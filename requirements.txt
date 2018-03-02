@@ -1,0 +1,5 @@
+numpy
+pypinyin
+Keras
+scikit-learn
+tensorflow
