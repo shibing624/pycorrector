@@ -16,3 +16,7 @@ print(traditional_sentence)
 print(pinyin('中心'))  # 带音调
 print(pinyin('中心', heteronym=True))  # 多音字
 print(lazy_pinyin('中心'))  # 不带音调
+
+print(preprocess('你干么！ｄ７＆８８８学英语ＡＢＣ？ｎｚ'))
+
+print(tokenize('小姑娘蹦蹦跳跳的去了她外公家'))
