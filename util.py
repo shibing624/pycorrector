@@ -4,7 +4,7 @@
 import os
 import pickle
 import re
-
+import pinyin
 import jieba
 
 from zhtools.langconv import Converter
@@ -60,9 +60,18 @@ def preprocess(sentence):
     return ret
 
 
-def tokenize(sentence):
+def segment(sentence):
     """
     切词
+    :param sentence:
+    :return: list
+    """
+    return jieba.cut(sentence)
+
+
+def tokenize(sentence):
+    """
+    切词并返回切词位置
     :param sentence:
     :return: (word, start_index, end_index) model='search'
     """
