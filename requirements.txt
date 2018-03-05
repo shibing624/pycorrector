@@ -1,5 +1,6 @@
 numpy
 pypinyin
+kenlm
 Keras
 scikit-learn
 tensorflow
