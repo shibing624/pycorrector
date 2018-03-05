@@ -11,6 +11,6 @@ correct_sent = correct(error_sentence_2)
 print("original sentence:{} => correct sentence:{}".format(error_sentence_2,correct_sent))
 
 
-error_sentence_2 = '我们现今所使用的大部分舒学符号，你们用的什么婊点符号'
+error_sentence_2 = '我们现今所"使用"的大部分舒学符号，你们用的什么婊点符号'
 correct_sent = correct(error_sentence_2)
 print("original sentence:{} => correct sentence:{}".format(error_sentence_2,correct_sent))

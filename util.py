@@ -54,7 +54,7 @@ def preprocess(sentence):
             code = 32
         elif code == 8216 or code == 8217:
             code = 39
-        elif code >= 65281 and code <= 65374:
+        elif 65281 <= code <= 65374:
             code -= 65248
         ret += chr(code)
     return ret
