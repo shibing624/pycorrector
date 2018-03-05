@@ -12,7 +12,7 @@ from util import segment, remove_punctuation
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 word_file_path = os.path.join(pwd_path, 'data/cn/word_dict.txt')
 char_file_path = os.path.join(pwd_path, 'data/cn/char_set.txt')
-PUNCTUATION_LIST = "。，,、？：；{}【】“‘’”《》/！%……（）"
+PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/！%……（）<>@#$~^￥%&*\"\'=+-"
 
 
 def construct_dict(path):
@@ -85,7 +85,7 @@ def correct_phrase(phrase):
 
 
 def correct(sentence, verbose=True):
-    seg_list = segment(remove_punctuation(sentence))
+    seg_list = segment(sentence)
     correct_sentence = ''
     for phrase in seg_list:
         corrected_phrase = phrase
