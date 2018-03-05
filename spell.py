@@ -73,6 +73,7 @@ def load_same_stroke(path, sep='\t'):
                 result[key_char] = set(list(parts[1]))
     return result
 
+
 same_pinyin_text_path = 'data/same_pinyin.txt'
 same_pinyin_model_path = 'data/same_pinyin.pkl'
 # 同音字
@@ -254,8 +255,7 @@ def generate_chars(c, fraction=2):
     confusion_char_set.add(c)
     confusion_char_list = list(confusion_char_set)
     all_confusion_char = sorted(confusion_char_list, key=lambda k: \
-        get_frequency(k, char_counter, sum(char_counter.values())),
-                                reverse=True)
+        get_frequency(k, char_counter, sum(char_counter.values())), reverse=True)
     return all_confusion_char[:len(confusion_char_list) // fraction + 1]
 
 
@@ -275,7 +275,8 @@ def correct_chars(sentence, start_index, end_index):
         print('num of possible replacements for {} is {}'.format(c, len(maybe_chars)))
         before = sentence[:start_index] + chars[:i]
         after = chars[i + 1:] + sentence[end_index:]
-        correct_char = max(maybe_chars, key=lambda k: get_ngram_score(before + k + after) + math.log(5) ** (k == c))
+        correct_char = max(maybe_chars, key=lambda k: \
+            get_ngram_score(before + k + after) + math.log(5) ** (k == c))
         chars = chars[:i] + correct_char + chars[i + 1:]
     return chars
 
@@ -300,7 +301,7 @@ def correct(sentence):
 
 
 def main():
-    line = '我们现今所使用的大部分舒学符号' # ，你们用的什么婊点符号
+    line = '我们现今所使用的大部分舒学符号'  # ，你们用的什么婊点符号
     print('input sentence is:', line)
     corrected_sent, correct_ranges = correct(line)
     print('corrected_sent:', corrected_sent)
