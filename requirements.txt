@@ -1,3 +1,4 @@
+kenlm==0.0.0
 numpy
 pypinyin
 Keras
