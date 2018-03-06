@@ -14,7 +14,7 @@ except:
 try:
     from zh_wiki import zh2Hant, zh2Hans
 except ImportError:
-    from corrector.zhtools.zh_wiki import zh2Hant, zh2Hans
+    from pycorrector.zhtools.zh_wiki import zh2Hant, zh2Hans
 
 import sys
 

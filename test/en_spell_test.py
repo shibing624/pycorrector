@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-from corrector.en_spell import *
-
+from pycorrector.en_spell import *
 
 def correction_t():
     assert correction('spelling') == 'spelling'  # no error
@@ -57,5 +56,5 @@ def get_set(lines):
 
 if __name__ == '__main__':
     print(correction_t())
-    spell_t(get_set(open('../data/en/spell-testset1.txt')),verbose=True)  # Dev set
-    spell_t(get_set(open('../data/en/spell-testset2.txt')),verbose=True)  # final test set
+    spell_t(get_set(open('../pycorrector/data/en/spell-testset1.txt')),verbose=True)  # Dev set
+    spell_t(get_set(open('../pycorrector/data/en/spell-testset2.txt')),verbose=True)  # final test set

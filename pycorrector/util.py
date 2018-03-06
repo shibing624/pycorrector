@@ -7,7 +7,7 @@ import re
 
 import jieba
 
-from corrector.zhtools.langconv import Converter
+from pycorrector.zhtools.langconv import Converter
 
 jieba.initialize()
 
