@@ -66,7 +66,7 @@ def segment(sentence):
     :param sentence:
     :return: list
     """
-    return jieba.cut(sentence)
+    return jieba.lcut(sentence)
 
 
 def tokenize(sentence):

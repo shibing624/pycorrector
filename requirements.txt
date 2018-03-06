@@ -1,3 +1,3 @@
-numpy
-pypinyin
-kenlm
+numpy==1.13.1
+pypinyin==0.23.0
+kenlm==0.0.0

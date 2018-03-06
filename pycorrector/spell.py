@@ -301,7 +301,7 @@ def correct(sentence):
 
 
 def main():
-    line = '我们现今所使用的大部分舒学符号'  # ，你们用的什么婊点符号
+    line = '我们现今所使用的大部分舒学符号'
     print('input sentence is:', line)
     corrected_sent, correct_ranges = correct(line)
     print('corrected_sent:', corrected_sent)

@@ -21,12 +21,12 @@ def construct_dict(path):
         for line in f:
             info = line.split()
             word = info[0]
-            freq = info[1]
+            freq = int(info[1])
             word_freq[word] = freq
     return word_freq
 
 
-phrase_freq = construct_dict(word_file_path)
+word_freq = construct_dict(word_file_path)
 
 
 def load_word_dict(path):
@@ -37,62 +37,89 @@ def load_word_dict(path):
     return word_dict
 
 
-def edit1(phrase, word_dict):
+def edit1(word, char_set):
     """
-    all edits that are one edit away from 'phrase'
-    :param phrase:
-    :param word_dict:
+    all edits that are one edit away from 'word'
+    :param word:
+    :param char_set:
     :return:
     """
-    splits = [(phrase[:i], phrase[i:]) for i in range(len(phrase) + 1)]
+    splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
     deletes = [L + R[1:] for L, R in splits if R]
     transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
-    replaces = [L + c + R[1:] for L, R in splits if R for c in word_dict]
-    inserts = [L + c + R for L, R in splits for c in word_dict]
+    replaces = [L + c + R[1:] for L, R in splits if R for c in char_set]
+    inserts = [L + c + R for L, R in splits for c in char_set]
     return set(deletes + transposes + replaces + inserts)
 
 
-def known(phrases):
-    return set(phrase for phrase in phrases if phrase in phrase_freq)
+def edit_distance_word(word, char_set):
+    """
+    all edits that are one edit away from 'word'
+    :param word:
+    :param char_set:
+    :return:
+    """
+    splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
+    replaces = [L + c + R[1:] for L, R in splits if R for c in char_set]
+    return set(transposes + replaces)
 
 
-def candidates(phrase):
+def known(words):
+    return set(word for word in words if word in word_freq)
+
+
+def candidates(word):
     candidates_1_order = []
     candidates_2_order = []
     candidates_3_order = []
-    error_pinyin = lazy_pinyin(phrase)
+    error_pinyin = lazy_pinyin(word)
     cn_char_set = load_word_dict(char_file_path)
-    candidate_phrases = list(known(edit1(phrase, cn_char_set)))
-    for candidate_phrase in candidate_phrases:
-        candidata_pinyin = lazy_pinyin(candidate_phrase)
+    candidate_words = list(known(edit_distance_word(word, cn_char_set)))
+    for candidate_word in candidate_words:
+        candidata_pinyin = lazy_pinyin(candidate_word)
         if candidata_pinyin == error_pinyin:
-            candidates_1_order.append(candidate_phrase)
+            candidates_1_order.append(candidate_word)
         elif candidata_pinyin[0] == error_pinyin[0]:
-            candidates_2_order.append(candidate_phrase)
+            candidates_2_order.append(candidate_word)
         else:
-            candidates_3_order.append(candidate_phrase)
+            candidates_3_order.append(candidate_word)
     return candidates_1_order, candidates_2_order, candidates_3_order
 
 
-def correct_phrase(phrase):
-    c1_order, c2_order, c3_order = candidates(phrase)
+def correct_word(word):
+    c1_order, c2_order, c3_order = candidates(word)
     if c1_order:
-        return max(c1_order, key=phrase_freq.get)
+        return max(c1_order, key=word_freq.get)
     elif c2_order:
-        return max(c2_order, key=phrase_freq.get)
+        return max(c2_order, key=word_freq.get)
+    elif c3_order:
+        return max(c3_order, key=word_freq.get)
     else:
-        return max(c3_order, key=phrase_freq.get)
+        return word
 
 
-def correct(sentence, verbose=True):
-    seg_list = segment(sentence)
+def correct(sentence, verbose=False):
+    """
+    correct the error sentence to correct sentence
+    :param sentence: str, input sentence with error words
+    :param verbose: bool,
+    :return: correct_sentence, correct_detail
+    """
     correct_sentence = ''
-    for phrase in seg_list:
-        corrected_phrase = phrase
-        if phrase not in PUNCTUATION_LIST:
-            if phrase not in phrase_freq.keys():
-                corrected_phrase = correct_phrase(phrase)
+    locations, wrong_words, right_words = [], [], []
+    seg_words = segment(sentence)
+    for word in seg_words:
+        corrected_word = word
+        if word not in PUNCTUATION_LIST:
+            if word not in word_freq.keys():
+                corrected_word = correct_word(word)
+                loc = sentence.find(word)
+                locations.append(loc)
+                wrong_words.append(word)
+                right_words.append(corrected_word)
                 if verbose:
-                    print(phrase, '=>', corrected_phrase)
-        correct_sentence += corrected_phrase
-    return correct_sentence
+                    print('pred:', word, '=>', corrected_word, ", index:", loc)
+        correct_sentence += corrected_word
+    correct_detail = zip(locations, wrong_words, right_words)
+    return correct_sentence, correct_detail

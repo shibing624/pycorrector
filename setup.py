@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pycorrector',
-    version='0.0.3',
+    version='0.0.4',
     description='Chinese Text Error corrector',
     long_description=long_description,
     author='XuMing',
@@ -40,7 +40,7 @@ setup(
     keywords='NLP,correction,Chinese error corrector,corrector',
     install_requires=[
         'kenlm==0.0.0',
-        'numpy>=1.13.1',
+        'numpy==1.13.1',
         'pypinyin==0.23.0'
     ],
     packages=['corrector'],
