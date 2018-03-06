@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 
-from detect import *
+from corrector.detect import *
 
 pron = get_homophones_by_char('长')
 print(pron)

@@ -8,8 +8,8 @@ import os
 from collections import Counter
 
 import numpy as np
-import config
-from util import tokenize, preprocess, load_pkl, dump_pkl
+
+from .util import tokenize, preprocess, load_pkl, dump_pkl
 
 bigram_path = 'data/kenlm/zhwiki_bigram.klm'
 bigram = kenlm.Model(bigram_path)

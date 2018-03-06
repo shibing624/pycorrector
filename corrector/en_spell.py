@@ -12,7 +12,7 @@ def words(text):
 
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-path = os.path.join(pwd_path, 'data/en/big.txt')
+path = os.path.join(pwd_path, '../data/en/big.txt')
 WORDS = Counter(words(open(path).read()))
 
 

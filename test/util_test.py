@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
-from util import *
+from corrector.util import *
 from pypinyin import pinyin, lazy_pinyin
 
 # traditional simplified

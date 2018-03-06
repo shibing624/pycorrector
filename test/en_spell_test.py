@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-from en_spell import *
+from corrector.en_spell import *
 
 
 def correction_t():

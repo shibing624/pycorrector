@@ -4,10 +4,10 @@
 import os
 import pickle
 import re
-import pinyin
+
 import jieba
 
-from zhtools.langconv import Converter
+from corrector.zhtools.langconv import Converter
 
 jieba.initialize()
 
