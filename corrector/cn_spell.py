@@ -10,8 +10,8 @@ from pypinyin import lazy_pinyin
 from .util import segment
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-word_file_path = os.path.join(pwd_path, '../data/cn/word_dict.txt')
-char_file_path = os.path.join(pwd_path, '../data/cn/char_set.txt')
+word_file_path = os.path.join(pwd_path, 'data/cn/word_dict.txt')
+char_file_path = os.path.join(pwd_path, 'data/cn/char_set.txt')
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/！%……（）<>@#$~^￥%&*\"\'=+-"
 
 
