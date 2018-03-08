@@ -1,8 +1,8 @@
 # corrector
-Chinese spelling correction tool. 
+Chinese text error correction tool. 
 
 
-**corrector**Use the language model to detect errors, phonetic features and resemblance characteristics to correcting 
+**corrector** Use the language model to detect errors, pinyin feature and shape feature to correct chinese text 
 error, it can be used for Chinese Pinyin and stroke input method.
 
 ## Features
