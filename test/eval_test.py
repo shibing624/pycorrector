@@ -23,11 +23,12 @@ def eval_bcmi_data_test():
 def clp_data_test():
     rate, right_dict, wrong_dict = eval_sighan_corpus(clp_path, True)
     print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
-
+    # cn_spell rate:0.2
 
 def sighan_data_test():
     rate, right_dict, wrong_dict = eval_sighan_corpus(sighan_path, True)
     print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
+    # cn_spell rate:0.2
 
 
 sighan_data_test()

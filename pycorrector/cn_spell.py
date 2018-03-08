@@ -7,7 +7,7 @@ import os
 
 from pypinyin import lazy_pinyin
 
-from .util import segment
+from pycorrector.util import segment
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 word_file_path = os.path.join(pwd_path, 'data/cn/word_dict.txt')
@@ -107,19 +107,20 @@ def correct(sentence, verbose=False):
     :return: correct_sentence, correct_detail
     """
     correct_sentence = ''
-    locations, wrong_words, right_words = [], [], []
+    wrong_words, right_words, begin_idx, end_idx = [], [], [], []
     seg_words = segment(sentence)
     for word in seg_words:
         corrected_word = word
         if word not in PUNCTUATION_LIST:
             if word not in word_freq.keys():
                 corrected_word = correct_word(word)
-                loc = sentence.find(word)
-                locations.append(loc)
+                begin_index = sentence.find(word)
+                begin_idx.append(begin_index)
+                end_idx.append(begin_index + len(word))
                 wrong_words.append(word)
                 right_words.append(corrected_word)
                 if verbose:
-                    print('pred:', word, '=>', corrected_word, ", index:", loc)
+                    print('pred:', word, '=>', corrected_word)
         correct_sentence += corrected_word
-    correct_detail = zip(locations, wrong_words, right_words)
+    correct_detail = list(zip(wrong_words, right_words, begin_idx, end_idx))
     return correct_sentence, correct_detail

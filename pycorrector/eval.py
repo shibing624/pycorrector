@@ -3,7 +3,7 @@
 # Brief:
 import re
 from codecs import open
-from .cn_spell import correct
+from .spell import correct
 from .util import load_pkl
 
 
@@ -65,15 +65,15 @@ def eval_sighan_corpus(pkl_path, verbose=False):
         if verbose:
             print('input sentence:', error_sentence)
             print('pred sentence:', pred_sentence)
-        for (right_loc, right_w, right_r), (pred_loc, pred_w, pred_r) in zip(right_detail, pred_detail):
+        for (right_loc, right_w, right_r), ( pred_loc, _) in zip(right_detail, pred_detail):
             total_count += 1
-            if right_r == pred_r:
-                right_count += 1
-                right_result[error_sentence] = [right_r, pred_r]
-            else:
-                wrong_result[error_sentence] = [right_r, pred_r]
+            # if right_r == pred_r:
+            #     right_count += 1
+            #     right_result[error_sentence] = [right_r, pred_r]
+            # else:
+            #     wrong_result[error_sentence] = [right_r, pred_r]
             if verbose:
                 print('right: {} => {} , index: {}'.format(right_w, right_r, right_loc))
-    if verbose:
-        print('right count:', right_count, ';total count:', total_count)
+    # if verbose:
+        # print('right count:', right_count, ';total count:', total_count)
     return right_count / total_count, right_result, wrong_result

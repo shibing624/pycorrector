@@ -9,18 +9,22 @@ from collections import Counter
 
 import numpy as np
 
-from .util import tokenize, preprocess, load_pkl, dump_pkl
+from pycorrector.text_preprocess import uniform
+from pycorrector.util import dump_pkl
+from pycorrector.util import load_pkl
+from pycorrector.util import tokenize
 
-bigram_path = 'data/kenlm/zhwiki_bigram.klm'
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+bigram_path = os.path.join(pwd_path, 'data/kenlm/zhwiki_bigram.klm')
 bigram = kenlm.Model(bigram_path)
 print('Loaded bigram language model from {}'.format(bigram_path))
 
-trigram_path = 'data/kenlm/zhwiki_trigram.klm'
+trigram_path = os.path.join(pwd_path, 'data/kenlm/zhwiki_trigram.klm')
 trigram = kenlm.Model(trigram_path)
 print('Loaded trigram language model from {}'.format(trigram_path))
 
-text_path = 'data/train_input.txt'
-text_counter_path = 'data/train_input_counter.pkl'
+text_path = os.path.join(pwd_path, 'data/train_input.txt')
+text_counter_path = os.path.join(pwd_path, 'data/train_input_counter.pkl')
 # 字频统计
 if os.path.exists(text_counter_path):
     char_counter = load_pkl(text_counter_path)
@@ -74,8 +78,8 @@ def load_same_stroke(path, sep='\t'):
     return result
 
 
-same_pinyin_text_path = 'data/same_pinyin.txt'
-same_pinyin_model_path = 'data/same_pinyin.pkl'
+same_pinyin_text_path = os.path.join(pwd_path, 'data/same_pinyin.txt')
+same_pinyin_model_path = os.path.join(pwd_path, 'data/same_pinyin.pkl')
 # 同音字
 if os.path.exists(same_pinyin_model_path):
     same_pinyin = load_pkl(same_pinyin_model_path)
@@ -85,8 +89,8 @@ else:
     dump_pkl(same_pinyin, same_pinyin_model_path)
 
 # 形似字
-same_stroke_text_path = 'data/same_stroke.txt'
-same_stroke_model_path = 'data/same_stroke.pkl'
+same_stroke_text_path = os.path.join(pwd_path, 'data/same_stroke.txt')
+same_stroke_model_path = os.path.join(pwd_path, 'data/same_stroke.pkl')
 if os.path.exists(same_stroke_model_path):
     same_stroke = load_pkl(same_stroke_model_path)
 else:
@@ -118,7 +122,9 @@ def get_model(n):
 
 
 def get_ngram_score(chars, model=bigram):
-    return model.score(' '.join(chars), bos=False, eos=False)
+    score = model.score(' '.join(chars), bos=False, eos=False)
+    # print('score: {}'.format(round(score, 4)))
+    return score
 
 
 def mad_score(scores, ratio=0.6745):
@@ -215,7 +221,7 @@ def score_sentence(sentence):
             scores.append(score)
         ngram_words.append(words)
         ngrams_scores = list(zip(words, [round(score, 3) for score in scores]))
-        print(ngrams_scores)
+        # print(ngrams_scores)
         ngram_scores.append(scores)
         # 移动窗口补全得分
         for _ in range(n - 1):
@@ -281,16 +287,17 @@ def correct_chars(sentence, start_index, end_index):
     return chars
 
 
-def correct(sentence):
-    sentence = preprocess(sentence)
+def correct(sentence, verbose=False):
+    sentence = uniform(sentence)
     tokens = tokenize(sentence)
-    print('segment sentens is:', ''.join([str(token) for token in tokens]))
+    # print('segment sentens is:', ''.join([str(token) for token in tokens]))
     seg_range = [[token[1], token[2]] for token in tokens]
     _, _, maybe_error_range = score_sentence(sentence)
     maybe_error_ranges = []
     if maybe_error_range:
         print('maybe error range:', maybe_error_range)
-        maybe_error_ranges = merge_ranges(overlap_ranges(maybe_error_range, seg_range))
+        maybe_error_ranges = maybe_error_range
+        # maybe_error_ranges = merge_ranges(overlap_ranges(maybe_error_range, seg_range))
         for range in maybe_error_ranges:
             start_index, end_index = range
             print('maybe error words:', sentence[start_index:end_index])

@@ -41,24 +41,6 @@ def simplified2traditional(sentence):
     return sentence
 
 
-def preprocess(sentence):
-    """
-    文本预处理：全角转半角，
-    :param sentence:
-    :return:
-    """
-    ret = ''
-    for c in sentence:
-        code = ord(c)
-        if code == 12288:
-            code = 32
-        elif code == 8216 or code == 8217:
-            code = 39
-        elif 65281 <= code <= 65374:
-            code -= 65248
-        ret += chr(code)
-    return ret
-
 
 def segment(sentence):
     """

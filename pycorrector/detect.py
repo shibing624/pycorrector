@@ -12,7 +12,6 @@ import numpy as np
 import pypinyin
 from pypinyin import pinyin
 from collections import Counter
-import config
 import re
 
 
