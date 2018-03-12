@@ -124,3 +124,11 @@ def correct(sentence, verbose=False):
         correct_sentence += corrected_word
     correct_detail = list(zip(wrong_words, right_words, begin_idx, end_idx))
     return correct_sentence, correct_detail
+
+
+if __name__ == '__main__':
+    error_sentence_1 = '少先队员因该为老人让坐'  # '机七学习是人工智能领遇最能体现智能的一个分知'
+    correct_sent, details = correct(error_sentence_1, True)
+    print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+    for wrong, right, s, e in details:
+        print(wrong, right, s, e, )

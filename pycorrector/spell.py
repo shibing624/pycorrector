@@ -23,8 +23,8 @@ trigram_path = os.path.join(pwd_path, 'data/kenlm/zhwiki_trigram.klm')
 trigram = kenlm.Model(trigram_path)
 print('Loaded trigram language model from {}'.format(trigram_path))
 
-text_path = os.path.join(pwd_path, 'data/train_input.txt')
-text_counter_path = os.path.join(pwd_path, 'data/train_input_counter.pkl')
+text_path = os.path.join(pwd_path, 'data/cn/bcmi.txt')
+text_counter_path = os.path.join(pwd_path, 'data/cn/bcmi_counter.pkl')
 # 字频统计
 if os.path.exists(text_counter_path):
     char_counter = load_pkl(text_counter_path)
@@ -309,6 +309,7 @@ def correct(sentence, verbose=False):
 
 def main():
     line = '我们现今所使用的大部分舒学符号'
+    # line = '机七学习是人工智能领遇最能体现智能的一个分知'
     print('input sentence is:', line)
     corrected_sent, correct_ranges = correct(line)
     print('corrected_sent:', corrected_sent)

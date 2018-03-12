@@ -8,9 +8,7 @@ import re
 import jieba
 
 from pycorrector.zhtools.langconv import Converter
-
 jieba.initialize()
-
 
 def remove_punctuation(strs):
     """
@@ -41,7 +39,6 @@ def simplified2traditional(sentence):
     return sentence
 
 
-
 def segment(sentence):
     """
     切词
@@ -51,13 +48,13 @@ def segment(sentence):
     return jieba.lcut(sentence)
 
 
-def tokenize(sentence):
+def tokenize(sentence, mode='default'):
     """
     切词并返回切词位置
     :param sentence:
     :return: (word, start_index, end_index) model='search'
     """
-    return list(jieba.tokenize(sentence, mode='search'))
+    return list(jieba.tokenize(sentence, mode=mode))
 
 
 def load_pkl(pkl_path):
@@ -83,3 +80,4 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
     with open(pkl_path, 'wb') as f:
         # pickle.dump(vocab, f, protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(vocab, f, protocol=0)
+

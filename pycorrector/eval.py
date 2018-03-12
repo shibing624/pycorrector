@@ -3,8 +3,8 @@
 # Brief:
 import re
 from codecs import open
-from .spell import correct
-from .util import load_pkl
+from pycorrector.corrector import correct
+from pycorrector.util import load_pkl
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):
@@ -38,7 +38,7 @@ def eval_bcmi_data(data_path, verbose=False):
             error_sentence, right_sentence = get_bcmi_corpus(line)
             if not error_sentence:
                 continue
-            pred_sentence, pred_detail = correct(error_sentence, True)
+            pred_sentence, pred_detail = correct(error_sentence)
             if verbose:
                 print('input sentence:', error_sentence)
                 print('pred sentence:', pred_sentence)
@@ -61,11 +61,11 @@ def eval_sighan_corpus(pkl_path, verbose=False):
     right_result = dict()
     wrong_result = dict()
     for error_sentence, right_detail in sighan_data:
-        pred_sentence, pred_detail = correct(error_sentence, True)
+        pred_sentence, pred_detail = correct(error_sentence)
         if verbose:
             print('input sentence:', error_sentence)
             print('pred sentence:', pred_sentence)
-        for (right_loc, right_w, right_r), ( pred_loc, _) in zip(right_detail, pred_detail):
+        for (right_loc, right_w, right_r), (pred_wrong, pred_right, pred_loc) in zip(right_detail, pred_detail):
             total_count += 1
             # if right_r == pred_r:
             #     right_count += 1
@@ -74,6 +74,6 @@ def eval_sighan_corpus(pkl_path, verbose=False):
             #     wrong_result[error_sentence] = [right_r, pred_r]
             if verbose:
                 print('right: {} => {} , index: {}'.format(right_w, right_r, right_loc))
-    # if verbose:
-        # print('right count:', right_count, ';total count:', total_count)
+                # if verbose:
+                # print('right count:', right_count, ';total count:', total_count)
     return right_count / total_count, right_result, wrong_result
