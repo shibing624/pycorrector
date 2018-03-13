@@ -247,7 +247,7 @@ def correct(sentence):
     """
     detail = []
     maybe_error_ids = get_sub_array(detect(sentence))
-    print('maybe_error_ids:', maybe_error_ids)
+    # print('maybe_error_ids:', maybe_error_ids)
     # 取得字词对应表
     index_char_dict = dict()
     for index in maybe_error_ids:

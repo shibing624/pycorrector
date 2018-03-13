@@ -65,7 +65,7 @@ def eval_sighan_corpus(pkl_path, verbose=False):
         if verbose:
             print('input sentence:', error_sentence)
             print('pred sentence:', pred_sentence)
-        for (right_loc, right_w, right_r), (pred_wrong, pred_right, pred_loc) in zip(right_detail, pred_detail):
+        for (right_loc, right_w, right_r) in right_detail:
             total_count += 1
             # if right_r == pred_r:
             #     right_count += 1
