@@ -5,11 +5,14 @@
 import codecs
 import os
 
-import pypinyin
-from pypinyin import pinyin, lazy_pinyin
+from pypinyin import lazy_pinyin
 
-from pycorrector.detector import detect, trigram_char
-from pycorrector.detector import get_frequency, word_freq, get_ppl_score
+from pycorrector.detector import detect
+from pycorrector.detector import get_frequency
+from pycorrector.detector import get_ppl_score
+from pycorrector.detector import trigram_char
+from pycorrector.detector import word_freq
+from pycorrector.text_preprocess import is_chinese_string
 from pycorrector.util import dump_pkl
 from pycorrector.util import load_pkl
 
@@ -69,6 +72,7 @@ def load_same_stroke(path, sep='\t'):
     return result
 
 
+cn_char_set = load_word_dict(char_file_path)
 same_pinyin_text_path = os.path.join(pwd_path, 'data/same_pinyin.txt')
 same_pinyin_model_path = os.path.join(pwd_path, 'data/same_pinyin.pkl')
 # 同音字
@@ -108,54 +112,7 @@ def get_same_stroke(char):
     return same_stroke.get(char, set())
 
 
-def get_homophones_by_char(input_char):
-    """
-    根据汉字取同音字
-    :param input_char:
-    :return:
-    """
-    result = []
-    # CJK统一汉字区的范围是0x4E00-0x9FA5,也就是我们经常提到的20902个汉字
-    for i in range(0x4e00, 0x9fa6):
-        if pinyin([chr(i)], style=pypinyin.NORMAL)[0][0] == pinyin(input_char, style=pypinyin.NORMAL)[0][0]:
-            result.append(chr(i))
-    return result
-
-
-def get_homophones_by_pinyin(input_pinyin):
-    """
-    根据拼音取同音字
-    :param input_pinyin:
-    :return:
-    """
-    result = []
-    # CJK统一汉字区的范围是0x4E00-0x9FA5,也就是我们经常提到的20902个汉字
-    for i in range(0x4e00, 0x9fa6):
-        if pinyin([chr(i)], style=pypinyin.TONE2)[0][0] == input_pinyin:
-            # TONE2: 中zho1ng
-            result.append(chr(i))
-    return result
-
-
-def generate_chars(c, fraction=2):
-    """
-    取音似、形似字
-    :param c:
-    :param fraction:
-    :return:
-    """
-    confusion_char_set = get_same_pinyin(c)
-    # confusion_char_set = get_same_pinyin(c).union(get_same_stroke(c))
-    if not confusion_char_set:
-        confusion_char_set = {c}
-    confusion_char_set.add(c)
-    confusion_char_list = list(confusion_char_set)
-    all_confusion_char = sorted(confusion_char_list, key=lambda k: \
-        get_frequency(k), reverse=True)
-    return all_confusion_char[:len(confusion_char_list) // fraction + 1]
-
-
-def edit_distance_word(word, char_set):
+def _edit_distance_word(word, char_set):
     """
     all edits that are one edit away from 'word'
     :param word:
@@ -172,62 +129,113 @@ def _known(words):
     return set(word for word in words if word in word_freq)
 
 
-def _candidates(word):
+def _get_confusion_set(c):
+    confusion_char_set = get_same_pinyin(c)
+    if not confusion_char_set:
+        confusion_char_set = set()
+    return confusion_char_set
+
+
+def _generate_items(word, fraction=2):
+    if not is_chinese_string(word):
+        return []
     candidates_1_order = []
     candidates_2_order = []
     candidates_3_order = []
-    error_pinyin = lazy_pinyin(word)
-    cn_char_set = load_word_dict(char_file_path)
-    candidate_words = list(_known(edit_distance_word(word, cn_char_set)))
+    candidate_words = list(_known(_edit_distance_word(word, cn_char_set)))
     for candidate_word in candidate_words:
-        candidata_pinyin = lazy_pinyin(candidate_word)
-        if candidata_pinyin == error_pinyin:
+        if lazy_pinyin(candidate_word) == lazy_pinyin(word):
+            # same pinyin
             candidates_1_order.append(candidate_word)
-        elif candidata_pinyin[0] == error_pinyin[0]:
-            candidates_2_order.append(candidate_word)
+    if len(word) == 1:
+        # same pinyin
+        confusion_char_set = _get_confusion_set(word[0])
+        confusion = [i for i in confusion_char_set if i]
+        candidates_2_order.extend(confusion)
+    if len(word) > 1:
+        # same first pinyin
+        confusion_char_set = _get_confusion_set(word[0])
+        confusion = [i + word[1:] for i in confusion_char_set if i]
+        candidates_2_order.extend(confusion)
+        # same last pinyin
+        confusion_char_set = _get_confusion_set(word[-1])
+        confusion = [word[:-1] + i for i in confusion_char_set]
+        candidates_2_order.extend(confusion)
+        if len(word) > 2:
+            # same mid pinyin
+            confusion_char_set = _get_confusion_set(word[1])
+            confusion = [word[0] + i + word[2:] for i in confusion_char_set]
+            candidates_3_order.extend(confusion)
+    # add all confusion word list
+    confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
+    confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
+    confusion_sorted = sorted(confusion_word_list, key=lambda k: \
+        get_frequency(k), reverse=True)
+    return confusion_sorted[:len(confusion_word_list) // fraction + 1]
+
+
+def get_sub_array(nums):
+    """
+    取所有连续子串，
+    [0, 1, 2, 5, 7, 8]
+    => [[0, 2], 5, [7, 8]]
+    :param nums: sorted(list)
+    :return:
+    """
+    ret = []
+    for i, c in enumerate(nums):
+        if i == 0:
+            pass
+        elif i <= ii:
+            continue
+        elif i == len(nums) - 1:
+            ret.append([c])
+            break
+        ii = i
+        cc = c
+        # get continuity Substring
+        while ii < len(nums) - 1 and nums[ii + 1] == cc + 1:
+            ii = ii + 1
+            cc = cc + 1
+        if ii > i:
+            ret.append([c, nums[ii] + 1])
         else:
-            candidates_3_order.append(candidate_word)
-    return candidates_1_order, candidates_2_order, candidates_3_order
+            ret.append([c])
+    return ret
 
 
-def _correct_word(word):
-    c1_order, c2_order, c3_order = _candidates(word)
-    if c1_order:
-        return max(c1_order, key=word_freq.get)
-    elif c2_order:
-        return max(c2_order, key=word_freq.get)
-    elif c3_order:
-        return max(c3_order, key=word_freq.get)
-    else:
-        return word
-
-
-def _correct_chars(sentence, ids):
+def _correct_item(sentence, idx, item):
     """
-    纠正错字，逐字处理
+    纠正错误，逐词处理
     :param sentence:
-    :param ids:
-    :return: corrected characters 修正的汉字
+    :param idx:
+    :param item:
+    :return: corrected word 修正的词语
     """
-    wrongs, rights, error_ids = [], [], []
-    maybe_error_chars = {i: sentence[i] for i in ids}
     corrected_sent = sentence
-    for i, c in maybe_error_chars.items():
-        # 取得所有可能正确的汉字
-        maybe_chars = generate_chars(c)
-        # print('num of possible replacements for {} is {}'.format(c, len(maybe_chars)))
-        before = corrected_sent[:i]
-        after = corrected_sent[i + 1:]
-        corrected_c = min(maybe_chars,
-                          key=lambda k: get_ppl_score(list(before + k + after),
-                                                      mode=trigram_char))
-        if corrected_c != c:
-            error_ids.append(i)
-            corrected_sent = before + corrected_c + after
-            print('pred:', c, '=>', corrected_c)
-            wrongs.append(c)
-            rights.append(corrected_c)
-    detail = list(zip(wrongs, rights, error_ids))
+    # 取得所有可能正确的词
+    maybe_error_items = _generate_items(item)
+    maybe_error_items = sorted(maybe_error_items, key=lambda k: \
+        get_frequency(k), reverse=True)
+    if not maybe_error_items:
+        return corrected_sent, []
+    ids = idx.split(',')
+    begin_id = int(ids[0])
+    end_id = int(ids[-1]) if len(ids) > 1 else int(ids[0]) + 1
+    before = sentence[:begin_id]
+    after = sentence[end_id:]
+    corrected_item = min(maybe_error_items,
+                         key=lambda k: get_ppl_score(list(before + k + after),
+                                                     mode=trigram_char))
+    wrongs, rights, begin_idx, end_idx = [], [], [], []
+    if corrected_item != item:
+        corrected_sent = before + corrected_item + after
+        print('pred:', item, '=>', corrected_item)
+        wrongs.append(item)
+        rights.append(corrected_item)
+        begin_idx.append(begin_id)
+        end_idx.append(end_id)
+    detail = list(zip(wrongs, rights, begin_idx, end_idx))
     return corrected_sent, detail
 
 
@@ -235,14 +243,31 @@ def correct(sentence):
     """
     句子改错
     :param sentence: 句子文本
-    :return: 改正后的句子, list(wrongs, rights, error_ids)
+    :return: 改正后的句子, list(wrongs, rights, begin_idx, end_idx)
     """
-    maybe_error_ids = detect(sentence)
-    return _correct_chars(sentence, maybe_error_ids)
+    detail = []
+    maybe_error_ids = get_sub_array(detect(sentence))
+    print('maybe_error_ids:', maybe_error_ids)
+    # 取得字词对应表
+    index_char_dict = dict()
+    for index in maybe_error_ids:
+        if len(index) == 1:
+            # 字
+            index_char_dict[','.join(map(str, index))] = sentence[index[0]]
+        else:
+            # 词
+            index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
+    for index, item in index_char_dict.items():
+        # 字词纠错
+        sentence, detail_word = _correct_item(sentence, index, item)
+        if detail_word:
+            detail.append(detail_word)
+    return sentence, detail
 
 
 if __name__ == '__main__':
     line = '少先队员因该为老人让坐'
+    line = '机七学习是人工智能领遇最能体现智能的一个分知'
     print('input sentence is:', line)
     corrected_sent, detail = correct(line)
     print('corrected_sent:', corrected_sent)

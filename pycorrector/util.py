@@ -4,7 +4,8 @@
 import os
 import pickle
 import re
-
+from pypinyin import pinyin
+import pypinyin
 import jieba
 
 from pycorrector.zhtools.langconv import Converter
@@ -81,3 +82,30 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
         # pickle.dump(vocab, f, protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(vocab, f, protocol=0)
 
+def get_homophones_by_char(input_char):
+    """
+    根据汉字取同音字
+    :param input_char:
+    :return:
+    """
+    result = []
+    # CJK统一汉字区的范围是0x4E00-0x9FA5,也就是我们经常提到的20902个汉字
+    for i in range(0x4e00, 0x9fa6):
+        if pinyin([chr(i)], style=pypinyin.NORMAL)[0][0] == pinyin(input_char, style=pypinyin.NORMAL)[0][0]:
+            result.append(chr(i))
+    return result
+
+
+def get_homophones_by_pinyin(input_pinyin):
+    """
+    根据拼音取同音字
+    :param input_pinyin:
+    :return:
+    """
+    result = []
+    # CJK统一汉字区的范围是0x4E00-0x9FA5,也就是我们经常提到的20902个汉字
+    for i in range(0x4e00, 0x9fa6):
+        if pinyin([chr(i)], style=pypinyin.TONE2)[0][0] == input_pinyin:
+            # TONE2: 中zho1ng
+            result.append(chr(i))
+    return result

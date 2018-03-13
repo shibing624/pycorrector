@@ -58,7 +58,7 @@ def get_ngram_score(chars, mode=trigram_word):
     return score
 
 
-def get_ppl_score(words, mode=trigram_word):
+def get_ppl_score(words, mode=trigram_char):
     """
     取语言模型困惑度得分，越小句子越通顺
     :param words: list, 以词或字切分

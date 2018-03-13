@@ -28,18 +28,17 @@ class BasicTestSuite(unittest.TestCase):
         correct_sent = correct(error_sentence_3)
         print("original sentence:{} => correct sentence:{}".format(error_sentence_3, correct_sent))
 
-        error_sentences = ['按照上级布署安排', '春暖花开之时我们躯车到了海滨渡假村']
+    @staticmethod
+    def test_text4():
+        error_sentences = ['春暖花开之时我们躯车到了海滨渡假村', '按照上级布署安排', ]
         for line in error_sentences:
             correct_sent = correct(line)
             print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 
     @staticmethod
     def homophones():
-        pron = get_homophones_by_char('长')
-        print('get_homophones_by_char:', pron)
-
-        pron = get_homophones_by_pinyin('zha1ng')
-        print('get_homophones_by_pinyin:', pron)
+        nums = [0, 1, 2, 5, 7, 8]
+        print(get_sub_array(nums))
 
 
 if __name__ == '__main__':

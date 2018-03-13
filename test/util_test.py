@@ -36,3 +36,9 @@ for word in strs:
 print(flag)
 print(en_dict.check("zhangsan"))
 print(en_dict.check("zhangsan ni zai zhe li ma ?"))
+
+pron = get_homophones_by_char('长')
+print('get_homophones_by_char:', pron)
+
+pron = get_homophones_by_pinyin('zha1ng')
+print('get_homophones_by_pinyin:', pron)

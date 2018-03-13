@@ -5,10 +5,18 @@
 
 def is_chinese(uchar):
     """判断一个unicode是否是汉字"""
-    if uchar >= u'u4e00' and uchar <= u'u9fa5':
+    if '\u4e00' <= uchar <= '\u9fa5':
         return True
     else:
         return False
+
+
+def is_chinese_string(string):
+    """判断是否全为汉字"""
+    for c in string:
+        if not is_chinese(c):
+            return False
+    return True
 
 
 def is_number(uchar):
@@ -79,3 +87,6 @@ if __name__ == "__main__":
     print(ustring)
     print(is_other(','))
     print(uniform('你干么！ｄ７＆８８８学英 语ＡＢＣ？ｎｚ'))
+    print(is_chinese('喜'))
+    print(is_chinese_string('喜,'))
+    print(is_chinese_string('丽，'))
