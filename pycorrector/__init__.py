@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: corrector with spell and stroke
-
 import codecs
 import os
 
@@ -14,11 +13,19 @@ from pycorrector.detector import get_ppl_score
 from pycorrector.detector import trigram_char
 from pycorrector.detector import word_freq
 from pycorrector.text_preprocess import is_chinese_string
+from pycorrector.util import default_logger
 from pycorrector.util import dump_pkl
 from pycorrector.util import load_pkl
 from pycorrector.util import traditional2simplified
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+
+def setLogLevel(log_level):
+    global logger
+    default_logger.setLevel(log_level)
+
+
 char_file_path = os.path.join(pwd_path, config.char_file_path)
 
 
@@ -38,7 +45,7 @@ def load_same_pinyin(path, sep='\t'):
     """
     result = dict()
     if not os.path.exists(path):
-        print("file not exists:", path)
+        default_logger.debug("file not exists:", path)
         return result
     with codecs.open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -64,7 +71,7 @@ def load_same_stroke(path, sep='\t'):
     """
     result = dict()
     if not os.path.exists(path):
-        print("file not exists:", path)
+        default_logger.debug("file not exists:", path)
         return result
     with codecs.open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -83,7 +90,7 @@ same_pinyin_model_path = os.path.join(pwd_path, config.same_pinyin_model_path)
 if os.path.exists(same_pinyin_model_path):
     same_pinyin = load_pkl(same_pinyin_model_path)
 else:
-    print('load same pinyin from text file:', same_pinyin_text_path)
+    default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
     same_pinyin = load_same_pinyin(same_pinyin_text_path)
     dump_pkl(same_pinyin, same_pinyin_model_path)
 
@@ -93,7 +100,7 @@ same_stroke_model_path = os.path.join(pwd_path, config.same_stroke_model_path)
 if os.path.exists(same_stroke_model_path):
     same_stroke = load_pkl(same_stroke_model_path)
 else:
-    print('load same stroke from text file:', same_stroke_text_path)
+    default_logger.debug('load same stroke from text file:', same_stroke_text_path)
     same_stroke = load_same_stroke(same_stroke_text_path)
     dump_pkl(same_stroke, same_stroke_model_path)
 
@@ -245,7 +252,7 @@ def _correct_item(sentence, idx, item):
     wrongs, rights, begin_idx, end_idx = [], [], [], []
     if corrected_item != item:
         corrected_sent = before + corrected_item + after
-        print('pred:', item, '=>', corrected_item)
+        # default_logger.debug('pred:', item, '=>', corrected_item)
         wrongs.append(item)
         rights.append(corrected_item)
         begin_idx.append(begin_id)
@@ -284,6 +291,4 @@ if __name__ == '__main__':
     line = '少先队员因该为老人让坐'
     # line = '机七学习是人工智能领遇最能体现智能的'
     print('input sentence is:', line)
-    corrected_sent, detail = correct(line)
-    print('corrected_sent:', corrected_sent)
-    print('detail:', detail)
+    print(correct(line))

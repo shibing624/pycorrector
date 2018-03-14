@@ -58,3 +58,4 @@ class BasicTestSuite(unittest.TestCase):
     def homophones():
         nums = [0, 1, 2, 5, 7, 8]
         print(get_sub_array(nums))
+

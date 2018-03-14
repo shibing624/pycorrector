@@ -1,15 +1,24 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
+import logging
 import os
 import pickle
 import re
-from pypinyin import pinyin
-import pypinyin
+import sys
+
 import jieba
+import pypinyin
+from pypinyin import pinyin
 
 from pycorrector.zhtools.langconv import Converter
+
 jieba.initialize()
+log_console = logging.StreamHandler(sys.stderr)
+default_logger = logging.getLogger(__name__)
+default_logger.setLevel(logging.DEBUG)
+default_logger.addHandler(log_console)
+
 
 def remove_punctuation(strs):
     """
@@ -81,6 +90,7 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
     with open(pkl_path, 'wb') as f:
         # pickle.dump(vocab, f, protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(vocab, f, protocol=0)
+
 
 def get_homophones_by_char(input_char):
     """

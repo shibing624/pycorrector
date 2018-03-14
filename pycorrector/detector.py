@@ -5,10 +5,11 @@ import codecs
 import kenlm
 import os
 
-import pycorrector.config as config
 import numpy as np
 
+import pycorrector.config as config
 from pycorrector.text_preprocess import uniform
+from pycorrector.util import default_logger
 from pycorrector.util import dump_pkl
 from pycorrector.util import load_pkl
 from pycorrector.util import tokenize
@@ -19,9 +20,9 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 # trigram_word = kenlm.Model(trigram_word_path)
 # print('Loaded trigram_word language model from {}'.format(trigram_word_path))
 
-trigram_char_path = os.path.join(pwd_path, 'data/kenlm/people_chars_lm.klm')
+trigram_char_path = os.path.join(pwd_path, config.language_model_path)
 trigram_char = kenlm.Model(trigram_char_path)
-print('Loaded trigram_word language model from {}'.format(trigram_char_path))
+default_logger.debug('Loaded trigram_word language model from {}'.format(trigram_char_path))
 
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/！%……（）<>@#$~^￥%&*\"\'=+-"
 
@@ -43,7 +44,7 @@ word_freq_model_path = os.path.join(pwd_path, config.word_freq_model_path)
 if os.path.exists(word_freq_model_path):
     word_freq = load_pkl(word_freq_model_path)
 else:
-    print('load word freq from text file:', word_freq_path)
+    default_logger.debug('load word freq from text file:', word_freq_path)
     word_freq = load_word_freq_dict(word_freq_path)
     dump_pkl(word_freq, word_freq_model_path)
 
@@ -142,6 +143,7 @@ if __name__ == '__main__':
     print(sent_chars)
 
     from pycorrector.util import segment
+
     print(get_ngram_score(segment(sent)))
     print(get_ppl_score(segment(sent)))
 
