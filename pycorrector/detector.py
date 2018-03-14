@@ -5,6 +5,7 @@ import codecs
 import kenlm
 import os
 
+import pycorrector.config as config
 import numpy as np
 
 from pycorrector.text_preprocess import uniform
@@ -14,11 +15,11 @@ from pycorrector.util import tokenize
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
-trigram_word_path = os.path.join(pwd_path, 'data/kenlm/people_words.klm')
-trigram_word = kenlm.Model(trigram_word_path)
-print('Loaded trigram_word language model from {}'.format(trigram_word_path))
+# trigram_word_path = os.path.join(pwd_path, 'data/kenlm/people_words.klm')
+# trigram_word = kenlm.Model(trigram_word_path)
+# print('Loaded trigram_word language model from {}'.format(trigram_word_path))
 
-trigram_char_path = os.path.join(pwd_path, 'data/kenlm/people_chars.klm')
+trigram_char_path = os.path.join(pwd_path, 'data/kenlm/people_chars_lm.klm')
 trigram_char = kenlm.Model(trigram_char_path)
 print('Loaded trigram_word language model from {}'.format(trigram_char_path))
 
@@ -37,8 +38,8 @@ def load_word_freq_dict(path):
 
 
 # 字频统计
-word_freq_path = os.path.join(pwd_path, 'data/cn/word_dict.txt')
-word_freq_model_path = os.path.join(pwd_path, 'data/cn/word_dict.pkl')
+word_freq_path = os.path.join(pwd_path, config.word_freq_path)
+word_freq_model_path = os.path.join(pwd_path, config.word_freq_model_path)
 if os.path.exists(word_freq_model_path):
     word_freq = load_pkl(word_freq_model_path)
 else:
@@ -47,15 +48,14 @@ else:
     dump_pkl(word_freq, word_freq_model_path)
 
 
-def get_ngram_score(chars, mode=trigram_word):
+def get_ngram_score(chars, mode=trigram_char):
     """
     取n元文法得分
     :param chars: list, 以词或字切分
     :param mode:
     :return:
     """
-    score = mode.score(' '.join(chars), bos=False, eos=False)
-    return score
+    return mode.score(' '.join(chars), bos=False, eos=False)
 
 
 def get_ppl_score(words, mode=trigram_char):
@@ -65,8 +65,7 @@ def get_ppl_score(words, mode=trigram_char):
     :param mode:
     :return:
     """
-    score = mode.perplexity(' '.join(words))
-    return score
+    return mode.perplexity(' '.join(words))
 
 
 def get_frequency(word):
@@ -130,7 +129,6 @@ def detect(sentence):
     maybe_error_char_indices = _get_maybe_error_index(sent_scores)
     # 合并字、词错误
     maybe_error_indices |= set(maybe_error_char_indices)
-    # print('maybe_error_indices:', maybe_error_indices)
     return sorted(maybe_error_indices)
 
 

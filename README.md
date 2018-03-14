@@ -10,6 +10,28 @@ error, it can be used for Chinese Pinyin and stroke input method.
 * Kenlm
 * RNNLM
 
+## Usage
+
+### install
+* pip install pycorrector / pip3 install pycorrector 
+* Or download https://github.com/shibing624/corrector, Unzip and run python setup.py install
+
+### correct  
+input:
+```
+import pycorrector
+
+corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+print(corrected_sent, detail)
+
+```
+
+output:
+```
+少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
+```
+
+
 ### Future work
 1. P(c), the language model. We could create a better language model by collecting more data, and perhaps by using a 
 little English morphology (such as adding "ility" or "able" to the end of a word).
@@ -50,7 +72,29 @@ going.
 
 **corrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
-## Features
+## 特征
 ### 语言模型
 * Kenlm（统计语言模型工具）
 * RNNLM（TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型）
+
+## 使用说明
+
+### 安装
+* 全自动安装：pip install pycorrector 或者 pip3 install pycorrector 
+* 半自动安装：下载 https://github.com/shibing624/corrector, 解压缩并运行 python setup.py install
+
+### 纠错  
+使用示例:
+```
+import pycorrector
+
+corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+print(corrected_sent, detail)
+
+```
+
+输出:
+```
+少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
+```
+

@@ -3,12 +3,17 @@
 # Brief: configuration
 import os
 
-################## for language model  ##################
+word_freq_path = 'data/word_dict.txt'
+word_freq_model_path = 'data/word_dict.pkl'
 
-bimodel_path = './data/model/zhwiki_bigram.klm'
-trimodel_path = './data/model/zhwiki_trigram.klm'
+char_file_path = 'data/char_set.txt'
 
-################## for training  #########################
+same_pinyin_text_path = 'data/same_pinyin.txt'
+same_pinyin_model_path = 'data/same_pinyin.pkl'
+
+same_stroke_text_path = 'data/same_stroke.txt'
+same_stroke_model_path = 'data/same_stroke.pkl'
+
 # path of training data
 train_data_path = "data/rank/train.txt"
 # path of testing data, if testing file does not exist,
@@ -17,10 +22,3 @@ test_data_path = "data/rank/test.txt"
 # path of word dictionary, if this file does not exist,
 # word dictionary will be built from training data.
 dic_path = "data/rank/vocab.txt"
-
-
-# directory to save the trained model
-# create a new directory if the directoy does not exist
-# model_save_dir = "model"
-# if not os.path.exists(model_save_dir):
-#     os.mkdir(model_save_dir)
