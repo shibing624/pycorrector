@@ -44,14 +44,10 @@ print(corrected_sent, detail)
 
 1. kenlm语言模型训练工具的使用，请见博客：http://blog.csdn.net/mingzai624/article/details/79560063
 2. 附上训练语料<人民日报2014版熟语料>，包括：
-
-1）标准人工切词及词性数据people2014.tar.gz，
-
-2）未切词文本数据people2014_words.txt，
-
-3）kenlm训练字粒度语言模型文件及其二进制文件people2014corpus_chars.arps/klm，
-
-4）kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
+    1）标准人工切词及词性数据people2014.tar.gz，
+    2）未切词文本数据people2014_words.txt，
+    3）kenlm训练字粒度语言模型文件及其二进制文件people2014corpus_chars.arps/klm，
+    4）kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
 
 网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11。尊重版权，传播请注明出处。
 
@@ -64,11 +60,11 @@ print(corrected_sent, detail)
 
 ## 参考
 
-1. [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
-2.《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]
-3.《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]
-4.《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]
-5.《Neural Language Correction with Character-Based Attention》[zhang, 2016]
+1.  [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
+2. 《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]
+3. 《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]
+4. 《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]
+5. 《Neural Language Correction with Character-Based Attention》[zhang, 2016]
 
 
 ----
