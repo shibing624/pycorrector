@@ -77,6 +77,7 @@ going.
 * Kenlm（统计语言模型工具）
 * RNNLM（TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型）
 
+
 ## 使用说明
 
 ### 安装
@@ -98,3 +99,21 @@ print(corrected_sent, detail)
 少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
 ```
 
+## 自定义语言模型
+
+语言模型对于纠错步骤至关重要，目前我能收集到的语料数据只有人民日报数据。大家可以用中文维基（繁体转简体）等更大的语料数据训练效果更好的语言模型，
+对于纠错效果会有很好的提升。
+
+1. kenlm工具使用见博客：http://blog.csdn.net/mingzai624/article/details/79560063
+2. 附上训练语料<人民日报2014版熟语料>，包括：
+1）标准人工切词及词性数据people2014.tar.gz，
+2）未切词文本数据people2014_words.txt，
+3）kenlm训练字粒度语言模型文件及其二进制文件people2014corpus_chars.arps/klm，
+4）kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
+网盘地址：链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11。尊重版权，传播请注明出处。
+
+## 贡献及优化点
+
+* 升级使用RNN语言模型来评估纠错效果。
+* 优化形似字字典，提高形似字纠错准确率。
+* 整理中文纠错集，使用seq2seq做深度中文纠错模型
