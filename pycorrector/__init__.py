@@ -19,14 +19,12 @@ from pycorrector.util import load_pkl
 from pycorrector.util import traditional2simplified
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
+char_file_path = os.path.join(pwd_path, config.char_file_path)
 
 
-def setLogLevel(log_level):
+def set_log_level(log_level):
     global logger
     default_logger.setLevel(log_level)
-
-
-char_file_path = os.path.join(pwd_path, config.char_file_path)
 
 
 def load_word_dict(path):
@@ -285,10 +283,3 @@ def correct(sentence):
         if detail_word:
             detail.append(detail_word)
     return sentence, detail
-
-
-if __name__ == '__main__':
-    line = '少先队员因该为老人让坐'
-    # line = '机七学习是人工智能领遇最能体现智能的'
-    print('input sentence is:', line)
-    print(correct(line))

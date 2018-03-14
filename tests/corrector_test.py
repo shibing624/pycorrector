@@ -59,3 +59,9 @@ class BasicTestSuite(unittest.TestCase):
         nums = [0, 1, 2, 5, 7, 8]
         print(get_sub_array(nums))
 
+    @staticmethod
+    def correct():
+        line = '少先队员因该为老人让坐'
+        # line = '机七学习是人工智能领遇最能体现智能的'
+        print('input sentence is:', line)
+        print(correct(line))
