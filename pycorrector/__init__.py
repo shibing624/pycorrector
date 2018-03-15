@@ -6,7 +6,7 @@ import os
 
 from pypinyin import lazy_pinyin
 
-import pycorrector.config as config
+import pycorrector.config
 from pycorrector.detector import detect
 from pycorrector.detector import get_frequency
 from pycorrector.detector import get_ppl_score
@@ -60,7 +60,7 @@ def load_same_pinyin(path, sep='\t'):
     return result
 
 
-def load_same_stroke(path, sep='\t'):
+def load_same_stroke(path, sep=','):
     """
     加载形似字
     :param path:
@@ -76,8 +76,8 @@ def load_same_stroke(path, sep='\t'):
             line = traditional2simplified(line.strip())
             parts = line.strip().split(sep)
             if parts and len(parts) > 1:
-                key_char = parts[0]
-                result[key_char] = set(list(parts[1]))
+                for i, c in enumerate(parts):
+                    result[c] = set(list(parts[:i] + parts[i + 1:]))
     return result
 
 
@@ -139,7 +139,7 @@ def known(words):
 
 
 def get_confusion_char_set(c):
-    confusion_char_set = get_same_pinyin(c)  # .union(get_same_stroke(c))
+    confusion_char_set = get_same_pinyin(c).union(get_same_stroke(c))
     if not confusion_char_set:
         confusion_char_set = set()
     return confusion_char_set

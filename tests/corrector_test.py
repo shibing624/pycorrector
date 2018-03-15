@@ -31,6 +31,7 @@ class BasicTestSuite(unittest.TestCase):
     @staticmethod
     def test_text4():
         error_sentences = [
+            '我喜欢打监球，你呢？足球吗',
             '老师工作非常幸苦,我们要遵敬老师',
             ' 我兴高彩列地去公园游玩',
             '老师的生体不好,可她艰持给我们上课',
@@ -58,6 +59,10 @@ class BasicTestSuite(unittest.TestCase):
     def homophones():
         nums = [0, 1, 2, 5, 7, 8]
         print(get_sub_array(nums))
+
+    @staticmethod
+    def stroke():
+        print(get_same_stroke('蓝'))
 
     @staticmethod
     def correct():
