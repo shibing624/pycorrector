@@ -1,0 +1,4285 @@
+<ROOT>
+<DOC>
+<TEXT id="200405109523200554_2_1x1">
+他们知不道吸烟对未成年年的影响会造成的各种害处。
+</TEXT>
+<CORRECTION>
+他们不知道吸烟对未成年人会造成的各种伤害。
+</CORRECTION>
+<ERROR start_off="3" end_off="4" type="W"></ERROR>
+<ERROR start_off="12" end_off="12" type="S"></ERROR>
+<ERROR start_off="13" end_off="15" type="R"></ERROR>
+<ERROR start_off="22" end_off="23" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109634201470_2_4x2">
+从此，父母亲就会教咱们爬行、走路、叫爸爸妈妈。到我们长大了，我们开始从妈妈爸爸身上模仿行为，譬如学习爸妈走路时的高雅步姿，坐姿、礼貌、习惯……渐渐地你会发觉一直好象是自己好奇，觉得有趣才会照着做，模仿着双亲，但不知不觉间他们影响到孩子们的不再是表面的行为，思想，心态、待人接物上我们都领受了不少，这的确会影响我们的成长。
+</TEXT>
+<CORRECTION>
+从此，父母亲就会教我们爬行、走路、叫爸爸妈妈。到我们长大了，我们开始从妈妈爸爸身上模仿行为，譬如学习爸妈走路时的高雅步姿，坐姿、礼貌、习惯……渐渐地你会发觉好象是自己一直好奇，觉得有趣才会照着做，模仿着双亲，但不知不觉间他们影响到孩子们的不再是表面的行为，思想，心态、待人接物上我们都领受了不少，这的确会影响我们的成长。
+</CORRECTION>
+<ERROR start_off="10" end_off="11" type="S"></ERROR>
+<ERROR start_off="79" end_off="85" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200014_2_1x1">
+有些不喜欢流行歌曲的人也说流行歌曲能引起不好的作用。
+</TEXT>
+<CORRECTION>
+有些不喜欢流行歌曲的人也说流行歌曲能引起不好的后果。
+</CORRECTION>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200257_2_2x2">
+如果它呈出不太香的颜色，那就意味着它颜色的来源——你，就是教给它呈出那样的味道的。如果你将一块“白布”成功地染上的话，会出什么样的颜色呢？
+</TEXT>
+<CORRECTION>
+如果它呈出不太美的颜色，那就意味着它颜色的来源——你，就是教给它呈出那样的颜色的人没教好。如果你将一块“白布”成功地染上颜色的话，会出什么样的颜色呢？
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="41" end_off="41" type="M"></ERROR>
+<ERROR start_off="57" end_off="57" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200464_2_5x1">
+这都是他们自己引起的，埋怨什么呢？
+</TEXT>
+<CORRECTION>
+这都是他们自己造成的，埋怨什么呢？
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200063_2_6x1">
+他长大以后突然产生要跟女孩交玩儿的念头。
+</TEXT>
+<CORRECTION>
+他长大以后突然产生要跟女孩儿玩耍的念头。
+</CORRECTION>
+<ERROR start_off="14" end_off="16" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200070_2_2x1">
+可是我觉得饥饿是用科学机技来能解决问题，所以我认为吃“绿色食品”是还是重要的问题。
+</TEXT>
+<CORRECTION>
+可是我觉得饥饿是用科学技术能解决的问题，所以我认为吃“绿色食品”是更重要的问题。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+<ERROR start_off="14" end_off="14" type="R"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100546_2_1x1">
+在韩国最近很流行不允许的电视节目，这节目说公共场所抽烟是不道德的行为。
+</TEXT>
+<CORRECTION>
+在韩国最近不允许抽烟的电视节目很流行，这些节目说在公共场所抽烟是不道德的行为。
+</CORRECTION>
+<ERROR start_off="6" end_off="16" type="W"></ERROR>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+<ERROR start_off="19" end_off="19" type="M"></ERROR>
+<ERROR start_off="22" end_off="22" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100195_2_9x2">
+如果他喜欢听什么，就能听什么。因为这种现象，因韩流而得到的经济利益也很多。
+</TEXT>
+<CORRECTION>
+他喜欢听什么，就能听什么。因为这种现象，韩国因韩流而得到的经济利益也很多。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="R"></ERROR>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109922201218_2_2x1">
+从环境里小孩子能快速地学或模仿他所见到的事物。
+</TEXT>
+<CORRECTION>
+小孩子能从环境里快速地学或模仿他所见到的事物。
+</CORRECTION>
+<ERROR start_off="1" end_off="8" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250013_2_7x1">
+认识到结婚过程不满六个月，也可以说我的故事中我是主动的。
+</TEXT>
+<CORRECTION>
+认识到结婚的过程不满六个月，也可以说在我的故事中我是主动的。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200331_2_3x2">
+因此，不仅靠国家的措施，而且我们消费者也应该多多考虑一下如何消灭香烟，如何处理现在在做香烟的工厂的人的以后的生活。我希望早日没有吸烟的危害。
+</TEXT>
+<CORRECTION>
+因此，不仅要靠国家的措施，而且我们消费者也应该多多考虑一下如何消灭香烟，如何处理现在在香烟工厂工作的人的以后的生活。我希望吸烟的危害早日消失。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="43" end_off="43" type="R"></ERROR>
+<ERROR start_off="46" end_off="46" type="R"></ERROR>
+<ERROR start_off="49" end_off="49" type="M"></ERROR>
+<ERROR start_off="63" end_off="64" type="S"></ERROR>
+<ERROR start_off="61" end_off="69" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525200162_2_1x1">
+大家都知道吸烟是害健康的。
+</TEXT>
+<CORRECTION>
+大家都知道吸烟是损害健康的。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510540540200023_2_1x1">
+我想起，在上高中至念大学时我有跟着流行。
+</TEXT>
+<CORRECTION>
+我想起，在上高中至念大学时我就跟着流行。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101600_2_13x1">
+”我认为：这个学生抽烟的现象是走上失足青年的第一步。
+</TEXT>
+<CORRECTION>
+”我认为：这个学生抽烟的现象是成为失足青年的第一步。
+</CORRECTION>
+<ERROR start_off="12" end_off="14" type="R"></ERROR>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250140_2_4x2">
+去年刚荣获公司所颁发的"最佳经理奖"与及"最亲切员工奖"。在这五年里，本人的工作表现良好，常常受到上司的赞扬和下属的尊敬。
+</TEXT>
+<CORRECTION>
+去年刚荣获公司所颁发的"最佳经理奖"以及"最亲切员工奖"。在这五年里，本人的工作表现良好，受到了上司的赞扬和下属的尊敬。
+</CORRECTION>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+<ERROR start_off="46" end_off="47" type="R"></ERROR>
+<ERROR start_off="50" end_off="50" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505610610250012_2_4x1">
+大家在手术间里，合作无间而救了那位病人。
+</TEXT>
+<CORRECTION>
+大家在手术间里，合作无间救了那位病人。
+</CORRECTION>
+<ERROR start_off="13" end_off="13" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200347_2_4x1">
+我父亲经常对我们说，“千万别人家添麻烦。
+</TEXT>
+<CORRECTION>
+我父亲经常对我们说，“千万别给人家添麻烦。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250150_2_1x1">
+虽然我或许还不够理解贵公司在电视的广告上宣传的每一个国家，但我有兴趣学习，也会努力学习的。
+</TEXT>
+<CORRECTION>
+虽然我或许还不够了解贵公司在电视上的广告所宣传的每一个国家，但我有兴趣学习，也会努力学习的。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+<ERROR start_off="20" end_off="20" type="R"></ERROR>
+<ERROR start_off="21" end_off="21" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101536_2_3x2">
+我看到了这一行为实在是不可原谅的。我由衷希望有了这一惩罚措施后，吸烟者的态度日益改善，并能够跟大家一起建立优良文明。
+</TEXT>
+<CORRECTION>
+我认为这一行为实在是不可原谅的。我由衷希望有了这一惩罚措施后，吸烟者的态度日益改善，并能够跟大家一起建立文明社会。
+</CORRECTION>
+<ERROR start_off="2" end_off="3" type="S"></ERROR>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+<ERROR start_off="54" end_off="55" type="R"></ERROR>
+<ERROR start_off="58" end_off="58" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519250017_2_4x1">
+如此不但能拥有幸福的家庭，同时也协助政府一起营造一个整洁的市容，并为协助下一代养成良好习惯。
+</TEXT>
+<CORRECTION>
+如此不但能拥有幸福的家庭，同时也能协助政府一起营造一个整洁的市容，并协助下一代养成良好习惯。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+<ERROR start_off="34" end_off="34" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100628_2_1x3">
+据我了解，随着社会的发展，人们也越来越重视自己的身体健康，所以不少人已经要努力地戒烟。人们都已经清楚得很，吸烟对身体多么不好。但是有些人还是吸烟，戒不烟。
+</TEXT>
+<CORRECTION>
+据我了解，随着社会的发展，人们越来越重视自己的身体健康，所以不少人已经要努力地戒烟。人们都已经清楚得很，吸烟对身体很不好。但是有些人还是吸烟，不戒烟。
+</CORRECTION>
+<ERROR start_off="16" end_off="16" type="R"></ERROR>
+<ERROR start_off="59" end_off="60" type="S"></ERROR>
+<ERROR start_off="74" end_off="75" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100853_2_1x1">
+其中在歌曲方面来看，歌曲已成为最大流行文化之一。
+</TEXT>
+<CORRECTION>
+其中从歌曲方面来看，歌曲已成为最大的流行文化之一。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525102401_2_3x3">
+所以家长会在孩子很小的时候就让其接受各种各样的学校教育，使还很脆弱心理和生理都受到很多压力。一朵含苞欲放的花朵在未开放时就给予它过多的有机肥料的话，其结果大家是可想而知的，花朵需要的不是肥料而是阳光和大地的培育，让其自然的成长。只要阳光是充足的大地是肥沃的花朵一定会开的很鲜艳的。
+</TEXT>
+<CORRECTION>
+所以家长会在孩子很小的时候就让其接受各种各样的学校教育，使孩子还很脆弱的心理和生理都受到很多压力。一朵含苞欲放的花朵在未开放时就给予它过多的有机肥料的话，其结果大家是可想而知的，花朵需要的不是肥料而是阳光和大地的滋养，让其自然地成长。只要阳光是充足的大地是肥沃的花朵一定会开得很鲜艳的。
+</CORRECTION>
+<ERROR start_off="30" end_off="30" type="M"></ERROR>
+<ERROR start_off="34" end_off="34" type="M"></ERROR>
+<ERROR start_off="104" end_off="105" type="S"></ERROR>
+<ERROR start_off="111" end_off="111" type="S"></ERROR>
+<ERROR start_off="135" end_off="135" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307332540200014_2_3x1">
+在生产绿色食品的同时，当然要头等考虑人民的温饱。
+</TEXT>
+<CORRECTION>
+在生产绿色食品的同时，当然要首先考虑人民的温饱。
+</CORRECTION>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250062_2_1x2">
+但是，如果这些中学将学生男女分班，这其实对学生的成长和心理况态是不健康的。因为如果这些学生如果从小就和异性分开，那他们就会和异性产生陌生感。
+</TEXT>
+<CORRECTION>
+但是，如果这些中学将学生男女分班，这其实对学生的成长和心理状况是不利的。因为如果这些学生从小就和异性分开，那他们就会对异性产生陌生感。
+</CORRECTION>
+<ERROR start_off="30" end_off="31" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="46" end_off="47" type="R"></ERROR>
+<ERROR start_off="62" end_off="62" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519250038_2_1x1">
+就公众利益而言，许多不吸烟者往往就与烟客们共处于一个封密的冷气场所内，他们的健康也受到了同等的威胁，尽管平日多么照顾自身健康，在这时也无济于事。
+</TEXT>
+<CORRECTION>
+就公众利益而言，许多不吸烟者往往与烟客们共处于一个密封的冷气场所内，他们的健康也受到了同等的威胁，尽管平日多么照顾自身健康，在这时也无济于事。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="R"></ERROR>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519250033_2_1x3">
+抽烟毕竟对人类的身体有害，政府也推行了许多的解决方针来对付走私烟商，希望可以减少香烟运到我国贩卖。此外，我国也设立了戒烟所于烟瘾者早日脱离烟海。至于青少年方面，政府正致力地推行课外活动计划，希望青少年在课余的时候能参加各类的有益身心的活动，以便能充实自己，对未来的前途有所抱负。
+</TEXT>
+<CORRECTION>
+抽烟毕竟对人类的身体有害，政府也推行了许多的解决方针来对付走私烟商，希望可以减少香烟运到我国贩卖的机会。此外，我国也设立了戒烟所使烟瘾者早日脱离烟海。至于青少年方面，政府正致力于推行课外活动计划，希望青少年在课余的时候能参加各类的有益身心的活动，以便能充实自己，对未来的前途有所期望。
+</CORRECTION>
+<ERROR start_off="49" end_off="49" type="M"></ERROR>
+<ERROR start_off="62" end_off="62" type="S"></ERROR>
+<ERROR start_off="86" end_off="86" type="S"></ERROR>
+<ERROR start_off="137" end_off="138" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533150064_2_2x2">
+毕业后在新加坡旅游局任职，职称是旅游活动策划部副主任，工作性质是责任是为新加坡旅游事业的开展制定路线和相关的活动，同时，针对本地的旅游公司和宾馆服务行业进行评估和监控。在旅游局工作了十八个月，在业务上和本地许多著名旅游公司建立了密切的联系，在专业上也了导旅游公司运作的情况以及所面对的问题，此外，我也成功地策划了许多经济效益非常高而又受旅客欢迎的观光活动节目。
+</TEXT>
+<CORRECTION>
+毕业后在新加坡旅游局任职，职称是旅游活动策划部副主任，工作性质和责任是为新加坡旅游事业的开展制定路线和相关的活动，同时，也对本地的旅游公司和宾馆服务行业进行评估和监控。在旅游局工作了十八个月，在业务上和本地许多著名旅游公司建立了密切的联系，在专业上也了解了旅游公司运作的情况以及所面对的问题，此外，我也成功地策划了许多经济效益非常高而又受旅客欢迎的观光活动。
+</CORRECTION>
+<ERROR start_off="32" end_off="32" type="M"></ERROR>
+<ERROR start_off="32" end_off="32" type="R"></ERROR>
+<ERROR start_off="61" end_off="62" type="S"></ERROR>
+<ERROR start_off="126" end_off="127" type="S"></ERROR>
+<ERROR start_off="128" end_off="128" type="M"></ERROR>
+<ERROR start_off="178" end_off="179" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505201540200302_2_2x1">
+怎样把孩子教养成人呢？
+</TEXT>
+<CORRECTION>
+怎样把孩子抚养成人呢？
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109605201593_2_6x3">
+其实，原因很简单：一个人的性格和思维受童年的重要影响，更准确地说，是在生下来以后一直到七岁的时候创造的。正好是在这段时间之内，小孩不断地在吸收环境的一切信息，为将来的发展奠定好的基础。那个时期的环境，当然是家庭的环境，所以小孩跟父母学生活的一切事情，可是最自然的。
+</TEXT>
+<CORRECTION>
+其实，原因很简单：一个人的性格和思维受童年的重要影响，更准确地说，人的性格和思维是在生下来以后一直到七岁的时候形成的。正好是在这段时间之内，小孩不断地在接收环境的一切信息，为将来的发展奠定好的基础。那个时期的环境，当然是家庭的环境，所以小孩跟父母学生活的一切事情，那是最自然的。
+</CORRECTION>
+<ERROR start_off="34" end_off="34" type="M"></ERROR>
+<ERROR start_off="49" end_off="50" type="S"></ERROR>
+<ERROR start_off="70" end_off="71" type="S"></ERROR>
+<ERROR start_off="126" end_off="126" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100029_2_9x1">
+乌鸦一听，认为是真的，而以后就不唱了。
+</TEXT>
+<CORRECTION>
+乌鸦一听，认为是真的，以后就不唱了。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523100093_2_21x1">
+污染也是重要的，但是人间是更重要的。
+</TEXT>
+<CORRECTION>
+污染也是重要的，但是人类是更重要的。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505209542100084_2_6x1">
+听起来也有点道理，但仔细地想一想，好像有这种观念的人已经忽略了孩子身边的重要的人物：他父母，也就是他家庭。
+</TEXT>
+<CORRECTION>
+听起来也有点道理，但仔细地想一想，好像有这种观念的人已经忽略了孩子身边的重要的人：他的父母，也就是他的家庭。
+</CORRECTION>
+<ERROR start_off="40" end_off="41" type="S"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+<ERROR start_off="51" end_off="51" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405209715100119_2_2x3">
+因此希望市政府执行该项规定时能贯彻能让大部分的人得到相对的照顾而保护。再者若能从青少年开始就有如此的教育，相对的青少年的健康也可以顾及，让我们的环境及青少年得到更多的保护。故吸烟对个人及公众皆为不佳的影响能从法规上规定严罚相对的会有不错的成效，空气清新，环境整洁。
+</TEXT>
+<CORRECTION>
+因此希望市政府执行该项规定时能贯彻让大部分的人得到相应的照顾和保护的原则。再者若能从青少年开始就有如此的教育，青少年的健康也可以顾及到，让我们的环境及青少年得到更多的保护。故吸烟对个人及公众皆有不佳的影响能从法规上规定严罚吸烟者相对的会有不错的成效，使空气清新，环境整洁。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="R"></ERROR>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+<ERROR start_off="32" end_off="32" type="S"></ERROR>
+<ERROR start_off="35" end_off="35" type="M"></ERROR>
+<ERROR start_off="54" end_off="56" type="R"></ERROR>
+<ERROR start_off="68" end_off="68" type="M"></ERROR>
+<ERROR start_off="97" end_off="97" type="S"></ERROR>
+<ERROR start_off="112" end_off="112" type="M"></ERROR>
+<ERROR start_off="123" end_off="123" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100099_2_1x1">
+无论是有什么理由，最重要的是生命和健康，有一些人凭借救人救灾的理由，乱要买卖这种不道德的农产品，依我看，这是一种犯罪行为。
+</TEXT>
+<CORRECTION>
+无论有什么理由，最重要的是生命和健康，有一些人凭借救人救灾的理由，非要买卖这种不道德的农产品，依我看，这是一种犯罪行为。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="R"></ERROR>
+<ERROR start_off="35" end_off="35" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200316_2_8x2">
+看医生检查好几次也没有找到能满足他疑问的答案。后来改变医者，看好几个医生终于找到心脏疼的理由，即是食道炎。
+</TEXT>
+<CORRECTION>
+看医生检查了好几次也没有找到能解决他疑问的答案。后来换了医生，看了好几个医生终于找到心脏疼的原因，即是食道炎。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+<ERROR start_off="26" end_off="27" type="S"></ERROR>
+<ERROR start_off="28" end_off="28" type="M"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="32" end_off="32" type="M"></ERROR>
+<ERROR start_off="45" end_off="46" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100430_2_2x1">
+现在流行的歌曲过一段时间后，变过时的。
+</TEXT>
+<CORRECTION>
+现在流行的歌曲过一段时间后，变成过时的。
+</CORRECTION>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200095_2_5x1">
+这个绿色食品受为健康着想人民的欢迎是必然的结果。
+</TEXT>
+<CORRECTION>
+这个绿色食品受为健康着想的人民的欢迎是必然的结果。
+</CORRECTION>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200800_2_2x1">
+他们都忽视自己生活当中的任务。
+</TEXT>
+<CORRECTION>
+他们都忽视了自己生活当中的任务。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200072_2_4x1">
+还有听着流行歌曲，人们能轻松自己。
+</TEXT>
+<CORRECTION>
+还有听着流行歌曲，人们能放松自己。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523100068_2_2x1">
+采取几种方法应该帮助他们。
+</TEXT>
+<CORRECTION>
+应该采取几种方法帮助他们。
+</CORRECTION>
+<ERROR start_off="1" end_off="8" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201055_2_3x3">
+每个国家纷纷进行这样的计划。吸烟对个人有坏处，甚至生命危险，因此国家给人民劝告戒烟。进行着上述的计划了。
+</TEXT>
+<CORRECTION>
+各个国家纷纷实行这样的计划。吸烟对个人有坏处，甚至有生命危险，因此国家劝告人民戒烟。实行了上述的计划了。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="35" end_off="35" type="R"></ERROR>
+<ERROR start_off="36" end_off="39" type="W"></ERROR>
+<ERROR start_off="43" end_off="44" type="S"></ERROR>
+<ERROR start_off="45" end_off="45" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200683_2_5x1">
+就是她的丈夫抽烟，每天她的旁边儿抽烟，所以她得了肺癌。
+</TEXT>
+<CORRECTION>
+就是因为她的丈夫抽烟，每天在她的旁边儿抽烟，所以她得了肺癌。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525100023_2_5x1">
+我想这问题本来是学生自己的，但还是年轻的学生需要大人的支持和指导，这样以来，学生才能走正确的路。
+</TEXT>
+<CORRECTION>
+我想这问题本来是学生自己的，但年轻的学生还是需要大人的支持和指导，这样以来，学生才能走正确的路。
+</CORRECTION>
+<ERROR start_off="16" end_off="22" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101830_2_1x3">
+现在人们的生活水平越来越发展。我们每逢发展时，他们的要求也更多占儿，还有发生了很多社会问题，这是无法解决的。其中最近主要提到问题就是吸烟对个人健康和公众利益的影响是否？
+</TEXT>
+<CORRECTION>
+现在人们的生活水平越来越高。我们每逢发展时，他们的要求也更多，还有发生了很多社会问题，这是无法解决的。其中最近主要提到的问题就是吸烟对个人健康和公众利益的影响是否有利？
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+<ERROR start_off="32" end_off="33" type="R"></ERROR>
+<ERROR start_off="63" end_off="63" type="M"></ERROR>
+<ERROR start_off="84" end_off="84" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200294_2_3x2">
+虽然妻子不抽烟，但她的丈夫所吐出的烟气害妻子的身体，结果会导致癌症病。还有，如果女人怀孕后继续抽烟的话，对婴儿也有影响。
+</TEXT>
+<CORRECTION>
+虽然妻子不抽烟，但她的丈夫所吐出的烟会危害妻子的身体，结果会导致癌症。还有，如果女人怀孕后继续抽烟的话，对胎儿也有影响。
+</CORRECTION>
+<ERROR start_off="18" end_off="19" type="S"></ERROR>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+<ERROR start_off="20" end_off="20" type="S"></ERROR>
+<ERROR start_off="34" end_off="34" type="R"></ERROR>
+<ERROR start_off="54" end_off="55" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505206616200124_2_1x1">
+孩子长大后会有自己的天地，可很多父母还是会是孩子的最好的朋友。
+</TEXT>
+<CORRECTION>
+孩子长大后会有自己的天地，可很多父母还会是孩子最好的朋友。
+</CORRECTION>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+<ERROR start_off="25" end_off="25" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540250036_2_3x1">
+尤其是成功的秘决，这类的书更是多得很，你想迈向成功之道，除了靠自身努力外，还须吸收前人的经验，才会产生优良的成功效果。
+</TEXT>
+<CORRECTION>
+尤其是成功的秘决，这类的书更是多得很，你想迈向成功之道，除了靠自身努力外，还须吸收前人的经验，这样才会产生良好的效果。
+</CORRECTION>
+<ERROR start_off="48" end_off="48" type="M"></ERROR>
+<ERROR start_off="52" end_off="53" type="S"></ERROR>
+<ERROR start_off="55" end_off="56" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100352_2_7x5">
+我走路时常常想抽烟，可能另外抽烟者也想这样。但马路上人太多的话不容易抽。所以我希望，政府做一个能抽烟的地方。那样的话我很安心地抽烟，对不抽烟的人引起问题。这样市政府的措施对我也好。
+</TEXT>
+<CORRECTION>
+我走路时常常想抽烟，可能别的抽烟者也这样想。但马路上人太多的话不方便抽。所以我希望，政府设立一个能抽烟的地方。那样的话我能很安心地抽烟，不会给不抽烟的人带来问题。这样市政府的措施对我也很好。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+<ERROR start_off="19" end_off="21" type="W"></ERROR>
+<ERROR start_off="33" end_off="34" type="S"></ERROR>
+<ERROR start_off="45" end_off="45" type="S"></ERROR>
+<ERROR start_off="60" end_off="60" type="M"></ERROR>
+<ERROR start_off="67" end_off="67" type="M"></ERROR>
+<ERROR start_off="67" end_off="67" type="S"></ERROR>
+<ERROR start_off="73" end_off="74" type="S"></ERROR>
+<ERROR start_off="89" end_off="89" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250122_2_2x1">
+通过亲戚朋友介绍，通常只说对方的优点，会有一种先入为主的感觉；一见倾心，却不能看到对方的缺点，只有盲目的落入情网。
+</TEXT>
+<CORRECTION>
+亲戚朋友介绍，通常只说对方的优点，会有一种先入为主的感觉；一见倾心，却不能看到对方的缺点，只会盲目地落入情网。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="R"></ERROR>
+<ERROR start_off="49" end_off="49" type="S"></ERROR>
+<ERROR start_off="52" end_off="52" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200103_2_7x1">
+我认为用农药、肥料的农法还是需要。
+</TEXT>
+<CORRECTION>
+我认为用农药、肥料的方法还是需要。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100054_2_4x1">
+那么如果自己对流行歌曲没有感兴趣的话，在朋友的面前没什么可说的，所以致至被社会淘汰。
+</TEXT>
+<CORRECTION>
+那么如果自己对流行歌曲没有感兴趣的话，在朋友的面前没什么可说的，所以以至被社会淘汰。
+</CORRECTION>
+<ERROR start_off="35" end_off="36" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200404140542200019_2_9x1">
+但是可能过了十年他的身休不太好了，不能参加大比赛了，收入也少多了，这个时候谁也不管，或者有的人参加比赛中遇到不好事情腿折那谁来负责任？
+</TEXT>
+<CORRECTION>
+但是可能过了十年他的身休不太好了，不能参加大比赛了，收入也少多了，这个时候谁也不管他，或者有的人在参加比赛中遇到不好事情腿折那谁来负责任？
+</CORRECTION>
+<ERROR start_off="42" end_off="42" type="M"></ERROR>
+<ERROR start_off="48" end_off="48" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250005_2_2x1">
+可是人们都忽略了这样美好世界，而污染了空气，其中最严重的问题就是吸烟，吸烟能使空气存在毒菌，还使氧气不能舒畅地到人体内的肺里面去。
+</TEXT>
+<CORRECTION>
+可是人们都忽视了这样美好的世界，而污染了空气，其中最严重的问题就是吸烟，吸烟能使空气存在毒菌，还使氧气不能舒畅地到人体内的肺里面去。
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109919100481_2_1x2">
+刚出生的小孩虽然也会有自己的个性，但是通过和父母的接触，个性会慢慢的改变，而此时的父母在对孩子的道德及思想上就处于第一线的位置。在历史上就曾有过一个很有名的故事，那就是“孟母三迁”，若此时孟母没有注意到周围对小孩的影响就没有流传千古的孟子了。
+</TEXT>
+<CORRECTION>
+刚出生的小孩虽然也会有自己的个性，但是通过和父母的接触，个性会慢慢地改变，而此时的父母在对孩子的道德及思想上就处于第一线的位置。在历史上就曾有过一个很有名的故事，那就是“孟母三迁”，若此时孟母没有注意到周围的环境对小孩的影响就没有流传千古的孟子了。
+</CORRECTION>
+<ERROR start_off="34" end_off="34" type="S"></ERROR>
+<ERROR start_off="104" end_off="104" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200066_2_1x2">
+但流行歌曲不会受到百分之百听众的喜爱，也有的人不爱听流行歌曲，他们因为不喜欢跟随流行，喜欢主张自己的意见。也有的人因为不喜欢被歌手痴迷。
+</TEXT>
+<CORRECTION>
+但流行歌曲不会百分之百受到听众的喜爱，也有的人不爱听流行歌曲，他们受到听众的喜爱，也有的人不爱听流行歌曲，因为他们不喜欢跟随流行，喜欢主张自己的意见。也有的人是因为不喜欢被歌手痴迷。
+</CORRECTION>
+<ERROR start_off="8" end_off="13" type="W"></ERROR>
+<ERROR start_off="32" end_off="35" type="W"></ERROR>
+<ERROR start_off="58" end_off="58" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533150043_2_1x1">
+在世界各地，大多数学校都是以男女混合式教育。
+</TEXT>
+<CORRECTION>
+在世界各地，大多数学校都是男女混合式教育。
+</CORRECTION>
+<ERROR start_off="14" end_off="14" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215523250005_2_9x1">
+那我们怎么避免这因缺少粮食而挨饿呢？
+</TEXT>
+<CORRECTION>
+那我们怎么避免这因缺少粮食而挨饿的问题/的现象呢？
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307209525100056_2_5x1">
+所以我们先要了解他们到底用什么样的农药以并这些东西的作用等。
+</TEXT>
+<CORRECTION>
+所以我们先要了解他们到底用什么样的农药以及这些东西的作用等。
+</CORRECTION>
+<ERROR start_off="21" end_off="21" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200013_2_1x2">
+还有件事是，吸烟是对公共环境不好。很多吸烟者随便扔后果街上有很多的烟。
+</TEXT>
+<CORRECTION>
+还有件事是，吸烟对公共环境不好。很多吸烟者随便扔烟头结果街上有很多的烟。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="R"></ERROR>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="26" end_off="27" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100060_2_1x2">
+第三，农民的收入比其他经济活动人低一些。所以，农民也为了他们的经济收入提高，选择了在市场更能挣钱的办法。
+</TEXT>
+<CORRECTION>
+第三，农民的收入比从事其他经济活动的人低一些。所以，农民也为了他们的经济收入提高，选择了在市场上更能挣钱的办法。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="M"></ERROR>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+<ERROR start_off="45" end_off="45" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200560_2_5x3">
+特别吸烟对青少年不好。如果青少年开始吸烟的话，大部分都不能停止，那就是由由习惯性。过马路时，我们常常看抽烟的人。
+</TEXT>
+<CORRECTION>
+吸烟对青少年特别不好。如果青少年开始吸烟的话，大部分都不能停止，那就是由于习惯性造成的。过马路时，我们常常看到抽烟的人。
+</CORRECTION>
+<ERROR start_off="1" end_off="8" type="W"></ERROR>
+<ERROR start_off="37" end_off="37" type="S"></ERROR>
+<ERROR start_off="41" end_off="41" type="M"></ERROR>
+<ERROR start_off="51" end_off="51" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101457_2_1x3">
+可能这个措施引起爱烟者们的激烈反对。其实，抽烟是一个公民的基本权利，有的时候尤其烦恼的时候，一条烟就是好像药品一样，能解决我们生活中的烦恼。而且，国家通过香烟拍卖，获得财政收入。
+</TEXT>
+<CORRECTION>
+可能这个措施会引起爱烟者们的激烈反对。其实，抽烟是一个公民的基本权利，有的时候尤其烦恼的时候，一根烟就好像药品一样，能解决我们生活中的烦恼。而且，国家通过香烟买卖，获得财政收入。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="M"></ERROR>
+<ERROR start_off="48" end_off="48" type="S"></ERROR>
+<ERROR start_off="51" end_off="51" type="R"></ERROR>
+<ERROR start_off="80" end_off="81" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405209627200018_2_1x2">
+总的来讲，这种措施虽然显得严厉，但是对整个社会有很大的利益。是社会进步的一种表现，也是对后一代的负责任。
+</TEXT>
+<CORRECTION>
+总的来讲，这种措施虽然显得严厉，但是对整个社会有很大的好处。这是社会进步的一种表现，也是对后一代负责任。
+</CORRECTION>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="31" end_off="31" type="M"></ERROR>
+<ERROR start_off="48" end_off="48" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519250017_2_2x1">
+此外，吸烟也影响了美观，洁白的牙齿因为吸烟的原故而变成淡黄色。
+</TEXT>
+<CORRECTION>
+此外，吸烟也影响了美观，洁白的牙齿因为吸烟的缘故而变成了淡黄色。
+</CORRECTION>
+<ERROR start_off="23" end_off="24" type="S"></ERROR>
+<ERROR start_off="28" end_off="28" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100451_2_1x1">
+然后，作为一个老师父母特别注意自已的行为，孩子是看父母长大的。
+</TEXT>
+<CORRECTION>
+然后，作为一个老师父母应该特别注意自已的行为，孩子是看父母长大的。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510529529251024_2_1x1">
+我相信现在在世界上有不少人喜欢听音乐因为它可以消除每个人的烦恼现在流行歌曲有不断地提高。
+</TEXT>
+<CORRECTION>
+我相信现在在世界上有不少人喜欢听音乐因为它可以消除每个人的烦恼现在流行歌曲有不断地提高的趋势。
+</CORRECTION>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200014_2_2x2">
+至今，连自己吸烟的人也知道吸烟对身体有害。但是，长年养成的嗜好他们难以离开。
+</TEXT>
+<CORRECTION>
+现在，连自己吸烟的人也知道吸烟对身体有害。但是，长年养成的嗜好他们难以摆脱。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+<ERROR start_off="36" end_off="37" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217523100014_2_2x1">
+现在是21世纪了，现在的科学有很多的发展，以后还能发展。
+</TEXT>
+<CORRECTION>
+现在是21世纪了，现在的科学有很大的发展，以后还能发展。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525101618_2_4x1">
+她每天交流中国人所以我也对中国很感兴趣。
+</TEXT>
+<CORRECTION>
+她每天跟中国人交流所以我也对中国很感兴趣。
+</CORRECTION>
+<ERROR start_off="4" end_off="8" type="W"></ERROR>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200815_2_3x2">
+我们通过听流行歌曲不但可以喜欢只是音乐，还可以喜欢唱那个歌的歌手。我们既可以享受音乐，既可以享受帅或漂亮的歌星的样子。
+</TEXT>
+<CORRECTION>
+我们通过听流行歌曲不但可以享受音乐，还可以喜欢唱那个歌的歌手。我们既可以享受音乐，又可以享受帅或漂亮的歌星的样子。
+</CORRECTION>
+<ERROR start_off="14" end_off="15" type="S"></ERROR>
+<ERROR start_off="16" end_off="17" type="R"></ERROR>
+<ERROR start_off="44" end_off="44" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201630_2_1x3">
+首先，流行歌曲让人们可以放松一下。人们生活在信息时代，所以我们的激烈地竞争是必不可少的。我们要生活在这样的世代应该有一种心情可以轻松的工具。
+</TEXT>
+<CORRECTION>
+首先，流行歌曲可以让人们放松一下。人们生活在信息时代，所以我们的激烈的竞争是必不可少的。我们要生活在这样的时代应该有一种可以放松心情的工具。
+</CORRECTION>
+<ERROR start_off="8" end_off="12" type="W"></ERROR>
+<ERROR start_off="35" end_off="35" type="S"></ERROR>
+<ERROR start_off="54" end_off="55" type="S"></ERROR>
+<ERROR start_off="61" end_off="66" type="W"></ERROR>
+<ERROR start_off="65" end_off="66" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204520100494_2_2x2">
+我有我父亲的聪明思想、强度高的思维能力。我有我母亲的能干、认真和对生活的美丽看法。
+</TEXT>
+<CORRECTION>
+我有我父亲的聪明思想、高强度的思维能力。我有我母亲的能干、认真和对生活的积极看法。
+</CORRECTION>
+<ERROR start_off="12" end_off="14" type="W"></ERROR>
+<ERROR start_off="37" end_off="38" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200820_2_3x1">
+还有的没有熄好的烟头导致火灾，女性吸烟，会影响孩子的健康。
+</TEXT>
+<CORRECTION>
+还有的没有熄灭的烟头会导致火灾，女性吸烟，会影响孩子的健康。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="S"></ERROR>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200045_2_9x1">
+”如果在分班过生活的话可能会有一些同性恋爱。
+</TEXT>
+<CORRECTION>
+”如果分班的话可能会有一些同性恋爱。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+<ERROR start_off="7" end_off="9" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250186_2_1x2">
+本人在过去的一年也上了夜校，学习有关人际关系的课以及学了日文。本人知道贵公司以日本旅客为主，因此本人认为自己能胜任当贵公司的导游，帮忙服务日本游客。
+</TEXT>
+<CORRECTION>
+本人在过去的一年上了夜校，学习有关人际关系的课程并学了日文。本人知道贵公司以日本旅客为主，因此本人认为自己能胜任当贵公司的导游，帮忙为日本游客服务。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="R"></ERROR>
+<ERROR start_off="24" end_off="24" type="S"></ERROR>
+<ERROR start_off="25" end_off="26" type="S"></ERROR>
+<ERROR start_off="58" end_off="58" type="R"></ERROR>
+<ERROR start_off="68" end_off="73" type="W"></ERROR>
+<ERROR start_off="70" end_off="70" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250015_2_1x2">
+我也向妈妈学习。我赞成通过亲戚朋友的介绍。
+</TEXT>
+<CORRECTION>
+我也要向妈妈学习。我赞成通过亲戚朋友的介绍结识对方。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="21" end_off="21" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525201656_2_10x1">
+父母应该做事情有道理的。
+</TEXT>
+<CORRECTION>
+因此父母应该做事情有道理的。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505610610250006_2_2x1">
+”对我来说是一条很难回答的问题。
+</TEXT>
+<CORRECTION>
+”对我来说这是一个很难回答的问题。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="8" end_off="8" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523200032_2_2x1">
+因为，农作物的生长中，若使用化肥和农药，产量就会大大提高，若不用化肥和农药，农作物产量就会大大降低。
+</TEXT>
+<CORRECTION>
+因为，在农作物的生长中，若使用化肥和农药，产量就会大大提高，若不用化肥和农药，农作物产量就会大大降低。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215523250003_2_4x1">
+也许是个家庭都有子女而担心子女的现在以及未来。
+</TEXT>
+<CORRECTION>
+也许每个家庭都有子女而担心子女的现在和未来。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505217525100044_2_5x1">
+”那时我学了吃饭时的礼貌。
+</TEXT>
+<CORRECTION>
+”那时我学会了吃饭时的礼貌。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525100177_2_4x2">
+这是对公共场所的第一个害。第二个害是在边抽边走的旁边的人也要抽他的烟。
+</TEXT>
+<CORRECTION>
+这是对公共场所的第一个害处。第二个害处是在边抽边走的人旁边的人也要吸他的烟。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="S"></ERROR>
+<ERROR start_off="17" end_off="17" type="S"></ERROR>
+<ERROR start_off="25" end_off="25" type="M"></ERROR>
+<ERROR start_off="31" end_off="31" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100435_2_4x1">
+在街上或者在电视上不知不觉听。
+</TEXT>
+<CORRECTION>
+在街上或者在电视上不知不觉听到。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505684542200005_2_3x2">
+朋友们我想对你们说如果你们还没有男（女）朋友，那你不要担心、闷愁，不要想各种方法来去认识别人。只要你满面春风，笑容总挂在脸上，别人一定就想做你的朋友，想把你当作他的意中人。
+</TEXT>
+<CORRECTION>
+朋友们我想对你们说如果你们还没有男（女）朋友，那你不要担心、愁闷，不要想各种方法来去认识别人。只要你满面春风，笑容总挂在脸上，别人就一定想做你的朋友，想把你当作他的意中人。
+</CORRECTION>
+<ERROR start_off="31" end_off="32" type="S"></ERROR>
+<ERROR start_off="66" end_off="68" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533150043_2_9x1">
+反之，如果男女混合式教育，男女都可在课堂上得知多一些。
+</TEXT>
+<CORRECTION>
+反之，如果男女混合式教育，男女都可在课堂上知道得多一些。
+</CORRECTION>
+<ERROR start_off="22" end_off="23" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307206525100014_2_3x1">
+然后蔬菜的话，估测还留着农药，我用洗剂来洗蔬菜。
+</TEXT>
+<CORRECTION>
+蔬菜的话，估计还留着农药，我用洗剂来洗蔬菜。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="R"></ERROR>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505951501150009_2_3x1">
+当着时间的积累和事件的共同经历，感情的日日加深，彼此已变成了不可分离的整体。
+</TEXT>
+<CORRECTION>
+随着时间的积累和事件的共同经历，感情的日日加深，彼此已变成了不可分离的整体。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201846_2_4x3">
+可是许多年的习惯不能几天改正改变了。吸烟者也知道，吸烟对自己的身体没有利益，还有对自己家里人的健康也严厉，所以现在几个国家政府出台了几个规定，其中最重要的是在公共场所不能吸烟。如果办公室内、学校、火车内、公园……等吸烟的话就被罚款。
+</TEXT>
+<CORRECTION>
+可是许多年的习惯几天改变不了。吸烟者也知道，吸烟对自己的身体没有好处，还有对自己家里人的健康也没有好处，所以现在几个国家的政府出台了几个规定，其中最重要的是在公共场所不能吸烟。如果在办公室、学校、火车、公园……等地吸烟的话就被罚款。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="R"></ERROR>
+<ERROR start_off="13" end_off="14" type="R"></ERROR>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+<ERROR start_off="36" end_off="37" type="S"></ERROR>
+<ERROR start_off="51" end_off="51" type="M"></ERROR>
+<ERROR start_off="51" end_off="52" type="S"></ERROR>
+<ERROR start_off="62" end_off="62" type="M"></ERROR>
+<ERROR start_off="91" end_off="91" type="M"></ERROR>
+<ERROR start_off="94" end_off="94" type="R"></ERROR>
+<ERROR start_off="101" end_off="101" type="R"></ERROR>
+<ERROR start_off="108" end_off="108" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250090_2_2x1">
+更重要是在这个现实的社会，金钱挂帅，就别提有情饮水饱。
+</TEXT>
+<CORRECTION>
+更重要的是在这个现实的社会，金钱挂帅，就别提有情饮水饱。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523101455_2_1x1">
+反正，流行歌曲的好的作用很多，让人会愉快，甚至表示当时的社会气氛。
+</TEXT>
+<CORRECTION>
+反正，流行歌曲的好的作用很多，让人会愉快，甚至反映当时的社会气氛。
+</CORRECTION>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250022_2_1x2">
+在缅甸的风俗之内儿女的婚姻也是很重视的。有些父母是订好了还没有生的孩子跟他们的朋友的儿女，有些通过亲戚朋友介绍的，有些是同学，有些是朋友，有些是一次都没见过。
+</TEXT>
+<CORRECTION>
+在缅甸的风俗之中人们对儿女的婚姻也是很重视的。有些父母是订好了还没有生的孩子跟他们的朋友的儿女结为夫妻，有些通过亲戚朋友介绍的，有些是同学，有些是朋友，有些是一次都没见过。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="S"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="45" end_off="45" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200407_2_3x1">
+对还没走出社会的孩子来说，周围的东西、人都是会带来影响的。
+</TEXT>
+<CORRECTION>
+对还没走进社会的孩子来说，周围的东西、人都是会带来影响的。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250118_2_2x1">
+惟有这样，才能在结交的过程当中，大家可以相处自然舒适。
+</TEXT>
+<CORRECTION>
+惟有这样，才能在结交的过程当中，大家可以相处得自然舒适。
+</CORRECTION>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201036_2_1x1">
+最后，喜欢流行歌曲的人，其实不是光喜欢歌曲，喜欢那个歌手的。
+</TEXT>
+<CORRECTION>
+最后，喜欢流行歌曲的人，其实不是光喜欢歌曲，还喜欢那个歌手。
+</CORRECTION>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200976_2_3x1">
+对我来说，还是受父母的影响，我家是商家，日本一般自己开公司的人不多。
+</TEXT>
+<CORRECTION>
+对我来说，也受父母的影响，我家是商人家庭，日本一般自己开公司的人不多。
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+<ERROR start_off="18" end_off="19" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405201525100321_2_6x1">
+你抽烟会害别人的健康。
+</TEXT>
+<CORRECTION>
+你抽烟会危害别人的健康。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525100480_2_2x2">
+从二十年左右开始抽烟，快要十岁过，不过戒烟太难，大概一十月以后又开始了抽烟。
+</TEXT>
+<CORRECTION>
+从二十岁左右开始抽烟，快要十年了，不过戒烟太难，大概十个月以后又开始了抽烟。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="S"></ERROR>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200010_2_8x2">
+因而会解决世界的饥饿问题。可是，现在科学越来越发达，有很多科学家研制对身体无害性的化肥和农药。
+</TEXT>
+<CORRECTION>
+就会解决世界的饥饿问题。可是，现在科学越来越发达，有很多科学家研制对身体无害的化肥和农药。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+<ERROR start_off="40" end_off="40" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100435_2_5x1">
+”时间是无价之宝的。
+</TEXT>
+<CORRECTION>
+”时间是无价之宝。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201060_2_1x3">
+对我来说，非常喜欢欣赏音乐。可以说听音乐在我的生活中占有着很大部分，甚至没有音乐的话可不能活下去。在多种音乐中，最欢喜的歌曲就是流行歌曲。
+</TEXT>
+<CORRECTION>
+对我来说，我非常喜欢欣赏音乐。可以说听音乐在我的生活中占有着很大部分，甚至没有音乐的话不能活下去。在多种音乐中，最喜欢的歌曲就是流行歌曲。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="43" end_off="43" type="R"></ERROR>
+<ERROR start_off="58" end_off="59" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109922201277_2_1x2">
+很多青少年寻求新鲜感或刺激，还未了解吸烟会造成的种种后果时便染上了这个坏毛病，给自己的人生带来众多不益。市政府限制吸烟场所的规定若能阻止哪怕是一个青年陷入这种自我伤害的陡境，就是应该支持的。
+</TEXT>
+<CORRECTION>
+很多青少年为了寻求新鲜感或刺激，还未了解吸烟会造成的种种后果时便染上了这个坏毛病，给自己的人生带来众多不益。市政府限制吸烟场所的规定若能阻止哪怕是一个青年陷入这种自我伤害的险境，就是应该支持的。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="85" end_off="86" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109540200627_2_1x1">
+人们都知道抽烟会造成肺癌症，除了这种病以外，如果怀孕的母子吸烟，也会影响出生的孩子。
+</TEXT>
+<CORRECTION>
+人们都知道抽烟会引起肺癌，除了这种病以外，如果怀孕的母亲吸烟，也会影响未出生的孩子。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+<ERROR start_off="13" end_off="13" type="R"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="37" end_off="37" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200979_2_6x1">
+我们应该知道所存在的别的局面。
+</TEXT>
+<CORRECTION>
+我们应该知道所存在的别的方面。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200445_2_5x1">
+我看父亲他已有工作还要学习的姿势非常看得起。
+</TEXT>
+<CORRECTION>
+我看父亲他已有工作还要学习的态度非常好。
+</CORRECTION>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+<ERROR start_off="19" end_off="21" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201850_2_5x2">
+第三，可以看到怀孕的妇女吸烟时，畸形儿出生率比较大。如此吸烟是不好对个人健康。
+</TEXT>
+<CORRECTION>
+第三，可以看到怀孕的妇女吸烟时，畸形儿的出生率比较大。如此看来吸烟是对个人健康不好。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="32" end_off="38" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250111_2_4x1">
+就算不同班或不同学校，只是他们有机会认识，还是会发生的。
+</TEXT>
+<CORRECTION>
+就算不同班或不同学校，只要他们有机会认识，还是会发生的。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200514_2_4x1">
+但是比以前更发达的现在社会的抽烟的人反而减少了。
+</TEXT>
+<CORRECTION>
+但是在比以前更发达的现在社会抽烟的人反而减少了。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="14" end_off="14" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200616_2_2x3">
+甚至市政府出台了一项不允许抽烟的规定。那么，为什么他们不喜欢或者不允许吸烟者呢？我想出来几一理由。
+</TEXT>
+<CORRECTION>
+市政府甚至出台了一项不允许抽烟的规定。那么，为什么他们不喜欢或者不允许吸烟者吸烟呢？我想出来几条理由。
+</CORRECTION>
+<ERROR start_off="1" end_off="5" type="W"></ERROR>
+<ERROR start_off="39" end_off="39" type="M"></ERROR>
+<ERROR start_off="46" end_off="46" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510520520250016_2_4x2">
+例如：我喜欢都蔡依林的歌曲，自从我听了她的歌以后我会很注意我的衣着，尽量要跟她穿的相似，这一点我想是流行歌曲帮我改变了自己的形象。除了这个，流行歌曲都是适合跳舞的，所以我想流行歌曲不但帮助我会跳舞，更重要的是在让我活动。
+</TEXT>
+<CORRECTION>
+例如：我喜欢蔡依林的歌曲，自从我听了她的歌以后我会很注意我的衣着，尽量要跟她穿的相似，这一点我想是流行歌曲帮我改变了自己的形象。除了这个，流行歌曲都是适合跳舞的，所以我想流行歌曲不但帮助我学会跳舞，更重要的是让我活动。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="R"></ERROR>
+<ERROR start_off="96" end_off="96" type="M"></ERROR>
+<ERROR start_off="105" end_off="105" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250025_2_2x2">
+我认为那是他们的过分担复。同学们的早恋人生中必经的过程之一，但也不是每个人都会在中学谈恋爱。
+</TEXT>
+<CORRECTION>
+我认为那是他们的过分担忧。同学们的早恋是人生中必经的过程之一，但也不是每个人都会在中学谈恋爱。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204635200497_2_3x2">
+这样，在不知不觉情况下我也爱上了音乐。更何况，当我上中学的时候我让我妈妈把我带到音乐学校。
+</TEXT>
+<CORRECTION>
+这样，在不知不觉的情况下我也爱上了音乐。于是，当我上中学的时候我让我妈妈把我带到音乐学校。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="20" end_off="22" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505275520100074_2_1x3">
+一对年青人结了婚、成了家、生了孩子，从此他们也就开始负责任。作为社会一名成员，或者说社会主体养孩子是“他们”对人类的贡献。由于每个人的生存方式不同，几乎人人对生活的看法，对人品的评论，对人道之观点有所差距。
+</TEXT>
+<CORRECTION>
+一对年青人结了婚、成了家、生了孩子，从此他们也就开始负责任了。作为社会的一名成员，或者说社会主体养孩子是“他们”对人类的贡献。由于每个人的生存方式不同，几乎人人对生活的看法，对人品的评论，对人道之观点有所不同。
+</CORRECTION>
+<ERROR start_off="30" end_off="30" type="M"></ERROR>
+<ERROR start_off="35" end_off="35" type="M"></ERROR>
+<ERROR start_off="101" end_off="102" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100649_2_3x1">
+上文也提示了因肺癌死亡人越来越多。
+</TEXT>
+<CORRECTION>
+上文已提到了因肺癌死亡的人越来越多。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="4" end_off="5" type="S"></ERROR>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200077_2_2x1">
+不过，我自己本身偏好于男女混合式教育。
+</TEXT>
+<CORRECTION>
+不过，我自己本身偏向于男女混合式教育。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217525200054_2_2x1">
+到可以的范围内，尽量生产绿色食品，只是没有办法的时候才吃被污染的食品。
+</TEXT>
+<CORRECTION>
+在可以的范围内，尽量生产绿色食品，只是没有办法的时候才吃被污染的食品。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510520520250001_2_1x2">
+我认为听流行歌会感受自己是现代人，二十一世纪的人，也可以感受自己是一个年轻的人不管在哪个时代，歌曲总会赶着时代而改变，人也应该赶着时代去变，要是有人不赶时代，他简直就像个木头人，没有感情，没有思想。而赶时代生活的人，就会很活跃、快乐，因为他们有思想，不像那些“木头人”一样，他们感受到世界正在变，生活日益改善，好的东西不断地出来，为人类创造幸福，帮人们充满希望地过日子。
+</TEXT>
+<CORRECTION>
+我认为听流行歌会感受自己是现代人，二十一世纪的人，也可以感受自己是一个年轻的人不管在哪个时代，歌曲总会随着时代而改变，人也应该随着时代去变，要是有人不追赶时代，他简直就像个木头人，没有感情，没有思想。而赶上时代生活的人，就会很活跃、快乐，因为他们有思想，不像那些“木头人”一样，他们感受到世界正在变，生活日益改善，好的东西不断地出现，为人类创造幸福，帮人们充满希望地过日子。
+</CORRECTION>
+<ERROR start_off="52" end_off="52" type="S"></ERROR>
+<ERROR start_off="64" end_off="64" type="S"></ERROR>
+<ERROR start_off="76" end_off="76" type="S"></ERROR>
+<ERROR start_off="101" end_off="101" type="S"></ERROR>
+<ERROR start_off="163" end_off="164" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510529529251002_2_1x2">
+已前这流行歌曲的歌星很少，我觉得流行歌曲听了很喜欢，整天都能听，但现在的流行歌曲听了我也喜欢但跟已前的不一样，我来想想看。现在的歌星很多，非常是年轻的歌星。
+</TEXT>
+<CORRECTION>
+已前流行歌曲的歌星很少，我觉得流行歌曲听了很喜欢，整天都能听，但现在的流行歌曲听了我也喜欢但跟以前的不一样，我来想想看。现在的歌星很多，是非常年轻的歌星。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="R"></ERROR>
+<ERROR start_off="49" end_off="49" type="S"></ERROR>
+<ERROR start_off="70" end_off="72" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525100118_2_1x3">
+但是，因为父母是孩子的老师，所以他们应该对自己的行为有责任。要是他们的行为没有责任，就对孩子教育的时候也没有说服力了。父母对自己的行为也有着责任，这样才能成为真正的老师呢。
+</TEXT>
+<CORRECTION>
+但是，因为父母是孩子的老师，所以他们应该对自己的行为负责任。要是他们的行为没有责任，对孩子教育的时候就也没有说服力了。父母对自己的行为也有着责任，这样才能成为真正的老师。
+</CORRECTION>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+<ERROR start_off="43" end_off="51" type="W"></ERROR>
+<ERROR start_off="85" end_off="85" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200868_2_7x1">
+我想对大家说，如果你们希望成功，一定要找自己的爱护。
+</TEXT>
+<CORRECTION>
+我想对大家说，如果你们希望成功，一定要找到自己的爱好。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="S"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540250069_2_2x1">
+这就是给我们很大的启示，读书多才能求得高深的学问。
+</TEXT>
+<CORRECTION>
+这给我们很大的启示，读书多才能求得高深的学问。
+</CORRECTION>
+<ERROR start_off="2" end_off="3" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204523200576_2_6x1">
+不过我倒觉得只考虑这些事情使我们忽视“父母是孩子的第一任老师”的核心道理。
+</TEXT>
+<CORRECTION>
+不过我倒觉得只考虑这些事情使我们忽视了“父母是孩子的第一任老师”的核心道理。
+</CORRECTION>
+<ERROR start_off="19" end_off="19" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100248_2_9x1">
+后来孟子因这样的母亲教育而成为中国古代中最有名的思想家之一。
+</TEXT>
+<CORRECTION>
+后来孟子因这样的教育而成为中国古代中最有名的思想家之一。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217525200056_2_1x1">
+现在人们很关心对化肥和农药对人体的影响如何，意味着这两个对身的不好的影响很明显而严重，所以“绿色食品”受受很多人的欢迎，我也支持推广“绿色食品”。
+</TEXT>
+<CORRECTION>
+现在人们很关心化肥和农药对人体的影响如何，这意味着这两个对人体的不好的影响很明显而且很严重，所以“绿色食品”受到很多人的欢迎，我也支持推广“绿色食品”。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="R"></ERROR>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+<ERROR start_off="30" end_off="30" type="S"></ERROR>
+<ERROR start_off="40" end_off="40" type="S"></ERROR>
+<ERROR start_off="41" end_off="41" type="M"></ERROR>
+<ERROR start_off="53" end_off="53" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200833_2_2x1">
+然后开始每个人不一样的环境下，学所有的。
+</TEXT>
+<CORRECTION>
+然后每个人开始在不一样的环境下，学所有的事情。
+</CORRECTION>
+<ERROR start_off="3" end_off="7" type="W"></ERROR>
+<ERROR start_off="8" end_off="8" type="M"></ERROR>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204520200495_2_1x1">
+我国有一俗话说“看父母，便可知道孩子长成什么样的人。
+</TEXT>
+<CORRECTION>
+我国有一俗话说“看父母，便可知道孩子会长成什么样的人。
+</CORRECTION>
+<ERROR start_off="19" end_off="19" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200144_2_9x2">
+我长大后考虑过，那时候的他一定对我希望当跟他一样的数学迷。不过结果我自己以为当了语言迷了。
+</TEXT>
+<CORRECTION>
+我长大后想过，那时候的他一定希望我当跟他一样的数学迷。不过结果我自己认为我自己当了语言迷了。
+</CORRECTION>
+<ERROR start_off="5" end_off="6" type="S"></ERROR>
+<ERROR start_off="16" end_off="16" type="R"></ERROR>
+<ERROR start_off="17" end_off="19" type="W"></ERROR>
+<ERROR start_off="37" end_off="38" type="S"></ERROR>
+<ERROR start_off="39" end_off="39" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200193_2_1x1">
+对我的经验来看，父母的家庭教育是很重要的。
+</TEXT>
+<CORRECTION>
+从我的经验来看，父母的家庭教育是很重要的。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100001_2_4x4">
+有的人是歌曲感觉好听所以喜欢流行歌曲，有的人是喜欢唱流行歌曲的歌星，所以喜欢流行歌曲。但我觉的不应该的，有这样的人，流行歌曲的品质变到越来越不好的。因为那样的人只看着那位歌星长的怎么样来听歌星的歌，这样就排歌星的时候只看着长的怎么样来排出，但那一个歌星的歌没那么好，那样流行歌曲就会变成难听的歌曲。所以这样的原因来喜欢流行歌曲是不对的。
+</TEXT>
+<CORRECTION>
+有的人是感觉歌曲好听所以喜欢流行歌曲，有的人是喜欢唱流行歌曲的歌星，所以喜欢流行歌曲。但我觉的不应该这样的，有这样的人，流行歌曲的品质变得越来越不好。因为那样的人只看着那位歌星长得怎么样来听歌星的歌，这样就歌曲好听所以喜欢流行歌曲，有的人是喜欢唱流行歌曲的歌星，所以喜欢流行歌曲。但我觉的不应该这样的，有这样的人，流行歌曲的品质变得越来越不好。因为那样的人只看着那位歌星长得怎么样来听歌星的歌，这样排歌星的时候就只看着长得怎么样来排出，但那一个歌星的歌没那么好，那样流行歌曲就会变成难听的歌曲。所以以这样的原因来喜欢流行歌曲是不对的。
+</CORRECTION>
+<ERROR start_off="5" end_off="8" type="W"></ERROR>
+<ERROR start_off="51" end_off="51" type="M"></ERROR>
+<ERROR start_off="66" end_off="67" type="S"></ERROR>
+<ERROR start_off="73" end_off="73" type="R"></ERROR>
+<ERROR start_off="89" end_off="89" type="S"></ERROR>
+<ERROR start_off="102" end_off="108" type="W"></ERROR>
+<ERROR start_off="113" end_off="113" type="S"></ERROR>
+<ERROR start_off="152" end_off="152" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109633102070_2_6x3">
+但是，对我来说父母更正确的一个定义可能是“最重要老师”。这是因为，实事上虽然父母对孩子象征着最高的权利，但是他们还有许多教育与经验的机会，也不一定父母起任何作用。比如，兄弟姐妹、朋友同学，都能成为一种能模仿的态度标准。
+</TEXT>
+<CORRECTION>
+但是，对我来说父母更正确的一个定义可能是“最重要的老师”。这是因为，事实上虽然父母对孩子象征着最高的权利，但是他们还有许多教育与经验的机会，也不一定父母起全部作用。比如，兄弟姐妹、朋友同学，都能成为一种模仿的态度标准。
+</CORRECTION>
+<ERROR start_off="25" end_off="25" type="M"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="77" end_off="78" type="S"></ERROR>
+<ERROR start_off="101" end_off="101" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201166_2_1x2">
+总之，我认为吸烟的坏处比长处更多。所以各人都注意自己的健康，为了公众利益，我们不要抽烟。
+</TEXT>
+<CORRECTION>
+总之，我认为吸烟的坏处比好处更多。所以各人都应该注意自己的健康，为了公众利益，我们不要抽烟。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100556_2_1x1">
+吸烟对人的健康有害处，这是各个人都知道的事实。
+</TEXT>
+<CORRECTION>
+吸烟对人的健康有害处，这是每个人都知道的事实。
+</CORRECTION>
+<ERROR start_off="14" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519250034_2_2x1">
+首先香烟内的化学成分不利人的身体。
+</TEXT>
+<CORRECTION>
+首先香烟内的化学成分不利人的身体健康。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201578_2_1x3">
+可是我不这么认为了。我觉得不管是老人、小孩子、高中生，都很重要音乐。他们也有享受娱乐生活的权力，我觉得流行歌曲给我们带来生活中的一生动力。
+</TEXT>
+<CORRECTION>
+可是我不这么认为。我觉得不管是老人、小孩子、高中生，音乐都很重要。他们也有享受娱乐生活的权力，我觉得流行歌曲给我们带来生活中的一种活力。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="R"></ERROR>
+<ERROR start_off="28" end_off="33" type="W"></ERROR>
+<ERROR start_off="66" end_off="68" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533150018_2_3x1">
+假使他们是因为婚嫁年龄已至而女方还是小姑独处尚无郎；男方还是单身贵族一名，事业有成的钻石王五老，我想他们的相识方式是否由亲戚朋友介绍，青梅竹马之交，抑或萍水相逢，一见钟情都不关重要。
+</TEXT>
+<CORRECTION>
+假使他们是因为婚嫁年龄已至而女方还是小姑独处尚无新郎；男方还是单身贵族一名，是事业有成的钻石王五老，我想他们的相识方式是否由亲戚朋友介绍，青梅竹马之交，抑或萍水相逢，一见钟情都无关紧要。
+</CORRECTION>
+<ERROR start_off="25" end_off="25" type="M"></ERROR>
+<ERROR start_off="38" end_off="38" type="M"></ERROR>
+<ERROR start_off="87" end_off="90" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540250033_2_6x1">
+但如果象这次汉语水平考试的参考资料来讲，那就得花更多的时间，反复的看，反复的思考直到精通为止。
+</TEXT>
+<CORRECTION>
+但如果像这次汉语水平考试的参考资料，那就得花更多的时间，反复地看，反复地思考直到精通为止。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="S"></ERROR>
+<ERROR start_off="18" end_off="19" type="R"></ERROR>
+<ERROR start_off="33" end_off="33" type="S"></ERROR>
+<ERROR start_off="38" end_off="38" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100085_2_3x1">
+使用化肥和农药的农作物进到人口后，引起很多对人非常不好的影响，其中有消化不良，使身体虚弱，不能集中精神等等。
+</TEXT>
+<CORRECTION>
+使用化肥和农药的农作物进到身体后，引起很多对人非常不好的影响，其中有消化不良，身体虚弱，不能集中精神等等。
+</CORRECTION>
+<ERROR start_off="14" end_off="15" type="S"></ERROR>
+<ERROR start_off="40" end_off="40" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109523201266_2_6x2">
+我小时候经常坐在父亲旁边，只好忍心听着。我当时不愿听他的话，而心里决定“我决不会变成一个像我爸爸的人”。
+</TEXT>
+<CORRECTION>
+我小时候经常坐在父亲旁边，只好忍受听着。我当时不愿听他的话，所以心里决定“我决不会变成一个像我爸爸的人”。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+<ERROR start_off="31" end_off="31" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510919501150011_2_7x3">
+如果父母以身做则，具有良好的兴趣观和思想观，那么他们的孩子就能从小培养起良好的举止行为。如果父母在小孩成长期里不做好榜样，那么孩子就没有一个好榜样学习，当长大后犯下错误的时候，父母后悔也来不及了。所以一个人是否能成才，除了自身后天的努力程度，在成长期父母对他们如何教育有很大的关系。
+</TEXT>
+<CORRECTION>
+如果父母以身做则，具有良好的兴趣爱好和思想观念，那么他们的孩子就能从小培养起良好的举止行为。如果父母在小孩成长期里没做好榜样，那么孩子就没有一个好榜样学习，当长大后犯下错误的时候，父母后悔也来不及了。所以一个人是否能成才，除了自身后天的努力程度以外，与在成长期父母对他们如何进行教育有很大的关系。
+</CORRECTION>
+<ERROR start_off="15" end_off="17" type="S"></ERROR>
+<ERROR start_off="19" end_off="21" type="S"></ERROR>
+<ERROR start_off="56" end_off="56" type="S"></ERROR>
+<ERROR start_off="121" end_off="121" type="M"></ERROR>
+<ERROR start_off="122" end_off="122" type="M"></ERROR>
+<ERROR start_off="133" end_off="133" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525200106_2_2x1">
+这个团体的目的是减少边走边抽的人。
+</TEXT>
+<CORRECTION>
+这个团体的目的是减少边走边抽烟的人。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200235_2_1x3">
+我以为本来为什么存在烟也不会了解。吸烟有坏处也没有好处的，他们为什么发明烟，为什么喜欢那么臭的烟？有人说心情不好时吸烟的话吸以后心情安定下来。
+</TEXT>
+<CORRECTION>
+我本来对为什么存在烟也不了解。吸烟有坏处没有好处，他们为什么发明烟，为什么喜欢那么臭的烟？有人说心情不好时吸烟的话吸完以后心情会安定下来。
+</CORRECTION>
+<ERROR start_off="2" end_off="3" type="R"></ERROR>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+<ERROR start_off="14" end_off="14" type="R"></ERROR>
+<ERROR start_off="23" end_off="23" type="R"></ERROR>
+<ERROR start_off="28" end_off="28" type="R"></ERROR>
+<ERROR start_off="63" end_off="63" type="M"></ERROR>
+<ERROR start_off="67" end_off="67" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523100122_2_1x1">
+但现在还在几个贫困的国家，很多人没有吃的东西，每天几百、几千人饿死。
+</TEXT>
+<CORRECTION>
+但现在在几个贫困的国家，很多人没有吃的东西，每天几百、几千人饿死。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200578_2_1x2">
+总的来说，吸烟也是各人的人权。可是政府应该为不吸烟的人和青少年来限制大部分的吸烟者在在公共场所吸烟的现象。
+</TEXT>
+<CORRECTION>
+总的来说，吸烟也是个人的人权。可是政府应该为不吸烟的人和青少年来限制大部分的吸烟者在公共场所吸烟的现象。
+</CORRECTION>
+<ERROR start_off="10" end_off="11" type="S"></ERROR>
+<ERROR start_off="42" end_off="42" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200682_2_1x1">
+随着社会上的生活上的压力变大，人们的吸烟率也增加。
+</TEXT>
+<CORRECTION>
+随着社会上和生活上的压力变大，人们的吸烟率也增加了。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="R"></ERROR>
+<ERROR start_off="7" end_off="7" type="M"></ERROR>
+<ERROR start_off="25" end_off="25" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200827_2_1x1">
+流行的歌曲对人们满足于情绪的要求。
+</TEXT>
+<CORRECTION>
+流行的歌曲满足人们情绪的要求。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="R"></ERROR>
+<ERROR start_off="7" end_off="10" type="W"></ERROR>
+<ERROR start_off="11" end_off="11" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523100122_2_1x3">
+随着逐渐人的生活提高，对饮食关心越来越增加。人要吃有利于身体的、能保持自己健康的。特别“绿色食品”受欢迎。
+</TEXT>
+<CORRECTION>
+随着人的生活逐渐提高，对饮食的关心越来越增加。人要吃有利于身体的、能保持自己健康的食品。特别逐渐提高，对饮食的关心越来越增加。人要吃有利于身体的、能保持自己健康的食品。“绿色食品”特别受欢迎。
+</CORRECTION>
+<ERROR start_off="3" end_off="8" type="W"></ERROR>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+<ERROR start_off="41" end_off="41" type="M"></ERROR>
+<ERROR start_off="42" end_off="49" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525101851_2_7x1">
+有人说，甚至孩子还在母亲的肚子里时的外边环境都会影响这孩子的特点。
+</TEXT>
+<CORRECTION>
+有人说，甚至孩子还在母亲的肚子里时外边环境都会影响这孩子的特点。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505217525100093_2_5x2">
+看不好的方面：据报纸说，没有父亲或母亲或两个都没有的人长大后的犯罪率比有父母的家庭里长大的人高的多。幼少期受过父母的暴力的人，自己有了孩子以后比较容易对孩子用暴力的。
+</TEXT>
+<CORRECTION>
+看不好的方面：据报纸说，没有父亲或母亲或两个都没有的人长大后的犯罪率比有父母的家庭里长大的人高得多。幼小时期受过父母的暴力的人，自己有了孩子以后比较容易对孩子用暴力。
+</CORRECTION>
+<ERROR start_off="48" end_off="48" type="S"></ERROR>
+<ERROR start_off="51" end_off="52" type="S"></ERROR>
+<ERROR start_off="53" end_off="53" type="S"></ERROR>
+<ERROR start_off="82" end_off="82" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200309529529251020_2_1x2">
+从小学到中学，我所上过的每一个学校都是男女共校的，而我从没感觉过有何不便或不宜之处。反之，男、女学生在同一个教室上课，参加同样的活动，接受同等质量的教育时，彼此都能够达到更好的了解。
+</TEXT>
+<CORRECTION>
+从小学到中学，我所上过的每一个学校都是男女共校的，但我从没感觉到有何不便或不宜之处。反之，男、女学生在同一个教室上课，参加同样的活动，接受同等质量的教育时，彼此都能够更好的了解。
+</CORRECTION>
+<ERROR start_off="26" end_off="26" type="S"></ERROR>
+<ERROR start_off="32" end_off="32" type="S"></ERROR>
+<ERROR start_off="84" end_off="85" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200430_2_3x1">
+虽然大部分的人们没有把自己幼儿时候的事情记得清清楚楚，但是大部分的人们会受影响到幼儿时候给的观念、思想，而形成自己的性格。
+</TEXT>
+<CORRECTION>
+虽然大部分的人不能把自己幼儿时候的事情记得清清楚楚，但是大部分的人会受幼儿时候的观念、思想影响，而形成自己的性格。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="40" end_off="40" type="R"></ERROR>
+<ERROR start_off="45" end_off="45" type="R"></ERROR>
+<ERROR start_off="39" end_off="51" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100439_2_3x1">
+自己对我朋友的交流当中也使用烟的好处。
+</TEXT>
+<CORRECTION>
+自己在跟朋友的交流当中也利用烟的好处。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525100088_2_2x3">
+因为从出生的那一刻开始，就在父母的照顾下开始新的生活。而且曾几何时在大家庭里生活，爷爷，奶奶等生育过孩子的“老师”的指导、帮助之下可以养孩子的情况变成，而如今的小家庭就是没有经验、没有老师的情况下要养孩子。父母的对孩子的所有的责任更大了。
+</TEXT>
+<CORRECTION>
+因为孩子从出生的那一刻开始，就在父母的照顾下开始新的生活。而且曾几何时在大家庭里生活，爷爷，奶奶等生育过孩子的“老师”的指导、帮助之下可以养孩子的情况变成如今的小家庭，而如今的小家庭就是在没有经验、没有老师的情况下要养孩子。父母对孩子所有的责任更大了。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="76" end_off="76" type="M"></ERROR>
+<ERROR start_off="86" end_off="86" type="M"></ERROR>
+<ERROR start_off="106" end_off="106" type="R"></ERROR>
+<ERROR start_off="110" end_off="110" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200017_2_2x1">
+因为在一起相处中，可以学到很多东西。
+</TEXT>
+<CORRECTION>
+因为在相处中，可以学到很多东西。
+</CORRECTION>
+<ERROR start_off="4" end_off="5" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101395_2_4x1">
+虽然我也早已知道吸烟对身体并不没有一点的好处，可不能戒烟。
+</TEXT>
+<CORRECTION>
+虽然我也早已知道吸烟对身体并没有一点好处，可还是不能戒烟。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="R"></ERROR>
+<ERROR start_off="20" end_off="20" type="R"></ERROR>
+<ERROR start_off="25" end_off="25" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505206919200029_2_1x2">
+总得来说，父母对孩子的影响很大。因为孩子能吸收新的东西很快，所以父母要做一个好的榜样，以免孩子走错了生活的轨道。
+</TEXT>
+<CORRECTION>
+总的来说，父母对孩子的影响很大。因为孩子吸收新的东西很快，所以父母要做一个好的榜样，以免孩子走错了生活的轨道。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="S"></ERROR>
+<ERROR start_off="21" end_off="21" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100710_2_2x1">
+我觉得父母的态度和思想反映了孩子。
+</TEXT>
+<CORRECTION>
+我觉得父母的态度和思想反映了孩子的态度和思想。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505217525200085_2_1x1">
+拿我自己的成长环境来说，我父母算是比一般的父母严格得多。
+</TEXT>
+<CORRECTION>
+拿我自己的成长环境来说，我父母算比一般的父母严格得多。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405201525200224_2_4x1">
+更不好的事，旁边儿的人吸的烟比正在吸烟者吸的烟更有害。
+</TEXT>
+<CORRECTION>
+更不好的事是，旁边儿的人吸的烟比正在吸烟者吸的烟更有害。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250057_2_2x1">
+这样既避免出现冷场，也可暗中观察对方，以更了解对方。
+</TEXT>
+<CORRECTION>
+这样既避免出现冷场，也可暗中观察对方，以便更了解对方。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523200815_2_3x1">
+通过利用当时的流行来可以做出流行的歌词、节奏等等。
+</TEXT>
+<CORRECTION>
+通过利用当时的流行来做出流行的歌词、节奏等等。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200154_2_2x5">
+虽然他一个人抽了烟，但是跟他一起过的奶奶也犯了气管支炎，而且引起了并其他的病。这种情况，当然是原因不只是爷爷的烟，可是医生说过了就是原因之一。我认为吸烟是个人的嗜好品。所以不管对本人好不好，基本上我们都不可能让他禁止。可是一定要说，不要让人麻烦。
+</TEXT>
+<CORRECTION>
+虽然他一个人抽烟，但是跟他一起过的奶奶也得了支气管炎，而且引起了其他的病。这种情况，当然原因不只是爷爷的烟，可是医生说过了烟就是原因之一。我认为吸烟是个人的嗜好。所以不管对本人好不好，基本上我们都不可能让他停止。可是我一定要说，吸烟者不要给别人添麻烦。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="R"></ERROR>
+<ERROR start_off="22" end_off="22" type="S"></ERROR>
+<ERROR start_off="24" end_off="26" type="S"></ERROR>
+<ERROR start_off="34" end_off="34" type="R"></ERROR>
+<ERROR start_off="47" end_off="47" type="R"></ERROR>
+<ERROR start_off="65" end_off="65" type="M"></ERROR>
+<ERROR start_off="81" end_off="83" type="S"></ERROR>
+<ERROR start_off="107" end_off="108" type="S"></ERROR>
+<ERROR start_off="112" end_off="112" type="M"></ERROR>
+<ERROR start_off="117" end_off="117" type="M"></ERROR>
+<ERROR start_off="119" end_off="119" type="S"></ERROR>
+<ERROR start_off="120" end_off="120" type="S"></ERROR>
+<ERROR start_off="121" end_off="121" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200291_2_1x1">
+我认为这不是不吸烟者的问题，而是吸烟者自身的，还有政府规定的法的问题。
+</TEXT>
+<CORRECTION>
+我认为这不是不吸烟者的问题，而是吸烟者自身的，还有政府制定的法律问题。
+</CORRECTION>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="32" end_off="32" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200121_2_9x4">
+所以我从小开始去雪山滑滑雪，夏天的时候，去海岸游泳。这是我的爱好和喜欢的运动类。第三是最重要的家训，就是“你的人生中除了母国语言以外，一定学会一个语言。”我现在来中国学习汉语的理由就是由于这个家训因此的。
+</TEXT>
+<CORRECTION>
+所以我从小开始去雪山滑雪，夏天的时候，去海岸游泳。这是我的爱好和喜欢的运动。第三是最重要的家训，就是“你的人生中除了本国语言以外，一定学会一种语言。”我现在来中国学习汉语的理由就是由于这个家训。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="R"></ERROR>
+<ERROR start_off="39" end_off="39" type="R"></ERROR>
+<ERROR start_off="61" end_off="62" type="S"></ERROR>
+<ERROR start_off="73" end_off="73" type="S"></ERROR>
+<ERROR start_off="99" end_off="101" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200179_2_1x1">
+我也受到父母的影响长大了。
+</TEXT>
+<CORRECTION>
+我也受到父母的影响长大。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525202614_2_1x3">
+总而言之，“父母是孩子的第一老师”这种说话是大家都知道的，而且我觉得大部分的人都认为这种说话是正确的，那一定要好好照顾自己的孩子。因为父母给孩子的影响是甚至决定孩子未来的东西。父母别忘自己是孩子的第一个老师。
+</TEXT>
+<CORRECTION>
+总而言之，“父母是孩子的第一老师”这种说法是大家都知道的，而且我觉得大部分的人都认为这种说法是正确的，那一定要好好照顾自己的孩子。因为父母给孩子的影响是重大的甚至决定孩子未来的东西。父母别忘了自己是孩子的第一个老师。
+</CORRECTION>
+<ERROR start_off="20" end_off="21" type="S"></ERROR>
+<ERROR start_off="45" end_off="46" type="S"></ERROR>
+<ERROR start_off="77" end_off="77" type="M"></ERROR>
+<ERROR start_off="93" end_off="93" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523101115_2_2x1">
+所以，我们要注意一下它的负面影响，才能享受音乐给人们带来的帮助。
+</TEXT>
+<CORRECTION>
+所以，我们要注意一下它的负面影响，才能享受音乐给人们带来的乐趣。
+</CORRECTION>
+<ERROR start_off="30" end_off="31" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201452_2_3x1">
+他们的肝都被烟里边含着的因素坏了。
+</TEXT>
+<CORRECTION>
+他们的肝都被烟里边含着的因素破坏了。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201065_2_5x3">
+在美国特别重视这点吸烟对个人健康和公众利益的影响，去年加州洛杉机被批准了新的法律规定，就是：在任何公共场所，如公共公园、图书馆、学校以及海滩也不让吸烟了。这是为了公众利益和保洁城市环境取大了很大的成果。在东京的杉并区也是如此，从2002年开始采用在街上不让一边吸烟一边走路的规定。
+</TEXT>
+<CORRECTION>
+在美国特别重视吸烟对个人健康和公众利益的影响这点，去年加州洛杉机批准了新的法律规定，就是：在任何公共场所，如公共公园、图书馆、学校以及海滩都不让吸烟了。这是为了公众利益和保护城市环境并取得了很大的成果。在东京的杉并区也是如此，从2002年开始实施在街上不让一边吸烟一边走路的规定。
+</CORRECTION>
+<ERROR start_off="8" end_off="24" type="W"></ERROR>
+<ERROR start_off="33" end_off="33" type="R"></ERROR>
+<ERROR start_off="71" end_off="71" type="S"></ERROR>
+<ERROR start_off="87" end_off="88" type="S"></ERROR>
+<ERROR start_off="93" end_off="93" type="M"></ERROR>
+<ERROR start_off="94" end_off="94" type="S"></ERROR>
+<ERROR start_off="122" end_off="123" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200404140506100200_2_4x2">
+假如，有一天那些球迷们赏欣运动的数量开始下降，我敢肯定，那些运动员也就不会挣得到比商人和其它人高的收入。因此，他们设想办法要使自己球迷们的数量越来越大，以将能够挣更高的收入。
+</TEXT>
+<CORRECTION>
+假如，有一天那些球迷们欣赏运动的数量开始下降，我敢肯定，那些运动员也就不会挣得到比商人和其它人高的收入。因此，他们想方设法要使自己球迷们的数量越来越大，以将能够获得更高的收入。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+<ERROR start_off="58" end_off="61" type="S"></ERROR>
+<ERROR start_off="81" end_off="81" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200215_2_1x1">
+我希望这些措施，除了在人口密集的商业中心以外，所有的公共场所商店也开始实行。
+</TEXT>
+<CORRECTION>
+我希望这些措施，除了在人口密集的商业中心实施以外，在所有的公共场所都开始实行。
+</CORRECTION>
+<ERROR start_off="21" end_off="21" type="M"></ERROR>
+<ERROR start_off="24" end_off="24" type="M"></ERROR>
+<ERROR start_off="31" end_off="32" type="R"></ERROR>
+<ERROR start_off="33" end_off="33" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100237_2_4x1">
+因为在公共场所吸烟的话，不吸烟的人也有害健康。
+</TEXT>
+<CORRECTION>
+因为在公共场所吸烟的话，对不吸烟的人也有害。
+</CORRECTION>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+<ERROR start_off="21" end_off="22" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250006_2_2x1">
+因为人们吸了烟以后常会得到肺病对于身体的健康很是不利。
+</TEXT>
+<CORRECTION>
+因为人们吸了烟以后常会得肺病，对身体的健康很是不利。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200119_2_1x1">
+首先，对个人健康的角度来看，这种规定很有用。
+</TEXT>
+<CORRECTION>
+首先，从个人健康的角度来看，这种规定很有用。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201808_2_3x3">
+作为成年人，务必考虑其他人，尤其关怀儿童。如有关爱青少年的观念，不会做边走边抽烟等恶劣行为。这种行为不但会有烟火伤人的可能之外，从示范角度来看，对青少年有不的影响。
+</TEXT>
+<CORRECTION>
+作为成年人，务必考虑其他人，尤其要关怀儿童。如有关爱青少年的观念，不会做边走边抽烟等恶劣的事。这种行为不但会有烟火伤人的可能，从示范角度来看，对青少年也有不好影响。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+<ERROR start_off="44" end_off="45" type="S"></ERROR>
+<ERROR start_off="62" end_off="63" type="R"></ERROR>
+<ERROR start_off="77" end_off="77" type="M"></ERROR>
+<ERROR start_off="79" end_off="79" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523101582_2_3x1">
+我们为了我们经济发展的更快，为了保持自己的想法，我们不要喜欢流行歌曲，我们要喜欢自己真正喜欢的歌曲。
+</TEXT>
+<CORRECTION>
+我们为了我们经济发展得更快，为了保持自己的想法，我们不要喜欢流行歌曲，我们要喜欢自己真正喜欢的歌曲。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405212540200030_2_2x1">
+我想保持整洁是为了帮助于青少年、中老年人养成良好的生活习惯。
+</TEXT>
+<CORRECTION>
+我想保持整洁是为了帮助青少年、中老年人养成良好的生活习惯。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200831_2_2x1">
+她吸烟，而且她怕周围的目光在厕所里抽烟。
+</TEXT>
+<CORRECTION>
+她吸烟，但是她怕周围的目光在厕所里抽烟。
+</CORRECTION>
+<ERROR start_off="5" end_off="6" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525200144_2_5x1">
+不过，抽烟却甚至对周围的人也有坏处。
+</TEXT>
+<CORRECTION>
+不过，抽烟甚至对周围的人也有坏处。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525100068_2_1x1">
+所以现在我的看法是没有需要男女分班，这样开始进行男女分班的试验我觉得是不对的如果男女分班有好处的话中国历史那么长早就男女分班了。
+</TEXT>
+<CORRECTION>
+所以现在我的看法是没有必要男女分班，这样开始进行男女分班的试验我觉得是不对的如果男女分班有好处的话中国历史那么长早就男女分班了。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100141_2_2x2">
+但内面上讲，是现代的新的文化，新的改变。就从我们的周边听到的古典音乐和流行歌曲比较，你可能觉得古典音乐所具有的感情和流行歌曲不一样，所以，无论它的歌词是怎样的，你只要听着音乐你就能感觉出其中的含义和感情。
+</TEXT>
+<CORRECTION>
+但从内在层次上讲，是现代的新的文化，新的改变。就把我们的周边听到的古典音乐和流行歌曲比较一下，你可能觉得古典音乐所具有的感情和流行歌曲不一样，所以，无论它的歌词是怎样的，你只要听着音乐你就能感觉出其中的含义和感情。
+</CORRECTION>
+<ERROR start_off="2" end_off="4" type="S"></ERROR>
+<ERROR start_off="22" end_off="22" type="S"></ERROR>
+<ERROR start_off="42" end_off="42" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525100211_2_8x1">
+每个人都很自觉，能考虑到人家的话，世界会变成很美的。
+</TEXT>
+<CORRECTION>
+每个人都很自觉，能考虑到别人的话，世界会变成很美的。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215525150016_2_1x1">
+我们日本农业者为了生产多量农产品，从七〇年代开始积极地开发化肥和农药，而且，积极地使用这些东西。
+</TEXT>
+<CORRECTION>
+我们日本农业者为了生产大量农产品，从七〇年代开始积极地开发化肥和农药，而且，积极地使用这些东西。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250084_2_3x4">
+男女衣冠整齐与介绍人和彼此家长来个饭局，从而交谈中去了解对方的家世与背景。当然相亲来父可靠。介绍人可以把对方优点说个天花乱坠，可事实却并非如此。当然也更以交往过程中慢慢的去了解才是上策。
+</TEXT>
+<CORRECTION>
+男女衣冠整齐与介绍人和彼此家长来个饭局，从交谈中去了解对方的家世与背景。当然相亲未必可靠。介绍人可以把对方的优点说个天花乱坠，可事实却并非如此。当然在交往过程中慢慢地去了解才是上策。
+</CORRECTION>
+<ERROR start_off="21" end_off="22" type="S"></ERROR>
+<ERROR start_off="42" end_off="43" type="S"></ERROR>
+<ERROR start_off="55" end_off="55" type="M"></ERROR>
+<ERROR start_off="75" end_off="77" type="S"></ERROR>
+<ERROR start_off="85" end_off="85" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217525100103_2_8x1">
+但是现在无论工业还是农业都关注无论怎样降低成本的问题。
+</TEXT>
+<CORRECTION>
+但是现在无论工业还是农业都关注怎样降低成本的问题。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510634634200161_2_3x1">
+我觉得光听流行音乐的人的思想生活恐怕比较单调！
+</TEXT>
+<CORRECTION>
+我觉得光听流行音乐的人的精神生活恐怕比较单调！
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100083_2_1x1">
+当然，盲目的喜欢歌星是问题，但我们不能轻视它的好处。
+</TEXT>
+<CORRECTION>
+当然，盲目地喜欢歌星是问题，但我们不能轻视它的好处。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525100675_2_5x2">
+吃饭后、而且喝酒时的吸烟也会感到轻轻的感觉。可是，世界中一定有不能保持环境的人民。
+</TEXT>
+<CORRECTION>
+吃饭后、而且喝酒时吸烟也会感到轻松的感觉。可是，世界上一定有不能保护环境的人。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="18" end_off="18" type="S"></ERROR>
+<ERROR start_off="28" end_off="28" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="39" end_off="40" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525202299_2_2x1">
+任何婴儿心都是白纸似的清白。
+</TEXT>
+<CORRECTION>
+任何婴儿的心都是白纸似的清白。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250006_2_2x1">
+而我呢，是喜欢那种相识、相恋到互相了解才结合的。
+</TEXT>
+<CORRECTION>
+而我呢，是喜欢那种相识、相恋到互相了解再结合的。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100838_2_3x2">
+我就在朋友的这一点发现了流行歌曲的不好的一面。后来我就越来越不喜欢听流行歌曲了，直到有一天，那一天刚刚考完试，我就和同学去了歌厅，在那里我看到了朋友们高高兴兴着唱流行歌曲，我就感到去听和唱流行音乐也有着一个特别好的一面，就是放松心情。
+</TEXT>
+<CORRECTION>
+我就从朋友的这一点发现了流行歌曲的不好的一面。后来我就越来越不喜欢听流行歌曲了，直到有一天，那一天刚刚考完试，我就和同学去了歌厅，在那里我看到了朋友们高高兴兴地唱流行歌曲，我就感到去听和唱流行音乐也有特别好的一面，就是放松心情。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="80" end_off="80" type="S"></ERROR>
+<ERROR start_off="101" end_off="101" type="R"></ERROR>
+<ERROR start_off="102" end_off="103" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217523200021_2_1x2">
+人们的基本饮食生活已经有了很好的状态。农夫与产生农作物的人，为了我们的幸福与健康，少一点用化肥和农药。
+</TEXT>
+<CORRECTION>
+人们的基本饮食生活已经有了很好的改变。农夫与生产农作物的人，为了我们的幸福与健康，少用一点化肥和农药。
+</CORRECTION>
+<ERROR start_off="17" end_off="18" type="S"></ERROR>
+<ERROR start_off="23" end_off="24" type="S"></ERROR>
+<ERROR start_off="43" end_off="45" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525201906_2_6x1">
+如果我没有父母的情况下长大的话，肯定我的性格不是这么开朗、温暖。
+</TEXT>
+<CORRECTION>
+如果我在没有父母的情况下长大的话，肯定我的性格不是这么开朗、和善。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="M"></ERROR>
+<ERROR start_off="30" end_off="31" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100069_2_2x1">
+我想，因为是他们觉得流行歌曲使人尤其是青少年导致不良的影响，很多歌词具有反抗社会，劝告不道德的行为，帮助青少年的罪行，而把青少年对社会的看法变得歪些。
+</TEXT>
+<CORRECTION>
+我想，因为他们觉得流行歌曲使人尤其是青少年受到不良的影响，很多歌词具有反抗社会，劝告不道德的行为，助长青少年的罪行的内容，而把青少年对社会的看法变得歪些。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="R"></ERROR>
+<ERROR start_off="23" end_off="24" type="S"></ERROR>
+<ERROR start_off="51" end_off="52" type="S"></ERROR>
+<ERROR start_off="59" end_off="59" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310512512250030_2_1x2">
+分班可以避免早恋，影响学生的学习，这是其一；其二就是男女生同班会有重男轻女的倾向，比如说男的可能会认为女的反应比较不灵活，而且女性在社会上的地位较低，做任何事都没有反驳的余地，男生的大男人主义就会较强，而女性也会存有很大的依赖性。这些都会使女性的地位降低，相反的男性的地位反而会提高，使得在社会上有男女不平等的待遇。
+</TEXT>
+<CORRECTION>
+分班可以避免早恋，避免影响学生的学习，这是其一；其二就是男女生同班会有重男轻女的倾向，比如说男的可能会认为女的反应比较不灵活，而且女性在社会上的地位较低，做任何事都没有反驳的余地，男生的大男人主义就会较强，而女性也会存有很大的依赖性。这些都会使女性的地位降低，相反的男性的地位反而会提高，使得在社会上有男女不平等的现象。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="M"></ERROR>
+<ERROR start_off="156" end_off="157" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307206525200075_2_4x2">
+反过来不使用化肥和农药是看起来对人们好的影响。如果某一个人天天一直看种植物的话，我认为不使用化肥和农药的好。
+</TEXT>
+<CORRECTION>
+反过来不使用化肥和农药看起来是对人们有好的影响。如果某一个人天天一直看农作物的话，我认为不使用化肥和农药的好。
+</CORRECTION>
+<ERROR start_off="12" end_off="15" type="W"></ERROR>
+<ERROR start_off="19" end_off="19" type="M"></ERROR>
+<ERROR start_off="35" end_off="37" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100277_2_1x3">
+我现在像妈一样喜欢说开玩笑，而且不让人发生嫌恶感。对别人面前说话时也挺放松的。她的思想观念是现在的我的原本。
+</TEXT>
+<CORRECTION>
+我现在像妈一样喜欢开玩笑，而且不让人发生嫌恶感。在别人面前说话时也挺放松的。她的思想观念是现在的我的本原。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="26" end_off="26" type="S"></ERROR>
+<ERROR start_off="52" end_off="53" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525202152_2_3x2">
+虽然他天天很忙但是至少一个星期一次一定给我们做菜。我们孩子们非常感到父亲的感情。
+</TEXT>
+<CORRECTION>
+虽然他天天很忙但是至少一个星期一次给我们做菜。我们孩子们感到父亲的感情。
+</CORRECTION>
+<ERROR start_off="18" end_off="19" type="R"></ERROR>
+<ERROR start_off="31" end_off="32" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201108_2_4x2">
+因此，听了此种类的歌，我们总是不知不觉中回顾以前的异性朋友，也有正谈恋爱的人。这样的歌词里再加上很美的节奏，不能再好听了。
+</TEXT>
+<CORRECTION>
+因此，听了此类的歌，我们总是在不知不觉中回顾以前的异性朋友，还有正谈恋爱的人。这样的歌词再加上很美的节奏，不能再好听了。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="R"></ERROR>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+<ERROR start_off="31" end_off="31" type="S"></ERROR>
+<ERROR start_off="45" end_off="45" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250057_2_1x1">
+如蒙贵公司录用，我将尽我所学为公司效力，充分发挥我所能为公司的发展业务努力。
+</TEXT>
+<CORRECTION>
+如蒙贵公司录用，我将尽我所学为公司效力，充分发挥我所能为公司的业务发展而尽的努力。
+</CORRECTION>
+<ERROR start_off="32" end_off="35" type="W"></ERROR>
+<ERROR start_off="36" end_off="36" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200550_2_1x3">
+我想孩子是一种父母的镜子。孩子做坏事这家的父母也在孩子面前做不好的事。所以父母特别注意自己的行为、语言。
+</TEXT>
+<CORRECTION>
+我想孩子是父母的一面镜子。孩子做坏事这家的父母肯定也在孩子面前做过不好的事。所以父母应该特别注意自己的行为、语言。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="S"></ERROR>
+<ERROR start_off="6" end_off="10" type="W"></ERROR>
+<ERROR start_off="24" end_off="24" type="M"></ERROR>
+<ERROR start_off="31" end_off="31" type="M"></ERROR>
+<ERROR start_off="40" end_off="40" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505217525200003_2_3x1">
+我小时候，我爸陪我常常去钓鱼。
+</TEXT>
+<CORRECTION>
+我小时候，我爸常常陪我去钓鱼。
+</CORRECTION>
+<ERROR start_off="8" end_off="11" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250135_2_3x1">
+在一间公司里，肯定会有男女混和在一起的，那是理所当然的！
+</TEXT>
+<CORRECTION>
+在一个公司里，肯定会有男女混和在一起的，那是理所当然的！
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100604_2_9x3">
+很多专家们告诉我们烟对身体有什么不好的。烟对身体来说，一点儿也没有好处，烟带来了对身体很严重的坏处。烟是一个很厉害的一个东西。
+</TEXT>
+<CORRECTION>
+很多专家告诉我们烟对身体有什么坏处。烟对身体来说，一点儿好处也没有，烟给身体带来了很严重的坏处。烟是一个很厉害的东西。
+</CORRECTION>
+<ERROR start_off="3" end_off="5" type="S"></ERROR>
+<ERROR start_off="17" end_off="19" type="S"></ERROR>
+<ERROR start_off="31" end_off="35" type="W"></ERROR>
+<ERROR start_off="38" end_off="43" type="W"></ERROR>
+<ERROR start_off="41" end_off="41" type="S"></ERROR>
+<ERROR start_off="59" end_off="60" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100325_2_2x2">
+因为在电视上看到了抽人的结果。我希望现在抽烟的人快知道抽烟对人没有什么好处。
+</TEXT>
+<CORRECTION>
+因为在电视上看到了抽烟的结果。我希望现在抽烟的人赶快知道抽烟对人没有什么好处。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="S"></ERROR>
+<ERROR start_off="25" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109616101113_2_4x2">
+对于孩子的成长过程，哪个人有最大的影响？并且不要忘记，举止行为不仅是出生之后发展的，父母继承下来的基因也构成一个不能忽视的因素，只在这我们想重视社会上存在的一些问题。
+</TEXT>
+<CORRECTION>
+对于孩子的成长过程，哪个人有最大的影响力？并且不要忘记，举止行为不仅是出生之后发展的，从父母那里继承下来的基因也构成一个不能忽视的因素，在这我们只想重视社会上存在的一些问题。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+<ERROR start_off="43" end_off="43" type="M"></ERROR>
+<ERROR start_off="45" end_off="45" type="M"></ERROR>
+<ERROR start_off="65" end_off="69" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200193_2_5x1">
+当我哭的时候，我父亲对我说：“你别哭，妈妈还在医院工作是为了你生活过得幸福。
+</TEXT>
+<CORRECTION>
+当我哭的时候，我父亲对我说：“你别哭，妈妈还在医院工作是为了你生活得幸福。
+</CORRECTION>
+<ERROR start_off="34" end_off="34" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200134_2_1x1">
+特别大部分的老人呢，不太喜欢听现在流行的歌曲，对现代年轻人的思考意识差异很大。
+</TEXT>
+<CORRECTION>
+特别大部分的老人呢，不太喜欢听现在流行的歌曲，与现代年轻人的思想意识差异很大。
+</CORRECTION>
+<ERROR start_off="24" end_off="24" type="S"></ERROR>
+<ERROR start_off="31" end_off="32" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250018_2_5x3">
+听她的话后我心里想道“爱是用什么来测量的？外表还是内向还是看钱还是看劳动？我觉得一个都不是，因为变化无常的生活中没有一个是有恒的，都总有一天会变化的。
+</TEXT>
+<CORRECTION>
+听了她的话后我心里想到“爱是用什么来衡量的？外表还是内在看钱还是看工作？我觉得一个都不是，因为变化无常的生活中没有一个是永恒的，总有一天都会变化的。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="M"></ERROR>
+<ERROR start_off="10" end_off="10" type="S"></ERROR>
+<ERROR start_off="18" end_off="19" type="S"></ERROR>
+<ERROR start_off="26" end_off="27" type="S"></ERROR>
+<ERROR start_off="28" end_off="29" type="R"></ERROR>
+<ERROR start_off="35" end_off="36" type="S"></ERROR>
+<ERROR start_off="62" end_off="63" type="S"></ERROR>
+<ERROR start_off="66" end_off="70" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250194_2_3x1">
+因此，我能和各种不同种族和国籍的人交谈，并且能更清楚地介绍各各区域给旅客。
+</TEXT>
+<CORRECTION>
+因此，我能和各种不同种族和国籍的人交谈，并且能更清楚地给旅客介绍各个区域。
+</CORRECTION>
+<ERROR start_off="30" end_off="31" type="S"></ERROR>
+<ERROR start_off="28" end_off="36" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201260_2_1x2">
+在日本，东京也采取措施，开始在公共场所边走边抽烟的人将被罚款。而且，街道上本来有的有关抽烟的东西都取除了。
+</TEXT>
+<CORRECTION>
+在日本，东京也采取措施，在公共场所边走边抽烟的人将被罚款。而且，街道上本来有的有关抽烟的东西都撤掉了。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="R"></ERROR>
+<ERROR start_off="50" end_off="51" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525100166_2_3x1">
+我们常见抽完烟后，随地的扔掉烟灰。
+</TEXT>
+<CORRECTION>
+我们常见有人抽完烟后，随地扔掉烟灰。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="M"></ERROR>
+<ERROR start_off="12" end_off="12" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100781_2_1x2">
+所以最前边的人摔倒了地上，但是后边儿的人没注意到。所以这事死了8个人左右。
+</TEXT>
+<CORRECTION>
+所以最前边的人摔倒在地上，但是后边儿的人没注意到。所以这次事件死了8个人左右。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200014_2_4x1">
+福父亲之托，我不仅汉字写得好，而且让我意识到学汉字的快乐。
+</TEXT>
+<CORRECTION>
+托父亲之福，我不仅汉字写得好，而且让我意识到学汉字的快乐。
+</CORRECTION>
+<ERROR start_off="1" end_off="5" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250010_2_1x1">
+上帝创造人类时，就把性别分开为男女，我认为这是有意识的，想让我们大家在这大千世界中寻觅各自的伴侣，各自创造一番美丽的爱情故事。
+</TEXT>
+<CORRECTION>
+上帝创造人类时，就把性别分为男女，我认为这是有意识的，想让我们大家在这大千世界中寻觅各自的伴侣，各自创造一段美丽的爱情故事。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+<ERROR start_off="54" end_off="55" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200262_2_3x1">
+孩子从小孩一直看或者听父母的行为、观念思想和发言。
+</TEXT>
+<CORRECTION>
+孩子从小孩时起一直看或者听父母的行为、观念思想和发言。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200091_2_4x1">
+凡是爱谁的时候，能控制自己。
+</TEXT>
+<CORRECTION>
+凡是爱谁的时候，我能控制自己。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525201254_2_1x2">
+我认识父母对孩子的成长产生的影响的确很大。孩子长得什么样的人，这大部分是要看他（她）在什么样的生活环境中长大的。
+</TEXT>
+<CORRECTION>
+我认为父母对孩子的成长产生的影响的确很大。孩子长成什么样的人，这大部分是要看他（她）在什么样的生活环境中长大的。
+</CORRECTION>
+<ERROR start_off="2" end_off="3" type="S"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200477_2_4x1">
+他们的身体还没有完整，不应该吸烟的。
+</TEXT>
+<CORRECTION>
+他们的身体还没有成熟，不应该吸烟的。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100927_2_1x2">
+父母是肯定对孩子影响最大。孩子性格形成的幼年和少年时，天天和他一起生活，而且父母能决定他学什么做什么。
+</TEXT>
+<CORRECTION>
+父母肯定是对孩子影响最大的人。孩子性格形成的幼年和少年时，父母天天和他一起生活，而且父母能决定他学什么做什么。
+</CORRECTION>
+<ERROR start_off="3" end_off="5" type="W"></ERROR>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+<ERROR start_off="28" end_off="28" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505680519250002_2_2x1">
+两小无猜经常在一起玩，彼此之间的友谊之情经过了时间的练粹，升华成了没有血缘关系的亲情。
+</TEXT>
+<CORRECTION>
+两小无猜经常在一起玩，彼此之间的友谊之情经过了时间的淬炼，升华成了没有血缘关系的亲情。
+</CORRECTION>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200404140540100043_2_7x2">
+足球运动员的路程可真不简单，首先他们在俱乐部应该有出色的表现才能得到高收同时高的评价，这样的话才会有很多俱乐部请他们转到别的俱乐部，这当然新的俱乐部会提供更好的条件，更高的收入，等等。除此之外他们也要有出色的表现以便能化表国家队，这样对运动员来说是一生中最难忘的事情。
+</TEXT>
+<CORRECTION>
+足球运动员的路程可真不简单，首先他们在俱乐部应该有出色的表现才能得到高收入和高的评价，这样的话才会有很多俱乐部请他们转到别的俱乐部，这当然新的俱乐部会提供更好的条件，更高的收入，等等。除此之外他们也要有出色的表现以便能代表国家队，这样对运动员来说是一生中最难忘的事情。
+</CORRECTION>
+<ERROR start_off="37" end_off="38" type="S"></ERROR>
+<ERROR start_off="67" end_off="67" type="R"></ERROR>
+<ERROR start_off="110" end_off="111" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510520520150008_2_6x1">
+而是唱嘻嘻哈哈和摇滚的歌手们的大部分太随便，一点儿都不懂礼貌，有的甚至用鸦片，还要歌里面的意思满处都是坏话、脏话。
+</TEXT>
+<CORRECTION>
+而是唱嘻嘻哈哈和摇滚的歌手们的大部分太随便，一点儿都不懂礼貌，有的甚至用鸦片，还有歌里面的内容到处都是坏话、脏话。
+</CORRECTION>
+<ERROR start_off="40" end_off="41" type="S"></ERROR>
+<ERROR start_off="46" end_off="47" type="S"></ERROR>
+<ERROR start_off="48" end_off="49" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250003_2_2x2">
+比如，但两个人认识了很久，“闷”这个字会在感情上出现。想一想：你从小已经看过他的脸，而结婚过后，每天早上起来，又要对他的脸起床，难到闷这位先生不会出现吗？
+</TEXT>
+<CORRECTION>
+比如，两个人认识了很久，“闷”这个问题会在感情上出现。想一想：你从小已经看过他的脸，而结婚过后，每天早上起来，又要面对他的脸起床，难到闷这位先生不会出现吗？
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+<ERROR start_off="19" end_off="19" type="S"></ERROR>
+<ERROR start_off="58" end_off="58" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101347_2_6x2">
+还有，有一个人上班，他的同事们一边抽烟一边工作，房间里弥漫着烟，在这样的环境，就算他没有抽过烟，也可以算是抽烟，他这样的人也很有可能会导致肺癌的。所以在这个社会里抽烟不是一个人的事情，而是对每一个人都有关系的事情。
+</TEXT>
+<CORRECTION>
+还有，有一个人上班，他的同事们一边抽烟一边工作，房间里弥漫着烟，在这样的环境里，就算他没有抽过烟，也可以算是抽烟，他这样的人也很有可能会得肺癌的。所以在这个社会里抽烟不是一个人的事情，而是和每一个人都有关系的事情。
+</CORRECTION>
+<ERROR start_off="39" end_off="39" type="M"></ERROR>
+<ERROR start_off="68" end_off="69" type="S"></ERROR>
+<ERROR start_off="95" end_off="95" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533150092_2_1x1">
+以我个人自小在新加坡成长的经验来说。
+</TEXT>
+<CORRECTION>
+以我个人自小在新加坡成长的经历来说。
+</CORRECTION>
+<ERROR start_off="14" end_off="15" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307332523200019_2_2x1">
+经济发展的时候我们应该先考虑到以后造成的环境上的后果。
+</TEXT>
+<CORRECTION>
+经济发展的时候我们应该先考虑到将造成的环境上的后果。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100250_2_10x1">
+如果一个社会要实现完全健康的社会，那么应该实现完全禁止吸烟的社会。
+</TEXT>
+<CORRECTION>
+如果一个社会要成为完全健康的社会，那么应该先成为完全禁止吸烟的社会。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+<ERROR start_off="22" end_off="22" type="M"></ERROR>
+<ERROR start_off="22" end_off="23" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200294_2_1x1">
+吸烟对身体有害，这一个真实是众所周知的。
+</TEXT>
+<CORRECTION>
+吸烟对身体有害，这一个事实是众所周知的。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201271_2_10x1">
+听这些流行歌曲，那我的心里可以变得很平安，很舒畅。
+</TEXT>
+<CORRECTION>
+听这些流行歌曲，那我的心里可以变得很平静，很舒畅。
+</CORRECTION>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200946_2_1x1">
+吸烟对个人健康和公众利益的影响非常大，现在人们才认识到吸烟对自己的健康和别人的健康带来了很大损失。
+</TEXT>
+<CORRECTION>
+吸烟对个人健康和公众利益的影响非常大，现在人们才认识到吸烟给自己的健康和别人的健康带来了很大损害。
+</CORRECTION>
+<ERROR start_off="30" end_off="30" type="S"></ERROR>
+<ERROR start_off="47" end_off="48" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200002_2_1x1">
+爱吸烟的人总是要注意这点。
+</TEXT>
+<CORRECTION>
+爱吸烟的人必须要注意这点。
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250186_2_4x1">
+他们在生理上也开始起了变化，对异性的好奇心，生理的某些需求……这些因素都很容易引导他们陷入早恋的网络，意志不坚定者，更容易因而荒废了学业。
+</TEXT>
+<CORRECTION>
+他们在生理上也开始起了变化，对异性的好奇心，生理的某些需求……这些因素都很容易引导他们陷入早恋的陷阱，意志不坚定者，更容易因而荒废了学业。
+</CORRECTION>
+<ERROR start_off="49" end_off="50" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100569_2_6x3">
+此外，韩国文化观光部5年前实行了在电视项目里不允许演员抽烟的行为。因为，让青少年带来不好的影响。目前大多数人们承认抽烟的行为不管社会氛围还是青少年养成良好的习惯影响大。
+</TEXT>
+<CORRECTION>
+此外，韩国文化观光部5年前实行了在电视节目里不允许演员抽烟的措施。因为，这给青少年带来不好的影响。目前大多数人们承认抽烟的行为不管对社会氛围还是对青少年养成良好的习惯都影响大。
+</CORRECTION>
+<ERROR start_off="20" end_off="21" type="S"></ERROR>
+<ERROR start_off="31" end_off="32" type="S"></ERROR>
+<ERROR start_off="37" end_off="37" type="M"></ERROR>
+<ERROR start_off="37" end_off="37" type="S"></ERROR>
+<ERROR start_off="55" end_off="55" type="R"></ERROR>
+<ERROR start_off="65" end_off="65" type="M"></ERROR>
+<ERROR start_off="71" end_off="71" type="M"></ERROR>
+<ERROR start_off="81" end_off="81" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250033_2_2x1">
+这也能减低他们对性别之间的不同生理构造、心里的想法等好奇心，从而降低一些不良行为像观看色情片，甚至采取一些不道德的行为。
+</TEXT>
+<CORRECTION>
+这也能减少他们对不同性别之间的不同生理构造、心里的想法等好奇心，从而降低一些不良行为像观看色情片，甚至采取一些不道德的行为。
+</CORRECTION>
+<ERROR start_off="4" end_off="5" type="S"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201875_2_1x2">
+吸烟现在世界的公共问题，还有这是人的人格问题。我们应该再想吸烟这部分的问题就是我的朋友的问题还有孩子的问题。
+</TEXT>
+<CORRECTION>
+吸烟现在是世界的公共问题，还有这是人的人格问题。我们应该认为吸烟这个问题就是我的朋友的问题还有孩子的问题。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="M"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="33" end_off="34" type="S"></ERROR>
+<ERROR start_off="35" end_off="35" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250105_2_2x2">
+在那，女生可以敞开胸心地交谈。在班上面前演讲时不害怕会出丑，反正大家都是女生。
+</TEXT>
+<CORRECTION>
+在那，女生可以敞开心胸地交谈。在班上同学面前演讲时不害怕会出丑，反正大家都是女生。
+</CORRECTION>
+<ERROR start_off="10" end_off="11" type="S"></ERROR>
+<ERROR start_off="19" end_off="19" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201776_2_2x1">
+如果这样的话，对个人与别人大家都好。
+</TEXT>
+<CORRECTION>
+如果这样的话，对个人与大家都好。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200319_2_1x1">
+为了避免这些问题禁止在公共场所抽烟或确立规定是必须要的。
+</TEXT>
+<CORRECTION>
+为了避免这些问题禁止在公共场所抽烟或制定规定是必要的。
+</CORRECTION>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+<ERROR start_off="24" end_off="26" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509602801150003_2_6x1">
+他们教我应该对待其他人才是对的。
+</TEXT>
+<CORRECTION>
+他们教我应该怎样对待其他人才是对的。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523101848_2_1x2">
+原来在学校有一个事情。大概十二月多时候我的学校有艺术节。
+</TEXT>
+<CORRECTION>
+原来在学校有一件事情。大概十二月多的时候我的学校有艺术节。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="S"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200513_2_3x3">
+我最近觉得我也是顾虑过头他人的人。我做这样的话，心情马上不太好。但是我的心里，要别人看我好。
+</TEXT>
+<CORRECTION>
+我最近觉得我也是顾虑他人过头的人。我这样做的话，心情马上不太好。但是我的心里，要别人看到我好。
+</CORRECTION>
+<ERROR start_off="11" end_off="14" type="W"></ERROR>
+<ERROR start_off="19" end_off="21" type="W"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217501100124_2_3x1">
+但是绿色食品的产量要比传统农作物要低，所以它的价格就比原有农作物要贵得多。
+</TEXT>
+<CORRECTION>
+但是绿色食品的产量要比传统农作物低，所以它的价格就比原有农作物要贵得多。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519150001_2_1x1">
+如果全世界的人都不吸烟，空气减少污染，人们将活得更健康，更快乐。
+</TEXT>
+<CORRECTION>
+如果全世界的人都不吸烟，空气污染减少，人们将活得更健康，更快乐。
+</CORRECTION>
+<ERROR start_off="15" end_off="18" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111540201626_2_3x1">
+如服装，若有一个很流行的形式，人们就赶快地追求。
+</TEXT>
+<CORRECTION>
+如服装，若有一个很流行的样式，人们就赶快地追求。
+</CORRECTION>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540150073_2_1x2">
+我就听取抓紧中学时代、大学时代老师们的教诲，就是阅读书籍要有计划要有系统要做笔记才能达到所谓有效阅读。开卷有益是好的但不是一切书籍对自己有益。
+</TEXT>
+<CORRECTION>
+我就听取了中学时代、大学时代老师们的教诲，就是阅读书籍要有计划要有系统要做笔记才能达到所谓的有效阅读。开卷有益是好的但不是一切书籍对自己都有益。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="M"></ERROR>
+<ERROR start_off="5" end_off="6" type="S"></ERROR>
+<ERROR start_off="47" end_off="47" type="M"></ERROR>
+<ERROR start_off="69" end_off="69" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250163_2_1x2">
+女生和男生的格性都不同。如果学生都不交流，男生什么会知道女生是什么的样人？
+</TEXT>
+<CORRECTION>
+女生和男生的性格都不同。如果学生都不交流，男生怎么会知道女生是什么样的人？
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200197_2_2x1">
+我爸爸喜欢看山登，所以我们常常爬山。
+</TEXT>
+<CORRECTION>
+我爸爸喜欢看登山，所以我们常常爬山。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310602501250004_2_3x2">
+早恋的形成有一方面是常常与男生交往，另一方面则是家长教育与控制结果。如果家长能很好的了解自己的孩子并加于教育，那么他们也就不会做不应该做的事。
+</TEXT>
+<CORRECTION>
+早恋的形成有一方面是常常与男生交往，另一方面则是家长教育与控制的结果。如果家长能很好的了解自己的孩子并加以教育，那么他们也就不会做不应该做的事。
+</CORRECTION>
+<ERROR start_off="32" end_off="32" type="M"></ERROR>
+<ERROR start_off="51" end_off="52" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101623_2_3x1">
+这些行为对不吸烟的人们和环境给了不好的影响。
+</TEXT>
+<CORRECTION>
+这些行为对不吸烟的人们和环境产生了不好的影响。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200093_2_3x1">
+作为对孩子的老师，父母应该努力奋斗。
+</TEXT>
+<CORRECTION>
+作为孩子的老师，父母应该努力奋斗。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519150029_2_1x2">
+而现在由市政府出台的新规定，这些烟民们在公共场所抽烟将受到对付，真是一件大快人心的举动。笔者认为，在抽烟已经是一件坏事，然而在公共地方大刺刺的抽烟更不应该。
+</TEXT>
+<CORRECTION>
+而现在有市政府出台的新规定，这些烟民们在公共场所抽烟将受到惩罚，真是一个大快人心的举动。笔者认为，抽烟已经是一件坏事，然而在公共地方光明正大的抽烟更不应该。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="S"></ERROR>
+<ERROR start_off="30" end_off="31" type="S"></ERROR>
+<ERROR start_off="36" end_off="36" type="S"></ERROR>
+<ERROR start_off="50" end_off="50" type="R"></ERROR>
+<ERROR start_off="68" end_off="70" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201798_2_2x1">
+我觉得没有人为了只一根要花钱。
+</TEXT>
+<CORRECTION>
+我觉得没有人只为了一根烟而花钱。
+</CORRECTION>
+<ERROR start_off="7" end_off="9" type="W"></ERROR>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+<ERROR start_off="12" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250098_2_4x1">
+首先在价值观上，彼此就可能有很大多的出入，恋爱时，可能不明显，但久而久之，双方就可能出现裂痕。
+</TEXT>
+<CORRECTION>
+首先在价值观上，彼此就可能有很大的出入，恋爱时，可能不明显，但久而久之，双方就可能出现裂痕。
+</CORRECTION>
+<ERROR start_off="17" end_off="17" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200320_2_1x1">
+吸烟是一种个人习惯，可是得同时重视吸烟对别人的不好影响，要得考虑周围的环境。
+</TEXT>
+<CORRECTION>
+吸烟是一种个人习惯，可是得同时重视吸烟对别人的不好的影响，得考虑周围的环境。
+</CORRECTION>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200787_2_1x1">
+就是家庭、公司、社会、国家进一步世界的问题。
+</TEXT>
+<CORRECTION>
+就是家庭、公司、社会、国家乃至世界的问题。
+</CORRECTION>
+<ERROR start_off="14" end_off="16" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200037_2_1x1">
+我在日本长大了，男女混合式教育上长大了。
+</TEXT>
+<CORRECTION>
+我在日本长大，也在男女混合式教育下长大。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="R"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="16" end_off="16" type="S"></ERROR>
+<ERROR start_off="19" end_off="19" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100446_2_3x1">
+他每天说，他埋怨是因为爱我。
+</TEXT>
+<CORRECTION>
+她每天说，她埋怨是因为爱我。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+<ERROR start_off="6" end_off="6" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200046_2_3x2">
+粮食多剩的地方可以主动地帮助贫困地区。而且现在我们的科学相当发达，可以发明以最低的成本获得最高的收获。
+</TEXT>
+<CORRECTION>
+粮食剩地多的地方可以主动地帮助贫困地区。而且现在我们的科学相当发达，可以发明以最低的成本获得最高的收获的办法。
+</CORRECTION>
+<ERROR start_off="3" end_off="4" type="S"></ERROR>
+<ERROR start_off="51" end_off="51" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100546_2_1x3">
+吸烟人的抽烟的原因是很多的。有的人是用抽烟解决自己的压力，有的人是模仿的行为的。但是无论如何在公共场所抽烟的行为是我们一定要根绝的社会上的毛病。
+</TEXT>
+<CORRECTION>
+吸烟者的抽烟的原因是很多的。有的人是用抽烟解决自己的压力，有的人是模仿别人的行为。但是无论如何在公共场所抽烟的行为是我们一定要杜绝的社会上的弊病。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="36" end_off="36" type="M"></ERROR>
+<ERROR start_off="39" end_off="39" type="R"></ERROR>
+<ERROR start_off="63" end_off="64" type="S"></ERROR>
+<ERROR start_off="70" end_off="71" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109542100869_2_11x1">
+假如你对烟火过敏为例子。
+</TEXT>
+<CORRECTION>
+就以你对烟火过敏为例子。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201072_2_2x1">
+但是，享受合适的程度的话，可以带来了好处。
+</TEXT>
+<CORRECTION>
+但是，享受合适的程度的话，可以带来好处。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525102027_2_1x2">
+父母是最早对孩子的成产生重大影响的。我对这句话表示同意的意见。
+</TEXT>
+<CORRECTION>
+父母是最早对孩子的成长产生重大影响的人。我对这句话表示同意。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="S"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+<ERROR start_off="28" end_off="30" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217525100041_2_5x1">
+好多专家都承认这些使用农药，化肥生产的食品给我们的健康很大的影响。
+</TEXT>
+<CORRECTION>
+好多专家都承认这样使用农药，化肥生产的食品给我们的健康很大的影响。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250037_2_1x1">
+我×××，男性，今年32岁，已婚，新加坡公民。
+</TEXT>
+<CORRECTION>
+我叫×××，男性，今年32岁，已婚，新加坡公民。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100044_2_1x3">
+现在很多国家，剧面这个问题，我的国家也以前常常讨论过使用化肥和农药生产的农作物对人危害到什么程度。吃完大量使用化肥和农药生产的农作物会引起使人患病甚至会影响于下一代。我们也知道使用化肥和农药，产量就会大大提高，不使用化肥和农药，农作物的产量又会大大降低，可是在世界上还有几亿人因缺少粮食而挨饿。
+</TEXT>
+<CORRECTION>
+现在很多国家，面临这个问题，我的国家以前也常常讨论使用化肥和农药生产的农作物对人危害到什么程度。吃完大量使用化肥和农药生产的农作物会使人患病甚至会影响下一代。我们也知道使用化肥和农药，产量就会大大提高，不使用化肥和农药，农作物的产量就会大大降低，可是在世界上还有几亿人因缺少粮食而挨饿。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+<ERROR start_off="19" end_off="21" type="W"></ERROR>
+<ERROR start_off="26" end_off="26" type="R"></ERROR>
+<ERROR start_off="68" end_off="69" type="R"></ERROR>
+<ERROR start_off="79" end_off="79" type="R"></ERROR>
+<ERROR start_off="121" end_off="121" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100355_2_2x5">
+我想这项规定不但是保持整洁，帮助青少年养成，而且对人伤害也有效。我这么说是因为我在小时候走路时，有吸烟者从前方到我这边走了。那时人太多，他不管人怎样，随便地吸烟了。他在走过我时，他没注意到他的烟碰到我头上。从那时候开始怕走着吸烟的人。
+</TEXT>
+<CORRECTION>
+我想这项规定不但是能保持城市整洁，帮助青少年养成好习惯，而且对防止伤害别人也有效。我这么说是因为我在小时候走路时，有吸烟者从前方往我这边走过来。那时人太多，他不管别人怎样，随便地吸烟。他在走过我身边时，没注意到他的烟碰到了我头上。我从那时候开始害怕走着吸烟的人。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="M"></ERROR>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+<ERROR start_off="22" end_off="22" type="M"></ERROR>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="26" end_off="26" type="S"></ERROR>
+<ERROR start_off="25" end_off="28" type="W"></ERROR>
+<ERROR start_off="56" end_off="56" type="S"></ERROR>
+<ERROR start_off="61" end_off="61" type="M"></ERROR>
+<ERROR start_off="61" end_off="61" type="R"></ERROR>
+<ERROR start_off="72" end_off="72" type="S"></ERROR>
+<ERROR start_off="81" end_off="81" type="R"></ERROR>
+<ERROR start_off="88" end_off="88" type="M"></ERROR>
+<ERROR start_off="90" end_off="90" type="R"></ERROR>
+<ERROR start_off="100" end_off="100" type="M"></ERROR>
+<ERROR start_off="104" end_off="104" type="M"></ERROR>
+<ERROR start_off="110" end_off="110" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215448250022_2_5x1">
+宇航员对外太空所做的考察中，已经发现了由于失去地球引力的影响和无污染的环境，外太空的一些星球上十分适宜于植物的生长，科学家们预测未来的外星球食品有可能会是绿色食品的延伸。
+</TEXT>
+<CORRECTION>
+宇航员对外太空所做的考察中，已经发现了由于失去地球引力的影响和无污染的环境，外太空的一些星球上十分适宜于植物的生长，科学家预测未来的外星球食品有可能会是绿色食品的延伸。
+</CORRECTION>
+<ERROR start_off="62" end_off="62" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525100197_2_4x3">
+过了一会儿，在很短时间内一支烟消灭很多东西。人的注意力不是完美的，有时候犯错误。但我们应该重视那小小的烟引起的很大的损害。
+</TEXT>
+<CORRECTION>
+过了一会儿，在很短时间内一支烟毁灭很多东西。人不是完美的，有时候犯错误。但我们应该重视那小小的烟引起的很大的危害。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+<ERROR start_off="24" end_off="27" type="R"></ERROR>
+<ERROR start_off="59" end_off="60" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200098_2_1x3">
+这个问题应该先从国家开起解决。因为大部分人们都想吃有利的食品，但贫困的人也不可忽视看，所以国家农产部门先把这个问题解决。对两个方面都没有损害才这样人们都会活得好。
+</TEXT>
+<CORRECTION>
+这个问题应该先从国家开始解决。因为大部分人们都想吃有利的食品，但贫困的人也不可忽视，所以国家农产部门先把这个问题解决好。对两个方面都没有损害这样人们才都会活得好。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="S"></ERROR>
+<ERROR start_off="42" end_off="42" type="R"></ERROR>
+<ERROR start_off="60" end_off="60" type="M"></ERROR>
+<ERROR start_off="71" end_off="75" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405261542100077_2_4x4">
+再次，吸烟还会花不少钱，至少对某个人也增加负担。那么每个能想到这点的话，一年也会节省不少金钱。这是对个人来说的，如果整个社会而言，这是一笔大钱。我们能用这笔钱去做有有的事情，比如帮助困难的学生或去解决社会各种各样的问题。
+</TEXT>
+<CORRECTION>
+再次，吸烟还会花不少钱，至少给个人也增加负担。如果每个能想到这点的话，一年也会节省不少金钱。这是对个人来说的，如果对整个社会而言，这是一笔大钱。我们能用这笔钱去做有用的事情，比如帮助困难的学生或去解决社会各种各样的问题。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="S"></ERROR>
+<ERROR start_off="16" end_off="16" type="R"></ERROR>
+<ERROR start_off="25" end_off="26" type="S"></ERROR>
+<ERROR start_off="59" end_off="59" type="M"></ERROR>
+<ERROR start_off="82" end_off="83" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109512202592_2_1x3">
+下面我来谈一谈我“第一任老师”所教我的知识。第一，“慢慢一步一步来”。记得我小时候，学走路的时候常常倒在地上，每次就要大哭一声，妈妈爸爸就会抱着我说：“慢慢一步一步来，别着急。
+</TEXT>
+<CORRECTION>
+下面我来谈一谈我的“第一任老师”所教的知识。第一，“慢慢地一步一步来”。记得我小时候，学走路的时候常常倒在地上，每次就要大哭一声，妈妈爸爸就会抱着我说：“慢慢地一步一步来，别着急。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="18" end_off="18" type="R"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="79" end_off="79" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100381_2_2x1">
+政府采取什么样的措施对公共场所吸烟问题，吸烟者的数量和青少年吸烟问题都起巨大的作用。
+</TEXT>
+<CORRECTION>
+政府采取什么样的措施对解决公共场所吸烟问题，吸烟者的数量和青少年吸烟问题都起巨大的作用。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+<ERROR start_off="11" end_off="11" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250013_2_1x2">
+吸烟对个人、对家庭、对社会带来了不利的损失。现在，在家庭里，在公共汽车上，在公共场所中都很严厉地反对吸烟，无论到哪里谁都不愿意闻到烟臭。
+</TEXT>
+<CORRECTION>
+吸烟给个人、给家庭、给社会带来了不利的影响。现在，在家庭里，在公共汽车上，在公共场所中人们都很严厉地反对吸烟，无论到哪里谁都不愿意闻到烟臭。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="7" end_off="7" type="S"></ERROR>
+<ERROR start_off="11" end_off="11" type="S"></ERROR>
+<ERROR start_off="20" end_off="21" type="S"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100049_2_4x1">
+也说得很快、节奏也很快。
+</TEXT>
+<CORRECTION>
+说得也很快、节奏也很快。
+</CORRECTION>
+<ERROR start_off="1" end_off="3" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201108_2_1x1">
+我是喜欢听音乐的人，是我的爱好。
+</TEXT>
+<CORRECTION>
+我是喜欢听音乐的人，听音乐是我的爱好。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100250_2_12x3">
+但是实际上这种措施还没实现。因为社会还承认吸烟人的权利。政府尽管实现像文章一般的措施，好像最近的年轻人还是有吸烟的现象。
+</TEXT>
+<CORRECTION>
+但是实际上这种情况还没实现。因为社会还维护吸烟人的权利。政府尽管实施了像文章中一样的措施，好像最近的年轻人还是有吸烟的现象。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+<ERROR start_off="20" end_off="21" type="S"></ERROR>
+<ERROR start_off="33" end_off="34" type="S"></ERROR>
+<ERROR start_off="35" end_off="35" type="M"></ERROR>
+<ERROR start_off="38" end_off="38" type="M"></ERROR>
+<ERROR start_off="38" end_off="39" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201858_2_2x1">
+这是对吸烟者来说越来越不方便。
+</TEXT>
+<CORRECTION>
+这对吸烟者来说越来越不方便。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100651_2_2x1">
+很多人多知道抽烟是对健康有害的，但是人们为什么一直在抽这个没有什么好处的东西呢？
+</TEXT>
+<CORRECTION>
+很多人知道抽烟是对健康有害的，但是人们为什么一直在抽这个没有什么好处的东西呢？
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307209523100002_2_3x1">
+我们必须通过任何手段来确保每一个人都不会挨饿然后再考虑绿色食品。
+</TEXT>
+<CORRECTION>
+我们必须通过所有手段来确保每一个人都不会挨饿然后再考虑绿色食品。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307206523200051_2_2x1">
+如果我是个挨饿的人，但有了粮食一就是用化肥和农药的，我吃的话，农药渐渐包在我的身体里，一直这样下去的话，我也会死的。
+</TEXT>
+<CORRECTION>
+如果我是个挨饿的人，但有了依旧是用化肥和农药的粮食，我吃的话，农药渐渐留在我的身体里，一直这样下去的话，我也会死的。
+</CORRECTION>
+<ERROR start_off="14" end_off="25" type="W"></ERROR>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+<ERROR start_off="36" end_off="36" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100334_2_3x2">
+先听他们的说话，然后我说跟他们一样的语言。其他的科目也有。
+</TEXT>
+<CORRECTION>
+先听他们说话，然后我说跟他们一样的语言。其他的方面也一样。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="R"></ERROR>
+<ERROR start_off="25" end_off="26" type="S"></ERROR>
+<ERROR start_off="28" end_off="28" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201839_2_8x2">
+我听说我妈妈的同学她已经吸烟了30多年，戒也戒不了。他终于去世于癌症，都是由烟所得到的结果，对吸烟者来说这样的后果是不可避免的。
+</TEXT>
+<CORRECTION>
+我听说我妈妈的同学吸烟已经30多年了，戒也戒不了。她最终因癌症去世，都是由烟造成的结果，对吸烟者来说这样的后果是不可避免的。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="11" end_off="14" type="W"></ERROR>
+<ERROR start_off="15" end_off="15" type="R"></ERROR>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+<ERROR start_off="30" end_off="34" type="W"></ERROR>
+<ERROR start_off="32" end_off="32" type="S"></ERROR>
+<ERROR start_off="40" end_off="40" type="R"></ERROR>
+<ERROR start_off="41" end_off="42" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101771_2_3x1">
+这一新措施在人口密集的商业中心已开始实施，但是这只是走一步而已，还有很长路要走。
+</TEXT>
+<CORRECTION>
+这一新措施在人口密集的商业中心已开始实施，但是这只是第一步而已，还有很长的路要走。
+</CORRECTION>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+<ERROR start_off="37" end_off="37" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250020_2_1x1">
+所以每个国家都能够实行这一新措施的话，我看全世界污染少，人们也健康多。
+</TEXT>
+<CORRECTION>
+所以每个国家都能够实行这一新措施的话，我看全世界污染会减少，人们也会健康得多。
+</CORRECTION>
+<ERROR start_off="27" end_off="27" type="M"></ERROR>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+<ERROR start_off="32" end_off="32" type="M"></ERROR>
+<ERROR start_off="34" end_off="34" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405201523100212_2_7x2">
+除了对人体有害之外可能会破坏国家形象。如果吸烟者增长的话，那高兴的人只有卖烟的人。
+</TEXT>
+<CORRECTION>
+吸烟除了对人体有害之外可能会破坏国家形象。如果吸烟者增加的话，那高兴的人只有卖烟的人。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="M"></ERROR>
+<ERROR start_off="25" end_off="26" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201897_2_4x2">
+对妇女来说，如果妈妈抽烟的话，对肚子里的孩子影响很大的伤害。第二，如果在公共场所抽烟的话，会影响非吸烟的人。
+</TEXT>
+<CORRECTION>
+对妇女来说，如果妈妈抽烟的话，对肚子里的孩子造成很大的伤害。第二，如果在公共场所抽烟的话，会影响不吸烟的人。
+</CORRECTION>
+<ERROR start_off="23" end_off="24" type="S"></ERROR>
+<ERROR start_off="49" end_off="49" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307206525100019_2_5x1">
+但是人们挨饿的国家不是这样的。
+</TEXT>
+<CORRECTION>
+但是人民挨饿的国家不是这样的。
+</CORRECTION>
+<ERROR start_off="3" end_off="4" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525200106_2_3x1">
+可是时间过去，我越来越知道吸烟给周围的人各种的恶害。
+</TEXT>
+<CORRECTION>
+可是随着时间过去，我越来越知道吸烟给周围的人造成的各种危害。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+<ERROR start_off="21" end_off="21" type="M"></ERROR>
+<ERROR start_off="21" end_off="21" type="M"></ERROR>
+<ERROR start_off="23" end_off="23" type="R"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201258_2_2x2">
+到处都有“公共场所”，在公园吸了个烟也不行吗？且而有惩罚措施？
+</TEXT>
+<CORRECTION>
+到处都有“公共场所”，在公园吸个烟也不行吗？而且有惩罚措施？
+</CORRECTION>
+<ERROR start_off="16" end_off="16" type="R"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200404140529200134_2_2x1">
+我们可能认为收入最多的人大部分都是商人、管治理人等。
+</TEXT>
+<CORRECTION>
+我们可能认为收入最多的人大部分都是商人、管理人员等。
+</CORRECTION>
+<ERROR start_off="22" end_off="24" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200280_2_6x1">
+其实已发生过这样的问题。
+</TEXT>
+<CORRECTION>
+其实已发生过这样的问题了。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540250035_2_3x2">
+虽然在生活实践中往往会遇到种种困境，但保持冷静态度还是无比之上策。如果我们真能够锻炼出正确的概来面对人生的一切，那么无论什么事情做起来也显得轻松简单了。
+</TEXT>
+<CORRECTION>
+虽然在生活实践中往往会遇到种种困难，但保持冷静的态度还是上策。如果我们真能够树立起正确的态度来面对人生的一切，那么无论什么事情做起来都显得轻松简单了。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="S"></ERROR>
+<ERROR start_off="24" end_off="24" type="M"></ERROR>
+<ERROR start_off="28" end_off="30" type="R"></ERROR>
+<ERROR start_off="41" end_off="43" type="S"></ERROR>
+<ERROR start_off="47" end_off="47" type="S"></ERROR>
+<ERROR start_off="68" end_off="68" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505024634200394_2_3x3">
+从孩子牙牙学语的第一天，家长就要有给他（她）们良好语音影响的意识，让他们学到正确的发音。孩子有意识和无意识地在观察父母，父母的一言一行，为人处世都会在孩子的心目打下烙印。有修养，重道德，有知识的父母，他们的孩子在一个良好生活中成长，并把他们父母辈所具有的美德发扬光大。
+</TEXT>
+<CORRECTION>
+从孩子牙牙学语的第一天起，家长就要有给他（她）们良好语音影响的意识，让他们学到正确的发音。孩子有意识和无意识地在观察父母，父母的一言一行，为人处世的方式都会在孩子的心目中打下烙印。有修养，重道德，有知识的父母，他们的孩子在一个良好的生活中成长，并把他们父母辈所具有的美德发扬光大。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="M"></ERROR>
+<ERROR start_off="73" end_off="73" type="M"></ERROR>
+<ERROR start_off="81" end_off="81" type="M"></ERROR>
+<ERROR start_off="111" end_off="111" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100128_2_2x1">
+为了让它更高处走，我们应该对流行音乐多关心，该批评时批评，该表扬时表扬，这样就对个人，还社会都有益处，都能做出贡献。
+</TEXT>
+<CORRECTION>
+为了让让它更高处走，我们应该对流行音乐多关心，该批评时批评，该表扬时表扬，这样就对个人，还有社会都有益处，都能做出贡献。
+</CORRECTION>
+<ERROR start_off="4" end_off="4" type="M"></ERROR>
+<ERROR start_off="44" end_off="44" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100632_2_1x2">
+以前，抽烟者随地抽烟了，比如说，在路上想抽烟就抽烟，还有在车上，在大楼里面等等。可是现在不行，有的地方不能抽烟，而且抽烟的话，被市政府惩罚。
+</TEXT>
+<CORRECTION>
+以前，抽烟者随处抽烟，比如说，在路上想抽烟就抽烟，还有在车上，在大楼里面等等。可是现在不行，有的地方不能抽烟，而且抽烟的话，会被市政府惩罚。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="11" end_off="11" type="R"></ERROR>
+<ERROR start_off="64" end_off="64" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215523250015_2_8x3">
+使用农药也是比较危险的部分，我们不可以忽视农药量。为了我们而为了保护美丽的环境，应该少用农药。因为我想不使用化肥和农药是不可能的，而且为了那么多数的饥饿人们应该生产很多粮食。
+</TEXT>
+<CORRECTION>
+使用农药也是比较危险的，我们不可以忽视农药量。为了我们为了保护美丽的环境，应该少用农药。因为我想不使用化肥和农药是不可能的，而且为了那么多的饥饿的人们应该生产很多粮食。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="R"></ERROR>
+<ERROR start_off="30" end_off="30" type="R"></ERROR>
+<ERROR start_off="72" end_off="73" type="S"></ERROR>
+<ERROR start_off="77" end_off="77" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200513_2_3x3">
+这是对青少年肯定有好处。如果年龄少时开始抽烟的话，越少越身体不好。但社会保持戒烟的话，帮助青少年养成良好习惯。
+</TEXT>
+<CORRECTION>
+这对青少年肯定有好处。如果年龄小时开始抽烟的话，越小身体越不好。但社会保持戒烟的话，可以帮助青少年养成良好习惯。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="R"></ERROR>
+<ERROR start_off="17" end_off="17" type="S"></ERROR>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+<ERROR start_off="28" end_off="30" type="W"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200005_2_9x1">
+我父母的爱好是去美术馆参观去看表演到了。
+</TEXT>
+<CORRECTION>
+我父母的爱好是去美术馆参观去看表演。
+</CORRECTION>
+<ERROR start_off="18" end_off="19" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100823_2_1x2">
+第一个是，直接吸烟上的问题。三十年以上抽，一天一盒以上的吸烟者更容易得到严重的病毒比不抽的人。
+</TEXT>
+<CORRECTION>
+第一个是，直接吸烟的问题。抽三十年以上，一天一盒以上的吸烟者比不抽的人更容易得严重的病。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="15" end_off="20" type="W"></ERROR>
+<ERROR start_off="36" end_off="36" type="R"></ERROR>
+<ERROR start_off="40" end_off="41" type="S"></ERROR>
+<ERROR start_off="34" end_off="46" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510650523250187_2_2x1">
+这样，你也可以简接的接受外国的文化，同时如果你真正喜欢上那个歌曲而对于那个国家原来的歌曲上在网上或不管什么方法再调查一下，你就会更好地了解到别的国家的很多事情。
+</TEXT>
+<CORRECTION>
+这样，你也可以间接地接受外国的文化，同时如果你真正喜欢上那首歌曲而对那个国家原来的歌曲通过上网或不管什么方法再调查一下，你就会更好地了解到别的国家的很多事情。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+<ERROR start_off="10" end_off="10" type="S"></ERROR>
+<ERROR start_off="30" end_off="30" type="S"></ERROR>
+<ERROR start_off="34" end_off="35" type="S"></ERROR>
+<ERROR start_off="45" end_off="45" type="M"></ERROR>
+<ERROR start_off="46" end_off="48" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200932_2_5x1">
+因为吸烟同时损害别人。
+</TEXT>
+<CORRECTION>
+因为吸烟同时会损害别人的健康。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="M"></ERROR>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405680519150048_2_3x3">
+它虽然可暂时帮到我们松驰心情但它也带来给我们极大的“破坏性”。那就是我们最宝贵的健康，一个是有钱也无法得到的宝物。香烟本身已含有过多的毒质，当人吸香烟时无疑是把毒素一一地放入我们的体内，虽然那时候你会感觉到无比地快活但你却不知道你的寿命却比一般人去得快。
+</TEXT>
+<CORRECTION>
+它虽然可暂时帮助我们放松心情但它也给我们带来极大的“破坏性”。那就是我们最宝贵的健康，一个有钱也无法得到的宝物。香烟本身已含有过多的毒素，当人吸香烟时无疑是把毒素一一地放入我们的体内，虽然那时候你会感觉到无比地快活但你却不知道你的寿命却比一般人少得多。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+<ERROR start_off="18" end_off="22" type="W"></ERROR>
+<ERROR start_off="46" end_off="46" type="R"></ERROR>
+<ERROR start_off="68" end_off="69" type="S"></ERROR>
+<ERROR start_off="119" end_off="119" type="R"></ERROR>
+<ERROR start_off="124" end_off="126" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525100320_2_2x1">
+随着吸烟带来所对健康问题的知识广泛，人们逐渐意识到了其深刻性。
+</TEXT>
+<CORRECTION>
+随着对吸烟所带来健康问题的广泛认识，人们逐渐意识到了其严峻性。
+</CORRECTION>
+<ERROR start_off="3" end_off="8" type="W"></ERROR>
+<ERROR start_off="14" end_off="15" type="S"></ERROR>
+<ERROR start_off="14" end_off="17" type="W"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100374_2_5x1">
+看这样不能说是小习惯了。
+</TEXT>
+<CORRECTION>
+这样看我们不能说是小习惯了。
+</CORRECTION>
+<ERROR start_off="1" end_off="3" type="W"></ERROR>
+<ERROR start_off="4" end_off="4" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200826_2_2x2">
+不管有个人的影响，还会给别人带来不好的影响。得到这种不好的影响，结果会给个人带来生命的危险或不能正常的生活。
+</TEXT>
+<CORRECTION>
+不仅有个人的影响，还会给别人带来不好的影响。受到这种不好的影响，结果会给个人带来生命危险或不能正常地生活。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+<ERROR start_off="23" end_off="24" type="S"></ERROR>
+<ERROR start_off="43" end_off="43" type="R"></ERROR>
+<ERROR start_off="51" end_off="51" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250061_2_1x1">
+有的是通过亲戚朋友介绍的：有的是从小一起长大的玩伴，随着年龄的增长而自然走在一起；有的则是通过上网或婚姻介绍所介绍的而进入谈恋爱到最后结婚。
+</TEXT>
+<CORRECTION>
+有的是通过亲戚朋友介绍的：有的是从小一起长大的玩伴，随着年龄的增长而自然走在一起；有的则是通过上网或婚姻介绍所介绍而进入谈恋爱到最后结婚。
+</CORRECTION>
+<ERROR start_off="58" end_off="58" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109520200966_2_1x1">
+最近几年来各国都开始非常关注个“吸烟对个人健康和公众利益的影响”问题并极积采取一些措施。
+</TEXT>
+<CORRECTION>
+最近几年来各国都开始非常关注“吸烟对个人健康和公众利益的影响”问题并极积采取一些措施。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307209523100009_2_4x1">
+如果我们只顾着我们自己的健康而忽略了这些人是残忍的害死了这些人。
+</TEXT>
+<CORRECTION>
+如果我们只顾着我们自己的健康而忽略了这些人是残忍地害死了这些人。
+</CORRECTION>
+<ERROR start_off="25" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250005_2_1x2">
+现在每一个国家每一个城市都重视这个问题，所以定出了很多禁止抽规定行为，有些罚款，有些做严厉的惩罚。这对吸烟者也好对大家都有益处。
+</TEXT>
+<CORRECTION>
+现在每一个国家每一个城市都重视这个问题，所以定出了很多禁止抽烟的行为，有些罚款，有些做严厉的惩罚。这对吸烟者和大家都有益处。
+</CORRECTION>
+<ERROR start_off="31" end_off="32" type="S"></ERROR>
+<ERROR start_off="55" end_off="56" type="R"></ERROR>
+<ERROR start_off="57" end_off="57" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100621_2_13x1">
+但是随孩子长大，孩子说得越来越多，也越来越内容富韦多彩。
+</TEXT>
+<CORRECTION>
+但是随着孩子长大，孩子说得越来越多，内容也越来越丰富多彩。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="18" end_off="23" type="W"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525202398_2_1x2">
+父母是最早对孩子的成长产生重大影响人。因为孩子还不上学时，接触大人的机会较小，所以父母的兴趣爱好、思想观念、行为举止，在孩子心目中不知不觉地打下深深的烙印。
+</TEXT>
+<CORRECTION>
+父母是最早对孩子的成长产生重大影响的人。因为孩子还没上学时，接触大人的机会较少，所以父母的兴趣爱好、思想观念、行为举止，在孩子心目中不知不觉地打下深深的烙印。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+<ERROR start_off="25" end_off="25" type="S"></ERROR>
+<ERROR start_off="38" end_off="38" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201413_2_4x1">
+开会也不能缺少那支烟的原因，我就几乎放弃了吸收新鲜空气的幸福。
+</TEXT>
+<CORRECTION>
+他们开会也不能缺少那支烟，我就几乎放弃了呼吸新鲜空气的幸福。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="M"></ERROR>
+<ERROR start_off="11" end_off="13" type="R"></ERROR>
+<ERROR start_off="22" end_off="23" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250030_2_2x1">
+我的语言及表达能力是我的优势，精通三种语言，英语，华语及日语。
+</TEXT>
+<CORRECTION>
+我的语言及表达能力是我的优势，我精通三种语言，英语，华语及日语。
+</CORRECTION>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250013_2_3x1">
+如果大人到前面抽烟，会引起孩子的注意，从而跟着学抽，对孩子的学习、健康、生活、习惯将来都会受到很大的不良影响。
+</TEXT>
+<CORRECTION>
+如果大人到前面抽烟，会引起孩子的注意，从而跟着学抽，孩子的学习、健康、生活、习惯将来都会受到很大的不良影响。
+</CORRECTION>
+<ERROR start_off="27" end_off="27" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200022_2_2x3">
+我认为每个流行歌包含那个时代，所以听那个国家的流行歌能知道那个时代的年轻人的风格和思想。比如说韩国2002年界世界杯的时候我们一般都唱的是为韩国足球选手的加油歌。当时从小孩到大人都唱这首歌，没有人不知道这首歌看这个情况我们可以知道一个流行歌带着国家的情况和国民的关心事儿是什么。
+</TEXT>
+<CORRECTION>
+我认为每个流行歌包含那个时代的信息，所以听那个国家的流行歌能知道那个时代的年轻人的风格和思想。比如说韩国2002年界世界杯的时候我们一般都唱的是为韩国足球选手加油的歌。当时从小孩到大人都唱这首歌，没有人不知道这首歌看这个情况我们可以知道一个流行歌反映国家的情况和国民的的歌。当时从小孩到大人都唱这首歌，没有人不知道这首歌看这个情况我们可以知道一个流行歌反映国家的情况和国民关心的事儿是什么。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+<ERROR start_off="77" end_off="79" type="W"></ERROR>
+<ERROR start_off="121" end_off="122" type="S"></ERROR>
+<ERROR start_off="131" end_off="133" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201452_2_9x1">
+有一天突然我咳嗽的厉害，爸妈带我去医院，医生问：“您的家里边有吸烟的人吗？
+</TEXT>
+<CORRECTION>
+有一天我突然咳嗽得厉害，爸妈带我去医院，医生问：“您的家里边有吸烟的人吗？
+</CORRECTION>
+<ERROR start_off="4" end_off="6" type="W"></ERROR>
+<ERROR start_off="9" end_off="9" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200235_2_1x1">
+我们有一个言“吸烟有百害没有利益”我同意这个看法。
+</TEXT>
+<CORRECTION>
+我们有一句话“吸烟有百害没有一利”我同意这个看法。
+</CORRECTION>
+<ERROR start_off="4" end_off="6" type="S"></ERROR>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525100260_2_6x1">
+别担心，秋叶原地区的政府租了个大厦的整个儿一层，装修将它成为专门吸烟室，可怜的“萤火虫”只能生存在那里边哪！
+</TEXT>
+<CORRECTION>
+别担心，秋叶原地区的政府租了个大厦的整个儿一层，将它装修成为专门吸烟室，可怜的“萤火虫”只能生存在那里边哪！
+</CORRECTION>
+<ERROR start_off="25" end_off="28" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509105922200007_2_4x1">
+可是一个吸烟者的烟还影响到旁边无关的人。
+</TEXT>
+<CORRECTION>
+可是一个吸烟者吐出的烟还会影响到旁边无关的人。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="M"></ERROR>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250019_2_1x1">
+我认为人啊长大了有自己的看法或想法，爱上一个人也许要思考他是不是自己理想中的那种人相识了后也需要双方了解不然结婚后会出不少麻烦的事来。
+</TEXT>
+<CORRECTION>
+我认为人长大了有自己的看法或想法，爱上一个人也许要考虑他是不是自己理想中的那种人相识了之后也需要双方了解不然结婚后会生出不少麻烦的事来。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="R"></ERROR>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+<ERROR start_off="45" end_off="45" type="M"></ERROR>
+<ERROR start_off="59" end_off="59" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200209_2_2x2">
+因为对个人来说对身体不好。而且，在公众场所在不应该吸烟。
+</TEXT>
+<CORRECTION>
+因为对个人来说吸烟对身体不好。而且，在公众场所更不应该吸烟。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="M"></ERROR>
+<ERROR start_off="22" end_off="22" type="R"></ERROR>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310576525200002_2_1x1">
+总之，我很赞成男女分班的看法，这样才可以学生好好学习，家长很安心，互相会自身投入美好的未来。
+</TEXT>
+<CORRECTION>
+总之，我很赞成男女分班的看法，这样学生才可以好好学习，家长才很安心，互相能全身心奔向美好的未来。
+</CORRECTION>
+<ERROR start_off="18" end_off="22" type="W"></ERROR>
+<ERROR start_off="30" end_off="30" type="M"></ERROR>
+<ERROR start_off="36" end_off="36" type="S"></ERROR>
+<ERROR start_off="37" end_off="38" type="S"></ERROR>
+<ERROR start_off="39" end_off="40" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523201151_2_1x1">
+对于吸烟者的立场说，这是很艰苦的情况，但是一定会有助戒吸烟的。
+</TEXT>
+<CORRECTION>
+站在吸烟者的立场说，这是很艰苦的情况，但是一定会有助于戒烟的。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="S"></ERROR>
+<ERROR start_off="27" end_off="27" type="M"></ERROR>
+<ERROR start_off="28" end_off="29" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523200028_2_6x3">
+可如果不用化肥和农药，那就会农作物的产量大大降低。现在世界上还有几亿人因缺少粮食而挨饿，甚至有的国家人民就饿死。这样的话，还使用化肥和农药提高生产量就防止这样的情况。
+</TEXT>
+<CORRECTION>
+可如果不用化肥和农药，那农作物的产量就会大大降低。现在世界上还有几亿人因缺少粮食而挨饿，甚至有的国家人民饿死。这样的话，继续使用化肥和农药提高生产量就会防止这样的情况。
+</CORRECTION>
+<ERROR start_off="13" end_off="20" type="W"></ERROR>
+<ERROR start_off="53" end_off="53" type="R"></ERROR>
+<ERROR start_off="62" end_off="62" type="S"></ERROR>
+<ERROR start_off="76" end_off="76" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100203_2_3x1">
+这是对那些低年龄的人的教育是一种不好的影响。
+</TEXT>
+<CORRECTION>
+这对那些低年龄的人的教育是一种不好的影响。
+</CORRECTION>
+<ERROR start_off="2" end_off="2" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510529529251030_2_1x2">
+有些人喜欢流行歌曲，特别从外埠来的歌星，更不用说。有时一张票价价高到数千朱，也不感到贵，只要能到场欣赏，享受一下，就是毕生的荣幸。
+</TEXT>
+<CORRECTION>
+有些人喜欢流行歌曲，特别是从外埠来的歌星，更不用说。有时一张票价价高到数千元，也不感到贵，只要能到场欣赏，享受一下，就是毕生的荣幸。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+<ERROR start_off="37" end_off="37" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100637_2_2x2">
+可是随着人们的经济发展，人们的思想也提高了。90年代开始韩国也有在公共场所边走边抽烟的人将被罚款。
+</TEXT>
+<CORRECTION>
+可是随着人们的经济的发展，人们的思想水平也提高了。从90年代开始韩国也有了在公共场所边走边抽烟的人将被罚款的规定。
+</CORRECTION>
+<ERROR start_off="10" end_off="10" type="M"></ERROR>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+<ERROR start_off="33" end_off="33" type="M"></ERROR>
+<ERROR start_off="49" end_off="49" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307215523250019_2_6x1">
+所以我们拿自己的钱应该救他们的命。
+</TEXT>
+<CORRECTION>
+所以我们应该拿自己的钱救他们的命。
+</CORRECTION>
+<ERROR start_off="5" end_off="11" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201877_2_6x2">
+但结果呢，他不能完全地戒烟了。他明明知道抽烟会损害身体健康，可拿他来说，一抽就戒不了。
+</TEXT>
+<CORRECTION>
+但结果呢，他不能完全地戒烟。他明明知道抽烟会损害身体健康，可对他来说，一抽就戒不了。
+</CORRECTION>
+<ERROR start_off="14" end_off="14" type="R"></ERROR>
+<ERROR start_off="32" end_off="32" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522150039_2_2x1">
+在众多相识的方式里面我觉得从朋友开始，然后顺序渐进的方式最自然也最稳固。
+</TEXT>
+<CORRECTION>
+在众多相识的方式里面我觉得从朋友开始，然后循序渐进的方式最自然也最稳固。
+</CORRECTION>
+<ERROR start_off="22" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510650634150188_2_2x3">
+很多人，尤其是年轻人，不但喜欢上了这种现代艺术，更喜欢上了它的艺术家流行音乐的歌星。流行音乐是一种谁都能感受的休闲方式。有的歌手不但在全国有名，在国外，甚至在全世界变的有名，关心他们的音乐，关心他们的生活的人非常多。
+</TEXT>
+<CORRECTION>
+很多人，尤其是年轻人，不但喜欢上了这种现代艺术，更喜欢上了它的艺术家和流行音乐的歌星。流行音乐是一种谁都能享受的休闲方式。有的歌手不但在全国有名，在国外，甚至在全世界也很有名，关心他们的音乐，关心他们的生活的人非常多。
+</CORRECTION>
+<ERROR start_off="35" end_off="35" type="M"></ERROR>
+<ERROR start_off="53" end_off="54" type="S"></ERROR>
+<ERROR start_off="83" end_off="84" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505951501150007_2_1x1">
+有时候和一些已经结婚的朋友聊天，我会问他们当初是怎么样认识他们爱人的。
+</TEXT>
+<CORRECTION>
+有时候和一些已经结婚的朋友聊天，我会问他们当初是怎么样认识他们的爱人的。
+</CORRECTION>
+<ERROR start_off="32" end_off="32" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200153_2_4x1">
+想喜欢歌星那是一个无聊的事，你再怎么喜欢他，他却不理你，所以他们想这样无顾的喜欢才是最没事干的。
+</TEXT>
+<CORRECTION>
+想喜欢歌星那是一件无聊的事，你再怎么喜欢他，他却不理你，所以他们想这样无聊的喜欢才是最没事干的。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="S"></ERROR>
+<ERROR start_off="36" end_off="37" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525101452_2_5x1">
+父母做事都好的话，孩子也从父母学到的东西很多。
+</TEXT>
+<CORRECTION>
+父母做事都好的话，孩子从父母那儿学到的东西也很多。
+</CORRECTION>
+<ERROR start_off="12" end_off="20" type="W"></ERROR>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101440_2_1x1">
+但是依我看，关键是吸烟者要改变意识要不然这种不必要的制度，永远会存下去。
+</TEXT>
+<CORRECTION>
+但是依我看，关键是吸烟者要改变意识要不然这种不必要的制度，永远会存在下去。
+</CORRECTION>
+<ERROR start_off="33" end_off="33" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307206525100054_2_2x3">
+一般在发达国家是过生活的人平时不意识到饥饿的恐怖。从小，家里不吃饭或吃得少，会收到父母的不高兴或批评。长大后在学校下课时，能随时随地去食食店，以较便宜的价格能够买汉堡。
+</TEXT>
+<CORRECTION>
+一般在发达国家过生活的人平时意识不到饥饿的恐怖。从小，孩子在家里不吃饭或吃得少，会受到父母的不高兴或批评。长大后在学校下课时，能随时随地去食品店，以较便宜的价格能够买汉堡。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="R"></ERROR>
+<ERROR start_off="16" end_off="18" type="W"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="40" end_off="41" type="S"></ERROR>
+<ERROR start_off="69" end_off="70" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100431_2_1x1">
+有一天，我看到了用闪烁的小灯点缀的台上表演。
+</TEXT>
+<CORRECTION>
+有一天，我看到了她在用闪烁的小灯点缀的台上表演。
+</CORRECTION>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100794_2_5x1">
+流行歌曲有很多好外，相反有很多缺点，特别是给学生不好的影向。
+</TEXT>
+<CORRECTION>
+流行歌曲有很多好外，也有很多缺点，特别是给学生不好的影向。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109821101858_2_4x1">
+父母的教育方面各种各样。
+</TEXT>
+<CORRECTION>
+父母的教育方式各种各样。
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100629_2_1x1">
+我表示欢迎对吸烟者最为严厉的惩罚措施。我认为抽烟者他们没有权力影响不抽烟者的呼吸。
+</TEXT>
+<CORRECTION>
+我欢迎对吸烟者最为严厉的惩罚措施。我认为抽烟者没有权力影响不抽烟者的呼吸。
+</CORRECTION>
+<ERROR start_off="2" end_off="3" type="R"></ERROR>
+<ERROR start_off="26" end_off="27" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523200123_2_6x1">
+但是为了未来的人类生活，以后生产“绿色食品”。
+</TEXT>
+<CORRECTION>
+但是为了未来的人类生活，以后应该生产“绿色食品”。
+</CORRECTION>
+<ERROR start_off="15" end_off="15" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200380_2_1x3">
+由三个原因我很欢迎最近的趋势，就是在公共场所抽烟的人将被罚款。最近很多人自愿地进行戒烟运动，可是我以为没有什么法律上的制限下，这样的运动是有限的。为了社会的进一步吸烟是要快一点解决的问题。
+</TEXT>
+<CORRECTION>
+由于这三个原因我很欢迎最近的趋势，就是在公共场所抽烟的人将被罚款。最近很多人自愿地进行戒烟运动，可是我认为在没有什么法律上的限制下，这样的运动是有限的。为了社会的进一步戒烟是要快一点解决这个问题。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+<ERROR start_off="2" end_off="2" type="M"></ERROR>
+<ERROR start_off="50" end_off="51" type="S"></ERROR>
+<ERROR start_off="52" end_off="52" type="M"></ERROR>
+<ERROR start_off="60" end_off="61" type="S"></ERROR>
+<ERROR start_off="82" end_off="83" type="S"></ERROR>
+<ERROR start_off="91" end_off="91" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510540540200067_2_1x1">
+但若堕落的流行歌曲就不好了。
+</TEXT>
+<CORRECTION>
+但若是堕落的流行歌曲就不好了。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523100413_2_9x1">
+如果我有女朋友，我听浪漫的音乐，浪漫的歌曲我的感觉就当世界上最浪漫的一个人。
+</TEXT>
+<CORRECTION>
+如果我有女朋友，我听浪漫的音乐，浪漫的歌曲让我的感觉就是世界上最浪漫的一个人。
+</CORRECTION>
+<ERROR start_off="22" end_off="22" type="M"></ERROR>
+<ERROR start_off="27" end_off="27" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533250085_2_1x1">
+长久以来，男女混合式教育，也出现了一些不容忽视的问题，一些家长也考虑把孩子送入纯女或纯男校为第一选择。
+</TEXT>
+<CORRECTION>
+长久以来，男女混合式教育，也出现了一些不容忽视的问题，一些家长也以把孩子送入纯女或纯男校为第一选择。
+</CORRECTION>
+<ERROR start_off="33" end_off="34" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111626200711_2_6x1">
+因此，我对流行歌曲并不太熟悉，朋友们谈流行歌曲和她们最喜欢的歌星时我不知到她们说的是什么，觉得没有意思。
+</TEXT>
+<CORRECTION>
+因此，我对流行歌曲并不太熟悉，朋友们谈流行歌曲和她们最喜欢的歌星时不知到她们说的是什么，觉得没有意思。
+</CORRECTION>
+<ERROR start_off="34" end_off="34" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405332922200024_2_3x2">
+因为也是我们不抽烟者的权利有新鲜的空气。我希望越来越国家采用这种方式减少抽烟。
+</TEXT>
+<CORRECTION>
+因为有新鲜的空气也是我们不抽烟者的权利。我希望越来越多的国家采用这种方式减少抽烟的人。
+</CORRECTION>
+<ERROR start_off="3" end_off="19" type="W"></ERROR>
+<ERROR start_off="27" end_off="27" type="M"></ERROR>
+<ERROR start_off="27" end_off="27" type="M"></ERROR>
+<ERROR start_off="39" end_off="39" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405332540200008_2_4x1">
+不过，吸烟者也应该意识到，吸烟等于冒着得癌症的险。
+</TEXT>
+<CORRECTION>
+不过，吸烟者也应该意识到，吸烟等于冒着得癌症的危险。
+</CORRECTION>
+<ERROR start_off="24" end_off="24" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100622_2_4x1">
+我看在中国抽烟比在韩国抽烟比较自由自在。
+</TEXT>
+<CORRECTION>
+我看在中国抽烟比在韩国抽烟更自由自在。
+</CORRECTION>
+<ERROR start_off="14" end_off="15" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200249_2_3x2">
+现在我长大后才能体会这样感受。我想分析父母是孩子的第一任老师这个原因。
+</TEXT>
+<CORRECTION>
+现在我长大了才能体会这样的感受。我想分析父母是孩子的第一任老师的原因。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="S"></ERROR>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+<ERROR start_off="31" end_off="31" type="M"></ERROR>
+<ERROR start_off="31" end_off="32" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200364_2_6x1">
+还有，我们经常看到随便掉在路上的烟头，真让人看不顺眼。
+</TEXT>
+<CORRECTION>
+还有，我们经常看到随便扔在路上的烟头，真让人看不顺眼。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101835_2_1x1">
+我读完上面文章以后把我给吓坏了。
+</TEXT>
+<CORRECTION>
+我读完上面的文章以后把我给吓坏了。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523101878_2_3x1">
+一般的吸烟的人把时间管理不好。
+</TEXT>
+<CORRECTION>
+一般的吸烟的人管理不好时间。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="R"></ERROR>
+<ERROR start_off="9" end_off="14" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307209523200042_2_1x1">
+我们未来的有一天在世界上没有饥饿的孩子的，所以现在我们在自己的位置上更努力，更认真考虑保护环境，都是从环境污染产生了不好的结果。
+</TEXT>
+<CORRECTION>
+未来的某一天在世界上没有饥饿的孩子，所以现在我们在自己的位置上更努力，更认真考虑保护环境，都是因为环境污染产生了不好的结果。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="R"></ERROR>
+<ERROR start_off="6" end_off="6" type="S"></ERROR>
+<ERROR start_off="20" end_off="20" type="R"></ERROR>
+<ERROR start_off="51" end_off="51" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540150020_2_2x1">
+朋友们不要馁气，虽然现今年岁大了，没关系真所谓学无止境，活到老学到老。
+</TEXT>
+<CORRECTION>
+朋友们不要气馁，虽然现今年岁大了，没关系正所谓学无止境，活到老学到老。
+</CORRECTION>
+<ERROR start_off="6" end_off="7" type="S"></ERROR>
+<ERROR start_off="21" end_off="21" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200473_2_1x1">
+一个具有良好品德的人必需考虑到在公共场所吸烟对整个社会意味着什么，应该采取正确的态度。
+</TEXT>
+<CORRECTION>
+一个具有良好品德的人必须考虑到在公共场所吸烟对整个社会意味着什么，应该采取正确的态度。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525101536_2_6x1">
+虽然我也觉得爱吸烟者有所可怜，但为了谋求更多的人，建立良好的文明以及为了保持生活环境的清洁，我希望今后政府规定更多的有关吸烟的措施。
+</TEXT>
+<CORRECTION>
+虽然我也觉得爱吸烟者可怜，但为了保护更多的人，建立良好的文明以及为了保持生活环境的清洁，我希望今后政府制定更多的有关吸烟的措施。
+</CORRECTION>
+<ERROR start_off="11" end_off="12" type="R"></ERROR>
+<ERROR start_off="19" end_off="20" type="S"></ERROR>
+<ERROR start_off="54" end_off="55" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200410534533250015_2_6x1">
+双方可能会离婚收场。
+</TEXT>
+<CORRECTION>
+双方可能会以离婚收场。
+</CORRECTION>
+<ERROR start_off="6" end_off="6" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100087_2_2x1">
+那时候我觉得听任何的音乐或者流行歌曲是最好办法的。
+</TEXT>
+<CORRECTION>
+那时候我觉得听一些音乐或者流行歌曲是最好的办法。
+</CORRECTION>
+<ERROR start_off="8" end_off="9" type="S"></ERROR>
+<ERROR start_off="10" end_off="10" type="R"></ERROR>
+<ERROR start_off="22" end_off="24" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525100514_2_1x3">
+第二，从思想观念的角度来看，我爸从来都在我面前没有讲过人家的坏话的。然后我有一次在大众面前骂我的同学，出手的时候，我爸马上带我过去洗手间，教训我一顿。那个时候我体会到说人家的坏话是一件很不好的事情，而且知道为什么平时爸爸不说人家的坏话。
+</TEXT>
+<CORRECTION>
+第二，从思想观念的角度来看，我爸在我面前从来都没有讲过人家的坏话的。然后我有一次在大众面前骂我的同学，出手的时候，我爸马上带我去洗手间，教训我一顿。那个时候我体会到说人家的坏话是一件很不好的事情，而且知道了为什么平时爸爸不说人家的坏话。
+</CORRECTION>
+<ERROR start_off="17" end_off="23" type="W"></ERROR>
+<ERROR start_off="64" end_off="65" type="S"></ERROR>
+<ERROR start_off="104" end_off="104" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405261542100077_2_2x2">
+现在在不同的国家、不同的场所等地方针对吸烟问题出台了不少办法。就该消息而言也采取类似的措施。
+</TEXT>
+<CORRECTION>
+现在在不同的国家、不同的场所针对吸烟问题出台了不少办法。就该消息而言某政府也采取类似的措施。
+</CORRECTION>
+<ERROR start_off="15" end_off="17" type="R"></ERROR>
+<ERROR start_off="19" end_off="19" type="S"></ERROR>
+<ERROR start_off="38" end_off="38" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200504534533150101_2_6x1">
+他们可能因谈恋爱而忽视了学业或比较早期接触于性行为。
+</TEXT>
+<CORRECTION>
+他们可能因谈恋爱而忽视了学业或过早接触性行为。
+</CORRECTION>
+<ERROR start_off="16" end_off="17" type="R"></ERROR>
+<ERROR start_off="18" end_off="19" type="S"></ERROR>
+<ERROR start_off="22" end_off="22" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525201874_2_2x1">
+我也是一个吸烟者，不过我会自觉地把烟头放在携身带的小烟灰缸里，当然在马路不会去吸烟。
+</TEXT>
+<CORRECTION>
+我也是一个吸烟者，不过我会自觉地把烟头放在随身携带的小烟灰缸里，当然在马路上不会去吸烟。
+</CORRECTION>
+<ERROR start_off="22" end_off="24" type="S"></ERROR>
+<ERROR start_off="37" end_off="37" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505951501250002_2_3x3">
+在现在二十一世纪中男女结交方式太多太多种了，以上几种只是比较普遍而大众化的结交方式。在中国一般基本的男女结交方式就是透過亲戚朋友朋友或一些长辈们的介绍而认识对方，而是否要进一步的发展那就要看二人的意愿了，不过大多数的人在经过朋友、亲戚们的介绍后都会去尝试和另一方相处，久而久之就会从中而慢慢深入地了解对方。不过有些人是透過婚姻中介所而认识彼此那他们是否能和对方和睦相处或是有着相同的目标与理想呢？
+</TEXT>
+<CORRECTION>
+在现在二十一世纪中男女结交方式有太多太多种了，以上几种只是比较普遍而大众化的结交方式。在中国一般基本的男女结交方式就是通过亲戚朋友或一些长辈们的介绍而认识对方，而是否要进一步的发展那就要看二人的意愿了，不过大多数的人在经过朋友、亲戚们的介绍后都会去尝试和另一方相处，久而久之就会从中慢慢深入地了解对方。不过有些人是通过婚姻中介所而认识彼此那他们是否能和对方和睦相处或是拥有相同的目标与理想呢？
+</CORRECTION>
+<ERROR start_off="16" end_off="16" type="M"></ERROR>
+<ERROR start_off="59" end_off="60" type="S"></ERROR>
+<ERROR start_off="65" end_off="66" type="R"></ERROR>
+<ERROR start_off="143" end_off="143" type="R"></ERROR>
+<ERROR start_off="160" end_off="161" type="S"></ERROR>
+<ERROR start_off="187" end_off="188" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525200511_2_2x1">
+父母必需要有一个给孩子当老师的心态，也需要每时每刻都注意自己的举止和行为。
+</TEXT>
+<CORRECTION>
+父母必须要有一个给孩子当老师的心态，也需要每时每刻都注意自己的举止和行为。
+</CORRECTION>
+<ERROR start_off="3" end_off="4" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509105922200008_2_2x1">
+诸多据科学报告显示，因吸了二手咽而患上癌症的可能性明显地高于吸烟者。
+</TEXT>
+<CORRECTION>
+诸多科学报告显示，因吸了二手咽而患上癌症的可能性明显地高于吸烟者。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200608_2_1x2">
+去年在韩国一条消息惹人注目，这就是有名的喜剧演员患肺癌症，他过了痛苦的时间以后总算去世了，他临终之间向人民警惕吸烟的弊端。通过这件事韩国人很深考虑吸烟的影响。
+</TEXT>
+<CORRECTION>
+去年在韩国一条消息惹人注目，这就是有名的喜剧演员患肺癌的事，他过了一段痛苦的时间以后总算去世了，他临终之前要人们警惕吸烟的弊端。通过这件事韩国人很深刻地考虑吸烟的影响。
+</CORRECTION>
+<ERROR start_off="26" end_off="28" type="S"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="33" end_off="33" type="M"></ERROR>
+<ERROR start_off="50" end_off="50" type="S"></ERROR>
+<ERROR start_off="51" end_off="51" type="S"></ERROR>
+<ERROR start_off="52" end_off="53" type="S"></ERROR>
+<ERROR start_off="71" end_off="71" type="S"></ERROR>
+<ERROR start_off="72" end_off="72" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100051_2_8x1">
+他们为了自己的健康找一找绿色食品，因为如此使用化肥和农药的农家越来越少。
+</TEXT>
+<CORRECTION>
+他们为了自己的健康寻找绿色食品，因为这样使用化肥和农药的农家越来越少。
+</CORRECTION>
+<ERROR start_off="10" end_off="12" type="S"></ERROR>
+<ERROR start_off="20" end_off="21" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525201656_2_3x2">
+父母有不好的思想教给孩子，那么一定传染到孩子。孩子长大以后也还在那些坏思想，孩子长大结婚，生孩子，孩子教给自己的孩子，又传染坏思想。
+</TEXT>
+<CORRECTION>
+父母把不好的思想教给孩子，那么一定传给孩子。孩子长大以后也还有那些坏思想，孩子长大结婚，生孩子，孩子教给自己的孩子，又传递坏思想。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="S"></ERROR>
+<ERROR start_off="18" end_off="19" type="S"></ERROR>
+<ERROR start_off="20" end_off="20" type="R"></ERROR>
+<ERROR start_off="31" end_off="32" type="S"></ERROR>
+<ERROR start_off="61" end_off="62" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307302523200053_2_4x1">
+所以出来了“绿色食品”。
+</TEXT>
+<CORRECTION>
+所以“绿色食品”出来了。
+</CORRECTION>
+<ERROR start_off="3" end_off="11" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200009_2_2x1">
+据说吸烟会危害到他人，甚至他人比吸烟者的危险性会更大。
+</TEXT>
+<CORRECTION>
+据说吸烟会危害到他人，甚至他人比吸烟者受到的危险性会更大。
+</CORRECTION>
+<ERROR start_off="20" end_off="20" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405522522250027_2_2x1">
+也有些人不守规格，吸了烟把烟根乱丢这样会发生了失火，失去了很多家产，有的甚至失去了自己的亲人。
+</TEXT>
+<CORRECTION>
+也有些人不守规矩，吸了烟把烟根乱丢这样就发生了火灾，失去了很多家产，有的甚至失去了自己的亲人。
+</CORRECTION>
+<ERROR start_off="7" end_off="8" type="S"></ERROR>
+<ERROR start_off="20" end_off="20" type="S"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109525100638_2_1x1">
+最后，我想介绍的是一位西方哲学者向孩子的教育方式。
+</TEXT>
+<CORRECTION>
+最后，我想介绍的是一位西方哲学家对孩子的教育方式。
+</CORRECTION>
+<ERROR start_off="14" end_off="16" type="S"></ERROR>
+<ERROR start_off="17" end_off="17" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201347_2_1x2">
+首先，音乐尤其流行歌曲是解缓我的压力。对于我来说，常常听音乐，尤其我听着流行歌曲的。
+</TEXT>
+<CORRECTION>
+首先，音乐尤其流行歌曲缓解我的压力。对于我来说，我常常听音乐，尤其喜欢听流行歌曲。
+</CORRECTION>
+<ERROR start_off="12" end_off="12" type="R"></ERROR>
+<ERROR start_off="13" end_off="14" type="S"></ERROR>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="34" end_off="34" type="S"></ERROR>
+<ERROR start_off="36" end_off="36" type="R"></ERROR>
+<ERROR start_off="41" end_off="41" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523100361_2_2x2">
+医学界已经发现和吸烟者一起生活的非吸烟者更多受吸烟的不好影响。一般吸烟者认为自己吸烟的事和别人无关，其实这是很明显错的想法。
+</TEXT>
+<CORRECTION>
+医学界已经发现和吸烟者一起生活的非吸烟者更多地受到吸烟的不良影响。一般吸烟者认为自己吸烟和别人无关，其实这是很不对的想法。
+</CORRECTION>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+<ERROR start_off="23" end_off="23" type="S"></ERROR>
+<ERROR start_off="27" end_off="28" type="S"></ERROR>
+<ERROR start_off="43" end_off="44" type="R"></ERROR>
+<ERROR start_off="56" end_off="57" type="R"></ERROR>
+<ERROR start_off="58" end_off="58" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200309529529251029_2_7x1">
+家长应该给孩子爱情知识，教他们在学习时应该对对方的性别怎么作的，怎么了解朋友的。
+</TEXT>
+<CORRECTION>
+家长应该教孩子爱情知识，教他们在学习时应该怎么对异性，怎么了解朋友。
+</CORRECTION>
+<ERROR start_off="5" end_off="5" type="S"></ERROR>
+<ERROR start_off="23" end_off="27" type="S"></ERROR>
+<ERROR start_off="25" end_off="29" type="W"></ERROR>
+<ERROR start_off="30" end_off="31" type="R"></ERROR>
+<ERROR start_off="39" end_off="39" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200310540540250068_2_2x1">
+要得到好的东西，必然花很多时间和力气。
+</TEXT>
+<CORRECTION>
+要得到好的东西，必然需要花很多时间和力气。
+</CORRECTION>
+<ERROR start_off="11" end_off="11" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100013_2_4x1">
+假如给他们少许的绿色食品和许多的食品供他们的话，人们都会相信他们会选择多的食品而放弃绿色食品的。
+</TEXT>
+<CORRECTION>
+假如给他们少许的绿色食品和许多的食品供他们选择的话，人们都会相信他们会选择多的食品而放弃绿色食品的。
+</CORRECTION>
+<ERROR start_off="22" end_off="22" type="M"></ERROR>
+<ERROR start_off="47" end_off="47" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505024542200371_2_3x1">
+我觉得父母应该先学做好父母，先教孩子做人因为只有所好做人了才能学知识，让孩子知道他们长大以后要为国家服务。
+</TEXT>
+<CORRECTION>
+我觉得父母应该先学做好父母，先教孩子做人因为只有学好做人了才能学知识，让孩子知道他们长大以后要为国家服务。
+</CORRECTION>
+<ERROR start_off="25" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523100206_2_10x1">
+我觉得流行歌曲是速度快还是慢都无所谓的，就是给听流行歌曲的人会高兴，给听的人安定，这就可以的。
+</TEXT>
+<CORRECTION>
+我觉得流行歌曲是速度快还是慢都无所谓的，就是使听流行歌曲的人会高兴，给听的人以平静，这就可以了。
+</CORRECTION>
+<ERROR start_off="23" end_off="23" type="S"></ERROR>
+<ERROR start_off="39" end_off="39" type="M"></ERROR>
+<ERROR start_off="39" end_off="40" type="S"></ERROR>
+<ERROR start_off="46" end_off="46" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525200588_2_8x1">
+但他们不是勉强，而是强调我们要自己找一找自己的爱好。
+</TEXT>
+<CORRECTION>
+但他们不是勉强我们，而是强调我们要自己找一找自己的爱好。
+</CORRECTION>
+<ERROR start_off="8" end_off="8" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505109922102567_2_6x1">
+我发现目前很父母都有一种错的观念。
+</TEXT>
+<CORRECTION>
+我发现目前很多父母都有一种错的观念。
+</CORRECTION>
+<ERROR start_off="7" end_off="7" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525100119_2_6x1">
+对正在找工作的我来说，工作方面的父亲的不懈地努力是给我留下了最深刻的影响。
+</TEXT>
+<CORRECTION>
+对正在找工作的我来说，父亲的工作方面的不懈地努力给我留下了最深刻的影响。
+</CORRECTION>
+<ERROR start_off="12" end_off="19" type="W"></ERROR>
+<ERROR start_off="25" end_off="25" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307217523100122_2_3x1">
+以前人们只考虑产量，但现在更加考虑健康和食品相关性。
+</TEXT>
+<CORRECTION>
+以前人们只考虑产量，但现在更加考虑健康和食品的相关性。
+</CORRECTION>
+<ERROR start_off="23" end_off="23" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405212529100011_2_2x2">
+无抽烟者可能会有我同样的想法。至今有某市政府注意到这一点，开始进行对吸烟者的严厉的惩罚措施。
+</TEXT>
+<CORRECTION>
+不抽烟者可能会有和我同样的想法。至今某市政府注意到这一点，开始对吸烟者进行严厉的惩罚。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+<ERROR start_off="9" end_off="9" type="M"></ERROR>
+<ERROR start_off="18" end_off="18" type="R"></ERROR>
+<ERROR start_off="32" end_off="37" type="W"></ERROR>
+<ERROR start_off="38" end_off="38" type="R"></ERROR>
+<ERROR start_off="43" end_off="43" type="S"></ERROR>
+<ERROR start_off="44" end_off="45" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200575_2_2x1">
+可是到现在为止，还是很多人喜欢吸烟。
+</TEXT>
+<CORRECTION>
+可是到现在为止，很多人还是喜欢吸烟。
+</CORRECTION>
+<ERROR start_off="9" end_off="13" type="W"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109523200642_2_1x2">
+还有吸烟对公众也起着很不好的影响。人们一般想自己不抽烟就没事了但在一个空间里别人抽烟的话，自己不抽烟也能吸取烟雾并能引发疾病。
+</TEXT>
+<CORRECTION>
+还有吸烟对公众也有很不好的影响。人们一般认为自己不抽烟就没事了但在一个空间里别人抽烟的话，自己不抽烟也能吸取烟雾并能引发疾病。
+</CORRECTION>
+<ERROR start_off="9" end_off="10" type="S"></ERROR>
+<ERROR start_off="22" end_off="22" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405205525200063_2_2x1">
+如果你一点也不吸烟，但是你周围的人吸烟的话，那么你的身体被害的比他们还严重。
+</TEXT>
+<CORRECTION>
+如果你一点烟也不吸，但是你周围的人吸烟的话，那么你的身体会被伤害得比他们还严重。
+</CORRECTION>
+<ERROR start_off="6" end_off="9" type="W"></ERROR>
+<ERROR start_off="29" end_off="29" type="M"></ERROR>
+<ERROR start_off="30" end_off="30" type="S"></ERROR>
+<ERROR start_off="31" end_off="31" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200509534533250041_2_3x1">
+令公司欲聘请导游职位，我感到十分兴趣。
+</TEXT>
+<CORRECTION>
+贵公司欲聘请导游职位，我感到十分有兴趣。
+</CORRECTION>
+<ERROR start_off="1" end_off="1" type="S"></ERROR>
+<ERROR start_off="17" end_off="17" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200307271523100074_2_2x1">
+而是将整个世界一起重视饥饿问题，一起去研究，找解决这问题的途径。
+</TEXT>
+<CORRECTION>
+而是整个世界一起重视饥饿问题，一起去研究，找解决这问题的途径。
+</CORRECTION>
+<ERROR start_off="3" end_off="3" type="R"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505522522250021_2_3x1">
+而在我的心目中最理想的成交方式莫过于青梅竹马地一起长大，然后自然而然地走到一起了。
+</TEXT>
+<CORRECTION>
+而在我的心目中最理想的结交方式莫过于青梅竹马地一起长大，然后自然而然地走到一起了。
+</CORRECTION>
+<ERROR start_off="12" end_off="13" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525200327_2_4x1">
+我朋友的儿子以前在公园玩的时候，一个年轻人边走边抽烟走过来，朋友的儿子因为小孩子，所以没注意，要跑过去那个年轻人的旁儿。
+</TEXT>
+<CORRECTION>
+我朋友的儿子以前在公园玩的时候，一个年轻人边走边抽着烟走过来，朋友的儿子因为是小孩子，所以没注意，跑到那个年轻人的旁边。
+</CORRECTION>
+<ERROR start_off="26" end_off="26" type="M"></ERROR>
+<ERROR start_off="38" end_off="38" type="M"></ERROR>
+<ERROR start_off="48" end_off="48" type="R"></ERROR>
+<ERROR start_off="50" end_off="51" type="S"></ERROR>
+<ERROR start_off="58" end_off="58" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510111523201347_2_3x1">
+很多人喜欢听音乐所以音乐产业也发展。
+</TEXT>
+<CORRECTION>
+很多人喜欢听音乐所以音乐产业也发展了。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405212540200030_2_3x1">
+政府出台的一项规定是非常好的办法，新措施会带来利益的。
+</TEXT>
+<CORRECTION>
+政府出台的一项规定是非常好的，新措施会带来好处的。
+</CORRECTION>
+<ERROR start_off="15" end_off="16" type="R"></ERROR>
+<ERROR start_off="24" end_off="25" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200404140727200237_2_3x3">
+因为他虽然有技能但是还要通过一长痛苦的路才能得到第一名也就是说得到高收入。可能有人会说所谓运动员都会有痛苦，但是我觉得比如说职业台球的人虽有能力但不比那些长跑运动员痛苦地厉害。这样以来，我想高收入也就是因为通过痛苦。
+</TEXT>
+<CORRECTION>
+因为他虽然有技能但是还要通过异常痛苦的路才能得到第一名也就是说得到高收入。可能有人会说所谓运动员都会有痛苦，但是我觉得比如说职业台球的人虽有能力但不比那些长跑运动员痛苦。这样一来，我想高收入也就是因为经过痛苦。
+</CORRECTION>
+<ERROR start_off="15" end_off="16" type="S"></ERROR>
+<ERROR start_off="85" end_off="87" type="R"></ERROR>
+<ERROR start_off="91" end_off="92" type="S"></ERROR>
+<ERROR start_off="104" end_off="105" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200272_2_13x3">
+我想这样的年轻人越来越多的话，市政府也没有办法，只能严格控制，让公众遵守他们的规则。要不然，大家的利益都被破坏而损害。还有，有礼貌是一个人的基本的人品。
+</TEXT>
+<CORRECTION>
+我想这样的年轻人越来越多的话，市政府也没有办法，只能严格控制吸烟，让公众遵守规则。要不然，大家的利益都会被损害。还有，有礼貌是一个人的基本的品德。
+</CORRECTION>
+<ERROR start_off="31" end_off="31" type="M"></ERROR>
+<ERROR start_off="37" end_off="39" type="R"></ERROR>
+<ERROR start_off="53" end_off="53" type="M"></ERROR>
+<ERROR start_off="54" end_off="55" type="R"></ERROR>
+<ERROR start_off="56" end_off="56" type="R"></ERROR>
+<ERROR start_off="74" end_off="75" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505217610200176_2_2x3">
+一个良好的家庭氛围，兴趣爱好广泛、向上的父母，对一个孩子的成长是至关重要的……。瑞士著名语言学家索绪尔先生出生在一个知识分子的家庭，祖父是日内瓦大学的科学家，父亲是数学家，母亲是艺术热爱者。小索绪尔在很小的时候对物理感兴趣，但也热爱数学。
+</TEXT>
+<CORRECTION>
+一个良好的家庭氛围，兴趣爱好广泛、积极向上的父母，对一个孩子的成长是至关重要的……。瑞士著名语言学家索绪尔先生出生在一个知识分子家庭，祖父是日内瓦大学的科学家，父亲是数学家，母亲是艺术爱好者。小索绪尔在很小的时候就对物理感兴趣，但也热爱数学。
+</CORRECTION>
+<ERROR start_off="18" end_off="18" type="M"></ERROR>
+<ERROR start_off="63" end_off="63" type="R"></ERROR>
+<ERROR start_off="92" end_off="93" type="S"></ERROR>
+<ERROR start_off="106" end_off="106" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405109525100131_2_2x2">
+比如说，在公共场所绝对不抽烟，还有人多的地方，特别是有小孩子的地方，大人边走边抽烟时，正孩子的眼睛会碰到的。这样吸烟者自己要好好守规定。
+</TEXT>
+<CORRECTION>
+比如说，在公共场所绝对不抽烟，还有人多的地方，特别是有小孩子的地方，大人边走边抽烟时，孩子的眼睛正会碰到。这样吸烟者自己要好好遵守规定。
+</CORRECTION>
+<ERROR start_off="44" end_off="49" type="W"></ERROR>
+<ERROR start_off="53" end_off="53" type="R"></ERROR>
+<ERROR start_off="65" end_off="65" type="S"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200405204525200421_2_2x2">
+它的烟对在周围的人有影响。而且听说吸烟的人吸的烟比从香烟直接出来的烟对身体更不好。
+</TEXT>
+<CORRECTION>
+烟对周围的人有影响。而且听说吸烟的人吸的烟比从香烟直接散出来的烟对身体更不好。
+</CORRECTION>
+<ERROR start_off="1" end_off="2" type="R"></ERROR>
+<ERROR start_off="5" end_off="5" type="R"></ERROR>
+<ERROR start_off="31" end_off="31" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200510302523200221_2_1x3">
+第二是流行歌曲对学习外语人很有帮助，就是言语学习。在韩国很有名的老师们说“如果你要更好学习某个外语的话，你应该听其国的流行歌曲，用来流行歌曲学习外语的话，进步非常大。”我的看法也是一样，其实我有经验，对英语、汉语学习的时候，对我很大的帮助。
+</TEXT>
+<CORRECTION>
+第二是流行歌曲对学习外语的人很有帮助，就是语言学习。在韩国很有名的老师们说“如果你要更好地学习某种外语的话，你应该听该国的流行歌曲，用流行歌曲来学习外语的话，进步非常大。”我的看法也是一样，其实我有经验，在学习英语、汉语的时候，流行歌曲对我有很大的帮助。
+</CORRECTION>
+<ERROR start_off="13" end_off="13" type="M"></ERROR>
+<ERROR start_off="21" end_off="22" type="S"></ERROR>
+<ERROR start_off="44" end_off="44" type="M"></ERROR>
+<ERROR start_off="47" end_off="47" type="S"></ERROR>
+<ERROR start_off="57" end_off="58" type="S"></ERROR>
+<ERROR start_off="66" end_off="70" type="W"></ERROR>
+<ERROR start_off="101" end_off="101" type="S"></ERROR>
+<ERROR start_off="102" end_off="108" type="W"></ERROR>
+<ERROR start_off="113" end_off="113" type="M"></ERROR>
+<ERROR start_off="115" end_off="115" type="M"></ERROR>
+</DOC>
+<DOC>
+<TEXT id="200505204525100435_2_9x1">
+对于这种教孩子的事，只能父母亲切地教下去的。
+</TEXT>
+<CORRECTION>
+对于这种教孩子的事，只能父母亲切地教下去。
+</CORRECTION>
+<ERROR start_off="21" end_off="21" type="R"></ERROR>
+</DOC>
+</ROOT>
