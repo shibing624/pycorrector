@@ -13,10 +13,9 @@ from pypinyin import pinyin
 
 from pycorrector.zhtools.langconv import Converter
 
-jieba.initialize()
 log_console = logging.StreamHandler(sys.stderr)
 default_logger = logging.getLogger(__name__)
-default_logger.setLevel(logging.DEBUG)
+default_logger.setLevel(logging.ERROR)
 default_logger.addHandler(log_console)
 
 
@@ -55,6 +54,7 @@ def segment(sentence):
     :param sentence:
     :return: list
     """
+    jieba.default_logger.setLevel(logging.ERROR)
     return jieba.lcut(sentence)
 
 
@@ -64,6 +64,7 @@ def tokenize(sentence, mode='default'):
     :param sentence:
     :return: (word, start_index, end_index) model='search'
     """
+    jieba.default_logger.setLevel(logging.ERROR)
     return list(jieba.tokenize(sentence, mode=mode))
 
 
