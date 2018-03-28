@@ -22,7 +22,7 @@
 
 ### 安装
 * 全自动安装：pip install pycorrector 或者 pip3 install pycorrector 
-* 半自动安装：下载 https://github.com/shibing624/corrector, 解压缩并运行 python setup.py install
+* 半自动安装：下载 https://github.com/shibing624/pycorrector, 解压缩并运行 python setup.py install
 
 ### 纠错  
 使用示例:
@@ -87,7 +87,7 @@ error, it can be used for Chinese Pinyin and stroke input method.
 
 ### install
 * pip install pycorrector / pip3 install pycorrector 
-* Or download https://github.com/shibing624/corrector, Unzip and run python setup.py install
+* Or download https://github.com/shibing624/pycorrector, Unzip and run: python setup.py install
 
 ### correct  
 input:
