@@ -53,6 +53,7 @@ class FCEReader(Reader):
         i = 0
         with open(path, 'r', encoding='utf-8') as f:
             for line in f:
+                # input the correct text, which start with 0
                 if i % 2 == 1:
                     if line:
                         yield line.lower()[5:].strip().split()
