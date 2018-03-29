@@ -12,9 +12,6 @@ PAD_TOKEN = 'PAD'
 EOS_TOKEN = 'EOS'
 GO_TOKEN = 'GO'
 
-import tensorflow as tf
-tf.contrib.seq2seq
-
 
 class Reader:
     def __init__(self, config, train_path=None, token_2_id=None,
@@ -34,7 +31,7 @@ class Reader:
             # Get max_vocabulary size words
             count_pairs = sorted(token_counts.items(), key=lambda k: (-k[1], k[0]))
             vocab, _ = list(zip(*count_pairs))
-
+            vocab = list(vocab)
             # Insert the special tokens to the beginning
             vocab[0:0] = special_tokens
             full_token_id = list(zip(vocab, range(len(vocab))))
@@ -71,7 +68,7 @@ class Reader:
         :param token:
         :return:
         """
-        token_id = token if token in self.token_2_id else self.unknow_token()
+        token_id = token if token in self.token_2_id else self.unknown_token()
         return self.token_2_id[token_id]
 
     def convert_id_2_token(self, id):
@@ -82,13 +79,13 @@ class Reader:
         """
         return self.id_2_token[id]
 
-    def is_unknow_token(self, token):
+    def is_unknown_token(self, token):
         """
         True if the given token is out of vocabulary
         :param token:
         :return:
         """
-        return token not in self.token_2_id or token == self.unknow_token()
+        return token not in self.token_2_id or token == self.unknown_token()
 
     def sentence_2_token_ids(self, sentence):
         """
@@ -106,14 +103,13 @@ class Reader:
         """
         return [self.convert_id_2_token(w) for w in word_ids]
 
-
     def read_samples(self, path):
         """
         Read sample of path's data
         :param path:
         :return: generate list
         """
-        for source_words, target_words in self.read_sampless_by_string(path):
+        for source_words, target_words in self.read_samples_by_string(path):
             source = [self.convert_token_2_id(w) for w in source_words]
             target = [self.convert_token_2_id(w) for w in target_words]
             target.append(EOS_ID)

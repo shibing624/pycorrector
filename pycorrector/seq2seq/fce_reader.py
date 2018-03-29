@@ -21,34 +21,36 @@ class FCEReader(Reader):
             dataset_copies=dataset_copies)
         self.dropout_prob = dropout_prob
         self.replacement_prob = replacement_prob
-        self.UNKNOW_ID = self.token_2_id[FCEReader.UNKNOWN_TOKEN]
+        self.UNKNOWN_ID = self.token_2_id[FCEReader.UNKNOWN_TOKEN]
 
     def read_samples_by_string(self, path):
-        for tokens in self.read_tokens(path):
-            source = []
-            target = []
-            for token in tokens:
-                target.append(token)
+        with open(path, 'r', encoding='utf-8') as f:
+            line_src = f.readline()
+            line_dst = f.readline()
+            if line_src and line_dst:
+                source = line_src.lower()[5:].strip().split()
+                target = line_dst.lower()[5:].strip().split()
                 if self.config.enable_data_dropout:
-                    # Random dropout words from the input
-                    dropout_token = (token in FCEReader.DROPOUT_TOKENS and random.random() < self.dropout_prob)
-                    replace_token = (token in FCEReader.REPLACEMENTS and random.random() < self.replacement_prob)
-                    if replace_token:
-                        source.append(FCEReader.REPLACEMENTS[tokens])
-                    elif not dropout_token:
-                        source.append(token)
-                else:
-                    source.append(token)
-            yield source, target
+                    new_source = []
+                    for token in source:
+                        # Random dropout words from the input
+                        dropout_token = (token in FCEReader.DROPOUT_TOKENS and random.random() < self.dropout_prob)
+                        replace_token = (token in FCEReader.REPLACEMENTS and random.random() < self.replacement_prob)
+                        if replace_token:
+                            new_source.append(FCEReader.REPLACEMENTS[source])
+                        elif not dropout_token:
+                            new_source.append(token)
+                    source = new_source
+                yield source, target
 
     def unknown_token(self):
         return FCEReader.UNKNOWN_TOKEN
 
     def read_tokens(self, path):
         i = 0
-        with open(path, 'r', 'utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             for line in f:
-                if line in f:
-                    if i % 2 == 1:
+                if i % 2 == 1:
+                    if line:
                         yield line.lower()[5:].strip().split()
-                    i += 1
+                i += 1
