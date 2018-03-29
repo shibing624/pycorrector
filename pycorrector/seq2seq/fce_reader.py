@@ -2,6 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import random
+
 from reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 
 
@@ -27,15 +28,17 @@ class FCEReader(Reader):
         with open(path, 'r', encoding='utf-8') as f:
             line_src = f.readline()
             line_dst = f.readline()
-            if line_src and line_dst:
+            while line_src:
                 source = line_src.lower()[5:].strip().split()
                 target = line_dst.lower()[5:].strip().split()
                 if self.config.enable_data_dropout:
                     new_source = []
                     for token in source:
                         # Random dropout words from the input
-                        dropout_token = (token in FCEReader.DROPOUT_TOKENS and random.random() < self.dropout_prob)
-                        replace_token = (token in FCEReader.REPLACEMENTS and random.random() < self.replacement_prob)
+                        dropout_token = (token in FCEReader.DROPOUT_TOKENS and
+                                         random.random() < self.dropout_prob)
+                        replace_token = (token in FCEReader.REPLACEMENTS and
+                                         random.random() < self.replacement_prob)
                         if replace_token:
                             new_source.append(FCEReader.REPLACEMENTS[source])
                         elif not dropout_token:
