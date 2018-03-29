@@ -8,14 +8,14 @@ import os
 import numpy as np
 
 import pycorrector.config as config
-from pycorrector.text_preprocess import uniform
-from pycorrector.util import default_logger
-from pycorrector.util import dump_pkl
-from pycorrector.util import load_pkl
-from pycorrector.util import tokenize
+from pycorrector.text_util import uniform
+from pycorrector.text_util import tokenize
+from pycorrector.io_util import get_logger
+from pycorrector.io_util import dump_pkl
+from pycorrector.io_util import load_pkl
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-
+default_logger = get_logger(__file__)
 # trigram_word_path = os.path.join(pwd_path, 'data/kenlm/people_words.klm')
 # trigram_word = kenlm.Model(trigram_word_path)
 # print('Loaded trigram_word language model from {}'.format(trigram_word_path))
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     sent_chars = [sent[i] for i in error_list]
     print(sent_chars)
 
-    from pycorrector.util import segment
+    from text_util import segment, tokenize
 
     print(get_ngram_score(segment(sent)))
     print(get_ppl_score(segment(sent)))

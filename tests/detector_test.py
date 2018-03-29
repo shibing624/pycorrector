@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 from pycorrector import *
-from pycorrector.util import segment
+from text_util import segment
 
 c = get_same_pinyin('长')
 print('get_same_pinyin:', c)

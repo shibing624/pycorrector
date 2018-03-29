@@ -4,7 +4,7 @@
 
 import os
 import sys
-from pycorrector.util import default_logger
+from pycorrector.io_util import default_logger
 
 from xml.dom import minidom
 

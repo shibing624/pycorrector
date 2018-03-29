@@ -4,7 +4,7 @@
 import re
 from codecs import open
 from pycorrector import correct
-from pycorrector.util import load_pkl
+from pycorrector.io_util import load_pkl
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):
