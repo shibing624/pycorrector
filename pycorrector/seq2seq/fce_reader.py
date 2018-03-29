@@ -26,9 +26,11 @@ class FCEReader(Reader):
 
     def read_samples_by_string(self, path):
         with open(path, 'r', encoding='utf-8') as f:
-            line_src = f.readline()
-            line_dst = f.readline()
-            while line_src:
+            while True:
+                line_src = f.readline()
+                line_dst = f.readline()
+                if not line_src:
+                    break
                 source = line_src.lower()[5:].strip().split()
                 target = line_dst.lower()[5:].strip().split()
                 if self.config.enable_data_dropout:
@@ -53,7 +55,7 @@ class FCEReader(Reader):
         i = 0
         with open(path, 'r', encoding='utf-8') as f:
             for line in f:
-                # input the correct text, which start with 0
+                # Input the correct text, which start with 0
                 if i % 2 == 1:
                     if line:
                         yield line.lower()[5:].strip().split()
