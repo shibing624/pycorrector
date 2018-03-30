@@ -113,14 +113,17 @@ def simplified2traditional(sentence):
     return sentence
 
 
-def segment(sentence):
+def segment(sentence, cut_type='word'):
     """
     切词
     :param sentence:
+    :param cut_type: 'word' use jieba.lcut; 'char' use list(sentence)
     :return: list
     """
     import logging
     jieba.default_logger.setLevel(logging.ERROR)
+    if cut_type == 'char':
+        return list(sentence)
     return jieba.lcut(sentence)
 
 

@@ -92,9 +92,9 @@ class CorrectorModel(object):
             [corrective_tokens_tensor] * self.batch_size)
         self.batch_corrective_tokens_mask = batch_corrective_tokens_mask = \
             tf.placeholder(
-            tf.float32,
-            shape=[None, None],
-            name="corrective_tokens")
+                tf.float32,
+                shape=[None, None],
+                name="corrective_tokens")
 
         # Our targets are decoder inputs shifted by one.
         targets = [self.decoder_inputs[i + 1]
@@ -116,6 +116,7 @@ class CorrectorModel(object):
                 return tf.nn.sampled_softmax_loss(w_t, b, labels, logits,
                                                   num_samples,
                                                   self.target_vocab_size)
+
             softmax_loss_function = sampled_loss
 
         # Create the internal multi-layer cell for our RNN.
@@ -242,17 +243,14 @@ class CorrectorModel(object):
         # Check if the sizes match.
         encoder_size, decoder_size = self.buckets[bucket_id]
         if len(encoder_inputs) != encoder_size:
-            raise ValueError(
-                "Encoder length must be equal to the one in bucket,"
-                " %d != %d." % (len(encoder_inputs), encoder_size))
+            raise ValueError("Encoder length must be equal to the one in bucket,"
+                             " %d != %d." % (len(encoder_inputs), encoder_size))
         if len(decoder_inputs) != decoder_size:
-            raise ValueError(
-                "Decoder length must be equal to the one in bucket,"
-                " %d != %d." % (len(decoder_inputs), decoder_size))
+            raise ValueError("Decoder length must be equal to the one in bucket,"
+                             " %d != %d." % (len(decoder_inputs), decoder_size))
         if len(target_weights) != decoder_size:
-            raise ValueError(
-                "Weights length must be equal to the one in bucket,"
-                " %d != %d." % (len(target_weights), decoder_size))
+            raise ValueError("Weights length must be equal to the one in bucket,"
+                             " %d != %d." % (len(target_weights), decoder_size))
 
         # Input feed: encoder inputs, decoder inputs, target_weights,
         # as provided.
@@ -263,9 +261,8 @@ class CorrectorModel(object):
             input_feed[self.decoder_inputs[l].name] = decoder_inputs[l]
             input_feed[self.target_weights[l].name] = target_weights[l]
 
-        # TODO: learn corrective tokens during training
-        corrective_tokens_vector = (corrective_tokens
-                                    if corrective_tokens is not None else
+        corrective_tokens_vector = (corrective_tokens if
+                                    corrective_tokens is not None else
                                     np.zeros(self.target_vocab_size))
         batch_corrective_tokens = np.repeat([corrective_tokens_vector],
                                             self.batch_size, axis=0)
@@ -400,6 +397,7 @@ def apply_input_bias_and_extract_argmax_fn_factory(input_bias):
         Returns:
           A loop function.
         """
+
         def loop_function(prev, _):
             prev = project_and_apply_input_bias(prev, output_projection,
                                                 input_bias)
@@ -411,7 +409,7 @@ def apply_input_bias_and_extract_argmax_fn_factory(input_bias):
             if not update_embedding:
                 emb_prev = array_ops.stop_gradient(emb_prev)
             return emb_prev, prev_symbol
+
         return loop_function
 
     return fn_factory
-

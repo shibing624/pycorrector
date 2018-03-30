@@ -8,8 +8,10 @@ from collections import defaultdict
 import numpy as np
 import tensorflow as tf
 
-import seq2seq_config
-from fce_reader import FCEReader
+import fce_config
+import cged_config
+from corpus_reader import FCEReader
+from corpus_reader import CGEDReader
 from reader import EOS_ID
 from train import create_model
 
@@ -173,29 +175,29 @@ def evaluate_accuracy(sess, model, data_reader, corrective_tokens, test_path,
 def main(_):
     print('Correcting error...')
     # Set the model path.
-    model_path = seq2seq_config.model_path
-    data_reader = FCEReader(seq2seq_config, seq2seq_config.train_path)
+    model_path = cged_config.model_path
+    data_reader = CGEDReader(cged_config, cged_config.train_path)
 
-    if seq2seq_config.enable_decode_sentence:
+    if cged_config.enable_decode_sentence:
         # Correct user's sentences.
         with tf.Session() as session:
-            model = create_model(session, True, model_path, config=seq2seq_config)
+            model = create_model(session, True, model_path, config=cged_config)
             print("Enter a sentence you'd like to correct")
             correct_new_sentence = input()
             while correct_new_sentence.lower() != 'no':
                 decode_sentence(session, model=model, data_reader=data_reader,
                                 sentence=correct_new_sentence,
-                                corrective_tokens=data_reader.read_tokens(seq2seq_config.train_path))
+                                corrective_tokens=data_reader.read_tokens(cged_config.train_path))
                 print("Enter a sentence you'd like to correct or press NO")
                 correct_new_sentence = input()
-    elif seq2seq_config.enable_test_decode:
+    elif cged_config.enable_test_decode:
         # Decode test sentences.
         with tf.Session() as session:
-            model = create_model(session, True, model_path, config=seq2seq_config)
+            model = create_model(session, True, model_path, config=cged_config)
             print("Loaded model. Beginning decoding.")
             decodings = decode(session, model=model, data_reader=data_reader,
-                               data_to_decode=data_reader.read_tokens(seq2seq_config.test_path),
-                               corrective_tokens=data_reader.read_tokens(seq2seq_config.train_path))
+                               data_to_decode=data_reader.read_tokens(cged_config.test_path),
+                               corrective_tokens=data_reader.read_tokens(cged_config.train_path))
             # Write the decoded tokens to stdout.
             for tokens in decodings:
                 sys.stdout.flush()

@@ -10,13 +10,15 @@ import time
 import numpy as np
 import tensorflow as tf
 
-import seq2seq_config
+import cged_config
+import fce_config
 from corrector_model import CorrectorModel
-from fce_reader import FCEReader
+from corpus_reader import FCEReader
+from corpus_reader import CGEDReader
 from tf_util import get_ckpt_path
 
 
-def create_model(session, forward_only, model_path, config=seq2seq_config):
+def create_model(session, forward_only, model_path, config=cged_config):
     """
     Create model and load parameters
     :param session:
@@ -115,7 +117,7 @@ def train(data_reader, train_path, test_path, model_path):
                 # Run evals on development set and print their perplexity.
                 for bucket_id in range(len(config.buckets)):
                     if len(test_data[bucket_id]) == 0:
-                        print("  eval: empty bucket %d" % (bucket_id))
+                        print("  eval: empty bucket %d" % bucket_id)
                         continue
                     encoder_inputs, decoder_inputs, target_weights = \
                         model.get_batch(test_data, bucket_id)
@@ -133,11 +135,11 @@ def train(data_reader, train_path, test_path, model_path):
 
 def main(_):
     print('Training model...')
-    data_reader = FCEReader(seq2seq_config, seq2seq_config.train_path)
+    data_reader = CGEDReader(cged_config, cged_config.train_path)
     train(data_reader,
-          seq2seq_config.train_path,
-          seq2seq_config.val_path,
-          seq2seq_config.model_path)
+          cged_config.train_path,
+          cged_config.val_path,
+          cged_config.model_path)
 
 
 if __name__ == "__main__":
