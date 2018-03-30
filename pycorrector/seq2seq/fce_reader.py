@@ -33,7 +33,7 @@ class FCEReader(Reader):
                     break
                 source = line_src.lower()[5:].strip().split()
                 target = line_dst.lower()[5:].strip().split()
-                if self.config.enable_data_dropout:
+                if self.config.enable_special_error:
                     new_source = []
                     for token in source:
                         # Random dropout words from the input

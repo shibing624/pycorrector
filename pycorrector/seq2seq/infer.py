@@ -35,10 +35,10 @@ def decode(sess, model, data_reader, data_to_decode,
         corrective_tokens = set()
     for tokens in corrective_tokens:
         for token in tokens:
-            corrective_tokens_mask[data_reader.convert_token_to_id(token)] = 1.0
+            corrective_tokens_mask[data_reader.convert_token_2_id(token)] = 1.0
 
     for tokens in data_to_decode:
-        token_ids = [data_reader.convert_token_to_id(token) for token in tokens]
+        token_ids = [data_reader.convert_token_2_id(token) for token in tokens]
 
         # Which bucket does it belong to?
         matching_buckets = [b for b in range(len(model.buckets))
@@ -70,7 +70,7 @@ def decode(sess, model, data_reader, data_to_decode,
             if max_likelihood_token_id == EOS_ID:
                 break
 
-            token = data_reader.convert_id_to_token(max_likelihood_token_id)
+            token = data_reader.convert_id_2_token(max_likelihood_token_id)
             if data_reader.is_unknown_token(token):
                 # Replace the "unknown" token with the most probable OOV
                 # token from the input.

@@ -6,7 +6,7 @@ val_path = '../data/en/fce/fce_val.txt'  # Validation data path.
 test_path = '../data/en/fce/fce_test.txt'
 
 model_path = './output_model'  # Path of the model saved, default is output_path/model
-enable_data_dropout = False
+enable_special_error = False
 num_steps = 3000  # Number of steps to train.
 decode_sentence = False  # Whether we should decode sentences of the user.
 
@@ -14,7 +14,7 @@ decode_sentence = False  # Whether we should decode sentences of the user.
 buckets = [(10, 10), (15, 15), (20, 20), (40, 40)]  # use a number of buckets and pad to the closest one for efficiency.
 
 steps_per_checkpoint = 100
-max_steps = 10000
+max_steps = 2000
 
 max_vocab_size = 10000
 
