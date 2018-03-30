@@ -7,7 +7,7 @@ train_path = '../data/en/fce/fce_train.txt'  # Training data path.
 val_path = '../data/en/fce/fce_val.txt'  # Validation data path.
 test_path = '../data/en/fce/fce_test.txt'
 
-model_path = './output_model'  # Path of the model saved, default is output_path/model
+model_path = './output/fce_model'  # Path of the model saved, default is output_path/model
 enable_special_error = False
 num_steps = 3000  # Number of steps to train.
 decode_sentence = False  # Whether we should decode sentences of the user.

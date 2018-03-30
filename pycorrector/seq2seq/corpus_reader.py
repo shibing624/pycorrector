@@ -93,12 +93,17 @@ class CGEDReader(Reader):
     def unknown_token(self):
         return CGEDReader.UNKNOWN_TOKEN
 
-    def read_tokens(self, path):
+    def read_tokens(self, path, is_infer=False):
         with open(path, 'r', encoding='utf-8') as f:
             dom_tree = minidom.parse(f)
             docs = dom_tree.documentElement.getElementsByTagName('DOC')
             for doc in docs:
-                # Input the correct text
-                sentence = doc.getElementsByTagName('CORRECTION')[0]. \
-                    childNodes[0].data.strip()
+                if is_infer:
+                    # Input the error text
+                    sentence = doc.getElementsByTagName('TEXT')[0]. \
+                        childNodes[0].data.strip()
+                else:
+                    # Input the correct text
+                    sentence = doc.getElementsByTagName('CORRECTION')[0]. \
+                        childNodes[0].data.strip()
                 yield segment(sentence, cut_type='char')

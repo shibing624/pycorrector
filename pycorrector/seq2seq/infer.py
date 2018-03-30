@@ -8,11 +8,10 @@ from collections import defaultdict
 import numpy as np
 import tensorflow as tf
 
-import fce_config
 import cged_config
-from corpus_reader import FCEReader
 from corpus_reader import CGEDReader
 from reader import EOS_ID
+from text_util import segment
 from train import create_model
 
 
@@ -97,7 +96,7 @@ def decode(sess, model, data_reader, data_to_decode,
 def decode_sentence(sess, model, data_reader, sentence, corrective_tokens=set(),
                     verbose=True):
     """Used with InteractiveSession in IPython """
-    return next(decode(sess, model, data_reader, [sentence.split()],
+    return next(decode(sess, model, data_reader, [segment(sentence, 'char')],
                        corrective_tokens=corrective_tokens, verbose=verbose))
 
 
@@ -196,7 +195,7 @@ def main(_):
             model = create_model(session, True, model_path, config=cged_config)
             print("Loaded model. Beginning decoding.")
             decodings = decode(session, model=model, data_reader=data_reader,
-                               data_to_decode=data_reader.read_tokens(cged_config.test_path),
+                               data_to_decode=data_reader.read_tokens(cged_config.test_path, is_infer=True),
                                corrective_tokens=data_reader.read_tokens(cged_config.train_path))
             # Write the decoded tokens to stdout.
             for tokens in decodings:
