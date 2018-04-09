@@ -1,6 +1,6 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+# -*- coding: utf-8 -*-
+# Author: XuMing <xuming624@qq.com>
+# Brief:
 
 import random
 

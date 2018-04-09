@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: Use CGED corpus
+import os
 
 # CGED chinese corpus
 train_path = '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'  # Training data path.
@@ -28,8 +29,6 @@ use_rms_prop = False
 
 enable_decode_sentence = False  # Test with input error sentence
 enable_test_decode = True  # Test with test set
-
-import os
 
 if not os.path.exists(model_path):
     os.makedirs(model_path)
