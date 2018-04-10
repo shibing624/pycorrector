@@ -5,7 +5,7 @@ import random
 
 from reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 from xml.dom import minidom
-from text_util import segment
+from utils.text_utils import segment
 
 
 class FCEReader(Reader):

@@ -3,8 +3,8 @@
 # Brief:
 import re
 from codecs import open
-from pycorrector import correct
-from pycorrector.io_util import load_pkl
+import corrector
+from pycorrector.utils.io_utils import load_pkl
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):
@@ -38,7 +38,7 @@ def eval_bcmi_data(data_path, verbose=False):
             error_sentence, right_sentence = get_bcmi_corpus(line)
             if not error_sentence:
                 continue
-            pred_sentence, pred_detail = correct(error_sentence)
+            pred_sentence, pred_detail = corrector.correct(error_sentence)
             if verbose:
                 print('input sentence:', error_sentence)
                 print('pred sentence:', pred_sentence)
@@ -61,7 +61,7 @@ def eval_sighan_corpus(pkl_path, verbose=False):
     right_result = dict()
     wrong_result = dict()
     for error_sentence, right_detail in sighan_data:
-        pred_sentence, pred_detail = correct(error_sentence)
+        pred_sentence, pred_detail = corrector.correct(error_sentence)
         if verbose:
             print('input sentence:', error_sentence)
             print('pred sentence:', pred_sentence)

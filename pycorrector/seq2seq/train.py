@@ -15,7 +15,7 @@ import fce_config
 from corrector_model import CorrectorModel
 from corpus_reader import FCEReader
 from corpus_reader import CGEDReader
-from tf_util import get_ckpt_path
+from utils.tf_utils import get_ckpt_path
 
 
 def create_model(session, forward_only, model_path, config=cged_config):

@@ -8,11 +8,11 @@ import os
 import numpy as np
 
 import pycorrector.config as config
-from pycorrector.text_util import uniform
-from pycorrector.text_util import tokenize
-from pycorrector.io_util import get_logger
-from pycorrector.io_util import dump_pkl
-from pycorrector.io_util import load_pkl
+from pycorrector.utils.text_utils import uniform
+from pycorrector.utils.text_utils import tokenize
+from pycorrector.utils.io_utils import get_logger
+from pycorrector.utils.io_utils import dump_pkl
+from pycorrector.utils.io_utils import load_pkl
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 default_logger = get_logger(__file__)

@@ -12,11 +12,11 @@ from pycorrector.detector import get_frequency
 from pycorrector.detector import get_ppl_score
 from pycorrector.detector import trigram_char
 from pycorrector.detector import word_freq
-from pycorrector.io_util import dump_pkl
-from pycorrector.io_util import get_logger
-from pycorrector.io_util import load_pkl
-from pycorrector.text_util import is_chinese_string
-from text_util import traditional2simplified
+from pycorrector.utils.io_utils import dump_pkl
+from pycorrector.utils.io_utils import get_logger
+from pycorrector.utils.io_utils import load_pkl
+from pycorrector.utils.text_utils import is_chinese_string
+from utils.text_utils import traditional2simplified
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 char_file_path = os.path.join(pwd_path, config.char_file_path)
