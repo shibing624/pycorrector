@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 from sklearn.model_selection import train_test_split
-
+import numpy as np
 import rnn_crf_config as config
 from data_reader import build_dict
 from data_reader import data_reader
@@ -49,6 +49,13 @@ def train(word_data_path=None,
     # split train test
     X_train, X_test, y_train, y_test = train_test_split(
         word_seq, label_seq, test_size=0.2, random_state=42)
+    # reshape for crf
+    y_train = np.reshape(y_train, (y_train.shape[0], y_train.shape[1], 1))
+    y_test = np.reshape(y_test, (y_test.shape[0], y_test.shape[1], 1))
+    print('X_train.shape', X_train.shape)
+    print('X_test.shape', X_test.shape)
+    print('y_train.shape', y_train.shape)
+    print('y_test.shape', y_test.shape)
     model = rnn_crf(X_train, y_train, X_test, y_test, batch_size, word_ids_dict, label_ids_dict,
                     embedding_dim, rnn_hidden_dim, epoch)
     # predict
