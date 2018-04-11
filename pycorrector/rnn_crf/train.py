@@ -8,7 +8,6 @@ import rnn_crf_config as config
 from data_reader import build_dict
 from data_reader import get_max_len
 from data_reader import load_dict
-from data_reader import load_reverse_dict
 from data_reader import pad_sequence
 from data_reader import vectorize_data
 from rnn_crf_model import create_model

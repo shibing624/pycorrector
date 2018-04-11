@@ -69,15 +69,5 @@ def get_max_len(word_ids):
     return max(len(line) for line in word_ids)
 
 
-def test_reader(path):
-    print('Loading test data from %s' % path)
-    sids = []
-    contents = []
-    with open(path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip().split('\t')
-            sids = line[0].replace('(sid=', '').replace(')', '')
-            text = [w for w in line[1]]
-            sids.append(sids)
-            contents.append(text)
-    return sids, contents
+def load_test_id(dict_path):
+    return [''.join(line.strip().split()) for idx, line in enumerate(open(dict_path, 'r', encoding='utf-8').readlines())]
