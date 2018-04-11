@@ -14,7 +14,7 @@ from rnn_crf_model import load_model
 
 def infer(save_model_path, test_id_path, test_word_path, test_label_path,
           word_dict_path=None, label_dict_path=None, save_pred_path=None,
-          batch_size=64, embedding_dim=100, rnn_hidden_dim=200):
+          batch_size=64, dropout=0.5, embedding_dim=100, rnn_hidden_dim=200):
     # load dict
     test_ids = load_test_id(test_id_path)
     word_ids_dict, ids_word_dict = load_dict(word_dict_path), load_reverse_dict(word_dict_path)
@@ -28,14 +28,15 @@ def infer(save_model_path, test_id_path, test_word_path, test_label_path,
     # pad sequence
     word_seq, label_seq = pad_sequence(word_ids, label_ids, word_maxlen, label_maxlen)
     # load model by file
-    model = load_model(word_ids_dict, label_ids_dict, embedding_dim, rnn_hidden_dim, save_model_path)
+    model = load_model(word_ids_dict, label_ids_dict, embedding_dim,
+                       rnn_hidden_dim, dropout, save_model_path)
     probs = model.predict(word_seq, batch_size=batch_size).argmax(-1)
     assert len(probs) == len(label_seq)
     print('probs.shape:', probs.shape)
     save_preds(probs, test_ids, ids_word_dict, label_ids_dict, ids_label_dict, word_seq, save_pred_path)
 
 
-def save_preds(preds, test_ids , ids_word_dict, label_ids_dict, ids_label_dict, X_test, out_path):
+def save_preds(preds, test_ids, ids_word_dict, label_ids_dict, ids_label_dict, X_test, out_path):
     with open(out_path, 'w', encoding='utf-8') as f:
         for i in range(len(X_test)):
             sent = X_test[i]
@@ -89,5 +90,6 @@ if __name__ == '__main__':
           label_dict_path=config.label_dict_path,
           save_pred_path=config.save_pred_path,
           batch_size=config.batch_size,
+          dropout=config.dropout,
           embedding_dim=config.embedding_dim,
           rnn_hidden_dim=config.rnn_hidden_dim)

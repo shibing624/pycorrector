@@ -25,6 +25,7 @@ def train(train_word_path=None,
           label_dict_path=None,
           save_model_path=None,
           batch_size=64,
+          dropout=0.5,
           epoch=10,
           embedding_dim=100,
           rnn_hidden_dim=200,
@@ -56,15 +57,11 @@ def train(train_word_path=None,
     # reshape for crf model use
     y_train = np.reshape(y_train, (y_train.shape[0], y_train.shape[1], 1))
     y_test = np.reshape(y_test, (y_test.shape[0], y_test.shape[1], 1))
-    print('X_train.shape', X_train.shape)
-    print('X_test.shape', X_test.shape)
-    print('y_train.shape', y_train.shape)
-    print('y_test.shape', y_test.shape)
     logger.info("Data loaded.")
 
     logger.info("Training BILSTM_CRF model...")
     model = create_model(word_ids_dict, label_ids_dict,
-                         embedding_dim, rnn_hidden_dim)
+                         embedding_dim, rnn_hidden_dim, dropout)
     # fit
     model.fit(X_train, y_train,
               batch_size=batch_size,
@@ -83,6 +80,7 @@ if __name__ == "__main__":
           label_dict_path=config.label_dict_path,
           save_model_path=config.save_model_path,
           batch_size=config.batch_size,
+          dropout=config.dropout,
           epoch=config.epoch,
           embedding_dim=config.embedding_dim,
           rnn_hidden_dim=config.rnn_hidden_dim,
