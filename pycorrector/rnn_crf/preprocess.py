@@ -63,9 +63,9 @@ def parse_txt_file(input_path, truth_path):
                 for i in range(int(start_off) - 1, int(end_off)):
                     locate_dict[i] = error_type
                 if text_id in truth_dict:
-                    truth_dict[text_id].append(locate_dict)
+                    truth_dict[text_id].update(locate_dict)
                 else:
-                    truth_dict[text_id] = [locate_dict]
+                    truth_dict[text_id] = locate_dict
 
     # read input file and get tokenize
     with open(input_path, 'r', encoding='utf-8') as input_f:
@@ -73,20 +73,20 @@ def parse_txt_file(input_path, truth_path):
             parts = line.strip().split('\t')
             text_id = parts[0].replace('(sid=', '').replace(')', '')
             text = parts[1]
-            # Segment with pos
+            # segment with pos
             word_seq, pos_seq = segment(text, cut_type='char', pos=True)
             word_arr, label_arr = [], []
             if text_id in truth_dict:
-                for locate_dict in truth_dict[text_id]:
-                    for i in range(len(word_seq)):
-                        if i in locate_dict:
-                            word_arr.append(word_seq[i])
-                            # Fill with error type
-                            label_arr.append(locate_dict[i])
-                        else:
-                            word_arr.append(word_seq[i])
-                            # Fill with pos tag
-                            label_arr.append(pos_seq[i])
+                locate_dict = truth_dict[text_id]
+                for i in range(len(word_seq)):
+                    if i in locate_dict:
+                        word_arr.append(word_seq[i])
+                        # fill with error type
+                        label_arr.append(locate_dict[i])
+                    else:
+                        word_arr.append(word_seq[i])
+                        # fill with pos tag
+                        label_arr.append(pos_seq[i])
             else:
                 word_arr = word_seq
                 label_arr = pos_seq

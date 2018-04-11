@@ -59,9 +59,9 @@ def load_reverse_dict(dict_path):
                 for idx, line in enumerate(open(dict_path, 'r', encoding='utf-8').readlines()))
 
 
-def pad_sequence(word_ids, label_ids, word_maxlen, label_maxlen):
-    word_seq = sequence.pad_sequences(np.array(word_ids), maxlen=word_maxlen)
-    label_seq = sequence.pad_sequences(np.array(label_ids), maxlen=label_maxlen)
+def pad_sequence(word_ids, label_ids, maxlen=300):
+    word_seq = sequence.pad_sequences(np.array(word_ids), maxlen=maxlen)
+    label_seq = sequence.pad_sequences(np.array(label_ids), maxlen=maxlen)
     return word_seq, label_seq
 
 

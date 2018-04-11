@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 
 import rnn_crf_config as config
 from data_reader import build_dict
-from data_reader import get_max_len
 from data_reader import load_dict
 from data_reader import pad_sequence
 from data_reader import vectorize_data
@@ -29,6 +28,7 @@ def train(train_word_path=None,
           epoch=10,
           embedding_dim=100,
           rnn_hidden_dim=200,
+          maxlen=300,
           cutoff_frequency=0):
     """
     Train the bilstm_crf model for grammar correction.
@@ -46,11 +46,8 @@ def train(train_word_path=None,
     # read data to index
     word_ids = vectorize_data(train_word_path, word_ids_dict)
     label_ids = vectorize_data(train_label_path, label_ids_dict)
-    # max length of each sequence
-    word_maxlen = get_max_len(word_ids)
-    label_maxlen = get_max_len(label_ids)
     # pad sequence
-    word_seq, label_seq = pad_sequence(word_ids, label_ids, word_maxlen, label_maxlen)
+    word_seq, label_seq = pad_sequence(word_ids, label_ids, maxlen=maxlen)
     # split train test
     X_train, X_test, y_train, y_test = train_test_split(
         word_seq, label_seq, test_size=0.2, random_state=42)
@@ -84,4 +81,5 @@ if __name__ == "__main__":
           epoch=config.epoch,
           embedding_dim=config.embedding_dim,
           rnn_hidden_dim=config.rnn_hidden_dim,
+          maxlen=config.maxlen,
           cutoff_frequency=config.cutoff_frequency)
