@@ -12,7 +12,7 @@ import cged_config
 from corpus_reader import CGEDReader
 from reader import EOS_ID
 from utils.text_utils import segment
-from train import create_model
+from seq2seq.train import create_model
 
 
 def decode(sess, model, data_reader, data_to_decode,

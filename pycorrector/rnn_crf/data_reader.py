@@ -6,12 +6,11 @@ from collections import defaultdict
 
 import numpy as np
 from keras.preprocessing import sequence
-import pandas as pd
 
 UNK_ID = -1
 
 
-def data_reader(path, word_dict):
+def vectorize_data(path, word_dict):
     data_ids = []
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -60,11 +59,25 @@ def load_reverse_dict(dict_path):
                 for idx, line in enumerate(open(dict_path, 'r', encoding='utf-8').readlines()))
 
 
-def pad_sequence(word_ids, label_ids, maxlen=60):
-    word_seq = sequence.pad_sequences(np.array(word_ids), maxlen=maxlen)
-    label_seq = sequence.pad_sequences(np.array(label_ids), maxlen=maxlen)
+def pad_sequence(word_ids, label_ids, word_maxlen, label_maxlen):
+    word_seq = sequence.pad_sequences(np.array(word_ids), maxlen=word_maxlen)
+    label_seq = sequence.pad_sequences(np.array(label_ids), maxlen=label_maxlen)
     return word_seq, label_seq
 
 
 def get_max_len(word_ids):
     return max(len(line) for line in word_ids)
+
+
+def test_reader(path):
+    print('Loading test data from %s' % path)
+    sids = []
+    contents = []
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip().split('\t')
+            sids = line[0].replace('(sid=', '').replace(')', '')
+            text = [w for w in line[1]]
+            sids.append(sids)
+            contents.append(text)
+    return sids, contents

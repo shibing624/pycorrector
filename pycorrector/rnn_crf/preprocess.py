@@ -7,8 +7,8 @@ import rnn_crf_config as config
 from utils.text_utils import segment
 
 
-def load_train_data(data_path):
-    word_list, label_list = [], []
+def load_corpus_data(data_path):
+    word_lst, label_lst = [], []
     with open(data_path, 'r', encoding='utf-8') as f:
         dom_tree = minidom.parse(f)
     docs = dom_tree.documentElement.getElementsByTagName('DOC')
@@ -37,13 +37,13 @@ def load_train_data(data_path):
                 word_arr.append(word_seq[i])
                 # Fill with pos tag
                 label_arr.append(pos_seq[i])
-        word_list.append(word_arr)
-        label_list.append(label_arr)
+        word_lst.append(word_arr)
+        label_lst.append(label_arr)
 
-    return word_list, label_list
+    return word_lst, label_lst
 
 
-def transform_train_data(data_list, data_path):
+def transform_corpus_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for line in data_list:
@@ -53,10 +53,20 @@ def transform_train_data(data_list, data_path):
 
 
 if __name__ == '__main__':
-    word_list_total, label_list_total = [], []
+    # train data
+    train_words, train_labels = [], []
     for path in config.train_paths:
-        word_list, label_list = load_train_data(path)
-        word_list_total.extend(word_list)
-        label_list_total.extend(label_list)
-    transform_train_data(word_list_total, config.word_data_path)
-    transform_train_data(label_list_total, config.label_data_path)
+        word_list, label_list = load_corpus_data(path)
+        train_words.extend(word_list)
+        train_labels.extend(label_list)
+    transform_corpus_data(train_words, config.train_word_path)
+    transform_corpus_data(train_labels, config.train_label_path)
+
+    # test data
+    test_words, test_labels = [], []
+    for path in config.test_paths:
+        word_list, label_list = load_corpus_data(path)
+        test_words.extend(word_list)
+        test_labels.extend(label_list)
+    transform_corpus_data(test_words, config.test_word_path)
+    transform_corpus_data(test_labels, config.test_label_path)
