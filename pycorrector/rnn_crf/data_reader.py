@@ -7,7 +7,7 @@ from collections import defaultdict
 import numpy as np
 from keras.preprocessing import sequence
 
-UNK_ID = -1
+UNK_ID = 0
 
 
 def vectorize_data(path, word_dict):
