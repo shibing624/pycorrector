@@ -41,12 +41,12 @@ def save_preds(preds, test_ids, X_test, ids_word_dict,
                label_ids_dict, ids_label_dict, out_path):
     with open(out_path, 'w', encoding='utf-8') as f:
         for i in range(len(X_test)):
-            sent = X_test[i]
+            sent_ids = X_test[i]
             sid = test_ids[i]
-            sentence = ''.join([ids_word_dict[i] for i in sent if i > 0])
+            sentence = ''.join([ids_word_dict[i] for i in sent_ids if i > 0])
             label = []
-            for j in range(len(sent)):
-                if sent[j] != 0:
+            for j in range(len(sent_ids)):
+                if sent_ids[j] != 0:
                     label.append(preds[i][j])
             continue_error = False
             has_error = False
@@ -73,7 +73,7 @@ def save_preds(preds, test_ids, X_test, ids_word_dict,
                     current_error = label[k]
             if not has_error:
                 f.write('%s, correct\n' % (sid))
-        logger.info('done, infer data size: %d' % len(X_test))
+        logger.info('save to %s done, data size: %d' % (out_path, len(X_test)))
 
 
 def is_error_label_id(label_id, label_ids_dict):
