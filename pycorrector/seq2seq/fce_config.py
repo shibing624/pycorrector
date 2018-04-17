@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: Use FCE english corpus
+import os
 
 # FCE english corpus
 train_path = '../data/en/fce/fce_train.txt'  # Training data path.
@@ -29,7 +30,6 @@ use_rms_prop = False
 enable_decode_sentence = False  # Test with input error sentence
 enable_test_decode = True  # Test with test set
 
-import os
 
 if not os.path.exists(model_path):
     os.makedirs(model_path)

@@ -11,10 +11,8 @@ import numpy as np
 import tensorflow as tf
 
 import cged_config
-import fce_config
-from corrector_model import CorrectorModel
-from corpus_reader import FCEReader
 from corpus_reader import CGEDReader
+from corrector_model import CorrectorModel
 from utils.tf_utils import get_ckpt_path
 
 
@@ -138,7 +136,7 @@ def main(_):
     data_reader = CGEDReader(cged_config, cged_config.train_path)
     train(data_reader,
           cged_config.train_path,
-          cged_config.val_path,
+          cged_config.test_path,
           cged_config.model_path)
 
 

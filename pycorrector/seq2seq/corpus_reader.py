@@ -79,31 +79,25 @@ class CGEDReader(Reader):
 
     def read_samples_by_string(self, path):
         with open(path, 'r', encoding='utf-8') as f:
-            dom_tree = minidom.parse(f)
-            docs = dom_tree.documentElement.getElementsByTagName('DOC')
-            for doc in docs:
-                source_text = doc.getElementsByTagName('TEXT')[0]. \
-                    childNodes[0].data.strip()
-                target_text = doc.getElementsByTagName('CORRECTION')[0]. \
-                    childNodes[0].data.strip()
-                source = segment(source_text, cut_type='char')
-                target = segment(target_text, cut_type='char')
+            while True:
+                line_src = f.readline()
+                line_dst = f.readline()
+                if not line_src or len(line_src) < 5:
+                    break
+                source = line_src.lower()[5:].strip().split()
+                target = line_dst.lower()[5:].strip().split()
                 yield source, target
+
 
     def unknown_token(self):
         return CGEDReader.UNKNOWN_TOKEN
 
     def read_tokens(self, path, is_infer=False):
+        i = 0
         with open(path, 'r', encoding='utf-8') as f:
-            dom_tree = minidom.parse(f)
-            docs = dom_tree.documentElement.getElementsByTagName('DOC')
-            for doc in docs:
-                if is_infer:
-                    # Input the error text
-                    sentence = doc.getElementsByTagName('TEXT')[0]. \
-                        childNodes[0].data.strip()
-                else:
-                    # Input the correct text
-                    sentence = doc.getElementsByTagName('CORRECTION')[0]. \
-                        childNodes[0].data.strip()
-                yield segment(sentence, cut_type='char')
+            for line in f:
+                # Input the correct text, which start with 0
+                if i % 2 == 1:
+                    if line and len(line) > 5:
+                        yield line.lower()[5:].strip().split()
+                i += 1

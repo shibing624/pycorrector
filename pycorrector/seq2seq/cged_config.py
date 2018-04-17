@@ -3,13 +3,17 @@
 # Brief: Use CGED corpus
 import os
 
-# CGED chinese corpus
-train_path = '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'  # Training data path.
-val_path = '../data/cn/CGED/CGED18_HSK_TestingSet.xml'  # Validation data path.
-test_path = '../data/cn/CGED/CGED18_HSK_TestingSet.xml'
-
+output_dir = './output'
 model_path = './output/cged_model'  # Path of the model saved, default is output_path/model
-enable_special_error = False
+
+# CGED chinese corpus
+raw_train_paths = ['../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
+                   '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
+                   '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+                   # '../data/cn/CGED/sample_HSK_TrainingSet.xml',
+                   ]
+train_path = output_dir + '/train.txt'  # Training data path.
+test_path = output_dir + '/test.txt'  # Validation data path.
 num_steps = 3000  # Number of steps to train.
 decode_sentence = False  # Whether we should decode sentences of the user.
 
