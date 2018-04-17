@@ -29,7 +29,7 @@ def parse_xml_file(path):
     return data_list
 
 
-def save_data(data_list, data_path):
+def _save_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for src, dst in data_list:
@@ -41,8 +41,8 @@ def save_data(data_list, data_path):
 
 def transform_corpus_data(data_list, train_data_path, test_data_path):
     train_lst, test_lst = train_test_split(data_list)
-    save_data(train_lst, train_data_path)
-    save_data(test_lst, test_data_path)
+    _save_data(train_lst, train_data_path)
+    _save_data(test_lst, test_data_path)
 
 
 if __name__ == '__main__':

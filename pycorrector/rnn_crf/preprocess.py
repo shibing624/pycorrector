@@ -96,7 +96,7 @@ def parse_txt_file(input_path, truth_path):
     return id_lst, word_lst, label_lst
 
 
-def transform_corpus_data(data_list, data_path):
+def save_data_list(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for line in data_list:
@@ -112,8 +112,8 @@ if __name__ == '__main__':
         _, word_list, label_list = parse_xml_file(path)
         train_words.extend(word_list)
         train_labels.extend(label_list)
-    transform_corpus_data(train_words, config.train_word_path)
-    transform_corpus_data(train_labels, config.train_label_path)
+    save_data_list(train_words, config.train_word_path)
+    save_data_list(train_labels, config.train_label_path)
 
     # test data
     test_ids, test_words, test_labels = [], [],[]
@@ -122,6 +122,6 @@ if __name__ == '__main__':
         test_ids.extend(id_list)
         test_words.extend(word_list)
         test_labels.extend(label_list)
-    transform_corpus_data(test_ids, config.test_id_path)
-    transform_corpus_data(test_words, config.test_word_path)
-    transform_corpus_data(test_labels, config.test_label_path)
+    save_data_list(test_ids, config.test_id_path)
+    save_data_list(test_words, config.test_word_path)
+    save_data_list(test_labels, config.test_label_path)
