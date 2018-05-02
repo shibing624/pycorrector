@@ -4,7 +4,7 @@
 
 import unittest
 
-from pycorrector import *
+from pycorrector.corrector import *
 
 
 class BasicTestSuite(unittest.TestCase):

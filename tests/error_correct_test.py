@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-import pycorrector
+from pycorrector import corrector
 
 error_sentences = [
     '美食美事皆不可辜负，这场盛会你一定期待已久',
@@ -23,5 +23,5 @@ error_sentences = [
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
 ]
 for line in error_sentences:
-    correct_sent = pycorrector.correct(line)
+    correct_sent = corrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

@@ -4,8 +4,8 @@
 import enchant
 from pypinyin import lazy_pinyin
 
-from utils.text_util import traditional2simplified
-from utils.text_util import simplified2traditional, tokenize, get_homophones_by_char, get_homophones_by_pinyin
+from utils.text_utils import traditional2simplified, simplified2traditional
+from utils.text_utils import tokenize, get_homophones_by_char, get_homophones_by_pinyin
 
 traditional_sentence = '憂郁的臺灣烏龜'
 simplified_sentence = traditional2simplified(traditional_sentence)

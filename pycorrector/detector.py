@@ -8,11 +8,10 @@ import os
 import numpy as np
 
 import pycorrector.config as config
-from pycorrector.utils.text_utils import uniform
-from pycorrector.utils.text_utils import tokenize
-from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.io_utils import dump_pkl
+from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.io_utils import load_pkl
+from pycorrector.utils.text_utils import uniform, tokenize
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 default_logger = get_logger(__file__)
@@ -113,23 +112,30 @@ def detect(sentence):
                 maybe_error_indices.add(i)
     # 语言模型检测疑似错字
     ngram_avg_scores = []
-    for n in [2, 3]:
-        scores = []
-        for i in range(len(sentence) - n + 1):
-            word = sentence[i:i + n]
-            score = get_ngram_score(list(word), mode=trigram_char)
-            scores.append(score)
-        # 移动窗口补全得分
-        for _ in range(n - 1):
-            scores.insert(0, scores[0])
-            scores.append(scores[-1])
-        avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
-        ngram_avg_scores.append(avg_scores)
-    # 取拼接后的ngram平均得分
-    sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
-    maybe_error_char_indices = _get_maybe_error_index(sent_scores)
-    # 合并字、词错误
-    maybe_error_indices |= set(maybe_error_char_indices)
+    try:
+        for n in [2, 3]:
+            scores = []
+            for i in range(len(sentence) - n + 1):
+                word = sentence[i:i + n]
+                score = get_ngram_score(list(word), mode=trigram_char)
+                scores.append(score)
+            # 移动窗口补全得分
+            for _ in range(n - 1):
+                scores.insert(0, scores[0])
+                scores.append(scores[-1])
+            avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
+            ngram_avg_scores.append(avg_scores)
+
+        # 取拼接后的ngram平均得分
+        sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
+        maybe_error_char_indices = _get_maybe_error_index(sent_scores)
+        # 合并字、词错误
+        maybe_error_indices |= set(maybe_error_char_indices)
+    except IndexError:
+        print("index error, sentence:", sentence)
+        pass
+    except:
+        print("detect error, sentence:", sentence)
     return sorted(maybe_error_indices)
 
 
@@ -142,7 +148,7 @@ if __name__ == '__main__':
     sent_chars = [sent[i] for i in error_list]
     print(sent_chars)
 
-    from text_util import segment, tokenize
+    from utils.text_utils import segment, tokenize
 
     print(get_ngram_score(segment(sent)))
     print(get_ppl_score(segment(sent)))

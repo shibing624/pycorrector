@@ -2,6 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import os
+
 from pycorrector.eval import *
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
