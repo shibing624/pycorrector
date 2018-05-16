@@ -31,7 +31,7 @@ embedding_dim = 100
 rnn_hidden_dim = 200
 maxlen = 300
 cutoff_frequency = 0
-dropout = 0.5
+dropout = 0.2
 save_model_path = output_dir + '/rnn_crf_model.h5'  # Path of the model saved, default is output_path/model
 
 # infer

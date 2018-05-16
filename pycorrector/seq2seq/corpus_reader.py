@@ -2,7 +2,6 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: Corpus for model
 import random
-
 from reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 from xml.dom import minidom
 from utils.text_utils import segment
@@ -87,7 +86,6 @@ class CGEDReader(Reader):
                 source = line_src.lower()[5:].strip().split()
                 target = line_dst.lower()[5:].strip().split()
                 yield source, target
-
 
     def unknown_token(self):
         return CGEDReader.UNKNOWN_TOKEN

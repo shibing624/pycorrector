@@ -15,7 +15,7 @@ def reader(in_file):
     with open(in_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
-            text = line.split("\t")[1]
+            text = line.split("\t")[0]
             lines.append(text)
             cout += 1
     print("in file: %s, cout: %d" % (in_file, cout))
@@ -36,7 +36,7 @@ input_lines = reader(in_file)
 correct_lines = list()
 for line in input_lines:
     correct_sent, error_detail = corrector.correct(line)
-    print("original sentence:{} => correct sentence:{}, error:{}".format(
+    print("{}\t{}\t{}".format(
         line, correct_sent, error_detail))
     correct_lines.append(correct_sent)
 saver(out_file, correct_lines)
