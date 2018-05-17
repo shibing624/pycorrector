@@ -4,9 +4,10 @@
 import os
 
 import tensorflow as tf
-from rnn_lm_model import rnn_model
-from rnn_lm.data_reader import process_data, generate_batch
+import numpy as np
 import rnn_lm_config as conf
+from rnn_lm.data_reader import process_data, generate_batch
+from rnn_lm_model import rnn_model
 
 
 def main(_):
@@ -25,7 +26,7 @@ def main(_):
                            vocab_size=len(vocabularies),
                            rnn_size=128,
                            num_layers=2,
-                           batch_size=64,
+                           batch_size=conf.batch_size,
                            learning_rate=conf.learning_rate)
 
     saver = tf.train.Saver(tf.global_variables())
@@ -45,13 +46,14 @@ def main(_):
                 n = 0
                 n_chunk = len(data_vector) // conf.batch_size
                 for batch in range(n_chunk):
-                    loss, _, _ = sess.run([
+                    loss, _, _, perplexity = sess.run([
                         end_points['total_loss'],
                         end_points['last_state'],
-                        end_points['train_op']
+                        end_points['train_op'],
+                        end_points['perplexity']
                     ], feed_dict={input_data: batches_inputs[n], output_targets: batches_outputs[n]})
                     n += 1
-                    print('Epoch: %d, batch: %d, training loss: %.6f' % (epoch, batch, loss))
+                    print('Epoch: %d, batch: %d, training loss: %.6f, ppl: %.1f' % (epoch, batch, loss, perplexity))
                 if epoch % conf.num_save_epochs == 0:
                     saver.save(sess, os.path.join(conf.model_dir, conf.model_prefix), global_step=epoch)
         except KeyboardInterrupt:

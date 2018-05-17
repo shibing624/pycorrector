@@ -57,6 +57,7 @@ def rnn_model(model, input_data, output_data,
         loss = tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=logits)
         # loss shape should be [?, vocab_size+1]
         total_loss = tf.reduce_mean(loss)
+        perplexity = tf.exp(total_loss)
         train_op = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)
 
         end_points['initial_state'] = initial_state
@@ -65,6 +66,7 @@ def rnn_model(model, input_data, output_data,
         end_points['total_loss'] = total_loss
         end_points['loss'] = loss
         end_points['last_state'] = last_state
+        end_points['perplexity'] = perplexity
     else:
         prediction = tf.nn.softmax(logits)
 

@@ -21,8 +21,9 @@ def process_data(file_name,start_token='B',end_token='E'):
                 count = count + 1
             except ValueError as e:
                 pass
+
     print('file:', file_name, "size:", count)
-    data = sorted(data, key=lambda l: len(line))
+    data = sorted(data, key=lambda l: len(l))
 
     total_words = []
     for line in data:
