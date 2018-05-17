@@ -69,31 +69,6 @@ def generate(begin_word):
         return sentence
 
 
-def _eval(self, sess, word_idx, text):
-    batch_size = conf.batch_size
-    state = sess.run(self.cell.zero_state(1, tf.float32))
-    x = [word_idx[c] if c in word_idx else word_idx['UNK'] for c in text]
-    x = [word_idx[conf.start_token]] + x + [word_idx[conf.end_token]]
-    total_len = len(x) - 1
-    # pad x so the batch_size divides it
-    while len(x) % 200 != 1:
-        x.append(word_idx[' '])
-    y = np.array(x[1:]).reshape((-1, batch_size))
-    x = np.array(x[:-1]).reshape((-1, batch_size))
-
-    total_loss = 0.0
-    for i in range(x.shape[0]):
-        feed = {self.input_data: x[i:i + 1, :], self.targets: y[i:i + 1, :],
-                self.initial_state: state}
-        [state, loss] = sess.run([self.final_state, self.loss], feed)
-        total_loss += loss.sum()
-    # need to subtract off loss from padding tokens
-    total_loss -= loss[total_len % batch_size - batch_size:].sum()
-    avg_entropy = total_loss / len(text)
-    # perplexity
-    return np.exp(avg_entropy)
-
-
 def ppl(text):
     perplexity = 0
     batch_size = 1

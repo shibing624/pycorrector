@@ -23,10 +23,12 @@ learning_rate = 0.01
 model_dir = output_dir + '/model'
 model_prefix = 'lm'
 num_save_epochs = 6
-epochs = 50
+epochs = 10
 
 # infer
 gen_file_path = output_dir + '/gen.txt'
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)

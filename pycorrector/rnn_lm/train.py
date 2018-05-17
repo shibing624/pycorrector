@@ -4,16 +4,13 @@
 import os
 
 import tensorflow as tf
-import numpy as np
+
 import rnn_lm_config as conf
 from rnn_lm.data_reader import process_data, generate_batch
 from rnn_lm_model import rnn_model
 
 
 def main(_):
-    if not os.path.exists(conf.model_dir):
-        os.makedirs(conf.model_dir)
-
     data_vector, word_idx, vocabularies = process_data(conf.train_word_path, conf.start_token, conf.end_token)
     batches_inputs, batches_outputs = generate_batch(conf.batch_size, data_vector, word_idx)
 
