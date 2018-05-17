@@ -1,45 +1,69 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import tensorflow as tf
+from rnn_lm_model import rnn_model
+from rnn_lm.data_reader import process_data
+import numpy as np
+import rnn_lm_config as conf
 
-import rnn_crf_config as config
-from rnn_lm.data_reader import load_dict
-from rnn_lm.data_reader import load_reverse_dict
-from rnn_lm.data_reader import load_test_id
-from rnn_lm.data_reader import pad_sequence
-from rnn_lm.data_reader import vectorize_data
-from rnn_lm_model import load_model
-from utils.io_utils import get_logger
-
-logger = get_logger(__name__)
+def to_word(predict, vocabs):
+    t = np.cumsum(predict)
+    s = np.sum(predict)
+    sample = int(np.searchsorted(t, np.random.rand(1) * s))
+    if sample > len(vocabs):
+        sample = len(vocabs) - 1
+    return vocabs[sample]
 
 
-def infer(save_model_path, test_id_path, test_word_path,
-          word_dict_path=None,  batch_size=64, maxlen=300):
-    # load dict
-    test_ids = load_test_id(test_id_path)
-    word_ids_dict, ids_word_dict = load_dict(word_dict_path), load_reverse_dict(word_dict_path)
-    # read data to index
-    word_ids = vectorize_data(test_word_path, word_ids_dict)
-    # pad sequence
-    word_seq = pad_sequence(word_ids, maxlen)
-    # load model by file
-    model = load_model(save_model_path)
-    probs = model.predict(word_seq, batch_size=batch_size).argmax(-1)
-    assert len(probs) == len(word_seq)
-    print('probs.shape:', probs.shape)
+def generate(begin_word):
+    batch_size = 1
+    print('loading corpus from %s' % conf.model_dir)
+    data_vector, word_idx, vocabularies = process_data(conf.train_word_path)
+    input_data = tf.placeholder(tf.int32, [batch_size, None])
+    end_points = rnn_model(model='lstm',
+                           input_data=input_data,
+                           output_data=None,
+                           vocab_size=len(vocabularies),
+                           rnn_size=128,
+                           num_layers=2,
+                           batch_size=64,
+                           learning_rate=0.0002)
+
+    saver = tf.train.Saver(tf.global_variables())
+    init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
+    with tf.Session() as sess:
+        sess.run(init_op)
+
+        checkpoint = tf.train.latest_checkpoint(conf.model_dir)
+        saver.restore(sess, checkpoint)
+
+        x = np.array([list(map(word_idx.get, conf.start_token))])
+        [predict, last_state] = sess.run([end_points['prediction'],
+                                          end_points['last_state']],
+                                         feed_dict={input_data: x})
+        if begin_word:
+            word = begin_word
+        else:
+            word = to_word(predict, vocabularies)
+        sentence = ''
+
+        i = 0
+        while word != end_token:
+            sentence += word
+            i += 1
+            if i >= 24:
+                break
+            x = np.zeros((1, 1))
+            x[0, 0] = word_idx[word]
+            [predict, last_state] = sess.run([end_points['prediction'], end_points['last_state']],
+                                             feed_dict={input_data: x, end_points['initial_state']: last_state})
+            word = to_word(predict, vocabularies)
+
+        return sentence
 
 
 if __name__ == '__main__':
-    infer(config.save_model_path,
-          config.test_id_path,
-          config.test_word_path,
-          config.test_label_path,
-          word_dict_path=config.word_dict_path,
-          label_dict_path=config.label_dict_path,
-          save_pred_path=config.save_pred_path,
-          batch_size=config.batch_size,
-          dropout=config.dropout,
-          embedding_dim=config.embedding_dim,
-          rnn_hidden_dim=config.rnn_hidden_dim,
-          maxlen=config.maxlen)
+    begin_char = input('please input the first character:')
+    data = generate(begin_char)
+    print(data)

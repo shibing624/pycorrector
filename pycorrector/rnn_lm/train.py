@@ -1,68 +1,64 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-import sys
+import os
 
-sys.path.append('.')
-
-import rnn_lm_config as config
-from rnn_lm.data_reader import build_dict
-from rnn_lm.data_reader import load_dict
-from rnn_lm.data_reader import pad_sequence
-from rnn_lm.data_reader import vectorize_data
-from rnn_lm_model import create_model
-from utils.io_utils import get_logger
-
-logger = get_logger(__name__)
+import tensorflow as tf
+from rnn_lm_model import rnn_model
+from rnn_lm.data_reader import process_data, generate_batch
+import rnn_lm_config as conf
 
 
-def train(train_word_path=None,
-          word_dict_path=None,
-          save_model_path=None,
-          batch_size=64,
-          dropout=0.2,
-          epoch=10,
-          embedding_dim=100,
-          rnn_hidden_dim=200,
-          maxlen=300,
-          cutoff_frequency=0):
-    """
-    Train the bilstm lm model for grammar correction.
-    """
-    # build the word dictionary
-    build_dict(train_word_path,
-               word_dict_path,
-               cutoff_frequency)
-    # load dict
-    word_ids_dict = load_dict(word_dict_path)
-    # read data to index
-    word_ids = vectorize_data(train_word_path, word_ids_dict)
-    # pad sequence
-    word_seq = pad_sequence(word_ids, maxlen=maxlen)
-    logger.info("Data loaded.")
-    # model
-    logger.info("Training BILSTM LM model...")
-    model = create_model(word_ids_dict,
-                         embedding_dim=embedding_dim,
-                         rnn_hidden_dim=rnn_hidden_dim,
-                         dropout=dropout)
-    # fit
-    model.fit(word_seq,word_seq,
-              batch_size=batch_size,
-              epochs=epoch)
-    # save model
-    model.save(save_model_path)
-    logger.info("Training has finished.")
+def main(_):
+    if not os.path.exists(conf.model_dir):
+        os.makedirs(conf.model_dir)
+
+    data_vector, word_idx, vocabularies = process_data(conf.train_word_path, conf.start_token, conf.end_token)
+    batches_inputs, batches_outputs = generate_batch(conf.batch_size, data_vector, word_idx)
+
+    input_data = tf.placeholder(tf.int32, [conf.batch_size, None])
+    output_targets = tf.placeholder(tf.int32, [conf.batch_size, None])
+
+    end_points = rnn_model(model='lstm',
+                           input_data=input_data,
+                           output_data=output_targets,
+                           vocab_size=len(vocabularies),
+                           rnn_size=128,
+                           num_layers=2,
+                           batch_size=64,
+                           learning_rate=conf.learning_rate)
+
+    saver = tf.train.Saver(tf.global_variables())
+    init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
+    with tf.Session() as sess:
+        sess.run(init_op)
+
+        start_epoch = 0
+        checkpoint = tf.train.latest_checkpoint(conf.model_dir)
+        if checkpoint:
+            saver.restore(sess, checkpoint)
+            print("restore from the checkpoint {0}".format(checkpoint))
+            start_epoch += int(checkpoint.split('-')[-1])
+        print('start training...')
+        try:
+            for epoch in range(start_epoch, conf.epochs):
+                n = 0
+                n_chunk = len(data_vector) // conf.batch_size
+                for batch in range(n_chunk):
+                    loss, _, _ = sess.run([
+                        end_points['total_loss'],
+                        end_points['last_state'],
+                        end_points['train_op']
+                    ], feed_dict={input_data: batches_inputs[n], output_targets: batches_outputs[n]})
+                    n += 1
+                    print('Epoch: %d, batch: %d, training loss: %.6f' % (epoch, batch, loss))
+                if epoch % conf.num_save_epochs == 0:
+                    saver.save(sess, os.path.join(conf.model_dir, conf.model_prefix), global_step=epoch)
+        except KeyboardInterrupt:
+            print('Interrupt manually, try saving checkpoint for now...')
+            saver.save(sess, os.path.join(conf.model_dir, conf.model_prefix), global_step=epoch)
+            print('Last epoch were saved, next time will start from epoch {}.'.format(epoch))
 
 
-if __name__ == "__main__":
-    train(train_word_path=config.train_word_path,
-          word_dict_path=config.word_dict_path,
-          save_model_path=config.save_model_path,
-          batch_size=config.batch_size,
-          dropout=config.dropout,
-          epoch=config.epoch,
-          embedding_dim=config.embedding_dim,
-          rnn_hidden_dim=config.rnn_hidden_dim,
-          maxlen=config.maxlen,
-          cutoff_frequency=config.cutoff_frequency)
+if __name__ == '__main__':
+    tf.app.run()
