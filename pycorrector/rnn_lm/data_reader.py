@@ -5,22 +5,24 @@ import collections
 
 import numpy as np
 
+MIN_LEN = 5
+MAX_LEN = 400
+START_TOKEN = 'B'
+END_TOKEN = 'E'
+UNK_TOKEN = 'UNK'
 
-def process_data(file_name,start_token='B',end_token='E'):
+def process_data(file_name, word_dict_path=None):
     data = []
     with open(file_name, "r", encoding='utf-8') as f:
         count = 0
-        for line in f.readlines():
-            try:
-                content = line.strip()
-                content = content.replace(' ', '')
-                if len(content) < 5 or len(content) > 400:
-                    continue
-                content = start_token + content + end_token
-                data.append(content)
-                count = count + 1
-            except ValueError as e:
-                pass
+        for line in f:
+            content = line.strip()
+            content = content.replace(' ', '')
+            if len(content) < MIN_LEN or len(content) > MAX_LEN:
+                continue
+            content = START_TOKEN + content + END_TOKEN
+            data.append(content)
+            count = count + 1
 
     print('file:', file_name, "size:", count)
     data = sorted(data, key=lambda l: len(l))
@@ -30,13 +32,29 @@ def process_data(file_name,start_token='B',end_token='E'):
         total_words += [word for word in line]
     counter = collections.Counter(total_words)
     count_pairs = sorted(counter.items(), key=lambda x: -x[1])
-    words, _ = zip(*count_pairs)
+    vocab, _ = zip(*count_pairs)
 
-    words = words[:len(words)] + (' ',)
-    word_idx = dict(zip(words, range(len(words))))
-    data_vector = [list(map(lambda word: word_idx.get(word, len(words)), i)) for i in data]
+    vocab = vocab[:len(vocab)] + (UNK_TOKEN,)
+    word_to_int = dict(zip(vocab, range(len(vocab))))
+    if word_dict_path:
+        save_dict(word_to_int, word_dict_path)
+    data_vector = [list(map(lambda word: word_to_int.get(word, len(vocab)), i)) for i in data]
+    return data_vector, word_to_int
 
-    return data_vector, word_idx, words
+
+def save_dict(dict_data, save_path):
+    with open(save_path, 'w', encoding='utf-8') as f:
+        for k, v in dict_data.items():
+            f.write("%s\t%d\n" % (k, v))
+
+
+def load_word_dict(save_path):
+    dict_data = {}
+    with open(save_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            items = line.strip().split('\t')
+            dict_data[items[0]] = int(items[1])
+    return dict_data
 
 
 def generate_batch(batch_size, data_vec, word_to_int):
@@ -49,7 +67,7 @@ def generate_batch(batch_size, data_vec, word_to_int):
 
         batches = data_vec[start_index:end_index]
         length = max(map(len, batches))
-        x_data = np.full((batch_size, length), word_to_int[' '], np.int32)
+        x_data = np.full((batch_size, length), word_to_int[UNK_TOKEN], np.int32)
         for row in range(batch_size):
             x_data[row, :len(batches[row])] = batches[row]
         y_data = np.copy(x_data)

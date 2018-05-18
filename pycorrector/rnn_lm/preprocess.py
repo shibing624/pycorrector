@@ -17,7 +17,7 @@ def parse_xml_file(path):
         # Input the text
         text = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
-        # Segment with pos
+        # Segment
         word_seq = segment(text, cut_type='char', pos=False)
         word_arr.append(word_seq)
     return word_arr
