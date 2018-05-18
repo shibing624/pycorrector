@@ -8,7 +8,7 @@ import tensorflow as tf
 import rnn_lm_config as conf
 from rnn_lm.data_reader import process_data, generate_batch
 from rnn_lm_model import rnn_model
-from rnn_lm.infer import generate
+
 
 def main(_):
     # build vocab and word dict
@@ -56,7 +56,6 @@ def main(_):
                     print('Epoch: %d, batch: %d, training loss: %.6f, ppl: %.1f' % (epoch, batch, loss, perplexity))
                 if epoch % conf.num_save_epochs == 0:
                     saver.save(sess, os.path.join(conf.model_dir, conf.model_prefix), global_step=epoch)
-                    print(generate('我'))
         except KeyboardInterrupt:
             print('Interrupt manually, try saving checkpoint for now...')
             saver.save(sess, os.path.join(conf.model_dir, conf.model_prefix), global_step=epoch)
