@@ -11,7 +11,8 @@ START_TOKEN = 'B'
 END_TOKEN = 'E'
 UNK_TOKEN = 'UNK'
 
-def process_data(file_name, word_dict_path=None):
+
+def process_data(file_name, word_dict_path=None, cutoff_frequency=10):
     data = []
     with open(file_name, "r", encoding='utf-8') as f:
         count = 0
@@ -30,11 +31,15 @@ def process_data(file_name, word_dict_path=None):
     total_words = []
     for line in data:
         total_words += [word for word in line]
-    counter = collections.Counter(total_words)
+    counter = dict()
+    for k, v in collections.Counter(total_words).items():
+        if v < cutoff_frequency:
+            continue
+        counter[k] = v
     count_pairs = sorted(counter.items(), key=lambda x: -x[1])
     vocab, _ = zip(*count_pairs)
 
-    vocab = vocab[:len(vocab)] + (UNK_TOKEN,)
+    vocab = (UNK_TOKEN,) + vocab[:len(vocab)]
     word_to_int = dict(zip(vocab, range(len(vocab))))
     if word_dict_path:
         save_dict(word_to_int, word_dict_path)
@@ -49,11 +54,14 @@ def save_dict(dict_data, save_path):
 
 
 def load_word_dict(save_path):
-    dict_data = {}
+    dict_data = dict()
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.strip().split('\t')
-            dict_data[items[0]] = int(items[1])
+            items = line.strip().split()
+            try:
+                dict_data[items[0]] = int(items[1])
+            except IndexError:
+                print('error', line)
     return dict_data
 
 

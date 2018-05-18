@@ -11,7 +11,7 @@ def parse_xml_file(path):
     print('Parse data from %s' % path)
     word_arr = []
     with open(path, 'r', encoding='utf-8') as f:
-        dom_tree = minidom.parse(path)
+        dom_tree = minidom.parse(f)
     docs = dom_tree.documentElement.getElementsByTagName('DOC')
     for doc in docs:
         # Input the text

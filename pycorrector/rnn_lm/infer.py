@@ -14,13 +14,12 @@ def to_word(predict, vocabs):
     s = np.sum(predict)
     sample = int(np.searchsorted(t, np.random.rand(1) * s))
     if sample > len(vocabs):
-        sample = len(vocabs) - 1
+        sample = 0
     return vocabs[sample]
 
 
 def generate(begin_word):
     batch_size = 1
-    print('loading corpus from %s' % conf.model_dir)
     word_to_int = load_word_dict(conf.word_dict_path)
     vocabularies = [k for k, v in word_to_int.items()]
     input_data = tf.placeholder(tf.int32, [batch_size, None])
@@ -40,7 +39,7 @@ def generate(begin_word):
 
         checkpoint = tf.train.latest_checkpoint(conf.model_dir)
         saver.restore(sess, checkpoint)
-
+        print("loading model from the checkpoint {0}".format(checkpoint))
         x = np.array([list(map(word_to_int.get, START_TOKEN))])
         [predict, last_state] = sess.run([end_points['prediction'],
                                           end_points['last_state']],
@@ -50,7 +49,6 @@ def generate(begin_word):
         else:
             word = to_word(predict, vocabularies)
         sentence = ''
-
         i = 0
         while word != END_TOKEN and word != START_TOKEN and word!=UNK_TOKEN:
             sentence += word
@@ -96,7 +94,6 @@ def ppl(text):
     init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
     with tf.Session() as sess:
         sess.run(init_op)
-
         checkpoint = tf.train.latest_checkpoint(conf.model_dir)
         saver.restore(sess, checkpoint)
         print("loading model from the checkpoint {0}".format(checkpoint))
@@ -110,7 +107,8 @@ def ppl(text):
 
 if __name__ == '__main__':
     # begin_char = input('please input the first character:')
-    # begin_char = '我'
-    # print(generate(begin_char))
-    ppl("化肥和农药不仅对有害。")
+    begin_char = '我'
+    print(generate(begin_char))
+    # ppl("化肥和农药不仅对人类有害，而且对地球的土壤也非常有害。")
+    # ppl("化肥和农药不仅对土壤也非常。")
     # ppl("化肥和农药、不仅对人、类这最化有害。")
