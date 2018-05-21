@@ -2,9 +2,8 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: Corpus for model
 import random
-from reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
-from xml.dom import minidom
-from utils.text_utils import segment
+
+from pycorrector.seq2seq.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 
 
 class FCEReader(Reader):

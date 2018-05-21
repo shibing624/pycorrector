@@ -76,7 +76,7 @@ from tensorflow.python.ops import rnn_cell
 from tensorflow.contrib import rnn
 from tensorflow.contrib.rnn import EmbeddingWrapper
 
-linear = core_rnn_cell._linear  # pylint: disable=protected-access
+linear = core_rnn_cell._Linear  # pylint: disable=protected-access
 
 
 def _extract_argmax_and_embed(embedding, output_projection=None,

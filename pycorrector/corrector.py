@@ -6,7 +6,7 @@ import os
 
 from pypinyin import lazy_pinyin
 
-import config
+from pycorrector import config
 from pycorrector.detector import detect
 from pycorrector.detector import get_frequency
 from pycorrector.detector import get_ppl_score
@@ -16,7 +16,7 @@ from pycorrector.utils.io_utils import dump_pkl
 from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.io_utils import load_pkl
 from pycorrector.utils.text_utils import is_chinese_string
-from utils.text_utils import traditional2simplified
+from pycorrector.utils.text_utils import traditional2simplified
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 char_file_path = os.path.join(pwd_path, config.char_file_path)

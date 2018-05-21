@@ -3,8 +3,8 @@
 # Brief:
 from xml.dom import minidom
 
-import rnn_lm_config as config
-from utils.text_utils import segment
+import pycorrector.rnn_lm.rnn_lm_config as config
+from pycorrector.utils.text_utils import segment
 
 
 def parse_xml_file(path):

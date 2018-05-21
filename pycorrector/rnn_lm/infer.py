@@ -4,9 +4,9 @@
 import numpy as np
 import tensorflow as tf
 
-import rnn_lm_config as conf
-from rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
-from rnn_lm_model import rnn_model
+import pycorrector.rnn_lm.rnn_lm_config as conf
+from pycorrector.rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
+from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 
 
 def to_word(predict, vocabs):

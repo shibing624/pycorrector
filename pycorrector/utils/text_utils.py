@@ -4,11 +4,11 @@
 import re
 
 import jieba
-from jieba import posseg
 import pypinyin
+from jieba import posseg
 from pypinyin import pinyin
 
-from langconv import Converter
+from pycorrector.utils.langconv import Converter
 
 
 def is_chinese(uchar):

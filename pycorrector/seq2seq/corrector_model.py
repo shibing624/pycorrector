@@ -11,8 +11,8 @@ from tensorflow.python.ops import embedding_ops
 from tensorflow.python.ops import math_ops
 from tensorflow.python.ops import nn_ops
 
-import seq2seq
-from reader import PAD_ID, GO_ID
+from pycorrector.seq2seq import seq2seq
+from pycorrector.seq2seq.reader import PAD_ID, GO_ID
 
 
 class CorrectorModel(object):

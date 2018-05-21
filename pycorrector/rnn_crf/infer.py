@@ -2,14 +2,14 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 
-import rnn_crf_config as config
-from data_reader import load_dict
-from data_reader import load_reverse_dict
-from data_reader import load_test_id
-from data_reader import pad_sequence
-from data_reader import vectorize_data
-from rnn_crf_model import load_model
-from utils.io_utils import get_logger
+from pycorrector.rnn_crf import rnn_crf_config as config
+from pycorrector.rnn_crf.data_reader import load_dict
+from pycorrector.rnn_crf.data_reader import load_reverse_dict
+from pycorrector.rnn_crf.data_reader import load_test_id
+from pycorrector.rnn_crf.data_reader import pad_sequence
+from pycorrector.rnn_crf.data_reader import vectorize_data
+from pycorrector.rnn_crf.rnn_crf_model import load_model
+from pycorrector.utils.io_utils import get_logger
 
 logger = get_logger(__name__)
 

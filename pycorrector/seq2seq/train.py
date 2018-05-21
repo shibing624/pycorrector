@@ -10,10 +10,10 @@ import time
 import numpy as np
 import tensorflow as tf
 
-import cged_config
-from corpus_reader import CGEDReader
-from corrector_model import CorrectorModel
-from utils.tf_utils import get_ckpt_path
+from pycorrector.seq2seq import cged_config
+from pycorrector.seq2seq.corpus_reader import CGEDReader
+from pycorrector.seq2seq.corrector_model import CorrectorModel
+from pycorrector.utils.tf_utils import get_ckpt_path
 
 
 def create_model(session, forward_only, model_path, config=cged_config):

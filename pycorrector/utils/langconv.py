@@ -10,12 +10,7 @@ try:
     psyco.full()
 except:
     pass
-
-try:
-    from zh_wiki import zh2Hant, zh2Hans
-except ImportError:
-    from pycorrector.zhtools.zh_wiki import zh2Hant, zh2Hans
-
+from pycorrector.utils.zh_wiki import zh2Hant, zh2Hans
 import sys
 
 py3k = sys.version_info >= (3, 0, 0)

@@ -3,8 +3,8 @@
 # Brief:
 from xml.dom import minidom
 
-import rnn_crf_config as config
-from utils.text_utils import segment
+import pycorrector.rnn_crf.rnn_crf_config as config
+from pycorrector.utils.text_utils import segment
 
 
 def parse_xml_file(path):
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     save_data_list(train_labels, config.train_label_path)
 
     # test data
-    test_ids, test_words, test_labels = [], [],[]
+    test_ids, test_words, test_labels = [], [], []
     for input_path, truth_path in config.test_paths.items():
         id_list, word_list, label_list = parse_txt_file(input_path, truth_path)
         test_ids.extend(id_list)

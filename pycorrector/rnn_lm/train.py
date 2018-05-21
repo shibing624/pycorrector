@@ -5,9 +5,9 @@ import os
 
 import tensorflow as tf
 
-import rnn_lm_config as conf
-from rnn_lm.data_reader import process_data, generate_batch
-from rnn_lm_model import rnn_model
+import pycorrector.rnn_lm.rnn_lm_config as conf
+from pycorrector.rnn_lm.data_reader import process_data, generate_batch
+from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 
 
 def main(_):

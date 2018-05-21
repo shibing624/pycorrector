@@ -4,7 +4,7 @@
 
 import unittest
 
-from pycorrector.corrector import *
+from pycorrector.corrector import correct, get_same_stroke, get_sub_array
 
 
 class BasicTestSuite(unittest.TestCase):

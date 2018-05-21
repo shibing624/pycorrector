@@ -3,14 +3,14 @@
 # Brief:
 import numpy as np
 
-import rnn_crf_config as config
-from data_reader import build_dict
-from data_reader import load_dict
-from data_reader import pad_sequence
-from data_reader import vectorize_data
-from rnn_crf_model import callback
-from rnn_crf_model import create_model
-from utils.io_utils import get_logger
+from pycorrector.rnn_crf.data_reader import build_dict
+from pycorrector.rnn_crf.data_reader import load_dict
+from pycorrector.rnn_crf.data_reader import pad_sequence
+from pycorrector.rnn_crf.data_reader import vectorize_data
+from pycorrector.rnn_crf.rnn_crf_model import callback
+from pycorrector.rnn_crf.rnn_crf_model import create_model
+from pycorrector.utils.io_utils import get_logger
+from pycorrector.rnn_crf import rnn_crf_config as config
 
 logger = get_logger(__name__)
 PAD_TOKEN = 'PAD'

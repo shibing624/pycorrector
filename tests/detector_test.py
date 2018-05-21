@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 from pycorrector.corrector import *
-from utils.text_utils import *
+from pycorrector.utils.text_utils import *
 
 c = get_same_pinyin('长')
 print('get_same_pinyin:', c)
@@ -25,7 +25,5 @@ print('get_ppl_score:', ppl)
 
 print(detect(sent))
 
-import pycorrector
-
-corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+corrected_sent, detail = correct('少先队员因该为老人让坐')
 print(corrected_sent, detail)
