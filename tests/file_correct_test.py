@@ -38,5 +38,5 @@ for line in input_lines:
     correct_sent, error_detail = corrector.correct(line)
     print("{}\t{}\t{}".format(
         line, correct_sent, error_detail))
-    correct_lines.append(correct_sent)
+    correct_lines.append(line + '\t' + correct_sent + '\t' + str(error_detail))
 saver(out_file, correct_lines)
