@@ -4,7 +4,7 @@
 import numpy as np
 import tensorflow as tf
 
-import pycorrector.rnn_lm.rnn_lm_config as conf
+from pycorrector.rnn_lm import rnn_lm_config as conf
 from pycorrector.rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 
@@ -74,6 +74,7 @@ def ppl(sentence_list):
     word_to_int = load_word_dict(conf.word_dict_path)
     # init params
     batch_size = 1
+    tf.reset_default_graph()
     input_data = tf.placeholder(tf.int32, [batch_size, None])
     output_targets = tf.placeholder(tf.int32, [batch_size, None])
     # init model
@@ -85,7 +86,6 @@ def ppl(sentence_list):
                            num_layers=2,
                            batch_size=batch_size,
                            learning_rate=conf.learning_rate)
-
     saver = tf.train.Saver(tf.global_variables())
     init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
     with tf.Session() as sess:
@@ -131,4 +131,5 @@ if __name__ == '__main__':
                  '化肥和浓药不仅对人类有害',  # perplexity:5492552.78279785
                  '化肥和浓药不仅对人类有海',  # perplexity:5505405.811695649
                  '化肥和农药不仅对人类有害，而且对海洋危害很大']  # perplexity:21851.84118722833
+    ppl(sentences)
     ppl(sentences)
