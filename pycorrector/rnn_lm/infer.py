@@ -22,6 +22,7 @@ def generate(begin_word):
     batch_size = 1
     word_to_int = load_word_dict(conf.word_dict_path)
     vocabularies = [k for k, v in word_to_int.items()]
+    tf.reset_default_graph()
     input_data = tf.placeholder(tf.int32, [batch_size, None])
     end_points = rnn_model(model='lstm',
                            input_data=input_data,
@@ -36,7 +37,6 @@ def generate(begin_word):
     init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
     with tf.Session() as sess:
         sess.run(init_op)
-
         checkpoint = tf.train.latest_checkpoint(conf.model_dir)
         saver.restore(sess, checkpoint)
         print("loading model from the checkpoint {0}".format(checkpoint))
@@ -108,13 +108,16 @@ def ppl(sentence_list):
             print(x.shape)
             print(y.shape)
             # get each word perplexity
-            for i in range(x.shape[0]):
+            word_count = x.shape[0]
+            for i in range(word_count):
                 perplexity = sess.run(end_points['perplexity'],
                                       feed_dict={input_data: x[i:i + 1, :],
                                                  output_targets: y[i:i + 1, :]})
                 print('{0} -> {1}, perplexity: {2}'.format(x[i:i + 1, :], y[i:i + 1, :], perplexity))
+                if i == 0 or i == word_count:
+                    continue
                 ppl += perplexity
-            ppl = ppl / x.shape[0]
+            ppl /= (word_count - 2)
             print('perplexity:' + str(ppl))
             ppl_list.append(ppl)
     return ppl_list
@@ -133,3 +136,5 @@ if __name__ == '__main__':
                  '化肥和农药不仅对人类有害，而且对海洋危害很大']  # perplexity:21851.84118722833
     ppl(sentences)
     ppl(sentences)
+    infer_generate()
+    infer_generate()

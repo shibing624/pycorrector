@@ -131,11 +131,11 @@ def detect(sentence):
         maybe_error_char_indices = _get_maybe_error_index(sent_scores)
         # 合并字、词错误
         maybe_error_indices |= set(maybe_error_char_indices)
-    except IndexError:
-        print("index error, sentence:", sentence)
+    except IndexError as ie:
+        print("index error, sentence:", sentence, ie)
         pass
-    except:
-        print("detect error, sentence:", sentence)
+    except Exception as e:
+        print("detect error, sentence:", sentence, e)
     return sorted(maybe_error_indices)
 
 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     sent_chars = [sent[i] for i in error_list]
     print(sent_chars)
 
-    from utils.text_utils import segment, tokenize
+    from pycorrector.utils.text_utils import segment, tokenize
 
     print(get_ngram_score(segment(sent)))
     print(get_ppl_score(segment(sent)))
