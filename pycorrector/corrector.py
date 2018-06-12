@@ -195,7 +195,7 @@ def get_sub_array(nums):
     """
     取所有连续子串，
     [0, 1, 2, 5, 7, 8]
-    => [[0, 2], 5, [7, 8]]
+    => [[0, 3], 5, [7, 9]]
     :param nums: sorted(list)
     :return:
     """
