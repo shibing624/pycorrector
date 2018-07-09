@@ -1,0 +1,974 @@
+input sentence: 我俑有高山流水搬有高山流水搬的友情当我拿自己的幸福作堵注时友情会像陈洒一般越阵一般越阵越香给寂寞的心灵带来无比的振撼
+pred sentence : 我拥有高山流水搬有高山流水搬的友情当我拿自己的幸福作者注时友情会像沈洒一般越镇一般越阵越想给寂寞的心灵带来无比的震撼
+right sentence: 我拥有高山流水搬有高山流水般的友情当我拿自己的幸福作赌注时友情会像陈酒一般越阵一般越陈越香给寂寞的心灵带来无比的震撼
+input sentence: 当然会有一些茅盾滋润干固的心灵
+pred sentence : 当然会有一些茅盾滋润干家的心灵
+right sentence: 当然会有一些矛盾滋润干涸的心灵
+input sentence: 友情拌随人生人生将洋益勃勃生机在友情春风的吹佛下无可耐何零落成泥陪育来春新枝牙
+pred sentence : 友情拌随人生人生将洋溢勃勃生机在友情春风的吹拂下无可奈何零落成泥陪愈来春新枝丫
+right sentence: 友情伴随人生人生将洋溢勃勃生机在友情春风的吹拂下无可奈何零落成泥培育来春新枝牙
+input sentence: 老师工作非常幸苦我们要遵敬老师
+pred sentence : 老师工作非常辛苦我们要尊敬老师
+right sentence: 老师工作非常辛苦我们要尊敬老师
+input sentence: 小燕子有着一生乌黑光滑的羽毛
+pred sentence : 小燕子有着一生于黑光滑的羽毛
+right sentence: 小燕子有着一身乌黑光滑的羽毛
+input sentence: 小青总是先作功课在功课在玩
+pred sentence : 小情总是先做功课在功课在玩
+right sentence: 小青总是先做功课在功课再玩
+input sentence: 少先队员因该为老人让坐
+pred sentence : 少先队员应该为老人让座
+right sentence: 少先队员应该为老人让坐
+input sentence: 讲台上放着一只漂亮的刚笔
+pred sentence : 讲台上访着一致漂亮的钢笔
+right sentence: 讲台上放着一只漂亮的钢笔
+input sentence: 服装店里的衣服各试各样
+pred sentence : 服装店里的衣服各市各样
+right sentence: 服装店里的衣服各式各样
+input sentence: 我们要宝护它们
+pred sentence : 我们要保护它们
+right sentence: 我们要保护它们
+input sentence: 老师的生体不好可她艰持给我们上课
+pred sentence : 老师的身体不好可她坚持给我们上课
+right sentence: 老师的身体不好可她坚持给我们上课
+input sentence: 冬冬今天戴来了一本好看的童话书
+pred sentence : 冬冬今天带来了一本好看的童话术
+right sentence: 冬冬今天带来了一本好看的童话书
+input sentence: 中队会在热烈的气分中进行着
+pred sentence : 中队会在热烈的气氛中进行着
+right sentence: 中队会在热烈的气氛中进行着
+input sentence: 一只小鱼船浮在平净船浮在平净的河面上
+pred sentence : 一只小鱼船夫在平警船浮在平静的河面上
+right sentence: 一只小渔船浮在平净船浮在平静的河面上
+input sentence: 老师一题问
+pred sentence : 老师一题问
+right sentence: 老师一提问
+input sentence: 我的家乡是有明的渔的渔米之乡
+pred sentence : 我的家乡是有名的语的渔米之乡
+right sentence: 我的家乡是有名的渔的鱼米之乡
+input sentence: 我兴高彩列地去公园游玩
+pred sentence : 我省高彩列地去公园游玩
+right sentence: 我兴高彩烈地去公园游玩
+input sentence: 妈妈丛相子里番子里番出一件旧棉衣让我穿上在妈妈得说服叫育下我中于穿上哪于穿上哪件棉衣哼着哥件棉衣哼着哥儿上学去了
+pred sentence : 妈妈丛箱子里贩子里番出一件旧棉衣让我穿上在妈妈得说服教育下我终于穿上那于穿上那件棉衣哼着各件棉衣哼着哥儿上学去了
+right sentence: 妈妈丛箱子里番子里翻出一件旧棉衣让我穿上在妈妈得说服教育下我终于穿上哪于穿上那件棉衣哼着哥件棉衣哼着歌儿上学去了
+input sentence: 两条长长的辫子就要化费我好多时间我就要解下辫梢上的象皮筋然后把辫子折散用木梳把长长的头发梳通里顺在分成两大股漫漫编着辫子编好的辫子鸟编着辫子编好的辫子鸟黑光溜一值到要到要间
+pred sentence : 两条长长的辫子就要化费我好多时间我就要解下边梢上的象皮筋然后把辫子拆散用木梳把长长的头发疏通里顺在分成两大家漫漫变着辫子编好的辫子鸟变着辫子编好的辫子岛黑光溜一直到要到女间
+right sentence: 两条长长的辫子就要花费我好多时间我就要解下辫梢上的橡皮筋然后把辫子拆散用木梳把长长的头发梳通理顺再分成两大股慢慢漫编着辫子编好的辫子鸟编着辫子编好的辫子乌黑光溜一直到要到腰间
+input sentence: 黄老师上课重来多来多是板着脸不官刮风下雨总是那幅面容好像天生不会笑是的做提目时三言俩语每句话多说在点子上
+pred sentence : 黄老师上课重来踱来多是板着脸部官刮风下雨总是那负面容好像天生不会笑是的做是目时三言俩语每句话多说在点子上
+right sentence: 黄老师上课从来多来都是板着脸不管刮风下雨总是那副面容好像天生不会笑似的做题目时三言两语每句话都说在点子上
+input sentence: 每位同学的胸前都带着校徽
+pred sentence : 每位同学的胸前都带着校会
+right sentence: 每位同学的胸前都戴着校徽
+input sentence: 终是十分感概
+pred sentence : 终是十分感慨
+right sentence: 总是十分感概
+input sentence: 老师的教悔我们牢记在心头
+pred sentence : 老师的教会我们牢记在心头
+right sentence: 老师的教诲我们牢记在心头
+input sentence: 晓红的藉贯是北京
+pred sentence : 小红的籍贯是北京
+right sentence: 晓红的籍贯是北京
+input sentence: 行人车辆川梭似的来来往往
+pred sentence : 行人车辆穿梭似的来来往往
+right sentence: 行人车辆穿梭似的来来往往
+input sentence: 一阵阵凄历刺耳的叫声真让人害怕
+pred sentence : 一阵阵奇历刺耳的叫声真让人害怕
+right sentence: 一阵阵凄厉刺耳的叫声真让人害怕
+input sentence: 大家都喜出往外
+pred sentence : 大家都喜出望外
+right sentence: 大家都喜出望外
+input sentence: 春暖花开之时我们躯车到了海滨渡假村
+pred sentence : 春暖花开之时我们驱车到了海滨度假村
+right sentence: 春暖花开之时我们驱车到了海滨渡假村
+input sentence: 这纷繁的景象看到我眼花潦乱
+pred sentence : 宅纷繁的景象看到我眼花缭乱
+right sentence: 这纷繁的景象看到我眼花缭乱
+input sentence: 这篇文章只是罗例现象
+pred sentence : 这篇文章只是罗礼现象
+right sentence: 这篇文章只是罗列现象
+input sentence: 我真是激动及了后来我很快灰愎了健康
+pred sentence : 我真是激动及了后来我很快回愎了健康
+right sentence: 我真是激动极了后来我很快恢复愎了健康
+input sentence: 歌诵过清节工人
+pred sentence : 歌诵过清洁工人
+right sentence: 歌颂过清节工人
+input sentence: 哪天晚上
+pred sentence : 哪天晚上
+right sentence: 那天晚上
+input sentence: 王老师心格温和
+pred sentence : 王老师辛格温和
+right sentence: 王老师性格温和
+input sentence: 不怕严寒酷署了盛产药财走偏的名山
+pred sentence : 不怕严寒酷暑了盛产药材走偏的名山
+right sentence: 不怕严寒酷暑了盛产药财走遍的名山
+input sentence: 她总是勤勤垦垦地工作着默默无文机
+pred sentence : 她总是勤勤垦狠地工作着默默无闻机
+right sentence: 她总是勤勤恳恳垦地工作着默默无闻机
+input sentence: 秦兵马俑维妙维妙维肖地模拟阵列的排列在雕塑史上决无仅有
+pred sentence : 秦兵马俑惟妙维妙维肖地模拟阵列的排列在雕塑世上决无仅有
+right sentence: 秦兵马俑惟妙维妙惟肖地模拟阵列的排列在雕塑史上绝无仅有
+input sentence: 仿佛是大自然奏响的一枝交响乐
+pred sentence : 仿佛是大自然奏响的一起交响乐
+right sentence: 仿佛是大自然奏响的一支交响乐
+input sentence: 拄着捌仗踏着青青的台藓
+pred sentence : 拄着捌仗踏着青青的台县
+right sentence: 拄着拐仗踏着青青的苔藓
+input sentence: 反对豪无节制地用水浪废水资源
+pred sentence : 反对豪无节制的用水浪废水资源
+right sentence: 反对毫无节制地用水浪费水资源
+input sentence: 我们都迫不急待地想知道
+pred sentence : 我们都迫不急待的想知道
+right sentence: 我们都迫不及待地想知道
+input sentence: 按照上级布署
+pred sentence : 按照上级部署
+right sentence: 按照上级部署
+input sentence: 影片展现了周恩来总理对知识分子袒诚相待
+pred sentence : 影片展现了周恩来总理过知识分子坦诚相待
+right sentence: 影片展现了周恩来总理对知识分子坦诚相待
+input sentence: 要给游客提供务有所值多姿多采的活动项目和旅游商品
+pred sentence : 要给游客提供物有所值多姿多采的活动项目和旅游商品
+right sentence: 要给游客提供物有所值多姿多彩的活动项目和旅游商品
+input sentence: 他在事实面前无耐地低下头
+pred sentence : 他在事实面前无奈地低下头
+right sentence: 他在事实面前无奈地低下头
+input sentence: 全场暴发出一阵喝彩声
+pred sentence : 全场暴发出一阵喝彩声
+right sentence: 全场爆发出一阵喝彩声
+input sentence: 在清香的碧螺春荼汤里
+pred sentence : 在清香的碧螺春荼塘里
+right sentence: 在清香的碧螺春茶汤里
+input sentence: 只有经过坚苦卓绝的开采和经久不息的冶炼才有可能获得一棵光彩夺目的金珠
+pred sentence : 只有经过艰苦卓绝的开采和经久不息的冶炼才有可能获得一刻光彩夺目的金属
+right sentence: 只有经过艰苦卓绝的开采和经久不息的冶炼才有可能获得一颗光彩夺目的金珠
+input sentence: 对当前产生的腐败现象产生的缘因分析的十分中肯
+pred sentence : 对当前产生的腐败现象产生的原因分析的十分钟肯
+right sentence: 对当前产生的腐败现象产生的原因分析的十分中肯
+input sentence: 我市按装公司声誉较好
+pred sentence : 我市安装公司声誉较好
+right sentence: 我市安装公司声誉较好
+input sentence: 其实这座活生生的近代历史薄物馆
+pred sentence : 其实这做活生生的近代历史博物馆
+right sentence: 其实这座活生生的近代历史博物馆
+input sentence: 他带着帽子
+pred sentence : 他带着帽子
+right sentence: 他戴着帽子
+input sentence: 仅管他废管他废了很大的劲
+pred sentence : 仅管他费管他废了很大的劲
+right sentence: 尽管他废管他费了很大的劲
+input sentence: 我也不能恢心丧气
+pred sentence : 我也不能会心丧气
+right sentence: 我也不能灰心丧气
+input sentence: 广大人民群众和日寇进行了不屈不饶的斗争
+pred sentence : 广大人民群众和日寇进行了不屈不扰的斗争
+right sentence: 广大人民群众和日寇进行了不屈不挠的斗争
+input sentence: 干躁的天气
+pred sentence : 干燥的天气
+right sentence: 干燥的天气
+input sentence: 一个初入尘市的人迷罔懂的眼光看待一切
+pred sentence : 一个出入尘市的人迷惘懂的眼光看待一切
+right sentence: 一个初入尘世的人迷惘懂的眼光看待一切
+input sentence: 一种不再须要对别人察颜观色的从容
+pred sentence : 一种不再须要对别人察眼观色的从容
+right sentence: 一种不再需要对别人察颜观色的从容
+input sentence: 江苏常常是罪犯的中点站活眼金睛
+pred sentence : 江苏常常是罪犯的中点站和眼金睛
+right sentence: 江苏常常是罪犯的终点站火眼金睛
+input sentence: 急烈的比赛即将开始
+pred sentence : 激烈的比赛即将开始
+right sentence: 激烈的比赛即将开始
+input sentence: 但必须的生活用品还是应该购买的
+pred sentence : 但必须的生活用品还是应该购买的
+right sentence: 但必需的生活用品还是应该购买的
+input sentence: 深篮的天空中挂着一轮金黄的园的天空中挂着一轮金黄的园月
+pred sentence : 深蓝的天空中挂着一轮金黄的园的天空中挂着一轮金黄的元月
+right sentence: 深蓝的天空中挂着一轮金黄的园的天空中挂着一轮金黄的圆月
+input sentence: 中国寺庙建筑洪大精美
+pred sentence : 中国寺庙建筑宏大精美
+right sentence: 中国寺庙建筑宏大精美
+input sentence: 浪废严重
+pred sentence : 浪费严重
+right sentence: 浪费严重
+input sentence: 老师部置的作业我们必须及时完成
+pred sentence : 老师布置的作业我们必须及时完成
+right sentence: 老师布置的作业我们必须及时完成
+input sentence: 我们安响了门铃开门的是一位比我父亲年令还大些的高个儿先生
+pred sentence : 我们安享了门铃开门的是一位比我父亲年龄还大些的高个儿先生
+right sentence: 我们按响了门铃开门的是一位比我父亲年龄还大些的高个儿先生
+input sentence: 不可急工近利只能循绪渐进
+pred sentence : 不可急功近利只能循序渐进
+right sentence: 不可急功近利只能循序渐进
+input sentence: 中国人历来讲究礼上往来
+pred sentence : 中国人历来讲究礼尚往来
+right sentence: 中国人历来讲究礼尚往来
+input sentence: 无计于事
+pred sentence : 无机于事
+right sentence: 无济于事
+input sentence: 这在央视的历史上是决无仅有的
+pred sentence : 这在央视的历史上是绝无仅有的
+right sentence: 这在央视的历史上是绝无仅有的
+input sentence: 是人们渡假休闲的理想场所
+pred sentence : 是人们度假休闲的理想场所
+right sentence: 是人们度假休闲的理想场所
+input sentence: 天真无斜的美
+pred sentence : 天真无下的美
+right sentence: 天真无邪的美
+input sentence: 我的手在罗马以及晚期那些栩栩如生的大理石凋塑上停留过
+pred sentence : 我的手在罗马以及晚期那些栩栩如生的大理石雕塑上停留过
+right sentence: 我的手在罗马以及晚期那些栩栩如生的大理石雕塑上停留过
+input sentence: 也就是古人说的游目聘怀
+pred sentence : 也就是古人说的游目联怀
+right sentence: 也就是古人说的游目骋怀
+input sentence: 女儿欢呼鹊跃
+pred sentence : 女儿欢呼鹊跃
+right sentence: 女儿欢呼雀跃
+input sentence: 不少低收入家庭倍感通货膨涨的压力
+pred sentence : 不少低收入家庭倍感通货膨涨的压力
+right sentence: 不少低收入家庭倍感通货膨胀的压力
+input sentence: 弟弟的朗颂声情并茂
+pred sentence : 弟弟的朗诵声情并茂
+right sentence: 弟弟的朗诵声情并茂
+input sentence: 默守成规只会渗遭时代的陶汰
+pred sentence : 墨守成规只会渗澡时代的淘汰
+right sentence: 墨守成规只会惨遭时代的陶汰
+input sentence: 不小心多瞧了那个婧妹一下
+pred sentence : 不小心多瞧了那个婧每一下
+right sentence: 不小心多瞧了那个靓妹一下
+input sentence: 水质清净的温泉和波滔起伏的云海闻名于世
+pred sentence : 水质清净的温泉和波涛起伏的云海闻名于世
+right sentence: 水质清净的温泉和波涛起伏的云海闻名于世
+input sentence: 这一地区箭拔弩张的局势才得以缓和
+pred sentence : 这意地区建拔弩张的局势才得以缓和
+right sentence: 这一地区剑拔弩张的局势才得以缓和
+input sentence: 采取种种不正当手段拢络人心从而赢得选票的做法
+pred sentence : 采取种种不正当手段笼络人心从而赢得选票的做法
+right sentence: 采取种种不正当手段笼络人心从而赢得选票的做法
+input sentence: 他迅速赶赴现场坐阵指挥
+pred sentence : 他迅速赶赴现场坐镇指挥
+right sentence: 他迅速赶赴现场坐镇指挥
+input sentence: 我的母亲常常站在一张退了色的神像面前焚起香来
+pred sentence : 我的母亲常常站在一张退了色的神像面前火起香来
+right sentence: 我的母亲常常站在一张褪了色的神像面前焚起香来
+input sentence: 给人以变换莫测的感觉印照出一幅美丽的图画
+pred sentence : 给人以变换莫测的感觉印着出一幅美丽的图画
+right sentence: 给人以变幻莫测的感觉映照出一幅美丽的图画
+input sentence: 对当前产生的腐败现象产生的缘因分析的十分中肯
+pred sentence : 对当前产生的腐败现象产生的原因分析的十分钟肯
+right sentence: 对当前产生的腐败现象产生的原因分析的十分中肯
+input sentence: 仅管他废了很大的劲
+pred sentence : 仅管他废了很大的劲
+right sentence: 仅管他费了很大的劲
+input sentence: 保存至今的西夏建筑遗迹寥若辰星
+pred sentence : 保存至今的西夏建筑遗迹寥若辰星
+right sentence: 保存至今的西夏建筑遗迹寥若晨星
+input sentence: 出现学术浮噪病
+pred sentence : 出现学术浮躁病
+right sentence: 出现学术浮躁病
+input sentence: 习以为长了这个漂亮而荒涎的词组更具有现代意识
+pred sentence : 习以为长了这个漂亮而黄涎的词组更具有现代意识
+right sentence: 习以为常了这个漂亮而荒诞的词组更具有现代意识
+input sentence: 无学问的知慧但是一触既破
+pred sentence : 无学问的智慧但是一触既破
+right sentence: 无学问的智慧但是一触即破
+input sentence: 历史优久从这里走出的布衣皇帝刘邦一桶天下建立了辉黄的汉王朝徐州城周围构造各一的汉墓徐徐如生的汉画像石惟妙惟笑的汉兵马佣的汉兵马佣萃之邦徐州更是人文会说项羽自不避客从帝王将相到文人搔寰宇
+pred sentence : 历史悠久从这里走出的布衣皇帝刘邦一桶天下建立了辉黄的汉王朝徐州城周围构造各异的汉墓徐徐女生的汉画像石惟妙惟肖的汉兵马佣的汉兵马俑萃之邦徐州更是人文会说项羽自不避可从帝王将相到文人扫寰宇
+right sentence: 历史悠久从这里走出的布衣皇帝刘邦一统天下建立了辉煌的汉王朝徐州城周围构造各异的汉墓栩栩徐如生的汉画像石惟妙惟肖的汉兵马佣的汉兵马俑萃之邦徐州更是人文荟说项羽自不必客从帝王将相到文人骚寰宇
+input sentence: 之前他干过许多糊途和愚蠢的事情偷过邻居的茶杯和蜡肉他懵然意识到自己长大了意视到自己应该悬崖勒马痛改前非了
+pred sentence : 之前他赶过许多糊涂和愚蠢的事情透过邻居的茶杯和腊肉他懵然意识到自己长大了意见到自己应该悬崖勒马痛改前非了
+right sentence: 之前他干过许多糊涂和愚蠢的事情偷过邻居的茶杯和腊肉他猛然意识到自己长大了意识到自己应该悬崖勒马痛改前非了
+input sentence: 可是他已经绾回不了自己的声愚回不了自己的声愚和尊严他已经没有了任和的朋友少年并不记很他们
+pred sentence : 可是他已经挽回不了自己的声誉回不了自己的声誉和尊严他已经没有了任和的朋友少年并不记恨他们
+right sentence: 可是他已经挽回不了自己的声愚回不了自己的声誉和尊严他已经没有了任何的朋友少年并不记恨他们
+input sentence: 他任受不了寂寞吸两口青新空气少年不赶上前他无耐世界在他面前关起一扇门
+pred sentence : 他人受不了寂寞及两口清新空气少年不赶上前他无奈世界在他面前关起一扇门
+right sentence: 他忍受不了寂寞吸两口清新空气少年不敢上前他无奈世界在他面前关起一扇门
+input sentence: 没有扬光少年却感觉到后背焯热是一位坐在晾亭里的老人胆战心惊拭图离开
+pred sentence : 没有阳光少年却感觉到后背朝热是一位坐在凉亭里的老人胆战心惊试图离开
+right sentence: 没有阳光少年却感觉到后背灼热是一位坐在凉亭里的老人胆颤心惊试图离开
+input sentence: 打火机放在茶机上跟本不必锁门少年飞犇而去
+pred sentence : 打火机放在茶机上根本不必锁门少年飞奔而去
+right sentence: 打火几放在茶机上根本不必锁门少年飞奔而去
+input sentence: 他申手轻轻一推茶几上放着裸盘
+pred sentence : 他伸手轻轻一堆茶几上访着罗盘
+right sentence: 他伸手轻轻一推茶几上放着果盘
+input sentence: 正重地对少年表示感谢聚精汇神地和老人下起了象棋
+pred sentence : 正重地对少年表示感谢聚精会神地和老人下起了象棋
+right sentence: 郑重地对少年表示感谢聚精会神地和老人下起了象棋
+input sentence: 老人的身体扔然很好你口带里
+pred sentence : 老人的身体仍然很好你口袋里
+right sentence: 老人的身体仍然很好你口袋里
+input sentence: 那天的一切都是我古意的一切不过是你的一个美好梦景意识里
+pred sentence : 那天的一切都是我故意的一切不过是你的一个美好梦境意识里
+right sentence: 那天的一切都是我故意的一切不过是你的一个美好梦境意识里
+input sentence: 至今还概着稻草弥撒着一股亲切的草屑味可是岁月的磨食无情两扇略现笨重的大门也是油漆斑驳绽开一条条深深浅浅的列缝
+pred sentence : 至今还盖着稻草弥撒着一股亲切的草鞋味可是岁月的磨时无情两扇略显笨重的大门也是油漆斑驳绽开一条条深深浅浅的裂缝
+right sentence: 至今还盖着稻草弥散着一股亲切的草屑味可是岁月的磨蚀无情两扇略显笨重的大门也是油漆斑驳绽开一条条深深浅浅的裂缝
+input sentence: 它像在憨睡
+pred sentence : 它像在憨水
+right sentence: 它像在酣睡
+input sentence: 鸟儿庸倦地栖落在树上伸出尖尖小嘴巴书理自己的羽毛
+pred sentence : 鸟儿用倦地栖落在树上伸出尖减小嘴巴梳理自己的羽毛
+right sentence: 鸟儿慵倦地栖落在树上伸出尖尖小嘴巴梳理自己的羽毛
+input sentence: 屋沿下飘落起母亲长一声短一声催我回家的呼唤屋顶的吹烟仿佛还在
+pred sentence : 屋檐下飘落起母亲长一声短一声催我回家的呼唤屋顶的炊烟仿佛还在
+right sentence: 屋檐下飘落起母亲长一声短一声催我回家的呼唤屋顶的炊烟仿佛还在
+input sentence: 当我终于抬脚跨进门坎的一刹那
+pred sentence : 当我终于抬脚跨进门坎的一刹那
+right sentence: 当我终于抬脚跨进门槛的一刹那
+input sentence: 头顶满天烦星赶运木料父亲总会喜型于色地拍拍门窗平日不爱照像的父亲
+pred sentence : 头顶满天繁星赶运木料父亲总会习型于色地拍拍门窗平日部爱照像的父亲
+right sentence: 头顶满天繁星赶运木料父亲总会喜形于色地拍拍门窗平日不爱照相的父亲
+input sentence: 窗外的上玄月彼此之间已经漠生像温碗的明月我可用记亿的碎片还原全部细节无可辨驳地见证这里曾经氤氲的天伦之乐
+pred sentence : 窗外的上还月彼此之间已经漠生像温婉的明月我可用记忆的碎片还原全部细节无可辩驳地见证这里曾经氤氲的天伦之乐
+right sentence: 窗外的上弦月彼此之间已经陌生像温婉的明月我可用记忆的碎片还原全部细节无可辩驳地见证这里曾经氤氲的天伦之乐
+input sentence: 温煦的阳光头射在老屋的房顶访佛都可弯腰拾起儿时的一段记忆老屋是一本注满情与爱的大书都会找到生命之缘的温暖
+pred sentence : 温煦的阳光头也在老屋的房顶仿佛都可弯腰拾起儿时的一段记忆老屋是一本驻满情与爱的大书都会找到生命之源的温暖
+right sentence: 温煦的阳光投射在老屋的房顶仿佛都可弯腰拾起儿时的一段记忆老屋是一本贮满情与爱的大书都会找到生命之源的温暖
+input sentence: 春天是养蚕的记节每到这时后想起母亲来
+pred sentence : 春天是养餐的记节每到这时后想起母亲来
+right sentence: 春天是养蚕的季节每到这时候想起母亲来
+input sentence: 母亲靠养蚕换点儿线教给我们姐弟两学费
+pred sentence : 母亲靠养餐换点儿线教给我们姐弟两学费
+right sentence: 母亲靠养蚕换点儿钱教给我们姐弟俩学费
+input sentence: 妈妈一直赔伴着我
+pred sentence : 妈妈一直陪伴着我
+right sentence: 妈妈一直陪伴着我
+input sentence: 给我留下了深刻的音象
+pred sentence : 给我留下了深刻的印象
+right sentence: 给我留下了深刻的印象
+input sentence: 激烈的比赛即奖开始
+pred sentence : 激烈的比赛即将开始
+right sentence: 激烈的比赛即将开始
+input sentence: 但必须的生活用品还是应该购买的
+pred sentence : 但必须的生活用品还是应该购买的
+right sentence: 但必需的生活用品还是应该购买的
+input sentence: 严励打击各种刑事犯罪分子
+pred sentence : 严厉打击各种刑事犯罪分子
+right sentence: 严厉打击各种刑事犯罪分子
+input sentence: 春暖花开之时我们躯车到了海滨渡车到了海滨渡假村
+pred sentence : 春暖花开之时我们驱车到了海滨堵车到了海滨度假村
+right sentence: 春暖花开之时我们驱车到了海滨渡车到了海滨度假村
+input sentence: 中国寺庙建筑洪大精美
+pred sentence : 中国寺庙建筑宏大精美
+right sentence: 中国寺庙建筑宏大精美
+input sentence: 深篮的天空中挂着一轮金黄的园的天空中挂着一轮金黄的园月
+pred sentence : 深蓝的天空中挂着一轮金黄的园的天空中挂着一轮金黄的元月
+right sentence: 深蓝的天空中挂着一轮金黄的园的天空中挂着一轮金黄的圆月
+input sentence: 一双明牟总是闪硕总是闪硕着温情的光芒
+pred sentence : 一双明眸总是闪烁总是闪烁着温情的光芒
+right sentence: 一双明眸总是闪硕总是闪烁着温情的光芒
+input sentence: 对虾养植异军突起
+pred sentence : 对虾养殖异军突起
+right sentence: 对虾养殖异军突起
+input sentence: 关健在勤奋程度如何
+pred sentence : 关健在勤奋程度如何
+right sentence: 关键在勤奋程度如何
+input sentence: 浪废严重
+pred sentence : 浪费严重
+right sentence: 浪费严重
+input sentence: 全校师生辽亮的歌声如雷鸣般响彻云宵
+pred sentence : 全校师生了亮的歌声如雷鸣般响彻云霄
+right sentence: 全校师生嘹亮的歌声如雷鸣般响彻云宵
+input sentence: 老师部置的作业我们必须及时完成
+pred sentence : 老师布置的作业我们必须及时完成
+right sentence: 老师布置的作业我们必须及时完成
+input sentence: 这次辨论达到了辩论达到了辩伪去妄伪去妄的目的
+pred sentence : 这次辨论达到了辩论达到了辩为去妄为去妄的目的
+right sentence: 这次辩论达到了辩论达到了辨伪去妄伪去佞的目的
+input sentence: 我掩旗息鼓甘败下风
+pred sentence : 我掩旗息鼓甘败下风
+right sentence: 我偃旗息鼓甘拜下风
+input sentence: 我们决定把小茅屋修茸一下
+pred sentence : 我们决定把小茅屋修容一下
+right sentence: 我们决定把小茅屋修葺一下
+input sentence: 首位太空游客在国际空间站上俯瞰寰球
+pred sentence : 首位太空游客在国际空间站上俯瞰寰求
+right sentence: 首位太空游客在国际空间站上俯瞰环球
+input sentence: 父亲把车开近一个居民区开门的是一位比我父亲年令还大些的高个儿先生
+pred sentence : 父亲把车开近一个居民区开门的是一位比我父亲年龄还大些的高个儿先生
+right sentence: 父亲把车开进一个居民区开门的是一位比我父亲年龄还大些的高个儿先生
+input sentence: 当然饿拉望他说我喝乳期吧然后我可以敞开心非年那也许是书上说的青春短月我会有好心情呢
+pred sentence : 当然阿拉望他说我和乳期吧然后我可以敞开心扉年那也许是书上说的青春短说我会有好心情呢
+right sentence: 当然饿啦望他说我渴乳期吧然后我可以敞开心扉年那也许是书上说的青春断月我会有好心情呢
+input sentence: 不怕酷署严寒走偏了盛产药材的明了盛产药材的明山
+pred sentence : 不怕酷暑严寒走偏了盛产药材的明了盛产药材的明山
+right sentence: 不怕酷暑严寒走遍了盛产药材的明了盛产药材的名山
+input sentence: 青明节到了我们全校地师生去列土林圆林圆念革命先烈
+pred sentence : 清明节到了我们全校地师生去列土林圆林圆年革命先烈
+right sentence: 清明节到了我们全校地师生去烈士土林圆陵园圆念革命先烈
+input sentence: 老师背课很认真我们上课尊守记守记律认正听讲
+pred sentence : 老师育课很认真我们上课遵守记守记律认正听讲
+right sentence: 老师备课很认真我们上课遵守记守纪律认真听讲
+input sentence: 长城碗延盘族延盘族在崇山竣在崇山竣岭之间好向一条长龙在飞午一条长龙在飞午认真他工作狠切联系群众也能蜜气太急躁了
+pred sentence : 长城晚延盘族延盘族在崇山军在崇山峻岭之间好向一条长龙在飞无一条长龙在飞舞认真他工作恳切联系群众也能秘气太急躁了
+right sentence: 长城婉延盘族延盘旋在崇山竣在崇山峻岭之间好像一条长龙在飞午一条长龙在飞舞认真他工作很切联系群众也能密气太急躁了
+input sentence: 只要你不丢师付的脸不怀师付师付的明的明声就够了
+pred sentence : 只要你不丢失付的脸不怀师付师傅的明的名声就够了
+right sentence: 只要你不丢师傅的脸不坏师付师傅的明的名声就够了
+input sentence: 我们少先队员要继成革命的光荣传通广并发杨大
+pred sentence : 我们少先队员要继成革命的光荣传统广并发扬大
+right sentence: 我们少先队员要继成革命的光荣传统通广并发扬大
+input sentence: 中队主提队会在热列队会在热列地气分地气分中进行着好节目屈出不穷
+pred sentence : 中队主体队会在热烈队会在热烈地气分地气氛中进行着好节目取出不穷
+right sentence: 中队主题队会在热列队会在热烈地气分地气氛中进行着好节目层出不穷
+input sentence: 炮弹把船低炸了一个洞江水立既俑俑了进来
+pred sentence : 炮弹把船的炸了一个洞江水立既俑用了进来
+right sentence: 炮弹把船底炸了一个洞江水立即俑涌了进来
+input sentence: 我们要向雷蜂叔叔哪叔叔哪样尊照毛主席坚照毛主席坚苦愤苦愤斗的教道
+pred sentence : 我们要向雷锋叔叔哪叔叔哪样遵照毛主席间照毛主席坚苦奋苦愤斗的交道
+right sentence: 我们要向雷锋叔叔哪叔叔那样遵照毛主席坚照毛主席艰苦愤苦奋斗的教道
+input sentence: 张老师经常背课到深夜我们要体晾老师的心苦
+pred sentence : 张老师经常备课到深夜我们要体谅老师的心苦
+right sentence: 张老师经常备课到深夜我们要体谅老师的心苦
+input sentence: 坚侍长跑即煅练了身体
+pred sentence : 坚持长跑即锻练了身体
+right sentence: 坚持长跑即锻炼练了身体
+input sentence: 我由于当时过分激动和幸奋竞然妄记问他的名子
+pred sentence : 我由于当时过分激动和兴奋竞然妄记问他的名子
+right sentence: 我由于当时过分激动和兴奋竞然忘记问他的名子
+input sentence: 你地这遍这遍槁槁子必须再子必须再今天写好明天要记出去地
+pred sentence : 你的这遍这遍槁槁子必须在子必须再今天写好明天要给出去地
+right sentence: 你的这遍这篇槁稿子必须再子必须在今天写好明天要寄出去地
+input sentence: 小华受到老师表杨后
+pred sentence : 小花受到老师表扬后
+right sentence: 小华受到老师表扬后
+input sentence: 一辆时样新颖地气样新颖地气车栽着孩子们飞快得象象前史前史去
+pred sentence : 一辆时样新颖地气洋新颖地气车载着孩子们飞快得想象前史前史区
+right sentence: 一辆式样新颖地气样新颖地汽车载着孩子们飞快地象向前史前驶去
+input sentence: 遵纪守法是恒量每个公民觉悟高低的重要标准
+pred sentence : 遵纪守法是衡量每个公民觉悟高低的重要标准
+right sentence: 遵纪守法是衡量每个公民觉悟高低的重要标准
+input sentence: 老师对自己的思想和学习很观心
+pred sentence : 老师对自己的思想和学习很关心
+right sentence: 老师对自己的思想和学习很关心
+input sentence: 同学们将在一齐度过了三年的初中学习生活
+pred sentence : 同学们将在一起度过了三年的初中学习生活
+right sentence: 同学们将在一起度过了三年的初中学习生活
+input sentence: 我再操场上漫步给校园蒙上了一层神秘的面沙的树木就连那无比葱笼起伏的山锋连棉都变得蒙蒙起伏的山锋胧胧都变得蒙蒙不清模胡蓝有几个晨练的老师隐隐约约地在学校的操场上仍球蓝球飘在空中
+pred sentence : 我再操场上漫步给校园蒙上了一层神秘的面纱的树木就连那无比葱茏起伏的山锋连绵都变得蒙蒙起伏的山峰胧胧都变得蒙蒙不轻模胡蓝有几个晨练的老师隐隐约约地在学校的操场上仍球篮球飘在空中
+right sentence: 我在操场上漫步给校园蒙上了一层神秘的面纱的树木就连那无比葱茏起伏的山锋连绵都变得蒙蒙起伏的山峰胧胧都变得朦朦蒙不清模糊蓝有几个晨练的老师隐隐约约地在学校的操场上扔球篮球飘在空中
+input sentence: 优美的晚霞应红了天空红色就更胜一酬然失色红的就连楼顶上的国旗都险些暗了不少太阳的热度收恋的约会那太阳好像是与西山有个神密罩着一层灰色于是大地上茏火有人点起了堆堆钩的氛围校园里显得无比静秘的身影
+pred sentence : 优美的晚霞映红了天空红色就更胜一筹然失色红的就连楼顶上的国企都险些暗了不少太阳的热度收敛的约会那太阳好像是与西山有个神密照着一层灰色于是大地上龙火有人点走了堆堆沟的氛围校园里显得无比静谧的身影
+right sentence: 优美的晚霞映红了天空红色就更胜一筹然失色红的就连楼顶上的国旗都险些黯了不少太阳的热度收敛的约会那太阳好像是与西山有个神秘罩着一层灰色于是大地上笼火有人点起了堆堆篝的氛围校园里显得无比静谧的身影
+input sentence: 进年来环境问题已成为人们关注的交点实实在在地威协着人类
+pred sentence : 今年来环境问题已成为人们关注的交点实实在在地位协着人类
+right sentence: 近年来环境问题已成为人们关注的焦点实实在在地威胁着人类
+input sentence: 今年入春已来华北地区联续发生了12次扬沙沙尘瀑天气沙沉天气可分为浮尘
+pred sentence : 今年入春以来华北地区连续发生了12次扬沙沙尘暴天气沙尘天气可分为浮尘
+right sentence: 今年入春以来华北地区连续发生了12次扬沙沙尘暴天气沙尘天气可分为浮尘
+input sentence: 县里的按装队早就到了
+pred sentence : 县里的安装队早就到了
+right sentence: 县里的安装队早就到了
+input sentence: 只能甘败下风
+pred sentence : 只能感败下风
+right sentence: 只能甘拜下风
+input sentence: 摆出来的全是泊来品
+pred sentence : 摆出来的全市泊来品
+right sentence: 摆出来的全是舶来品
+input sentence: 连眼角也明显松驰下来
+pred sentence : 连眼角也明显松弛下来
+right sentence: 连眼角也明显松弛下来
+input sentence: 团部几位领导急得一愁莫展
+pred sentence : 团部几位领导吃得一愁莫展
+right sentence: 团部几位领导急得一筹莫展
+input sentence: 卫兵穿流不息地在院子里进进出出
+pred sentence : 卫兵川流不息地在院子里进进出出
+right sentence: 卫兵川流不息地在院子里进进出出
+input sentence: 一走进渡假村的大门
+pred sentence : 一走进度假村的大门
+right sentence: 一走进度假村的大门
+input sentence: 却防碍了救护车的通行
+pred sentence : 却妨碍了救护车的通行
+right sentence: 却妨碍了救护车的通行
+input sentence: 幅射沿海
+pred sentence : 幅射沿海
+right sentence: 辅射沿海
+input sentence: 门上一幅对联
+pred sentence : 门上一幅对联
+right sentence: 门上一副对联
+input sentence: 他已失去了一股作气的心劲
+pred sentence : 他已失去了一股作期的心劲
+right sentence: 他已失去了一鼓作气的心劲
+input sentence: 没有悬梁刺骨的决心
+pred sentence : 没有悬梁刺骨的决心
+right sentence: 没有悬梁刺股的决心
+input sentence: 食不裹腹
+pred sentence : 食不裹腹
+right sentence: 食不果腹
+input sentence: 你就凑和着用吧
+pred sentence : 你就凑和着用吧
+right sentence: 你就凑合着用吧
+input sentence: 侯车室里人头攒动
+pred sentence : 候车室里人头攒动
+right sentence: 候车室里人头攒动
+input sentence: 真是迫不急待
+pred sentence : 真是迫不急等
+right sentence: 真是迫不及待
+input sentence: 但既使前面是刀山火海
+pred sentence : 但即使前面是刀山火海
+right sentence: 但即使前面是刀山火海
+input sentence: 一如继往地关心我们的地球
+pred sentence : 一如继往地关心我们的地球
+right sentence: 一如既往地关心我们的地球
+input sentence: 怎么能草管人命呢
+pred sentence : 怎么能草关人命呢
+right sentence: 怎么能草菅人命呢
+input sentence: 但我总觉有一种矫揉造作的感觉
+pred sentence : 但我总觉有一种矫揉造作的感觉
+right sentence: 但我总觉有一种矫揉造作的感觉
+input sentence: 几个挖墙角者兴奋地抱着砖头
+pred sentence : 几个挖墙角都兴奋地抱着砖头
+right sentence: 几个挖墙脚者兴奋地抱着砖头
+input sentence: 一诺千金是中华民族的传统美德
+pred sentence : 宜诺千金是中华民族的传统美德
+right sentence: 一诺千斤是中华民族的传统美德
+input sentence: 不径而走的消息
+pred sentence : 不敬而走的消息
+right sentence: 不胫而走的消息
+input sentence: 下月即可峻工
+pred sentence : 下月即可竣工
+right sentence: 下月即可竣工
+input sentence: 方能不落巢臼
+pred sentence : 方能不落巢救
+right sentence: 方能不落窠臼
+input sentence: 写出了一批烩炙人口的作品
+pred sentence : 写出了一批会炙人口的作品
+right sentence: 写出了一批脍炙人口的作品
+input sentence: 遇到这种死皮癞脸的纠缠
+pred sentence : 遇到这种死皮赖脸的纠缠
+right sentence: 遇到这种死皮赖脸的纠缠
+input sentence: 仰望兰天白云
+pred sentence : 仰望蓝天白云
+right sentence: 仰望蓝天白云
+input sentence: 承兄鼎立相助
+pred sentence : 成兄鼎立相助
+right sentence: 承兄鼎力相助
+input sentence: 粉碎了国民党企图以长江为界的黄梁美梦
+pred sentence : 粉碎了国民党企图以长江卫界的黄梁美梦
+right sentence: 粉碎了国民党企图以长江为界的黄粱美梦
+input sentence: 老俩口于上月下旬
+pred sentence : 老两口于上月下旬
+right sentence: 老两口于上月下旬
+input sentence: 每天都有人爬到树上向远方了望
+pred sentence : 每天都有人爬到树上向远方了网
+right sentence: 每天都有人爬到树上向远方瞭望
+input sentence: 水笼头的哗哗声
+pred sentence : 谁笼头的哗哗声
+right sentence: 水龙头的哗哗声
+input sentence: 一张张中国民众惨遭杀戳的照片
+pred sentence : 一张张中国民众惨遭杀绰的照片
+right sentence: 一张张中国民众惨遭杀戮的照片
+input sentence: 眼前是一座美仑美奂的歌舞厅
+pred sentence : 眼前是一座美轮美奂的歌舞厅
+right sentence: 眼前是一座美轮美奂的歌舞厅
+input sentence: 但也有行文罗嗦
+pred sentence : 但也有行文罗索
+right sentence: 但也有行文啰嗦
+input sentence: 发现了犯罪分子留下的蛛丝蚂迹
+pred sentence : 发现了犯罪分子留下的蛛丝马迹
+right sentence: 发现了犯罪分子留下的蛛丝马迹
+input sentence: 萎糜不振的空气为之一扫
+pred sentence : 萎靡不振的空气为之一扫
+right sentence: 萎靡不振的空气为之一扫
+input sentence: 后来又沉缅于赌博而不能自拔
+pred sentence : 后来又沉湎于赌博而不能自拔
+right sentence: 后来又沉湎于赌博而不能自拔
+input sentence: 事先买好一打名信片
+pred sentence : 事先买好一大名信片
+right sentence: 事先买好一打明信片
+input sentence: 甚至默守成规
+pred sentence : 甚至墨守成规
+right sentence: 甚至墨守成规
+input sentence: 大姆指
+pred sentence : 大姆指
+right sentence: 大拇指
+input sentence: 沤心沥血
+pred sentence : 沤心沥血
+right sentence: 呕心沥血
+input sentence: 又凭添了几分秀色
+pred sentence : 又凭添了几分秀色
+right sentence: 又平添了几分秀色
+input sentence: 出奇不意地出现在观众面前
+pred sentence : 出奇不意地出现在观众面前
+right sentence: 出其不意地出现在观众面前
+input sentence: 校舍已修茸一新
+pred sentence : 校舍已修容一新
+right sentence: 校舍已修葺一新
+input sentence: 尤其是受到了年轻女性的亲睐
+pred sentence : 尤其是受到了年轻女性的青睐
+right sentence: 尤其是受到了年轻女性的青睐
+input sentence: 犯下的罪行磬竹难书
+pred sentence : 犯下的罪行罄竹难书
+right sentence: 犯下的罪行罄竹难书
+input sentence: 即使赢得声名雀起
+pred sentence : 即使赢得声名鹊起
+right sentence: 即使赢得声名鹊起
+input sentence: 其发韧地则在下城区江山弄
+pred sentence : 其发人地则在下城区江山弄
+right sentence: 其发轫地则在下城区江山弄
+input sentence: 老年人发生搔痒病
+pred sentence : 老年人发生搔痒病
+right sentence: 老年人发生瘙痒病
+input sentence: 换一副欣尝的眼光
+pred sentence : 换一副薪尝的眼光
+right sentence: 换一副欣赏的眼光
+input sentence: 因而有人情事故皆学问之说
+pred sentence : 因而有人情事故接学问之说
+right sentence: 因而有人情世故皆学问之说
+input sentence: 这家皮包公司有持无恐
+pred sentence : 这家皮包公司有迟无恐
+right sentence: 这家皮包公司有恃无恐
+input sentence: 国人额首称庆
+pred sentence : 国人额首称庆
+right sentence: 国人额手称庆
+input sentence: 你不仅能追朔到自己姓氏的源头
+pred sentence : 你不仅能追说到自己姓氏的源头
+right sentence: 你不仅能追溯到自己姓氏的源头
+input sentence: 有两个鬼鬼崇崇的家伙
+pred sentence : 有两个鬼鬼宗崇的家伙
+right sentence: 有两个鬼鬼祟祟崇的家伙
+input sentence: 金榜提名的十大餐饮领军人物
+pred sentence : 金榜实名的十大餐引领军人物
+right sentence: 金榜题名的十大餐饮领军人物
+input sentence: 走头无路之际
+pred sentence : 走头无路之际
+right sentence: 走投无路之际
+input sentence: 洁白无暇的感觉
+pred sentence : 洁白无下的感觉
+right sentence: 洁白无瑕的感觉
+input sentence: 早已把烦恼抛到了九宵云外
+pred sentence : 早已把烦恼抛到了九霄云外
+right sentence: 早已把烦恼抛到了九霄云外
+input sentence: 情绪不佳要渲泄
+pred sentence : 情绪不佳肴渲泄
+right sentence: 情绪不佳要宣泄
+input sentence: 两人寒喧之后很快沉默无言
+pred sentence : 两人寒暄之后很快沉默无言
+right sentence: 两人寒暄之后很快沉默无言
+input sentence: 整个岛上荡漾着优美的弦律
+pred sentence : 整个岛上荡漾着优美的线律
+right sentence: 整个岛上荡漾着优美的旋律
+input sentence: 其实大都是膺品
+pred sentence : 其实大都是应品
+right sentence: 其实大都是赝品
+input sentence: 尤如猛虎下山
+pred sentence : 犹如猛虎下山
+right sentence: 犹如猛虎下山
+input sentence: 这种竭泽而鱼的做法
+pred sentence : 这种竭泽而鱼的做法
+right sentence: 这种竭泽而渔的做法
+input sentence: 滥芋充数
+pred sentence : 滥竽充数
+right sentence: 滥竽充数
+input sentence: 陈又将大批脏款转移至岳父处
+pred sentence : 陈又将大批赃款转移至岳父处
+right sentence: 陈又将大批赃款转移至岳父处
+input sentence: 醮水笔
+pred sentence : 醮水笔
+right sentence: 蘸水笔
+input sentence: 蜇伏一隅
+pred sentence : 这伏一隅
+right sentence: 蛰伏一隅
+input sentence: 是无异于饮鸠止渴
+pred sentence : 是无异于饮鸠止渴
+right sentence: 是无异于饮鸩止渴
+input sentence: 先是坐阵香港
+pred sentence : 先是坐镇香港
+right sentence: 先是坐镇香港
+input sentence: 是善于旁证博引
+pred sentence : 是善于旁证博引
+right sentence: 是善于旁征博引
+input sentence: 灸手可热的人物
+pred sentence : 就手可热的人物
+right sentence: 炙手可热的人物
+input sentence: 任何人都不能姿意妄为
+pred sentence : 任何人都不能自意妄为
+right sentence: 任何人都不能恣意妄为
+input sentence: 才正式进入编篡阶段
+pred sentence : 才正式进入编篡阶段
+right sentence: 才正式进入编纂阶段
+input sentence: 做月子要讲科学保健
+pred sentence : 坐月子要讲科学保健
+right sentence: 坐月子要讲科学保健
+input sentence: 在出去玩
+pred sentence : 在出去玩
+right sentence: 再出去玩
+input sentence: 无毒不丈夫
+pred sentence : 无毒不丈夫
+right sentence: 无度不丈夫
+input sentence: 凭心而论虽有一些划众取笼众取笼质量有问题的然而并未冲淡主题的色采科调换
+pred sentence : 平心而论虽有一些哗众取笼众取笼质量有问题的然而并未冲淡主题的色彩科调换
+right sentence: 平心而论虽有一些哗众取笼众取宠质量有问题的然而并未冲淡主题的色彩科调换
+input sentence: 仿佛是大自然奏响的一枝交响乐
+pred sentence : 仿佛是大自然奏响的一起交响乐
+right sentence: 仿佛是大自然奏响的一支交响乐
+input sentence: 拄着捌杖
+pred sentence : 拄着捌杖
+right sentence: 拄着拐杖
+input sentence: 先是漂下几滴雨点
+pred sentence : 先是飘下几滴雨点
+right sentence: 先是飘下几滴雨点
+input sentence: 他在事实面前无耐地地低下头
+pred sentence : 他在事实面前无奈地地低下头
+right sentence: 他在事实面前无奈地的低下头
+input sentence: 反对豪无节制地用水浪废水资源地行为
+pred sentence : 反对毫无节制的用水浪废水资源地行为
+right sentence: 反对毫无节制地用水浪费水资源地行为
+input sentence: 演员们都表演得很精采发出一阵喝彩声
+pred sentence : 演员们都表演得很精彩发出一阵喝彩声
+right sentence: 演员们都表演得很精彩发出一阵喝彩声
+input sentence: 姐姐从来不迁让我
+pred sentence : 姐姐从来不前让我
+right sentence: 姐姐从来不谦让我
+input sentence: 耕耘生命的慌坡
+pred sentence : 耕耘生命的荒坡
+right sentence: 耕耘生命的荒坡
+input sentence: 风帆畜电池亮剑国际市场
+pred sentence : 风帆畜电池亮建国际市场
+right sentence: 风帆蓄电池亮剑国际市场
+input sentence: 有一种罄香叫宽容
+pred sentence : 有一种罄香叫宽容
+right sentence: 有一种馨香叫宽容
+input sentence: 学习不能靠绕幸
+pred sentence : 学习不能靠绕行
+right sentence: 学习不能靠侥幸
+input sentence: 在轻香的碧螺春茶汤里
+pred sentence : 在清香的碧螺春茶汤里
+right sentence: 在清香的碧螺春茶汤里
+input sentence: 秦兵马俑维妙维妙维肖地模拟阵列的排列
+pred sentence : 秦兵马俑惟妙维妙维肖地模拟阵列的排列
+right sentence: 秦兵马俑惟妙维妙惟肖地模拟阵列的排列
+input sentence: 我的心中就涌起了深深的劵恋之情
+pred sentence : 我的心中就涌起了深深蒂劵恋之情
+right sentence: 我的心中就涌起了深深的眷恋之情
+input sentence: 着实有点乱的不像杨子了
+pred sentence : 着实有点乱的不像样子了
+right sentence: 着实有点乱的不像样子了
+input sentence: 他感肯定自己已经全面超越了全国的玩家
+pred sentence : 他敢肯定自己已经全面超越了全国的玩家
+right sentence: 他敢肯定自己已经全面超越了全国的玩家
+input sentence: 所有权同江流的身份号码所订到了一起
+pred sentence : 所有权同江流的身份号码锁订到了一起
+right sentence: 锁定有权同江流的身份号码所订到了一起
+input sentence: 账号为您的身份号码
+pred sentence : 账号为您的身份号码
+right sentence: 帐号为您的身份号码
+input sentence: 江流连忙失口否认
+pred sentence : 江流连忙矢口否认
+right sentence: 江流连忙矢口否认
+input sentence: 他只好赶快下现摘下了头盔
+pred sentence : 他只好赶快下现这下了头盔
+right sentence: 他只好赶快下线摘下了头盔
+input sentence: 他不仅骂道
+pred sentence : 他不仅骂道
+right sentence: 他不紧骂道
+input sentence: 想到这里他才反映过来
+pred sentence : 想到这里他才反映过来
+right sentence: 想到这里他才反应过来
+input sentence: 男子大量了一下他
+pred sentence : 男子大量了一下他
+right sentence: 男子打量了一下他
+input sentence: 他举起铁剑狠狠地辟在野狗的鼻子上
+pred sentence : 他举起铁建狠狠地否在野狗的鼻子上
+right sentence: 他举起铁剑狠狠地劈在野狗的鼻子上
+input sentence: 待遇上的天翻地覆让江流楞了一下
+pred sentence : 待遇上的天翻地覆让江流楞了一下
+right sentence: 待遇上的天翻地覆让江流愣了一下
+input sentence: 看在沾了他那么大便宜的面子上
+pred sentence : 看在展了他那么大便宜的面子上
+right sentence: 看在占了他那么大便宜的面子上
+input sentence: 动摇西晃地作摇西晃地作了一套自创的健身操后江流此时脑袋里依旧昏昏噩噩的
+pred sentence : 动摇西晃地作摇西晃地做了一套自创的健身操后江流此时脑袋里依旧昏昏噩额的
+right sentence: 东摇西晃地作摇西晃地做了一套自创的健身操后江流此时脑袋里依旧浑浑昏噩噩的
+input sentence: 还长得那么飘亮青亮青纯
+pred sentence : 县长得那么漂亮青亮青纯
+right sentence: 还长得那么漂亮青亮清纯
+input sentence: 江流马上就反映过来这是一个任务
+pred sentence : 江流马上就反映过来者是一个任务
+right sentence: 江流马上就反应过来这是一个任务
+input sentence: 见到他之后自然是一大顿马匹拍过来
+pred sentence : 见到他之后自然是一代顿马匹拍过来
+right sentence: 见到他之后自然是一大顿马屁拍过来
+input sentence: 江流在呼叫器里把这个没义气的家伙愁骂了一顿后
+pred sentence : 江流在呼叫器里把这个没意气的家伙臭骂了一顿后
+right sentence: 江流在呼叫器里把这个没义气的家伙臭骂了一顿后
+input sentence: 那女子恨声威胁道
+pred sentence : 那女子恨声威胁道
+right sentence: 那女子狠声威胁道
+input sentence: 两人约好晚上家里简便挂断了电话
+pred sentence : 两儿约好晚上家里简便挂断了电话
+right sentence: 两人约好晚上家里见便挂断了电话
+input sentence: 正在不停地想他抛着故拒还迎的媚眼
+pred sentence : 正在不停地向他抛着故拒还迎的媚眼
+right sentence: 正在不停地向他抛着故拒还迎的媚眼
+input sentence: 他无奈地将球驻地目光投向了斜对面那个正在幸灾乐祸地阴笑着的某人了
+pred sentence : 他无奈地将求驻地目光投向了斜对面那个正在幸灾乐祸的阴笑着的某人了
+right sentence: 他无奈地将求助驻地目光投向了斜对面那个正在幸灾乐祸地阴笑着的某人了
+input sentence: 你那些散脚猫朋友就不要拿出来丢人了
+pred sentence : 你那些三脚猫朋友就不要拿出来丢人了
+right sentence: 你那些三脚猫朋友就不要拿出来丢人了
+input sentence: 江流想到这里也伸手模上腰带
+pred sentence : 江流想到这里也伸手摸上腰带
+right sentence: 江流想到这里也伸手摸上腰带
+input sentence: 忽然有人长声残呼
+pred sentence : 忽然有人掌声残呼
+right sentence: 忽然有人长声惨呼
+input sentence: 他看着受里剩下的几颗金创药
+pred sentence : 他看着手里剩下的几颗金抢药
+right sentence: 他看着手里剩下的几颗金创药
+input sentence: 怎么会取消您呢
+pred sentence : 怎么会取消您你
+right sentence: 怎么会取笑您呢
+input sentence: 没想到这丫头都穿上新娘妆了还这么辣
+pred sentence : 没想到这丫头都穿上新娘妆了还这么辣
+right sentence: 没想到这丫头都穿上新娘装了还这么辣
+input sentence: 对别人来说是蒙昧昧以求得以求得宝
+pred sentence : 对别人来说是蒙昧寐以求得以求得宝
+right sentence: 对别人来说是梦昧寐以求得以求的宝
+input sentence: 一个待从走了进来
+pred sentence : 一个大从走了进来
+right sentence: 一个侍从走了进来
+input sentence: 你可知我为何深夜招你
+pred sentence : 你可知我为何深夜着你
+right sentence: 你可知我为何深夜召你
+input sentence: 也太叫他感到非夷所思了
+pred sentence : 也太叫他感到匪夷所思了
+right sentence: 也太叫他感到匪夷所思了
+input sentence: 陈将军砌了两碗好茶坐在桌旁等待着岳天杨的到来
+pred sentence : 陈将军砌了两碗好茶坐在桌旁等待着说天杨的到来
+right sentence: 陈将军沏了两碗好茶坐在桌旁等待着岳天杨的到来
+input sentence: 居然连荼碗也惊落在地
+pred sentence : 居然连土碗也经落在地
+right sentence: 居然连茶碗也惊落在地
+input sentence: 他最喜欢他把圈子兜的又大又弯叫人难以分辩晕头转向一定会被我们的手下传杨出去
+pred sentence : 他最喜欢他把圈子兜的又大有弯叫人难以分辨晕头转向一定会被我们的手下传场出去
+right sentence: 他最喜欢他把圈子兜的又大又弯叫人难以分辨晕头转向一定会被我们的手下传扬出去
+input sentence: 他第一次发现原来做一种决择竟是这样难
+pred sentence : 他第一次发现原来做一种抉择竟是这样难
+right sentence: 他第一次发现原来做一种抉择竟是这样难
+input sentence: 而他的眼神却是扑塑迷离的
+pred sentence : 而他的眼神却是补塑迷离的
+right sentence: 而他的眼神却是扑朔迷离的
+input sentence: 以经到了咱们院子里了
+pred sentence : 已经到了咱们原子里了
+right sentence: 已经到了咱们院子里了
+input sentence: 这汉子的眼睛缓缓挣开
+pred sentence : 这汉子的眼睛缓缓挣开
+right sentence: 这汉子的眼睛缓缓睁开
+input sentence: 他可没有兴趣同那群嗜血的畜牲比试身手
+pred sentence : 他可没有兴趣同纳群嗜血的畜生比试身手
+right sentence: 他可没有兴趣同那群嗜血的畜生比试身手
+input sentence: 他距离黑风扬起的后踢只剩下了六尺多的距离
+pred sentence : 他距离黑风扬起的后体只剩下了六尺多的距离
+right sentence: 他距离黑风扬起的后蹄只剩下了六尺多的距离
+input sentence: 胖胖的园脸象脸象个大饼
+pred sentence : 胖胖的园险象脸象个大饼
+right sentence: 胖胖的圆脸象脸像个大饼
+input sentence: 可惜又谚云
+pred sentence : 可惜又燕云
+right sentence: 可惜有谚云
+input sentence: 得到高僧
+pred sentence : 得到高僧
+right sentence: 得道高僧
+input sentence: 花姿招展
+pred sentence : 花姿招展
+right sentence: 花枝招展
+input sentence: 砍掉头颅之后他们在也不能变成骷髅
+pred sentence : 砍掉头路之后他们在也不能变城骷髅
+right sentence: 砍掉头颅之后他们再也不能变成骷髅
+input sentence: 但是要吃下这个东西还真需要下一翻狠心
+pred sentence : 但是要吃下这个东西还真需要下一翻很心
+right sentence: 但是要吃下这个东西还真需要下一番狠心
+input sentence: 各个国家之中又有相应的若感神殿
+pred sentence : 各个国家之中又有相应的若感神典
+right sentence: 各个国家之中又有相应的若干神殿
+input sentence: 现在的我已经不必作作日
+pred sentence : 现在的我已经不必做作日
+right sentence: 现在的我已经不比作左日
+input sentence: 拘魂幡象似
+pred sentence : 据魂幡相似
+right sentence: 拘魂幡相似
+input sentence: 我更不知道这坐大山里的妖怪
+pred sentence : 我更不知道这座大山里的妖怪
+right sentence: 我更不知道这座大山里的妖怪
+input sentence: 只所以认定它为魔鹰因为它周身雪白
+pred sentence : 只所以认定它为魔英因为它周身雪白
+right sentence: 之所以认定它为魔鹰因为它周身雪白
+input sentence: 对比那些另人难以忍受的孤独
+pred sentence : 对比那些令人难以忍受的孤独
+right sentence: 对比那些令人难以忍受的孤独
+input sentence: 然后它的部队也全部进如了状态
+pred sentence : 然后它的部队也全部进入了状态
+right sentence: 然后它的部队也全部进入了状态
+input sentence: 转以修炼成妖的怪兽为食
+pred sentence : 专以修炼成要的怪兽喂食
+right sentence: 专以修炼成妖的怪兽为食
+input sentence: 我又何必去死挣这个道理
+pred sentence : 我又何必去四挣这个道理
+right sentence: 我又何必去死争这个道理
+input sentence: 不要愿望我厚脸皮
+pred sentence : 不要愿望我后脸皮
+right sentence: 不要冤枉望我厚脸皮
+input sentence: 我再次战在神像之前
+pred sentence : 我再次站在神像之前
+right sentence: 我再次站在神像之前
+input sentence: 见于阁下功勋卓著
+pred sentence : 见于合下功勋卓著
+right sentence: 鉴于阁下功勋卓著
+input sentence: 还有你们看看清除哈
+pred sentence : 还有你们看看清除合
+right sentence: 还有你们看看清楚哈
+input sentence: 记得每10快皮加1000神币
+pred sentence : 记得每10快皮加1000神币
+right sentence: 记得每10快皮加1000神币
+input sentence: 那天花板上的钻石可比鸡弹还大啊
+pred sentence : 那天花板上的钻石可比其弹还大啊
+right sentence: 那天花板上的钻石可比鸡蛋还大啊
+input sentence: 才般进装修好没多久的新宫殿里
+pred sentence : 才搬进装修好没多久的新宫殿里
+right sentence: 才搬进装修好没多久的新宫殿里
+input sentence: 做的最倒霉的一件事就帮尼哥檫脚
+pred sentence : 做的最倒霉的一件事就帮你哥檫脚
+right sentence: 做的最倒霉的一件事就帮尼哥擦脚
+input sentence: 一但死去
+pred sentence : 一但死去
+right sentence: 一旦死去
+input sentence: 战士微笑著轻轻拍了拍少年的肩膀
+pred sentence : 战士微笑著轻轻拍了拍少年的肩膀
+right sentence: 战士微笑着轻轻拍了拍少年的肩膀
+input sentence: 差点拌到自己的脚
+pred sentence : 差点拌到自己的脚
+right sentence: 差点绊到自己的脚
+input sentence: 面对着熙熙嚷嚷的城市
+pred sentence : 面对着西熙嚷嚷的城市
+right sentence: 面对着熙熙攘攘嚷的城市
+input sentence: 你等我和老大商却一下
+pred sentence : 你等我和老大商却一下
+right sentence: 你等我和老大商榷一下
+input sentence: 这家伙还蛮格尽职守的
+pred sentence : 这家伙还蛮各尽职守的
+right sentence: 这家伙还蛮恪尽职守的
+input sentence: 报应接中迩来
+pred sentence : 报应届中迩来
+right sentence: 报应接中而来
+input sentence: 人群穿流不息
+pred sentence : 人群川流不息
+right sentence: 人群川流不息
+input sentence: 这个消息不径而走
+pred sentence : 这个消息不敬而走
+right sentence: 这个消息不胫而走
+input sentence: 眼前的场景美仑美幻简直超出了人类的想象
+pred sentence : 眼前的场景美轮美幻简直超出了人类的想象
+right sentence: 眼前的场景美轮美幻简直超出了人类的想象
+input sentence: 看着这两个人谈笑风声我心理我心理不由有些忌妒
+pred sentence : 看着这两个人谈笑风声我心理我心理不由有些嫉妒
+right sentence: 看着这两个人谈笑风生我心理我心里不由有些忌妒
+input sentence: 有老怪坐阵难怪他们高枕无忧了
+pred sentence : 有老怪坐镇难怪他们高枕无忧了
+right sentence: 有老怪坐镇难怪他们高枕无忧了
+input sentence: 有了这一番旁证博引
+pred sentence : 有了这一番旁证博引
+right sentence: 有了这一番旁征博引
+right count: 88 ;sentence size: 325
+right rate: 0.27076923076923076

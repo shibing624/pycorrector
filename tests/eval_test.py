@@ -3,7 +3,6 @@
 # Brief:
 import os
 import sys
-import pdb
 sys.path.append("../")
 from pycorrector.eval import *
 
@@ -36,6 +35,6 @@ def sighan_data_test():
     # print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
     # cn_spell rate:0.2
 
-eval_bcmi_data_test()
+# eval_bcmi_data_test()
 # clp_data_test()
-# sighan_data_test()
+sighan_data_test()

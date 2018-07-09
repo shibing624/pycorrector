@@ -3,7 +3,6 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 import sys
-import pdb
 sys.path.append("../")
 from pycorrector.corrector import *
 from pycorrector.utils.text_utils import *

@@ -2,7 +2,6 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import re
-import pdb
 from codecs import open
 from pycorrector.corrector import correct
 from pycorrector.utils.io_utils import load_pkl

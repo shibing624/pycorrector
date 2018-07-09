@@ -2,7 +2,6 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import sys
-import pdb
 sys.path.append("../")
 from pycorrector import corrector
 
