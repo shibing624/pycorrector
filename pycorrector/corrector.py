@@ -3,10 +3,11 @@
 # Brief: corrector with spell and stroke
 import codecs
 import os
+import pdb
 
 from pypinyin import lazy_pinyin
 
-from pycorrector import config
+import pycorrector.config as config
 from pycorrector.detector import detect
 from pycorrector.detector import get_frequency
 from pycorrector.detector import get_ppl_score

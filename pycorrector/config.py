@@ -19,4 +19,7 @@ same_stroke_text_path = 'data/same_stroke.txt'
 same_stroke_model_path = 'data/same_stroke.pkl'
 
 # language model path
-language_model_path = 'data/kenlm/people_chars.klm'
+language_model_path = 'data/kenlm/people_chars_lm.klm'
+#language_model_path = 'data/kenlm/people2014corpus_chars.klm'
+#language_model_path = 'data/kenlm/people2014corpus_words.klm'
+

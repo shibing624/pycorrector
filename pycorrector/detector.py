@@ -4,6 +4,8 @@
 import codecs
 import kenlm
 import os
+import sys
+import pdb
 
 import numpy as np
 
@@ -104,7 +106,12 @@ def detect(sentence):
     # 文本归一化
     sentence = uniform(sentence)
     # 切词
+
+    # if not isinstance(sentence, unicode):
+    #     sentence = unicode(sentence, "utf-8")
+
     tokens = tokenize(sentence)
+
     # 未登录词加入疑似错误字典
     for word, begin_idx, end_idx in tokens:
         if word not in PUNCTUATION_LIST and word not in word_freq.keys():

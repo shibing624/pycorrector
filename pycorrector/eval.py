@@ -2,6 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import re
+import pdb
 from codecs import open
 from pycorrector.corrector import correct
 from pycorrector.utils.io_utils import load_pkl
@@ -41,7 +42,7 @@ def eval_bcmi_data(data_path, verbose=False):
             pred_sentence, pred_detail = correct(error_sentence)
             if verbose:
                 print('input sentence:', error_sentence)
-                print('pred sentence:', pred_sentence)
+                print('pred sentence :', pred_sentence)
                 print('right sentence:', right_sentence)
             sentence_size += 1
             if right_sentence == pred_sentence:
@@ -62,16 +63,26 @@ def eval_sighan_corpus(pkl_path, verbose=False):
     wrong_result = dict()
     for error_sentence, right_detail in sighan_data:
         pred_sentence, pred_detail = correct(error_sentence)
+        # print(pred_detail)
+        # if pred_detail and len(pred_detail[0]) > 1:
+        # pdb.set_trace()
         if verbose:
             print('input sentence:', error_sentence)
-            print('pred sentence:', pred_sentence)
+            print('pred sentence :', pred_sentence)
         for (right_loc, right_w, right_r) in right_detail:
             total_count += 1
-            # if right_r == pred_r:
-            #     right_count += 1
-            #     right_result[error_sentence] = [right_r, pred_r]
-            # else:
-            #     wrong_result[error_sentence] = [right_r, pred_r]
+            # pdb.set_trace()
+            if pred_detail:
+                for [(pred_w, pred_r, pred_beg, pred_end)] in pred_detail:
+                    if right_r in pred_r or pred_r in right_r:
+                        right_count += 1
+                        right_result[error_sentence] = [right_r, pred_r]
+                        pred_detail.remove([(pred_w, pred_r, pred_beg, pred_end)])
+                    # else:
+                    #     wrong_result[error_sentence] = [right_r, pred_r]
+            elif not right_detail:
+                right_count += 1
+
             if verbose:
                 print('right: {} => {} , index: {}'.format(right_w, right_r, right_loc))
                 # if verbose:

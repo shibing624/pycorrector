@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
-
+import sys
 import unittest
 
+sys.path.append("../")
 from pycorrector.corrector import correct, get_same_stroke, get_sub_array
 
 
