@@ -30,7 +30,7 @@ def clp_data_test():
     # cn_spell rate:0.2
 
 def sighan_data_test():
-    rate, right_dict, wrong_dict = eval_sighan_corpus(sighan_path, True)
+    rate, right_dict, wrong_dict = eval_sighan_corpus(sighan_path, False)
     print('right rate:',rate)
     # print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
     # cn_spell rate:0.2
