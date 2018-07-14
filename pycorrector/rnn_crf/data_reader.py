@@ -37,9 +37,9 @@ def build_dict(data_path,
 
         for v, count in sorted(
                 values.items(), key=lambda x: x[1], reverse=True):
-            if count < cutoff_frequency:
-                break
-            f.write("%s\t%d\n" % (v, count))
+            if count > cutoff_frequency:
+                f.write("%s\t%d\n" % (v, count))
+        print('save %s data to %s' % (data_path, save_path))
 
 
 def sent2ids(sent, vocab):
@@ -59,10 +59,8 @@ def load_reverse_dict(dict_path):
                 for idx, line in enumerate(open(dict_path, 'r', encoding='utf-8').readlines()))
 
 
-def pad_sequence(word_ids, label_ids, maxlen=300):
-    word_seq = sequence.pad_sequences(np.array(word_ids), maxlen=maxlen)
-    label_seq = sequence.pad_sequences(np.array(label_ids), maxlen=maxlen)
-    return word_seq, label_seq
+def pad_sequence(word_ids, maxlen=300):
+    return sequence.pad_sequences(np.array(word_ids), maxlen=maxlen)
 
 
 def get_max_len(word_ids):
@@ -70,4 +68,5 @@ def get_max_len(word_ids):
 
 
 def load_test_id(dict_path):
-    return [''.join(line.strip().split()) for idx, line in enumerate(open(dict_path, 'r', encoding='utf-8').readlines())]
+    return [''.join(line.strip().split()) for idx, line in
+            enumerate(open(dict_path, 'r', encoding='utf-8').readlines())]

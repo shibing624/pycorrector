@@ -26,12 +26,12 @@ label_dict_path = output_dir + '/label_dict.txt'
 
 # config
 batch_size = 64
-epoch = 15
+epoch = 10
 embedding_dim = 100
 rnn_hidden_dim = 200
 maxlen = 300
-cutoff_frequency = 10
-dropout = 0.2
+cutoff_frequency = 5
+dropout = 0.5
 save_model_path = output_dir + '/rnn_crf_model.h5'  # Path of the model saved, default is output_path/model
 
 # infer

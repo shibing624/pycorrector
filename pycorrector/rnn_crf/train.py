@@ -46,7 +46,8 @@ def train(train_word_path=None,
     word_ids = vectorize_data(train_word_path, word_ids_dict)
     label_ids = vectorize_data(train_label_path, label_ids_dict)
     # pad sequence
-    word_seq, label_seq = pad_sequence(word_ids, label_ids, maxlen=maxlen)
+    word_seq = pad_sequence(word_ids, maxlen=maxlen)
+    label_seq = pad_sequence(label_ids, maxlen=maxlen)
     # reshape label for crf model use
     label_seq = np.reshape(label_seq, (label_seq.shape[0], label_seq.shape[1], 1))
     logger.info("Data loaded.")
@@ -57,7 +58,8 @@ def train(train_word_path=None,
     # callback
     callbacks_list = callback(save_model_path, logger)
     # fit
-    model.fit(word_seq, label_seq,
+    model.fit(word_seq,
+              label_seq,
               batch_size=batch_size,
               epochs=epoch,
               validation_split=0.2,

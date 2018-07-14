@@ -16,7 +16,7 @@ def create_model(word_dict, label_dict, embedding_dim=100, rnn_hidden_dim=200, d
     # build model
     model = Sequential()
     # embedding
-    model.add(Embedding(len(word_dict), embedding_dim, mask_zero=True))
+    model.add(Embedding(len(word_dict), embedding_dim))
     # bilstm
     model.add(Bidirectional(LSTM(rnn_hidden_dim // 2, return_sequences=True,
                                  recurrent_dropout=dropout)))
