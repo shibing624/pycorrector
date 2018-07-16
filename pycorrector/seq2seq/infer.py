@@ -2,205 +2,135 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 
-import sys
-from collections import defaultdict
 
 import numpy as np
-import tensorflow as tf
+from keras.layers import Input
+from keras.models import Model, load_model
 
-import cged_config
-from corpus_reader import CGEDReader
-from reader import EOS_ID
-from utils.text_utils import segment
-from train import create_model
+from pycorrector.seq2seq import cged_config as config
+from pycorrector.seq2seq.corpus_reader import GO_TOKEN
+from pycorrector.seq2seq.corpus_reader import CGEDReader
+from pycorrector.utils.io_utils import get_logger
 
+from pycorrector.seq2seq.reader import EOS_TOKEN
 
-def decode(sess, model, data_reader, data_to_decode,
-           corrective_tokens=None, verbose=True):
-    """
-    Infer the correction sentence
-    :param sess:
-    :param model:
-    :param data_reader:
-    :param data_to_decode: an iterable of token lists representing the input
-        data we want to decode
-    :param corrective_tokens
-    :param verbose:
-    :return:
-    """
-    model.batch_size = 1
-    corrective_tokens_mask = np.zeros(model.target_vocab_size)
-    corrective_tokens_mask[EOS_ID] = 1.0
-
-    if corrective_tokens is None:
-        corrective_tokens = set()
-    for tokens in corrective_tokens:
-        for token in tokens:
-            corrective_tokens_mask[data_reader.convert_token_2_id(token)] = 1.0
-
-    for tokens in data_to_decode:
-        token_ids = [data_reader.convert_token_2_id(token) for token in tokens]
-
-        # Which bucket does it belong to?
-        matching_buckets = [b for b in range(len(model.buckets))
-                            if model.buckets[b][0] > len(token_ids)]
-        if not matching_buckets:
-            # The input string has more tokens than the largest bucket, so we
-            # have to skip it.
-            continue
-
-        bucket_id = min(matching_buckets)
-
-        # Get a 1-element batch to feed the sentence to the model.
-        encoder_inputs, decoder_inputs, target_weights = model.get_batch(
-            {bucket_id: [(token_ids, [])]}, bucket_id)
-
-        # Get output logits for the sentence.
-        _, _, output_logits = model.step(
-            sess, encoder_inputs, decoder_inputs, target_weights, bucket_id,
-            True, corrective_tokens=corrective_tokens_mask)
-
-        oov_input_tokens = [token for token in tokens if
-                            data_reader.is_unknown_token(token)]
-        outputs = []
-        next_oov_token_idx = 0
-
-        for logit in output_logits:
-            max_likelihood_token_id = int(np.argmax(logit, axis=1))
-            # Check if this logit most likely points to the EOS identifier.
-            if max_likelihood_token_id == EOS_ID:
-                break
-
-            token = data_reader.convert_id_2_token(max_likelihood_token_id)
-            if data_reader.is_unknown_token(token):
-                # Replace the "unknown" token with the most probable OOV
-                # token from the input.
-                if next_oov_token_idx < len(oov_input_tokens):
-                    # If we still have OOV input tokens available,
-                    # pick the next available one.
-                    token = oov_input_tokens[next_oov_token_idx]
-                    # Advance to the next OOV input token.
-                    next_oov_token_idx += 1
-                else:
-                    # If we've already used all OOV input tokens,
-                    # then we just leave the token as "UNK"
-                    pass
-            outputs.append(token)
-        if verbose:
-            decoded_sentence = " ".join(outputs)
-            print("Input: {}".format(" ".join(tokens)))
-            print("Output: {}\n".format(decoded_sentence))
-        yield outputs
+logger = get_logger(__name__)
 
 
-def decode_sentence(sess, model, data_reader, sentence, corrective_tokens=set(),
-                    verbose=True):
-    """Used with InteractiveSession in IPython """
-    return next(decode(sess, model, data_reader, [segment(sentence, 'char')],
-                       corrective_tokens=corrective_tokens, verbose=verbose))
+def decode_sequence(model, rnn_hidden_dim,input_token_index,
+                    num_decoder_tokens, target_token_index,encoder_input_data,
+                    reverse_target_char_index, max_decoder_seq_length):
+    # construct the encoder and decoder
+    encoder_inputs = model.input[0]  # input_1
+    encoder_outputs, state_h_enc, state_c_enc = model.layers[2].output  # lstm_1
+    encoder_states = [state_h_enc, state_c_enc]
+    encoder_model = Model(encoder_inputs, encoder_states)
+
+    decoder_inputs = model.input[1]  # input_2
+    decoder_state_input_h = Input(shape=(rnn_hidden_dim,), name='input_3')
+    decoder_state_input_c = Input(shape=(rnn_hidden_dim,), name='input_4')
+    decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
+    decoder_lstm = model.layers[3]
+    decoder_outputs, state_h_dec, state_c_dec = decoder_lstm(
+        decoder_inputs, initial_state=decoder_states_inputs)
+    decoder_states = [state_h_dec, state_c_dec]
+    decoder_dense = model.layers[4]
+    decoder_outputs = decoder_dense(decoder_outputs)
+    decoder_model = Model(
+        [decoder_inputs] + decoder_states_inputs,
+        [decoder_outputs] + decoder_states)
+
+    # Reverse-lookup token index to decode sequences back to
+    # something readable.
+    reverse_input_char_index = dict(
+        (i, char) for char, i in input_token_index.items())
+    reverse_target_char_index = dict(
+        (i, char) for char, i in target_token_index.items())
+
+    # Encode the input as state vectors.
+    states_value = encoder_model.predict(encoder_input_data)
+
+    # Generate empty target sequence of length 1.
+    target_seq = np.zeros((1, 1, num_decoder_tokens))
+    # Populate the first character of target sequence with the start character.
+    # target_seq[0, 0, target_token_index[first_char]] = 1.
+
+    # Sampling loop for a batch of sequences
+    # (to simplify, here we assume a batch of size 1).
+    stop_condition = False
+    decoded_sentence = ''
+
+    while not stop_condition:
+        output_tokens, h, c = decoder_model.predict(
+            [target_seq] + states_value)
+
+        # Sample a token
+        sampled_token_index = np.argmax(output_tokens[0, -1, :])
+        sampled_char = reverse_target_char_index[sampled_token_index]
+        decoded_sentence += sampled_char
+
+        # Exit condition: either hit max length
+        # or find stop character.
+        if (sampled_char == EOS_TOKEN or
+                    len(decoded_sentence) > max_decoder_seq_length):
+            stop_condition = True
+
+        # Update the target sequence (of length 1).
+        target_seq = np.zeros((1, 1, num_decoder_tokens))
+        target_seq[0, 0, sampled_token_index] = 1.
+
+        # Update states
+        states_value = [h, c]
+
+    return decoded_sentence
 
 
-def evaluate_accuracy(sess, model, data_reader, corrective_tokens, test_path,
-                      max_samples=None):
-    """Evaluates the accuracy and BLEU score of the given model."""
+def infer(train_path=None,
+          test_path=None,
+          save_model_path=None,
+          rnn_hidden_dim=200):
+    data_reader = CGEDReader(train_path)
+    input_texts, target_texts = data_reader.build_dataset(test_path)
 
-    import nltk  # Loading here to avoid having to bundle it in lambda.
+    input_characters = data_reader.read_vocab(input_texts)
+    target_characters = data_reader.read_vocab(target_texts)
+    num_encoder_tokens = len(input_characters)
+    num_decoder_tokens = len(target_characters)
+    max_encoder_seq_len = max([len(text) for text in input_texts])
+    max_decoder_seq_len = max([len(text) for text in target_texts])
 
-    # Build a collection of "baseline" and model-based hypotheses, where the
-    # baseline is just the (potentially errant) source sequence.
-    baseline_hypotheses = defaultdict(list)  # The model's input
-    model_hypotheses = defaultdict(list)  # The actual model's predictions
-    targets = defaultdict(list)  # Groundtruth
+    print('num of samples:', len(input_texts))
+    print('num of unique input tokens:', num_encoder_tokens)
+    print('num of unique output tokens:', num_decoder_tokens)
+    print('max sequence length for inputs:', max_encoder_seq_len)
+    print('max sequence length for outputs:', max_decoder_seq_len)
 
-    errors = []
+    input_token_index = dict([(char, i) for i, char in enumerate(input_characters)])
+    target_token_index = dict([(char, i) for i, char in enumerate(target_characters)])
 
-    n_samples_by_bucket = defaultdict(int)
-    n_correct_model_by_bucket = defaultdict(int)
-    n_correct_baseline_by_bucket = defaultdict(int)
-    n_samples = 0
+    encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_len, num_encoder_tokens), dtype='float32')
 
-    # Evaluate the model against all samples in the test data set.
-    for source, target in data_reader.read_samples_by_string(test_path):
-        matching_buckets = [i for i, bucket in enumerate(model.buckets) if
-                            len(source) < bucket[0]]
-        if not matching_buckets:
-            continue
+    # one hot representation
+    for i, input_text in enumerate(input_texts):
+        for t, char in enumerate(input_text):
+            encoder_input_data[i, t, input_token_index[char]] = 1.0
+    logger.info("Data loaded.")
 
-        bucket_id = matching_buckets[0]
+    # model
+    logger.info("Infer seq2seq model...")
+    model = load_model(save_model_path)
 
-        decoding = next(
-            decode(sess, model, data_reader, [source],
-                   corrective_tokens=corrective_tokens, verbose=False))
-        model_hypotheses[bucket_id].append(decoding)
-        if decoding == target:
-            n_correct_model_by_bucket[bucket_id] += 1
-        else:
-            errors.append((decoding, target))
+    decoded_sentences = decode_sequence(model, encoder_input_data, )
+    for seq_index in input_text:
+        print('-')
+        print('Input sentence:', input_texts[seq_index])
+        print('Decoded sentence:', decoded_sentences[seq_index])
 
-        baseline_hypotheses[bucket_id].append(source)
-        if source == target:
-            n_correct_baseline_by_bucket[bucket_id] += 1
-
-        # nltk.corpus_bleu expects a list of one or more reference
-        # translations per sample, so we wrap the target list in another list
-        targets[bucket_id].append([target])
-
-        n_samples_by_bucket[bucket_id] += 1
-        n_samples += 1
-
-        if max_samples is not None and n_samples > max_samples:
-            break
-
-    # Measure the corpus BLEU score and accuracy for the model and baseline
-    # across all buckets.
-    for bucket_id in targets.keys():
-        baseline_bleu_score = nltk.translate.bleu_score.corpus_bleu(
-            targets[bucket_id], baseline_hypotheses[bucket_id])
-        model_bleu_score = nltk.translate.bleu_score.corpus_bleu(
-            targets[bucket_id], model_hypotheses[bucket_id])
-        print("Bucket {}: {}".format(bucket_id, model.buckets[bucket_id]))
-        print("\tBaseline BLEU = {:.4f}\n\tModel BLEU = {:.4f}".format(
-            baseline_bleu_score, model_bleu_score))
-        print("\tBaseline Accuracy: {:.4f}".format(
-            1.0 * n_correct_baseline_by_bucket[bucket_id] /
-            n_samples_by_bucket[bucket_id]))
-        print("\tModel Accuracy: {:.4f}".format(
-            1.0 * n_correct_model_by_bucket[bucket_id] /
-            n_samples_by_bucket[bucket_id]))
-
-    return errors
-
-
-def main(_):
-    print('Correcting error...')
-    # Set the model path.
-    model_path = cged_config.model_path
-    data_reader = CGEDReader(cged_config, cged_config.train_path)
-
-    if cged_config.enable_decode_sentence:
-        # Correct user's sentences.
-        with tf.Session() as session:
-            model = create_model(session, True, model_path, config=cged_config)
-            print("Enter a sentence you'd like to correct")
-            correct_new_sentence = input()
-            while correct_new_sentence.lower() != 'no':
-                decode_sentence(session, model=model, data_reader=data_reader,
-                                sentence=correct_new_sentence,
-                                corrective_tokens=data_reader.read_tokens(cged_config.train_path))
-                print("Enter a sentence you'd like to correct or press NO")
-                correct_new_sentence = input()
-    elif cged_config.enable_test_decode:
-        # Decode test sentences.
-        with tf.Session() as session:
-            model = create_model(session, True, model_path, config=cged_config)
-            print("Loaded model. Beginning decoding.")
-            decodings = decode(session, model=model, data_reader=data_reader,
-                               data_to_decode=data_reader.read_tokens(cged_config.test_path, is_infer=True),
-                               corrective_tokens=data_reader.read_tokens(cged_config.train_path))
-            # Write the decoded tokens to stdout.
-            for tokens in decodings:
-                sys.stdout.flush()
+    logger.info("Infer has finished.")
 
 
 if __name__ == "__main__":
-    tf.app.run()
+    infer(train_path=config.train_path,
+          test_path=config.test_path,
+          save_model_path=config.save_model_path,
+          rnn_hidden_dim=config.rnn_hidden_dim)

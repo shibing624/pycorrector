@@ -5,7 +5,7 @@ from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
 
-import cged_config as config
+import pycorrector.seq2seq.cged_config as config
 from utils.text_utils import segment
 
 

@@ -45,11 +45,15 @@ def train(train_word_path=None,
     # read data to index
     word_ids = vectorize_data(train_word_path, word_ids_dict)
     label_ids = vectorize_data(train_label_path, label_ids_dict)
+    max_len = np.max([len(i) for i in word_ids])
+    print('max_len:', max_len)
     # pad sequence
     word_seq = pad_sequence(word_ids, maxlen=maxlen)
     label_seq = pad_sequence(label_ids, maxlen=maxlen)
     # reshape label for crf model use
     label_seq = np.reshape(label_seq, (label_seq.shape[0], label_seq.shape[1], 1))
+    print(word_seq.shape)
+    print(label_seq.shape)
     logger.info("Data loaded.")
     # model
     logger.info("Training BILSTM_CRF model...")

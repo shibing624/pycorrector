@@ -50,7 +50,6 @@ def save_preds(preds, test_ids, X_test, ids_word_dict,
             for j in range(len(sent_ids)):
                 if sent_ids[j] != 0:
                     label.append(preds[i][j])
-            print(label)
             continue_error = False
             has_error = False
             current_error = 0
@@ -80,7 +79,9 @@ def save_preds(preds, test_ids, X_test, ids_word_dict,
 
 
 def is_error_label_id(label_id, label_ids_dict):
-    return label_id != label_ids_dict['O']
+    # return label_id != label_ids_dict['O']
+    return label_id == label_ids_dict['M'] or label_id == label_ids_dict['R'] or label_id == label_ids_dict[
+        'S'] or label_id == label_ids_dict['W']
 
 
 if __name__ == '__main__':

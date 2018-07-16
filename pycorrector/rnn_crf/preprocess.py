@@ -30,7 +30,8 @@ def parse_xml_file(path):
                     error_type_change = 'B-' + error_type
                 else:
                     error_type_change = 'I-' + error_type
-                locate_dict[i] = error_type_change
+                # locate_dict[i] = error_type_change
+                locate_dict[i] = error_type
         # Segment with pos
         word_seq, pos_seq = segment(text, cut_type='char', pos=True)
         word_arr, label_arr = [], []
@@ -69,7 +70,8 @@ def parse_txt_file(input_path, truth_path):
                         error_type_change = 'B-' + error_type
                     else:
                         error_type_change = 'I-' + error_type
-                    locate_dict[i] = error_type_change
+                    # locate_dict[i] = error_type_change
+                    locate_dict[i] = error_type
                 # for i in range(int(start_off) - 1, int(end_off)):
                 #     locate_dict[i] = error_type
                 if text_id in truth_dict:

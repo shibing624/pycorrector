@@ -14,12 +14,8 @@ GO_TOKEN = 'GO'
 
 
 class Reader:
-    def __init__(self, config, train_path=None, token_2_id=None,
-                 special_tokens=(), dataset_copies=1):
-        self.config = config
-        self.dataset_copies = dataset_copies
-        # Vocabulary
-        max_vocab_size = config.max_vocab_size
+    def __init__(self, train_path=None, token_2_id=None,
+                 special_tokens=()):
         if train_path is None:
             self.token_2_id = token_2_id
         else:
@@ -36,7 +32,7 @@ class Reader:
             vocab[0:0] = special_tokens
             full_token_id = list(zip(vocab, range(len(vocab))))
             self.full_token_2_id = dict(full_token_id)
-            self.token_2_id = dict(full_token_id[:max_vocab_size])
+            self.token_2_id = dict(full_token_id)
         self.id_2_token = {v: k for k, v in self.token_2_id.items()}
 
     def read_tokens(self, path):
@@ -115,13 +111,21 @@ class Reader:
             target.append(EOS_ID)
             yield source, target
 
+    def read_samples_tokens(self, path):
+        """
+        Read sample of path's data
+        :param path:
+        :return: generate list
+        """
+        for source_words, target_words in self.read_samples_by_string(path):
+            target = target_words
+            target.append(EOS_TOKEN)
+            yield source_words, target
+
     def build_dataset(self, path):
-        dataset = [[] for _ in self.config.buckets]
-        # Copy the data set for different dropouts
-        for _ in range(self.dataset_copies):
-            for source, target in self.read_samples(path):
-                for bucket_id, (source_size, target_size) in enumerate(self.config.buckets):
-                    if len(source) < source_size and len(target) < target_size:
-                        dataset[bucket_id].append([source, target])
-                        break
-        return dataset
+        print('Read data, path:{0}'.format(path))
+        sources, targets = [], []
+        for source, target in self.read_samples_tokens(path):
+            sources.append(source)
+            targets.append(target)
+        return sources, targets

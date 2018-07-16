@@ -14,12 +14,11 @@ class FCEReader(Reader):
     DROPOUT_TOKENS = {"a", "an", "the", "'ll", "'s", "'m", "'ve"}
     REPLACEMENTS = {"there": "their", "their": "there", "then": "than", "than": "then"}
 
-    def __init__(self, config, train_path=None, token_2_id=None,
-                 dropout_prob=0.25, replacement_prob=0.25, dataset_copies=2):
+    def __init__(self, train_path=None, token_2_id=None,
+                 dropout_prob=0.25, replacement_prob=0.25):
         super(FCEReader, self).__init__(
-            config, train_path=train_path, token_2_id=token_2_id,
-            special_tokens=[PAD_TOKEN, GO_TOKEN, EOS_TOKEN, FCEReader.UNKNOWN_TOKEN],
-            dataset_copies=dataset_copies)
+            train_path=train_path, token_2_id=token_2_id,
+            special_tokens=[PAD_TOKEN, GO_TOKEN, EOS_TOKEN, FCEReader.UNKNOWN_TOKEN])
         self.dropout_prob = dropout_prob
         self.replacement_prob = replacement_prob
         self.UNKNOWN_ID = self.token_2_id[FCEReader.UNKNOWN_TOKEN]
@@ -33,19 +32,6 @@ class FCEReader(Reader):
                     break
                 source = line_src.lower()[5:].strip().split()
                 target = line_dst.lower()[5:].strip().split()
-                if self.config.enable_special_error:
-                    new_source = []
-                    for token in source:
-                        # Random dropout words from the input
-                        dropout_token = (token in FCEReader.DROPOUT_TOKENS and
-                                         random.random() < self.dropout_prob)
-                        replace_token = (token in FCEReader.REPLACEMENTS and
-                                         random.random() < self.replacement_prob)
-                        if replace_token:
-                            new_source.append(FCEReader.REPLACEMENTS[source])
-                        elif not dropout_token:
-                            new_source.append(token)
-                    source = new_source
                 yield source, target
 
     def unknown_token(self):
@@ -68,11 +54,10 @@ class CGEDReader(Reader):
     """
     UNKNOWN_TOKEN = 'UNK'
 
-    def __init__(self, config, train_path=None, token_2_id=None, dataset_copies=2):
+    def __init__(self, train_path=None, token_2_id=None):
         super(CGEDReader, self).__init__(
-            config, train_path=train_path, token_2_id=token_2_id,
-            special_tokens=[PAD_TOKEN, GO_TOKEN, EOS_TOKEN, CGEDReader.UNKNOWN_TOKEN],
-            dataset_copies=dataset_copies)
+            train_path=train_path, token_2_id=token_2_id,
+            special_tokens=[PAD_TOKEN, GO_TOKEN, EOS_TOKEN, CGEDReader.UNKNOWN_TOKEN])
         self.UNKNOWN_ID = self.token_2_id[CGEDReader.UNKNOWN_TOKEN]
 
     def read_samples_by_string(self, path):
@@ -98,3 +83,12 @@ class CGEDReader(Reader):
                     if line and len(line) > 5:
                         yield line.lower()[5:].strip().split()
                 i += 1
+
+    @staticmethod
+    def read_vocab(input_texts):
+        vocab = set()
+        for line in input_texts:
+            for char in line:
+                if char not in vocab:
+                    vocab.add(char)
+        return sorted(list(vocab))
