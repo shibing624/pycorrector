@@ -50,6 +50,7 @@ def save_preds(preds, test_ids, X_test, ids_word_dict,
             for j in range(len(sent_ids)):
                 if sent_ids[j] != 0:
                     label.append(preds[i][j])
+            print(label)
             continue_error = False
             has_error = False
             current_error = 0
