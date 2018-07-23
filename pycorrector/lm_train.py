@@ -9,15 +9,15 @@ import jieba
 
 def parse():
     parser = argparse.ArgumentParser(description = 'this is for tokenize file with one sentence in each line')
-    parser.add_argument('-i','--input_file', #required = True,
+    parser.add_argument('-i','--input_file', required = True,
                         help = 'file to be tokenized')
-    parser.add_argument('-o','--output_file', #required = True,
+    parser.add_argument('-o','--output_file', required = True,
                         help = 'file to store tokenized setence')
     parser.add_argument('-p','--parallel', default = 4, type = int,
                         help = 'tokenize file in parallel or not')
     parser.add_argument('-d','--dict',
                         help = 'load extra dictionary')
-    parser.add_argument('-c',c'--token_char', default = False,
+    parser.add_argument('-c','--token_char', default = False,
                         help = 'character-level tokenize sentence or not')
     return parser.parse_args()
 
@@ -42,16 +42,15 @@ def char_tokenize(args):
     file_out.close()
 
 def main():
-    if sys.argv[1][0] == "-":
+    if len(sys.argv) != 1 and sys.argv[1][0] != "-":
+        sys.stdout.write(" ".join(jieba.cut(sys.argv[1])) + "\n")
+    else:
         args = parse()
 
         if args.token_char:
             char_tokenize(args)
         else:  
             tokenize(args)
-
-    else:
-        sys.stdout.write(" ".join(jieba.cut(sys.argv[1])) + "\n")
 
 if __name__ == "__main__":
     main()
