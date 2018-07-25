@@ -3,6 +3,7 @@
 # Brief: corrector with spell and stroke
 import codecs
 import os
+import pdb
 
 from pypinyin import lazy_pinyin
 
@@ -50,7 +51,8 @@ def load_same_pinyin(path, sep='\t'):
                 key_char = parts[0]
                 same_pron_same_tone = set(list(parts[1]))
                 same_pron_diff_tone = set(list(parts[2]))
-                value = same_pron_same_tone.union(same_pron_diff_tone)
+                # value = same_pron_same_tone.union(same_pron_diff_tone)
+                value = set(list("".join(parts)))
                 if len(key_char) > 1 or not value:
                     continue
                 result[key_char] = value
@@ -87,6 +89,7 @@ if os.path.exists(same_pinyin_model_path):
 else:
     default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
     same_pinyin = load_same_pinyin(same_pinyin_text_path)
+    # pdb.set_trace()
     dump_pkl(same_pinyin, same_pinyin_model_path)
 
 # 形似字
@@ -156,6 +159,9 @@ def _generate_items(word, fraction=1):
     candidates_1_order = []
     candidates_2_order = []
     candidates_3_order = []
+
+    # pdb.set_trace()
+
     # same pinyin word
     candidates_1_order.extend(get_confusion_word_set(word))
     # same pinyin char
@@ -170,6 +176,13 @@ def _generate_items(word, fraction=1):
         # same last pinyin
         confusion = [word[:-1] + i for i in get_confusion_char_set(word[-1]) if i]
         candidates_2_order.extend(confusion)
+
+        # # both char are wrong
+        # confusion = [i + word[2: -1] + j for i in get_confusion_char_set(word[0]) if i \
+        #                                  for j in get_confusion_char_set(word[-1]) if j]
+        # candidates_2_order.extend(confusion)
+
+
         if len(word) > 2:
             # same mid char pinyin
             confusion = [word[0] + i + word[2:] for i in get_confusion_char_set(word[1])]
@@ -188,6 +201,7 @@ def _generate_items(word, fraction=1):
     confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
     confusion_sorted = sorted(confusion_word_list, key=lambda k: \
         get_frequency(k), reverse=True)
+
     return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
 
@@ -264,7 +278,11 @@ def correct(sentence):
     """
     detail = []
     maybe_error_ids = get_sub_array(detect(sentence))
-    # print('maybe_error_ids:', maybe_error_ids)
+
+    ######################
+    # pdb.set_trace()
+    ######################
+
     # 取得字词对应表
     index_char_dict = dict()
     for index in maybe_error_ids:
@@ -274,6 +292,7 @@ def correct(sentence):
         else:
             # 词
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
+
     for index, item in index_char_dict.items():
         # 字词纠错
         sentence, detail_word = _correct_item(sentence, index, item)

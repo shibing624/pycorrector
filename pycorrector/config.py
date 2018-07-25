@@ -20,15 +20,15 @@ same_stroke_text_path = 'data/same_stroke.txt'
 same_stroke_model_path = 'data/same_stroke.pkl'
 
 # language model path
-#language_model_path = 'data/kenlm/people_chars_lm.klm'
+# language_model_path = 'data/kenlm/people_chars_lm.klm'
 #language_model_path = 'data/kenlm/people2014corpus_chars.klm'
 #language_model_path = 'data/kenlm/people2014corpus_words.klm'
-#language_model_path = 'data/kenlm/lm_nlpcc.klm'
-language_model_path = 'data/kenlm/lm_nlpcc_char.klm'
+# language_model_path = 'data/kenlm/lm_nlpcc.klm'
+#language_model_path = 'data/kenlm/lm_nlpcc_char.klm'
 #language_model_path = 'data/kenlm/combined_char.klm'
-#language_model_path = 'data/kenlm/lm_nlpcc_bigdict.klm'
+# language_model_path = 'data/kenlm/lm_nlpcc_bigdict.klm'
 #language_model_path = 'data/kenlm/people2014_char.klm'
-
+language_model_path = 'data/kenlm/news.klm'
 
 
 

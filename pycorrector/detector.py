@@ -4,7 +4,9 @@
 import codecs
 import kenlm
 import os
+import pdb
 import sys
+sys.path.append("../")
 
 import numpy as np
 
@@ -78,7 +80,7 @@ def get_frequency(word):
     return word_freq.get(word, 0)
 
 
-def _get_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
+def _get_maybe_error_index(scores, ratio=0.6745, threshold=0.5):
     """
     取疑似错字的位置，通过平均绝对离差（MAD）
     :param scores: np.array
@@ -96,6 +98,11 @@ def _get_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
     # 打平
     scores = scores.flatten()
     maybe_error_indices = np.where((y_score > threshold) & (scores < median))
+
+    ######################
+    # pdb.set_trace()
+    ######################
+
     # 取全部疑似错误字的index
     return list(maybe_error_indices[0])
 
@@ -116,6 +123,11 @@ def detect(sentence):
         if word not in PUNCTUATION_LIST and word not in word_freq.keys():
             for i in range(begin_idx, end_idx):
                 maybe_error_indices.add(i)
+                
+                ######################
+                # pdb.set_trace()
+                ######################
+
     # 语言模型检测疑似错字
     ngram_avg_scores = []
     try:
@@ -135,6 +147,11 @@ def detect(sentence):
         # 取拼接后的ngram平均得分
         sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
         maybe_error_char_indices = _get_maybe_error_index(sent_scores)
+
+        ######################
+        # pdb.set_trace()
+        ######################
+
         # 合并字、词错误
         maybe_error_indices |= set(maybe_error_char_indices)
     except IndexError as ie:
@@ -146,26 +163,27 @@ def detect(sentence):
 
 
 if __name__ == '__main__':
-    sent = '少先队员因该为老人让坐'
+    # sent = '少先队员因该为老人让坐'
     # sent = '机七学习是人工智能领遇最能体现智能的一个分知'
+    sent = '天明到厨房去拿啤酒跟絣杆'
     error_list = detect(sent)
     print(error_list)
 
     sent_chars = [sent[i] for i in error_list]
     print(sent_chars)
 
-    from pycorrector.utils.text_utils import segment, tokenize
+    # from pycorrector.utils.text_utils import segment, tokenize
 
-    print(get_ngram_score(segment(sent)))
-    print(get_ppl_score(segment(sent)))
+    # print(get_ngram_score(segment(sent)))
+    # print(get_ppl_score(segment(sent)))
 
-    print(get_ngram_score(list(sent), mode=trigram_char))
-    print(get_ppl_score(list(sent), mode=trigram_char))
+    # print(get_ngram_score(list(sent), mode=trigram_char))
+    # print(get_ppl_score(list(sent), mode=trigram_char))
 
-    sent = '少先队员应该为老人让座'
-    print(detect(sent))
-    print(get_ngram_score(segment(sent)))
-    print(get_ppl_score(segment(sent)))
+    # sent = '天明到厨房去拿啤酒跟絣杆'
+    # print(detect(sent))
+    # print(get_ngram_score(segment(sent)))
+    # print(get_ppl_score(segment(sent)))
 
-    print(get_ngram_score(list(sent), mode=trigram_char))
-    print(get_ppl_score(list(sent), mode=trigram_char))
+    # print(get_ngram_score(list(sent), mode=trigram_char))
+    # print(get_ppl_score(list(sent), mode=trigram_char))
