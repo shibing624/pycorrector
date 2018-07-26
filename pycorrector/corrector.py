@@ -4,6 +4,7 @@
 import codecs
 import os
 import pdb
+from collections import defaultdict
 
 from pypinyin import lazy_pinyin
 
@@ -66,7 +67,7 @@ def load_same_stroke(path, sep=','):
     :param sep:
     :return:
     """
-    result = dict()
+    result = defaultdict(set)
     if not os.path.exists(path):
         default_logger.debug("file not exists:", path)
         return result
@@ -76,7 +77,8 @@ def load_same_stroke(path, sep=','):
             parts = line.strip().split(sep)
             if parts and len(parts) > 1:
                 for i, c in enumerate(parts):
-                    result[c] = set(list(parts[:i] + parts[i + 1:]))
+                    result[c].add(c)
+                    result[c] |= set(list(parts[:i] + parts[i + 1:]))
     return result
 
 
@@ -173,10 +175,13 @@ def _generate_items(word, fraction=1):
         # same first pinyin
         confusion = [i + word[1:] for i in get_confusion_char_set(word[0]) if i]
         candidates_2_order.extend(confusion)
+
+        # print(candidates_2_order)
         # same last pinyin
         confusion = [word[:-1] + i for i in get_confusion_char_set(word[-1]) if i]
         candidates_2_order.extend(confusion)
 
+        # print(candidates_2_order)
         # # both char are wrong
         # confusion = [i + word[2: -1] + j for i in get_confusion_char_set(word[0]) if i \
         #                                  for j in get_confusion_char_set(word[-1]) if j]
@@ -195,6 +200,11 @@ def _generate_items(word, fraction=1):
             # same last word pinyin
             confusion_word = [word[0] + i for i in get_confusion_word_set(word[1:])]
             candidates_1_order.extend(confusion_word)
+
+
+    # #####################
+    # pdb.set_trace()
+    # #####################
 
     # add all confusion word list
     confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
@@ -248,6 +258,11 @@ def _correct_item(sentence, idx, item):
         return corrected_sent, []
     # 取得所有可能正确的词
     maybe_error_items = _generate_items(item)
+
+    # #####################
+    # pdb.set_trace()
+    # #####################
+
     if not maybe_error_items:
         return corrected_sent, []
     ids = idx.split(',')
@@ -279,9 +294,9 @@ def correct(sentence):
     detail = []
     maybe_error_ids = get_sub_array(detect(sentence))
 
-    ######################
+    # #####################
     # pdb.set_trace()
-    ######################
+    # #####################
 
     # 取得字词对应表
     index_char_dict = dict()
@@ -296,6 +311,7 @@ def correct(sentence):
     for index, item in index_char_dict.items():
         # 字词纠错
         sentence, detail_word = _correct_item(sentence, index, item)
+        # print(detail_word)
         if detail_word:
             detail.append(detail_word)
     return sentence, detail
