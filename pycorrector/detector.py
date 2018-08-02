@@ -41,14 +41,14 @@ def load_word_freq_dict(path):
 
 
 # 字频统计
-word_freq_path = os.path.join(pwd_path, config.word_freq_path)
-word_freq_model_path = os.path.join(pwd_path, config.word_freq_model_path)
-if os.path.exists(word_freq_model_path):
-    word_freq = load_pkl(word_freq_model_path)
+word_dict_path = os.path.join(pwd_path, config.word_dict_path)
+word_dict_model_path = os.path.join(pwd_path, config.word_dict_model_path)
+if os.path.exists(word_dict_model_path):
+    word_freq = load_pkl(word_dict_model_path)
 else:
-    default_logger.debug('load word freq from text file:', word_freq_path)
-    word_freq = load_word_freq_dict(word_freq_path)
-    dump_pkl(word_freq, word_freq_model_path)
+    default_logger.debug('load word freq from text file:', word_dict_path)
+    word_freq = load_word_freq_dict(word_dict_path)
+    dump_pkl(word_freq, word_dict_model_path)
 
 
 def get_ngram_score(chars, mode=trigram_char):
@@ -99,7 +99,8 @@ def _get_maybe_error_index(scores, ratio=0.6745, threshold=0.5):
     scores = scores.flatten()
     maybe_error_indices = np.where((y_score > threshold) & (scores < median))
 
-    ######################
+    # ######################
+    # print(y_score)
     # pdb.set_trace()
     ######################
 
@@ -118,15 +119,18 @@ def detect(sentence):
 
     tokens = tokenize(sentence)
 
+    # #####################
+    # print(tokens)
+    # pdb.set_trace()
+    # #####################
+
     # 未登录词加入疑似错误字典
     for word, begin_idx, end_idx in tokens:
         if word not in PUNCTUATION_LIST and word not in word_freq.keys():
             for i in range(begin_idx, end_idx):
                 maybe_error_indices.add(i)
                 
-                ######################
-                # pdb.set_trace()
-                ######################
+
 
     # 语言模型检测疑似错字
     ngram_avg_scores = []
@@ -148,9 +152,11 @@ def detect(sentence):
         sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
         maybe_error_char_indices = _get_maybe_error_index(sent_scores)
 
-        ######################
+        # #####################
+        # print(maybe_error_char_indices)
+        # print([sentence[i] for i in maybe_error_char_indices])
         # pdb.set_trace()
-        ######################
+        # #####################
 
         # 合并字、词错误
         maybe_error_indices |= set(maybe_error_char_indices)
@@ -159,6 +165,36 @@ def detect(sentence):
         pass
     except Exception as e:
         print("detect error, sentence:", sentence, e)
+
+
+    ####################
+    # print(tokens)
+    # print(maybe_error_indices)
+    # print([sentence[i] for i in maybe_error_indices])
+    # # pdb.set_trace()
+    ####################
+
+    ##########################################
+    # maybe_error_indices = sorted(maybe_error_indices)
+
+    # maybe_error_indices_in_token = []
+    # for idx in sorted(maybe_error_indices):
+    #     for word, begin_idx, end_idx in tokens:
+    #         if begin_idx <= idx < end_idx and \
+    #            [begin_idx, end_idx] not in maybe_error_indices_in_token:
+    #             if maybe_error_indices_in_token and maybe_error_indices_in_token[-1][-1] >= begin_idx:
+    #                 maybe_error_indices_in_token[-1][-1] = end_idx
+    #             else:
+    #                 maybe_error_indices_in_token.append([begin_idx, end_idx])
+
+    # # print(tokenize('真户秃'))
+    # print(maybe_error_indices_in_token)
+    # pdb.set_trace()
+
+    ##########################################
+
+
+    # return maybe_error_indices_in_token
     return sorted(maybe_error_indices)
 
 

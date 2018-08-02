@@ -6,21 +6,41 @@ import os
 import codecs
 import pdb
 sys.path.append('../')
-import difflib
-from collections import defaultdict
 
-file = codecs.open('../tests/correction.txt', 'rb', encoding = 'utf-8').readlines()
-dic  = codecs.open('data/same_pinyin.txt', 'w+', encoding = 'utf-8').readlines()
+from pycorrector.corrector import load_same_pinyin
 
-dict_ = defaultdict(set)
+new_char = codecs.open('../sighan8_test/sighan8_result/correction.txt', \
+                       'rb', encoding = 'utf-8').readlines()
+old_char = codecs.open('data/same_stroke.txt',   \
+                       'rb', encoding = 'utf-8').readlines()
 
+set_stroke  = [set(i[:-1].split(',')) for i in old_char]
+dict_pinyin = load_same_pinyin('data/same_pinyin.txt')
 
-# print(file[-5:])
-for line in file:
-    print(line)
+new_file = codecs.open('data/same_stroke.txt', 'w+', encoding = 'utf-8')
+
+for line in new_char:
     wrong, right = line.split()
 
     for i in range(len(wrong)):
         if wrong[i] != right[i]:
-            dict_[wrong[i]].add(right[i])
-print(dict_)
+            if wrong[i] not in dict_pinyin or right[i] not in dict_pinyin[wrong[i]]:
+                flag = 0
+                for sets in set_stroke:
+                    if wrong[i] in sets:
+                        sets.add(right[i])
+                        flag = 1
+
+                    elif right[i] in sets:
+                        sets.add(wrong[i])
+                        flag = 1
+
+                if flag == 0:
+                    set_stroke.append(set([wrong[i], right[i]]))
+
+
+for sets in set_stroke:
+    new_file.write(','.join(list(sets)) + '\n')
+
+new_file.close()
+
