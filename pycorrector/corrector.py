@@ -88,8 +88,9 @@ def load_same_stroke(path, sep=','):
             parts = line.strip().split(sep)
             if parts and len(parts) > 1:
                 for i, c in enumerate(parts):
-                    result[c].add(c)
-                    result[c] |= set(list(parts[:i] + parts[i + 1:]))
+                    # result[c].add(c)
+                    # result[c] |= set(list(parts[:i] + parts[i + 1:]))
+                    result[c] |= set(parts)
     return result
 
 cn_char_set = load_char_dict(char_dict_path)
@@ -465,11 +466,11 @@ def _correct_item(sentence, idx, item):
     #                      k: get_ppl_score(list(before + k + after), mode=trigram_char) \
     #                         + factor * count_diff(item, k))
 
-    
+
     # #####################
     # print(maybe_error_items)
-    print(corrected_item)
-    pdb.set_trace()
+    # print(corrected_item)
+    # pdb.set_trace()
     # #####################
     wrongs, rights, begin_idx, end_idx = [], [], [], []
     if corrected_item != item:
@@ -505,11 +506,11 @@ def correct(sentence):
                                           get_sub_array(detect(sentence)))
     # maybe_error_ids = get_valid_sub_array(sentence, detect(sentence))
 
-    ####################
-    print('maybe_error_ids : ', maybe_error_ids)
-    print([sentence[i[0]:i[1]] for i in maybe_error_ids])
-    pdb.set_trace()
-    ####################
+    # ####################
+    # print('maybe_error_ids : ', maybe_error_ids)
+    # print([sentence[i[0]:i[1]] for i in maybe_error_ids])
+    # pdb.set_trace()
+    # ####################
     # ##################################################################
     # detect_time = time.time()
     # print("detect time: --- %s seconds ---" % (detect_time - start_time))
