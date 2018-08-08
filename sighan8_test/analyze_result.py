@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 #
-
-import re
 import pdb
 import argparse
 from codecs import open

@@ -25,7 +25,6 @@ from pycorrector.utils.text_utils import tokenize
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 char_dict_path = os.path.join(pwd_path, config.char_dict_path)
-word_dict_path = os.path.join(pwd_path, config.word_dict_path)
 
 default_logger = get_logger(__file__)
 
@@ -96,14 +95,15 @@ def load_same_stroke(path, sep=','):
 cn_char_set = load_char_dict(char_dict_path)
 
 # # word dictionary
-cn_word_set = load_word_dict(word_dict_path)
-# word_dict_model_path = os.path.join(pwd_path, config.word_dict_model_path)
-# if os.path.exists(word_dict_model_path):
-#     cn_word_set = load_pkl(word_dict_model_path)
-# else:
-#     default_logger.debug('load word dict from text file:', word_dict_model_path)
-#     cn_word_set = load_word_dict(word_dict_path)
-#     dump_pkl(cn_word_set, word_dict_model_path)
+# cn_word_set = load_word_dict(word_dict_path)
+word_dict_text_path = os.path.join(pwd_path, config.word_dict_path)
+word_dict_model_path = os.path.join(pwd_path, config.word_dict_model_path)
+if os.path.exists(word_dict_model_path):
+    cn_word_set = load_pkl(word_dict_model_path)
+else:
+    default_logger.debug('load word dict from text file:', word_dict_model_path)
+    cn_word_set = load_word_dict(word_dict_text_path)
+    dump_pkl(cn_word_set, word_dict_model_path)
 
 
 # similar pronuciation
@@ -196,6 +196,8 @@ def _generate_items(sentence, idx, word, fraction=1):
     candidates_2_order = []
     candidates_3_order = []
 
+    word_dict1 = open('../pycorrector/data/nlpccdata/char/y.txt', 'rb', encoding = 'utf-8').read()
+    word_dict2 = open('../pycorrector/data/360wan-utf8.dict', 'rb', encoding = 'utf-8').read()
 
     candidates_1_order.extend(get_confusion_word_set(word))
 
@@ -317,8 +319,7 @@ def _generate_items(sentence, idx, word, fraction=1):
     # add all confusion word list
     confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
     confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
-    confusion_sorted = sorted(confusion_word_list, key=lambda k: \
-        get_frequency(k), reverse=True)
+    confusion_sorted = sorted(confusion_word_list, key=lambda k: get_frequency(k), reverse=True)
 
     # #####################
     # print(confusion_word_set)
@@ -374,7 +375,8 @@ def get_valid_sub_array(sentence, sub_array_list):
     for sub_array in sub_array_list:
         valid_sub_array_detail = []
         if len(sub_array) == 1:
-            valid_array_detail.append([sub_array[0], sub_array[0]])
+            if is_chinese(sentence[sub_array[0]]):
+                valid_array_detail.append([sub_array[0], sub_array[0]])
         else:
             for i in range(sub_array[0], sub_array[1]):
                 if is_chinese(sentence[i]):
@@ -389,119 +391,88 @@ def get_valid_sub_array(sentence, sub_array_list):
     return [[sub[0], sub[-1] + 1] for sub in valid_array_detail]
 
 
+def count_diff(str1, str2):
+    # # assuming len(str1) == len(str2)
+    count = 0
+    if len(str1) != len(str2):
+        print(str1)
+        print(str2)
+        pdb.set_trace()
+    for i in range(len(str1)):
+        if str1[i] != str2[i]:
+            count += 1
+    return count
 
-def _correct_item(sentence, idx, item):
-    """
-    纠正错误，逐词处理
-    :param sentence:
-    :param idx:
-    :param item:
-    :return: corrected word 修正的词语
-    """
+def _correct(sentence, sub_sents, factor1 = 5, factor2 = 5):
 
-    #################################################################
-    cor_start_time = time.time()
-    #################################################################
+    detail = []
+    cands   = []
 
-    corrected_sent = sentence
-    if not is_chinese_string(item):
+    for idx, item in sub_sents:
+
+        maybe_error_items = _generate_items(sentence, idx, item)
+
+        if not maybe_error_items:
+            continue
+        ids = idx.split(',')
+        begin_id = int(ids[0])
+        end_id = int(ids[-1]) if len(ids) > 1 else int(ids[0]) + 1
+        before = sentence[:begin_id]
+        after = sentence[end_id:]
+
+        # ###################
         # print(item)
-        return corrected_sent, []
-    # 取得所有可能正确的词
-    maybe_error_items = _generate_items(sentence, idx, item)
+        # pdb.set_trace()
+        # ###################
 
-    ##################################################################
-    get_cand_time = time.time()
-    # print("getting candidate time : --- %s seconds ---" % (get_cand_time - cor_start_time))
-    # ##################################################################
+        base_score = get_ppl_score(list(before + item + after), mode=trigram_char) \
+                                + factor1 * count_diff(item, item)
+        min_score  = base_score
+        corrected_item = item
+        for candidate in maybe_error_items:
+            score = get_ppl_score(list(before + candidate + after), mode=trigram_char) \
+                                + factor1 * count_diff(item, candidate)
+            if score < min_score:
+                corrected_item = candidate
+                min_score = score
 
-    # #####################
-    # print(maybe_error_items)
+        delta_score = base_score - min_score
+ 
+        cands.append([idx, corrected_item, delta_score])
+
+    cands.sort(key = lambda x: x[2], reverse = True)
+    # ###################
+    # print(cands)
+    # print(get_ppl_score(list(sentence)))
     # pdb.set_trace()
-    # #####################
+    # ###################
 
-    if not maybe_error_items:
-        return corrected_sent, []
-    ids = idx.split(',')
-    begin_id = int(ids[0])
-    end_id = int(ids[-1]) if len(ids) > 1 else int(ids[0]) + 1
-    before = sentence[:begin_id]
-    after = sentence[end_id:]
+    for i, [idx, corrected_item, delta_score] in enumerate(cands):
+        if delta_score > i * factor2:
+            idx = [int(idx.split(",")[0]), int(idx.split(",")[1])]
+            detail.append(list(zip([sentence[idx[0]:idx[1]]], \
+                                   [corrected_item],          \
+                                   [idx[0]],                  \
+                                   [idx[1]])))  
+            
+            sentence = sentence[: idx[0]] + \
+                       corrected_item +     \
+                       sentence[idx[1]:]
+        else:
+            break
 
-    def count_diff(str1, str2):
-        # # assuming len(str1) == len(str2)
-        count = 0
-        if len(str1) != len(str2):
-            print(str1)
-            print(str2)
-            pdb.set_trace()
-        for i in range(len(str1)):
-            if str1[i] != str2[i]:
-                count += 1
-        return count
-
-    ######### !!!!!!!!!!!!! ###############
-    factor = 5
-    # ####################
-    # # print(maybe_error_items)
-    # print(item)
-    # pdb.set_trace()
-    # ####################
-
-    #########################################
-    # # edit cost
-    #########################################
-    min_score = get_ppl_score(list(before + item + after), mode=trigram_char) \
-                            + factor * count_diff(item, item)
-    corrected_item = item
-    for k in maybe_error_items:
-        score = get_ppl_score(list(before + k + after), mode=trigram_char) \
-                            + factor * count_diff(item, k)
-        if score < min_score:
-            corrected_item = k
-            min_score = score
-
-    # corrected_item = min(maybe_error_items,
-    #                      key=lambda \
-    #                      k: get_ppl_score(list(before + k + after), mode=trigram_char) \
-    #                         + factor * count_diff(item, k))
-
-
-    # #####################
-    # print(maybe_error_items)
-    # print(corrected_item)
-    # pdb.set_trace()
-    # #####################
-    wrongs, rights, begin_idx, end_idx = [], [], [], []
-    if corrected_item != item:
-        corrected_sent = before + corrected_item + after
-        # default_logger.debug('pred:', item, '=>', corrected_item)
-        wrongs.append(item)
-        rights.append(corrected_item)
-        begin_idx.append(begin_id)
-        end_idx.append(end_id)
-    detail = list(zip(wrongs, rights, begin_idx, end_idx))
-
-    ##################################################################
-    # eval_cand_time = time.time()
-    # print("evaluating candidate time : --- %s seconds ---" % (eval_cand_time - get_cand_time))
-    ##################################################################
-
-    return corrected_sent, detail
-
+    return sentence, detail
 
 
 def correct(sentence):
-    """
 
-    """
+    detail = []
     ##################################################################
     # start_time = time.time()
     # print("--- %s seconds ---" % start_time)
     ##################################################################
 
-    detail = []
-    # pdb.set_trace()
+
     maybe_error_ids = get_valid_sub_array(sentence, 
                                           get_sub_array(detect(sentence)))
     # maybe_error_ids = get_valid_sub_array(sentence, detect(sentence))
@@ -526,27 +497,14 @@ def correct(sentence):
 
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
 
-    for index, item in index_char_dict.items():
 
 
-        # #####################
-        # print(index_char_dict)
-        # pdb.set_trace()
-        # #####################
-
-        sentence, detail_word = _correct_item(sentence, index, item)
-        # print(detail_word)
-        if detail_word:
-            detail.append(detail_word)
+    sentence, detail = _correct(sentence, index_char_dict.items())
 
     # ##################################################################
     # predict_time = time.time()
     # # print("correct time : --- %s seconds ---" % (predict_time - detect_time))
     # ##################################################################
 
-    # #####################
-    # print(index_char_dict)
-    # pdb.set_trace()
-    # #####################
 
     return sentence, detail

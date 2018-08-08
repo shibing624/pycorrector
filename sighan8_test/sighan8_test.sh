@@ -20,7 +20,7 @@ java -jar sighan8csc_release1.0/Tool/sighan15csc.jar \
      -t sighan8csc_release1.0/Test/SIGHAN15_CSC_TestTruth.txt \
      -o sighan8_result/sighan15_evaluation_test.txt
 
-echo "---------------------  Runtime was `expr $end_time - $start_time` s.  ----------------\n\n
+echo "---------------------  Runtime was `expr $end_time - $start_time` s.  ----------------
  $(cat sighan8_result/sighan15_evaluation_test.txt)" \
         > sighan8_result/sighan15_evaluation_test.txt 
 
