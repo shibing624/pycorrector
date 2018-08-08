@@ -135,7 +135,7 @@ def detect(sentence):
     # 语言模型检测疑似错字
     ngram_avg_scores = []
     try:
-        for n in [2, 3]:
+        for n in [1, 2, 3]:
             scores = []
             for i in range(len(sentence) - n + 1):
                 word = sentence[i:i + n]
@@ -145,6 +145,7 @@ def detect(sentence):
             for _ in range(n - 1):
                 scores.insert(0, scores[0])
                 scores.append(scores[-1])
+
             avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
             ngram_avg_scores.append(avg_scores)
 
@@ -167,34 +168,6 @@ def detect(sentence):
         print("detect error, sentence:", sentence, e)
 
 
-    ####################
-    # print(tokens)
-    # print(maybe_error_indices)
-    # print([sentence[i] for i in maybe_error_indices])
-    # # pdb.set_trace()
-    ####################
-
-    ##########################################
-    # maybe_error_indices = sorted(maybe_error_indices)
-
-    # maybe_error_indices_in_token = []
-    # for idx in sorted(maybe_error_indices):
-    #     for word, begin_idx, end_idx in tokens:
-    #         if begin_idx <= idx < end_idx and \
-    #            [begin_idx, end_idx] not in maybe_error_indices_in_token:
-    #             if maybe_error_indices_in_token and maybe_error_indices_in_token[-1][-1] >= begin_idx:
-    #                 maybe_error_indices_in_token[-1][-1] = end_idx
-    #             else:
-    #                 maybe_error_indices_in_token.append([begin_idx, end_idx])
-
-    # # print(tokenize('真户秃'))
-    # print(maybe_error_indices_in_token)
-    # pdb.set_trace()
-
-    ##########################################
-
-
-    # return maybe_error_indices_in_token
     return sorted(maybe_error_indices)
 
 

@@ -440,13 +440,13 @@ def _correct_item(sentence, idx, item):
                 count += 1
         return count
 
-
+    ######### !!!!!!!!!!!!! ###############
     factor = 5
-    # #####################
-    # print(maybe_error_items)
+    # ####################
+    # # print(maybe_error_items)
     # print(item)
     # pdb.set_trace()
-    # #####################
+    # ####################
 
     #########################################
     # # edit cost
@@ -506,11 +506,11 @@ def correct(sentence):
                                           get_sub_array(detect(sentence)))
     # maybe_error_ids = get_valid_sub_array(sentence, detect(sentence))
 
-    # ####################
+    # ###################
     # print('maybe_error_ids : ', maybe_error_ids)
     # print([sentence[i[0]:i[1]] for i in maybe_error_ids])
     # pdb.set_trace()
-    # ####################
+    # ###################
     # ##################################################################
     # detect_time = time.time()
     # print("detect time: --- %s seconds ---" % (detect_time - start_time))

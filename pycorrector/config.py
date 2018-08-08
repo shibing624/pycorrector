@@ -23,9 +23,16 @@ same_stroke_model_path = 'data/same_stroke.pkl'
 # language model path
 
 
-# language_model_path = 'data/kenlm/nlpcc_token_new.klm'
 # language_model_path = 'data/kenlm/nlpcc_char.klm'
+
 language_model_path = 'data/kenlm/nlpcc_char_5gram.klm'
+# language_model_path = 'data/kenlm/nlpcc_char_7gram.klm'
+
+
+# reverse lm
+# word_dict_path = 'data/rev_360wan-utf8.dict'
+# language_model_path = 'data/kenlm/rev_nlpcc_char.klm'
+
 
 
 
