@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 #
-import re
-import pdb
 import argparse
 from codecs import open
 from tqdm import tqdm
 import sys
 sys.path.append("../")
-
 from pycorrector.corrector import correct
 
 def parse():
@@ -39,8 +36,9 @@ def eval_sighan(input_path, output_path, verbose=False):
         output_path: path of predicted sentences     form: (pid)\tcorrected_sentence
         verbose:     print the error and corrected sentences during running or not
     '''
-    sys.stderr.write('sighan15_test : start correcting sentences\n')
-    sys.stderr.write('error_sentences_path : ' + input_path + '\n')
+    
+    sys.stderr.write('sighan15_test            : start correcting sentences......\n')
+    sys.stderr.write('error_sentences_path     : ' + input_path + '\n')
     sys.stderr.write('corrected_sentences_path : ' + output_path + '\n')
     sighan_data = open(input_path, 'rb', encoding = 'utf-8')
     corr_file   = open(output_path, 'w+', encoding = 'utf-8')
@@ -66,7 +64,7 @@ def eval_sighan(input_path, output_path, verbose=False):
     corr_file.close()
     sighan_data.close()
 
-    sys.stderr.write('sighan15_test : finishing correcting sentences\n')
+    sys.stderr.write('sighan15_test            : finishing correcting sentences\n')
 
 
 def format_result(err_sent_path, cor_sent_path, result_path):

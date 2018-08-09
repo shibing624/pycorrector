@@ -5,8 +5,8 @@ import codecs
 import os
 import pdb
 import time
-from collections import defaultdict
 
+from collections import defaultdict
 from pypinyin import lazy_pinyin
 
 import pycorrector.config as config
@@ -36,13 +36,16 @@ def load_char_dict(path):
             char_dict += w.strip()
     return char_dict
 
+def load_2char_dict(path):
+    text = codecs.open(path, 'rb', encoding = 'utf-8').read()
+    return set(text.split('\n'))
+
 def load_word_dict(path):
     word_dict = set()
     word_dict_file = codecs.open(path, 'rb', encoding = 'utf-8').readlines()
     for line in word_dict_file:
         word_dict.add(line.split()[0])
     return word_dict
-
 
 def load_same_pinyin(path, sep='\t'):
     """
@@ -69,7 +72,6 @@ def load_same_pinyin(path, sep='\t'):
                 result[key_char] = value
     return result
 
-
 def load_same_stroke(path, sep=','):
     """
     加载形似字
@@ -93,9 +95,9 @@ def load_same_stroke(path, sep=','):
     return result
 
 cn_char_set = load_char_dict(char_dict_path)
+two_char_dict = load_2char_dict('../pycorrector/data/char_two_set.txt')
 
 # # word dictionary
-# cn_word_set = load_word_dict(word_dict_path)
 word_dict_text_path = os.path.join(pwd_path, config.word_dict_path)
 word_dict_model_path = os.path.join(pwd_path, config.word_dict_model_path)
 if os.path.exists(word_dict_model_path):
@@ -104,7 +106,6 @@ else:
     default_logger.debug('load word dict from text file:', word_dict_model_path)
     cn_word_set = load_word_dict(word_dict_text_path)
     dump_pkl(cn_word_set, word_dict_model_path)
-
 
 # similar pronuciation
 same_pinyin_text_path = os.path.join(pwd_path, config.same_pinyin_text_path)
@@ -126,7 +127,6 @@ else:
     default_logger.debug('load same stroke from text file:', same_stroke_text_path)
     same_stroke = load_same_stroke(same_stroke_text_path)
     dump_pkl(same_stroke, same_stroke_model_path)
-
 
 def get_same_pinyin(char):
     """
@@ -166,14 +166,14 @@ def known(words):
 def get_confusion_char_set(c):
     confusion_char_set = get_same_pinyin(c).union(get_same_stroke(c))
     if not confusion_char_set:
-        confusion_char_set = set()
+        confusion_char_set = {c}
     return confusion_char_set
+
 
 def get_confusion_two_char_set(word):
     return set([char_1 + char_2 for char_1 in get_confusion_char_set(word[0]) \
                                 for char_2 in get_confusion_char_set(word[1]) \
                                 if char_1 + char_2 in cn_word_set])
-
 
 
 def get_confusion_word_set(word):
@@ -183,11 +183,6 @@ def get_confusion_word_set(word):
         if lazy_pinyin(candidate_word) == lazy_pinyin(word):
             # same pinyin
             confusion_word_set.add(candidate_word)
-    # #####################
-    # print(word)
-    # print(confusion_word_set)
-    # pdb.set_trace()
-    # #####################
     return confusion_word_set
 
 
@@ -195,9 +190,6 @@ def _generate_items(sentence, idx, word, fraction=1):
     candidates_1_order = []
     candidates_2_order = []
     candidates_3_order = []
-
-    word_dict1 = open('../pycorrector/data/nlpccdata/char/y.txt', 'rb', encoding = 'utf-8').read()
-    word_dict2 = open('../pycorrector/data/360wan-utf8.dict', 'rb', encoding = 'utf-8').read()
 
     candidates_1_order.extend(get_confusion_word_set(word))
 
@@ -235,12 +227,15 @@ def _generate_items(sentence, idx, word, fraction=1):
                     result.append(input_str)
             return result
 
-        def combine_two_confusion_char(word):
+        def combine_two_confusion_char(sentence, idx, word):
             # # assuming there is only two char to change
             # # definitely not the final version, need to be fixed!!!!
             result = []
             for i in range(len(word) - 1):
                 for j in range(i + 1,len(word)):
+                    # for i_word in get_confusion_char_set(word[i]):
+                    #     for j_word in get_confusion_char_set(word[j]):
+                    #         if i == 0 
                     result.extend([word[: i] + i_word + word[i + 1: j] + j_word + word[j + 1:] \
                                    for i_word in get_confusion_char_set(word[i]) if i_word \
                                    for j_word in get_confusion_char_set(word[j]) if j_word])
@@ -250,35 +245,57 @@ def _generate_items(sentence, idx, word, fraction=1):
             # based on token and bigram model
             ##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@######
             # # TO DO ##
+            # still not consider change two connected chars both
             ##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@######
+
+            cands_tmp = [['',0]]
             result = []
-            tokens = tokenize(sentence)
+            ids = list(range(int(idx.split(',')[0]), int(idx.split(',')[1])))
 
-            def get_token(i, tokens):
-                for token, b_idx, e_idx in tokens:
-                    if b_idx <= i < e_idx:
-                        return (token, b_idx, e_idx)
+            edit_distance = 2
 
-            idx = list(range(int(idx.split(',')[0]), int(idx.split(',')[1])))
+            while cands_tmp:
 
-            conf_tokens = sorted(set([get_token(i, tokens) for i in idx]), \
-                                                    key = lambda x: x[1])
+                if len(cands_tmp[0][0]) == len(word):
+                    result.append(cands_tmp[0][0])
 
+                elif cands_tmp[0][1] == edit_distance:
+                    result.append(cands_tmp[0][0] + word[len(cands_tmp[0][0]):])
 
-            print(conf_tokens)
-            # print(tokens)
-            print(idx, word)
-            pdb.set_trace()
+                else:
+                    target_idx = ids[len(cands_tmp[0][0])]
+                    for char_cand in get_confusion_char_set(sentence[target_idx]):
 
+                        if target_idx == 0:
+                            if char_cand + sentence[target_idx + 1] not in two_char_dict:
+                                continue
 
+                        elif target_idx == len(sentence) - 1:
+                            if (len(cands_tmp[0][0]) == 0 and\
+                               sentence[target_idx - 1] + char_cand not in two_char_dict) or\
+                               (len(cands_tmp[0][0]) != 0 and\
+                               cands_tmp[0][0][-1] + char_cand not in two_char_dict):
+                                continue
 
+                        elif char_cand + sentence[target_idx + 1] not in two_char_dict and \
+                             ((len(cands_tmp[0][0]) == 0 and\
+                             sentence[target_idx - 1] + char_cand not in two_char_dict) or\
+                             (len(cands_tmp[0][0]) != 0 and\
+                             cands_tmp[0][0][-1] + char_cand not in two_char_dict)):
+                            continue
+                        
+                        if char_cand == sentence[target_idx]:
+                            cands_tmp.append([cands_tmp[0][0] + char_cand, cands_tmp[0][1]])
+                        else:
+                            cands_tmp.append([cands_tmp[0][0] + char_cand, cands_tmp[0][1] + 1])
 
+                cands_tmp.pop(0)
 
             return result
 
 
-        # confusion = confusion_set(sentence, idx, word)
-        confusion  = combine_two_confusion_char(word)
+        confusion = confusion_set(sentence, idx, word)
+        # confusion  = combine_two_confusion_char(word)
         # confusion = combine_confusion_char(word, '', [], 0)
         candidates_2_order.extend(confusion)
 
@@ -307,22 +324,13 @@ def _generate_items(sentence, idx, word, fraction=1):
         #     confusion_word = [word[0] + i for i in get_confusion_word_set(word[1:])]
         #     candidates_1_order.extend(confusion_word)
 
-
-        # #####################
-        # print(candidates_2_order)
-        # print(word, len(candidates_2_order))
-        # pdb.set_trace()
-        # ####################
-
-
-
     # add all confusion word list
     confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
     confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
     confusion_sorted = sorted(confusion_word_list, key=lambda k: get_frequency(k), reverse=True)
 
     # #####################
-    # print(confusion_word_set)
+    # print(len(confusion_word_set))
     # # print(confusion_sorted)
     # pdb.set_trace()
     # #####################
@@ -467,10 +475,10 @@ def _correct(sentence, sub_sents, factor1 = 5, factor2 = 5):
 def correct(sentence):
 
     detail = []
-    ##################################################################
+    # #################################################################
     # start_time = time.time()
     # print("--- %s seconds ---" % start_time)
-    ##################################################################
+    # #################################################################
 
 
     maybe_error_ids = get_valid_sub_array(sentence, 
@@ -480,7 +488,7 @@ def correct(sentence):
     # ###################
     # print('maybe_error_ids : ', maybe_error_ids)
     # print([sentence[i[0]:i[1]] for i in maybe_error_ids])
-    # pdb.set_trace()
+    # # pdb.set_trace()
     # ###################
     # ##################################################################
     # detect_time = time.time()
@@ -503,7 +511,7 @@ def correct(sentence):
 
     # ##################################################################
     # predict_time = time.time()
-    # # print("correct time : --- %s seconds ---" % (predict_time - detect_time))
+    # print("correct time : --- %s seconds ---" % (predict_time - detect_time))
     # ##################################################################
 
 
