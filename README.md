@@ -69,7 +69,7 @@ print(corrected_sent, detail)
 ## 参考
 
 1.  [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
-2. [《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]](http://www.aclweb.org/anthology/W/W14/W14-6835.pdf）
+2. [《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]](http://www.aclweb.org/anthology/W/W14/W14-6835.pdf)
 3. [《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]](http://www.aclweb.org/anthology/O/O13/O13-1005.pdf)
 4. [《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]](http://aclweb.org/anthology/W14-6822)
 5. [《Neural Language Correction with Character-Based Attention》[Ziang Xie, 2016]](https://arxiv.org/pdf/1603.09727.pdf)
