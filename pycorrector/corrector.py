@@ -205,28 +205,6 @@ def _generate_items(sentence, idx, word, fraction=1):
 
     if len(word) > 1:
 
-        def combine_confusion_char(word, input_str, result, depth):
-            # # go over all cases (quite slow when len(word) >=3!!!!)
-            if depth != len(word):
-                for char in get_confusion_char_set(word[depth]):
-                    result = combine_confusion_char(word, input_str + char, result, depth + 1)
-            elif len(word) == 2:
-                if input_str in cn_word_set:
-                    result.append(input_str)
-            elif len(word) > 2:
-                flag = True
-                tokens = tokenize(input_str)
-
-                if len(tokens) == len(word):
-                    flag = False
-                else:
-                    for token, b_idx, e_idx in tokens:
-                        if len(token) > 1 and token not in cn_word_set:
-                            flag = False
-                if flag:
-                    result.append(input_str)
-            return result
-
         def combine_two_confusion_char(sentence, idx, word):
             # # assuming there is only two char to change
             # # definitely not the final version, need to be fixed!!!!
@@ -242,25 +220,22 @@ def _generate_items(sentence, idx, word, fraction=1):
             return result
 
         def confusion_set(sentence, idx, word):
-            # based on token and bigram model
-            ##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@######
-            # # TO DO ##
-            # still not consider change two connected chars both
-            ##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@######
+            # maximum number of change char is set up by 'edit_distance'
+
+            # the maximum edit-distance
+            edit_distance = 2
 
             cands_tmp = [['',0]]
-            result = []
+            result = set()
             ids = list(range(int(idx.split(',')[0]), int(idx.split(',')[1])))
-
-            edit_distance = 2
 
             while cands_tmp:
 
                 if len(cands_tmp[0][0]) == len(word):
-                    result.append(cands_tmp[0][0])
+                    result.add(cands_tmp[0][0])
 
                 elif cands_tmp[0][1] == edit_distance:
-                    result.append(cands_tmp[0][0] + word[len(cands_tmp[0][0]):])
+                    result.add(cands_tmp[0][0] + word[len(cands_tmp[0][0]):])
 
                 else:
                     target_idx = ids[len(cands_tmp[0][0])]
@@ -271,17 +246,11 @@ def _generate_items(sentence, idx, word, fraction=1):
                                 continue
 
                         elif target_idx == len(sentence) - 1:
-                            if (len(cands_tmp[0][0]) == 0 and\
-                               sentence[target_idx - 1] + char_cand not in two_char_dict) or\
-                               (len(cands_tmp[0][0]) != 0 and\
-                               cands_tmp[0][0][-1] + char_cand not in two_char_dict):
+                            if sentence[target_idx - 1] + char_cand not in two_char_dict:
                                 continue
 
                         elif char_cand + sentence[target_idx + 1] not in two_char_dict and \
-                             ((len(cands_tmp[0][0]) == 0 and\
-                             sentence[target_idx - 1] + char_cand not in two_char_dict) or\
-                             (len(cands_tmp[0][0]) != 0 and\
-                             cands_tmp[0][0][-1] + char_cand not in two_char_dict)):
+                             sentence[target_idx - 1] + char_cand not in two_char_dict:
                             continue
                         
                         if char_cand == sentence[target_idx]:
@@ -291,7 +260,16 @@ def _generate_items(sentence, idx, word, fraction=1):
 
                 cands_tmp.pop(0)
 
-            return result
+
+            for i in range(len(word) - 1):
+                for char_i in get_confusion_char_set(word[i]):
+                    for char_j in get_confusion_char_set(word[i + 1]):
+                        if char_i + char_j in two_char_dict:
+                            result.add(word[:i] + char_i + char_j + word[i + 2:])
+
+
+
+            return list(result)
 
 
         confusion = confusion_set(sentence, idx, word)
