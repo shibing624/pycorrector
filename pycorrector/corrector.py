@@ -392,7 +392,7 @@ def count_diff(str1, str2):
     return count
 
 
-def correct_stat(sentence, sub_sents, factor1 = 5, factor2 = 5):
+def correct_stat(sentence, sub_sents):
 
     detail = []
     cands   = []
@@ -413,6 +413,7 @@ def correct_stat(sentence, sub_sents, factor1 = 5, factor2 = 5):
         # print(item)
         # pdb.set_trace()
         # ###################
+        factor1 = 4.5
 
         base_score = get_ppl_score(list(before + item + after), mode=trigram_char) \
                                 + factor1 * count_diff(item, item)
@@ -430,7 +431,7 @@ def correct_stat(sentence, sub_sents, factor1 = 5, factor2 = 5):
         cands.append([idx, corrected_item, delta_score])
 
     cands.sort(key = lambda x: x[2], reverse = True)
-
+    factor2 = 9
     for i, [idx, corrected_item, delta_score] in enumerate(cands):
         if delta_score > i * factor2:
             idx = [int(idx.split(",")[0]), int(idx.split(",")[1])]
@@ -469,7 +470,7 @@ def correct_rule(sentence, sub_sents):
 
     return sentence, detail
 
-def correct(sentence, factor1 = 5, factor2 = 5):
+def correct(sentence):
 
     detail = []
     # #################################################################
@@ -500,7 +501,7 @@ def correct(sentence, factor1 = 5, factor2 = 5):
 
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
 
-    sentence, detail_stat = correct_stat(sentence, index_char_dict.items(), factor1, factor2)
+    sentence, detail_stat = correct_stat(sentence, index_char_dict.items())
     detail += detail_stat
 
     # sentence, detail_rule = correct_rule(sentence, index_char_dict.items())
