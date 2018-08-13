@@ -70,6 +70,13 @@ def load_same_pinyin(path, sep='\t'):
                 if len(key_char) > 1 or not value:
                     continue
                 result[key_char] = value
+
+    # these pairs would be dealed with rule
+    result['他'] -= {'她', '它'}
+    result['她'] -= {'他', '它'}
+    result['它'] -= {'她', '他'}
+    result['影'] -= {'音'}
+
     return result
 
 def load_same_stroke(path, sep=','):
@@ -110,13 +117,13 @@ else:
 # similar pronuciation
 same_pinyin_text_path = os.path.join(pwd_path, config.same_pinyin_text_path)
 same_pinyin_model_path = os.path.join(pwd_path, config.same_pinyin_model_path)
-if os.path.exists(same_pinyin_model_path):
-    same_pinyin = load_pkl(same_pinyin_model_path)
-else:
-    default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
-    same_pinyin = load_same_pinyin(same_pinyin_text_path)
-    # pdb.set_trace()
-    dump_pkl(same_pinyin, same_pinyin_model_path)
+same_pinyin = load_same_pinyin(same_pinyin_text_path)
+# if os.path.exists(same_pinyin_model_path):
+#     same_pinyin = load_pkl(same_pinyin_model_path)
+# else:
+#     default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
+#     same_pinyin = load_same_pinyin(same_pinyin_text_path)
+#     dump_pkl(same_pinyin, same_pinyin_model_path)
 
 # similar shape
 same_stroke_text_path = os.path.join(pwd_path, config.same_stroke_text_path)
@@ -191,13 +198,7 @@ def _generate_items(sentence, idx, word, fraction=1):
     candidates_2_order = []
     candidates_3_order = []
 
-    candidates_1_order.extend(get_confusion_word_set(word))
-
-    # #####################
-    # if candidates_1_order:
-    #     print(candidates_1_order)
-    #     pdb.set_trace()
-    # #####################
+    # candidates_1_order.extend(get_confusion_word_set(word))
 
     if len(word) == 1:
         confusion = [i for i in get_confusion_char_set(word[0]) if i]
@@ -229,6 +230,7 @@ def _generate_items(sentence, idx, word, fraction=1):
             result = set()
             ids = list(range(int(idx.split(',')[0]), int(idx.split(',')[1])))
 
+            # # change individual char
             while cands_tmp:
 
                 if len(cands_tmp[0][0]) == len(word):
@@ -260,7 +262,7 @@ def _generate_items(sentence, idx, word, fraction=1):
 
                 cands_tmp.pop(0)
 
-
+            # # change connected two chars
             for i in range(len(word) - 1):
                 for char_i in get_confusion_char_set(word[i]):
                     for char_j in get_confusion_char_set(word[i + 1]):
@@ -274,7 +276,6 @@ def _generate_items(sentence, idx, word, fraction=1):
 
         confusion = confusion_set(sentence, idx, word)
         # confusion  = combine_two_confusion_char(word)
-        # confusion = combine_confusion_char(word, '', [], 0)
         candidates_2_order.extend(confusion)
 
 
@@ -345,6 +346,7 @@ def get_sub_array(nums):
             ret.append([c])
     return ret
 
+
 def get_valid_sub_array(sentence, sub_array_list):
     """
     this function is to get rid of puctuation in detected string
@@ -389,7 +391,8 @@ def count_diff(str1, str2):
             count += 1
     return count
 
-def _correct(sentence, sub_sents, factor1 = 5, factor2 = 5):
+
+def correct_stat(sentence, sub_sents, factor1 = 5, factor2 = 5):
 
     detail = []
     cands   = []
@@ -427,11 +430,6 @@ def _correct(sentence, sub_sents, factor1 = 5, factor2 = 5):
         cands.append([idx, corrected_item, delta_score])
 
     cands.sort(key = lambda x: x[2], reverse = True)
-    # ###################
-    # print(cands)
-    # print(get_ppl_score(list(sentence)))
-    # pdb.set_trace()
-    # ###################
 
     for i, [idx, corrected_item, delta_score] in enumerate(cands):
         if delta_score > i * factor2:
@@ -446,18 +444,38 @@ def _correct(sentence, sub_sents, factor1 = 5, factor2 = 5):
                        sentence[idx[1]:]
         else:
             break
+    # ###################
+    # print(detail)
+    # pdb.set_trace()
+    # ###################
+    return sentence, detail
+
+def correct_rule(sentence, sub_sents):
+    detail = []
+
+    # # rule for '他她它'('he, she, it')
+    dict_hsi  = {
+                '他' : {'爸','父','爷','哥','弟','兄','子','叔','伯','他','爹','先生'},
+                '她' : {'妈','母','奶','姐','妹','姑姑','婶','姊','妯','娌','她','婆','姨','太太','夫人','娘'},
+                '它' : {'它'}
+                }
+    for i in range(len(sentence)):
+        if sentence[i] in dict_hsi.keys():
+            for key in dict_hsi.keys():
+                if set(list(sentence[:i])) & dict_hsi[key]:
+                    sentence = sentence[:i] + key + sentence[i + 1:]
+                    detail.append([(sentence[i], key, i, i + 1)])
+                    continue
 
     return sentence, detail
 
-
-def correct(sentence):
+def correct(sentence, factor1 = 5, factor2 = 5):
 
     detail = []
     # #################################################################
     # start_time = time.time()
     # print("--- %s seconds ---" % start_time)
     # #################################################################
-
 
     maybe_error_ids = get_valid_sub_array(sentence, 
                                           get_sub_array(detect(sentence)))
@@ -473,7 +491,6 @@ def correct(sentence):
     # print("detect time: --- %s seconds ---" % (detect_time - start_time))
     # ##################################################################
 
-
     index_char_dict = dict()
     for index in maybe_error_ids:
         if len(index) == 1:
@@ -483,14 +500,16 @@ def correct(sentence):
 
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
 
+    sentence, detail_stat = correct_stat(sentence, index_char_dict.items(), factor1, factor2)
+    detail += detail_stat
 
-
-    sentence, detail = _correct(sentence, index_char_dict.items())
+    # sentence, detail_rule = correct_rule(sentence, index_char_dict.items())
+    # detail += detail_rule
 
     # ##################################################################
     # predict_time = time.time()
     # print("correct time : --- %s seconds ---" % (predict_time - detect_time))
     # ##################################################################
-
+    
 
     return sentence, detail

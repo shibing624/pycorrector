@@ -3,13 +3,11 @@
 set -eu
 
 
-
 start_time=`date +%s`
 
 
 # # correct
-python sighan8_test.py
-
+python sighan8_test.py -e sighan8csc_release1.0/Test/SIGHAN15_CSC_TestInput_mod.txt
 
 
 end_time=`date +%s`
@@ -17,7 +15,7 @@ end_time=`date +%s`
 # # evaluate results
 java -jar sighan8csc_release1.0/Tool/sighan15csc.jar \
      -i sighan8_result/corrected_result.txt \
-     -t sighan8csc_release1.0/Test/SIGHAN15_CSC_TestTruth.txt \
+     -t sighan8csc_release1.0/Test/SIGHAN15_CSC_TestTruth_mod.txt \
      -o sighan8_result/sighan15_evaluation_test.txt
 
 echo "---------------------  Runtime was `expr $end_time - $start_time` s.  ----------------
