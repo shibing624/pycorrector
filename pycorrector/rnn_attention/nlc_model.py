@@ -359,10 +359,7 @@ class NLCModel(object):
         return outputs[0], None, outputs[1:]
 
     def decode_beam(self, session, encoder_output, beam_size=8):
-        input_feed = {}
-        input_feed[self.encoder_output] = encoder_output
-        input_feed[self.keep_prob] = 1.
-        input_feed[self.beam_size] = beam_size
+        input_feed = {self.encoder_output: encoder_output, self.keep_prob: 1., self.beam_size: beam_size}
 
         output_feed = [self.beam_output, self.beam_scores]
         outputs = session.run(output_feed, input_feed)
