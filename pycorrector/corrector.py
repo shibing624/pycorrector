@@ -5,6 +5,7 @@ import codecs
 import os
 import pdb
 import time
+import math
 
 from collections import defaultdict
 from pypinyin import lazy_pinyin
@@ -433,7 +434,9 @@ def correct_stat(sentence, sub_sents):
         cands.append([idx, corrected_item, delta_score])
 
     cands.sort(key = lambda x: x[2], reverse = True)
+
     factor2 = 9
+
     for i, [idx, corrected_item, delta_score] in enumerate(cands):
         if delta_score > i * factor2:
             idx = [int(idx.split(",")[0]), int(idx.split(",")[1])]
@@ -485,7 +488,7 @@ def correct_rule(sentence, sub_sents):
     #                 detail.append([(sentence[i], key, i, i + 1)])
     #                 continue
 
-    # # rule for '的地得'(" 's ")
+    # # rule for '的地得'
     if set(sentence) & {'的', '地', '得'}:
         old_sentence = sentence
 
@@ -497,10 +500,29 @@ def correct_rule(sentence, sub_sents):
         for i in range(len(word)):
             if word[i] in {'的', '地', '得'} and 1 < i < len(word) - 1:
                 # '地'
-                if (tag[i + 1] == 'v' or word[i + 1] == '被') and tag[i - 1] in {'d','ad','l'} and len(word[i - 1]) > 1:
-                    if i > 2 and tag[i - 2] in {'n','r','vn','an'}:
+                if (tag[i + 1] == 'v' or \
+                    word[i + 1] == '被' or \
+                    tag[i + 1: i + 4] == ['p','n','v'] or \
+                    tag[i + 1: i + 5] == ['p','n','f','v']) and \
+                    (tag[i - 1] in {'i','d','ad','l'} or word[i-1] in {'一样','那么'}) and len(word[i - 1]) > 1 :
+                    if i > 2 and tag[i - 2] in {'n','r','vn','an','d','x'}:
                         if word[i + 1] not in {'做法','看法','想法','行为','存在'}:
-                            sentence = sentence[:len(''.join(word[:i]))] + '地' + sentence[len(''.join(word[:i])) + 1:]
+                            sentence = sentence[:len(''.join(word[:i]))] + \
+                                       '地' +                              \
+                                       sentence[len(''.join(word[:i])) + 1:]
+
+                if tag[i + 1] == 'a' and \
+                   (tag[i - 1] in {'d'} or word[i-1] in {'一样','那么'}) and \
+                   (tag[i + 2] == 'x' or tuple(tag[i+2:i+4]) in {('y','x'),('ul','x')}):
+                    sentence = sentence[:len(''.join(word[:i]))] + \
+                               '地' +                              \
+                               sentence[len(''.join(word[:i])) + 1:]
+
+                if tag[i - 1] == 'd' and tag[i + 1] in {'r','a'} \
+                   and i < len(word) - 2 and tag[i + 2] == 'v':
+                    sentence = sentence[:len(''.join(word[:i]))] + \
+                               '地' +                              \
+                               sentence[len(''.join(word[:i])) + 1:]                    
 
                 # '得'
                 if tag[i - 1] == 'v' and tag[i + 1] in {'a','d'}:
@@ -536,16 +558,31 @@ def correct_rule(sentence, sub_sents):
                     sentence = sentence[:len(''.join(word[:i]))] +       \
                                '的' +                                    \
                                sentence[len(''.join(word[:i])) + 1:] 
+
+                if tag[i - 1] == 'n' and tag[i + 1] == 'n':
+                    sentence = sentence[:len(''.join(word[:i]))] +       \
+                               '的' +                                    \
+                               sentence[len(''.join(word[:i])) + 1:]                    
+
+            if word[i] in {'真得','真地'}:
+                sentence = sentence[:len(''.join(word[:i]))] +        \
+                           '真的' +                                    \
+                           sentence[len(''.join(word[:i + 1])):]   
+
         for idx in range(len(sentence)):
             if sentence[idx] != old_sentence[idx]:
                 detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
 
+    # # rule for '啊阿'
+    if set(sentence) & {'阿'}:
+        old_sentence = sentence
+        for i in range(len(sentence)):
+            if sentence[i] == '阿' and not is_chinese(sentence[i + 1]):
+                sentence = sentence[:i] + '啊' + sentence[i + 1:]
 
-
-
-
-    # # rule for '那哪'
-    # # 目前还不能识别反问句
+        for idx in range(len(sentence)):
+            if sentence[idx] != old_sentence[idx]:
+                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
 
     # # 疑问代词：to suggest question
     ques_word = {'怎','什么','多少','谁', \
@@ -553,6 +590,7 @@ def correct_rule(sentence, sub_sents):
     # # 引导疑问句的词: to introduce a question
     intr_word = {'知道','想一想','无论','不管'} # to be added
 
+    # # rule for '那哪'           // 目前还不能识别反问句
     if set(sentence) & {'那', '哪'}:
         old_sentence = sentence
         # for idx in detect(sentence):

@@ -161,6 +161,9 @@ def detect(sentence):
 
     for i in range(len(tag)):
         if tag[i] in {'nz','nr','nt','ns'}:
+            if i > 0 and tag[i - 1] == 'd':
+                continue
+                
             if len(word[i]) > 1:
                 maybe_error_indices -= set(range(len(''.join(word[:i])), \
                                                  len(''.join(word[:i + 1]))))
