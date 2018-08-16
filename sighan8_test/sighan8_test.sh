@@ -27,7 +27,7 @@ echo "---------------------  Runtime was `expr $end_time - $start_time` s.  ----
 head -n 20 sighan8_result/sighan15_evaluation_test.txt 
 
 # # create a tmp file for read and compare result with ground truth
-python analyze_result.py 
+python tools/analyze_result.py 
 
 # # remove tmp file
 rm ../pycorrector/data/*.pkl

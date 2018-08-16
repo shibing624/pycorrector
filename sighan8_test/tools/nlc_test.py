@@ -6,7 +6,9 @@ import os
 import codecs
 import pdb
 
-cor_file = codecs.open('/Users/kun/xiaoI/opentool/Neural_Language_Correction/nlpcc_data/data/test_sighan8/test_sent.txt', 'rb' , encoding = 'utf-8').readlines()
+# cor_file = codecs.open('/Users/kun/xiaoI/opentool/Neural_Language_Correction/nlpcc_data/data/test_sighan8/test_sent.txt', 'rb' , encoding = 'utf-8').readlines()
+cor_file = codecs.open('test_sent.txt', 'rb' , encoding = 'utf-8').readlines()
+
 err_file = codecs.open('sighan8csc_release1.0/Test/SIGHAN15_CSC_TestInput.txt', 'rb', encoding = 'utf-8').readlines()
 result_file = codecs.open('sighan8_result/corrected_nlc_result.txt',   'w+', encoding = 'utf-8')
 

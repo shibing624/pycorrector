@@ -9,6 +9,8 @@ import time
 from collections import defaultdict
 from pypinyin import lazy_pinyin
 
+import jieba.posseg as pseg
+
 import pycorrector.config as config
 from pycorrector.detector import detect
 from pycorrector.detector import get_frequency
@@ -451,46 +453,147 @@ def correct_stat(sentence, sub_sents):
     # ###################
     return sentence, detail
 
+
+def get_sub_sent(idx, sentence):
+    begin_id = 0
+    end_id = 0
+    for i in range(idx,-1,-1):
+        if not is_chinese(sentence[i]):
+            begin_id = i
+            break
+    for i in range(idx, len(sentence)):
+        if not is_chinese(sentence[i]):
+            end_id = i
+            break
+    return [begin_id, end_id]
+
+
 def correct_rule(sentence, sub_sents):
     detail = []
 
     # # rule for '他她它'('he, she, it')
-    dict_hsi  = {
-                '他' : {'爸','父','爷','哥','弟','兄','子','叔','伯','他','爹','先生'},
-                '她' : {'妈','母','奶','姐','妹','姑姑','婶','姊','妯','娌','她','婆','姨','太太','夫人','娘'},
-                '它' : {'它'}
-                }
-    for i in range(len(sentence)):
-        if sentence[i] in dict_hsi.keys():
-            for key in dict_hsi.keys():
-                if set(list(sentence[:i])) & dict_hsi[key]:
-                    sentence = sentence[:i] + key + sentence[i + 1:]
-                    detail.append([(sentence[i], key, i, i + 1)])
+    # dict_hsi  = {
+    #             '他' : {'爸','父','爷','哥','弟','兄','子','叔','伯','他','爹','先生'},
+    #             '她' : {'妈','母','奶','姐','妹','姑姑','婶','姊','妯','娌','她','婆','姨','太太','夫人','娘'},
+    #             '它' : {'它'}
+    #             }
+    # for i in range(len(sentence)):
+    #     if sentence[i] in dict_hsi.keys():
+    #         for key in dict_hsi.keys():
+    #             if set(list(sentence[:i])) & dict_hsi[key]:
+    #                 sentence = sentence[:i] + key + sentence[i + 1:]
+    #                 detail.append([(sentence[i], key, i, i + 1)])
+    #                 continue
+
+    # # rule for '的地得'(" 's ")
+    if set(sentence) & {'的', '地', '得'}:
+        old_sentence = sentence
+
+        seg = pseg.lcut(sentence)
+        # # in the form of list of pair(w.word, w.flag)
+        word = [w.word for w in seg]
+        tag  = [w.flag for w in seg]
+
+        for i in range(len(word)):
+            if word[i] in {'的', '地', '得'} and 1 < i < len(word) - 1:
+                # '地'
+                if (tag[i + 1] == 'v' or word[i + 1] == '被') and tag[i - 1] in {'d','ad','l'} and len(word[i - 1]) > 1:
+                    if i > 2 and tag[i - 2] in {'n','r','vn','an'}:
+                        if word[i + 1] not in {'做法','看法','想法','行为','存在'}:
+                            sentence = sentence[:len(''.join(word[:i]))] + '地' + sentence[len(''.join(word[:i])) + 1:]
+
+                # '得'
+                if tag[i - 1] == 'v' and tag[i + 1] in {'a','d'}:
+                    if tag[i + 1] == 'a':
+                        if i > len(word) - 5:
+                            sentence = sentence[:len(''.join(word[:i]))] +   \
+                                       '得' +                                \
+                                       sentence[len(''.join(word[:i])) + 1:]
+                        elif word[i + 2] not in {'的', '地', '得'} or         \
+                             tag[i + 3] not in {'n','vn','r'}:
+                            sentence = sentence[:len(''.join(word[:i]))] +   \
+                                       '得' +                                \
+                                       sentence[len(''.join(word[:i])) + 1:]
+                    if tag[i + 1] == 'd':
+                        sentence = sentence[:len(''.join(word[:i]))] +       \
+                                   '得' +                                    \
+                                   sentence[len(''.join(word[:i])) + 1:]
+                if tag[i - 1] == 'a' and word[i + 1] == '多' and not is_chinese(word[i + 2]):
+                    sentence = sentence[:len(''.join(word[:i]))] +       \
+                               '得' +                                    \
+                               sentence[len(''.join(word[:i])) + 1:]
+
+                # for word '得到'
+                if tag[i - 1] in {'n','r','vn'} and word[i + 1] == '到':
+                    sentence = sentence[:len(''.join(word[:i]))] +       \
+                               '得' +                                    \
+                               sentence[len(''.join(word[:i])) + 1:]                                                            
+
+
+                # '的'
+                if tag[i - 1] == 'v' and (not is_chinese(word[i + 1]) or \
+                                  (i < len(word) - 2 and not is_chinese(word[i + 2]) and tag[i + 1] == 'y')):
+                    sentence = sentence[:len(''.join(word[:i]))] +       \
+                               '的' +                                    \
+                               sentence[len(''.join(word[:i])) + 1:] 
+        for idx in range(len(sentence)):
+            if sentence[idx] != old_sentence[idx]:
+                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
+
+
+
+
+
+    # # rule for '那哪'
+    # # 目前还不能识别反问句
+
+    # # 疑问代词：to suggest question
+    ques_word = {'怎','什么','多少','谁', \
+                 '可不可','是不是', '能不能','会不会'} # to be added
+    # # 引导疑问句的词: to introduce a question
+    intr_word = {'知道','想一想','无论','不管'} # to be added
+
+    if set(sentence) & {'那', '哪'}:
+        old_sentence = sentence
+        # for idx in detect(sentence):
+        for idx in range(len(sentence)):
+            if sentence[idx] in {'那', '哪'}:
+                if idx < len(sentence) - 1 and sentence[idx + 1] == '么':
+                    sentence = sentence[:idx] + '那' + sentence[idx + 1:]
                     continue
+                [sub_sent_b, sub_sent_e] = get_sub_sent(idx, sentence)
+                sub_sent = sentence[sub_sent_b: sub_sent_e + 1]
+
+                # question sentence
+                if sub_sent[-1] == '？':
+                    if True in [i in sub_sent for i in ques_word]:
+                        sentence = sentence[:idx] + '那' + sentence[idx + 1:]
+                    else:
+                        sentence = sentence[:idx] + '哪' + sentence[idx + 1:]
+
+                # # state sentence
+                else:
+                    if True in [i in sub_sent[:idx - sub_sent_b] for i in intr_word]:
+                        if True not in [i in sub_sent for i in ques_word]:
+                            sentence = sentence[:idx] + '哪' + sentence[idx + 1:]
+                    else:
+                        sentence = sentence[:idx] + '那' + sentence[idx + 1:]
+
+        for idx in range(len(sentence)):
+            if sentence[idx] != old_sentence[idx]:
+                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
+
 
     return sentence, detail
+
 
 def correct(sentence):
 
     detail = []
-    # #################################################################
-    # start_time = time.time()
-    # print("--- %s seconds ---" % start_time)
-    # #################################################################
 
     maybe_error_ids = get_valid_sub_array(sentence, 
                                           get_sub_array(detect(sentence)))
-    # maybe_error_ids = get_valid_sub_array(sentence, detect(sentence))
 
-    # ###################
-    # print('maybe_error_ids : ', maybe_error_ids)
-    # print([sentence[i[0]:i[1]] for i in maybe_error_ids])
-    # # pdb.set_trace()
-    # ###################
-    # ##################################################################
-    # detect_time = time.time()
-    # print("detect time: --- %s seconds ---" % (detect_time - start_time))
-    # ##################################################################
 
     index_char_dict = dict()
     for index in maybe_error_ids:
@@ -501,16 +604,12 @@ def correct(sentence):
 
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
 
+
     sentence, detail_stat = correct_stat(sentence, index_char_dict.items())
     detail += detail_stat
 
-    # sentence, detail_rule = correct_rule(sentence, index_char_dict.items())
-    # detail += detail_rule
+    sentence, detail_rule = correct_rule(sentence, index_char_dict.items())
+    detail += detail_rule
 
-    # ##################################################################
-    # predict_time = time.time()
-    # print("correct time : --- %s seconds ---" % (predict_time - detect_time))
-    # ##################################################################
-    
 
     return sentence, detail

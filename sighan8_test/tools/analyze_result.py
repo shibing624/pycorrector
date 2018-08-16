@@ -10,12 +10,11 @@ sys.path.append("../")
 
 def main():
     cor_sent    = open('sighan8_result/corrected_sentence.txt', 'rb', encoding = 'utf-8').readlines()
-    err_sent    = open('sighan8csc_release1.0/Test/SIGHAN15_CSC_TestInput.txt', 'rb', encoding = 'utf-8').readlines()
+    err_sent    = open('sighan8csc_release1.0/Test/SIGHAN15_CSC_TestInput_mod.txt', 'rb', encoding = 'utf-8').readlines()
     pred_change = open('sighan8_result/corrected_result.txt', 'rb', encoding = 'utf-8').readlines()
-    true_change = open('sighan8csc_release1.0/Test/SIGHAN15_CSC_TestTruth.txt', 'rb', encoding = 'utf-8').readlines()
+    true_change = open('sighan8csc_release1.0/Test/SIGHAN15_CSC_TestTruth_mod.txt', 'rb', encoding = 'utf-8').readlines()
 
     comp_file   = open('sighan8_result/result_compare.tmp', 'w+', encoding = 'utf-8')
-
     TP_file     = open('sighan8_result/result_tp.tmp', 'w+', encoding = 'utf-8')
     TN_file     = open('sighan8_result/result_tn.tmp', 'w+', encoding = 'utf-8')
     False_file  = open('sighan8_result/result_false.tmp', 'w+', encoding = 'utf-8')
