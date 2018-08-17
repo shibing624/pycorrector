@@ -79,6 +79,8 @@ def load_same_pinyin(path, sep='\t'):
     result['她'] -= {'他', '它'}
     result['它'] -= {'她', '他'}
     result['影'] -= {'音'}
+    result['车'] = result['扯']
+
 
     return result
 
@@ -385,17 +387,14 @@ def get_valid_sub_array(sentence, sub_array_list):
 def count_diff(str1, str2):
     # # assuming len(str1) == len(str2)
     count = 0
-    if len(str1) != len(str2):
-        print(str1)
-        print(str2)
-        pdb.set_trace()
     for i in range(len(str1)):
         if str1[i] != str2[i]:
             count += 1
+
     return count
 
 
-def correct_stat(sentence, sub_sents):
+def correct_stat(sentence, sub_sents, param_ec, param_gd):
 
     detail = []
     cands   = []
@@ -412,19 +411,20 @@ def correct_stat(sentence, sub_sents):
         before = sentence[:begin_id]
         after = sentence[end_id:]
 
+        base_score = get_ppl_score(list(before + item + after), mode=trigram_char)
+
         # ###################
         # print(item)
+        # # print(item)
         # pdb.set_trace()
         # ###################
-        factor1 = 4.5
 
-        base_score = get_ppl_score(list(before + item + after), mode=trigram_char) \
-                                + factor1 * count_diff(item, item)
         min_score  = base_score
+
         corrected_item = item
         for candidate in maybe_error_items:
             score = get_ppl_score(list(before + candidate + after), mode=trigram_char) \
-                                + factor1 * count_diff(item, candidate)
+                                + param_ec * count_diff(item, candidate) * math.log(base_score)
             if score < min_score:
                 corrected_item = candidate
                 min_score = score
@@ -435,10 +435,10 @@ def correct_stat(sentence, sub_sents):
 
     cands.sort(key = lambda x: x[2], reverse = True)
 
-    factor2 = 9
+    # param_gd = 9
 
     for i, [idx, corrected_item, delta_score] in enumerate(cands):
-        if delta_score > i * factor2:
+        if delta_score > i * param_gd * math.log(base_score):
             idx = [int(idx.split(",")[0]), int(idx.split(",")[1])]
             detail.append(list(zip([sentence[idx[0]:idx[1]]], \
                                    [corrected_item],          \
@@ -474,6 +474,8 @@ def get_sub_sent(idx, sentence):
 def correct_rule(sentence, sub_sents):
     detail = []
 
+    old_sentence = sentence
+
     # # rule for '他她它'('he, she, it')
     # dict_hsi  = {
     #             '他' : {'爸','父','爷','哥','弟','兄','子','叔','伯','他','爹','先生'},
@@ -490,7 +492,6 @@ def correct_rule(sentence, sub_sents):
 
     # # rule for '的地得'
     if set(sentence) & {'的', '地', '得'}:
-        old_sentence = sentence
 
         seg = pseg.lcut(sentence)
         # # in the form of list of pair(w.word, w.flag)
@@ -503,8 +504,12 @@ def correct_rule(sentence, sub_sents):
                 if (tag[i + 1] == 'v' or \
                     word[i + 1] == '被' or \
                     tag[i + 1: i + 4] == ['p','n','v'] or \
-                    tag[i + 1: i + 5] == ['p','n','f','v']) and \
-                    (tag[i - 1] in {'i','d','ad','l'} or word[i-1] in {'一样','那么'}) and len(word[i - 1]) > 1 :
+                    tag[i + 1: i + 5] == ['p','n','f','v']) \
+                    and \
+                    (tag[i - 1] in {'i','d','ad','l'} or \
+                    word[i-1] in {'一样','那么'}) \
+                    and \
+                    len(word[i - 1]) > 1 :
                     if i > 2 and tag[i - 2] in {'n','r','vn','an','d','x'}:
                         if word[i + 1] not in {'做法','看法','想法','行为','存在'}:
                             sentence = sentence[:len(''.join(word[:i]))] + \
@@ -518,8 +523,10 @@ def correct_rule(sentence, sub_sents):
                                '地' +                              \
                                sentence[len(''.join(word[:i])) + 1:]
 
-                if tag[i - 1] == 'd' and tag[i + 1] in {'r','a'} \
-                   and i < len(word) - 2 and tag[i + 2] == 'v':
+                if tag[i - 1] == 'd' and       \
+                   tag[i + 1] in {'r','a'} and \
+                   i < len(word) - 2 and       \
+                   tag[i + 2] == 'v':
                     sentence = sentence[:len(''.join(word[:i]))] + \
                                '地' +                              \
                                sentence[len(''.join(word[:i])) + 1:]                    
@@ -569,20 +576,11 @@ def correct_rule(sentence, sub_sents):
                            '真的' +                                    \
                            sentence[len(''.join(word[:i + 1])):]   
 
-        for idx in range(len(sentence)):
-            if sentence[idx] != old_sentence[idx]:
-                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
-
     # # rule for '啊阿'
     if set(sentence) & {'阿'}:
-        old_sentence = sentence
         for i in range(len(sentence)):
             if sentence[i] == '阿' and not is_chinese(sentence[i + 1]):
                 sentence = sentence[:i] + '啊' + sentence[i + 1:]
-
-        for idx in range(len(sentence)):
-            if sentence[idx] != old_sentence[idx]:
-                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
 
     # # 疑问代词：to suggest question
     ques_word = {'怎','什么','多少','谁', \
@@ -592,7 +590,6 @@ def correct_rule(sentence, sub_sents):
 
     # # rule for '那哪'           // 目前还不能识别反问句
     if set(sentence) & {'那', '哪'}:
-        old_sentence = sentence
         # for idx in detect(sentence):
         for idx in range(len(sentence)):
             if sentence[idx] in {'那', '哪'}:
@@ -617,15 +614,15 @@ def correct_rule(sentence, sub_sents):
                     else:
                         sentence = sentence[:idx] + '那' + sentence[idx + 1:]
 
-        for idx in range(len(sentence)):
-            if sentence[idx] != old_sentence[idx]:
-                detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
+    for idx in range(len(sentence)):
+        if sentence[idx] != old_sentence[idx]:
+            detail.append([old_sentence[idx], sentence[idx], idx, idx + 1])
 
 
     return sentence, detail
 
 
-def correct(sentence):
+def correct(sentence, param_ec = 1.4, param_gd = 2):
 
     detail = []
 
@@ -643,7 +640,7 @@ def correct(sentence):
             index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
 
 
-    sentence, detail_stat = correct_stat(sentence, index_char_dict.items())
+    sentence, detail_stat = correct_stat(sentence, index_char_dict.items(), param_ec, param_gd)
     detail += detail_stat
 
     sentence, detail_rule = correct_rule(sentence, index_char_dict.items())

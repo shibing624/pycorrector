@@ -2,10 +2,11 @@
 #!/usr/bin/env python
 #
 import argparse
-from codecs import open
-from tqdm import tqdm
 import sys
 sys.path.append("../")
+
+from codecs import open
+from tqdm import tqdm
 from pycorrector.corrector import correct
 
 def parse():
@@ -27,9 +28,15 @@ def parse():
     parser.add_argument('-v', '--correct_verbose',
                         default = False,
                         help = 'show the detail of correction or not')
+    parser.add_argument('--param_ec', type = float,
+                        default = 1.4,
+                        help = 'parameter for adjust the weight of edition cost')
+    parser.add_argument('--param_gd', type = float,
+                        default = 2,
+                        help = 'parameter for adjust the weight of global decision')
     return parser.parse_args()
 
-def eval_sighan(input_path, output_path, verbose=False):
+def eval_sighan(input_path, output_path, param_ec, param_gd, verbose=False):
     '''
     Input:
         input_path:  file of original sentences      form: (pid)\terror_sentence
@@ -46,20 +53,20 @@ def eval_sighan(input_path, output_path, verbose=False):
     if verbose:
         for line in sighan_data.readlines():
             pid, sentence = line.split('\t')
-            pred_sent, pred_detail = correct(sentence)
+            pred_sent, pred_detail = correct(sentence.strip(), param_ec, param_gd)
 
             sys.stderr.write('input sentence : ' + sentence)
             sys.stderr.write('pred sentence  : ' + pred_sent)
             sys.stderr.write('predict change : ' + ', '.join([i[0][0] + '-->' + i[0][1] \
                                        for i in pred_detail if i]) + '\n')
 
-            corr_file.write(pid + '\t' + pred_sent)
+            corr_file.write(pid + '\t' + pred_sent + '\n')
     else:
         for line in tqdm(sighan_data.readlines()):
             pid, sentence = line.split('\t')
-            pred_sent, pred_detail = correct(sentence)
+            pred_sent, pred_detail = correct(sentence.strip(), param_ec, param_gd)
 
-            corr_file.write(pid + '\t' + pred_sent)
+            corr_file.write(pid + '\t' + pred_sent + '\n')
 
     corr_file.close()
     sighan_data.close()
@@ -122,7 +129,9 @@ if __name__ == "__main__":
     args = parse()
 
     eval_sighan  (args.error_sentence, 
-                  args.corrected_sentence, 
+                  args.corrected_sentence,
+                  args.param_ec,
+                  args.param_gd,
                   args.correct_verbose)
 
     format_result(args.error_sentence, 
