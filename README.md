@@ -26,9 +26,14 @@
 
 ## 使用说明
 
+### 依赖
+pip3 install -r requirements.txt
+pip3 install git+https://www.github.com/keras-team/keras-contrib.git
+
+
 ### 安装
-* 全自动安装：pip install pycorrector 或者 pip3 install pycorrector 
-* 半自动安装：下载 https://github.com/shibing624/pycorrector, 解压缩并运行 python setup.py install
+* 全自动安装：pip3 install pycorrector
+* 半自动安装：下载 https://github.com/shibing624/pycorrector, 解压缩并运行 python3 setup.py install
 
 ### 纠错  
 使用示例:
