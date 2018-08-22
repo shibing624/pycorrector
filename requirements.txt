@@ -1,7 +1,4 @@
 numpy
 pypinyin
-kenlm==0.0.0
+kenlm
 jieba
-tensorflow>=1.2.1
-keras>=2.1.5
-keras_contrib
