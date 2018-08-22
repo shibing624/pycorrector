@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/env bash
+#
 # Author: XuMing <xuming624@qq.com>
 # Brief: corrector with spell and stroke
 import codecs
