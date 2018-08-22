@@ -96,8 +96,6 @@ def train():
     logging.getLogger().addHandler(file_handler)
 
     print(vars(FLAGS))
-    with open(os.path.join(FLAGS.train_dir, "flags.json"), 'w') as fout:
-        json.dump(FLAGS.__flags, fout)
 
     with tf.Session() as sess:
         logging.info("Creating %d layers of %d units." % (FLAGS.num_layers, FLAGS.size))
@@ -142,11 +140,9 @@ def train():
                 cost = cost / mean_length
 
                 if current_step % FLAGS.print_every == 0:
-                    logging.info(
-                        'epoch %d, iter %d, cost %f, exp_cost %f, grad norm %f, param norm %f, tps %f, '
-                        'length mean/std %f/%f' %
-                        (epoch, current_step, cost, exp_cost / exp_length, grad_norm, param_norm, tps, mean_length,
-                         std_length))
+                    logging.info('epoch %d, iter %d, cost %f, exp_cost %f, grad norm %f, param norm %f, tps %f, '
+                                 'length mean/std %f/%f' % (epoch, current_step, cost, exp_cost / exp_length, grad_norm,
+                                                            param_norm, tps, mean_length, std_length))
             epoch_toc = time.time()
 
             # Checkpoint

@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
+from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
 
 import pycorrector.rnn_attention.config as config
-from utils.text_utils import segment
+from pycorrector.utils.text_utils import segment
 
 
 def parse_xml_file(path):
     print('Parse data from %s' % path)
     data_list = []
-    with open(path, 'r', encoding='utf-8') as f:
-        dom_tree = minidom.parse(f)
+    dom_tree = minidom.parse(path)
     docs = dom_tree.documentElement.getElementsByTagName('DOC')
     for doc in docs:
         # Input the text
