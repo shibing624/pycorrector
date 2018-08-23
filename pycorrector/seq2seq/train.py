@@ -5,7 +5,7 @@
 import numpy as np
 
 from pycorrector.seq2seq import cged_config as config
-from pycorrector.seq2seq.corpus_reader import CGEDReader
+from pycorrector.seq2seq.corpus_reader import CGEDReader, save_word_dict, load_word_dict
 from pycorrector.seq2seq.seq2seq_model import create_model, callback, eval
 from pycorrector.utils.io_utils import get_logger
 
@@ -14,6 +14,8 @@ logger = get_logger(__name__)
 
 def train(train_path=None,
           save_model_path=None,
+          save_input_token_path=None,
+          save_target_token_path=None,
           batch_size=64,
           epochs=10,
           rnn_hidden_dim=200):
@@ -39,6 +41,10 @@ def train(train_path=None,
     input_token_index = dict([(char, i) for i, char in enumerate(input_characters)])
     target_token_index = dict([(char, i) for i, char in enumerate(target_characters)])
 
+    # save word dict
+    save_word_dict(input_token_index, save_input_token_path)
+    save_word_dict(target_token_index, save_target_token_path)
+
     encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_len, num_encoder_tokens), dtype='float32')
     decoder_input_data = np.zeros((len(input_texts), max_decoder_seq_len, num_decoder_tokens), dtype='float32')
     decoder_target_data = np.zeros((len(input_texts), max_decoder_seq_len, num_decoder_tokens), dtype='float32')
@@ -63,6 +69,7 @@ def train(train_path=None,
               batch_size=batch_size,
               epochs=epochs,
               callbacks=callbacks_list)
+    logger.info("Model save to " + save_model_path)
     logger.info("Training has finished.")
 
     eval(num_encoder_tokens, num_decoder_tokens, rnn_hidden_dim, input_token_index, target_token_index,
@@ -72,6 +79,8 @@ def train(train_path=None,
 if __name__ == "__main__":
     train(train_path=config.train_path,
           save_model_path=config.save_model_path,
+          save_input_token_path=config.input_vocab_path,
+          save_target_token_path=config.target_vocab_path,
           batch_size=config.batch_size,
           epochs=config.epochs,
           rnn_hidden_dim=config.rnn_hidden_dim)

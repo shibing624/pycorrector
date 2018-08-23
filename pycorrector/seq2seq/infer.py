@@ -8,18 +8,16 @@ from keras.layers import Input
 from keras.models import Model, load_model
 
 from pycorrector.seq2seq import cged_config as config
-from pycorrector.seq2seq.corpus_reader import GO_TOKEN
-from pycorrector.seq2seq.corpus_reader import CGEDReader
-from pycorrector.utils.io_utils import get_logger
-
+from pycorrector.seq2seq.corpus_reader import CGEDReader, load_word_dict
 from pycorrector.seq2seq.reader import EOS_TOKEN
+from pycorrector.utils.io_utils import get_logger
 
 logger = get_logger(__name__)
 
 
-def decode_sequence(model, rnn_hidden_dim,input_token_index,
-                    num_decoder_tokens, target_token_index,encoder_input_data,
-                    reverse_target_char_index, max_decoder_seq_length):
+def decode_sequence(model, rnn_hidden_dim, input_token_index,
+                    num_decoder_tokens, target_token_index, encoder_input_data,
+                    max_decoder_seq_length):
     # construct the encoder and decoder
     encoder_inputs = model.input[0]  # input_1
     encoder_outputs, state_h_enc, state_c_enc = model.layers[2].output  # lstm_1
@@ -88,43 +86,46 @@ def decode_sequence(model, rnn_hidden_dim,input_token_index,
 def infer(train_path=None,
           test_path=None,
           save_model_path=None,
+          save_input_token_path=None,
+          save_target_token_path=None,
           rnn_hidden_dim=200):
     data_reader = CGEDReader(train_path)
     input_texts, target_texts = data_reader.build_dataset(test_path)
 
-    input_characters = data_reader.read_vocab(input_texts)
-    target_characters = data_reader.read_vocab(target_texts)
-    num_encoder_tokens = len(input_characters)
-    num_decoder_tokens = len(target_characters)
     max_encoder_seq_len = max([len(text) for text in input_texts])
     max_decoder_seq_len = max([len(text) for text in target_texts])
 
     print('num of samples:', len(input_texts))
-    print('num of unique input tokens:', num_encoder_tokens)
-    print('num of unique output tokens:', num_decoder_tokens)
     print('max sequence length for inputs:', max_encoder_seq_len)
     print('max sequence length for outputs:', max_decoder_seq_len)
 
-    input_token_index = dict([(char, i) for i, char in enumerate(input_characters)])
-    target_token_index = dict([(char, i) for i, char in enumerate(target_characters)])
+    input_token_index = load_word_dict(save_input_token_path)
+    target_token_index = load_word_dict(save_target_token_path)
 
-    encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_len, num_encoder_tokens), dtype='float32')
+    encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_len, len(input_token_index)), dtype='float32')
 
     # one hot representation
     for i, input_text in enumerate(input_texts):
         for t, char in enumerate(input_text):
-            encoder_input_data[i, t, input_token_index[char]] = 1.0
+            if char in input_token_index:
+                encoder_input_data[i, t, input_token_index[char]] = 1.0
     logger.info("Data loaded.")
 
     # model
     logger.info("Infer seq2seq model...")
     model = load_model(save_model_path)
 
-    decoded_sentences = decode_sequence(model, encoder_input_data, )
-    for seq_index in input_text:
-        print('-')
+    for seq_index in range(10):
+        # Take one sequence (part of the test set)
+        # for trying out decoding.
+        input_seq = encoder_input_data[seq_index: seq_index + 1]
+        decoded_sentence = decode_sequence(model, rnn_hidden_dim, input_token_index,
+                                           len(target_token_index), target_token_index, input_seq,
+                                           max_decoder_seq_len)
+
         print('Input sentence:', input_texts[seq_index])
-        print('Decoded sentence:', decoded_sentences[seq_index])
+        print('Decoded sentence:', decoded_sentence)
+        print('-')
 
     logger.info("Infer has finished.")
 
@@ -133,4 +134,13 @@ if __name__ == "__main__":
     infer(train_path=config.train_path,
           test_path=config.test_path,
           save_model_path=config.save_model_path,
+          save_input_token_path=config.input_vocab_path,
+          save_target_token_path=config.target_vocab_path,
           rnn_hidden_dim=config.rnn_hidden_dim)
+
+# Input sentence: ['由', '我', '起', '开', '始', '做', '。']
+# Decoded sentence: 的，。的，的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的
+# -
+# Input sentence: ['我', '父', '母', '生', '活', '的', '世', '纪', '最', '贫', '穷', '的', '世', '纪', '，', '我', '生', '活', '的', '世', '纪', '是', '什', '么', '都', '丰', '富', '的', '世', '纪', '。']
+# Decoded sentence: 的，。的，的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的
+# 这结果也是醉了，seq2seq 一般对局部起作用，全部输给模型，基本上什么都学不到。。。

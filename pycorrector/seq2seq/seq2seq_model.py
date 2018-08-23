@@ -138,7 +138,5 @@ def callback(save_model_path, logger=None):
         batch_print_callback = LambdaCallback(
             on_batch_begin=lambda batch, logs: print(batch))
     # define the checkpoint, save model
-    checkpoint = ModelCheckpoint(save_model_path,
-                                 save_best_only=True,
-                                 verbose=1)
+    checkpoint = ModelCheckpoint(save_model_path)
     return [batch_print_callback, checkpoint]

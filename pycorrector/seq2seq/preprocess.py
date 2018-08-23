@@ -6,7 +6,7 @@ from xml.dom import minidom
 from sklearn.model_selection import train_test_split
 
 import pycorrector.seq2seq.cged_config as config
-from utils.text_utils import segment
+from pycorrector.utils.text_utils import segment
 
 
 def parse_xml_file(path):

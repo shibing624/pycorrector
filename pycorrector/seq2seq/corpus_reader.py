@@ -6,6 +6,24 @@ import random
 from pycorrector.seq2seq.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 
 
+def save_word_dict(dict_data, save_path):
+    with open(save_path, 'w', encoding='utf-8') as f:
+        for k, v in dict_data.items():
+            f.write("%s\t%d\n" % (k, v))
+
+
+def load_word_dict(save_path):
+    dict_data = dict()
+    with open(save_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            items = line.strip().split()
+            try:
+                dict_data[items[0]] = int(items[1])
+            except IndexError:
+                print('error', line)
+    return dict_data
+
+
 class FCEReader(Reader):
     """
     Read FCE data set
