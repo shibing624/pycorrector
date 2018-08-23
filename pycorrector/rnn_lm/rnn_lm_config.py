@@ -6,11 +6,12 @@ import os
 output_dir = './output'
 
 # CGED chinese corpus
-train_paths = ['../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
-               '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-               '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
-               # '../data/cn/CGED/sample_HSK_TrainingSet.xml',
-               ]
+train_paths = [
+    # '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
+    # '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
+    # '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+    '../data/cn/CGED/sample_HSK_TrainingSet.xml',
+]
 train_word_path = output_dir + '/train_words.txt'
 # vocab
 word_dict_path = output_dir + '/word_dict.txt'
