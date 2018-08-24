@@ -3,3 +3,4 @@ pypinyin
 kenlm
 jieba
 tqdm
+cmake
