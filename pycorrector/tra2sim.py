@@ -5,14 +5,14 @@ import sys
 import os
 import codecs
 import argparse
+
 import pdb
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.dirname(__file__)) + "/../")
+
+from tqdm import tqdm
 from pycorrector.utils.text_utils import is_chinese
 from pycorrector.utils.text_utils import traditional2simplified
 from pycorrector.utils.io_utils import get_logger
-
-# if len(sys.argv) == 1:
-#     sys.argv = ['tra2sim', 'data/test', 'data/test_sim']
 
 def parse():
     parser = argparse.ArgumentParser(description = 'this is for tokenize file with one sentence in each line')
@@ -40,14 +40,14 @@ def main():
 
     if args.effect:
         PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/！%……（）<>@#$~^￥%&*\"\'=+-"
-        for line in file_in:
+        for line in tqdm(file_in):
             line = line.strip()
             if False not in [(char in PUNCTUATION_LIST or is_chinese(char)) for char in line]:
                 line = traditional2simplified(line)
                 file_ou.write(line + '\n')
         file_ou.close()
     else:
-        for line in file_in:
+        for line in tqdm(file_in):
             line = line.strip()
             line = traditional2simplified(line)
             file_ou.write(line + '\n')

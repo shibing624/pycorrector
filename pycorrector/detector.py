@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/env bash
+#
 # Author: XuMing <xuming624@qq.com>
 # Brief: error word detector
 import codecs
@@ -19,9 +21,6 @@ from pycorrector.utils.text_utils import uniform, tokenize
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 default_logger = get_logger(__file__)
-# trigram_word_path = os.path.join(pwd_path, 'data/kenlm/people_words.klm')
-# trigram_word = kenlm.Model(trigram_word_path)
-# print('Loaded trigram_word language model from {}'.format(trigram_word_path))
 
 trigram_char_path = os.path.join(pwd_path, config.language_model_path)
 trigram_char = kenlm.Model(trigram_char_path)
