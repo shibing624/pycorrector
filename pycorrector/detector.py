@@ -8,7 +8,9 @@ import kenlm
 import os
 import pdb
 import sys
-sys.path.append("../")
+import argparse
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(pwd_path + '/../')
 
 import numpy as np
 import jieba.posseg as pseg
@@ -19,7 +21,7 @@ from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.io_utils import load_pkl
 from pycorrector.utils.text_utils import uniform, tokenize
 
-pwd_path = os.path.abspath(os.path.dirname(__file__))
+# pwd_path = os.path.abspath(os.path.dirname(__file__))
 default_logger = get_logger(__file__)
 
 trigram_char_path = os.path.join(pwd_path, config.language_model_path)
@@ -169,14 +171,79 @@ def detect(sentence):
             elif i + 1 < len(tag) and tag[i + 1] in {'nz','nr','nt','ns'}:
                 maybe_error_indices -= set(range(len(''.join(word[:i])), \
                                                  len(''.join(word[:i + 2]))))               
-
-
-    # #####################
-    # print(maybe_error_indices)
-    # print([sentence[i] for i in maybe_error_indices])
-    # pdb.set_trace()
-    # #####################
-
+        if tag[i] == 'j' and len(word[i]) > 1:
+            maybe_error_indices -= set(range(len(''.join(word[:i])), \
+                                             len(''.join(word[:i + 1]))))
     return sorted(maybe_error_indices)
+
+def parse():
+    parser = argparse.ArgumentParser(
+             description = 'this file is to use pycorrector to test '
+                           'sighan15 test file, and transfer the result'
+                           'to the format that sighan15 eval tool required')
+    parser.add_argument('-i', '--error_sentence', #required = True, 
+                        help = 'error sentenced to be detected'
+                               '(format should be only one sentence per line)')
+    parser.add_argument('-o', '--detected_chars', #required = True,
+                        help = 'file to store detected suspect chars(not required)')
+    parser.add_argument('-v', '--detect_verbose',
+                        default = False,
+                        help = 'show the detail of correction or not')
+    return parser.parse_args()
+
+
+def main():
+    args = parse()
+
+    if args.error_sentence == None:
+        if args.detected_chars == None:
+            sentence = input('input a sentence to detect errors: ')
+            while sentence not in {'','q'}:
+                nums = detect(sentence.strip())
+                sys.stderr.write('input sentence : ' + sentence + '\n')
+                sys.stderr.write('suspect chars  : ' + ', '.join([sentence[i] for i in nums]) + '\n')
+                sentence = input('input a sentence to continue detecting errors or input q to quit: ')                
+          
+        else:
+            sys.stderr.write('Error: no path to error sentences.')
+
+    elif args.detected_chars == None:
+        sys.stderr.write('Error: no path to store suspect chars.')
+
+    else:
+        sys.stderr.write('Starting detecting sentences......\n')
+        sys.stderr.write('Please make sure the input file has only one sentence per line(no index!).')
+        sys.stderr.write('error_sentences_path: ' + args.error_sentence + '\n')
+        sys.stderr.write('detected_chars_path : ' + args.detected_chars + '\n')
+        err_file = open(args.error_sentence, 'rb', encoding = 'utf-8')
+        cor_file = open(args.detected_chars, 'w+', encoding = 'utf-8')
+
+        if args.detect_verbose:
+            for sentence in err_file.readlines():
+                nums = detect(sentence.strip())
+
+                sys.stderr.write('input sentence : ' + sentence + '\n')
+                sys.stderr.write('suspect chars  : ' + ', '.join([sentence[i] for i in nums]) + '\n')
+
+                cor_file.write(', '.join([sentence[i] for i in nums]) + '\n')
+        else:
+            for sentence in tqdm(err_file.readlines()):
+                nums = detect(sentence.strip())
+
+                cor_file.write(', '.join([sentence[i] for i in nums]) + '\n')
+
+        cor_file.close()
+        err_file.close()
+
+        sys.stderr.write('Finishing detecting sentences.\n')
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
 
 

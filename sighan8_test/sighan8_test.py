@@ -47,7 +47,7 @@ def eval_sighan(input_path, output_path, param_ec, param_gd, verbose=False):
     sys.stderr.write('sighan15_test            : start correcting sentences......\n')
     sys.stderr.write('error_sentences_path     : ' + input_path + '\n')
     sys.stderr.write('corrected_sentences_path : ' + output_path + '\n')
-    sighan_data = open(input_path, 'rb', encoding = 'utf-8')
+    sighan_data = open(input_path,  'rb', encoding = 'utf-8')
     corr_file   = open(output_path, 'w+', encoding = 'utf-8')
 
     if verbose:
@@ -55,8 +55,8 @@ def eval_sighan(input_path, output_path, param_ec, param_gd, verbose=False):
             pid, sentence = line.split('\t')
             pred_sent, pred_detail = correct(sentence.strip(), param_ec, param_gd)
 
-            sys.stderr.write('input sentence : ' + sentence)
-            sys.stderr.write('pred sentence  : ' + pred_sent)
+            sys.stderr.write('input sentence : ' + sentence + '\n')
+            sys.stderr.write('pred sentence  : ' + pred_sent + '\n')
             sys.stderr.write('predict change : ' + ', '.join([i[0][0] + '-->' + i[0][1] \
                                        for i in pred_detail if i]) + '\n')
 
@@ -125,7 +125,7 @@ def format_result(err_sent_path, cor_sent_path, result_path):
 
     sys.stderr.write('REFORMING RESULTS : finishing formatting correction result\n')
 
-if __name__ == "__main__":
+def main():
     args = parse()
 
     eval_sighan  (args.error_sentence, 
@@ -138,7 +138,8 @@ if __name__ == "__main__":
                   args.corrected_sentence, 
                   args.result)
 
-
+if __name__ == "__main__":
+    main()
 
 
 

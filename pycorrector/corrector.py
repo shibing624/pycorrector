@@ -8,11 +8,16 @@ import os
 import pdb
 import time
 import math
+import sys
+import argparse
 
 from collections import defaultdict
 from pypinyin import lazy_pinyin
 
 import jieba.posseg as pseg
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(pwd_path + '/../')
 
 import pycorrector.config as config
 from pycorrector.detector import detect
@@ -109,7 +114,7 @@ def load_same_stroke(path, sep=','):
     return result
 
 cn_char_set = load_char_dict(char_dict_path)
-two_char_dict = load_2char_dict('../pycorrector/data/char_two_set.txt')
+two_char_dict = load_2char_dict(pwd_path + '/data/char_two_set.txt')
 
 # # word dictionary
 word_dict_text_path = os.path.join(pwd_path, config.word_dict_path)
@@ -142,45 +147,47 @@ else:
     same_stroke = load_same_stroke(same_stroke_text_path)
     dump_pkl(same_stroke, same_stroke_model_path)
 
-def get_same_pinyin(char):
-    """
-    取同音字
-    :param char:
-    :return:
-    """
-    return same_pinyin.get(char, set())
+# def get_same_pinyin(char):
+#     """
+#     取同音字
+#     :param char:
+#     :return:
+#     """
+#     return same_pinyin.get(char, set())
 
 
-def get_same_stroke(char):
-    """
-    取形似字
-    :param char:
-    :return:
-    """
-    return same_stroke.get(char, set())
+# def get_same_stroke(char):
+#     """
+#     取形似字
+#     :param char:
+#     :return:
+#     """
+#     return same_stroke.get(char, set())
 
 
-def edit_distance_word(word, char_set):
-    """
-    all edits that are one edit away from 'word'
-    :param word:
-    :param char_set:
-    :return:
-    """
-    splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
-    transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
-    replaces = [L + c + R[1:] for L, R in splits if R for c in char_set]
-    return set(transposes + replaces)
+# def edit_distance_word(word, char_set):
+#     """
+#     all edits that are one edit away from 'word'
+#     :param word:
+#     :param char_set:
+#     :return:
+#     """
+#     splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+#     transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
+#     replaces = [L + c + R[1:] for L, R in splits if R for c in char_set]
+#     return set(transposes + replaces)
 
 
-def known(words):
-    return set(word for word in words if word in word_freq)
+# def known(words):
+#     return set(word for word in words if word in word_freq)
 
 
-def get_confusion_char_set(c):
-    confusion_char_set = get_same_pinyin(c).union(get_same_stroke(c))
+def get_confusion_char_set(char):
+    # confusion_char_set = get_same_pinyin(char).union(get_same_stroke(char))
+    confusion_char_set = same_pinyin.get(char, set())
+    confusion_char_set |= same_stroke.get(char, set())
     if not confusion_char_set:
-        confusion_char_set = {c}
+        confusion_char_set = {char}
     return confusion_char_set
 
 
@@ -190,39 +197,29 @@ def get_confusion_two_char_set(word):
                                 if char_1 + char_2 in cn_word_set])
 
 
-def get_confusion_word_set(word):
-    confusion_word_set = set()
-    candidate_words = list(known(edit_distance_word(word, cn_char_set)))
-    for candidate_word in candidate_words:
-        if lazy_pinyin(candidate_word) == lazy_pinyin(word):
-            # same pinyin
-            confusion_word_set.add(candidate_word)
-    return confusion_word_set
+# def get_confusion_word_set(word):
+#     confusion_word_set = set()
+#     candidate_words = list(known(edit_distance_word(word, cn_char_set)))
+#     for candidate_word in candidate_words:
+#         if lazy_pinyin(candidate_word) == lazy_pinyin(word):
+#             confusion_word_set.add(candidate_word)
+#     return confusion_word_set
 
 
 def _generate_items(sentence, idx, word, fraction=1):
-    candidates_1_order = []
-    candidates_2_order = []
-    candidates_3_order = []
-
-    # candidates_1_order.extend(get_confusion_word_set(word))
 
     if len(word) == 1:
-        confusion = [i for i in get_confusion_char_set(word[0]) if i]
-        candidates_2_order.extend(confusion)
+        confusion_word_set = set([i for i in get_confusion_char_set(word[0]) if i])
 
     if len(word) > 1:
 
         def combine_two_confusion_char(sentence, idx, word):
             # # assuming there is only two char to change
             # # definitely not the final version, need to be fixed!!!!
-            result = []
+            result = set()
             for i in range(len(word) - 1):
                 for j in range(i + 1,len(word)):
-                    # for i_word in get_confusion_char_set(word[i]):
-                    #     for j_word in get_confusion_char_set(word[j]):
-                    #         if i == 0 
-                    result.extend([word[: i] + i_word + word[i + 1: j] + j_word + word[j + 1:] \
+                    result |= set([word[: i] + i_word + word[i + 1: j] + j_word + word[j + 1:] \
                                    for i_word in get_confusion_char_set(word[i]) if i_word \
                                    for j_word in get_confusion_char_set(word[j]) if j_word])
             return result
@@ -278,48 +275,12 @@ def _generate_items(sentence, idx, word, fraction=1):
 
 
 
-            return list(result)
+            return result
 
+        confusion_word_set = confusion_set(sentence, idx, word)
 
-        confusion = confusion_set(sentence, idx, word)
-        # confusion  = combine_two_confusion_char(word)
-        candidates_2_order.extend(confusion)
-
-
-        # # same first pinyin
-        # confusion = [i + word[1:] for i in get_confusion_char_set(word[0]) if i]
-        # candidates_2_order.extend(confusion)
-
-        # # same last pinyin
-        # confusion = [word[:-1] + i for i in get_confusion_char_set(word[-1]) if i]
-        # candidates_2_order.extend(confusion)
-
-
-        # if len(word) > 2:
-        #     # same mid char pinyin
-        #     # for idx in range(1,len(word) - 1):
-        #     #     confusion = [word[:idx] + i + word[idx + 1:] for i in get_confusion_char_set(word[idx])]
-        #     confusion = [word[0] + i + word[2:] for i in get_confusion_char_set(word[1])]
-        #     candidates_3_order.extend(confusion)
-
-        #     # same first word pinyin
-        #     confusion_word = [i + word[-1] for i in get_confusion_word_set(word[:-1])]
-        #     candidates_1_order.extend(confusion_word)
-
-        #     # same last word pinyin
-        #     confusion_word = [word[0] + i for i in get_confusion_word_set(word[1:])]
-        #     candidates_1_order.extend(confusion_word)
-
-    # add all confusion word list
-    confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
     confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
     confusion_sorted = sorted(confusion_word_list, key=lambda k: get_frequency(k), reverse=True)
-
-    # #####################
-    # print(len(confusion_word_set))
-    # # print(confusion_sorted)
-    # pdb.set_trace()
-    # #####################
 
     return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
@@ -415,12 +376,6 @@ def correct_stat(sentence, sub_sents, param_ec, param_gd):
 
         base_score = get_ppl_score(list(before + item + after), mode=trigram_char)
 
-        # ###################
-        # print(item)
-        # # print(item)
-        # pdb.set_trace()
-        # ###################
-
         min_score  = base_score
 
         corrected_item = item
@@ -437,8 +392,6 @@ def correct_stat(sentence, sub_sents, param_ec, param_gd):
 
     cands.sort(key = lambda x: x[2], reverse = True)
 
-    # param_gd = 9
-
     for i, [idx, corrected_item, delta_score] in enumerate(cands):
         if delta_score > i * param_gd * math.log(base_score):
             idx = [int(idx.split(",")[0]), int(idx.split(",")[1])]
@@ -452,10 +405,7 @@ def correct_stat(sentence, sub_sents, param_ec, param_gd):
                        sentence[idx[1]:]
         else:
             break
-    # ###################
-    # print(detail)
-    # pdb.set_trace()
-    # ###################
+
     return sentence, detail
 
 
@@ -632,21 +582,95 @@ def correct(sentence, param_ec = 1.4, param_gd = 2):
                                           get_sub_array(detect(sentence)))
 
 
-    index_char_dict = dict()
-    for index in maybe_error_ids:
-        if len(index) == 1:
+    suspect_chars = [[','.join([str(i[0]), str(i[-1])]), sentence[i[0]: i[-1]]] for i in maybe_error_ids]
 
-            index_char_dict[','.join(map(str, index))] = sentence[index[0]]
-        else:
-
-            index_char_dict[','.join(map(str, index))] = sentence[index[0]:index[-1]]
-
-
-    sentence, detail_stat = correct_stat(sentence, index_char_dict.items(), param_ec, param_gd)
+    sentence, detail_stat = correct_stat(sentence, suspect_chars, param_ec, param_gd)
     detail += detail_stat
 
-    sentence, detail_rule = correct_rule(sentence, index_char_dict.items())
+    sentence, detail_rule = correct_rule(sentence, suspect_chars)
     detail += detail_rule
 
-
     return sentence, detail
+
+
+def parse():
+    parser = argparse.ArgumentParser(
+             description = 'this file is to use pycorrector to test '
+                           'sighan15 test file, and transfer the result'
+                           'to the format that sighan15 eval tool required')
+    parser.add_argument('-i', '--error_sentence', #required = True, 
+                        help = 'input: error sentenced to be corrected'
+                               '(format should be only one sentence per line)')
+    parser.add_argument('-o', '--corrected_sentence', #required = True,
+                        help = 'output: file to store corrected sentence(not required)')
+    parser.add_argument('-v', '--correct_verbose',
+                        default = False,
+                        help = 'show the detail of correction or not')
+    parser.add_argument('--param_ec', type = float,
+                        default = 1.4,
+                        help = 'parameter for adjust the weight of edition cost')
+    parser.add_argument('--param_gd', type = float,
+                        default = 2,
+                        help = 'parameter for adjust the weight of global decision')
+    return parser.parse_args()
+
+
+def main():
+
+    args = parse()
+
+    if args.error_sentence == None:
+        if args.corrected_sentence == None:
+            sentence = input('input a sentence to correct errors: ')
+            while sentence not in {'','q'}:
+                pred_sent, pred_detail = correct(sentence.strip(), args.param_ec, args.param_gd)
+                sys.stderr.write('input sentence : ' + sentence + '\n')
+                sys.stderr.write('pred sentence  : ' + pred_sent + '\n')
+                sys.stderr.write('predict change : ' + ', '.join([i[0][0] + '-->' + i[0][1] \
+                                               for i in pred_detail if i]) + '\n')  
+                sentence = input('input a sentence to continue correcting errors or input q to quit: ')          
+        else:
+            sys.stderr.write('Error: no path to error sentences.')
+
+    elif args.corrected_sentence == None:
+        sys.stderr.write('Error: no path to store corrected sentences.')
+
+    else:
+        sys.stderr.write('Starting correcting sentences......\n')
+        sys.stderr.write('Please make sure the input file has only one sentence per line(no index!).')
+        sys.stderr.write('error_sentences_path     : ' + args.error_sentence     + '\n')
+        sys.stderr.write('corrected_sentences_path : ' + args.corrected_sentence + '\n')
+        err_file = open(args.error_sentence,     'rb', encoding = 'utf-8')
+        cor_file = open(args.corrected_sentence, 'w+', encoding = 'utf-8')
+
+        if args.correct_verbose:
+            for sentence in err_file.readlines():
+                pred_sent, pred_detail = correct(sentence.strip(), args.param_ec, args.param_gd)
+
+                sys.stderr.write('input sentence : ' + sentence + '\n')
+                sys.stderr.write('pred sentence  : ' + pred_sent + '\n')
+                sys.stderr.write('predict change : ' + ', '.join([i[0][0] + '-->' + i[0][1] \
+                                           for i in pred_detail if i]) + '\n')
+
+                cor_file.write(pred_sent + '\n')
+        else:
+            for sentence in tqdm(err_file.readlines()):
+                pred_sent, pred_detail = correct(sentence.strip(), args.param_ec, args.param_gd)
+
+                cor_file.write(pred_sent + '\n')
+
+        cor_file.close()
+        err_file.close()
+
+        sys.stderr.write('Finishing correcting sentences.\n')
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+
+

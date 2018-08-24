@@ -72,6 +72,7 @@ if [ $stage -le 2] && $train_new_lm ; then
     kenlm/build/bin/build_binary ${kenlm_data_path}/${file_name}_${ngram}gram.arpa \
                                  ${kenlm_data_path}/${file_name}_${ngram}gram.klm
 
+    sed -i '' 's/^language_model_path/# language_model_path/' pycorrector/config.py
     echo "language_model_path = 'data/kenlm/${file_name}_${ngram}gram.klm'" >> pycorrector/config.py
 fi 
 
