@@ -10,11 +10,9 @@ import time
 import math
 import sys
 import argparse
-
+import jieba.posseg as pseg
 from collections import defaultdict
 from pypinyin import lazy_pinyin
-
-import jieba.posseg as pseg
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(pwd_path + '/../')
@@ -33,8 +31,6 @@ from pycorrector.utils.text_utils import is_chinese
 from pycorrector.utils.text_utils import traditional2simplified
 from pycorrector.utils.text_utils import tokenize
 
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-char_dict_path = os.path.join(pwd_path, config.char_dict_path)
 
 default_logger = get_logger(__file__)
 
@@ -88,7 +84,6 @@ def load_same_pinyin(path, sep='\t'):
     result['影'] -= {'音'}
     result['车'] = result['扯']
 
-
     return result
 
 def load_same_stroke(path, sep=','):
@@ -113,6 +108,7 @@ def load_same_stroke(path, sep=','):
                     result[c] |= set(parts)
     return result
 
+char_dict_path = os.path.join(pwd_path, config.char_dict_path)
 cn_char_set = load_char_dict(char_dict_path)
 two_char_dict = load_2char_dict(pwd_path + '/data/char_two_set.txt')
 
@@ -129,13 +125,13 @@ else:
 # similar pronuciation
 same_pinyin_text_path = os.path.join(pwd_path, config.same_pinyin_text_path)
 same_pinyin_model_path = os.path.join(pwd_path, config.same_pinyin_model_path)
-same_pinyin = load_same_pinyin(same_pinyin_text_path)
-# if os.path.exists(same_pinyin_model_path):
-#     same_pinyin = load_pkl(same_pinyin_model_path)
-# else:
-#     default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
-#     same_pinyin = load_same_pinyin(same_pinyin_text_path)
-#     dump_pkl(same_pinyin, same_pinyin_model_path)
+# same_pinyin = load_same_pinyin(same_pinyin_text_path)
+if os.path.exists(same_pinyin_model_path):
+    same_pinyin = load_pkl(same_pinyin_model_path)
+else:
+    default_logger.debug('load same pinyin from text file:', same_pinyin_text_path)
+    same_pinyin = load_same_pinyin(same_pinyin_text_path)
+    dump_pkl(same_pinyin, same_pinyin_model_path)
 
 # similar shape
 same_stroke_text_path = os.path.join(pwd_path, config.same_stroke_text_path)
@@ -146,40 +142,6 @@ else:
     default_logger.debug('load same stroke from text file:', same_stroke_text_path)
     same_stroke = load_same_stroke(same_stroke_text_path)
     dump_pkl(same_stroke, same_stroke_model_path)
-
-# def get_same_pinyin(char):
-#     """
-#     取同音字
-#     :param char:
-#     :return:
-#     """
-#     return same_pinyin.get(char, set())
-
-
-# def get_same_stroke(char):
-#     """
-#     取形似字
-#     :param char:
-#     :return:
-#     """
-#     return same_stroke.get(char, set())
-
-
-# def edit_distance_word(word, char_set):
-#     """
-#     all edits that are one edit away from 'word'
-#     :param word:
-#     :param char_set:
-#     :return:
-#     """
-#     splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
-#     transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
-#     replaces = [L + c + R[1:] for L, R in splits if R for c in char_set]
-#     return set(transposes + replaces)
-
-
-# def known(words):
-#     return set(word for word in words if word in word_freq)
 
 
 def get_confusion_char_set(char):
@@ -195,15 +157,6 @@ def get_confusion_two_char_set(word):
     return set([char_1 + char_2 for char_1 in get_confusion_char_set(word[0]) \
                                 for char_2 in get_confusion_char_set(word[1]) \
                                 if char_1 + char_2 in cn_word_set])
-
-
-# def get_confusion_word_set(word):
-#     confusion_word_set = set()
-#     candidate_words = list(known(edit_distance_word(word, cn_char_set)))
-#     for candidate_word in candidate_words:
-#         if lazy_pinyin(candidate_word) == lazy_pinyin(word):
-#             confusion_word_set.add(candidate_word)
-#     return confusion_word_set
 
 
 def _generate_items(sentence, idx, word, fraction=1):
@@ -540,7 +493,7 @@ def correct_rule(sentence, sub_sents):
     # # 引导疑问句的词: to introduce a question
     intr_word = {'知道','想一想','无论','不管'} # to be added
 
-    # # rule for '那哪'           // 目前还不能识别反问句
+    # # rule for '那哪'    
     if set(sentence) & {'那', '哪'}:
         # for idx in detect(sentence):
         for idx in range(len(sentence)):
@@ -553,7 +506,11 @@ def correct_rule(sentence, sub_sents):
 
                 # question sentence
                 if sub_sent[-1] == '？':
-                    if True in [i in sub_sent for i in ques_word]:
+                    if True in [i in sub_sent for i in ques_word] or \
+                        ((idx == 0 or \
+                          not is_chinese(sentence[idx - 1])) and \
+                         (sentence[idx + 1: idx + 2]=='不' or \
+                          sentence[idx + 1: idx + 3]=='岂不')):
                         sentence = sentence[:idx] + '那' + sentence[idx + 1:]
                     else:
                         sentence = sentence[:idx] + '哪' + sentence[idx + 1:]
@@ -565,6 +522,14 @@ def correct_rule(sentence, sub_sents):
                             sentence = sentence[:idx] + '哪' + sentence[idx + 1:]
                     else:
                         sentence = sentence[:idx] + '那' + sentence[idx + 1:]
+
+    # # rule for '那哪'           // 目前还不能识别反问句
+    if set(sentence) & {'门', '们'}:
+        for idx in [i for i in range(len(sentence)) if sentence[i] in {'门', '们'}]:
+            if idx == 0:
+                sentence = '门' + sentence[1:]
+            elif sentence[idx - 1] in {'你','我','他','她','它','哥'}:
+                sentence = sentence[:idx] + '们' + sentence[idx + 1:]
 
     for idx in range(len(sentence)):
         if sentence[idx] != old_sentence[idx]:
@@ -578,8 +543,7 @@ def correct(sentence, param_ec = 1.4, param_gd = 2):
 
     detail = []
 
-    maybe_error_ids = get_valid_sub_array(sentence, 
-                                          get_sub_array(detect(sentence)))
+    maybe_error_ids = get_valid_sub_array(sentence, get_sub_array(detect(sentence)))
 
 
     suspect_chars = [[','.join([str(i[0]), str(i[-1])]), sentence[i[0]: i[-1]]] for i in maybe_error_ids]
