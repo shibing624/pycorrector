@@ -25,9 +25,9 @@ awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC-master/Data/training/train.tx
                 > ${kenlm_data_path}/nlpcc.txt
 
 python pycorrector/tra2sim.py -i ${kenlm_data_path}/nlpcc.txt \
-                              -o p${kenlm_data_path}/nlpcc.txt \
+                              -o ${kenlm_data_path}/nlpcc.txt \
                               -e True
-                    
+
 python pycorrector/lm_train.py -i ${kenlm_data_path}/nlpcc.txt \
                                -o ${kenlm_data_path}/nlpcc_token.txt \
                                -c True
