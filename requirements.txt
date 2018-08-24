@@ -2,3 +2,4 @@ numpy
 pypinyin
 kenlm
 jieba
+tqdm
