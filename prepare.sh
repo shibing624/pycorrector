@@ -14,11 +14,11 @@ pip install -r requirements.txt
 # # to train the language model with kenlm toolkit
 kenlm_data_path="pycorrector/data/kenlm"
 
-# # download and process nlpcc training data 
-echo "downloading lm training data( nlpcc 2018 GEC training data)..."
-nlpcc_data_url="http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz"
-wget -O ${kenlm_data_path}/nlpcc_data.tar.gz $nlpcc_data_url
-tar -xzvf $nlpcc_data_path
+# # # download and process nlpcc training data 
+# echo "downloading lm training data( nlpcc 2018 GEC training data)..."
+# nlpcc_data_url="http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz"
+# wget -O ${kenlm_data_path}/nlpcc_data.tar.gz $nlpcc_data_url
+# tar -xzvf $nlpcc_data_path
 
 echo "processing lm training data( nlpcc 2018 GEC training data)..."
 awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC-master/Data/training/train.txt \
