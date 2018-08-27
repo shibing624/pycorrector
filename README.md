@@ -36,6 +36,7 @@ These dependencies are all concluded in requirements.txt and you could easily in
 ```
 $ pip install -r requirements.txt
 ```
+and it is included in `prepare.sh` file.
 
 A conda environment is suggested to avoid python version conflict.
 
@@ -45,7 +46,6 @@ A conda environment is suggested to avoid python version conflict.
 ```
 $ git clone https://github.com/qbetterk/pycorrector.git
 $ cd pycorrector
-$ pip install -r requirements.txt
 $ bash prepare.sh
 ```
 
