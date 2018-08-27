@@ -40,10 +40,14 @@ if [ $stage -le 2 ] && [ $train_new_lm ]; then
             wget -O ${kenlm_data_path}/nlpcc_data.tar.gz $nlpcc_data_url
             tar -xzvf ${kenlm_data_path}/nlpcc_data.tar.gz -C ${kenlm_data_path}/
 
-            echo "processing lm training data( nlpcc 2018 GEC training data)..."
-            awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC_TrainingData/data.train \
-                        > ${kenlm_data_path}/nlpcc.txt
+        elif [ -e ${kenlm_data_path}/nlpcc_data.tar.gz ]; then
+            tar -xzvf ${kenlm_data_path}/nlpcc_data.tar.gz -C ${kenlm_data_path}/
         fi
+
+        echo "processing lm training data( nlpcc 2018 GEC training data)..."
+        awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC_TrainingData/data.train \
+                    > ${kenlm_data_path}/nlpcc.txt                
+
 
         python pycorrector/tra2sim.py -i ${kenlm_data_path}/nlpcc.txt \
                                       -o ${kenlm_data_path}/nlpcc.txt \
