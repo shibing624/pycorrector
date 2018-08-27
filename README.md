@@ -4,13 +4,11 @@
 
 * [Introduction](#introduction)
 * [Requirements](#requirements)
-* [Building fastText](#building-fasttext)
-   * [Getting the source code](#getting-the-source-code)
-   * [Building fastText using make (preferred)](#building-fasttext-using-make-preferred)
-   * [Building fastText using cmake](#building-fasttext-using-cmake)
-   * [Building fastText for Python](#building-fasttext-for-python)
-* [Example use cases](#example-use-cases)
-   * [Word representation learning](#word-representation-learning)
+* [Building pycorrector](#building-pycorrector)
+* [Running pycorrector](#running-pycorrector)
+* [Example](#examples)
+   * [Dataset](#dataset)
+   * [Running script](#running-scripts)
 * [Full documentation](#full-documentation)
 * [License](#license)
 
@@ -39,7 +37,7 @@ These dependencies are all concluded in requirements.txt and you could easily in
 $ pip install -r requirements.txt
 ```
 
-A conda environment is suggested to create a python enviroment.
+A conda environment is suggested to avoid python version conflict.
 
 
 ## Building pycorrector
@@ -52,9 +50,27 @@ $ bash prepare.sh
 ```
 
 The default setting in `prepare.sh` in to mainly download kenlm toolkit and dataset from NLPCC2018 GEC shared task to train a charactor based language model.
-If you want to have your own language model based on your dataset, you could use `-train_new_lm=False` to command `base prepare.sh`. Train a statistical language model with kenlm(https://github.com/kpu/kenlm) is required and remember to add path to `pycorrecor/config.py`.
+If you want to have your own language model based on your dataset, you could add `-train_new_lm=False` to command `base prepare.sh`. 
+Train a statistical language model with kenlm(https://github.com/kpu/kenlm) is required:
+```
+# get kenlm source code and compile it 
+$ git clone https://github.com/kpu/kenlm.git
+$ cd kenlm
+$ mkdir -p build
+$ cd build
+$ cmake ..
+$ make -j 4
 
-## Using pycorrector
+# training language model based on your own training data
+$ ./build/bin/lmplz -o 3 --verbose_header --text ./train_data.txt --arpa ./train_data.arps
+$ ./build/bin/build_binary ./train_data.arps ./train_data.klm
+```
+
+Note that the train_data.txt is required to be tokenized(word level or charactor level) and remember to add relative path of `train_data.klm` from `pycorrector/` to `pycorrecor/config.py`.
+
+
+
+## Running pycorrector
 
 For error detection:
 ```
@@ -78,7 +94,7 @@ Here we take SIGHAN 2015 Bake-off: Chinese Spelling Check Task as an example.
 
 Considering the copyright, you have to download the dataset manually on SIGHAN 2015 website(http://ir.itc.ntnu.edu.tw/lre/sighan8csc.html)
 
-Please uncompress the dataset to under the folder `sighan8_test/`
+Please uncompress the dataset under the folder `sighan8_test/`
 
 
 ### Running script
