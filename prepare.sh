@@ -81,7 +81,7 @@ if [ $stage -le 2 ] && [ $train_new_lm ]; then
     kenlm/build/bin/build_binary ${kenlm_data_path}/${file_name}_${ngram}gram.arpa \
                                  ${kenlm_data_path}/${file_name}_${ngram}gram.klm
 
-    if [ $uname = Darwin ]; then
+    if [ $(uname) = Darwin ]; then
         sed -i '' 's/^language_model_path/# language_model_path/' pycorrector/config.py
     else
         sed -i 's/^language_model_path/# language_model_path/' pycorrector/config.py
