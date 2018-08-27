@@ -44,11 +44,6 @@ def main():
                 true_detail += err_sent[i].split('\t')[1][int(true_change_line[idx * 2]) - 1] + \
                                     ' --> '  + true_change_line[idx * 2 + 1] + ', '
 
-        # sys.stderr.write('input_sentence :  ' + err_sent[i].split('\t')[1])
-        # sys.stderr.write('output_sentence : ' + cor_sent[i].split('\t')[1])
-        # sys.stderr.write('pred_change : ' + pred_detail + '\n')
-        # sys.stderr.write('true_change : ' + true_detail + '\n')
-
         comp_file.write('input_sentence  : ' + err_sent[i].split('\t')[1])
         comp_file.write('output_sentence : ' + cor_sent[i].split('\t')[1])
         comp_file.write('pred_change : ' + pred_detail + '\n')
