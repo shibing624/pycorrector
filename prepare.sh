@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-set -exu
+set -eu
 
 stage=0
 # whether train a new language model
@@ -15,11 +15,11 @@ char_level_lm=True
 # n-gram model
 ngram=5
 
-if [ $stage -le 0 ]; then
-    # # checkout update
-    git_url="https://github.com/qbetterk/pycorrector.git"
-    git pull $git_url
-fi
+# if [ $stage -le 0 ]; then
+#     # # checkout update
+#     git_url="https://github.com/qbetterk/pycorrector.git"
+#     git pull $git_url
+# fi
 
 if [ $stage -le 1 ]; then
     # # dependency 
@@ -27,20 +27,23 @@ if [ $stage -le 1 ]; then
     pip install -r requirements.txt
 fi
 
-if [ $stage -le 2 ] && $train_new_lm ; then
+if [ $stage -le 2 ] && [ $train_new_lm ]; then
     # # to train the language model with kenlm toolkit
     kenlm_data_path="pycorrector/data/kenlm"
 
-    if $nlpcc_lm ; then
-        # # download and process nlpcc training data 
-        echo "downloading lm training data( nlpcc 2018 GEC training data)..."
-        nlpcc_data_url="http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz"
-        wget -O ${kenlm_data_path}/nlpcc_data.tar.gz $nlpcc_data_url
-        tar -xzvf ${kenlm_data_path}/nlpcc_data.tar.gz
+    if [ $nlpcc_lm ]; then
+        if [ ! -e ${kenlm_data_path}/nlpcc_data.tar.gz ] && \
+           [ ! -d ${kenlm_data_path}/NLPCC2018_GEC_TrainingData/ ]; then
+            # # download and process nlpcc training data 
+            echo "downloading lm training data( nlpcc 2018 GEC training data)..."
+            nlpcc_data_url="http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz"
+            wget -O ${kenlm_data_path}/nlpcc_data.tar.gz $nlpcc_data_url
+            tar -xzvf ${kenlm_data_path}/nlpcc_data.tar.gz -C ${kenlm_data_path}/
 
-        echo "processing lm training data( nlpcc 2018 GEC training data)..."
-        awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC-master/Data/training/train.txt \
-                    > ${kenlm_data_path}/nlpcc.txt
+            echo "processing lm training data( nlpcc 2018 GEC training data)..."
+            awk '{print $NF}' ${kenlm_data_path}/NLPCC2018_GEC_TrainingData/data.train \
+                        > ${kenlm_data_path}/nlpcc.txt
+        fi
 
         python pycorrector/tra2sim.py -i ${kenlm_data_path}/nlpcc.txt \
                                       -o ${kenlm_data_path}/nlpcc.txt \
@@ -51,15 +54,17 @@ if [ $stage -le 2 ] && $train_new_lm ; then
                                        -c $char_level_lm      
     fi
 
-    # # download kenlm toolkit
-    echo "downloading kenlm toolkit"
-    git clone https://github.com/kpu/kenlm.git
-    cd kenlm
-    mkdir -p build
-    cd build
-    cmake ..
-    make -j 4
-    cd ../..
+    if [ ! -d kenlm ]; then
+        # # download kenlm toolkit
+        echo "downloading kenlm toolkit"
+        git clone https://github.com/kpu/kenlm.git
+        cd kenlm
+        mkdir -p build
+        cd build
+        cmake ..
+        make -j 4
+        cd ../..
+    fi
 
     # # training lm
     echo "training language model"
@@ -72,7 +77,12 @@ if [ $stage -le 2 ] && $train_new_lm ; then
     kenlm/build/bin/build_binary ${kenlm_data_path}/${file_name}_${ngram}gram.arpa \
                                  ${kenlm_data_path}/${file_name}_${ngram}gram.klm
 
-    sed -i '' 's/^language_model_path/# language_model_path/' pycorrector/config.py
+    if [ $uname = Darwin ]; then
+        sed -i '' 's/^language_model_path/# language_model_path/' pycorrector/config.py
+    else
+        sed -i 's/^language_model_path/# language_model_path/' pycorrector/config.py
+    fi
+
     echo "language_model_path = 'data/kenlm/${file_name}_${ngram}gram.klm'" >> pycorrector/config.py
 fi 
 
