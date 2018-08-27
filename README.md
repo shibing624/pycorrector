@@ -144,4 +144,4 @@ The following arguments for the tunning are optional(you might want to tune thes
 
 ## License
 
-fastText is BSD-licensed. We also provide an additional patent grant.
+pycorrector is BSD-licensed. We also provide an additional patent grant.
