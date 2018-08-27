@@ -14,7 +14,7 @@
 
 ## Introduction
 
-[pycorrector](https://fasttext.cc/) is a toolkit for Chinese spelling error detection and correction with statistical methods.
+**pycorrector** is a toolkit for Chinese spelling error detection and correction with statistical methods.
 
 
 ## Requirements
