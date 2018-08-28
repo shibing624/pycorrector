@@ -3,6 +3,7 @@
 # Brief: 
 from __future__ import print_function
 from setuptools import setup, find_packages
+from pycorrector import __version__
 
 long_description = '''
 ## Usage
@@ -42,8 +43,8 @@ output:
 ## 使用说明
 
 ### 安装
-* 全自动安装：pip install pycorrector 或者 pip3 install pycorrector 
-* 半自动安装：下载 https://github.com/shibing624/corrector 解压缩并运行 python setup.py install
+* 全自动安装：pip3 install pycorrector 
+* 半自动安装：下载 https://github.com/shibing624/corrector 解压缩并运行 python3 setup.py install
 
 ### 纠错 
 使用示例:
@@ -64,13 +65,13 @@ print(corrected_sent, detail)
 
 setup(
     name='pycorrector',
-    version='0.1.2',
+    version=__version__,
     description='Chinese Text Error corrector',
     long_description=long_description,
     author='XuMing',
     author_email='xuming624@qq.com',
     url='https://github.com/shibing624/corrector',
-    license="MIT",
+    license="Apache 2.0",
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
@@ -95,9 +96,9 @@ setup(
         'pypinyin',
         'jieba'
     ],
-    packages=['pycorrector'],
+    packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
-        'pycorrector': ['*.py', 'zhtools/*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/people_chars_lm.klm'],
+        'pycorrector': ['*.*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/*', 'utils/*'],
     }
 )
