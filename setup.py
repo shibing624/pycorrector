@@ -9,8 +9,8 @@ long_description = '''
 ## Usage
 
 ### install
-* pip install pycorrector / pip3 install pycorrector 
-* Or download https://github.com/shibing624/corrector Unzip and run python setup.py install
+* pip3 install pycorrector 
+* Or download https://github.com/shibing624/corrector Unzip and run python3 setup.py install
 
 ### correct 
 input:
@@ -74,7 +74,7 @@ setup(
     license="Apache 2.0",
     classifiers=[
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: Apache License 2.0',
         'Operating System :: OS Independent',
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Chinese (Traditional)',
