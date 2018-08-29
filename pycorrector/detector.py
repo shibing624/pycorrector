@@ -91,6 +91,8 @@ def _get_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
     margin_median = np.sqrt(np.sum((scores - median) ** 2, axis=-1))  # deviation from the median
     # 平均绝对离差值
     med_abs_deviation = np.median(margin_median)
+    if med_abs_deviation == 0:
+        return []
     y_score = ratio * margin_median / med_abs_deviation
     # 打平
     scores = scores.flatten()
@@ -107,9 +109,14 @@ def detect(sentence):
     tokens = tokenize(sentence)
     # 未登录词加入疑似错误字典
     for word, begin_idx, end_idx in tokens:
-        if word not in PUNCTUATION_LIST and word not in word_freq.keys():
-            for i in range(begin_idx, end_idx):
-                maybe_error_indices.add(i)
+        # fixed: pass num alpha
+        if word.isalnum(): continue
+        # punctuation
+        if word in PUNCTUATION_LIST: continue
+        # in dict
+        if word in word_freq.keys(): continue
+        for i in range(begin_idx, end_idx):
+            maybe_error_indices.add(i)
     # 语言模型检测疑似错字
     ngram_avg_scores = []
     try:
@@ -119,6 +126,7 @@ def detect(sentence):
                 word = sentence[i:i + n]
                 score = get_ngram_score(list(word), mode=trigram_char)
                 scores.append(score)
+            if not scores: continue
             # 移动窗口补全得分
             for _ in range(n - 1):
                 scores.insert(0, scores[0])
@@ -132,10 +140,9 @@ def detect(sentence):
         # 合并字、词错误
         maybe_error_indices |= set(maybe_error_char_indices)
     except IndexError as ie:
-        print("index error, sentence:", sentence, ie)
-        pass
+        default_logger.warn("index error, sentence:" + sentence + ie)
     except Exception as e:
-        print("detect error, sentence:", sentence, e)
+        default_logger.warn("detect error, sentence:" + sentence + e)
     return sorted(maybe_error_indices)
 
 

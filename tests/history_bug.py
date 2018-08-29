@@ -6,5 +6,6 @@
 
 from pycorrector import detector
 
-idx_errors = detector.detect('少先队员因该为老人让坐')
+# fixed
+idx_errors = detector.detect('vd')
 print(idx_errors)
