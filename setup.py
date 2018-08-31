@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
-# Brief: 
+# Brief:
 from __future__ import print_function
 from setuptools import setup, find_packages
 from pycorrector import __version__
@@ -96,6 +96,8 @@ setup(
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
-        'pycorrector': ['*.*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/*', 'utils/*'],
+        'pycorrector': ['*.*', 'LICENSE', 'README.*',
+                        'data/*.txt', 'data/*.pkl',  'utils/*.py',
+                        'data/kenlm/*', 'data/test/*'],
     }
 )
