@@ -74,7 +74,6 @@ setup(
     license="Apache 2.0",
     classifiers=[
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache License 2.0',
         'Operating System :: OS Independent',
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Chinese (Traditional)',
@@ -88,10 +87,14 @@ setup(
     ],
     keywords='NLP,correction,Chinese error corrector,corrector',
     install_requires=[
-        'kenlm==0.0.0',
-        'numpy',
+        'scipy',
+        'scikit-learn',
         'pypinyin',
-        'jieba'
+        'kenlm',
+        'jieba',
+        'tensorflow',
+        'keras>=2.1.5',
+        'keras_contrib',
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
