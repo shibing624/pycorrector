@@ -3,8 +3,7 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import pycorrector
 
-from pycorrector import detector
-
-idx_errors = detector.detect('少先队员因该为老人让坐')
+idx_errors = pycorrector.detect('少先队员因该为老人让坐')
 print(idx_errors)

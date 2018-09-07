@@ -4,8 +4,7 @@
 @description: 
 """
 
-from pycorrector import detector
+import pycorrector
 
-# fixed
-idx_errors = detector.detect('vd')
-print(idx_errors)
+corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+print(corrected_sent, detail)

@@ -4,7 +4,8 @@
 
 import unittest
 
-from pycorrector.corrector import correct, get_same_stroke, get_sub_array
+from pycorrector import correct, get_same_stroke
+from pycorrector.utils.math_utils import get_sub_array
 
 
 class BasicTestSuite(unittest.TestCase):
