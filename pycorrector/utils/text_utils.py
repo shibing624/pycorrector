@@ -29,7 +29,7 @@ def is_chinese_string(string):
 
 def is_number(uchar):
     """判断一个unicode是否是数字"""
-    if uchar >= u'u0030' and uchar <= u'u0039':
+    if u'u0030' <= uchar <= u'u0039':
         return True
     else:
         return False
@@ -37,10 +37,18 @@ def is_number(uchar):
 
 def is_alphabet(uchar):
     """判断一个unicode是否是英文字母"""
-    if (uchar >= u'u0041' and uchar <= u'u005a') or (uchar >= u'u0061' and uchar <= u'u007a'):
+    if (u'u0041' <= uchar <= u'u005a') or (u'u0061' <= uchar <= u'u007a'):
         return True
     else:
         return False
+
+
+def is_alphabet_string(string):
+    """判断是否全部为英文字母"""
+    for c in string:
+        if not is_alphabet(c):
+            return False
+    return True
 
 
 def is_other(uchar):

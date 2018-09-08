@@ -3,16 +3,16 @@
 # Brief: pycorrector.api
 
 from .corrector import Corrector
-from .detector import Detector
 from .config import *
 
 __version__ = '0.1.4'
 
-corrector = Corrector(char_file_path=char_file_path,
-                      same_pinyin_text_path=same_pinyin_text_path,
-                      same_stroke_text_path=same_stroke_text_path,
+corrector = Corrector(common_char_path=common_char_path,
+                      same_pinyin_path=same_pinyin_path,
+                      same_stroke_path=same_stroke_path,
                       language_model_path=language_model_path,
-                      word_freq_path=word_freq_path)
+                      word_freq_path=word_freq_path,
+                      custom_confusion_path=custom_confusion_path)
 get_same_pinyin = corrector.get_same_pinyin
 get_same_stroke = corrector.get_same_stroke
 correct = corrector.correct
