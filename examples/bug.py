@@ -33,12 +33,15 @@ import pycorrector
 # 一阙词牌名	一阕词牌名
 
 error_sentences = [
+
+    '一阙词牌名',
     '我兴高彩列地去公园游玩',
     '吹唐人记忆',
     '老师工作非常幸苦,我们要遵敬老师',
-    ' 我兴高彩列地去公园游玩',
+    ' 耐得住欲妄',
+    '母子平爱',
+    '不由的感叹道',
 ]
 for line in error_sentences:
-    print(pycorrector.detect(line))
     correct_sent = pycorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

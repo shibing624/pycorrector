@@ -16,7 +16,7 @@ corrector = Corrector(common_char_path=common_char_path,
 get_same_pinyin = corrector.get_same_pinyin
 get_same_stroke = corrector.get_same_stroke
 correct = corrector.correct
-ngram_score = corrector.detector.ngram_score
-ppl_score = corrector.detector.ppl_score
-word_frequency = corrector.detector.word_frequency
-detect = corrector.detector.detect
+ngram_score = corrector.ngram_score
+ppl_score = corrector.ppl_score
+word_frequency = corrector.word_frequency
+detect = corrector.detect

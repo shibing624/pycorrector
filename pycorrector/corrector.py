@@ -75,19 +75,20 @@ def load_same_stroke(path, sep='\t'):
     return result
 
 
-class Corrector(object):
+class Corrector(Detector):
     def __init__(self, common_char_path='', same_pinyin_path='',
                  same_stroke_path='', language_model_path='',
                  word_freq_path='', custom_confusion_path=''):
+        super(Corrector, self).__init__(language_model_path=language_model_path,
+                                        word_freq_path=word_freq_path,
+                                        custom_confusion_path=custom_confusion_path)
+        self.name = 'corrector'
         self.common_char_path = os.path.join(pwd_path, common_char_path)
         self.same_pinyin_text_path = os.path.join(pwd_path, same_pinyin_path)
         self.same_stroke_text_path = os.path.join(pwd_path, same_stroke_path)
-        self.detector = Detector(language_model_path=language_model_path,
-                                 word_freq_path=word_freq_path,
-                                 custom_confusion_path=custom_confusion_path)
-        self.initialized = False
+        self.initialized_corrector = False
 
-    def initialize(self):
+    def initialize_corrector(self):
         t1 = time.time()
         # chinese common char dict
         self.cn_char_set = load_word_dict(self.common_char_path)
@@ -97,11 +98,11 @@ class Corrector(object):
         self.same_stroke = load_same_stroke(self.same_stroke_text_path)
         default_logger.debug("Loaded same pinyin file: %s, same stroke file: %s, spend: %.3f s." % (
             self.same_pinyin_text_path, self.same_stroke_text_path, time.time() - t1))
-        self.initialized = True
+        self.initialized_corrector = True
 
-    def check_initialized(self):
-        if not self.initialized:
-            self.initialize()
+    def check_corrector_initialized(self):
+        if not self.initialized_corrector:
+            self.initialize_corrector()
 
     def get_same_pinyin(self, char):
         """
@@ -109,7 +110,7 @@ class Corrector(object):
         :param char:
         :return:
         """
-        self.check_initialized()
+        self.check_corrector_initialized()
         return self.same_pinyin.get(char, set())
 
     def get_same_stroke(self, char):
@@ -118,11 +119,11 @@ class Corrector(object):
         :param char:
         :return:
         """
-        self.check_initialized()
+        self.check_corrector_initialized()
         return self.same_stroke.get(char, set())
 
     def known(self, words):
-        return set(word for word in words if word in self.detector.word_freq)
+        return set(word for word in words if word in self.word_freq)
 
     def _confusion_char_set(self, c):
         confusion_char_set = self.get_same_pinyin(c).union(self.get_same_stroke(c))
@@ -141,8 +142,8 @@ class Corrector(object):
 
     def _confusion_custom_set(self, word):
         confusion_word_set = set()
-        if word in self.detector.custom_confusion:
-            confusion_word_set = {self.detector.custom_confusion[word]}
+        if word in self.custom_confusion:
+            confusion_word_set = {self.custom_confusion[word]}
         return confusion_word_set
 
     def _generate_items(self, word, fraction=1):
@@ -158,30 +159,30 @@ class Corrector(object):
             # same one char pinyin
             confusion = [i for i in self._confusion_char_set(word[0]) if i]
             candidates_2_order.extend(confusion)
-        if len(word) > 1:
+        if len(word) == 2:
             # same first char pinyin
             confusion = [i + word[1:] for i in self._confusion_char_set(word[0]) if i]
             candidates_2_order.extend(confusion)
             # same last char pinyin
             confusion = [word[:-1] + i for i in self._confusion_char_set(word[-1]) if i]
             candidates_2_order.extend(confusion)
-            if len(word) > 2:
-                # same mid char pinyin
-                confusion = [word[0] + i + word[2:] for i in self._confusion_char_set(word[1])]
-                candidates_3_order.extend(confusion)
+        if len(word) > 2:
+            # same mid char pinyin
+            confusion = [word[0] + i + word[2:] for i in self._confusion_char_set(word[1])]
+            candidates_3_order.extend(confusion)
 
-                # same first word pinyin
-                confusion_word = [i + word[-1] for i in self._confusion_word_set(word[:-1])]
-                candidates_1_order.extend(confusion_word)
+            # same first word pinyin
+            confusion_word = [i + word[-1] for i in self._confusion_word_set(word[:-1])]
+            candidates_3_order.extend(confusion_word)
 
-                # same last word pinyin
-                confusion_word = [word[0] + i for i in self._confusion_word_set(word[1:])]
-                candidates_1_order.extend(confusion_word)
+            # same last word pinyin
+            confusion_word = [word[0] + i for i in self._confusion_word_set(word[1:])]
+            candidates_3_order.extend(confusion_word)
 
         # add all confusion word list
         confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
         confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
-        confusion_sorted = sorted(confusion_word_list, key=lambda k: self.detector.word_frequency(k), reverse=True)
+        confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
     def _correct_item(self, sentence, item, begin_idx, end_idx):
@@ -203,10 +204,10 @@ class Corrector(object):
         before_sent = sentence[:begin_idx]
         after_sent = sentence[end_idx:]
         corrected_item = min(maybe_right_items,
-                             key=lambda k: self.detector.ppl_score(list(before_sent + k + after_sent)))
+                             key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
         if corrected_item != item:
             corrected_sent = before_sent + corrected_item + after_sent
-            default_logger.debug('pred:' + item + '=>' + corrected_item)
+            default_logger.debug('predict:' + item + '=>' + corrected_item)
             detail = [item, corrected_item, begin_idx, end_idx]
         return corrected_sent, detail
 
@@ -216,12 +217,11 @@ class Corrector(object):
         :param sentence: 句子文本
         :return: 改正后的句子, list(wrongs, rights, begin_idx, end_idx)
         """
-        self.check_initialized()
+        self.check_corrector_initialized()
         detail = []
-        maybe_errors = self.detector.detect(sentence)
+        maybe_errors = self.detect(sentence)
         for item, begin_idx, end_idx in maybe_errors:
             # 纠错，逐个处理
-            # TODO: 设置优先级，词大于字
             sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx)
             if detail_word:
                 detail.append(detail_word)
