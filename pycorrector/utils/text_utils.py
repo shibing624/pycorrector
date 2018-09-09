@@ -46,7 +46,7 @@ def is_alphabet(uchar):
 def is_alphabet_string(string):
     """判断是否全部为英文字母"""
     for c in string:
-        if not is_alphabet(c):
+        if c < 'a' or c > 'z':
             return False
     return True
 
@@ -197,6 +197,8 @@ def get_homophones_by_pinyin(input_pinyin):
 
 
 if __name__ == "__main__":
+    a = 'nihao'
+    print(a, is_alphabet_string(a))
     # test Q2B and B2Q
     for i in range(0x0020, 0x007F):
         print(Q2B(B2Q(chr(i))), B2Q(chr(i)))

@@ -126,10 +126,7 @@ class Corrector(Detector):
         return set(word for word in words if word in self.word_freq)
 
     def _confusion_char_set(self, c):
-        confusion_char_set = self.get_same_pinyin(c).union(self.get_same_stroke(c))
-        if not confusion_char_set:
-            confusion_char_set = set()
-        return confusion_char_set
+        return self.get_same_pinyin(c).union(self.get_same_stroke(c))
 
     def _confusion_word_set(self, word):
         confusion_word_set = set()
@@ -207,7 +204,7 @@ class Corrector(Detector):
                              key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
         if corrected_item != item:
             corrected_sent = before_sent + corrected_item + after_sent
-            default_logger.debug('predict:' + item + '=>' + corrected_item)
+            # default_logger.debug('predict:' + item + '=>' + corrected_item)
             detail = [item, corrected_item, begin_idx, end_idx]
         return corrected_sent, detail
 

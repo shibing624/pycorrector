@@ -6,5 +6,5 @@
 
 import pycorrector
 
-corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+corrected_sent, detail = pycorrector.correct('cv')
 print(corrected_sent, detail)

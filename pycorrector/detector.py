@@ -151,7 +151,6 @@ class Detector(object):
         sentence = uniform(sentence)
         # 切词
         tokens = tokenize(sentence)
-        default_logger.debug(tokens)
         maybe_errors = []
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
@@ -162,6 +161,9 @@ class Detector(object):
 
         # 未登录词加入疑似错误词典
         for word, begin_idx, end_idx in tokens:
+            # pass blank
+            if not word.strip():
+                continue
             # punctuation
             if word in PUNCTUATION_LIST:
                 continue
@@ -205,4 +207,4 @@ class Detector(object):
             default_logger.warn("index error, sentence:" + sentence + str(ie))
         except Exception as e:
             default_logger.warn("detect error, sentence:" + sentence + str(e))
-        return maybe_errors
+        return sorted(maybe_errors, key=lambda k: k[1], reverse=False)
