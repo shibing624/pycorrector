@@ -171,7 +171,7 @@ class Detector(object):
             if word.isdigit():
                 continue
             # pass alpha
-            if is_alphabet_string(word):
+            if is_alphabet_string(word.lower()):
                 continue
             # in dict
             if word in self.word_freq:
