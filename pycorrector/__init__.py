@@ -15,6 +15,7 @@ corrector = Corrector(common_char_path=common_char_path,
                       custom_confusion_path=custom_confusion_path)
 get_same_pinyin = corrector.get_same_pinyin
 get_same_stroke = corrector.get_same_stroke
+set_custom_confusion_dict = corrector.set_custom_confusion_dict
 correct = corrector.correct
 ngram_score = corrector.ngram_score
 ppl_score = corrector.ppl_score

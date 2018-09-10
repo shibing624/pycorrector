@@ -35,7 +35,7 @@ class Detector(object):
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
         default_logger.debug('Loaded word freq file: %s, spend: %s s' %
                              (self.word_freq_path, str(time.time() - t2)))
-        self.custom_confusion = self.load_custom_confusion_dict(self.custom_confusion_path)
+        self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
         default_logger.debug('Loaded confusion file: %s, spend: %s s' %
                              (self.custom_confusion_path, str(time.time() - t2)))
         self.initialized_detector = True
@@ -58,7 +58,7 @@ class Detector(object):
                 word_freq[word] = freq
         return word_freq
 
-    def load_custom_confusion_dict(self, path):
+    def _get_custom_confusion_dict(self, path):
         confusion = {}
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -74,6 +74,12 @@ class Detector(object):
                 confusion[variant] = origin
                 self.word_freq[origin] = freq
         return confusion
+
+    def set_custom_confusion_dict(self, path):
+        self.check_detector_initialized()
+        custom_confusion = self._get_custom_confusion_dict(path)
+        self.custom_confusion.update(custom_confusion)
+        default_logger.info('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
 
     def ngram_score(self, chars):
         """
