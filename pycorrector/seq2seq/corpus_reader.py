@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: Corpus for model
-import random
+from codecs import open
 
 from pycorrector.seq2seq.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 
@@ -14,7 +14,7 @@ def save_word_dict(dict_data, save_path):
 
 def load_word_dict(save_path):
     dict_data = dict()
-    with open(save_path, 'r', encoding='utf-8') as f:
+    with open(save_path, encoding='utf-8') as f:
         for line in f:
             items = line.strip().split()
             try:

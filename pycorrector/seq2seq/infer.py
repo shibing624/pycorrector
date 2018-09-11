@@ -2,56 +2,106 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 
-
 import numpy as np
-from keras.layers import Input
-from keras.models import Model, load_model
+from keras.layers import Input, LSTM
+from keras.models import load_model
 
 from pycorrector.seq2seq import cged_config as config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, load_word_dict
-from pycorrector.seq2seq.reader import EOS_TOKEN
+from pycorrector.seq2seq.reader import EOS_TOKEN, GO_TOKEN
 from pycorrector.utils.io_utils import get_logger
 
 logger = get_logger(__name__)
 
 
-def decode_sequence(model, rnn_hidden_dim, input_token_index,
-                    num_decoder_tokens, target_token_index, encoder_input_data,
-                    max_decoder_seq_length):
-    # construct the encoder and decoder
-    encoder_inputs = model.input[0]  # input_1
-    encoder_outputs, state_h_enc, state_c_enc = model.layers[2].output  # lstm_1
-    encoder_states = [state_h_enc, state_c_enc]
-    encoder_model = Model(encoder_inputs, encoder_states)
+def evaluate(encoder_model, decoder_model, num_encoder_tokens,
+             num_decoder_tokens, rnn_hidden_dim, target_token_index,
+             max_decoder_seq_length, encoder_input_data, input_texts):
+    # Define an input sequence and process it.
+    encoder_inputs = Input(shape=(None, num_encoder_tokens))
+    encoder = LSTM(rnn_hidden_dim, return_state=True)
+    encoder_outputs, state_h, state_c = encoder(encoder_inputs)
+    # We discard `encoder_outputs` and only keep the states.
+    encoder_states = [state_h, state_c]
 
-    decoder_inputs = model.input[1]  # input_2
-    decoder_state_input_h = Input(shape=(rnn_hidden_dim,), name='input_3')
-    decoder_state_input_c = Input(shape=(rnn_hidden_dim,), name='input_4')
-    decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
-    decoder_lstm = model.layers[3]
-    decoder_outputs, state_h_dec, state_c_dec = decoder_lstm(
-        decoder_inputs, initial_state=decoder_states_inputs)
-    decoder_states = [state_h_dec, state_c_dec]
-    decoder_dense = model.layers[4]
-    decoder_outputs = decoder_dense(decoder_outputs)
-    decoder_model = Model(
-        [decoder_inputs] + decoder_states_inputs,
-        [decoder_outputs] + decoder_states)
-
+    # Set up the decoder, using `encoder_states` as initial state.
+    decoder_inputs = Input(shape=(None, num_decoder_tokens))
+    # We set up our decoder to return full output sequences,
+    # and to return internal states as well. We don't use the
+    # return states in the training model, but we will use them in inference.
+    decoder_lstm = LSTM(rnn_hidden_dim, return_sequences=True, return_state=True)
+    decoder_outputs, _, _ = decoder_lstm(decoder_inputs,
+                                         initial_state=encoder_states)
     # Reverse-lookup token index to decode sequences back to
     # something readable.
-    reverse_input_char_index = dict(
-        (i, char) for char, i in input_token_index.items())
     reverse_target_char_index = dict(
         (i, char) for char, i in target_token_index.items())
 
+    def decode_seq(input_seq):
+        # Encode the input as state vectors.
+        states_value = encoder_model.predict(input_seq)
+
+        # Generate empty target sequence of length 1.
+        target_seq = np.zeros((1, 1, num_decoder_tokens))
+        # Populate the first character of target sequence with the start character.
+        first_char = GO_TOKEN
+        print('first char:', first_char)
+        target_seq[0, 0, target_token_index[first_char]] = 1.
+
+        # Sampling loop for a batch of sequences
+        # (to simplify, here we assume a batch of size 1).
+        stop_condition = False
+        decoded_sentence = ''
+        while not stop_condition:
+            output_tokens, h, c = decoder_model.predict(
+                [target_seq] + states_value)
+
+            # Sample a token
+            sampled_token_index = np.argmax(output_tokens[0, -1, :])
+            sampled_char = reverse_target_char_index[sampled_token_index]
+            if sampled_char != EOS_TOKEN:
+                decoded_sentence += sampled_char
+
+            # Exit condition: either hit max length
+            # or find stop character.
+            if (sampled_char == EOS_TOKEN or
+                        len(decoded_sentence) > max_decoder_seq_length):
+                stop_condition = True
+
+            # Update the target sequence (of length 1).
+            target_seq = np.zeros((1, 1, num_decoder_tokens))
+            target_seq[0, 0, sampled_token_index] = 1.
+
+            # Update states
+            states_value = [h, c]
+
+        return decoded_sentence
+
+    for seq_index in range(10):
+        # Take one sequence (part of the training set)
+        # for trying out decoding.
+        input_seq = encoder_input_data[seq_index: seq_index + 1]
+        decoded_sentence = decode_seq(input_seq)
+
+        print('Input sentence:', input_texts[seq_index])
+        print('Decoded sentence:', decoded_sentence)
+        print('-')
+
+
+def decode_sequence(encoder_model, decoder_model,
+                    num_decoder_tokens, target_token_index,
+                    encoder_input_data, max_target_texts_len):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(encoder_input_data)
 
     # Generate empty target sequence of length 1.
     target_seq = np.zeros((1, 1, num_decoder_tokens))
     # Populate the first character of target sequence with the start character.
-    # target_seq[0, 0, target_token_index[first_char]] = 1.
+    # first_char = encoder_input_data[0]
+    target_seq[0, 0, target_token_index[GO_TOKEN]] = 1.
+
+    reverse_target_char_index = dict(
+        (i, char) for char, i in target_token_index.items())
 
     # Sampling loop for a batch of sequences
     # (to simplify, here we assume a batch of size 1).
@@ -59,8 +109,7 @@ def decode_sequence(model, rnn_hidden_dim, input_token_index,
     decoded_sentence = ''
 
     while not stop_condition:
-        output_tokens, h, c = decoder_model.predict(
-            [target_seq] + states_value)
+        output_tokens, h, c = decoder_model.predict([target_seq] + states_value)
 
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
@@ -70,7 +119,7 @@ def decode_sequence(model, rnn_hidden_dim, input_token_index,
         # Exit condition: either hit max length
         # or find stop character.
         if (sampled_char == EOS_TOKEN or
-                    len(decoded_sentence) > max_decoder_seq_length):
+                    len(decoded_sentence) > max_target_texts_len):
             stop_condition = True
 
         # Update the target sequence (of length 1).
@@ -83,60 +132,49 @@ def decode_sequence(model, rnn_hidden_dim, input_token_index,
     return decoded_sentence
 
 
-def infer(train_path=None,
-          test_path=None,
-          save_model_path=None,
-          save_input_token_path=None,
-          save_target_token_path=None,
-          rnn_hidden_dim=200):
-    data_reader = CGEDReader(train_path)
-    input_texts, target_texts = data_reader.build_dataset(test_path)
-
-    max_encoder_seq_len = max([len(text) for text in input_texts])
-    max_decoder_seq_len = max([len(text) for text in target_texts])
-
-    print('num of samples:', len(input_texts))
-    print('max sequence length for inputs:', max_encoder_seq_len)
-    print('max sequence length for outputs:', max_decoder_seq_len)
-
-    input_token_index = load_word_dict(save_input_token_path)
-    target_token_index = load_word_dict(save_target_token_path)
-
-    encoder_input_data = np.zeros((len(input_texts), max_encoder_seq_len, len(input_token_index)), dtype='float32')
-
+def infer(input_text):
     # one hot representation
-    for i, input_text in enumerate(input_texts):
-        for t, char in enumerate(input_text):
-            if char in input_token_index:
-                encoder_input_data[i, t, input_token_index[char]] = 1.0
+    for i, char in enumerate(input_text):
+        if char in input_token_index:
+            encoder_input_data[0, i, input_token_index[char]] = 1.0
     logger.info("Data loaded.")
-
-    # model
-    logger.info("Infer seq2seq model...")
-    model = load_model(save_model_path)
-
-    for seq_index in range(10):
-        # Take one sequence (part of the test set)
-        # for trying out decoding.
-        input_seq = encoder_input_data[seq_index: seq_index + 1]
-        decoded_sentence = decode_sequence(model, rnn_hidden_dim, input_token_index,
-                                           len(target_token_index), target_token_index, input_seq,
-                                           max_decoder_seq_len)
-
-        print('Input sentence:', input_texts[seq_index])
-        print('Decoded sentence:', decoded_sentence)
-        print('-')
-
+    # Take one sequence decoding.
+    decoded_sentence = decode_sequence(encoder_model, decoder_model,
+                                       len(target_token_index), target_token_index,
+                                       encoder_input_data, max_target_texts_len)
+    print('Input sentence:', input_text)
+    print('Decoded sentence:', decoded_sentence)
     logger.info("Infer has finished.")
 
 
 if __name__ == "__main__":
-    infer(train_path=config.train_path,
-          test_path=config.test_path,
-          save_model_path=config.save_model_path,
-          save_input_token_path=config.input_vocab_path,
-          save_target_token_path=config.target_vocab_path,
-          rnn_hidden_dim=config.rnn_hidden_dim)
+    train_path = config.train_path
+    encoder_model_path = config.encoder_model_path
+    decoder_model_path = config.decoder_model_path
+    save_input_token_path = config.input_vocab_path
+    save_target_token_path = config.target_vocab_path
 
-# Input sentence: ['由', '我', '起', '开', '始', '做', '。']
-# Decoded sentence: 的，。的，的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的
+    # load dict
+    input_token_index = load_word_dict(save_input_token_path)
+    target_token_index = load_word_dict(save_target_token_path)
+
+    data_reader = CGEDReader(train_path)
+    input_texts, target_texts = data_reader.build_dataset(train_path)
+    max_input_texts_len = max([len(text) for text in input_texts])
+    max_target_texts_len = max([len(text) for text in target_texts])
+    encoder_input_data = np.zeros((1, max_input_texts_len, len(input_token_index)), dtype='float32')
+
+    # load model
+    logger.info("Load seq2seq model...")
+    encoder_model = load_model(encoder_model_path)
+    decoder_model = load_model(decoder_model_path)
+
+    inputs = [
+        list('由我起开始做。'),
+        list('没有解决这个问题，不能人类实现更美好的将来。'),
+    ]
+    for i in inputs:
+        infer(i)
+
+        # Input sentence: ['由', '我', '起', '开', '始', '做', '。']
+        # Decoded sentence: 的，。的，的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的

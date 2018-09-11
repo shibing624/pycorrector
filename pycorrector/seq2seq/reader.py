@@ -108,6 +108,8 @@ class Reader:
         for source_words, target_words in self.read_samples_by_string(path):
             source = [self.convert_token_2_id(w) for w in source_words]
             target = [self.convert_token_2_id(w) for w in target_words]
+            # head: "GO"; last: "EOS"
+            target.insert(0, GO_ID)
             target.append(EOS_ID)
             yield source, target
 
@@ -119,6 +121,8 @@ class Reader:
         """
         for source_words, target_words in self.read_samples_by_string(path):
             target = target_words
+            # head: "GO"; last: "EOS"
+            target.insert(0, GO_TOKEN)
             target.append(EOS_TOKEN)
             yield source_words, target
 
