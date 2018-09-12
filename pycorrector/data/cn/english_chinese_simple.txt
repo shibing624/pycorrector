@@ -1,0 +1,6000 @@
+src: Hi.
+dst: 嗨。
+src: Hi.
+dst: 你好。
+src: Run.
+dst: 你用跑的。
+src: Wait!
+dst: 等等！
+src: Hello!
+dst: 你好。
+src: I try.
+dst: 让我来。
+src: I won!
+dst: 我赢了。
+src: Oh no!
+dst: 不会吧。
+src: Cheers!
+dst: 干杯!
+src: He ran.
+dst: 他跑了。
+src: Hop in.
+dst: 跳进来。
+src: I lost.
+dst: 我迷失了。
+src: I quit.
+dst: 我退出。
+src: I'm OK.
+dst: 我没事。
+src: Listen.
+dst: 听着。
+src: No way!
+dst: 不可能！
+src: No way!
+dst: 没门！
+src: Really?
+dst: 你确定？
+src: Try it.
+dst: 试试吧。
+src: We try.
+dst: 我们来试试。
+src: Why me?
+dst: 为什么是我？
+src: Ask Tom.
+dst: 去问汤姆。
+src: Be calm.
+dst: 冷静点。
+src: Be fair.
+dst: 公平点。
+src: Be kind.
+dst: 友善点。
+src: Be nice.
+dst: 和气点。
+src: Call me.
+dst: 联系我。
+src: Call us.
+dst: 联系我们。
+src: Come in.
+dst: 进来。
+src: Get Tom.
+dst: 找到汤姆。
+src: Get out!
+dst: 滚出去！
+src: Go away!
+dst: 走开！
+src: Go away!
+dst: 滚！
+src: Go away.
+dst: 走开！
+src: Goodbye!
+dst: 再见！
+src: Goodbye!
+dst: 告辞！
+src: Hang on!
+dst: 等一下！
+src: He came.
+dst: 他来了。
+src: He runs.
+dst: 他跑。
+src: Help me.
+dst: 帮我一下。
+src: Hold on.
+dst: 坚持。
+src: Hug Tom.
+dst: 抱抱汤姆！
+src: I agree.
+dst: 我同意。
+src: I'm ill.
+dst: 我生病了。
+src: I'm old.
+dst: 我老了。
+src: It's OK.
+dst: 没关系。
+src: It's me.
+dst: 是我。
+src: Join us.
+dst: 来加入我们吧。
+src: Keep it.
+dst: 留着吧。
+src: Kiss me.
+dst: 吻我。
+src: Perfect!
+dst: 完美！
+src: See you.
+dst: 再见！
+src: Shut up!
+dst: 闭嘴！
+src: Skip it.
+dst: 不管它。
+src: Take it.
+dst: 拿走吧。
+src: Wake up!
+dst: 醒醒！
+src: Wash up.
+dst: 去清洗一下。
+src: We know.
+dst: 我们知道。
+src: Welcome.
+dst: 欢迎。
+src: Who won?
+dst: 谁赢了？
+src: Why not?
+dst: 为什么不？
+src: You run.
+dst: 你跑。
+src: Back off.
+dst: 往后退点。
+src: Be still.
+dst: 静静的，别动。
+src: Cuff him.
+dst: 把他铐上。
+src: Drive on.
+dst: 往前开。
+src: Get away!
+dst: 走开！
+src: Get away!
+dst: 滚！
+src: Get down!
+dst: 趴下！
+src: Get lost!
+dst: 滚！
+src: Get real.
+dst: 醒醒吧。
+src: Grab Tom.
+dst: 抓住汤姆。
+src: Grab him.
+dst: 抓住他。
+src: Have fun.
+dst: 玩得开心。
+src: He tries.
+dst: 他来试试。
+src: Humor me.
+dst: 你就随了我的意吧。
+src: Hurry up.
+dst: 赶快!
+src: Hurry up.
+dst: 快点！
+src: I forgot.
+dst: 我忘了。
+src: I resign.
+dst: 我放弃。
+src: I'll pay.
+dst: 我来付钱。
+src: I'm busy.
+dst: 我很忙。
+src: I'm cold.
+dst: 我冷。
+src: I'm fine.
+dst: 我很好。
+src: I'm full.
+dst: 我吃饱了。
+src: I'm sick.
+dst: 我生病了。
+src: I'm sick.
+dst: 我病了。
+src: Leave me.
+dst: 让我一个人呆会儿。
+src: Let's go!
+dst: 走吧。
+src: Let's go!
+dst: 我们开始吧！
+src: Let's go!
+dst: 我们走吧!
+src: Look out!
+dst: 当心！
+src: She runs.
+dst: 她跑。
+src: Stand up.
+dst: 起立。
+src: They won.
+dst: 他们赢了。
+src: Tom died.
+dst: 汤姆去世了。
+src: Tom quit.
+dst: 汤姆不干了。
+src: Tom swam.
+dst: 汤姆游泳了。
+src: Trust me.
+dst: 相信我。
+src: Try hard.
+dst: 努力。
+src: Try some.
+dst: 试试吧。
+src: Who died?
+dst: 谁死了？
+src: Birds fly.
+dst: 鸟类飞行。
+src: Call home!
+dst: 打电话回家！
+src: Catch him.
+dst: 抓住他。
+src: Come home.
+dst: 回家吧。
+src: Do it now.
+dst: 现在就做。
+src: Dogs bark.
+dst: 狗会叫。
+src: Don't cry.
+dst: 别哭。
+src: Excuse me.
+dst: 对不起。
+src: Feel this.
+dst: 来感受一下这个。
+src: Follow me.
+dst: 请跟我来。
+src: Follow us.
+dst: 请跟着我们。
+src: Good luck.
+dst: 祝你好运。
+src: Grab that.
+dst: 抓住那个。
+src: Grab this.
+dst: 抓住这个。
+src: Hands off.
+dst: 手举起来。
+src: He's a DJ.
+dst: 他是一个 DJ 。
+src: He's lazy.
+dst: 他很懒。
+src: Hold fire.
+dst: 停火。
+src: Hold this.
+dst: 我住这个。
+src: How awful!
+dst: 太可怕了。
+src: I am cold.
+dst: 我冷。
+src: I am okay.
+dst: 我没事。
+src: I am sick.
+dst: 我生病了。
+src: I get you.
+dst: 我了解你。
+src: I hope so.
+dst: 我希望如此。
+src: I laughed.
+dst: 我笑了。
+src: I promise.
+dst: 我向你保证。
+src: I saw Tom.
+dst: 我看见汤姆了。
+src: I'm a man.
+dst: 我是个男人。
+src: I'm right.
+dst: 我是对的。
+src: I'm sorry.
+dst: 对不起。
+src: I'm sorry.
+dst: 我很抱歉。
+src: I'm young.
+dst: 我还年轻。
+src: Is it far?
+dst: 远吗？
+src: It snowed.
+dst: 下雪了。
+src: It's 3:30.
+dst: 3点半了。
+src: It's cold.
+dst: 天很冷。
+src: It's free.
+dst: 它是免费的。
+src: It's late.
+dst: 很晚了。
+src: It's true.
+dst: 这是真的。
+src: Let me in.
+dst: 让我进去。
+src: Lie still.
+dst: 躺着不动。
+src: Look back!
+dst: 回头看！
+src: Move over.
+dst: 腾一下地方。
+src: Of course!
+dst: 当然!
+src: Of course.
+dst: 当然。
+src: Of course.
+dst: 当然了。
+src: Oh please!
+dst: 噢拜托了！
+src: Open fire!
+dst: 开火！
+src: Read this.
+dst: 念这个。
+src: See above.
+dst: 参见上文。
+src: She cried.
+dst: 她哭了。
+src: She tried.
+dst: 她试过了。
+src: She walks.
+dst: 她在行走。
+src: Sit tight.
+dst: 耐心等着。
+src: Slow down.
+dst: 慢一点。
+src: Stay calm.
+dst: 保持冷静。
+src: Stay down!
+dst: 趴着！
+src: Stop that!
+dst: 住手。
+src: Take care!
+dst: 照顾好自己。
+src: Take care.
+dst: 照顾好自己。
+src: Tom swims.
+dst: Tom游泳。
+src: Tom tried.
+dst: 汤姆累了。
+src: Tom waved.
+dst: 汤姆挥手了。
+src: Turn left.
+dst: 向左转。
+src: Wait here.
+dst: 在这等着。
+src: Well done!
+dst: 做得好！
+src: Who cares?
+dst: 爱谁谁。
+src: Wonderful!
+dst: 很棒！
+src: You idiot!
+dst: 蠢货！
+src: All aboard!
+dst: 请上船！
+src: Am I wrong?
+dst: 我错了吗？
+src: Birds sing.
+dst: 鸟儿歌唱。
+src: Can I help?
+dst: 我可以帮忙吗?
+src: Come along.
+dst: 快点。
+src: Definitely!
+dst: 必须的！
+src: Don't move!
+dst: 别动！
+src: Don't move.
+dst: 不要动。
+src: Fill it up.
+dst: 把它填满。
+src: Follow him.
+dst: 跟着他走。
+src: God exists.
+dst: 上帝存在。
+src: Good night.
+dst: 晚安。
+src: He gave in.
+dst: 他让步了.
+src: He is mean.
+dst: 他很凶。
+src: He is poor.
+dst: 他很穷。
+src: He is tall.
+dst: 他高。
+src: Hello, Tom.
+dst: 你好，汤姆。
+src: Hey, relax.
+dst: 嘿，放松点。
+src: How lovely!
+dst: 多可爱啊！
+src: Hurry home.
+dst: 赶快回家。
+src: I am a man.
+dst: 我是个男人。
+src: I am short.
+dst: 我个头矮。
+src: I can cook.
+dst: 我会做饭。
+src: I can swim.
+dst: 我会游泳。
+src: I eat here.
+dst: 我在这里吃。
+src: I envy her.
+dst: 我嫉妒她。
+src: I envy him.
+dst: 我羡慕他。
+src: I hate you.
+dst: 我恨你。
+src: I know Tom.
+dst: 我认识汤姆。
+src: I know him.
+dst: 我认识他。
+src: I like tea.
+dst: 我喜欢茶。
+src: I like you.
+dst: 我喜欢你。
+src: I like you.
+dst: 我喜欢你。
+src: I love her.
+dst: 我爱她。
+src: I love you.
+dst: 我爱您。
+src: I miss you.
+dst: 我想念你。
+src: I need you.
+dst: 我需要你。
+src: I think so.
+dst: 我想是这样的。
+src: I use this.
+dst: 我使用这个。
+src: I'll do it.
+dst: 我会做的。
+src: I'm a hero.
+dst: 我是个英雄。
+src: I'm humble.
+dst: 我是谦虚的。
+src: I'm single.
+dst: 我单身。
+src: I'm sleepy.
+dst: 我困了。
+src: I'm so fat.
+dst: 我好胖哦。
+src: Ignore Tom.
+dst: 别理汤姆。
+src: Is it love?
+dst: 那是爱吗？
+src: It's great.
+dst: 真是太好了。
+src: It's night.
+dst: 是晚上了。
+src: Just relax.
+dst: 放松点吧。
+src: Keep quiet!
+dst: 保持安静！
+src: Let him in.
+dst: 让他进来。
+src: Let me die.
+dst: 让我去死。
+src: Let me see.
+dst: 让我想一想。
+src: Let's walk.
+dst: 我们走走吧。
+src: Look there.
+dst: 看那里。
+src: No comment.
+dst: 禁止评论。
+src: No problem!
+dst: 没问题！
+src: No problem.
+dst: 没关系。
+src: No problem.
+dst: 没问题。
+src: Oh, really?
+dst: 噢，真的吗?
+src: Once again.
+dst: 再一次。
+src: She smiled.
+dst: 她笑了。
+src: Stand back!
+dst: 往后站！
+src: Stay sharp.
+dst: 保持警惕。
+src: Stay there.
+dst: 留在这里别动。
+src: Step aside.
+dst: 让开。
+src: Study hard.
+dst: 好好学习。
+src: That hurts.
+dst: 真疼。
+src: Time flies.
+dst: 时光飞逝。
+src: Tom is shy.
+dst: 汤姆害羞。
+src: Tom smiled.
+dst: 汤姆笑了。
+src: Tom yawned.
+dst: 汤姆打哈欠了。
+src: Turn right.
+dst: 向右转。
+src: We laughed.
+dst: 我们笑了。
+src: We lost it.
+dst: 我们失去了它。
+src: What is it?
+dst: 这是什么啊？
+src: What's new?
+dst: 有什么新鲜事吗？
+src: Where am I?
+dst: 我在哪里？
+src: Where am I?
+dst: 这是什么地方?
+src: Who are we?
+dst: 我们是谁？
+src: Wood burns.
+dst: 木材燃烧。
+src: Are we done?
+dst: 我们完成了吗？
+src: Are you Tom?
+dst: 你是汤姆吗？
+src: Are you mad?
+dst: 您生气了吗？
+src: Are you mad?
+dst: 你生气了吗？
+src: Are you sad?
+dst: 你伤心吗？
+src: Be friendly.
+dst: 友好点。
+src: Break it up!
+dst: 停手！
+src: Can you see?
+dst: 你能看吗？
+src: Count me in.
+dst: 算我一个.
+src: Do as I say.
+dst: 按我说的做。
+src: Don't leave!
+dst: 别走！
+src: Don't panic!
+dst: 不要恐慌！
+src: Don't shout.
+dst: 不许大叫。
+src: Don't worry.
+dst: 别担心。
+src: Don't worry.
+dst: 别担心。
+src: Get serious.
+dst: 认真点。
+src: He is alone.
+dst: 他独自一人。
+src: He is drunk.
+dst: 他醉了。
+src: He's strong.
+dst: 他很强壮。
+src: Here we are!
+dst: 我们到了！
+src: Here, catch!
+dst: 这里，快抓住。
+src: How are you?
+dst: 你们好吗？
+src: How are you?
+dst: 你好吗？
+src: How curious!
+dst: 多怪啊！
+src: How strange!
+dst: 真奇怪。
+src: I am coming.
+dst: 我来了。
+src: I buy tapes.
+dst: 我买磁带。
+src: I can't say.
+dst: 我不能说。
+src: I don't lie.
+dst: 我不说谎。
+src: I eat bread.
+dst: 我吃面包。
+src: I feel cold.
+dst: 我觉得冷。
+src: I feel fine.
+dst: 我感觉很好。
+src: I feel weak.
+dst: 我感到虚弱。
+src: I have time.
+dst: 我有时间。
+src: I heard you.
+dst: 我听你的。
+src: I like fish.
+dst: 我喜欢鱼。
+src: I like jazz.
+dst: 我喜欢爵士乐。
+src: I live here.
+dst: 我住在这。
+src: I need glue.
+dst: 我需要胶水。
+src: I overslept.
+dst: 我睡过头了。
+src: I said that.
+dst: 我是那样说的。
+src: I smell gas.
+dst: 我闻到瓦斯味。
+src: I trust him.
+dst: 我信任他。
+src: I trust you.
+dst: 我信任你。
+src: I want more.
+dst: 我想要更多。
+src: I was wrong.
+dst: 我搞错了。
+src: I will obey.
+dst: 我会听从指示。
+src: I will wait.
+dst: 我会等。
+src: I work here.
+dst: 我在这里工作。
+src: I'll attend.
+dst: 我会参加。
+src: I'll get in.
+dst: 我会进去。
+src: I'm 17, too.
+dst: 我也是17岁。
+src: I'm a loser.
+dst: 我是个不成器的人。
+src: I'm at home.
+dst: 我在家。
+src: I'm curious.
+dst: 我很好奇。
+src: I'm married.
+dst: 我结婚了。
+src: I'm married.
+dst: 我已婚。
+src: I'm reading.
+dst: 我在读书。
+src: I'm serious.
+dst: 我是认真的。
+src: I'm thirsty.
+dst: 我渴了。
+src: Is Tom well?
+dst: 汤姆还好吧？
+src: Is it yours?
+dst: 这是你的吗？
+src: It can't be!
+dst: 这不可能！
+src: It can't be!
+dst: 不可能！
+src: It's my job.
+dst: 这是我份内的事。
+src: Just say no.
+dst: 只要说不。
+src: Keep trying.
+dst: 继续努力。
+src: Let me know.
+dst: 让我知道。
+src: Let's begin.
+dst: 让我们开始吧。
+src: Let's leave.
+dst: 走吧。
+src: Let's start!
+dst: 让我们开始吧。
+src: Life is fun.
+dst: 人生是有趣的。
+src: Look around.
+dst: 四处看看。
+src: Lunch is on.
+dst: 午餐送到了。
+src: Many thanks.
+dst: 非常感谢！
+src: Money talks.
+dst: 金钱万能。
+src: Nice timing.
+dst: 好时机。
+src: No one came.
+dst: 没有人来了。
+src: OK. I agree.
+dst: 好。我同意。
+src: Please come.
+dst: 请来吧。
+src: Please sing.
+dst: 请唱歌。
+src: Release him.
+dst: 放开他。
+src: She hit him.
+dst: 她打了他。
+src: Stand aside.
+dst: 一边站着。
+src: Step inside.
+dst: 进来。
+src: That's life.
+dst: 这就是生活。
+src: That's life.
+dst: 人生就是如此。
+src: That's true.
+dst: 这是真的。
+src: They hugged.
+dst: 他们拥抱。
+src: They kissed.
+dst: 他们亲吻了。
+src: This is ice.
+dst: 这是冰块。
+src: Tom blushed.
+dst: 汤姆脸红了。
+src: Tom frowned.
+dst: 汤姆皱着眉头。
+src: Tom got fat.
+dst: 汤姆变胖了。
+src: Tom saw you.
+dst: 汤姆看见你了。
+src: Tom'll wait.
+dst: 汤姆会等。
+src: Tom's wrong.
+dst: 汤姆错了。
+src: Turn around.
+dst: 转过来。
+src: Was I wrong?
+dst: 我错了吗？
+src: We are boys.
+dst: 我们是男孩。
+src: We are late.
+dst: 我们迟到了。
+src: We both won.
+dst: 我们都赢了。
+src: We can rest.
+dst: 我们可以休息。
+src: We know him.
+dst: 我们认识他。
+src: We love Tom.
+dst: 我们爱汤姆。
+src: We want Tom.
+dst: 我们想要汤姆。
+src: What a pity!
+dst: 太可惜了！
+src: What a pity!
+dst: 多遗憾啊！
+src: What is new?
+dst: 有什么新鲜事吗？
+src: What's that?
+dst: 那是什么？
+src: What's this?
+dst: 这是什么啊？
+src: What's this?
+dst: 那是什么？
+src: Who are you?
+dst: 你是谁？
+src: Who drew it?
+dst: 谁画的？
+src: Who is that?
+dst: 那是谁？
+src: Whose is it?
+dst: 这是谁的？
+src: Wood floats.
+dst: 木头会漂浮。
+src: Work slowly.
+dst: 干活慢点。
+src: You're sick!
+dst: 你有病！
+src: Anything new?
+dst: 有什么新鲜事吗？
+src: Are you busy?
+dst: 你忙吗？
+src: Are you lost?
+dst: 您迷路了吗？
+src: Are you lost?
+dst: 你迷路了吗？
+src: Are you sure?
+dst: 你确定吗？
+src: Be realistic!
+dst: 现实点！
+src: Bring him in.
+dst: 带他进来。
+src: Call Tom now.
+dst: 现在给汤姆打电话。
+src: Can we do it?
+dst: 我们能做到吗？
+src: Can you come?
+dst: 你能来吗？
+src: Can you read?
+dst: 你能阅读吗？
+src: Can you swim?
+dst: 你会游泳吗?
+src: Did you call?
+dst: 你打过电话了吗？
+src: Do you smoke?
+dst: 你吸烟吗?
+src: Do your best.
+dst: 尽力而为。
+src: Don't be shy.
+dst: 不要害羞。
+src: Don't bother.
+dst: 不用麻烦了。
+src: Don't bug me.
+dst: 别来烦我。
+src: Drive safely.
+dst: 安全地驾驶。
+src: Drive slowly.
+dst: 开车慢点。
+src: Ghosts exist.
+dst: 鬼魂是存在的。
+src: Give it back.
+dst: 还回去
+src: Good evening.
+dst: 晚上好。
+src: Good evening.
+dst: 晚上好！
+src: Good morning.
+dst: 早上好！
+src: He got angry.
+dst: 他生气了。
+src: He likes tea.
+dst: 他喜欢茶。
+src: He loves her.
+dst: 他爱她。
+src: He was brave.
+dst: 他很勇敢。
+src: How annoying!
+dst: 真烦人。
+src: How dare you!
+dst: 你敢！
+src: How horrible!
+dst: 真糟糕！
+src: I admire you.
+dst: 我欣赏你。
+src: I almost won.
+dst: 我几乎赢了。
+src: I am at home.
+dst: 我在家。
+src: I am curious.
+dst: 我很好奇。
+src: I am married.
+dst: 我结婚了。
+src: I am praying.
+dst: 我在祈祷。
+src: I am thirsty.
+dst: 我渴了。
+src: I ate caviar.
+dst: 我吃了鱼子酱。
+src: I called Tom.
+dst: 我给汤姆打了电话。
+src: I don't care.
+dst: 我无所谓。
+src: I have a car.
+dst: 我有一辆车。
+src: I have a dog.
+dst: 我有一条狗。
+src: I have a map.
+dst: 我有一张地图。
+src: I like these.
+dst: 我喜欢这些。
+src: I love music.
+dst: 我爱音乐。
+src: I missed you.
+dst: 我想你。
+src: I see a book.
+dst: 我看到一本书。
+src: I understand.
+dst: 我明白了。
+src: I want a dog.
+dst: 我想要一只狗。
+src: I'll sue you.
+dst: 我要告你。
+src: I'm all ears.
+dst: 我洗耳恭听。
+src: I'm free now.
+dst: 我现在有空了。
+src: I'm innocent.
+dst: 我是清白的。
+src: I'm not sure.
+dst: 我不确定。
+src: I'm pregnant.
+dst: 我怀孕了。
+src: I'm so happy.
+dst: 我好高兴。
+src: I'm so tired.
+dst: 我好累。
+src: I'm starving!
+dst: 我饿死了！
+src: I'm starving!
+dst: 我饿死了！
+src: I'm the best.
+dst: 我是最好的。
+src: I'm thrilled.
+dst: 我激动不已。
+src: I've decided.
+dst: 我决定了。
+src: Is that love?
+dst: 那是爱吗？
+src: Is that true?
+dst: 真的？
+src: It's amazing.
+dst: 太神奇了。
+src: It's obvious.
+dst: 它是明显的。
+src: It's raining.
+dst: 下雨了。
+src: It's raining.
+dst: 在下雨。
+src: It's snowing.
+dst: 正在下雪。
+src: It's so hard.
+dst: 太难了。
+src: It's too big.
+dst: 它太大了。
+src: Keep looking.
+dst: 继续看！
+src: Keep reading.
+dst: 继续看。
+src: Keep working.
+dst: 继续工作！
+src: Let me think.
+dst: 让我想一想。
+src: Let's go now.
+dst: 我们现在去吧。
+src: Life goes on.
+dst: 人生会继续。
+src: Mary came in.
+dst: 玛丽进来了。
+src: Mary is tall.
+dst: 玛丽很高。
+src: May I go now?
+dst: 我现在能去了吗？
+src: Move quietly.
+dst: 轻轻地移动。
+src: My eyes hurt.
+dst: 我的眼睛痛。
+src: No one knows.
+dst: 没有人知道。
+src: Nobody asked.
+dst: 没人问过。
+src: Open the box.
+dst: 打开箱子。
+src: Please hurry.
+dst: 请抓紧时间。
+src: Please leave.
+dst: 请你离开。
+src: See you soon!
+dst: 一会儿见！
+src: See you then.
+dst: 到时候见。
+src: Shame on you!
+dst: 你真丢脸！
+src: Shame on you.
+dst: 你真丢脸！
+src: She is quiet.
+dst: 她很安静。
+src: She is upset.
+dst: 她心情不好。
+src: She may come.
+dst: 她可以来。
+src: She may come.
+dst: 她也许来。
+src: Someone came.
+dst: 有人来了。
+src: Stop gawking.
+dst: 别再傻看着。
+src: Stop reading.
+dst: 别再念了。
+src: Stop staring.
+dst: 别再盯着了。
+src: Stop talking.
+dst: 不要说话了。
+src: Stop whining.
+dst: 别再埋怨了。
+src: Stop yelling!
+dst: 别再喊叫了！
+src: Sweet dreams!
+dst: 祝你好梦。
+src: Take it easy.
+dst: 放轻松。
+src: Take it easy.
+dst: 别紧张。
+src: Take me home.
+dst: 带我回家。
+src: Tell us more.
+dst: 告诉我们多一点。
+src: That is mine.
+dst: 那是我的。
+src: That's crazy.
+dst: 那是疯狂的。
+src: That's great.
+dst: 那真是太好了。
+src: That's right.
+dst: 对！
+src: They refused.
+dst: 他们拒绝了。
+src: This is mine.
+dst: 这是我的。
+src: This is true.
+dst: 这是真的。
+src: Tom followed.
+dst: 汤姆跟着。
+src: Tom is happy.
+dst: 汤姆高兴。
+src: Tom knows me.
+dst: Tom认识我。
+src: Tom sat down.
+dst: 汤姆坐下了。
+src: Tom told him.
+dst: 汤姆告诉了他。
+src: Tom was full.
+dst: 汤姆饱了。
+src: Tom, wake up.
+dst: 汤姆，快起来！
+src: Try it again.
+dst: 再试一次。
+src: Unbelievable!
+dst: 难以置信!
+src: Unbelievable!
+dst: 难以置信！
+src: Vote for Tom.
+dst: 投票给汤姆。
+src: We are happy.
+dst: 我们很快乐。
+src: We can begin.
+dst: 我们能开始。
+src: We need more.
+dst: 我们需要更多。
+src: We succeeded.
+dst: 我们成功了。
+src: We surrender.
+dst: 我们投降。
+src: We're hiding.
+dst: 我们在藏着。
+src: Welcome back.
+dst: 欢迎回来。
+src: What is love?
+dst: 爱是什么？
+src: What is that?
+dst: 那是什么？
+src: What is this?
+dst: 这是什么啊？
+src: Who built it?
+dst: 这是谁建的？
+src: Who was here?
+dst: 谁来了这里？
+src: Years passed.
+dst: 多少年过去了。
+src: Anything else?
+dst: 还有别的吗？
+src: Are you angry?
+dst: 您生气了吗？
+src: Are you angry?
+dst: 你生气了吗？
+src: Are you happy?
+dst: 你快乐吗？
+src: Are you ready?
+dst: 您准备好了吗？
+src: Are you ready?
+dst: 你们准备好了吗？
+src: Are you ready?
+dst: 你准备好了吗？
+src: Are you tired?
+dst: 你累了吗?
+src: Bring the key.
+dst: 带钥匙来。
+src: Call security!
+dst: 叫保安来！
+src: Can you skate?
+dst: 你会溜冰吗？
+src: Check, please.
+dst: 请结帐。
+src: Don't give up!
+dst: 不要放弃!
+src: Draw a circle.
+dst: 画一个圈。
+src: Flowers bloom.
+dst: 鲜花盛开。
+src: He can't swim.
+dst: 他不会游泳。
+src: He is a thief.
+dst: 这是一个小偷。
+src: He is at home.
+dst: 他在家里。
+src: He is my type!
+dst: 他是我的菜!
+src: He is no fool.
+dst: 他不是傻子。
+src: He is no fool.
+dst: 他没疯。
+src: He isn't home.
+dst: 他不在家。
+src: He lied to us.
+dst: 他欺骗了我们。
+src: He sells cars.
+dst: 他卖车子。
+src: He shot at me.
+dst: 他枪击了我。
+src: He tries hard.
+dst: 他努力地尝试。
+src: He wants more.
+dst: 他想要更多。
+src: He's not home.
+dst: 他不在家。
+src: How about you?
+dst: 你怎么样？
+src: How about you?
+dst: 那你呢?
+src: How about you?
+dst: 你们呢？
+src: How about you?
+dst: 您呢？
+src: How beautiful!
+dst: 多美啊！
+src: I am divorced.
+dst: 我离婚了。
+src: I am very sad.
+dst: 我很难过。
+src: I approved it.
+dst: 我同意它。
+src: I believe you.
+dst: 我相信你。
+src: I believe you.
+dst: 我信过你。
+src: I can see Tom.
+dst: 我看得见汤姆。
+src: I can't do it.
+dst: 我无法做到这一点。
+src: I despise you.
+dst: 我鄙视你。
+src: I did my best.
+dst: 我做得好到不能再好了。
+src: I did see him.
+dst: 我确实看见他了。
+src: I didn't pass.
+dst: 我没通过。
+src: I feel lonely.
+dst: 我觉得很孤独。
+src: I got it free.
+dst: 我是免费得到的。
+src: I have a home.
+dst: 我有一个家。
+src: I have an egg.
+dst: 我有一只蛋。
+src: I have to win.
+dst: 我必须赢。
+src: I like sports.
+dst: 我喜欢运动。
+src: I like sweets.
+dst: 我喜欢甜食。
+src: I like to eat.
+dst: 我喜欢吃。
+src: I like to run.
+dst: 我喜欢跑步。
+src: I love coffee.
+dst: 我爱咖啡。
+src: I love movies.
+dst: 我爱电影。
+src: I love nature.
+dst: 我爱大自然。
+src: I love sports.
+dst: 我喜欢运动。
+src: I miss Boston.
+dst: 我想念波士顿。
+src: I must go now.
+dst: 我现在必须走了。
+src: I need to try.
+dst: 我需要尝试。
+src: I respect Tom.
+dst: 我尊敬汤姆。
+src: I think I can.
+dst: 我想我可以。
+src: I use Twitter.
+dst: 我用Twitter。
+src: I want to cry.
+dst: 我想哭。
+src: I want to die.
+dst: 我想死
+src: I was at home.
+dst: 我刚才在家。
+src: I was so cold.
+dst: 我很冷。
+src: I'll buy this.
+dst: 我要买这个。
+src: I'll call you.
+dst: 我会打电话给你。
+src: I'll eat here.
+dst: 我会在这里吃饭。
+src: I'll take him.
+dst: 我会去接他的。
+src: I'm a teacher.
+dst: 我是个老师。
+src: I'm exhausted.
+dst: 我累死了。
+src: I'm exhausted.
+dst: 困死了。
+src: I'm on a diet.
+dst: 我在节食。
+src: I'm on my way.
+dst: 我这就上路。
+src: I'm so stupid.
+dst: 我真蠢。
+src: I'm very busy.
+dst: 我很忙。
+src: I've got time.
+dst: 我有时间。
+src: I've got wine.
+dst: 我有酒。
+src: Is it serious?
+dst: 严重吗？
+src: It is raining.
+dst: 下雨了。
+src: It is raining.
+dst: 在下雨。
+src: It looks good.
+dst: 看起来不错。
+src: It might rain.
+dst: 可能会下雨。
+src: It might rain.
+dst: 可能要下雨了。
+src: It's a secret.
+dst: 它是个秘密。
+src: It's business.
+dst: 公事公办。
+src: It's freezing.
+dst: 天气好冷。
+src: It's improved.
+dst: 它有改善了。
+src: It's my treat.
+dst: 我请客。
+src: It's not mine.
+dst: 不是我的。
+src: It's too long.
+dst: 它太长了。
+src: It's too loud.
+dst: 它太大声。
+src: It's very big.
+dst: 它很大。
+src: Keep Tom safe.
+dst: 确保汤姆安全。
+src: Keep it quiet.
+dst: 保持安静
+src: Let me see it.
+dst: 让我看看。
+src: Lock the gate.
+dst: 锁大门。
+src: May I come in?
+dst: 我可以进来吗?
+src: Meet me there.
+dst: 在那里见我。
+src: My foot hurts.
+dst: 我的脚痛。
+src: My pen is new.
+dst: 我的钢笔是新的。
+src: Never give up.
+dst: 决不放弃。
+src: Pace yourself.
+dst: 量力而行。
+src: Quit gambling.
+dst: 戒掉赌博吧。
+src: Read this now.
+dst: 现在读这个。
+src: Save yourself.
+dst: 拯救你自己。
+src: See you again.
+dst: 再见！
+src: See you later.
+dst: 再见。
+src: Shake my hand.
+dst: 和我握手。
+src: Shall we walk?
+dst: 我们该步行吗？
+src: She felt blue.
+dst: 她感到闷闷不乐的。
+src: She hated him.
+dst: 她恨他。
+src: She loves Tom.
+dst: 她爱汤姆。
+src: She's dieting.
+dst: 她在节食中。
+src: She's my type.
+dst: 她是我的菜。
+src: Shut the door.
+dst: 不要把门开着。
+src: Shut the door.
+dst: 关门。
+src: Sit beside me.
+dst: 坐我旁边。
+src: Speak clearly.
+dst: 讲清楚。
+src: Stir the soup.
+dst: 搅一下汤。
+src: Stop meddling.
+dst: 别再插手。
+src: Stop shooting.
+dst: 停止射击。
+src: Straighten up.
+dst: 改邪归正。
+src: Stuff happens.
+dst: 事情难免会发生。
+src: Tell me again.
+dst: 重新告诉我。
+src: Thanks anyway.
+dst: 还是要说谢谢的。
+src: That's a book.
+dst: 那是一本书。
+src: The bell rang.
+dst: 铃响了。
+src: They're armed.
+dst: 他们有带武器。
+src: This is a wig.
+dst: 这是假发。
+src: Time is money.
+dst: 时间就是金钱。
+src: Today was fun.
+dst: 今天很有趣。
+src: Tom didn't go.
+dst: 汤姆没走。
+src: Tom is a hick.
+dst: 汤姆是个乡巴佬。
+src: Tom is absent.
+dst: 汤姆缺席。
+src: Tom is boring.
+dst: 汤姆是个无聊的人。
+src: Tom is so hot.
+dst: 汤姆非常性感。
+src: Tom isn't old.
+dst: 汤姆不老。
+src: Tom knows him.
+dst: 汤姆认识他。
+src: Tom loves you.
+dst: 汤姆爱你。
+src: Tom overslept.
+dst: 汤姆睡过头了。
+src: Tom runs fast.
+dst: 汤姆跑得快。
+src: Tom was fired.
+dst: 汤姆被解僱了。
+src: Wait a moment.
+dst: 请稍等。
+src: We kept quiet.
+dst: 我们保持了沉默。
+src: We like music.
+dst: 我们喜欢音乐。
+src: We missed you.
+dst: 我们想你。
+src: We need money.
+dst: 我们需要钱。
+src: We understand.
+dst: 我们明白。
+src: We want candy.
+dst: 我们想要糖。
+src: We'll be busy.
+dst: 我们会很忙。
+src: We'll do that.
+dst: 我们会去做。
+src: We've arrived.
+dst: 我们已经到了。
+src: Where are you?
+dst: 你在哪儿?
+src: Where is Mary?
+dst: 玛丽在哪里？
+src: Who helps her?
+dst: 谁帮帮她？
+src: Whose is this?
+dst: 这是谁的？
+src: Why blame Tom?
+dst: 为什么责备汤姆？
+src: You are lying.
+dst: 你在撒谎。
+src: You are sharp.
+dst: 你很聪明。
+src: You could run.
+dst: 你能跑。
+src: You look pale.
+dst: 你看起来很苍白。
+src: You should go.
+dst: 你应该去。
+src: You should go.
+dst: 你最好去。
+src: You will fail.
+dst: 你会失败。
+src: You work hard.
+dst: 你工作努力。
+src: You're joking!
+dst: 你在开玩笑吧！
+src: You're so bad.
+dst: 你真坏。
+src: A bird can fly.
+dst: 鸟会飞。
+src: Allow me to go.
+dst: 请允许我去。
+src: Are you crying?
+dst: 你在哭吗？
+src: Aren't you Tom?
+dst: 你不是汤姆吗?
+src: Aren't you Tom?
+dst: 你不是汤姆吗？
+src: Aren't you hot?
+dst: 你不热吗？
+src: Be nice to her.
+dst: 对她好点。
+src: Birds lay eggs.
+dst: 鸟下蛋。
+src: Boil the water.
+dst: 把水烧开。
+src: Bring it to me.
+dst: 把它带给我。
+src: Can I eat this?
+dst: 我可以吃这个吗?
+src: Can I help you?
+dst: 我能帮你吗？
+src: Can I sit here?
+dst: 我能坐这里吗？
+src: Clean the room.
+dst: 打扫房间。
+src: Close the door.
+dst: 关门。
+src: Coffee, please.
+dst: 我要咖啡，谢谢。
+src: Deal with them.
+dst: 解决他们。
+src: Do we know you?
+dst: 我们认识你么？
+src: Do you know me?
+dst: 你认识我吗？
+src: Do you know me?
+dst: 你还认识我吗？
+src: Do you like it?
+dst: 你喜欢吗 ?
+src: Do you like it?
+dst: 你喜欢吗？
+src: Do you miss me?
+dst: 你想我了？
+src: Do you miss me?
+dst: 你想我吗？
+src: Do you promise?
+dst: 你保证吗？
+src: Don't touch it.
+dst: 别碰它。
+src: Everybody lies.
+dst: 每个人都会说谎。
+src: Foxes eat hens.
+dst: 狐狸吃母鸡。
+src: Get out of bed!
+dst: 起床!
+src: Good afternoon.
+dst: 下午好。
+src: Happy New Year!
+dst: 新年快乐！
+src: Have some more.
+dst: 你该多吃点。
+src: He accelerated.
+dst: 他提速了。
+src: He cannot swim.
+dst: 他不会游泳。
+src: He confused us.
+dst: 他把我们弄糊涂了。
+src: He doesn't lie.
+dst: 他不说谎。
+src: He is American.
+dst: 他是美国人。
+src: He lives alone.
+dst: 他一个人生活。
+src: He lives alone.
+dst: 他独自生活。
+src: He looks young.
+dst: 他看起来很年轻。
+src: He lost a book.
+dst: 他弄丢了一本书。
+src: He sang a song.
+dst: 他唱了一首歌。
+src: He was drowned.
+dst: 他被淹死了。
+src: He was drowned.
+dst: 他溺水而亡。
+src: He's a big boy.
+dst: 他是个大男孩。
+src: He's an author.
+dst: 他是作家。
+src: Here is a book.
+dst: 这里有一本书。
+src: How much is it?
+dst: 它多贵?
+src: How much is it?
+dst: 多少钱?
+src: How's it going?
+dst: 你们好吗？
+src: I am Hungarian.
+dst: 我是匈牙利人。
+src: I am a teacher.
+dst: 我是个老师。
+src: I am exhausted.
+dst: 我累死了。
+src: I am off today.
+dst: 我今天休息。
+src: I am too short.
+dst: 我太矮了。
+src: I borrow money.
+dst: 我借钱。
+src: I broke my arm.
+dst: 我的手臂断了。
+src: I don't get it.
+dst: 我不懂。
+src: I go to school.
+dst: 我去学校。
+src: I got arrested.
+dst: 我被逮捕了。
+src: I got up early.
+dst: 我起床早。
+src: I had a vision.
+dst: 我有一个设想。
+src: I had a vision.
+dst: 我有一个愿景。
+src: I hate Mondays.
+dst: 我讨厌星期一。
+src: I have a cough.
+dst: 我咳嗽。
+src: I have a dream.
+dst: 我有一个梦想。
+src: I have hiccups.
+dst: 我打嗝了。
+src: I have no time.
+dst: 我没时间。
+src: I hiccup a lot.
+dst: 我经常打嗝。
+src: I like flowers.
+dst: 我喜欢花。
+src: I like jogging.
+dst: 我喜欢跑步。
+src: I like reading.
+dst: 我喜欢阅读。
+src: I like running.
+dst: 我喜欢跑步。
+src: I like to read.
+dst: 我喜欢阅读。
+src: I love my life.
+dst: 我爱我的生活。
+src: I love my life.
+dst: 我爱我的生命。
+src: I love my wife.
+dst: 我爱我的妻子。
+src: I love parties.
+dst: 我爱派对。
+src: I met a friend.
+dst: 我遇见一个朋友。
+src: I need a stamp.
+dst: 我需要一张邮票。
+src: I need it ASAP.
+dst: 我尽快需要。
+src: I need my coat.
+dst: 我需要我的大衣。
+src: I need to know.
+dst: 我需要知道。
+src: I often hiccup.
+dst: 我经常打嗝。
+src: I said shut up!
+dst: 我说过了，闭嘴！
+src: I saw five men.
+dst: 我看到了五个男人。
+src: I should do it.
+dst: 我应该去做。
+src: I study Korean.
+dst: 我学韩语。
+src: I was a doctor.
+dst: 我以前是医生。
+src: I was learning.
+dst: 我在学习。
+src: I will sue you.
+dst: 我要控告你。
+src: I'd like to go.
+dst: 我想要去。
+src: I'll alert Tom.
+dst: 我会警告汤姆。
+src: I'll come back.
+dst: 我会回来的。
+src: I'll scold him.
+dst: 我会责备他。
+src: I'll see to it.
+dst: 我会留意的。
+src: I'll see to it.
+dst: 由我来做.
+src: I'll stay home.
+dst: 我会待在家里。
+src: I'll treat you.
+dst: 我请你。
+src: I'm a free man.
+dst: 我是一个自由的人。
+src: I'm a good guy.
+dst: 我是一个好人。
+src: I'm behind him.
+dst: 我在他后面。
+src: I'm free today.
+dst: 我今天有空。
+src: I'm from Tokyo.
+dst: 我来自东京。
+src: I'm not greedy.
+dst: 我不贪婪。
+src: I'm not guilty.
+dst: 我没有罪。
+src: I'm so excited.
+dst: 我很激动。
+src: I'm undressing.
+dst: 我脱衣服。
+src: I'm very happy.
+dst: 我很快乐。
+src: I'm very happy.
+dst: 我很快乐。
+src: I've seen that.
+dst: 我见过。
+src: Is he Japanese?
+dst: 他是日本人吗？
+src: Is that better?
+dst: 那更好吗？
+src: Isn't it black?
+dst: 它不是黑色的吗？
+src: It is so early.
+dst: 太早了。
+src: It is too late.
+dst: 太晚了。
+src: It makes sense.
+dst: 那样说得通。
+src: It took months.
+dst: 它花了几个月。
+src: It's brand new.
+dst: 这是全新的。
+src: It's dangerous!
+dst: 它是危险的!
+src: It's not funny.
+dst: 这不好笑。
+src: It's our fault.
+dst: 它是我们的错误。
+src: It's the truth.
+dst: 这是事实。
+src: It's too large.
+dst: 它太大了。
+src: It's up to you.
+dst: 这就要看您了。
+src: It's up to you.
+dst: 由你来决定。
+src: It's very cold.
+dst: 非常冷。
+src: It's well done.
+dst: 做得很好。
+src: It's your book.
+dst: 它是你的书。
+src: It's your move.
+dst: 该你走了。
+src: Keep listening.
+dst: 继续听。
+src: Let me do that.
+dst: 让我去做。
+src: Let us go home.
+dst: 让我们回家吧。
+src: Let's just eat.
+dst: 我们吃吧。
+src: Listen to this.
+dst: 听听这个。
+src: May I use this?
+dst: 我可以用吗？
+src: My name is Tom.
+dst: 我叫Tom。
+src: Now I remember.
+dst: 现在我想起来了。
+src: Please come in.
+dst: 请进来。
+src: Please do that.
+dst: 麻烦您那样做。
+src: Please help me.
+dst: 请帮助我。
+src: Please help me.
+dst: 请帮我。
+src: Please join us.
+dst: 请加入我们。
+src: Please tell me.
+dst: 请告诉我。
+src: Please wash it.
+dst: 请清洗它。
+src: Prices went up.
+dst: 物价上涨。
+src: Read this book.
+dst: 看这本书。
+src: Say it clearly.
+dst: 说清楚。
+src: Science is fun.
+dst: 科学好玩。
+src: See you around.
+dst: 再见！
+src: She fooled him.
+dst: 她愚弄了他。
+src: She grew roses.
+dst: 她种了玫瑰。
+src: She might come.
+dst: 她也许会来。
+src: She seems rich.
+dst: 她看来有钱。
+src: Smoke appeared.
+dst: 烟雾出现了。
+src: Someone called.
+dst: 有人打电话来。
+src: Stop grumbling.
+dst: 停止发牢骚吧。
+src: Stop resisting!
+dst: 停止抵抗！
+src: Take your time.
+dst: 你可以慢慢来。
+src: That's a shame.
+dst: 那是一个耻辱。
+src: That's my coat.
+dst: 那是我的大衣。
+src: That's perfect.
+dst: 那是完美的。
+src: That's too bad.
+dst: 多遗憾啊！
+src: That's too bad.
+dst: 那太糟糕了。
+src: The birds sang.
+dst: 鸟儿歌唱。
+src: The flag is up.
+dst: 旗子升起了。
+src: The phone rang.
+dst: 电话正在响。
+src: Their eyes met.
+dst: 他们目光相接。
+src: These are pens.
+dst: 这些是笔。
+src: They hated Tom.
+dst: 他们恨汤姆。
+src: They have jobs.
+dst: 他们有工作。
+src: They let me go.
+dst: 他们让我走。
+src: They love that.
+dst: 他们喜欢那个
+src: They trust Tom.
+dst: 他们信任汤姆。
+src: They want more.
+dst: 他们想要更多。
+src: They want this.
+dst: 他们想要这个。
+src: They were good.
+dst: 他们不错。
+src: This is a book.
+dst: 这是一本书。
+src: This is my bag.
+dst: 那是我的包。
+src: Tom can change.
+dst: 汤姆能改变。
+src: Tom can't swim.
+dst: 汤姆不会游泳。
+src: Tom has a plan.
+dst: 汤姆有个计画。
+src: Tom is a rabbi.
+dst: 汤姆是个拉比。
+src: Tom isn't dumb.
+dst: 汤姆不傻。
+src: Tom looks pale.
+dst: 汤姆看起来很苍白。
+src: Tom walked out.
+dst: 汤姆走了出去。
+src: Tom's fearless.
+dst: 汤姆无所畏惧。
+src: Tom's laughing.
+dst: 汤姆在笑。
+src: Tom's thrilled.
+dst: 汤姆兴奋不已。
+src: Treat him well.
+dst: 对他好一点。
+src: Turn on the TV.
+dst: 开电视。
+src: Turn up the TV.
+dst: 把电视声音调大点儿。
+src: Was Tom asleep?
+dst: 汤姆睡着了吗？
+src: Wash your feet.
+dst: 洗您的脚。
+src: Wash your feet.
+dst: 洗你的脚。
+src: Watch yourself.
+dst: 自己当心啊。
+src: We forgive you.
+dst: 我们原谅你。
+src: We knew no one.
+dst: 我们谁也不认识。
+src: We study music.
+dst: 我们学习音乐。
+src: We're not late.
+dst: 我们没迟到。
+src: Well, let's go.
+dst: 好吧，我们走吧。
+src: Were you right?
+dst: 你是对的吗？
+src: What about you?
+dst: 你们呢？
+src: What about you?
+dst: 您呢？
+src: What do you do?
+dst: 你的职业是什么?
+src: What's her job?
+dst: 她做什么工作？
+src: Where do we go?
+dst: 我们去哪儿？
+src: Where were you?
+dst: 之前你在哪里？
+src: Who's that guy?
+dst: 那家伙是谁？
+src: Why do you ask?
+dst: 你问这个干什么?
+src: Why is he here?
+dst: 为什么他在这儿？
+src: Wipe your eyes.
+dst: 擦擦你的眼睛。
+src: Yes, I know it.
+dst: 是的，我知道。
+src: Yes, of course.
+dst: 是的，当然。
+src: You look bored.
+dst: 你看起来很无聊。
+src: You look tense.
+dst: 你看起来很紧张。
+src: You look tired.
+dst: 你看起来很疲倦。
+src: You must do it.
+dst: 你必须去做。
+src: You'll love it.
+dst: 你会爱它。
+src: You're kidding!
+dst: 你开玩笑吧！
+src: Are you over 18?
+dst: 你有18岁了吗？
+src: Are you serious?
+dst: 你是认真的吗？
+src: Are you thirsty?
+dst: 你渴吗？
+src: Balls are round.
+dst: 球是圆的。
+src: Be happy for me.
+dst: 为我感到高兴吧。
+src: Behave yourself.
+dst: 规矩点。
+src: Black suits you.
+dst: 黑色很衬你。
+src: Boil some water.
+dst: 烧一点水。
+src: Call the police!
+dst: 叫警察！
+src: Call the police!
+dst: 报警！
+src: Call the police.
+dst: 报警！
+src: Can you find it?
+dst: 你能找到它吗？
+src: Clean your room.
+dst: 清扫你的房间。
+src: Close your eyes.
+dst: 闭上你的眼睛。
+src: Close your eyes.
+dst: 闭上你们的眼睛。
+src: Come if you can.
+dst: 如果你能就来吧。
+src: Congratulations!
+dst: 祝贺你。
+src: Congratulations!
+dst: 恭喜！
+src: Could you do it?
+dst: 你能做到吗？
+src: Count to thirty.
+dst: 数到三十。
+src: Did Tom say who?
+dst: 汤姆说是谁了吗？
+src: Did you like it?
+dst: 你以前喜欢吗？
+src: Did you miss me?
+dst: 你想我了？
+src: Do you go often?
+dst: 您经常去吗？
+src: Do you have one?
+dst: 你有吗？
+src: Do you know him?
+dst: 你认识他吗?
+src: Do you like rap?
+dst: 你喜欢说唱音乐吗？
+src: Do you remember?
+dst: 你记得吗？
+src: Does love exist?
+dst: 爱存在吗？
+src: Don't be fooled.
+dst: 别被骗了。
+src: Don't bother me.
+dst: 别来烦我。
+src: Don't forget me.
+dst: 别忘了我。
+src: Don't open that.
+dst: 别打开那个。
+src: Don't run risks.
+dst: 不要冒险。
+src: Don't tell lies.
+dst: 别说谎!
+src: Drive carefully.
+dst: 开车小心点。
+src: Get out of here.
+dst: 离开这里。
+src: Give Tom a hand.
+dst: 帮汤姆一把。
+src: Give it to them.
+dst: 把它给他们。
+src: Go to the patio.
+dst: 去露台。
+src: Green suits you.
+dst: 绿色适合你。
+src: Have a nice day.
+dst: 祝你一天过得愉快。
+src: He acts quickly.
+dst: 他行动迅速。
+src: He began to cry.
+dst: 他开始哭了。
+src: He is my father.
+dst: 他是我父亲。
+src: He is very kind.
+dst: 他非常亲切。
+src: He is very tall.
+dst: 他很高。
+src: He just arrived.
+dst: 他刚到。
+src: He looks strong.
+dst: 他看起来很强壮。
+src: He loves trains.
+dst: 他喜欢火车。
+src: He pressured me.
+dst: 他向我施压。
+src: He studied hard.
+dst: 他努力学习。
+src: He tends to lie.
+dst: 他企图说谎。
+src: He tires easily.
+dst: 他很容易觉得累。
+src: He was very old.
+dst: 他很老。
+src: He will survive.
+dst: 他会倖存。
+src: He's a comedian.
+dst: 他是喜剧演员。
+src: He's a good guy.
+dst: 他是个好人。
+src: He's a good lad.
+dst: 他是个好人。
+src: He's a good man.
+dst: 他是个好人。
+src: He's a good man.
+dst: 他是个好人。
+src: He's a tall boy.
+dst: 他是一个高大的男孩。
+src: He's not a hero.
+dst: 他不是英雄。
+src: He's not stupid.
+dst: 他不是傻子。
+src: He's very angry.
+dst: 他非常生气。
+src: Here's your tea.
+dst: 这是你的茶。
+src: Hi! How are you?
+dst: 嗨！你好吗？
+src: His word is law.
+dst: 他的话就是命令。
+src: How do you feel?
+dst: 你感觉如何？
+src: How do you know?
+dst: 我怎么知道？
+src: How is everyone?
+dst: 大家好吗？
+src: How is it going?
+dst: 你们好吗？
+src: How old are you?
+dst: 你几岁?
+src: How rude of you!
+dst: 你真粗鲁！
+src: How unfortunate!
+dst: 可怜!
+src: How's the apple?
+dst: 这个苹果怎么样？
+src: I ache all over.
+dst: 我全身酸痛。
+src: I am a good boy.
+dst: 我是一个好男孩。
+src: I am from China.
+dst: 我是从中国来的。
+src: I am from China.
+dst: 我来自中国。
+src: I am in trouble.
+dst: 我有麻烦了。
+src: I am in trouble.
+dst: 我遇到困难了。
+src: I ate the apple.
+dst: 我吃了这个苹果。
+src: I baked cookies.
+dst: 我烤了曲奇。
+src: I began running.
+dst: 我开始跑。
+src: I booked a seat.
+dst: 我订了一个位子。
+src: I bought a book.
+dst: 我买了一本书。
+src: I called Tom up.
+dst: 我打电话给汤姆了。
+src: I called her up.
+dst: 我叫她起来。
+src: I can swim well.
+dst: 我游泳可以游得很好。
+src: I can't see you.
+dst: 我看不见你。
+src: I can't undo it.
+dst: 我不能取消它。
+src: I don't want it.
+dst: 我不要.
+src: I feel relieved.
+dst: 我感觉轻松了。
+src: I get up at six.
+dst: 我六点起床。
+src: I had no choice.
+dst: 那时我没有选择的馀地。
+src: I hate studying.
+dst: 我讨厌学习。
+src: I have brothers.
+dst: 我有兄弟。
+src: I have ten pens.
+dst: 我有十支笔。
+src: I have to hurry!
+dst: 我要赶紧了!
+src: I have two cats.
+dst: 我有两只猫。
+src: I have two sons.
+dst: 我有两个儿子。
+src: I just threw up.
+dst: 我刚才吐了。
+src: I lent him a CD.
+dst: 我借给他一盘CD。
+src: I like Tom, too.
+dst: 我也喜欢汤姆。
+src: I like football.
+dst: 我喜欢足球。
+src: I like potatoes.
+dst: 我喜欢土豆。
+src: I like the cold.
+dst: 我喜欢寒冷。
+src: I like this dog.
+dst: 我喜欢这只狗。
+src: I like your car.
+dst: 我喜欢您的车。
+src: I lived in Rome.
+dst: 我住在罗马。
+src: I love this car.
+dst: 我爱这台车。
+src: I might say yes.
+dst: 我可能会说是。
+src: I must help her.
+dst: 我必须帮助她。
+src: I need a friend.
+dst: 我需要个朋友。
+src: I need evidence.
+dst: 我需要证据。
+src: I need you here.
+dst: 我需要你在这里。
+src: I paid the bill.
+dst: 我买了单。
+src: I played tennis.
+dst: 我打网球了。
+src: I run every day.
+dst: 我每天跑步。
+src: I speak Swedish.
+dst: 我说瑞典语。
+src: I talked to her.
+dst: 我跟她谈了话。
+src: I teach Chinese.
+dst: 我教中文。
+src: I think it's OK.
+dst: 我想没关系。
+src: I took a shower.
+dst: 我洗了澡。
+src: I want a guitar.
+dst: 我想要一把吉他。
+src: I want that bag.
+dst: 我想要那个袋子。
+src: I want to drive.
+dst: 我想开车。
+src: I was surprised.
+dst: 我吃惊了。
+src: I wish you'd go.
+dst: 我希望你去。
+src: I woke up early.
+dst: 我起得早。
+src: I work too much.
+dst: 我工作得太多了。
+src: I'll bring wine.
+dst: 我会带酒来。
+src: I'll never stop.
+dst: 我绝不会停。
+src: I'm a foreigner.
+dst: 我是一个外国人。
+src: I'm a night owl.
+dst: 我是个夜猫子。
+src: I'm about ready.
+dst: 我快好了。
+src: I'm always here.
+dst: 我一直在这里。
+src: I'm daydreaming.
+dst: 我在做白日梦。
+src: I'm feeling fit.
+dst: 我觉得精神很好。
+src: I'm left-handed.
+dst: 我是左撇子。
+src: I'm not serious.
+dst: 我不是认真的。
+src: I'm out of time.
+dst: 我没时间了。
+src: I'm really busy.
+dst: 我真的好忙。
+src: I'm really cold.
+dst: 我真的冷。
+src: I'm still angry.
+dst: 我还饿着呢。
+src: I'm very hungry.
+dst: 我很饿。
+src: I'm very lonely.
+dst: 我很寂寞。
+src: I've had enough.
+dst: 我已经受够了。
+src: I've had enough.
+dst: 我已经吃饱了。
+src: Is Tom Canadian?
+dst: Tom是加拿大人吗?
+src: Is he breathing?
+dst: 他在呼吸吗?
+src: Is it all there?
+dst: 全都在那里吗？
+src: Is it too salty?
+dst: 还有多馀的盐吗？
+src: Is she Japanese?
+dst: 她是日本人吗？
+src: Is this a river?
+dst: 这是一条河吗?
+src: Isn't that mine?
+dst: 那是我的吗？
+src: It is up to you.
+dst: 由你来决定。
+src: It snowed a lot.
+dst: 下了很多的雪。
+src: It was terrible.
+dst: 真糟糕。
+src: It was very far.
+dst: 它很远。
+src: It'll be cloudy.
+dst: 天要变多云了。
+src: It's a dead end.
+dst: 这是个死胡同。
+src: It's a new book.
+dst: 那本书是一本新书。
+src: It's a nice day.
+dst: 今天天气很好。
+src: It's a surprise.
+dst: 这是一个惊喜。
+src: It's almost six.
+dst: 快要六点了。
+src: It's already 11.
+dst: 已经是11点了。
+src: It's fine today.
+dst: 今天天气很好。
+src: It's impossible.
+dst: 这是不可能的。
+src: It's lunch time.
+dst: 午餐时间到了。
+src: It's okay to go.
+dst: 你可以走了。
+src: It's over there.
+dst: 在那里。
+src: It's time to go.
+dst: 该走了。
+src: It's time to go.
+dst: 是该离开的时候了。
+src: Jesus loves you.
+dst: 耶稣爱你。
+src: Keep on smiling.
+dst: 保持微笑。
+src: Keep on working.
+dst: 继续工作！
+src: Keep the change!
+dst: 不用找零钱了。
+src: Large, isn't it?
+dst: 很大, 不是吗?
+src: Lemons are sour.
+dst: 柠檬是酸的。
+src: Let me go alone.
+dst: 让我一个人去。
+src: Let me see that.
+dst: 让我看看。
+src: Let them decide.
+dst: 让他们决定。
+src: Let's eat sushi.
+dst: 让我们吃寿司吧。
+src: Let's go by bus.
+dst: 让我们坐公共汽车去。
+src: Let's not argue.
+dst: 我们别吵了。
+src: Let's turn back.
+dst: 我们掉头吧！
+src: Look at the sky.
+dst: 看天上。
+src: Look behind you.
+dst: 瞧你身后。
+src: Make it smaller.
+dst: 把它弄小一点。
+src: May I leave now?
+dst: 我现在能走了吗？
+src: May I try it on?
+dst: 我能试一下吗？
+src: Maybe next time.
+dst: 也许下一次吧。
+src: Men should work.
+dst: 男人应该工作。
+src: Merry Christmas!
+dst: 圣诞快乐。
+src: Mom, I'm hungry.
+dst: 妈妈，我肚子饿了。
+src: My father walks.
+dst: 我爸爸走路。
+src: My house is big.
+dst: 我家很大。
+src: Never say never.
+dst: 永远不要说永远。
+src: No one was late.
+dst: 没有人迟到。
+src: No, I didn't go.
+dst: 不，我没去。
+src: Open the bottle.
+dst: 把瓶子打开。
+src: Open your mouth!
+dst: 把嘴张开！
+src: Please be quiet.
+dst: 请安静。
+src: Please continue.
+dst: 请继续。
+src: Please sit down.
+dst: 请坐下。
+src: Put your hat on.
+dst: 戴上你的帽子。
+src: Say no to drugs.
+dst: 对毒品说不。
+src: Scary, isn't it?
+dst: 吓人，不是么？
+src: See you about 7.
+dst: 我们7点左右碰头。
+src: See you tonight.
+dst: 今晚见。
+src: She calmed down.
+dst: 她冷静下来。
+src: She disappeared.
+dst: 她消失了。
+src: She is graceful.
+dst: 她举止优雅。
+src: She looked away.
+dst: 她转移了视线。
+src: She looks young.
+dst: 她看起来很年轻。
+src: She lost a book.
+dst: 她弄丢了一本书。
+src: She married him.
+dst: 她嫁给了他。
+src: She woke him up.
+dst: 她把他叫醒了。
+src: She worked hard.
+dst: 她努力地工作。
+src: She's my sister.
+dst: 她是我的姊妹。
+src: Spring has come.
+dst: 春天到了。
+src: That dog is big.
+dst: 这只狗很大。
+src: That feels good.
+dst: 感觉良好。
+src: That isn't fair.
+dst: 这不公平。
+src: That smells bad.
+dst: 那不好闻。
+src: That's not fair.
+dst: 那是不公平的。
+src: That's too easy.
+dst: 那太简单了。
+src: That's very big.
+dst: 那是很大的。
+src: The boy is kind.
+dst: 他是个好孩子。
+src: The leaves fell.
+dst: 叶子落了。
+src: The light is on.
+dst: 灯亮着。
+src: There's no rush.
+dst: 不急。
+src: There's no salt.
+dst: 没有盐。
+src: They all did it.
+dst: 他们都做了。
+src: They are melons.
+dst: 它们是瓜。
+src: They sell candy.
+dst: 他们卖糖果。
+src: This book's new.
+dst: 这本书是新的。
+src: This is my bike.
+dst: 这是我的自行车。
+src: This is my book.
+dst: 这是我的书。
+src: This is my wife.
+dst: 这是我的妻子。
+src: This is the end.
+dst: 这是结束。
+src: This is too big.
+dst: 这个太大了。
+src: This is typical.
+dst: 这是典型的。
+src: This isn't good.
+dst: 这不好。
+src: This isn't love.
+dst: 这不是爱。
+src: Time for dinner.
+dst: 吃饭时间到了。
+src: Tom also talked.
+dst: 汤姆也说话了。
+src: Tom disappeared.
+dst: 汤姆不见了。
+src: Tom fell asleep.
+dst: 汤姆睡着了。
+src: Tom felt hungry.
+dst: 汤姆觉得饿了。
+src: Tom hugged Mary.
+dst: 汤姆拥抱了玛丽。
+src: Tom is a racist.
+dst: 汤姆是种族主义者。
+src: Tom is escaping.
+dst: 汤姆在逃跑。
+src: Tom is laughing.
+dst: 汤姆在笑。
+src: Tom is swimming.
+dst: 汤姆在游泳。
+src: Tom lived there.
+dst: 汤姆住在这里。
+src: Tom seems tough.
+dst: 汤姆看来难缠。
+src: Tom stayed home.
+dst: 汤姆留在家里。
+src: Tom was a nurse.
+dst: 汤姆是个护士。
+src: Tom was at home.
+dst: 汤姆在家的。
+src: Tom was bullied.
+dst: 汤姆被欺负了。
+src: Tom was popular.
+dst: 汤姆挺受欢迎。
+src: Tom was sobbing.
+dst: 汤姆在啜泣。
+src: Tom went abroad.
+dst: 汤姆出国了。
+src: Turn off the TV.
+dst: 关闭电视机
+src: Watch your step.
+dst: 走路小心。
+src: Watch your step.
+dst: 小心脚下。
+src: We can't escape.
+dst: 我们逃不出去。
+src: We have no time.
+dst: 我们没时间。
+src: We want to know.
+dst: 我们想知道。
+src: We were friends.
+dst: 我们是朋友。
+src: We're Canadians.
+dst: 我们是加拿大人。
+src: We've lost them.
+dst: 我们失去他们了。
+src: What a surprise!
+dst: 太惊喜了!
+src: What can Tom do?
+dst: 汤姆能做什么？
+src: What did he say?
+dst: 他说了什么？
+src: What do we want?
+dst: 我们要什么？
+src: What is missing?
+dst: 少了什么？
+src: What time is it?
+dst: 几点了？
+src: What time is it?
+dst: 现在几点？
+src: What time is it?
+dst: 几点了？
+src: What's happened?
+dst: 怎么了？
+src: When can we eat?
+dst: 我们什么时候可以吃？
+src: Where is Manila?
+dst: 马尼拉在哪里？
+src: Where's my wife?
+dst: 我的妻子在哪里？
+src: Who is this boy?
+dst: 这个男孩是谁？
+src: Who likes beans?
+dst: 谁喜欢豆子？
+src: Who was playing?
+dst: 谁在玩？
+src: Why did we fail?
+dst: 我们为甚么失败了？
+src: Why did you cry?
+dst: 你为什么哭？
+src: Why did you cry?
+dst: 你为什么哭？
+src: Why do that now?
+dst: 为什么现在做那个？
+src: Wolves scare me.
+dst: 狼吓到了我。
+src: You can come in.
+dst: 你可以进来。
+src: You can tell us.
+dst: 你能告诉我们。
+src: You look stupid.
+dst: 你看上去很傻。
+src: You must choose.
+dst: 你必须选择。
+src: You'd better go.
+dst: 你最好走。
+src: You'll get lost.
+dst: 你会迷路的。
+src: You're a person.
+dst: 你是人。
+src: You're so right.
+dst: 你真是太对了。
+src: You're terrible.
+dst: 你真坏。
+src: You're very shy.
+dst: 你很害羞。
+src: You've been had.
+dst: 你们被骗了。
+src: You've been had.
+dst: 您被骗了。
+src: Your time is up.
+dst: 你的时间到了。
+src: "Look," she said.
+dst: “看啊！” 她说道。
+src: Accidents happen.
+dst: 事故发生。
+src: Answer the phone.
+dst: 接电话。
+src: Are you Japanese?
+dst: 你是日本人吗？
+src: Are you a doctor?
+dst: 你是医生吗？
+src: Are you a wizard?
+dst: 你是个术士吗？
+src: Are you busy now?
+dst: 现在你们忙吗？
+src: Are you busy now?
+dst: 现在您忙吗？
+src: Are you finished?
+dst: 你结束了吗？
+src: Are you students?
+dst: 你们是学生吗？
+src: Aren't you happy?
+dst: 你不快乐吗?
+src: Ask him his name.
+dst: 问他一下他的名字。
+src: Can I rest a bit?
+dst: 我能休息一会儿吗？
+src: Can I sleep here?
+dst: 我能在这里睡觉吗？
+src: Can anyone drive?
+dst: 有人会开车吗？
+src: Can you eat this?
+dst: 这个能吃吗？
+src: Can you save Tom?
+dst: 你能救汤姆吗？
+src: Come with me now.
+dst: 现在就跟我来。
+src: Did Spot go, too?
+dst: Spot也去了吗？
+src: Did you ever try?
+dst: 你试过吗？
+src: Did you meet Tom?
+dst: 你见过汤姆了吗？
+src: Do as you please.
+dst: 你可以随心所欲。
+src: Do you have a TV?
+dst: 你有电视吗？
+src: Do you have kids?
+dst: 你们有小孩吗?
+src: Do you like snow?
+dst: 你喜欢雪吗？
+src: Do you live here?
+dst: 你住这里吗?
+src: Do you need help?
+dst: 你需要帮助吗？
+src: Do you own a gun?
+dst: 你拥有枪支吗？
+src: Do you trust her?
+dst: 你相信她吗?
+src: Do you want more?
+dst: 你想要更多吗？
+src: Don't kid around.
+dst: 别开玩笑了。
+src: Drink this juice.
+dst: 喝这果汁。
+src: Everybody laughs.
+dst: 每个人都在笑。
+src: Everybody saw it.
+dst: 每个人都看见了。
+src: Everyone noticed.
+dst: 所有人都注意到了。
+src: Fight like a man!
+dst: 像男人一样战斗！
+src: For what purpose?
+dst: 为了什么目的？
+src: Get off the lawn!
+dst: 离开草坪!
+src: Get on the horse.
+dst: 上马。
+src: Give Tom a chair.
+dst: 给汤姆一把椅子。
+src: Give me the book.
+dst: 给我这本书。
+src: Give me the book.
+dst: 把书给我。
+src: Go straight home.
+dst: 直接回家。
+src: Go up the stairs.
+dst: 上楼。
+src: Go when you want.
+dst: 你想走的时候就走吧。
+src: He broke the law.
+dst: 他触犯了法律。
+src: He can read well.
+dst: 他能读得很好。
+src: He caught a cold.
+dst: 他着凉了。
+src: He caught a cold.
+dst: 他感冒了。
+src: He died recently.
+dst: 他最近去世了。
+src: He has long hair.
+dst: 他有长头发。
+src: He heard a shout.
+dst: 他听到了叫声。
+src: He is a tall boy.
+dst: 他是一个高大的男孩。
+src: He is an Italian.
+dst: 他是义大利人。
+src: He is in trouble.
+dst: 他有麻烦。
+src: He is not stupid.
+dst: 他不是傻子。
+src: He is still here.
+dst: 他还在这儿。
+src: He is very angry.
+dst: 他非常生气。
+src: He isn't at home.
+dst: 他不在家。
+src: He just got home.
+dst: 他刚回到家。
+src: He likes fishing.
+dst: 他喜欢钓鱼。
+src: He likes hunting.
+dst: 他喜欢打猎。
+src: He likes oranges.
+dst: 他喜欢橙子。
+src: He loves to fish.
+dst: 他酷爱钓鱼。
+src: He must love you.
+dst: 他一定很爱你。
+src: He played tennis.
+dst: 他打了网球。
+src: He shut the door.
+dst: 他关上了门。
+src: He told us a lie.
+dst: 他对我们说了一个谎。
+src: He wears glasses.
+dst: 他戴眼镜。
+src: He writes Arabic.
+dst: 他写阿拉伯文。
+src: He's at her side.
+dst: 他在她的旁边。
+src: He's new in town.
+dst: 他刚来这镇上。
+src: He's your friend.
+dst: 他是你的朋友。
+src: Here is your bag.
+dst: 你的袋子在这里。
+src: How are you, Tom?
+dst: 你好吗，汤姆？
+src: How did Tom know?
+dst: 汤姆怎么知道？
+src: How do I sign up?
+dst: 我怎样报名参加呢？
+src: How is your wife?
+dst: 你太太怎么样？
+src: How long is this?
+dst: 这有多长？
+src: How tall are you?
+dst: 你多高？
+src: How tall are you?
+dst: 你多高?
+src: How was the food?
+dst: 食物怎么样？
+src: How're you doing?
+dst: 你们好吗？
+src: I agree with him.
+dst: 我同意他。
+src: I almost drowned.
+dst: 我差点被淹死。
+src: I always eat out.
+dst: 我总是在外面吃饭。
+src: I am a bit drunk.
+dst: 我有点醉了。
+src: I am eating rice.
+dst: 我在吃米饭。
+src: I am not a witch.
+dst: 我不是巫婆。
+src: I am not curious.
+dst: 我不好奇。
+src: I am your father.
+dst: 我是你爸爸。
+src: I believe in you.
+dst: 我相信你。
+src: I bet Tom forgot.
+dst: 我打赌汤姆忘了。
+src: I bought a watch.
+dst: 我买了一只手表。
+src: I can't hear you.
+dst: 我听不到你的声音。
+src: I can't meet you.
+dst: 遇不到你。
+src: I can't reach it.
+dst: 我搆不到它。
+src: I can't remember.
+dst: 我记不得了。
+src: I can't remember.
+dst: 我想不起来。
+src: I can't stand it.
+dst: 我不能忍受。
+src: I collect stamps.
+dst: 我收集邮票。
+src: I could see that.
+dst: 我能看见。
+src: I couldn't sleep.
+dst: 我无法入睡。
+src: I couldn't sleep.
+dst: 我睡不着。
+src: I didn't like it.
+dst: 我没有喜欢过。
+src: I didn't mean it.
+dst: 我不是这个意思。
+src: I didn't see him.
+dst: 我没见到他。
+src: I do forgive Tom.
+dst: 我原谅汤姆。
+src: I don't doubt it.
+dst: 我没有疑问。
+src: I don't know her.
+dst: 我不认识她。
+src: I don't like her.
+dst: 我不喜欢她。
+src: I don't like tea.
+dst: 我不喜欢喝茶。
+src: I don't like you.
+dst: 我不喜欢你。
+src: I don't remember.
+dst: 我不记得了。
+src: I don't want you.
+dst: 我不想要你。
+src: I feel very sick.
+dst: 我觉得我病得很厉害。
+src: I had a hard day.
+dst: 我过了难挨的一天。
+src: I hate chemistry.
+dst: 我讨厌化学。
+src: I have a big dog.
+dst: 我有条大狗。
+src: I have a new car.
+dst: 我有辆新车。
+src: I have asked him.
+dst: 我问过他。
+src: I have no excuse.
+dst: 我没有借口。
+src: I have to say no.
+dst: 我必须拒绝。
+src: I hope Tom loses.
+dst: 我希望汤姆输。
+src: I know it's hard.
+dst: 我知道它有困难。
+src: I like chocolate.
+dst: 我喜欢巧克力。
+src: I like pop music.
+dst: 我喜欢流行音乐。
+src: I like red roses.
+dst: 我喜欢红色的玫瑰。
+src: I like to travel.
+dst: 我喜欢旅行。
+src: I like traveling.
+dst: 我喜欢旅行。
+src: I like your city.
+dst: 我喜欢你们的城市。
+src: I like your room.
+dst: 我喜欢你的房间。
+src: I live near here.
+dst: 我住在这附近。
+src: I love this song.
+dst: 我爱这首歌。
+src: I made a mistake.
+dst: 我犯了一个错。
+src: I made her angry.
+dst: 我让她生气。
+src: I made it myself.
+dst: 我自己做的。
+src: I miss you badly.
+dst: 我非常想你。
+src: I need more time.
+dst: 我需要更多时间。
+src: I play in a band.
+dst: 我在一个乐团里演奏。
+src: I still love her.
+dst: 我仍然爱着她。
+src: I still love him.
+dst: 我依旧爱着他。
+src: I tried to smile.
+dst: 我试着微笑。
+src: I want beef, too.
+dst: "我也要牛肉。"
+src: I want much more.
+dst: 我要多很多。
+src: I want you to go.
+dst: 我要你去。
+src: I want your love.
+dst: 我要你的爱。
+src: I wasn't yelling.
+dst: 我没有在吼。
+src: I wrote a letter.
+dst: 我写了一封信。
+src: I'll do anything.
+dst: 我不会做任何事。
+src: I'll eat it here.
+dst: 我会在这里把它吃了。
+src: I'm able to swim.
+dst: 我会游泳。
+src: I'm free tonight.
+dst: 我今晚有空。
+src: I'm just looking.
+dst: 我只是随便看看。
+src: I'm not a beggar.
+dst: 我不是乞丐。
+src: I'm not a doctor.
+dst: 我不是医生。
+src: I'm not busy now.
+dst: 我现在不忙。
+src: I'm not so brave.
+dst: 我没那么勇敢。
+src: I'm not the boss.
+dst: 我不是老板。
+src: I'm on your side.
+dst: 我站在你这边。
+src: I'm proud of you.
+dst: 我以你为荣。
+src: I'm really tired.
+dst: 我累死了。
+src: I'm staying home.
+dst: 我在家里待着。
+src: I'm still sleepy.
+dst: 我还很困。
+src: I'm very thirsty.
+dst: 我很渴。
+src: I've lost my pen.
+dst: 我弄丢了我的笔。
+src: If not now, when?
+dst: 如果不是现在，那是什么时候？
+src: Is she all right?
+dst: 她是正确的吗？
+src: Is that your car?
+dst: 那是你的车吗?
+src: Is the door open?
+dst: 门开着吗？
+src: Is the work hard?
+dst: 工作困难吗？
+src: Is this your car?
+dst: 这是你的车吗?
+src: Is this your pen?
+dst: 这是你的笔吗？
+src: Isn't he Italian?
+dst: 他不是意大利人吗？
+src: It began to snow.
+dst: 开始下雪了。
+src: It began to snow.
+dst: 开始下雪了。
+src: It can't be true.
+dst: 那不可能是真的。
+src: It's a clear day.
+dst: 它是一个晴朗的日子。
+src: It's a good deal.
+dst: 这是一笔不错的交易。
+src: It's a sunflower.
+dst: 那是一朵向日葵。
+src: It's frozen hard.
+dst: 真的很冰冷。
+src: It's hard to say.
+dst: 难讲喔。
+src: It's no big deal.
+dst: 这没什么大不了的。
+src: It's not a watch.
+dst: 这不是手表。
+src: It's on the sofa.
+dst: 它在沙发上。
+src: It's very normal.
+dst: 它很正常。
+src: Japan is in Asia.
+dst: 日本在亚洲。
+src: Keep the dog out.
+dst: 别让狗进来。
+src: Let's discuss it.
+dst: 来商量吧。
+src: Let's fly a kite.
+dst: 让我们放风筝。
+src: Let's go indoors.
+dst: 我们进屋吧。
+src: Let's take a bus.
+dst: 让我们搭公车吧。
+src: Let's try it out.
+dst: 我们试试。
+src: Listen carefully.
+dst: 仔细听着。
+src: Listen to me, OK?
+dst: 听我说，好吗？
+src: Mail this letter.
+dst: 把这封信寄了。
+src: Make your choice.
+dst: 做出您的选择。
+src: May we swim here?
+dst: 我们能在这里游泳吗？
+src: My album is here.
+dst: 我的相簿在这里。
+src: My house is here.
+dst: 我家在这里。
+src: My stomach hurts.
+dst: 我胃痛。
+src: Nice to meet you.
+dst: 很高兴认识你。
+src: No one will talk.
+dst: 没人会讲。
+src: No pain, no gain.
+dst: 一分耕耘，一分收获。
+src: Nobody knows why.
+dst: 没人知道为什么。
+src: Nobody likes war.
+dst: 没有人喜欢战争。
+src: Nothing happened.
+dst: 什么事都没有发生。
+src: Please copy this.
+dst: 麻烦拷贝这个。
+src: Please don't ask.
+dst: 请不要问。
+src: Please let me go.
+dst: 请让我走。
+src: Please let me go.
+dst: 请允许我去。
+src: Put the box down.
+dst: 把箱子放下。
+src: She began crying.
+dst: 她开始哭泣。
+src: She despised him.
+dst: 她看不起他。
+src: She disliked him.
+dst: 她不喜欢他。
+src: She is mad at me.
+dst: 她跟我生气了。
+src: She kept working.
+dst: 她不停地工作。
+src: She put on socks.
+dst: 她穿上袜子。
+src: She quit smoking.
+dst: 她停下来抽烟。
+src: She was promoted.
+dst: 她晋升了。
+src: Someone is lying.
+dst: 有人说谎。
+src: Sorry to be late.
+dst: 对不起我来晚了。
+src: Summer has ended.
+dst: 夏天已经结束。
+src: Swimming is easy.
+dst: 游泳很容易。
+src: Tell me about it!
+dst: 跟我讲讲那件事。
+src: That is a pencil.
+dst: 那是一支铅笔。
+src: That makes sense.
+dst: 那是有道理的。
+src: That wasn't nice.
+dst: 那不好。
+src: That's avoidable.
+dst: 那是可避免的。
+src: That's our house.
+dst: 那是我们的房子。
+src: That's the point.
+dst: 这正是问题的关键。
+src: That's very rare.
+dst: 那太稀少了。
+src: The box is empty.
+dst: 盒子里面没有东西。
+src: The car is ready.
+dst: 汽车准备好了。
+src: The curtain fell.
+dst: 谢幕了。
+src: The dog is dying.
+dst: 这只狗快要死了。
+src: The fire was out.
+dst: 火熄灭了。
+src: The man is naked.
+dst: 那人没穿衣服。
+src: The sky is clear.
+dst: 天空很晴朗。
+src: The storm abated.
+dst: 风暴减弱了。
+src: The well ran dry.
+dst: 这口井干涸了。
+src: There were risks.
+dst: 有风险。
+src: There's no doubt.
+dst: 毫无疑问。
+src: There's no sugar.
+dst: 没有糖。
+src: There's no water.
+dst: 没有水。
+src: They aren't dead.
+dst: 他们没死。
+src: They were afraid.
+dst: 他们害怕了。
+src: They'll kill you.
+dst: 他们要杀你。
+src: They're children.
+dst: 他们是孩子。
+src: They're children.
+dst: 她们是孩子。
+src: This book is new.
+dst: 这本书是新的。
+src: This is Room 839.
+dst: 这是839号房间。
+src: This is a pencil.
+dst: 这是一支铅笔。
+src: This is not safe.
+dst: 这不安全。
+src: This is the best.
+dst: 这是最好的。
+src: This is your dog.
+dst: 这是你的狗。
+src: This is your key.
+dst: 这是您的钥匙。
+src: This isn't money.
+dst: 这不是钱。
+src: This one's yours.
+dst: 这个是你的。
+src: Tom bought a car.
+dst: 汤姆买了辆车。
+src: Tom can run fast.
+dst: Tom可以跑得很快。
+src: Tom cannot drive.
+dst: 汤姆不能开车。
+src: Tom did it again.
+dst: 汤姆又做了一次。
+src: Tom glanced away.
+dst: 汤姆瞥了一眼就移开目光了。
+src: Tom has no money.
+dst: Tom没有钱。
+src: Tom hit a triple.
+dst: 汤姆击出三垒安打。
+src: Tom hurt himself.
+dst: 汤姆弄伤了自己。
+src: Tom is a fat man.
+dst: 汤姆是个胖子
+src: Tom is a student.
+dst: 汤姆是个学生。
+src: Tom is an artist.
+dst: 汤姆是艺术家。
+src: Tom is deceitful.
+dst: 汤姆是个骗子。
+src: Tom is in danger.
+dst: 汤姆有危险。
+src: Tom is my friend.
+dst: 汤姆是我的朋友。
+src: Tom is very kind.
+dst: 汤姆人很好。
+src: Tom isn't a fool.
+dst: 汤姆不是傻瓜。
+src: Tom isn't a hero.
+dst: 汤姆不是英雄。
+src: Tom likes it hot.
+dst: 汤姆喜欢热的。
+src: Tom lost his job.
+dst: 汤姆丢了工作。
+src: Tom saw the file.
+dst: 汤姆看了文件。
+src: Tom studies hard.
+dst: 汤姆努力学习。
+src: Tom walks slowly.
+dst: 汤姆走得很慢。
+src: Tom will do that.
+dst: 汤姆会做。
+src: Tom would accept.
+dst: 汤姆会接受。
+src: Try it once more.
+dst: 再试一次。
+src: Turn off the gas.
+dst: 把煤气关了！
+src: Turn to the left.
+dst: 向左转。
+src: We accept checks.
+dst: 我们接受支票。
+src: We depend on you.
+dst: 我们可全指望你了。
+src: We depend on you.
+dst: 我们可全靠你了。
+src: We expect to win.
+dst: 我们打算赢。
+src: We have two ears.
+dst: 我们有两只耳朵。
+src: We help the poor.
+dst: 我们帮助穷人。
+src: We just moved in.
+dst: 我们才刚搬进来。
+src: We live together.
+dst: 我们住在一起。
+src: We lost the game.
+dst: 我们比赛输了。
+src: We may need some.
+dst: 我们可能需要一些。
+src: We need Tom back.
+dst: 我们需要汤姆回来。
+src: We never gave up.
+dst: 我们从不放弃。
+src: We'd better talk.
+dst: 我们谈谈比较好。
+src: We'll meet again.
+dst: 后会有期。
+src: We'll stay quiet.
+dst: 我们会保持安静。
+src: We'll talk later.
+dst: 我们过一会再谈。
+src: We're all hungry.
+dst: 我们都饿了。
+src: We're classmates.
+dst: 我们是同学。
+src: We're having fun.
+dst: 我们在高兴地玩。
+src: We're in a hurry.
+dst: 我们很匆忙。
+src: We're in a hurry.
+dst: 我们很急。
+src: We're not stupid.
+dst: 我们不傻。
+src: Welcome to Japan.
+dst: 欢迎到日本。
+src: What a good idea!
+dst: 多好的主意啊！
+src: What did she say?
+dst: 她说了什么？
+src: What did she say?
+dst: 她说了什么?
+src: What did you buy?
+dst: 你买了什么？
+src: What do you have?
+dst: 您有什么？
+src: What do you know?
+dst: 你知道什么？
+src: What do you make?
+dst: 你做什么？
+src: What do you want?
+dst: 你想要什么？
+src: What should I do?
+dst: 我该做什么？
+src: What woke you up?
+dst: 什么吵醒你了?
+src: What's he hiding?
+dst: 他在藏甚么？
+src: What's she doing?
+dst: 她在做什么？
+src: What's your name?
+dst: 你叫什么名字？
+src: What's your name?
+dst: 您叫什么名字？
+src: What's your name?
+dst: 叫什么名字?
+src: Where is my book?
+dst: 我的书在哪？
+src: Where is my seat?
+dst: 我的位子在哪儿？
+src: Where's the boss?
+dst: 老板在哪里？
+src: Where's your dog?
+dst: 你的狗在哪里？
+src: Who decided that?
+dst: 谁决定了那件事？
+src: Who found my bag?
+dst: 谁找到了我的包？
+src: Who wrote Hamlet?
+dst: 哈姆雷特是谁写的？
+src: Whose turn is it?
+dst: 轮到谁了？
+src: Why are you here?
+dst: 你为什么在这？
+src: Why did you quit?
+dst: 你为什么辞职？
+src: Why is he hiding?
+dst: 他为什么在躲藏？
+src: Will you join us?
+dst: 你会参加吗？
+src: Winter is coming.
+dst: 冬季快来了。
+src: You are blushing.
+dst: 你脸红了。
+src: You can't say no.
+dst: 你无法说“不”。
+src: You have to move.
+dst: 你得行动了。
+src: You need to know.
+dst: 你有必要了解。
+src: You shouldn't go.
+dst: 你不应该去。
+src: You're impatient.
+dst: 你缺乏耐心。
+src: You're in my way.
+dst: 你挡住了我的路。
+src: You're no singer.
+dst: 你不是歌手。
+src: Am I overreacting?
+dst: 我反应过度了吗？
+src: Are they students?
+dst: 他们是学生吗？
+src: Are you all ready?
+dst: 你们都准备好了吗?
+src: Are you happy now?
+dst: 你现在高兴吗？
+src: Be nice to others.
+dst: 对他人要友善。
+src: Beware of the dog!
+dst: 小心狗！
+src: Birds build nests.
+dst: 鸟儿筑巢。
+src: Call an ambulance.
+dst: 叫救护车。
+src: Can I have a bite?
+dst: 我可以吃一口吗？
+src: Can I try this on?
+dst: 我能试一下吗？
+src: Can we trust them?
+dst: 我们能信任他们吗？
+src: Can you freeze it?
+dst: 你能冷冻它吗？
+src: Can you jump rope?
+dst: 你能跳绳吗？
+src: Champagne, please.
+dst: 给我香槟，谢谢。
+src: Choose one person.
+dst: 从中选择一人。
+src: Christmas is soon.
+dst: 圣诞节快到了。
+src: Clean up the room.
+dst: 收拾房间。
+src: Come here quickly.
+dst: 快来这里。
+src: Come on, hurry up.
+dst: 来吧，快一点。
+src: Come on, let's go.
+dst: 来吧，我们一起去。
+src: Come on, touch it.
+dst: 来吧，摸一下。
+src: Come on, trust me.
+dst: 来吧，相信我。
+src: Could you tell me?
+dst: 您会告诉我吗？
+src: Deal us the cards.
+dst: 发牌给我们。
+src: Did you borrow it?
+dst: 你借它了吗？
+src: Did you buy juice?
+dst: 你有买果汁吗？
+src: Do I need surgery?
+dst: 我需要做手术吗？
+src: Do you believe me?
+dst: 你相信我吗？
+src: Do you drink beer?
+dst: 你喝啤酒吗？
+src: Do you feel lucky?
+dst: 你觉得幸运吗？
+src: Do you feel tired?
+dst: 你觉得累吗？
+src: Do you have a car?
+dst: 你有车吗？
+src: Do you have a car?
+dst: 您有车吗？
+src: Do you have a map?
+dst: 你有地图吗？
+src: Do you like China?
+dst: 你喜欢中国吗？
+src: Do you like juice?
+dst: 你喜欢果汁吗？
+src: Do you like music?
+dst: 你喜欢音乐吗？
+src: Do you like music?
+dst: 你爱音乐吗？
+src: Do you love music?
+dst: 你爱音乐吗？
+src: Do you understand?
+dst: 你明白了吗?
+src: Don't believe him.
+dst: 不要相信他。
+src: Don't let Tom die.
+dst: 别让汤姆死了。
+src: Don't let him run.
+dst: 别让他跑。
+src: Don't let me down.
+dst: 别让我失望。
+src: Don't pull my leg!
+dst: 不要拉我的腿！
+src: Don't shout at me.
+dst: 别对着我吼。
+src: Don't touch these.
+dst: 不要碰这些。
+src: Earth is a planet.
+dst: 地球是一个行星。
+src: Everybody is fine.
+dst: 每个人都好。
+src: Everybody laughed.
+dst: 大家笑了。
+src: Everyone knows me.
+dst: 大家都认识我。
+src: Everyone was fine.
+dst: 大家都还行。
+src: Feel free to stay.
+dst: 欢迎留下来。
+src: Get into your car.
+dst: 进你的车里。
+src: Give her the book.
+dst: 把这本书给她。
+src: God bless America.
+dst: 上帝保佑美国。
+src: God is everywhere.
+dst: 神无处不在。
+src: Has the bell rung?
+dst: 钟响过了吗？
+src: Haste makes waste.
+dst: 欲速则不达。
+src: He began to shout.
+dst: 他开始喊叫。
+src: He bought a Honda.
+dst: 他卖了一台丰田的车。
+src: He came in person.
+dst: 他亲自来了。
+src: He came to see me.
+dst: 他来看我了。
+src: He can't help you.
+dst: 他不能帮你。
+src: He could not swim.
+dst: 他不能游泳。
+src: He died yesterday.
+dst: 他昨天去世了。
+src: He doesn't listen.
+dst: 他没听。
+src: He has a few pens.
+dst: 他有些钢笔。
+src: He has seven sons.
+dst: 他有七个儿子。
+src: He has three sons.
+dst: 他有三个儿子。
+src: He himself did it.
+dst: 是他自己做的。
+src: He is a screwball.
+dst: 他是一个怪人。
+src: He is an American.
+dst: 他是美国人。
+src: He is at her side.
+dst: 他在她的旁边。
+src: He is but a child.
+dst: 他不过是个孩子。
+src: He is watching TV.
+dst: 他在看电视。
+src: He likes sleeping.
+dst: 他喜欢睡觉。
+src: He loves to party.
+dst: 他爱去聚会。
+src: He made me a suit.
+dst: 他给我做了套衣服。
+src: He struck a match.
+dst: 他划了一根火柴。
+src: He studied abroad.
+dst: 他出国留学了。
+src: He threw the ball.
+dst: 他把球扔了。
+src: He told the truth.
+dst: 他说了实话。
+src: He turned the key.
+dst: 他转动钥匙。
+src: He will come back.
+dst: 他会回来的。
+src: He won everything.
+dst: 他赢得一切了。
+src: He wrote a letter.
+dst: 他写了一封信。
+src: He's a bit lively.
+dst: 他有点活泼。
+src: He's not here yet.
+dst: 他还没到这里。
+src: He's really angry.
+dst: 他非常生气。
+src: Here goes nothing.
+dst: 毫无希望，白费心思。
+src: Here is your book.
+dst: 这是你的书。
+src: Here's the change.
+dst: 这是找零。
+src: How are you doing?
+dst: 你们好吗？
+src: How complex is it?
+dst: 它有多复杂？
+src: How should I know?
+dst: 我怎么知道？
+src: How should I know?
+dst: 我怎么知道?
+src: How was your test?
+dst: 你的测验怎么样？
+src: How was your trip?
+dst: 你的旅行怎么样?
+src: I agreed with her.
+dst: 我同意她。
+src: I am a vegetarian.
+dst: 我是素食主义者。
+src: I am fond of cars.
+dst: 我喜欢车。
+src: I am from Shikoku.
+dst: 我来自四国。
+src: I am in the house.
+dst: 我在家里。
+src: I am on the right.
+dst: 我在右边。
+src: I am studying now.
+dst: 我现在正在学习。
+src: I bathe every day.
+dst: 我每天都洗澡。
+src: I believe in love.
+dst: 我相信爱情。
+src: I bought that car.
+dst: 我买了那辆车。
+src: I can comfort her.
+dst: 我可以安慰她。
+src: I can do it alone.
+dst: 我可以独自做。
+src: I can drive a car.
+dst: 我会开车。
+src: I can hardly walk.
+dst: 我几乎不能走路。
+src: I can play Chopin.
+dst: 我会弹萧邦。
+src: I can play soccer.
+dst: 我会踢足球。
+src: I can play tennis.
+dst: 我会打网球。
+src: I can't stand him.
+dst: 我受不了他。
+src: I come from China.
+dst: 我是从中国来的。
+src: I didn't feel bad.
+dst: 我没觉得不好。
+src: I don't accept it.
+dst: 我不接受。
+src: I don't blame you.
+dst: 我不怪你。
+src: I don't like eggs.
+dst: 我不喜欢吃鸡蛋。
+src: I don't like eggs.
+dst: 我不喜欢鸡蛋。
+src: I don't like kids.
+dst: 我不喜欢小孩。
+src: I don't like this.
+dst: 我不喜欢。
+src: I don't like wine.
+dst: 我不喜欢红酒。
+src: I don't regret it.
+dst: 我不后悔。
+src: I gave you a book.
+dst: 我给了你一本书。
+src: I got a bee sting.
+dst: 我被蜜蜂蛰了一下。
+src: I got my hair cut.
+dst: 我把我的头发剪了。
+src: I got up at seven.
+dst: 我7点起床了。
+src: I hate mosquitoes.
+dst: 我恨蚊子。
+src: I have a computer.
+dst: 我有一台电脑。
+src: I have a daughter.
+dst: 我有一个女儿。
+src: I have a headache.
+dst: 我头痛。
+src: I have a proposal.
+dst: 我有个提案。
+src: I have an opinion.
+dst: 我有一个意见。
+src: I have many discs.
+dst: 我有许多唱片。
+src: I haven't changed.
+dst: 我没改变。
+src: I haven't met her.
+dst: 我没有遇见她。
+src: I hope to see you.
+dst: 我希望能见到你。
+src: I like jazz music.
+dst: 我喜欢爵士乐。
+src: I like short hair.
+dst: 我喜欢短发。
+src: I like your house.
+dst: 我喜欢你的房子。
+src: I like your shoes.
+dst: 我喜欢你的鞋子。
+src: I lost my luggage.
+dst: 我的行李丢了。
+src: I need many books.
+dst: 我需要很多书。
+src: I ripped my pants.
+dst: 我扯掉了自己的裤子。
+src: I sat by his side.
+dst: 我坐在他旁边。
+src: I saw him running.
+dst: 我看见了他跑步。
+src: I saw the sunrise.
+dst: 我看了日出。
+src: I should be happy.
+dst: 我该高兴。
+src: I study at school.
+dst: 我在学校读书。
+src: I think I'll stay.
+dst: 我认我会留下。
+src: I think I'm right.
+dst: 我想我是对的。
+src: I took Highway 58.
+dst: 我走58号高速公路。
+src: I tried to escape.
+dst: 我试图逃跑。
+src: I usually eat out.
+dst: 我通常在外面吃饭。
+src: I want Tom to win.
+dst: 我想让汤姆赢。
+src: I want a lot more.
+dst: 我要多很多。
+src: I want to go home.
+dst: 我要回家。
+src: I was so homesick.
+dst: 我很想家。
+src: I went on reading.
+dst: 我继续阅读。
+src: I will do my best.
+dst: 我会尽力而为。
+src: I wish I could go.
+dst: 我希望我可以去。
+src: I woke up at 2:30.
+dst: 我在2:30起床。
+src: I won the lottery.
+dst: 我中奖了。
+src: I work for a bank.
+dst: 我为一家银行工作。
+src: I work long hours.
+dst: 我工作数小时。
+src: I worry about him.
+dst: 我担心他。
+src: I wrote it myself.
+dst: 我自己写了它。
+src: I wrote this book.
+dst: 我写了这本书。
+src: I'd like to dance.
+dst: 我想要跳舞。
+src: I'd wear a helmet.
+dst: 我要戴头盔。
+src: I'll be back late.
+dst: 我会晚一点回来。
+src: I'll go by myself.
+dst: 我会自己走。
+src: I'll pay the bill.
+dst: 我来付账。
+src: I'll tell my wife.
+dst: 我会告诉我的妻子。
+src: I'm a new student.
+dst: 我是个新生。
+src: I'm able to speak.
+dst: 我能说。
+src: I'm bad at sports.
+dst: 我不擅长运动。
+src: I'm being patient.
+dst: 我很有耐心。
+src: I'm going to lose.
+dst: 我要输了。
+src: I'm not a student.
+dst: 我不是学生。
+src: I'm not too smart.
+dst: 我不太聪明。
+src: I'm on Tom's side.
+dst: 我站在汤姆一边。
+src: I'm still puzzled.
+dst: 我还不明白。
+src: I'm using Twitter.
+dst: 我在用Twitter。
+src: Is Tom a good guy?
+dst: 汤姆是好人。
+src: Is that pure gold?
+dst: 那是纯金吗？
+src: Is the bath clean?
+dst: 浴室干净吗？
+src: Is the party over?
+dst: 聚会结束了吗？
+src: Is this your book?
+dst: 这是你的书吗？
+src: It doesn't matter.
+dst: 没关系。
+src: It is not a watch.
+dst: 这不是手表。
+src: It is windy today.
+dst: 今天有风。
+src: It was our secret.
+dst: 它是我们的秘密。
+src: It's a good start.
+dst: 这是一个好的开端。
+src: It's all my fault.
+dst: 都是我的错。
+src: It's already 7:00.
+dst: 已经是早上七点了。
+src: It's confidential.
+dst: 这是机密。
+src: It's hot out here.
+dst: 这里够热。
+src: It's human nature.
+dst: 它是人的天性。
+src: It's my brother's.
+dst: 它是我兄弟的。
+src: It's not my fault.
+dst: 不是我的错。
+src: It's not that far.
+dst: 不是那么远。
+src: It's on the house.
+dst: 这是免费的。
+src: It's our pleasure.
+dst: 这是我们的荣幸。
+src: It's pretty heavy.
+dst: 它真重。
+src: It's self-evident.
+dst: 这是不证自明的。
+src: It's time to talk.
+dst: 到谈话的时间了。
+src: It's very special.
+dst: 它很特别。
+src: It's warm in here.
+dst: 这里是温暖的。
+src: Keep to the right.
+dst: 靠右侧通行。
+src: Let's get started.
+dst: 让我们开始吧。
+src: Let's get started.
+dst: 让我们开始吧。
+src: Let's get to work.
+dst: 干活吧。
+src: Let's play soccer.
+dst: 去踢足球吧。
+src: Let's shake hands.
+dst: 让我们握手吧。
+src: Let's take a look.
+dst: 让我们看看吧。
+src: Let's take a rest.
+dst: 我们休息一下吧。
+src: Life is beautiful.
+dst: 生活是美丽的。
+src: Life is very hard.
+dst: 人生良苦。
+src: Long time, no see.
+dst: 好久不见。
+src: Look into my eyes.
+dst: 看着我的眼睛。
+src: May I put it here?
+dst: 我可以把它放在这儿吗？
+src: My father is busy.
+dst: 我爸爸很忙。
+src: My laptop crashed.
+dst: 我的笔记本电脑发生故障了。
+src: My shoulder hurts.
+dst: 我肩膀痛。
+src: My stomach's full.
+dst: 我的胃是胀满的。
+src: My stomach's full.
+dst: 我吃得很饱。
+src: No problem at all!
+dst: 什么问题都没有！
+src: No problem at all!
+dst: 一点问题都没有！
+src: No problem at all!
+dst: 没有任何问题!
+src: Pick up the phone.
+dst: 接一下电话。
+src: Please contact us.
+dst: 请联系我们。
+src: Please forgive me.
+dst: 请原谅我。
+src: Please reconsider.
+dst: 请重新考虑一下。
+src: Please wrap it up.
+dst: 请包起来。
+src: Pretend you're me.
+dst: 假装你是我。
+src: Put out the light.
+dst: 熄灯。
+src: Put your hands up!
+dst: 把手举起来！
+src: Say it in English.
+dst: 用英语说。
+src: Shame on you guys.
+dst: 替你们脸红啊。
+src: She began to sing.
+dst: 她开始唱歌了。
+src: She cursed loudly.
+dst: 她大声诅咒。
+src: She didn't go far.
+dst: 她没有走远。
+src: She has blue eyes.
+dst: 她有蓝色的眼睛。
+src: She likes oranges.
+dst: 她喜欢柳橙。
+src: She likes oranges.
+dst: 她喜欢橙子。
+src: She looks unhappy.
+dst: 她看起来不快乐。
+src: She went upstairs.
+dst: 她上楼了。
+src: She wept bitterly.
+dst: 她痛哭。
+src: She's in the bath.
+dst: 她在浴室。
+src: She's my daughter.
+dst: 她是我女儿。
+src: She's not a child.
+dst: 她不是小孩。
+src: Should I help you?
+dst: 我该帮你吗？
+src: Stop bothering me.
+dst: 不要烦我。
+src: Tell me the truth.
+dst: 告诉我真相。
+src: That house is big.
+dst: 那栋房子很大。
+src: That house is big.
+dst: 那栋房子很大。
+src: That is flammable.
+dst: 那是可燃的。
+src: That is your book.
+dst: 那是你的书。
+src: That was fabulous.
+dst: 那真是极好的。
+src: That wasn't funny.
+dst: 那不好笑。
+src: That's a pheasant.
+dst: 那是一只野鸡。
+src: That's my problem.
+dst: 这是我的问题。
+src: That's so perfect.
+dst: 那是完美的。
+src: The bath is ready.
+dst: 浴缸已经准备好了。
+src: The cat is eating.
+dst: 这只猫在吃东西。
+src: The clock stopped.
+dst: 钟停了。
+src: The dog went away.
+dst: 这只狗跑走了。
+src: The doorbell rang.
+dst: 门铃儿响了。
+src: The market is big.
+dst: 市场很大。
+src: The meeting ended.
+dst: 会议结束了。
+src: The pain has gone.
+dst: 疼痛消失了。
+src: The system worked.
+dst: 系统运行起来了。
+src: The truck is gone.
+dst: 货车走了。
+src: The worst is over.
+dst: 最坏的已经过去了。
+src: There is a strike.
+dst: 有罢工。
+src: There is no water.
+dst: 没有水。
+src: They are at lunch.
+dst: 他们在吃午饭。
+src: They are very big.
+dst: 他们非常大。
+src: They can't see me.
+dst: 他们看不见我。
+src: They like to sing.
+dst: 他们都喜欢唱歌。
+src: They were worried.
+dst: 他们担心。
+src: They're in danger.
+dst: 他们有危险。
+src: This apple is bad.
+dst: 这个苹果是坏的。
+src: This book will do.
+dst: 这本书就行了。
+src: This could be fun.
+dst: 这可能很好玩。
+src: This desk is mine.
+dst: 这张书桌是我的。
+src: This is Tom's car.
+dst: 这是胡安的车。
+src: This is a miracle.
+dst: 这是一个奇迹。
+src: This is delicious.
+dst: 很美味。
+src: This is difficult.
+dst: 这很难。
+src: This is expensive.
+dst: 这很贵。
+src: This is gibberish.
+dst: 这是胡说。
+src: This is my mother.
+dst: 这是我母亲。
+src: This is so boring.
+dst: 这太无聊了。
+src: This is your book.
+dst: 这是你的书。
+src: This makes me sad.
+dst: 这让我难过。
+src: Today is Thursday.
+dst: 今天是礼拜四。
+src: Tom began talking.
+dst: 汤姆开始说话。
+src: Tom couldn't swim.
+dst: 汤姆不会游泳。
+src: Tom died recently.
+dst: 汤姆最近死了。
+src: Tom gave me a pen.
+dst: 汤姆给了我一枝笔。
+src: Tom has blue eyes.
+dst: 汤姆的眼睛是蓝色的。
+src: Tom has many cats.
+dst: 汤姆有很多猫。
+src: Tom hates spiders.
+dst: 汤姆恨蜘蛛。
+src: Tom heard a shout.
+dst: 汤姆听到了一声喊叫。
+src: Tom heard nothing.
+dst: 汤姆什么也没听见。
+src: Tom helped us all.
+dst: 汤姆帮了我们。
+src: Tom is a magician.
+dst: 汤姆是魔法师。
+src: Tom is a true man.
+dst: 汤姆是个真男人。
+src: Tom is happy here.
+dst: 汤姆在这里很高兴。
+src: Tom is overweight.
+dst: 汤姆超重了。
+src: Tom is very quiet.
+dst: 汤姆很安静。
+src: Tom isn't unhappy.
+dst: 汤姆不是不高兴。
+src: Tom likes to knit.
+dst: 汤姆喜欢编织。
+src: Tom lives near me.
+dst: 汤姆住在我的附近。
+src: Tom loves flowers.
+dst: 汤姆热爱花卉。
+src: Tom loves to sing.
+dst: 汤姆爱唱歌。
+src: Tom made a choice.
+dst: 汤姆做出了选择。
+src: Tom robbed a bank.
+dst: 汤姆抢了家银行。
+src: Tom sent me there.
+dst: 汤姆送我去了那里。
+src: Tom shut his eyes.
+dst: 汤姆闭上了眼睛。
+src: Tom wants to talk.
+dst: 汤姆想说话。
+src: Tom was very sick.
+dst: 汤姆很虚弱。
+src: Tom wasn't in bed.
+dst: 汤姆不在床上。
+src: Tom works at home.
+dst: 汤姆在家工作。
+src: Try it once again.
+dst: 再试一次。
+src: Turn back, please.
+dst: 请回来。
+src: Two beers, please.
+dst: 请来两杯啤酒。
+src: Use it or lose it.
+dst: 使用它或失去它。
+src: Was that too much?
+dst: 那太多了吗？
+src: We don't think so.
+dst: 我们不这样认为。
+src: We had no secrets.
+dst: 我们没有秘密。
+src: We hope Tom is OK.
+dst: 我们希望汤姆没事。
+src: We may never know.
+dst: 我们可能永远不知道。
+src: We must intervene.
+dst: 我们必须介入。
+src: We need more food.
+dst: 我们需要更多食物。
+src: We need your help.
+dst: 我们需要你的帮忙。
+src: We started at six.
+dst: 我们六点开始。
+src: We went to Russia.
+dst: 我们去了一趟俄罗斯。
+src: We were kids then.
+dst: 我们那时是孩子。
+src: We won the battle.
+dst: 我们战争胜利了。
+src: We're not looking.
+dst: 我们没有看着。
+src: We're old friends.
+dst: 我们是老朋友了。
+src: What did you make?
+dst: 你做了什么？
+src: What do you think?
+dst: 你认为如何?
+src: What does it mean?
+dst: 这是什么意思？
+src: What is your name?
+dst: 你叫什么名字？
+src: What is your name?
+dst: 您叫什么名字？
+src: What's Tom saying?
+dst: 汤姆在说甚么？
+src: What's for supper?
+dst: 我们晚饭吃什么？
+src: What's the matter?
+dst: 怎么了？
+src: What's your hobby?
+dst: 你的爱好是什么？
+src: When do you close?
+dst: 你们公司几点下班?
+src: When was it built?
+dst: 它是什么什么时候盖的？
+src: When was she born?
+dst: 她是什么时候出生的？
+src: Where are you now?
+dst: 你现在在哪里呢？
+src: Where is Room 105?
+dst: 105号房间在哪里？
+src: Where is my watch?
+dst: 我的手表在哪里？
+src: Where is the bank?
+dst: 银行在哪里？
+src: Where is the book?
+dst: 那本书在哪儿？
+src: Where is the pain?
+dst: 哪里痛？
+src: Where is your dog?
+dst: 你的狗在哪儿？
+src: Where is your dog?
+dst: 你的狗在哪里？
+src: Which tooth hurts?
+dst: 哪颗牙痛？
+src: Who invented that?
+dst: 那是谁发明的？
+src: Whose car is this?
+dst: 这辆汽车是谁的?
+src: Whose car is this?
+dst: 这台汽车是谁的?
+src: Whose car is this?
+dst: 这是谁的车？
+src: Whose fault is it?
+dst: 是谁的错呢？
+src: Whose idea was it?
+dst: 这是谁的主意？
+src: Why are you angry?
+dst: 你为什么生气？
+src: Why were you late?
+dst: 你为什么迟到？
+src: Why would she lie?
+dst: 她为甚么要说谎？
+src: Will you marry me?
+dst: 你愿意嫁给我吗？
+src: Will you use this?
+dst: 你要用这个吗？
+src: Yes. That's right.
+dst: 是的。没错。
+src: You are a student.
+dst: 你是学生。
+src: You are a student.
+dst: 您是学生。
+src: You are in my way.
+dst: 你挡住了我的路。
+src: You are so stupid.
+dst: 你真傻。
+src: You disappoint me.
+dst: 你让我失望了。
+src: You got here fast.
+dst: 你来得很快。
+src: You have no fever.
+dst: 你没发烧。
+src: You have to leave.
+dst: 你们得走了。
+src: You have to leave.
+dst: 你得走了。
+src: You know too much.
+dst: 你知道得太多了。
+src: You made me laugh.
+dst: 我被你逗乐了。
+src: You make me happy.
+dst: 你让我快乐。
+src: You may take this.
+dst: 您可以拿着这个.
+src: You need to leave.
+dst: 你必须离开。
+src: You talk too much.
+dst: 你说太多了。
+src: You won't need it.
+dst: 你不会需要它。
+src: You work too hard.
+dst: 你工作太努力了。
+src: You're very alert.
+dst: 你真是警惕。
+src: You're very smart.
+dst: 你很聪明。
+src: You've done a lot.
+dst: 你做了很多。
+src: Anyone can do that.
+dst: 任何人都可以做到。
+src: Are you busy today?
+dst: 你今天忙吗？
+src: Are your eyes open?
+dst: 你睁着眼吗？
+src: Be careful with it.
+dst: 当心它。
+src: Breakfast is ready.
+dst: 早饭准备好了。
+src: Can I see that one?
+dst: 我能看那个吗？
+src: Can I see this one?
+dst: 我能看看这个吗？
+src: Can I use your pen?
+dst: 我可以用你的笔吗？
+src: Can we go back now?
+dst: 我们现在能回去吗？
+src: Can you forgive me?
+dst: 可以原谅我吗？
+src: Come along with me.
+dst: 请跟我来。
+src: Come along with us.
+dst: 跟我们一起来吧。
+src: Come in, it's open.
+dst: 进来，门开着。
+src: Come on, try again.
+dst: 来，再试试看。
+src: Did you bring them?
+dst: 你把它们带来了么？
+src: Did you check this?
+dst: 你检查这个了吗？
+src: Do you like apples?
+dst: 你喜欢苹果吗？
+src: Do you like school?
+dst: 你们喜欢学校吗？
+src: Do you like school?
+dst: 您喜欢学校吗?
+src: Do you play soccer?
+dst: 你踢足球吗?
+src: Do your gums bleed?
+dst: 你的牙龈流血吗？
+src: Does it hurt a lot?
+dst: 很痛吗?
+src: Don't be terrified.
+dst: 别被吓坏了。
+src: Don't miss the bus.
+dst: 不要错过公车。
+src: Don't quit English.
+dst: 不要放弃英语。
+src: Don't talk rubbish.
+dst: 别胡说。
+src: Don't you think so?
+dst: 你不这么认为吗？
+src: Everybody did that.
+dst: 每个人都做了那事。
+src: Everybody is alive.
+dst: 所有人都是活着的。
+src: Everybody will die.
+dst: 人固有一死。
+src: Everyone was drunk.
+dst: 所有人都喝醉了。
+src: Everyone was happy.
+dst: 每个人都高兴。
+src: Everything matters.
+dst: 任何事情都是重要。
+src: Facebook is boring.
+dst: Facebook很无聊。
+src: For here, or to go?
+dst: 内用还是外带?
+src: Give me the number.
+dst: 把那个号码给我。
+src: Give me the report.
+dst: 给我报告。
+src: Give me your phone.
+dst: 给我你的手机。
+src: Go get your helmet.
+dst: 戴上你的安全帽。
+src: He arrived in time.
+dst: 他及时赶到。
+src: He asked after you.
+dst: 他问候了你。
+src: He called me a cab.
+dst: 他替我叫了一部计程车。
+src: He can drive a car.
+dst: 他会开车。
+src: He does speak well.
+dst: 他真的说得很好。
+src: He found me a taxi.
+dst: 他帮我打到一辆出租车。
+src: He gave him a book.
+dst: 他给了他一本书。
+src: He got off the bus.
+dst: 他下了公车。
+src: He hasn't come yet.
+dst: 他还没来。
+src: He insured himself.
+dst: 他给自己投了保险。
+src: He is a bad driver.
+dst: 他是个糟糕的司机。
+src: He is on the radio.
+dst: 他上电台了。
+src: He is so heartless.
+dst: 他是这么的无情。
+src: He killed that man.
+dst: 他杀死了那个人。
+src: He lied to my face.
+dst: 他在我面前撒谎.
+src: He loves traveling.
+dst: 他爱旅行。
+src: He never said that.
+dst: 他从来没说过那个。
+src: He plays very well.
+dst: 他玩得很好。
+src: He plays very well.
+dst: 他弹得很好。
+src: He raised his hand.
+dst: 他举起他的手。
+src: He returned at six.
+dst: 他六点回来了。
+src: He seems to be ill.
+dst: 他好像病了。
+src: He set a precedent.
+dst: 他开了先河。
+src: He speaks too fast.
+dst: 他说话太快了。
+src: He still loves her.
+dst: 他仍然爱着她。
+src: He stole her watch.
+dst: 他偷了她的手表。
+src: He took a week off.
+dst: 他休了一周的假。
+src: He wants affection.
+dst: 他要爱。
+src: He was alone there.
+dst: 他独自在那里。
+src: He went by bicycle.
+dst: 他骑自行车去的。
+src: He went by bicycle.
+dst: 他骑脚踏车去。
+src: He'll wait for you.
+dst: 他会等你。
+src: He's a good person.
+dst: 他是个好人。
+src: He's a good person.
+dst: 他是个好人。
+src: He's a little pale.
+dst: 他有点苍白。
+src: He's a meth addict.
+dst: 他是个吸毒男。
+src: He's already a man.
+dst: 他已经是个男人了。
+src: He's coming closer.
+dst: 他在靠近。
+src: He's in a bad mood.
+dst: 他心情不好。
+src: He's my new friend.
+dst: 他是我新交的朋友。
+src: Her hair grew back.
+dst: 她的头发长回来了。
+src: Her skin is smooth.
+dst: 她的皮肤光滑。
+src: Her socks are gray.
+dst: 她的袜子是灰色的。
+src: Here is my baggage.
+dst: 这是我的行李。
+src: How did he find us?
+dst: 他怎么找到我们的？
+src: How does this work?
+dst: 这是怎么运行的？
+src: How is the weather?
+dst: 天气怎样？
+src: How're you feeling?
+dst: 你感觉如何？
+src: I accept the offer.
+dst: 我接受了报价。
+src: I agree completely.
+dst: 我完全同意。
+src: I almost never lie.
+dst: 我几乎从不说谎。
+src: I am a new student.
+dst: 我是个新生。
+src: I am an only child.
+dst: 我是独生子。
+src: I am from Shizuoka.
+dst: 我来自静冈。
+src: I am not a student.
+dst: 我不是学生。
+src: I am not a teacher.
+dst: 我不是个老师。
+src: I am six feet tall.
+dst: 我六英尺高。
+src: I bathe once a day.
+dst: 我每天洗一次澡。
+src: I burned the paper.
+dst: 我烧了纸。
+src: I can eat anything.
+dst: 我甚么都能吃。
+src: I can wait for you.
+dst: 我可以等你。
+src: I can't believe it!
+dst: 我没法相信！
+src: I can't drink milk.
+dst: 我不可以喝牛奶。
+src: I can't drink milk.
+dst: 我不能喝牛奶。
+src: I clapped my hands.
+dst: 我拍手。
+src: I didn't mean that.
+dst: 我没有那个意思。
+src: I didn't want this.
+dst: 我不想要这个。
+src: I don't have a car.
+dst: 我没有汽车。
+src: I don't have a cat.
+dst: 我没有猫。
+src: I don't like sushi.
+dst: 我不喜欢寿司。
+src: I don't smoke weed.
+dst: 我不吸大麻。
+src: I don't understand.
+dst: 我不懂。
+src: I don't understand.
+dst: 不明白。
+src: I dreamt about you.
+dst: 我梦到你了。
+src: I expect your help.
+dst: 我期待你的帮助。
+src: I feel like a rest.
+dst: 我想休息一下。
+src: I feel like crying.
+dst: 我想哭。
+src: I felt like crying.
+dst: 我想哭。
+src: I gave Mary a book.
+dst: 我给了玛丽一本书。
+src: I give you my word.
+dst: 我向你保证。
+src: I had a lot of fun.
+dst: 我玩得很开心。
+src: I had him write it.
+dst: 我要他写。
+src: I have to call Tom.
+dst: 我得给汤姆打电话。
+src: I have to paint it.
+dst: 我必须把它漆上油漆。
+src: I have to say this.
+dst: 我得说这事。
+src: I heard him go out.
+dst: 我听到他出去了。
+src: I hope we find Tom.
+dst: 我希望我们能找到汤姆。
+src: I know her address.
+dst: 我知道她的地址。
+src: I know the feeling.
+dst: 我知道那种感觉。
+src: I know the problem.
+dst: 我知道问题。
+src: I know those girls.
+dst: 我认识那些女孩。
+src: I know those women.
+dst: 我认识那些女人。
+src: I know what he did.
+dst: 我知道他做了。
+src: I know what to say.
+dst: 我知道要说什么。
+src: I like L.A. better.
+dst: 我更喜欢洛杉矶。
+src: I like candlelight.
+dst: 我很喜欢烛光。
+src: I like mathematics.
+dst: 我喜欢数学。
+src: I like mathematics.
+dst: 我喜欢数学。
+src: I like that person.
+dst: 我喜欢那个人。
+src: I looked around me.
+dst: 我看了看周围。
+src: I lost my umbrella.
+dst: 我丢了我的伞。
+src: I love apple juice.
+dst: 我爱苹果汁。
+src: I made other plans.
+dst: 我另有计划。
+src: I met an old woman.
+dst: 我遇见了一位老妇人。
+src: I miss her so much.
+dst: 我那么想念她。
+src: I miss my children.
+dst: 我想念我的孩子。
+src: I miss you so much.
+dst: 我如此想念你。
+src: I miss you so much.
+dst: 好想见到你
+src: I need your advice.
+dst: 我需要你的意见。
+src: I plan to go there.
+dst: 我打算去那里。
+src: I saw him run away.
+dst: 我看见他逃跑了。
+src: I slapped his face.
+dst: 我掴了他的脸。
+src: I slept on the bus.
+dst: 我在公交车上睡觉了。
+src: I swim once a week.
+dst: 我每周游一次泳。
+src: I think he'll come.
+dst: 我想他会来的吧。
+src: I think he's happy.
+dst: 我想他很快乐。
+src: I walked to school.
+dst: 我走路到学校。
+src: I want this camera.
+dst: 我要这台相机。
+src: I wanted red shoes.
+dst: 我要红色的鞋子。
+src: I was at home then.
+dst: 那个时候，我在家。
+src: I was born in 1988.
+dst: 我生于1988年。
+src: I was expecting it!
+dst: 我一直在期待着！
+src: I was nervous, too.
+dst: 我也紧张。
+src: I was very relaxed.
+dst: 我很放松。
+src: I will go on ahead.
+dst: 我会继续前进。
+src: I wish I had a car.
+dst: 但愿我有一辆车。
+src: I wish I were rich.
+dst: 但愿我很有钱。
+src: I'd like your help.
+dst: 我想请你们帮个忙。
+src: I'll be seeing you.
+dst: 我会见到你。
+src: I'll call Tom back.
+dst: 我会叫汤姆回来。
+src: I'll get some help.
+dst: 我会需要帮助。
+src: I'll keep doing it.
+dst: 我要一直做下去。
+src: I'll see you later.
+dst: 等会儿见。
+src: I'll think it over.
+dst: 我会考虑一下。
+src: I'm a little tired.
+dst: 我有点累。
+src: I'm afraid of dogs.
+dst: 我怕狗。
+src: I'm as tall as you.
+dst: 我跟你一样高。
+src: I'm from Singapore.
+dst: 我是从新加坡来的。
+src: I'm going to check.
+dst: 我正要去签到。
+src: I'm good at skiing.
+dst: 我擅长滑雪。
+src: I'm good at soccer.
+dst: 我擅长足球。
+src: I'm good at tennis.
+dst: 我擅长网球。
+src: I'm losing my grip.
+dst: 我失去了控制。
+src: I'm making a movie.
+dst: 我在制作电影。
+src: I'm not interested.
+dst: 我不感兴趣。
+src: I'm not quite well.
+dst: 我有点不舒服。
+src: I'm ready to leave.
+dst: 我准备好出发了。
+src: I'm really worried.
+dst: 我很着急。
+src: I'm too busy to go.
+dst: 我太忙了不能去。
+src: I've gained weight.
+dst: 我增加了体重。
+src: I've got to go now.
+dst: 我现在得走了。
+src: I've gotten better.
+dst: 我已经变得好多了。
+src: I've never met him.
+dst: 我从来没有见过他。
+src: Ignorance is bliss.
+dst: 无知就是幸福。
+src: Is everybody ready?
+dst: 所有人都准备好了吗？
+src: Is it large enough?
+dst: 这么大的够用吗？
+src: Is she your mother?
+dst: 她是你妈妈吗?
+src: Is something wrong?
+dst: 有什么不对吗？
+src: Is this everything?
+dst: 这就是全部吗？
+src: It came to nothing.
+dst: 这没有结果。
+src: It is easy to swim.
+dst: 游泳很简单。
+src: It is really cheap.
+dst: 它真的很便宜。
+src: It just gets worse.
+dst: 它变糟了。
+src: It wasn't my fault.
+dst: 那不是我的错。
+src: It's about to rain.
+dst: 天快要下雨了。
+src: It's going to rain.
+dst: 天快要下雨了。
+src: It's gotten better.
+dst: 它会好转的。
+src: It's not important.
+dst: 这个不重要。
+src: It's not important.
+dst: 这不重要。
+src: It's not practical.
+dst: 这不实用。
+src: It's snowing today.
+dst: 今天下雪。
+src: Just let Tom speak.
+dst: 就让汤姆说吧。
+src: Knowledge is power.
+dst: 知识就是力量。
+src: Leave my car alone.
+dst: 离我的车远一点。
+src: Leave my car alone.
+dst: 不要碰我的车。
+src: Let me handle this.
+dst: 让我来处理。
+src: Let me have a look.
+dst: 让我看看。
+src: Let's be realistic.
+dst: 现实点吧。
+src: Let's get off here.
+dst: 我们在这里下车吧。
+src: Let's not watch TV.
+dst: 我们不要看电视吧。
+src: Let's take it easy.
+dst: 让我们放轻松吧。
+src: Look at my new car.
+dst: 看看我的新车。
+src: Look at that house.
+dst: 看那个房子。
+src: Look at that smoke.
+dst: 快看那个烟。
+src: Look what happened.
+dst: 看看发生了什么。
+src: Love doesn't exist.
+dst: 爱不存在。
+src: Mary has nice legs.
+dst: 玛丽的腿很漂亮。
+src: Mary has nice legs.
+dst: 玛丽有一双美腿。
+src: May I pay by check?
+dst: 我可以用支票付吗？
+src: May I run with you?
+dst: 我可以跟你一起跑吗？
+src: May I take a photo?
+dst: 请问可以给您拍张照片吗？
+src: My father grew old.
+dst: 我父亲变老了。
+src: My hand was burned.
+dst: 我的手烧伤了。
+src: My legs still hurt.
+dst: 我的腿还是很痛。
+src: My room faces east.
+dst: 我的房间面向东边。
+src: No one can help me.
+dst: 没有人能帮我。
+src: No one will see us.
+dst: 没有人会看到我们。
+src: Nobody can help me.
+dst: 没有人能帮我。
+src: Nobody was injured.
+dst: 没有人受伤。
+src: Nothing is missing.
+dst: 什么也没少。
+src: Now it is official.
+dst: 现在它是官方的。
+src: Now, wait a second.
+dst: 现在等一下。
+src: Obey your teachers.
+dst: 要听老师的话。
+src: Oh! That's too bad.
+dst: 哦！那太糟糕了。
+src: Please get dressed.
+dst: 请穿衣服。
+src: Please let us know.
+dst: 请让我们知道。
+src: Put the book there.
+dst: 把书放在那里。
+src: Put your guns down.
+dst: 放下你的枪。
+src: She cried bitterly.
+dst: 她痛哭了起来。
+src: She is very clever.
+dst: 她很聪明。
+src: She is very pretty.
+dst: 她很可爱。
+src: She loves children.
+dst: 她爱孩子。
+src: She made me a cake.
+dst: 她为我做了一个蛋糕。
+src: She needs our help.
+dst: 她需要我们的帮忙。
+src: She put on her hat.
+dst: 她戴上了她的帽子。
+src: She was in a hurry.
+dst: 她在赶时间。
+src: She won everything.
+dst: 她赢得一切了。
+src: She's Tom's sister.
+dst: 她是Tom的姐妹。
+src: She's my classmate.
+dst: 她是我的同学。
+src: She's only a child.
+dst: 她只是个孩子。
+src: Show me an example.
+dst: 给我个例子。
+src: Somebody is eating.
+dst: 有人在吃东西。
+src: Stay off the grass.
+dst: 不要走在草地上。
+src: Stop joking around.
+dst: 不要随便开玩笑。
+src: Stop joking around.
+dst: 别开玩笑了。
+src: Tell me what to do.
+dst: 告诉我该做什么。
+src: That is intriguing.
+dst: 那真有趣。
+src: That is our school.
+dst: 那是我们的学校。
+src: That was years ago.
+dst: 那是好几年前。
+src: That's a good idea!
+dst: 真是个好主意！
+src: That's a good idea.
+dst: 那是一个好主意。
+src: That's a good plan.
+dst: 那是一个很好的计划。
+src: That's a nice coat.
+dst: 那是一件不错的大衣。
+src: That's no big deal.
+dst: 那没什么大不了的。
+src: That's really nice.
+dst: 真好。
+src: That's what I like.
+dst: 我就喜欢它。
+src: That's what I want.
+dst: 那就是我想要的。
+src: The area was quiet.
+dst: 这地区很安静。
+src: The boy eats bread.
+dst: 这个男孩吃面包。
+src: The car broke down.
+dst: 汽车发生故障了。
+src: The coffee is cold.
+dst: 咖啡是冷的。
+src: The crow flew away.
+dst: 这只乌鸦飞走了。
+src: The danger is over.
+dst: 危险已过去。
+src: The glass is dirty.
+dst: 玻璃脏了。
+src: The lock is broken.
+dst: 锁坏了。
+src: The plane is ready.
+dst: 飞机准备好了。
+src: The problem is Tom.
+dst: 问题是汤姆。
+src: The tire leaks air.
+dst: 轮胎漏气了。
+src: There goes our bus.
+dst: 我们的车走了。
+src: There's no mistake.
+dst: 没有错误。
+src: These dogs are big.
+dst: 这些狗很大。
+src: These must be fake.
+dst: 这些一定是假的。
+src: They all have come.
+dst: 他们全都来了。
+src: They didn't listen.
+dst: 他们没听。
+src: They didn't see us.
+dst: 他们没看见我们。
+src: They don't like me.
+dst: 他们不喜欢我。
+src: They forced me out.
+dst: 他们迫使我出来。
+src: They live in peace.
+dst: 他们过着和平的生活。
+src: They never give up.
+dst: 他们永不言弃。
+src: They were so young.
+dst: 他们是那么年轻。
+src: They will not pass!
+dst: 他们不会通过的!
+src: They work together.
+dst: 他们在一起工作。
+src: This book is small.
+dst: 这本书小。
+src: This book is yours.
+dst: 这本书是你的。
+src: This book was easy.
+dst: 这本书很容易。
+src: This chair is ugly.
+dst: 这把椅子很丑。
+src: This clock is mine.
+dst: 这个表是我的。
+src: This house is mine.
+dst: 这房子是我的。
+src: This is Mary's dog.
+dst: 这是玛丽的狗。
+src: This is all I know.
+dst: 这是我所知道的。
+src: This is just wrong.
+dst: 这就是错的。
+src: This is my bicycle.
+dst: 这是我的自行车。
+src: This is quite good.
+dst: 这可真好。
+src: This is surprising.
+dst: 这是令人吃惊的。
+src: This isn't Spanish.
+dst: 这不是西班牙语。
+src: This story is true.
+dst: 这个故事是真的。
+src: Those are my pants.
+dst: 那些是我的裤子。
+src: Those dogs are big.
+dst: 那些狗都很大。
+src: Today is the fifth.
+dst: 今天是五号。
+src: Tom abandoned hope.
+dst: 汤姆放弃了希望。
+src: Tom asked for food.
+dst: 汤姆要食物。
+src: Tom died in battle.
+dst: 汤姆在战斗中死了。
+src: Tom follows orders.
+dst: 汤姆服从命令。
+src: Tom has an old car.
+dst: 汤姆有辆旧车。
+src: Tom has no manners.
+dst: Tom没有礼貌。
+src: Tom has three cats.
+dst: Tom有三只猫。
+src: Tom is a good cook.
+dst: 汤姆是个好厨师。
+src: Tom is always late.
+dst: 汤姆总是迟到。
+src: Tom is crying, too.
+dst: 汤姆也在哭。
+src: Tom is going crazy.
+dst: 汤姆要发疯。
+src: Tom is more active.
+dst: 汤姆更活跃。
+src: Tom is serious now.
+dst: 汤姆现在是认真的。
+src: Tom is still upset.
+dst: 汤姆还是不安。
+src: Tom is there alone.
+dst: Tom独自在那。
+src: Tom isn't an angel.
+dst: 汤姆不是天使。
+src: Tom likes swimming.
+dst: 汤姆喜欢游泳。
+src: Tom made fun of me.
+dst: 汤姆拿我开心。
+src: Tom runs very fast.
+dst: 汤姆跑得快。
+src: Tom said he'd wait.
+dst: 汤姆说他会等。
+src: Tom teaches French.
+dst: 汤姆教法语。
+src: Tom waited outside.
+dst: 汤姆在外面等。
+src: Tom wanted revenge.
+dst: 汤姆想报仇。
+src: Tom wasn't thirsty.
+dst: 汤姆不渴。
+src: Tom's door is open.
+dst: 汤姆的门开着。
+src: Turn off the light.
+dst: 关灯。
+src: Wait just a moment.
+dst: 就等一会儿。
+src: Was her story true?
+dst: 她的故事是真的吗？
+src: Was his story true?
+dst: 他的故事是真的吗？
+src: We all fell asleep.
+dst: 我们都睡着了。
+src: We are against war.
+dst: 我们反对战争。
+src: We can't talk here.
+dst: 我们不能在这里谈。
+src: We didn't break in.
+dst: 我们没有打断。
+src: We don't have time.
+dst: 我们没时间。
+src: We don't trust Tom.
+dst: 我们不相信汤姆。
+src: We have many goals.
+dst: 我们有许多目标。
+src: We have three kids.
+dst: 我们有三个孩子。
+src: We kept them quiet.
+dst: 我们让他们保持安静。
+src: We know everything.
+dst: 我们什么都知道。
+src: We know our rights.
+dst: 我们知道我们的权利。
+src: We love each other.
+dst: 我们彼此相爱。
+src: We love our school.
+dst: 我们爱我们的学校。
+src: We ran in the park.
+dst: 我们在公园里跑了步。
+src: We should sit down.
+dst: 我们应该坐下。
+src: We studied English.
+dst: 我们学了英语。
+src: We want to go home.
+dst: 我们想回家。
+src: We want to hear it.
+dst: 我们想听听。
+src: We're almost broke.
+dst: 我们快破产了。
+src: We're conservative.
+dst: 我们很保守。
+src: We're the same age.
+dst: 他和我同岁。
+src: We've been tricked.
+dst: 我们被耍了。
+src: We've forgiven you.
+dst: 我们已经原谅你了。
+src: Were you a soldier?
+dst: 你是士兵吗？
+src: What a lot of pens!
+dst: 那么多钢笔！
+src: What a strong wind!
+dst: 多么强的风啊！
+src: What an idiot I am!
+dst: 我真是个白痴！
+src: What are you doing?
+dst: 你做什么？
+src: What happened here?
+dst: 这儿发生了什么事？
+src: What happened then?
+dst: 然后发生了什么事？
+src: What is over there?
+dst: 那是什么？
+src: What just happened?
+dst: 刚刚发生了什么？
+src: What will you have?
+dst: 你将拥有什么？
+src: What will you make?
+dst: 你会做什么？
+src: What're you saying?
+dst: 你在说什么？
+src: What's in this bag?
+dst: 这个袋子里是什么？
+src: What's your advice?
+dst: 你有什么建议呢？
+src: When was Tom fired?
+dst: 汤姆什么时候被开除的?
+src: When was Tom fired?
+dst: 汤姆什么时候被解雇的?
+src: Where are my books?
+dst: 我的书在哪？
+src: Where do you study?
+dst: 你在哪读书？
+src: Where does he work?
+dst: 他在哪里工作？
+src: Where does it hurt?
+dst: 哪里痛?
+src: Where does it hurt?
+dst: 哪里疼?
+src: Where is the vodka?
+dst: 伏特加在哪里？
+src: Where should we go?
+dst: 我们应该去哪里？
+src: Where're the shoes?
+dst: 鞋子在哪儿？
+src: Which cap is yours?
+dst: 哪顶帽子是你的？
+src: Which cup is yours?
+dst: 哪个杯子是你的？
+src: Which hat is yours?
+dst: 哪顶帽子是你的？
+src: Which is your book?
+dst: 哪本是你的书？
+src: Which is your book?
+dst: 哪本是你们的书？
+src: Which is your book?
+dst: 哪本是您的书？
+src: Which is your book?
+dst: 哪本书是您的？
+src: Which is your book?
+dst: 哪本书是你们的？
+src: Who are those guys?
+dst: 那些家伙是谁？
+src: Who took the money?
+dst: 谁拿了钱？
+src: Who touched my gun?
+dst: 谁碰了我的枪？
+src: Whose bike is this?
+dst: 这辆自行车是谁的？
+src: Whose book is this?
+dst: 这是谁的书？
+src: Whose book is this?
+dst: 这书是谁的？
+src: Whose ring is that?
+dst: 那是谁的环？
+src: Why are you crying?
+dst: 你为什么哭？
+src: Why are you crying?
+dst: 你为什么哭？
+src: Why are you so mad?
+dst: 你为什么这么生气？
+src: Why can't you come?
+dst: 你为什么不能来?
+src: Why do you need it?
+dst: 你为什么需要它？
+src: Why should we help?
+dst: 为什么我们应该要帮助？
+src: Why were you there?
+dst: 你为什么在那里?
+src: Why worry about it?
+dst: 为什么要担心？
+src: Will I have a scar?
+dst: 我会留疤吗？
+src: You are free to go.
+dst: 你可以走了。
+src: You are very brave.
+dst: 您非常勇敢。
+src: You are very brave.
+dst: 你非常勇敢。
+src: You aren't invited.
+dst: 你没受到邀请。
+src: You broke the rule.
+dst: 你坏了规矩。
+src: You could say that.
+dst: 你不能这么说。
+src: You have cute eyes.
+dst: 你有一双很可爱的眼睛。
+src: You have nice skin.
+dst: 你的皮肤真好。
+src: You know I'm right.
+dst: 你知道我是正确的。
+src: You like elephants.
+dst: 你喜欢大象。
+src: You live and learn.
+dst: 你一面生活一面学习。
+src: You look very good.
+dst: 你看上去很好。
+src: You look very pale.
+dst: 你看上去很苍白。
+src: You made a mistake.
+dst: 你犯了个错误。
+src: You might meet him.
+dst: 你可能会见到他。
+src: You must be joking!
+dst: 你一定是开玩笑！
+src: You should know it.
+dst: 你应该知道的。
+src: You'd better hurry.
+dst: 你最好快点。
+src: You'll be confused.
+dst: 你会困惑。
+src: You'll bounce back.
+dst: 你会东山再起的。
+src: You're a good cook.
+dst: 你是个好厨师。
+src: You're always busy.
+dst: 你一直忙。
+src: You're an optimist.
+dst: 你是个乐观主义者。
+src: You're not my type.
+dst: 你不是我喜欢的类型。
+src: You're quite right.
+dst: 你是对的。
+src: You're still green.
+dst: 你还年轻。
+src: You're still young.
+dst: 你仍然很年轻。
+src: You're such a jerk.
+dst: 你真是个傻子。
+src: You're turning red.
+dst: 你脸红了。
+src: "Trust me," he said.
+dst: “相信我。”他说。
+src: A whale is a mammal.
+dst: 鲸鱼是哺乳动物。
+src: Answer my questions.
+dst: 回答我的问题。
+src: Answer the question.
+dst: 回答问题。
+src: Are you guys crying?
+dst: 你们在哭吗？
+src: Can you drive a car?
+dst: 您会开车吗？
+src: Can you really swim?
+dst: 你真的会游泳吗？
+src: Christmas is coming.
+dst: 圣诞节快到了。
+src: Come again any time.
+dst: 随时再来。
+src: Could I try this on?
+dst: 我能试一下这个吗？
+src: Could you sign here?
+dst: 你能在这里签名吗?
+src: Destroy this temple.
+dst: 摧毁这个寺庙。
+src: Do you drink coffee?
+dst: 你喝咖啡吗?
+src: Do you go to church?
+dst: 你去教堂吗？
+src: Do you have a cough?
+dst: 你咳嗽吗？
+src: Do you have a fever?
+dst: 你发烧了吗？
+src: Do you know my name?
+dst: 你知道我的名字吗？
+src: Do you like English?
+dst: 你喜欢英语吗？
+src: Do you speak French?
+dst: 你会讲法语吗？
+src: Do you want to know?
+dst: 你想知道吗？
+src: Does Tom have a job?
+dst: 汤姆有工作吗？
+src: Don't let Tom leave.
+dst: 别让汤姆走了。
+src: Don't listen to her.
+dst: 别听她的。
+src: Don't stand near me.
+dst: 不要站在我身边。
+src: Don't you know that?
+dst: 你不知道那件事吗？
+src: Dry wood burns well.
+dst: 干柴烧得旺。
+src: Enjoy your holidays.
+dst: 度假愉快！
+src: Every minute counts.
+dst: 分秒必争。
+src: Everybody knows her.
+dst: 每个人都认识她。
+src: Everybody thinks so.
+dst: 大家都是这样想的。
+src: Everything seems OK.
+dst: 一切看上去正常。
+src: Excuse me, I'm lost.
+dst: 不好意思，我迷路了。
+src: Few people think so.
+dst: 很少人这么认为。
+src: Fish is cheap today.
+dst: 今天鱼很便宜。
+src: Give me a cigarette.
+dst: 给我支香烟吧。
+src: Has Tom gone insane?
+dst: Tom疯了吗？
+src: Have a good weekend.
+dst: 周末愉快。
+src: Have you been fired?
+dst: 你曾经被开除过吗?
+src: He accepted my idea.
+dst: 他接受了我的主意。
+src: He appeared at last.
+dst: 他终于出现了。
+src: He became a pianist.
+dst: 他成为了一个钢琴家。
+src: He called me a taxi.
+dst: 他替我叫了一部计程车。
+src: He climbed Mt. Fuji.
+dst: 他爬上了富士山。
+src: He did it for money.
+dst: 他做这个是为了钱。
+src: He didn't know that.
+dst: 他不知道。
+src: He does not like us.
+dst: 他不喜欢我们。
+src: He drives very fast.
+dst: 他开车速度非常快。
+src: He entered the army.
+dst: 他加入了陆军。
+src: He has a big family.
+dst: 他有个大家庭。
+src: He has a round face.
+dst: 他有一张圆脸。
+src: He has his own room.
+dst: 他有自己的房间。
+src: He has lost his job.
+dst: 他已经失去了他的工作。
+src: He hates air travel.
+dst: 他讨厌坐飞机旅行。
+src: He is a good fellow.
+dst: 他是个好人。
+src: He is a learned man.
+dst: 他是个有教养的人。
+src: He is at home today.
+dst: 他今天在家。
+src: He is good at rugby.
+dst: 他很擅长橄榄球。
+src: He is not religious.
+dst: 他不信教。
+src: He is playing music.
+dst: 他在演奏音乐。
+src: He is taking a walk.
+dst: 他正在散步。
+src: He is telling a lie.
+dst: 他说谎。
+src: He is very handsome.
+dst: 他很英俊。
+src: He laid on his back.
+dst: 他仰躺。
+src: He left an hour ago.
+dst: 他一小时前走了。
+src: He lives by himself.
+dst: 他一个人生活。
+src: He lives by himself.
+dst: 他独自生活。
+src: He may not be happy.
+dst: 他可能不高兴。
+src: He raised his hands.
+dst: 他举起了他的手。
+src: He saluted the lady.
+dst: 他向那位女士问好。
+src: He sat on the bench.
+dst: 他坐在长凳上。
+src: He seems to be rich.
+dst: 他看起来很有钱。
+src: He shaves every day.
+dst: 他每天刮胡子。
+src: He should thank you.
+dst: 他应该感谢您。
+src: He was made captain.
+dst: 他被选为队长。
+src: He was very patient.
+dst: 他非常有耐心。
+src: He worked very hard.
+dst: 他工作很努力。
+src: He wrote one letter.
+dst: 他写了一封信。
+src: He wrote the report.
+dst: 他写了这份报告。
+src: He'll never beat me.
+dst: 他永远不会打败我的。
+src: He's afraid of dogs.
+dst: 他怕狗。
+src: He's always smiling.
+dst: 他总是在笑。
+src: He's doing his best.
+dst: 他在全力以赴。
+src: Her son is a genius.
+dst: 她儿子是个天才。
+src: Here is your change.
+dst: 这是你零钱。
+src: Here's how we do it.
+dst: 以下是我们怎么做的。
+src: His bicycle is blue.
+dst: 他的自行车是蓝色的。
+src: His speech bored me.
+dst: 他的演讲让我很无聊。
+src: His speech moved us.
+dst: 他的演说打动了我们。
+src: How I've missed you!
+dst: 我多么想念你！
+src: How about Thai food?
+dst: 泰国菜怎么样？
+src: How are you feeling?
+dst: 你感觉如何？
+src: How can I reach you?
+dst: 我怎样才能连络到你?
+src: How do you feel now?
+dst: 你现在感觉如何？
+src: How old is this zoo?
+dst: 这间动物园多久了？
+src: How old is your son?
+dst: 你儿子几岁?
+src: How was the fishing?
+dst: 钓鱼怎么样？
+src: How was the seminar?
+dst: 这研究会怎么样？
+src: I always study hard.
+dst: 我总是用功读书。
+src: I am afraid of dogs.
+dst: 我怕狗。
+src: I am an electrician.
+dst: 我是一名电工。
+src: I am engaged to her.
+dst: 我跟她订婚了。
+src: I am in Tokyo today.
+dst: 我今天在东京。
+src: I am too busy to go.
+dst: 我太忙了不能去。
+src: I arrived in London.
+dst: 我到达伦敦了。
+src: I ate a hasty lunch.
+dst: 我匆忙的吃了午餐。
+src: I can come at three.
+dst: 我三点钟可以来。
+src: I can help you, too.
+dst: 我也能帮你。
+src: I can see the light.
+dst: 我能看到光线。
+src: I can speak Chinese.
+dst: 我会说中文。
+src: I can speak English.
+dst: 我会讲英语。
+src: I can start anytime.
+dst: 我随时可以开始。
+src: I can win this time.
+dst: 我这回能赢。
+src: I can't afford that.
+dst: 我买不起那个。
+src: I can't find my pen.
+dst: 我找不到我的笔。
+src: I cleared the table.
+dst: 我清理了桌子。
+src: I come from England.
+dst: 我来自英国。
+src: I continued singing.
+dst: 我继续唱歌。
+src: I continued singing.
+dst: 我继续唱歌。
+src: I continued working.
+dst: 我继续工作。
+src: I disagree with you.
+dst: 我不同意你的看法。
+src: I do not fear death.
+dst: 我不怕死。
+src: I do not have a cat.
+dst: 我没有猫。
+src: I do not understand.
+dst: 我不懂。
+src: I don't like movies.
+dst: 我不喜欢电影。
+src: I don't like school.
+dst: 我不喜欢学校。
+src: I don't like summer.
+dst: 我不喜欢夏天。
+src: I don't like winter.
+dst: 我不喜欢冬天。
+src: I don't see why not.
+dst: 我看不出为什么不。
+src: I don't want to eat.
+dst: 我不想吃。
+src: I dreamed about you.
+dst: 我梦到你了。
+src: I felt good tonight.
+dst: 我今晚感觉良好。
+src: I forgot to ask Tom.
+dst: 我忘了问汤姆。
+src: I forgot to ask him.
+dst: 我忘了问他。
+src: I have a high fever.
+dst: 我烧得很厉害。
+src: I have been to Rome.
+dst: 我去过罗马。
+src: I have to go to bed.
+dst: 我该去睡觉了。
+src: I have to go to bed.
+dst: 我该上床了。
+src: I have to stay home.
+dst: 我得留在家。
+src: I heard her singing.
+dst: 我听见她唱歌了。
+src: I just need a break.
+dst: 我只想休息一下
+src: I keep a female cat.
+dst: 我养了一只母猫。
+src: I know that feeling.
+dst: 我知道那种感觉。
+src: I know what you did.
+dst: 我知道你做了什么。
+src: I know where she is.
+dst: 我知道她在哪里。
+src: I know you're upset.
+dst: 我知道你难过。
+src: I like dragon fruit.
+dst: 我喜欢火龙果。
+src: I like each of them.
+dst: 我喜欢他们每一个。
+src: I like movies a lot.
+dst: 我很喜欢电影。
+src: I like taking walks.
+dst: 我喜欢散步。
+src: I live in this area.
+dst: 我住在这区。
+src: I live too far away.
+dst: 我住得太远了。
+src: I need a bigger box.
+dst: 我需要个更大的箱子。
+src: I never played golf.
+dst: 我从没玩过高尔夫。
+src: I noticed a pattern.
+dst: 我注意到一个图案。
+src: I often catch colds.
+dst: 我常常感冒。
+src: I often eat chicken.
+dst: 我经常吃鸡。
+src: I quickly ate lunch.
+dst: 我迅速地吃了午饭。
+src: I really am unlucky!
+dst: 我真的很倒霉！
+src: I really don't sing.
+dst: 我真的不会唱。
+src: I really have to go.
+dst: 我真的得走了。
+src: I remember this map.
+dst: 我记得这张地图。
+src: I retired last year.
+dst: 我去年退休了。
+src: I talked to friends.
+dst: 我和朋友们交谈。
+src: I told Tom I was OK.
+dst: 我对汤姆说我很好。
+src: I want a girlfriend.
+dst: 我想找女朋友。
+src: I want your opinion.
+dst: 我想要听听你的意见。
+src: I was born in Kyoto.
+dst: 我生于京都。
+src: I was ill yesterday.
+dst: 我昨天生病了。
+src: I was pretty hungry.
+dst: 我真是饿了。
+src: I was quite annoyed.
+dst: 我被烦死了。
+src: I wasn't alone then.
+dst: 我当时不孤单。
+src: I will try it again.
+dst: 我会再试一次。
+src: I wish I could swim.
+dst: 我希望我会游泳。
+src: I wish I were young.
+dst: 但愿我还年轻。
+src: I won't stay silent.
+dst: 我不会保持沉默的。
+src: I won’t be fooled.
+dst: 我不会上当的。
+src: I work in a factory.
+dst: 我在一家工厂工作。
+src: I wrote it all down.
+dst: 我全写下来了。
+src: I'll drive you home.
+dst: 我开车送你回家。
+src: I'll join you later.
+dst: 我一会儿就来。
+src: I'll let you decide.
+dst: 我让你来决定。
+src: I'll make you happy.
+dst: 我会让你幸福的。
+src: I'll return at 6:30.
+dst: 我六点半回来。
+src: I'm Tom's assistant.
+dst: 我是汤姆的助手。
+src: I'm a social worker.
+dst: 我是个社会工作人员。
+src: I'm as old as he is.
+dst: 我和他同年。
+src: I'm counting on you.
+dst: 我就指望你了。
+src: I'm looking for you.
+dst: 我在找你。
+src: I'm not a bit tired.
+dst: 我一点也不累。
+src: I'm not your mother.
+dst: 我不是你们的妈妈。
+src: I'm not your mother.
+dst: 我不是你母亲。
+src: I'm proud of my son.
+dst: 我为我儿子感到骄傲。
+src: I'm sad without you.
+dst: 没有你我很悲伤。
+src: I'm stuck in my job.
+dst: 我被工作困住了。
+src: I'm taller than you.
+dst: 我比你高。
+src: I'm very busy today.
+dst: 我今天很忙。
+src: I'm very hungry now.
+dst: 我现在非常饿。
+src: I'm waiting for him.
+dst: 我在等他。
+src: I've been in prison.
+dst: 我进过监狱。
+src: I've lost my ticket.
+dst: 我把票弄丢了。
+src: I've missed so much.
+dst: 我错过了太多。
+src: I've seen Tom naked.
+dst: 我见过汤姆光着。
+src: Is Tom helping Mary?
+dst: 汤姆在帮玛丽吗？
+src: Is anybody in there?
+dst: 那边有人吗？
+src: Is it far from here?
+dst: 离这儿远吗？
+src: Is that our problem?
+dst: 那是我们的问题吗？
+src: Is that the station?
+dst: 那是车站吗？
+src: Is this really real?
+dst: 这真是真的吗？
+src: Is this your family?
+dst: 这是你的家人吗？
+src: Is this your pencil?
+dst: 这是你的铅笔吗？
+src: It can be dangerous.
+dst: 它有危险。
+src: It hasn't been easy.
+dst: 它不容易。
+src: It is going to rain.
+dst: 天快要下雨了。
+src: It is going to snow.
+dst: 要下雪了。
+src: It may never happen.
+dst: 它可能从没发生过。
+src: It rained yesterday.
+dst: 昨天下雨了。
+src: It serves you right.
+dst: 自作自受。
+src: It was a lot of fun.
+dst: 它很好玩。
+src: It was getting dark.
+dst: 天要黑了。
+src: It was really cheap.
+dst: 它真的很便宜。
+src: It's a real bargain.
+dst: 真是物美价廉。
+src: It's all your fault.
+dst: 都是你的错。
+src: It's as cold as ice.
+dst: 它冷得像冰一样。
+src: It's really awesome.
+dst: 太棒了。
+src: It's safe to say so.
+dst: 这么说是安全的。
+src: It's very difficult.
+dst: 这很难。
+src: It's worth the wait.
+dst: 它是值得等待的。
+src: Just take it slowly.
+dst: 慢慢来。
+src: Keep going straight.
+dst: 继续直行。
+src: Keep your eyes open.
+dst: 睁大你的眼睛。
+src: Let's call it a day.
+dst: 今天就到此为止吧。
+src: Let's go to a movie.
+dst: 让我们去看电影。
+src: Let's keep in touch.
+dst: 让我们保持联络。
+src: Let's play baseball!
+dst: 让我们来打棒球吧！
+src: Lift your right arm.
+dst: 举起你的右臂。
+src: Love is like oxygen.
+dst: 爱就像氧气。
+src: Mary can dance well.
+dst: 玛丽舞跳得很好。
+src: May I eat that cake?
+dst: 我可以吃那个蛋糕吗？
+src: May I say something?
+dst: 我可以说些什么吗?
+src: More coffee, please.
+dst: 请再给我一点咖啡。
+src: My back still hurts.
+dst: 我的背还在痛。
+src: My home is far away.
+dst: 我家很远。
+src: My neck still hurts.
+dst: 我的脖子还疼。
+src: My notebook is pink.
+dst: 我的笔记本是粉色的。
+src: My purse was stolen.
+dst: 我的钱包被抢了。
+src: My room is a pigsty.
+dst: 我房间是个猪窝。
+src: My throat feels dry.
+dst: 我喉咙很干。
+src: No drinkers allowed.
+dst: 饮酒者不准禁入。
+src: Now it's your serve.
+dst: 现在该你发球。
+src: One of us has to go.
+dst: 我们中的一个得走。
+src: Ostriches can't fly.
+dst: 鸵鸟不会飞。
+src: Ostriches can't fly.
+dst: 鸵鸟不会飞。
+src: Paper burns quickly.
+dst: 纸烧得快。
+src: People love to talk.
+dst: 人们就是爱说话。
+src: Please make the bed.
+dst: 请整理床铺。
+src: Please speak slowly.
+dst: 请说慢一点。
+src: Please speak slowly.
+dst: 请说慢一些。
+src: Please wish me luck.
+dst: 请祝我好运。
+src: Prices are going up.
+dst: 物价上涨了。
+src: Roll the ball to me.
+dst: 把球传给我。
+src: See you in two days.
+dst: 后天见。
+src: She did not turn up.
+dst: 她没有出现。
+src: She didn't like him.
+dst: 她不喜欢他。
+src: She didn't think so.
+dst: 她不这么想。
+src: She finally made it.
+dst: 她终于做到了。
+src: She gave me a watch.
+dst: 她给了我一支手表。
+src: She got in at 9 p.m.
+dst: 她晚上九点钟上了车。
+src: She has lost weight.
+dst: 她的体重减轻了。
+src: She is about my age.
+dst: 她大约跟我同年纪。
+src: She is still a girl.
+dst: 她还是个小孩儿。
+src: She kept on working.
+dst: 她继续工作。
+src: She made tea for me.
+dst: 她给我沏了茶。
+src: She made tea for me.
+dst: 她给我泡了茶。
+src: She went for a walk.
+dst: 她去散步了。
+src: She went on working.
+dst: 她继续工作。
+src: She works very hard.
+dst: 她很努力工作。
+src: Someone is watching.
+dst: 有人在监视。
+src: Stay out of my room.
+dst: 别进我的房间。
+src: Stop criticizing me!
+dst: 不要再批评我了！
+src: Stop fooling around.
+dst: 不要随便开玩笑。
+src: Stop talking loudly.
+dst: 停止大声说话。
+src: Stop, or I'll shoot.
+dst: 停止，不然我就开枪了。
+src: That boy is running.
+dst: 这个男孩子在跑步。
+src: That boy is running.
+dst: 那个男孩在跑步。
+src: That is not my line.
+dst: 这不是我拿手的。
+src: That was a disaster.
+dst: 那是灾难。
+src: That was my mistake.
+dst: 那是我的错。
+src: That wasn't too bad.
+dst: 那不太坏。
+src: That's Tom's mother.
+dst: 那是汤姆的妈妈。
+src: That's a great poem.
+dst: 这是一首很棒的诗。
+src: That's an exception.
+dst: 那是例外。
+src: That's an imitation.
+dst: 那是一个仿造品。
+src: That's your opinion.
+dst: 那是你的想法。
+src: The boys kept quiet.
+dst: 男孩子们保持安静。
+src: The button came off.
+dst: 这颗钮扣脱落了。
+src: The cat is adorable.
+dst: 这只猫很可爱。
+src: The crops need rain.
+dst: 农作物需要雨水。
+src: The fire alarm rang.
+dst: 火警警报响了。
+src: The lake was frozen.
+dst: 湖冻冰了。
+src: The moon is shining.
+dst: 月光在照耀着。
+src: The papers blew off.
+dst: 文件被风刮起来。
+src: The picture is nice.
+dst: 这画不错。
+src: The skies are clear.
+dst: 天空很清朗。
+src: The sky turned dark.
+dst: 天暗了下来。
+src: The trees are green.
+dst: 树是绿的。
+src: There's a book here.
+dst: 这里有一本书。
+src: There's nobody here.
+dst: 这里没人。
+src: They have the horse.
+dst: 他们有马。
+src: They ruined my life.
+dst: 他们毁了我的生活。
+src: They won't find Tom.
+dst: 他们不会找到汤姆。
+src: They'll be grateful.
+dst: 他们会感激。
+src: They're ignoring me.
+dst: 他们不理我。
+src: This is a bad thing.
+dst: 这是件坏事。
+src: This is my daughter.
+dst: 这是我女儿。
+src: This is my property.
+dst: 这是我的财产。
+src: This is their house.
+dst: 这是他们家。
+src: This is what I want.
+dst: 这就是我想要的。
+src: This makes me angry.
+dst: 这让我愤怒。
+src: This makes me happy.
+dst: 这让我开心。
+src: This won't help you.
+dst: 这帮不了你。
+src: Thou shalt not kill.
+dst: 不可杀人。
+src: Tokyo is a big city.
+dst: 东京是一个很大的城市。
+src: Tom bought a ticket.
+dst: 汤姆买了张票。
+src: Tom can't find Mary.
+dst: 汤姆找不到玛丽。
+src: Tom can't tie a tie.
+dst: 汤姆不会系领带。
+src: Tom cares about you.
+dst: 汤姆关心你。
+src: Tom changed clothes.
+dst: 汤姆换了衣服。
+src: Tom dealt the cards.
+dst: Tom处理了卡片。
+src: Tom doesn't like me.
+dst: 汤姆不喜欢我。
+src: Tom found me a taxi.
+dst: 汤姆帮我叫了辆计程车。
+src: Tom gave us nothing.
+dst: 汤姆什么也没给我们。
+src: Tom had no children.
+dst: Tom没有孩子。
+src: Tom has calmed down.
+dst: 汤姆冷静下来了。
+src: Tom has no siblings.
+dst: Tom没有兄弟姊妹。
+src: Tom is a bus driver.
+dst: 汤姆是个公交车司机。
+src: Tom is a clever kid.
+dst: 汤姆是聪明的孩子。
+src: Tom is awfully sick.
+dst: 汤姆非常虚弱。
+src: Tom is exaggerating.
+dst: 汤姆在吹嘘。
+src: Tom is in the attic.
+dst: 汤姆在阁楼里。
+src: Tom is in the house.
+dst: 汤姆在这栋房子里。
+src: Tom is in the house.
+dst: 汤姆在家里。
+src: Tom is working hard.
+dst: 汤姆在努力工作。
+src: Tom knows it's over.
+dst: 汤姆知道它结束了。
+src: Tom knows my number.
+dst: Tom知道我的号码。
+src: Tom likes hot curry.
+dst: 汤姆喜欢辣咖哩。
+src: Tom made a sandwich.
+dst: 汤姆做了个三明治。
+src: Tom needs the money.
+dst: 汤姆需要钱。
+src: Tom nodded approval.
+dst: 汤姆点头同意。
+src: Tom owes us a favor.
+dst: 汤姆欠我们个情。
+src: Tom sat beside Mary.
+dst: 汤姆坐在玛丽旁边。
+src: Tom saw Mary crying.
+dst: 汤姆看见玛丽在哭。
+src: Tom says he's tired.
+dst: 汤姆说他累了。
+src: Tom should be fired.
+dst: 汤姆应该要被开除。
+src: Tom should be happy.
+dst: 汤姆应该高兴。
+src: Tom should thank me.
+dst: 汤姆应该感谢我。
+src: Tom started singing.
+dst: 汤姆开始唱歌。
+src: Tom stood behind me.
+dst: 汤姆站在我后面。
+src: Tom swims very fast.
+dst: 汤姆游泳游得非常快。
+src: Tom took Friday off.
+dst: 汤姆星期五闲着。
+src: Tom took this photo.
+dst: 汤姆拍了这张照。
+src: Tom was never happy.
+dst: 汤姆从不高兴。
+src: Tom was on the list.
+dst: 汤姆在名单上。
+src: Tom was very scared.
+dst: 汤姆非常害怕。
+src: Tom was very scared.
+dst: 汤姆当时非常害怕。
+src: Tom won't be coming.
+dst: 汤姆不会来了。
+src: Tom works in Boston.
+dst: 汤姆在波士顿工作。
+src: Tom wrote two books.
+dst: 汤姆写了两本书。
+src: Tom's check bounced.
+dst: 汤姆的支票被退票了。
+src: Tom's eyes are blue.
+dst: 汤姆的眼睛是蓝色的。
+src: Tom's mother's dead.
+dst: 汤姆的妈妈去世了。
+src: Tom's not breathing.
+dst: 汤姆没有呼吸了。
+src: Umbrellas sell well.
+dst: 雨伞卖得好。
+src: Wake me up at seven.
+dst: 七点叫醒我。
+src: Waste not, want not.
+dst: 不浪费则不匮乏。
+src: We all have secrets.
+dst: 我们都有秘密。
+src: We all like cycling.
+dst: 我们都喜欢骑自行车。
+src: We are good friends.
+dst: 我们是好朋友。
+src: We are having lunch.
+dst: 我们在吃午餐。
+src: We couldn't do that.
+dst: 我们做不到。
+src: We did it ourselves.
+dst: 我们自己做的。
+src: We just need a plan.
+dst: 我们只是需要个计画。
+src: We're eating apples.
+dst: 我们正在吃苹果。
+src: We're having dinner.
+dst: 我们在吃晚餐。
+src: We're not in Boston.
+dst: 我们不在波士顿。
+src: We're still nervous.
+dst: 我们还是紧张。
+src: We've not done well.
+dst: 我们没有做好。
+src: Welcome to our home.
+dst: 欢迎来到我们家。
+src: What am I to do now?
+dst: 怎么办?
+src: What are you called?
+dst: 你们叫什么名字？
+src: What did he ask you?
+dst: 他问你什么？
+src: What did you answer?
+dst: 你回答了什么？
+src: What do you do here?
+dst: 你在这里做甚么？
+src: What should I bring?
+dst: 我该带些什么？
+src: What should be done?
+dst: 怎么办?
+src: What would you like?
+dst: 你想要甚么？
+src: What's Tom given us?
+dst: 汤姆给了我们什么？
+src: What's today's date?
+dst: 今天几号？
+src: What's wrong, honey?
+dst: 出什么事了，宝贝？
+src: What's your problem?
+dst: 你有什么问题？
+src: When did you buy it?
+dst: 你甚么时候买的？
+src: When does it arrive?
+dst: 它什么时候到？
+src: When will you leave?
+dst: 你什么时候离开？
+src: Where are you going?
+dst: 你去哪儿？
+src: Where are you going?
+dst: 你要去哪里?
+src: Where have you been?
+dst: 你一直在哪里？
+src: Where is your house?
+dst: 你家在哪里？
+src: Where is your house?
+dst: 您的家在哪？
+src: Where is your house?
+dst: 你们家在哪？
+src: Which book is yours?
+dst: 哪本是你的书？
+src: Which book is yours?
+dst: 哪本是你们的书？
+src: Which book is yours?
+dst: 哪本是您的书？
+src: Which book is yours?
+dst: 哪本书是您的？
+src: Which book is yours?
+dst: 哪本书是你们的？
+src: Which one is easier?
+dst: 哪一个最简单？
+src: Who is that old man?
+dst: 那个老男人是谁？
+src: Who is this, please?
+dst: 请问这是谁？
+src: Who is your teacher?
+dst: 谁是你老师？
+src: Whose shirt is this?
+dst: 这是谁的衬衫。
+src: Why am I still here?
+dst: 为什么我还在这里？
+src: Why did you do that?
+dst: 你为什么要那样做呢？
+src: Why didn't she come?
+dst: 她为什么没来？
+src: Why do you say that?
+dst: 你为什么那样说?
+src: Why don't you do it?
+dst: 你为什么不做？
+src: Why is the sky blue?
+dst: 为什么天是蓝的？
+src: Why isn't that good?
+dst: 那为甚么不好？
+src: Why worry about Tom?
+dst: 为什么要担心Tom？
+src: You are quite right.
+dst: 你说得很对。
+src: You broke the rules.
+dst: 你触犯了规则。
+src: You can count on it.
+dst: 你可以依靠它。
+src: You can rely on him.
+dst: 你可以依靠他。
+src: You can shut up now.
+dst: 你现在可以住口了。
+src: You do have choices.
+dst: 你有选择。
+src: You guys looked mad.
+dst: 你们疯了吧
+src: You guys looked mad.
+dst: 你们那时候看起来在生气。
+src: You have many books.
+dst: 您有很多书。
+src: You have many books.
+dst: 你有许多书。
+src: You have some books.
+dst: 您有一些书。
+src: You have some books.
+dst: 你有一些书。
+src: You look pale today.
+dst: 你今天看上去很苍白。
+src: You look very tired.
+dst: 你看上去非常累。
+src: You may go anywhere.
+dst: 您可以随便去哪儿。
+src: You may go anywhere.
+dst: 你可以随便去哪儿。
+src: You may go home now.
+dst: 你现在可以回家了。
+src: You may not come in.
+dst: 你不能进来。
+src: You need a vacation.
+dst: 你需要个假期。
+src: You need protection.
+dst: 你需要保护。
+src: You should try this.
+dst: 你应该试试这个。
+src: You'd better not go.
+dst: 你最好不要去。
+src: You're irresistible.
+dst: 你令人难以抗拒。
+src: You're not a doctor.
+dst: 您不是医生。
+src: You're not too late.
+dst: 你还不太晚。
+src: You're so beautiful!
+dst: 你太漂亮了！
+src: You're the prisoner.
+dst: 你是囚犯。
+src: You're too generous.
+dst: 你太大方了。
+src: Your father is tall.
+dst: 你爸爸很高。
+src: Your hair is pretty.
+dst: 你的头发很漂亮。
+src: Your shoes are here.
+dst: 你的鞋在这儿。
+src: Yours is over there.
+dst: 你的在那儿呢。
+src: A permit is required.
+dst: 需要准许。
+src: Almost everyone came.
+dst: 几乎每个人都来了。
+src: Are those explosives?
+dst: 那些是爆炸物吗？
+src: Are you Tom's mother?
+dst: 你是汤姆的母亲吗？
+src: Are you busy at work?
+dst: 你工作很忙吗 ?
+src: Are you following me?
+dst: 你在跟着我吗？
+src: Are you going or not?
+dst: 你去还是不去？
+src: Are your hands clean?
+dst: 你的手干净吗?
+src: Be quiet, all of you.
+dst: 你们所有的人都安静。
+src: Be sure to come at 3.
+dst: 务必在三点钟来。
+src: Bring me a dry towel.
+dst: 给我一条干毛巾。
+src: But you're not there.
+dst: 但你不在那里。
+src: Can I ask a question?
+dst: 我能问个问题吗？
+src: Can he speak English?
+dst: 他会讲英语吗？
+src: Can we stop fighting?
+dst: 我们能不打了吗？
+src: Can you ride a horse?
+dst: 您会骑马吗？
+src: Can you speak French?
+dst: 你会讲法语吗？
+src: Cats hate to get wet.
+dst: 猫讨厌被弄湿。
+src: Children need loving.
+dst: 孩子们需要关爱。
+src: Clothes make the man.
+dst: 人要衣装。
+src: Come again next week.
+dst: 下周再来。
+src: Did I miss the party?
+dst: 我错过派对了吗？
+src: Did Tom say anything?
+dst: Tom有说什么吗？
+src: Did Tom talk to Mary?
+dst: 汤姆跟玛丽说话了吗？
+src: Did he pass the exam?
+dst: 他通过考试了吗？
+src: Did he pass the test?
+dst: 他通过测验了吗?
+src: Did somebody hit Tom?
+dst: 有人打汤姆了吗？
+src: Did something happen?
+dst: 发生了什么事吗？
+src: Did you get up early?
+dst: 你起床早吗？
+src: Didn't I tell you so?
+dst: 我不是告诉过你了吗？
+src: Do it somewhere else.
+dst: 到别处去做。
+src: Do what he tells you.
+dst: 做他告诉你的事。
+src: Do you eat out often?
+dst: 你常常外食吗？
+src: Do you get up at six?
+dst: 你六点起床吗？
+src: Do you have a camera?
+dst: 你有照相机吗？
+src: Do you have a garage?
+dst: 你有车库吗？
+src: Do you have children?
+dst: 你有孩子吗？
+src: Do you know Tom well?
+dst: 你很了解汤姆吗？
+src: Do you like shopping?
+dst: 你喜欢购物吗？
+src: Do you like swimming?
+dst: 你喜欢游泳吗？
+src: Do you run every day?
+dst: 你每天都跑步吗？
+src: Do you speak Chinese?
+dst: 你会说中文吗？
+src: Do you study English?
+dst: 您学英语吗？
+src: Do you study English?
+dst: 你学英语吗？
+src: Do you want anything?
+dst: 你想要什么吗？
+src: Does Tom play tennis?
+dst: 汤姆打网球吗？
+src: Does anyone know Tom?
+dst: 有人认识汤姆吗？
+src: Don't be so careless!
+dst: 别这么粗心！
+src: Don't be so childish.
+dst: 不要那么幼稚。
+src: Don't go to extremes.
+dst: 别走极端。
+src: Don't leave the room.
+dst: 别离开房间。
+src: Don't let the dog in.
+dst: 别让狗进来。
+src: Don't open your book.
+dst: 不要打开你的书。
+src: Don't try to stop me.
+dst: 别想阻止我。
+src: Don't worry about it.
+dst: 不要担心它。
+src: Don't worry about me.
+dst: 不要担心我。
+src: Everyone, say cheese.
+dst: 所有人，都请说 cheese 。
+src: Everything went well.
+dst: 一切都很顺利。
+src: Finally, it's Friday.
+dst: 终于星期五了。
+src: Go back to your seat.
+dst: 回到你的座位。
+src: Has anything changed?
+dst: 有任何事情改变了吗？
+src: Have a nice day, Tom.
+dst: 汤姆，希望你今天玩得开心。
+src: Have you been eating?
+dst: 你在吃东西吗？
+src: Have you eaten lunch?
+dst: 你吃过午饭了吗？
+src: Have you finished it?
+dst: 你做完了吗?
+src: He accepted her gift.
+dst: 他接受了她的礼物。
+src: He acted as my guide.
+dst: 他担任我的向导。
+src: He came to my rescue.
+dst: 他拯救了我。
+src: He committed suicide.
+dst: 他自杀了。
+src: He doesn't like fish.
+dst: 他不喜欢吃鱼。
+src: He had a hungry look.
+dst: 他面有饥色
+src: He has a nice income.
+dst: 他收入可观。
+src: He has poor eyesight.
+dst: 他的视力不佳。
+src: He has two daughters.
+dst: 他有两个女儿。
+src: He is a Japanese boy.
+dst: 他是个日本少年。
+src: He is always with me.
+dst: 他一直与我同在。
+src: He is angry with you.
+dst: 他在生你的气。
+src: He is apt to be late.
+dst: 他很容易迟到。
+src: He is as tall as her.
+dst: 他和她一样高。
+src: He is full of energy.
+dst: 他充满活力。
+src: He is very sensitive.
+dst: 他很敏感。
+src: He is wearing gloves.
+dst: 他戴着手套。
+src: He isn't an American.
+dst: 他不是美国人。
+src: He knows how to swim.
+dst: 他会游泳。
+src: He likes to watch TV.
+dst: 他喜欢看电视。
+src: He likes watching TV.
+dst: 他喜欢看电视。
+src: He may have been ill.
+dst: 他可能病了。
+src: He needs an umbrella.
+dst: 他需要一把伞。
+src: He put away his toys.
+dst: 他收起了他的玩具。
+src: He ran into the room.
+dst: 他跑进房间内。
+src: He slipped me a note.
+dst: 他悄悄地递给我一张纸条。
+src: He spoke very loudly.
+dst: 他说得很大声。
+src: He studied very hard.
+dst: 他学习非常努力。
+src: He took it literally.
+dst: 他按照字面上的意思。
+src: He used to live here.
+dst: 他以前住在这儿。
+src: He was elected mayor.
+dst: 他被选为市长。
+src: He was sitting there.
+dst: 他之前坐在这里。
+src: He went to the store.
+dst: 他去了商店。
+src: He will be back soon.
+dst: 他很快就会回来的。
+src: He's a bit energetic.
+dst: 他有点活泼。
+src: He's a tennis player.
+dst: 他是个网球球手。
+src: He's bound to forget.
+dst: 他准会忘。
+src: He's eating an apple.
+dst: 他正吃着一个苹果。
+src: He's younger than me.
+dst: 他比我年轻。
+src: Here comes the train.
+dst: 火车来了。
+src: Hey you! Please wait.
+dst: 嘿，你！请稍候。
+src: Hi! Do you work here?
+dst: 嗨！你在这儿工作吗？
+src: His memory amazes me.
+dst: 他的记忆力使我惊讶。
+src: How about a sandwich?
+dst: 三明治怎么样？
+src: How can you say that?
+dst: 你怎么能那么说？
+src: How deep is the hole?
+dst: 这个洞多深?
+src: How did you meet Tom?
+dst: 你是怎么见到汤姆的？
+src: How high is Mt. Fuji?
+dst: 富士山有多高？
+src: How much did you bid?
+dst: 你出价多少？
+src: How was your weekend?
+dst: 你周末过得怎么样？
+src: I accepted the offer.
+dst: 我接受了报价。
+src: I already apologized.
+dst: 我已经道歉了。
+src: I am a stranger here.
+dst: 我是这里的外地人。
+src: I am afraid of death.
+dst: 我怕死。
+src: I am afraid of dying.
+dst: 我怕死。
+src: I am counting on you.
+dst: 我指望你了。
+src: I am leaving at four.
+dst: 我四点要离开。
+src: I am not well at all.
+dst: 我一点都不好。
+src: I am poor at drawing.
+dst: 我不擅长画画。
+src: I ate Tom's sandwich.
+dst: 我吃了汤姆的三明治。
+src: I believe that story.
+dst: 我相信那个故事。
+src: I bought her a watch.
+dst: 我买了一支手表给她。
+src: I broke my right leg.
+dst: 我摔断了右腿。
+src: I can barely see you.
+dst: 我几乎看不见你。
+src: I can swim very fast.
+dst: 我游泳可以游得很快。
+src: I can talk for a bit.
+dst: 我会说一点儿。
+src: I can't afford a car.
+dst: 我买不起车子。
+src: I can't believe that.
+dst: 我不能相信。
+src: I can't do it either.
+dst: 我也不会做。
+src: I can't say for sure.
+dst: 我不太确定。
+src: I can't shut it down.
+dst: 我不能关掉它。
+src: I can't tell you now.
+dst: 我现在不能告诉你。
+src: I can't wait for you.
+dst: 我不能等你。

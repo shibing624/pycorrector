@@ -66,13 +66,12 @@ def train(train_path=None,
     # model
     logger.info("Training seq2seq model...")
     model, encoder_model, decoder_model = create_model(num_encoder_tokens, num_decoder_tokens, rnn_hidden_dim)
-    model.summary()
-
-    # save
+    # Run training
     callbacks_list = callback(save_model_path, logger)
     model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
               batch_size=batch_size,
               epochs=epochs,
+              validation_split=0.1,
               callbacks=callbacks_list)
     encoder_model.save(encoder_model_path)
     decoder_model.save(decoder_model_path)

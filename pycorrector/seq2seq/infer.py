@@ -45,7 +45,6 @@ def evaluate(encoder_model, decoder_model, num_encoder_tokens,
         target_seq = np.zeros((1, 1, num_decoder_tokens))
         # Populate the first character of target sequence with the start character.
         first_char = GO_TOKEN
-        print('first char:', first_char)
         target_seq[0, 0, target_token_index[first_char]] = 1.
 
         # Sampling loop for a batch of sequences
@@ -98,37 +97,27 @@ def decode_sequence(encoder_model, decoder_model,
     target_seq = np.zeros((1, 1, num_decoder_tokens))
     # Populate the first character of target sequence with the start character.
     # first_char = encoder_input_data[0]
-    target_seq[0, 0, target_token_index[GO_TOKEN]] = 1.
+    target_seq[0, 0, target_token_index[GO_TOKEN]] = 1.0
 
     reverse_target_char_index = dict(
         (i, char) for char, i in target_token_index.items())
 
-    # Sampling loop for a batch of sequences
-    # (to simplify, here we assume a batch of size 1).
-    stop_condition = False
     decoded_sentence = ''
-
-    while not stop_condition:
+    for _ in range(max_target_texts_len):
         output_tokens, h, c = decoder_model.predict([target_seq] + states_value)
-
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
         sampled_char = reverse_target_char_index[sampled_token_index]
-        decoded_sentence += sampled_char
-
         # Exit condition: either hit max length
         # or find stop character.
-        if (sampled_char == EOS_TOKEN or
-                    len(decoded_sentence) > max_target_texts_len):
-            stop_condition = True
-
+        if sampled_char == EOS_TOKEN:
+            break
+        decoded_sentence += sampled_char
         # Update the target sequence (of length 1).
         target_seq = np.zeros((1, 1, num_decoder_tokens))
-        target_seq[0, 0, sampled_token_index] = 1.
-
+        target_seq[0, 0, sampled_token_index] = 1.0
         # Update states
         states_value = [h, c]
-
     return decoded_sentence
 
 
@@ -137,14 +126,12 @@ def infer(input_text):
     for i, char in enumerate(input_text):
         if char in input_token_index:
             encoder_input_data[0, i, input_token_index[char]] = 1.0
-    logger.info("Data loaded.")
     # Take one sequence decoding.
     decoded_sentence = decode_sequence(encoder_model, decoder_model,
                                        len(target_token_index), target_token_index,
                                        encoder_input_data, max_target_texts_len)
     print('Input sentence:', input_text)
     print('Decoded sentence:', decoded_sentence)
-    logger.info("Infer has finished.")
 
 
 if __name__ == "__main__":
@@ -163,18 +150,17 @@ if __name__ == "__main__":
     max_input_texts_len = max([len(text) for text in input_texts])
     max_target_texts_len = max([len(text) for text in target_texts])
     encoder_input_data = np.zeros((1, max_input_texts_len, len(input_token_index)), dtype='float32')
+    logger.info("Data loaded.")
 
     # load model
-    logger.info("Load seq2seq model...")
     encoder_model = load_model(encoder_model_path)
     decoder_model = load_model(decoder_model_path)
+    logger.info("Loaded seq2seq model.")
 
     inputs = [
-        list('由我起开始做。'),
-        list('没有解决这个问题，不能人类实现更美好的将来。'),
+        '由我起开始做。',
+        '没有解决这个问题，',
+        '不能人类实现更美好的将来。',
     ]
     for i in inputs:
         infer(i)
-
-        # Input sentence: ['由', '我', '起', '开', '始', '做', '。']
-        # Decoded sentence: 的，。的，的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的也的也的也的也的也的的也的也的也的也的的

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: seq2seq model with keras (refs: keras-example)
-from keras.callbacks import LambdaCallback
+from keras.callbacks import LambdaCallback, EarlyStopping
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Input, LSTM, Dense
 from keras.models import Model
@@ -30,8 +30,6 @@ def create_model(num_encoder_tokens, num_decoder_tokens, rnn_hidden_dim=200):
     # Define the model that will turn
     # `encoder_input_data` & `decoder_input_data` into `decoder_target_data`
     model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
-
-    # Run training
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 
     # 2.Define inference encoder model
@@ -61,4 +59,5 @@ def callback(save_model_path, logger=None):
             on_batch_begin=lambda batch, logs: print(batch))
     # define the checkpoint, save model
     checkpoint = ModelCheckpoint(save_model_path)
-    return [batch_print_callback, checkpoint]
+    early_stop = EarlyStopping(monitor='val_loss', patience=2, verbose=2)
+    return [batch_print_callback, checkpoint, early_stop]
