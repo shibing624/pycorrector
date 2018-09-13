@@ -20,8 +20,8 @@ input_vocab_path = os.path.join(output_dir, 'input_vocab.txt')
 target_vocab_path = os.path.join(output_dir, 'target_vocab.txt')
 
 # config
-batch_size = 512
-epochs = 20
+batch_size = 128
+epochs = 200
 rnn_hidden_dim = 256
 # Path of the model saved
 save_model_path = os.path.join(output_dir, 'cged_seq2seq_model.h5')
