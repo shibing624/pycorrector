@@ -82,9 +82,8 @@ def evaluate(encoder_model, decoder_model, num_encoder_tokens,
         input_seq = encoder_input_data[seq_index: seq_index + 1]
         decoded_sentence = decode_seq(input_seq)
 
-        print('Input sentence:', input_texts[seq_index])
-        print('Decoded sentence:', decoded_sentence)
-        print('-')
+        logger.info('Input sentence:%s' % input_texts[seq_index])
+        logger.info('Decoded sentence:%s' % decoded_sentence)
 
 
 def decode_sequence(encoder_model, decoder_model,
@@ -130,8 +129,8 @@ def infer(input_text):
     decoded_sentence = decode_sequence(encoder_model, decoder_model,
                                        len(target_token_index), target_token_index,
                                        encoder_input_data, max_target_texts_len)
-    print('Input sentence:', input_text)
-    print('Decoded sentence:', decoded_sentence)
+    logger.info('Input sentence:%s' % input_text)
+    logger.info('Decoded sentence:%s' % decoded_sentence)
 
 
 if __name__ == "__main__":

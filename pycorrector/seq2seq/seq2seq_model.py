@@ -54,9 +54,6 @@ def callback(save_model_path, logger=None):
     if logger:
         batch_print_callback = LambdaCallback(
             on_batch_begin=lambda batch, logs: logger.info('batch: %d' % batch))
-    else:
-        batch_print_callback = LambdaCallback(
-            on_batch_begin=lambda batch, logs: print(batch))
     # define the checkpoint, save model
     checkpoint = ModelCheckpoint(save_model_path)
     early_stop = EarlyStopping(monitor='val_loss', patience=2, verbose=2)

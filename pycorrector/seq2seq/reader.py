@@ -13,7 +13,7 @@ EOS_TOKEN = 'EOS'
 GO_TOKEN = 'GO'
 
 
-class Reader:
+class Reader(object):
     def __init__(self, train_path=None, token_2_id=None,
                  special_tokens=()):
         if train_path is None:
