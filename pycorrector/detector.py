@@ -75,6 +75,11 @@ class Detector(object):
                 self.word_freq[origin] = freq
         return confusion
 
+    def set_language_model_path(self, path):
+        self.check_detector_initialized()
+        self.lm = kenlm.Model(path)
+        default_logger.info('Loaded language model: %s' % path)
+
     def set_custom_confusion_dict(self, path):
         self.check_detector_initialized()
         custom_confusion = self._get_custom_confusion_dict(path)
