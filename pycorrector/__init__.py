@@ -8,7 +8,7 @@ from .config import common_char_path, same_pinyin_path, same_stroke_path, langua
 from .utils.text_utils import traditional2simplified, simplified2traditional
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 corrector = Corrector(common_char_path=common_char_path,
                       same_pinyin_path=same_pinyin_path,

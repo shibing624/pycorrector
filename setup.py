@@ -94,7 +94,6 @@ setup(
         'jieba',
         'tensorflow',
         'keras>=2.1.5',
-        'keras_contrib',
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
