@@ -13,7 +13,7 @@ from pycorrector.utils.text_utils import tokenize
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
 default_logger = get_logger(__file__)
-PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/！%……（）<>@#$~^￥%&*\"\'=+-"
+PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -157,12 +157,14 @@ class Detector(object):
         return list(maybe_error_indices[0])
 
     def detect(self, sentence):
+        maybe_errors = []
+        if not sentence.strip():
+            return maybe_errors
         self.check_detector_initialized()
         # 文本归一化
         sentence = uniform(sentence)
         # 切词
         tokens = tokenize(sentence)
-        maybe_errors = []
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)

@@ -31,8 +31,19 @@ import pycorrector
 # 到目前为之	到目前为止
 # 吹唐人记忆	吹糖人记忆
 # 一阙词牌名	一阕词牌名
+# 这就是报应，赤-裸-裸的报应啊！  这就是报应，赤裸裸的报应啊！
+# 搜索关注【落红小说】微亅信丨公亅众丨号 回复    搜索关注【落红小说】微信公众号 回复
+# 关注微·信·公·众·号【 南北书院 】回复书号   关注微信公众号【 南北书院 】回复书号
+# 保险公司：流程出错一毛不陪 保险公司：流程出错一毛不赔
 
+
+pycorrector.set_language_model_path(path='../pycorrector/data/test/people_chars.klm')
 error_sentences = [
+    '这就是报应，赤-裸-裸的报应啊！',
+    '搜索关注【落红小说】微亅信丨公亅众丨号 回复',
+    '关注微·信·公·众·号【 南北书院 】回复书号',
+    '保险公司：流程出错一毛不陪',
+    ' ',
     '这是人工智能的一个分知',
     '一只小鱼船夫在平静的河面上',
     '我的家乡是有名的玉米之乡',
@@ -46,5 +57,6 @@ error_sentences = [
     '不由的感叹道',
 ]
 for line in error_sentences:
+    print(pycorrector.detect(line))
     correct_sent = pycorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

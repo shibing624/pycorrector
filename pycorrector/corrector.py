@@ -214,8 +214,8 @@ class Corrector(Detector):
         :param sentence: 句子文本
         :return: 改正后的句子, list(wrongs, rights, begin_idx, end_idx)
         """
-        self.check_corrector_initialized()
         detail = []
+        self.check_corrector_initialized()
         maybe_errors = self.detect(sentence)
         for item, begin_idx, end_idx in maybe_errors:
             # 纠错，逐个处理
