@@ -7,7 +7,7 @@ import os
 raw_train_paths = [
     # '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
     # '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-    '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+    # '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
     '../data/cn/CGED/sample_HSK_TrainingSet.xml',
 ]
 output_dir = 'output'
@@ -21,7 +21,7 @@ target_vocab_path = os.path.join(output_dir, 'target_vocab.txt')
 
 # config
 batch_size = 128
-epochs = 200
+epochs = 60
 rnn_hidden_dim = 256
 # Path of the model saved
 save_model_path = os.path.join(output_dir, 'cged_seq2seq_model.h5')

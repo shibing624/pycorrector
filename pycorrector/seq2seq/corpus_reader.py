@@ -8,6 +8,7 @@ from pycorrector.utils.io_utils import get_logger
 
 logger = get_logger(__name__)
 
+
 def save_word_dict(dict_data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
         for k, v in dict_data.items():
