@@ -7,8 +7,7 @@ from sklearn.model_selection import train_test_split
 
 from pycorrector.seq2seq import cged_config as config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, save_word_dict
-from pycorrector.seq2seq.infer import evaluate
-from pycorrector.seq2seq.seq2seq_model import create_model, callback
+from pycorrector.seq2seq.seq2seq_model import create_model, callback, evaluate
 from pycorrector.utils.io_utils import get_logger
 
 logger = get_logger(__name__)
