@@ -107,7 +107,7 @@ class CGEDReader(Reader):
 
     @staticmethod
     def read_vocab(input_texts):
-        vocab = set()
+        vocab = {PAD_TOKEN, EOS_TOKEN, GO_TOKEN}
         for line in input_texts:
             for char in line:
                 if char not in vocab:

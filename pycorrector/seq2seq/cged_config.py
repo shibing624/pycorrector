@@ -7,7 +7,7 @@ import os
 raw_train_paths = [
     # '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
     # '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-    # '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+    '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
     '../data/cn/CGED/sample_HSK_TrainingSet.xml',
 ]
 output_dir = 'output'
@@ -19,6 +19,8 @@ test_path = os.path.join(output_dir, 'test.txt')
 input_vocab_path = os.path.join(output_dir, 'input_vocab.txt')
 target_vocab_path = os.path.join(output_dir, 'target_vocab.txt')
 
+vocab_json_path = os.path.join(output_dir, 'seq2seq_config.json')
+attn_model_path = os.path.join(output_dir, 'attn_model.h5')
 # config
 batch_size = 128
 epochs = 60

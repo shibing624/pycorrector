@@ -2,7 +2,6 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: seq2seq model with keras (refs: keras-example)
 import numpy as np
-from keras import Input
 from keras.callbacks import LambdaCallback, EarlyStopping
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Input, LSTM, Dense
@@ -54,11 +53,10 @@ def create_model(num_encoder_tokens, num_decoder_tokens, rnn_hidden_dim=200):
     return model, encoder_model, decoder_model
 
 
-def callback(save_model_path, logger=None):
+def callback(save_model_path, logger):
     # Print the batch number at the beginning of every batch.
-    if logger:
-        batch_print_callback = LambdaCallback(
-            on_batch_begin=lambda batch, logs: logger.info('batch: %d' % batch))
+    batch_print_callback = LambdaCallback(
+        on_batch_begin=lambda batch, logs: logger.info(' batch: %d' % batch))
     # define the checkpoint, save model
     checkpoint = ModelCheckpoint(save_model_path)
     early_stop = EarlyStopping(monitor='val_loss', patience=2, verbose=2)
@@ -89,6 +87,7 @@ def evaluate(encoder_model, decoder_model, num_encoder_tokens,
         (i, char) for char, i in target_token_index.items())
 
     def decode_seq(input_seq):
+        decoded_sentence = ''
         # Encode the input as state vectors.
         states_value = encoder_model.predict(input_seq)
 
@@ -101,7 +100,6 @@ def evaluate(encoder_model, decoder_model, num_encoder_tokens,
         # Sampling loop for a batch of sequences
         # (to simplify, here we assume a batch of size 1).
         stop_condition = False
-        decoded_sentence = ''
         while not stop_condition:
             output_tokens, h, c = decoder_model.predict(
                 [target_seq] + states_value)
@@ -131,7 +129,7 @@ def evaluate(encoder_model, decoder_model, num_encoder_tokens,
         # Take one sequence (part of the training set)
         # for trying out decoding.
         input_seq = encoder_input_data[seq_index: seq_index + 1]
-        decoded_sentence = decode_seq(input_seq)
+        output_text = decode_seq(input_seq)
 
         logger.info('Input sentence:%s' % input_texts[seq_index])
-        logger.info('Decoded sentence:%s' % decoded_sentence)
+        logger.info('Decoded sentence:%s' % output_text)
