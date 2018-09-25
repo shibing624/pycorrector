@@ -19,8 +19,10 @@ test_path = os.path.join(output_dir, 'test.txt')
 input_vocab_path = os.path.join(output_dir, 'input_vocab.txt')
 target_vocab_path = os.path.join(output_dir, 'target_vocab.txt')
 
+# seq2seq_attn_train config
 vocab_json_path = os.path.join(output_dir, 'seq2seq_config.json')
 attn_model_path = os.path.join(output_dir, 'attn_model.h5')
+
 # config
 batch_size = 128
 epochs = 60

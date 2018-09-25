@@ -58,7 +58,7 @@ class Seq2seqAttnModel(object):
         x_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(x)
         y_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(y)
 
-        x_one_hot = Lambda(self.to_one_hot)([x, x_mask])
+        x_one_hot = Lambda(self._one_hot)([x, x_mask])
         x_prior = ScaleShift()(x_one_hot)  # 学习输出的先验分布（标题的字词很可能在文章出现过）
 
         embedding = Embedding(len(self.chars), self.hidden_dim)
@@ -90,7 +90,7 @@ class Seq2seqAttnModel(object):
             model.load_weights(self.model_path)
         return model
 
-    def to_one_hot(self, x):  # 输出一个词表大小的向量，来标记该词是否在文章出现过
+    def _one_hot(self, x):  # 输出一个词表大小的向量，来标记该词是否在文章出现过
         x, x_mask = x
         x = K.cast(x, 'int32')
         x = K.one_hot(x, len(self.chars))
@@ -220,7 +220,7 @@ class Evaluate(Callback):
 
 
 def train(train_path='', vocab_json_path='', attn_model_path='',
-          batch_size=64, epochs=100, maxlen=400):
+          batch_size=64, epochs=100, maxlen=400, hidden_dim=128):
     data_reader = CGEDReader(train_path)
     input_texts, target_texts = data_reader.build_dataset(train_path)
 
@@ -241,9 +241,9 @@ def train(train_path='', vocab_json_path='', attn_model_path='',
         char2id = {j: i for i, j in id2char.items()}
         json.dump([chars, id2char, char2id], open(vocab_json_path, 'w'))
 
-    seq2seq_attn_model = Seq2seqAttnModel(chars, attn_model_path=attn_model_path)
+    seq2seq_attn_model = Seq2seqAttnModel(chars, attn_model_path=attn_model_path, hidden_dim=hidden_dim)
     model = seq2seq_attn_model.build_model()
-    evaluator = Evaluate(model, attn_model_path, char2id, id2char)
+    evaluator = Evaluate(model, attn_model_path, char2id, id2char, maxlen)
     model.fit_generator(data_generator(input_texts, target_texts, char2id, batch_size, maxlen),
                         steps_per_epoch=(len(input_texts) + batch_size - 1) // batch_size,
                         epochs=epochs,
@@ -256,4 +256,5 @@ if __name__ == "__main__":
           attn_model_path=config.attn_model_path,
           batch_size=64,
           epochs=100,
-          maxlen=400)
+          maxlen=400,
+          hidden_dim=128)

@@ -35,8 +35,7 @@ http://www.borntowin.cn/nlp/corrector.html
 pip3 install -r requirements.txt
 
 pip3 install git+https://www.github.com/keras-team/keras-contrib.git
-pip3 install git+git://github.com/datalogai/recurrentshop.git
-pip3 install git+https://github.com/farizrahman4u/seq2seq.git
+
 
 ### 安装
 * 全自动安装：pip3 install pycorrector
