@@ -10,99 +10,93 @@ import os
 import numpy as np
 from keras import backend as K
 from keras.callbacks import Callback
-from keras.layers import Input, Lambda, Layer, Embedding, Bidirectional, Dense, Activation, GRU, CuDNNLSTM
+from keras.layers import Input, Lambda, Layer, Embedding, Bidirectional, Dense, Activation, GRU
 from keras.models import Model
 from keras.optimizers import Adam
 
 from pycorrector.seq2seq import cged_config as config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, EOS_TOKEN, GO_TOKEN, PAD_TOKEN
 
-maxlen = 400
-batch_size = 64
-epochs = 100
-char_size = 128
 
-train_path = config.train_path
-vocab_json_path = config.vocab_json_path
-attn_model_path = config.attn_model_path
-data_reader = CGEDReader(train_path)
-input_texts, target_texts = data_reader.build_dataset(train_path)
-
-if os.path.exists(vocab_json_path):
-    chars, id2char, char2id = json.load(open(vocab_json_path))
-    id2char = {int(i): j for i, j in id2char.items()}
-else:
-    chars = {}
-    print('Training data...')
-    print('input_texts:', input_texts[0])
-    print('target_texts:', target_texts[0])
-    max_input_texts_len = max([len(text) for text in input_texts])
-
-    print('num of samples:', len(input_texts))
-    print('max sequence length for inputs:', max_input_texts_len)
-
-    chars = data_reader.read_vocab(input_texts + target_texts)
-    # 0: mask
-    # 1: unk
-    # 2: start
-    # 3: end
-    id2char = {i: j for i, j in enumerate(chars)}
-    char2id = {j: i for i, j in id2char.items()}
-    json.dump([chars, id2char, char2id], open(vocab_json_path, 'w'))
-
-
-def str2id(s, start_end=False):
+def str2id(s, char2id, maxlen):
     # 文字转整数id
-    if start_end:  # 补上<start>和<end>标记
-        ids = [char2id.get(c, 1) for c in s[:maxlen - 2]]
-        ids = [2] + ids + [3]
-    else:  # 普通转化
-        ids = [char2id.get(c, 1) for c in s[:maxlen]]
-    return ids
+    return [char2id.get(c, 1) for c in s[:maxlen]]
 
 
-def id2str(ids):
-    # id转文字，找不到的用空字符代替
-    return ''.join([id2char.get(i, '') for i in ids])
-
-
-def padding(x):
+def padding(x, char2id):
     # padding至batch内的最大长度
     ml = max([len(i) for i in x])
     return [i + [char2id[PAD_TOKEN]] * (ml - len(i)) for i in x]
 
 
-def data_generator():
+def data_generator(input_texts, target_texts, char2id, batch_size, maxlen):
     # 数据生成器
     X, Y = [], []
     while True:
         for i in range(len(input_texts)):
-            X.append(str2id(input_texts[i]))
-            Y.append(str2id(target_texts[i], start_end=False))
+            X.append(str2id(input_texts[i], char2id, maxlen))
+            Y.append(str2id(target_texts[i], char2id, maxlen))
             if len(X) == batch_size:
-                X = np.array(padding(X))
-                Y = np.array(padding(Y))
+                X = np.array(padding(X, char2id))
+                Y = np.array(padding(Y, char2id))
                 yield [X, Y], None
                 X, Y = [], []
 
 
-# 搭建seq2seq模型
+class Seq2seqAttnModel(object):
+    def __init__(self, chars, hidden_dim=128, attn_model_path=None):
+        self.chars = chars
+        self.hidden_dim = hidden_dim
+        self.model_path = attn_model_path
 
-x_in = Input(shape=(None,))
-y_in = Input(shape=(None,))
-x = x_in
-y = y_in
-x_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(x)
-y_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(y)
+    def build_model(self):
+        # 搭建seq2seq模型
+        x_in = Input(shape=(None,))
+        y_in = Input(shape=(None,))
+        x = x_in
+        y = y_in
+        x_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(x)
+        y_mask = Lambda(lambda x: K.cast(K.greater(K.expand_dims(x, 2), 0), 'float32'))(y)
 
+        x_one_hot = Lambda(self.to_one_hot)([x, x_mask])
+        x_prior = ScaleShift()(x_one_hot)  # 学习输出的先验分布（标题的字词很可能在文章出现过）
 
-def to_one_hot(x):  # 输出一个词表大小的向量，来标记该词是否在文章出现过
-    x, x_mask = x
-    x = K.cast(x, 'int32')
-    x = K.one_hot(x, len(chars))
-    x = K.sum(x_mask * x, 1, keepdims=True)
-    x = K.cast(K.greater(x, 0.5), 'float32')
-    return x
+        embedding = Embedding(len(self.chars), self.hidden_dim)
+        x = embedding(x)
+        y = embedding(y)
+
+        # encoder，双层双向LSTM
+        x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True))(x)
+        x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True))(x)
+
+        # decoder，双层单向LSTM
+        y = GRU(self.hidden_dim, return_sequences=True)(y)
+        y = GRU(self.hidden_dim, return_sequences=True)(y)
+
+        xy = Interact()([y, x, x_mask])
+        xy = Dense(512, activation='relu')(xy)
+        xy = Dense(len(self.chars))(xy)
+        xy = Lambda(lambda x: (x[0] + x[1]) / 2)([xy, x_prior])  # 与先验结果平均
+        xy = Activation('softmax')(xy)
+
+        # 交叉熵作为loss，但mask掉padding部分
+        cross_entropy = K.sparse_categorical_crossentropy(y_in[:, 1:], xy[:, :-1])
+        loss = K.sum(cross_entropy * y_mask[:, 1:, 0]) / K.sum(y_mask[:, 1:, 0])
+
+        model = Model([x_in, y_in], xy)
+        model.add_loss(loss)
+        model.compile(optimizer=Adam(1e-3))
+        if os.path.exists(self.model_path):
+            model.load_weights(self.model_path)
+        return model
+
+    def to_one_hot(self, x):  # 输出一个词表大小的向量，来标记该词是否在文章出现过
+        x, x_mask = x
+        x = K.cast(x, 'int32')
+        x = K.one_hot(x, len(self.chars))
+        x = K.sum(x_mask * x, 1, keepdims=True)
+        x = K.cast(K.greater(x, 0.5), 'float32')
+        return x
 
 
 class ScaleShift(Layer):
@@ -124,22 +118,6 @@ class ScaleShift(Layer):
     def call(self, inputs):
         x_outs = K.exp(self.log_scale) * inputs + self.shift
         return x_outs
-
-
-x_one_hot = Lambda(to_one_hot)([x, x_mask])
-x_prior = ScaleShift()(x_one_hot)  # 学习输出的先验分布（标题的字词很可能在文章出现过）
-
-embedding = Embedding(len(chars), char_size)
-x = embedding(x)
-y = embedding(y)
-
-# encoder，双层双向LSTM
-x = Bidirectional(GRU(int(char_size / 2), return_sequences=True))(x)
-x = Bidirectional(GRU(int(char_size / 2), return_sequences=True))(x)
-
-# decoder，双层单向LSTM
-y = GRU(char_size, return_sequences=True)(y)
-y = GRU(char_size, return_sequences=True)(y)
 
 
 class Interact(Layer):
@@ -175,28 +153,16 @@ class Interact(Layer):
                 input_shape[0][2] + input_shape[1][2] * 2)
 
 
-xy = Interact()([y, x, x_mask])
-xy = Dense(512, activation='relu')(xy)
-xy = Dense(len(chars))(xy)
-xy = Lambda(lambda x: (x[0] + x[1]) / 2)([xy, x_prior])  # 与先验结果平均
-xy = Activation('softmax')(xy)
-
-# 交叉熵作为loss，但mask掉padding部分
-cross_entropy = K.sparse_categorical_crossentropy(y_in[:, 1:], xy[:, :-1])
-loss = K.sum(cross_entropy * y_mask[:, 1:, 0]) / K.sum(y_mask[:, 1:, 0])
-
-model = Model([x_in, y_in], xy)
-model.add_loss(loss)
-model.compile(optimizer=Adam(1e-3))
-if os.path.exists(attn_model_path):
-    model.load_weights(attn_model_path)
+def id2str(ids, id2char):
+    # id转文字，找不到的用空字符代替
+    return ''.join([id2char.get(i, '') for i in ids])
 
 
-def gen_target(s, topk=3):
+def gen_target(s, model, char2id, id2char, maxlen, topk=3):
     """beam search解码
     每次只保留topk个最优候选结果；如果topk=1，那么就是贪心搜索
     """
-    xid = np.array([str2id(s)] * topk)  # 输入转id
+    xid = np.array([str2id(s, char2id, maxlen)] * topk)  # 输入转id
     yid = np.array([[char2id[GO_TOKEN]]] * topk)  # 解码均以<start>开通，这里<start>的id为2
     scores = [0] * topk  # 候选答案分数
     for i in range(50):  # 强制要求标题不超过50字
@@ -221,38 +187,73 @@ def gen_target(s, topk=3):
         scores = []
         for k in range(len(xid)):
             if _yid[k][-1] == char2id[EOS_TOKEN]:  # 找到<end>就返回
-                return id2str(_yid[k][1:-1])
+                return id2str(_yid[k][1:-1], id2char)
             else:
                 yid.append(_yid[k])
                 scores.append(_scores[k])
         yid = np.array(yid)
     # 如果50字都找不到<end>，直接返回
-    return id2str(yid[np.argmax(scores)][1:-1])
-
-
-s1 = '吸烟的行为女人比男人更重 ，'
-s2 = '所以在这期间，'
+    return id2str(yid[np.argmax(scores)][1:-1], id2char)
 
 
 class Evaluate(Callback):
-    def __init__(self):
+    def __init__(self, model, attn_model_path, char2id, id2char, maxlen):
         self.lowest = 1e10
+        self.model = model
+        self.attn_model_path = attn_model_path
+        self.char2id = char2id
+        self.id2char = id2char
+        self.maxlen = maxlen
 
     def on_epoch_end(self, epoch, logs=None):
+        s1 = '吸烟的行为女人比男人更重 ，'
+        s2 = '所以在这期间，'
         # 训练过程中观察一两个例子，显示预测质量提高的过程
         print('input:' + s1)
-        print('output:' + gen_target(s1))
+        print('output:' + gen_target(s1, self.char2id, self.id2char, self.maxlen))
         print('input:' + s2)
-        print('output:' + gen_target(s2))
+        print('output:' + gen_target(s2, self.char2id, self.id2char, self.maxlen))
         # 保存最优结果
         if logs['loss'] <= self.lowest:
             self.lowest = logs['loss']
-            model.save_weights(attn_model_path)
+            self.model.save_weights(self.attn_model_path)
 
 
-evaluator = Evaluate()
+def train(train_path='', vocab_json_path='', attn_model_path='',
+          batch_size=64, epochs=100, maxlen=400):
+    data_reader = CGEDReader(train_path)
+    input_texts, target_texts = data_reader.build_dataset(train_path)
 
-model.fit_generator(data_generator(),
-                    steps_per_epoch=(len(input_texts) + batch_size - 1) // batch_size,
-                    epochs=epochs,
-                    callbacks=[evaluator])
+    if os.path.exists(vocab_json_path):
+        chars, id2char, char2id = json.load(open(vocab_json_path))
+        id2char = {int(i): j for i, j in id2char.items()}
+    else:
+        print('Training data...')
+        print('input_texts:', input_texts[0])
+        print('target_texts:', target_texts[0])
+        max_input_texts_len = max([len(text) for text in input_texts])
+
+        print('num of samples:', len(input_texts))
+        print('max sequence length for inputs:', max_input_texts_len)
+
+        chars = data_reader.read_vocab(input_texts + target_texts)
+        id2char = {i: j for i, j in enumerate(chars)}
+        char2id = {j: i for i, j in id2char.items()}
+        json.dump([chars, id2char, char2id], open(vocab_json_path, 'w'))
+
+    seq2seq_attn_model = Seq2seqAttnModel(chars, attn_model_path=attn_model_path)
+    model = seq2seq_attn_model.build_model()
+    evaluator = Evaluate(model, attn_model_path, char2id, id2char)
+    model.fit_generator(data_generator(input_texts, target_texts, char2id, batch_size, maxlen),
+                        steps_per_epoch=(len(input_texts) + batch_size - 1) // batch_size,
+                        epochs=epochs,
+                        callbacks=[evaluator])
+
+
+if __name__ == "__main__":
+    train(train_path=config.train_path,
+          vocab_json_path=config.vocab_json_path,
+          attn_model_path=config.attn_model_path,
+          batch_size=64,
+          epochs=100,
+          maxlen=400)
