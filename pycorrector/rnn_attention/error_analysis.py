@@ -17,30 +17,16 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import math
-import os
-import random
-import sys
-import time
-import random
-import string
+import json
+import kenlm
 
 import numpy as np
-from six.moves import xrange
 import tensorflow as tf
-import csv
-import itertools
-import json
-import re
-
-import kenlm
 
 from pycorrector.rnn_attention.nlc_data import *
 from pycorrector.rnn_attention.nlc_data import _PAD
 from pycorrector.rnn_attention.nlc_model import NLCModel
 from pycorrector.rnn_attention.util import get_tokenizer, pair_iter
-
-# FIXME(zxie) Replace the below with just loading configuration from json file
 
 tf.app.flags.DEFINE_string("train_dir", "./", "Training directory.")
 tf.app.flags.DEFINE_string("lmfile", None, "arpa file of the language model.")
@@ -226,23 +212,6 @@ def batch_decode(model, sess, x_dev, y_dev, alpha):
             generated_nw_score.append(nw_score)
             generated_lm_score.append(lm_score)
         count += 1
-
-    """
-    print("outputting in csv file...")
-
-    # dump it out in train_dir
-    with open("err_val_alpha_" + str(alpha) + ".csv", 'wb') as f:
-      wrt = csv.writer(f)
-      wrt.writerow(['Bad Input', 'Ground Truth', 'Network Score', 'LM Score', 'Generated Hypothesis', 'Combined Score', 'Network Score', 'LM Score'])
-      if not FLAGS.score:
-        for s, t, g in itertools.izip(error_source, error_target, error_generated):
-          wrt.writerow([s, t, g])  # source, correct target, wrong target
-      else:
-        for s, t, tns, tls, g, gs, gns, gls in itertools.izip(error_source, error_target, target_nw_score, target_lm_score, error_generated, generated_score, generated_nw_score, generated_lm_score):
-          wrt.writerow([s, t, tns, tls, g, gs, gns, gls])
-    """
-
-    # print("err_val_alpha_" + str(alpha) + ".csv" + "file finished")
 
     with open(FLAGS.tokenizer.lower() + "_runs" + str(FLAGS.beam_size) + "/alpha" + str(alpha) + ".txt", 'wb') as f:
         f.write("\n".join(error_generated))

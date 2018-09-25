@@ -7,8 +7,9 @@
 import json
 import os
 
-from pycorrector.seq2seq import cged_config as config
-from pycorrector.seq2seq.seq2seq_attn_train import Seq2seqAttnModel, gen_target
+from pycorrector.seq2seq_attention import config
+from pycorrector.seq2seq_attention.evaluate import gen_target
+from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
 
 
 class Inference(object):
