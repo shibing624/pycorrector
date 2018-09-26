@@ -3,8 +3,9 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+
 import numpy as np
-from keras.callbacks import Callback
+from keras.callbacks import Callback,EarlyStopping
 
 from pycorrector.seq2seq_attention.corpus_reader import str2id, id2str
 from pycorrector.seq2seq_attention.reader import GO_TOKEN, EOS_TOKEN
@@ -59,14 +60,14 @@ class Evaluate(Callback):
         self.maxlen = maxlen
 
     def on_epoch_end(self, epoch, logs=None):
-        s1 = '吸烟的行为经常会影响社会里所有的人。'
-        s2 = '所以在这期间，'
+        sents = ['吸烟的行为经常会影响社会里所有的人。',
+                 '所以在这期间，']
         # 训练过程中观察一两个例子，显示预测质量提高的过程
-        print('input:' + s1)
-        print('output:' + gen_target(s1, self.model, self.char2id, self.id2char, self.maxlen))
-        print('input:' + s2)
-        print('output:' + gen_target(s2, self.model, self.char2id, self.id2char, self.maxlen))
+        for sent in sents:
+            target = gen_target(sent, self.model, self.char2id, self.id2char, self.maxlen)
+            print('input:' + sent)
+            print('output:' + target)
         # 保存最优结果
-        if logs['loss'] <= self.lowest:
-            self.lowest = logs['loss']
+        if logs['val_loss'] <= self.lowest:
+            self.lowest = logs['val_loss']
             self.model.save_weights(self.attn_model_path)

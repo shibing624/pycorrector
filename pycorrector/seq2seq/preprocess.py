@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
-# Brief: 
+# Brief:
+import sys
+
+sys.path.append('../..')
+
 from codecs import open
 from xml.dom import minidom
 
@@ -21,8 +25,7 @@ def split_2_short_text(sentence):
 def parse_xml_file(path):
     print('Parse data from %s' % path)
     data_list = []
-    with open(path, 'r', encoding='utf-8') as f:
-        dom_tree = minidom.parse(f)
+    dom_tree = minidom.parse(path)
     docs = dom_tree.documentElement.getElementsByTagName('DOC')
     for doc in docs:
         # Input the text

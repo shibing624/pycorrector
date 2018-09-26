@@ -17,8 +17,8 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 # seq2seq_attn_train config
-vocab_json_path = os.path.join(output_dir, 'seq2seq_config.json')
-attn_model_path = os.path.join(output_dir, 'attn_model.h5')
+save_vocab_path = os.path.join(output_dir, 'vocab.txt')
+attn_model_path = os.path.join(output_dir, 'attn_model.weight')
 
 # config
 batch_size = 64

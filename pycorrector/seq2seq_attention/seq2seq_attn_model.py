@@ -3,12 +3,9 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
-import json
 import os
 
-import numpy as np
 from keras import backend as K
-from keras.callbacks import Callback
 from keras.layers import Input, Lambda, Layer, Embedding, Bidirectional, Dense, Activation, GRU
 from keras.models import Model
 from keras.optimizers import Adam

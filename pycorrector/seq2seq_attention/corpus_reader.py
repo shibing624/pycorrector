@@ -19,7 +19,7 @@ def load_word_dict(save_path):
     dict_data = dict()
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.strip().split()
+            items = line.split()
             try:
                 dict_data[items[0]] = int(items[1])
             except IndexError:

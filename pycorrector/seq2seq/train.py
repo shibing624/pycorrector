@@ -3,6 +3,7 @@
 # Brief: Train seq2seq model for text grammar error correction
 import os
 import sys
+
 sys.path.append('../..')
 import numpy as np
 from keras.models import load_model
