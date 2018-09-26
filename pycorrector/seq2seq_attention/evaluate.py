@@ -18,7 +18,7 @@ def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3):
     xid = np.array([str2id(input_text, char2id, maxlen)] * topk)  # 输入转id
     yid = np.array([[char2id[GO_TOKEN]]] * topk)  # 解码均以GO开始
     scores = [0] * topk  # 候选答案分数
-    for i in range(50):  # 强制要求target不超过50字
+    for i in range(maxlen):  # 强制要求target不超过maxlen字
         proba = model.predict([xid, yid])[:, i, :]  # 预测
         log_proba = np.log(proba + 1e-6)  # 取对数，方便计算
         arg_topk = log_proba.argsort(axis=1)[:, -topk:]  # 每一项选出topk
@@ -45,7 +45,7 @@ def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3):
                 yid.append(_yid[k])
                 scores.append(_scores[k])
         yid = np.array(yid)
-    # 如果50字都找不到EOS，直接返回
+    # 如果maxlen字都找不到EOS，直接返回
     return id2str(yid[np.argmax(scores)][1:-1], id2char)
 
 
@@ -61,7 +61,7 @@ class Evaluate(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         sents = ['吸烟的行为经常会影响社会里所有的人。',
-                 '所以在这期间，']
+                 '科学的发展会带来我们极好的生活。']
         # 训练过程中观察一两个例子，显示预测质量提高的过程
         for sent in sents:
             target = gen_target(sent, self.model, self.char2id, self.id2char, self.maxlen)

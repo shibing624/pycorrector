@@ -12,6 +12,14 @@ from sklearn.model_selection import train_test_split
 from pycorrector.seq2seq_attention import config
 from pycorrector.utils.text_utils import segment
 
+split_symbol = ['，', '。', '？', '！']
+
+
+def split_2_short_text(sentence):
+    for i in split_symbol:
+        sentence = sentence.replace(i, i + '\t')
+    return sentence.split('\t')
+
 
 def parse_xml_file(path):
     print('Parse data from %s' % path)
@@ -26,11 +34,20 @@ def parse_xml_file(path):
         correction = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
 
-        source = segment(text, cut_type='char')
-        target = segment(correction, cut_type='char')
-        pair = [source, target]
-        if pair not in data_list:
-            data_list.append(pair)
+        texts = split_2_short_text(text)
+        corrections = split_2_short_text(correction)
+        if len(texts) != len(corrections):
+            print('error:' + text + '\t' + correction)
+            continue
+        for i in range(len(texts)):
+            if len(texts[i]) > 40:
+                print('error:' + texts[i] + '\t' + corrections[i])
+                continue
+            source = segment(texts[i], cut_type='char')
+            target = segment(corrections[i], cut_type='char')
+            pair = [source, target]
+            if pair not in data_list:
+                data_list.append(pair)
     return data_list
 
 

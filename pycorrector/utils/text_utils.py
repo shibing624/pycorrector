@@ -122,13 +122,12 @@ def simplified2traditional(sentence):
     return sentence
 
 
-def segment(sentence, cut_type='word', pos=False, None_flag='O'):
+def segment(sentence, cut_type='word', pos=False):
     """
     切词
     :param sentence:
     :param cut_type: 'word' use jieba.lcut; 'char' use list(sentence)
     :param pos: enable POS
-    :param None_flag: 'BIO' the 'O'
     :return: list
     """
     import logging

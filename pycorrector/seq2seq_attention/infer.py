@@ -48,6 +48,9 @@ if __name__ == "__main__":
         target = inference.infer(i)
         print('input:' + i)
         print('output:' + target)
+    while True:
+        sent = input('input:')
+        print("output:" + inference.infer(sent))
 
 # result:
 # input:由我起开始做。
