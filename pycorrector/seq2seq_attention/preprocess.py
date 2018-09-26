@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from pycorrector.seq2seq_attention import config
 from pycorrector.utils.text_utils import segment
 
-split_symbol = ['，', '。', '？', '!', '、']
+split_symbol = ['，', '。', '？', '！']
 
 
 def split_2_short_text(sentence):
