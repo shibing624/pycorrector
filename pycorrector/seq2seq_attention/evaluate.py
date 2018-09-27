@@ -11,14 +11,14 @@ from pycorrector.seq2seq_attention.corpus_reader import str2id, id2str
 from pycorrector.seq2seq_attention.reader import GO_TOKEN, EOS_TOKEN
 
 
-def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3):
+def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3, max_target_len=50):
     """beam search解码
     每次只保留topk个最优候选结果；如果topk=1，那么就是贪心搜索
     """
     xid = np.array([str2id(input_text, char2id, maxlen)] * topk)  # 输入转id
     yid = np.array([[char2id[GO_TOKEN]]] * topk)  # 解码均以GO开始
     scores = [0] * topk  # 候选答案分数
-    for i in range(maxlen):  # 强制要求target不超过maxlen字
+    for i in range(max_target_len):  # 强制要求target不超过maxlen字
         proba = model.predict([xid, yid])[:, i, :]  # 预测
         log_proba = np.log(proba + 1e-6)  # 取对数，方便计算
         arg_topk = log_proba.argsort(axis=1)[:, -topk:]  # 每一项选出topk
