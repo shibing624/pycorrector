@@ -15,6 +15,7 @@ from pycorrector.utils.text_utils import uniform, is_alphabet_string
 default_logger = get_logger(__file__)
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
 pwd_path = os.path.abspath(os.path.dirname(__file__))
+error_type = {"confusion": 1, "word": 2, "char": 3}
 
 
 class Detector(object):
@@ -123,12 +124,24 @@ class Detector(object):
 
     @staticmethod
     def _check_contain_error(maybe_err, maybe_errors):
+        """
+        检测错误集合是否已经包含该错误位置
+        :param maybe_err:
+        :param maybe_errors:
+        :return:
+        """
         for err in maybe_errors:
             if maybe_err[0] in err[0] and maybe_err[1] >= err[1] and maybe_err[2] <= err[2]:
                 return True
         return False
 
     def _add_maybe_error_item(self, maybe_err, maybe_errors):
+        """
+        新增该错误位置
+        :param maybe_err:
+        :param maybe_errors:
+        :return:
+        """
         if maybe_err not in maybe_errors and not self._check_contain_error(maybe_err, maybe_errors):
             maybe_errors.append(maybe_err)
 
@@ -164,12 +177,12 @@ class Detector(object):
         # 文本归一化
         sentence = uniform(sentence)
         # 切词
-        tokens = tokenize(sentence)
+        tokens = tokenize(sentence, custom_confusion=self.custom_confusion)
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)
             if idx > -1:
-                maybe_err = [confuse, idx, idx + len(confuse)]
+                maybe_err = [confuse, idx, idx + len(confuse), error_type["confusion"]]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 未登录词加入疑似错误词典
@@ -189,7 +202,7 @@ class Detector(object):
             # in dict
             if word in self.word_freq:
                 continue
-            maybe_err = [word, begin_idx, end_idx]
+            maybe_err = [word, begin_idx, end_idx, error_type["word"]]
             self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 语言模型检测疑似错误字
@@ -214,7 +227,7 @@ class Detector(object):
             sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
             # 取疑似错字信息
             for i in self._get_maybe_error_index(sent_scores):
-                maybe_err = [sentence[i], i, i + 1]
+                maybe_err = [sentence[i], i, i + 1, error_type["char"]]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
         except IndexError as ie:
             default_logger.warn("index error, sentence:" + sentence + str(ie))

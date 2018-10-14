@@ -19,7 +19,7 @@ def load_word_dict(save_path):
     dict_data = dict()
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.split()
+            items = line.strip().split()
             try:
                 dict_data[items[0]] = int(items[1])
             except IndexError:
@@ -117,7 +117,7 @@ class CGEDReader(Reader):
 
 def str2id(s, char2id, maxlen):
     # 文字转整数id
-    return [char2id.get(c, 1) for c in s[:maxlen]]
+    return [char2id.get(c, char2id[PAD_TOKEN]) for c in s[:maxlen]]
 
 
 def padding(x, char2id):

@@ -7,7 +7,7 @@ import time
 
 from pypinyin import lazy_pinyin
 
-from pycorrector.detector import Detector
+from pycorrector.detector import Detector, error_type
 from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
@@ -182,12 +182,14 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
-    def _correct_item(self, sentence, item, begin_idx, end_idx):
+    def _correct_item(self, sentence, item, begin_idx, end_idx, err_type):
         """
         纠正字词错误
         :param sentence:
-        :param idx:
         :param item:
+        :param begin_idx:
+        :param end_idx:
+        :param err_type: 错误类型
         :return: corrected word 修正的词语
         """
         corrected_sent = sentence
@@ -200,8 +202,10 @@ class Corrector(Detector):
             return corrected_sent, []
         before_sent = sentence[:begin_idx]
         after_sent = sentence[end_idx:]
-        corrected_item = min(maybe_right_items,
-                             key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
+        if err_type == error_type["confusion"]:
+            corrected_item = self.custom_confusion[item]
+        else:
+            corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
         if corrected_item != item:
             corrected_sent = before_sent + corrected_item + after_sent
             # default_logger.debug('predict:' + item + '=>' + corrected_item)
@@ -212,14 +216,14 @@ class Corrector(Detector):
         """
         句子改错
         :param sentence: 句子文本
-        :return: 改正后的句子, list(wrongs, rights, begin_idx, end_idx)
+        :return: 改正后的句子, list(wrong, right, begin_idx, end_idx)
         """
         detail = []
         self.check_corrector_initialized()
         maybe_errors = self.detect(sentence)
-        for item, begin_idx, end_idx in maybe_errors:
+        for item, begin_idx, end_idx, error_type in maybe_errors:
             # 纠错，逐个处理
-            sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx)
+            sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx, error_type)
             if detail_word:
                 detail.append(detail_word)
         return sentence, detail

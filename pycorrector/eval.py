@@ -3,7 +3,7 @@
 # Brief:
 import re
 from codecs import open
-from pycorrector.corrector import correct
+from pycorrector import correct
 from pycorrector.utils.io_utils import load_pkl
 
 

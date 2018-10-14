@@ -11,21 +11,29 @@
 # 方大碳素等等	方大炭素等等
 # 耐得住欲妄	耐得住欲望
 # 交通先行	交通限行
+# 苹果吧   苹果八
 
 import pycorrector
 
 error_sentences = [
+    '哪里卖苹果吧？',
     '我对于宠物出租得事非常认同',
     '天地无垠大，我们的舞台无线大',
-    '交通先行了怎么过去啊？'
+    '交通先行了怎么过去啊？',
+
 ]
 for line in error_sentences:
+    # idx_errors = pycorrector.detect(line)
+    # print(idx_errors)
+
     correct_sent = pycorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 
 print('*' * 53)
 pycorrector.set_custom_confusion_dict(path='./my_confusion.txt')
 for line in error_sentences:
+    # idx_errors = pycorrector.detect(line)
+    # print(idx_errors)
     correct_sent = pycorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 
