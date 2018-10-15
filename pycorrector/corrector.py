@@ -143,7 +143,14 @@ class Corrector(Detector):
             confusion_word_set = {self.custom_confusion[word]}
         return confusion_word_set
 
+    # TODO: need more faster
     def _generate_items(self, word, fraction=1):
+        """
+        生成纠错候选集
+        :param word:
+        :param fraction:
+        :return:
+        """
         candidates_1_order = []
         candidates_2_order = []
         candidates_3_order = []
