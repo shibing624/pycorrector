@@ -194,18 +194,24 @@ class Corrector(Detector):
         """
         corrected_sent = sentence
         detail = []
-        if not is_chinese_string(item):
-            return corrected_sent, detail
-        # 取得所有可能正确的词
-        maybe_right_items = self._generate_items(item)
-        if not maybe_right_items:
-            return corrected_sent, []
+
         before_sent = sentence[:begin_idx]
         after_sent = sentence[end_idx:]
+
+        # 困惑集中指定的词，直接取结果
         if err_type == error_type["confusion"]:
             corrected_item = self.custom_confusion[item]
         else:
+            # 对非中文的错字不做处理
+            if not is_chinese_string(item):
+                return corrected_sent, detail
+            # 取得所有可能正确的词
+            maybe_right_items = self._generate_items(item)
+            if not maybe_right_items:
+                return corrected_sent, detail
             corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
+
+        # output
         if corrected_item != item:
             corrected_sent = before_sent + corrected_item + after_sent
             # default_logger.debug('predict:' + item + '=>' + corrected_item)

@@ -178,6 +178,7 @@ class Detector(object):
         sentence = uniform(sentence)
         # 切词
         tokens = tokenize(sentence, custom_confusion=self.custom_confusion)
+        # print(tokens)
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)

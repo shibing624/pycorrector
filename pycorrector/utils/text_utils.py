@@ -165,6 +165,7 @@ def tokenize(sentence, mode='default', custom_confusion=None):
     if custom_confusion:
         for k, word in custom_confusion.items():
             # if word not in jieba.finalseg.Force_Split_Words:
+            jieba.add_word(k)
             jieba.add_word(word)
     jieba.default_logger.setLevel(logging.ERROR)
     return list(jieba.tokenize(sentence, mode=mode))

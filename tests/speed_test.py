@@ -3,7 +3,7 @@
 # Brief:
 
 import time
-from pycorrector import corrector
+from pycorrector import correct, detect
 
 error_sentences = [
     '汽车新式在这条路上',
@@ -32,10 +32,14 @@ error_sentences = [
 t1 = time.time()
 for i in range(3):
     for line in error_sentences:
-        correct_sent = corrector.correct(line)
-        # print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+        idx_errors = detect(line)
 t2 = time.time()
-print('spend time: %f s' % (t2 - t1))
+print('[detect] spend time: %f s' % (t2 - t1))
 
-# spend time: 11.497331 s
-# spend time: 11.858631 s
+for i in range(3):
+    for line in error_sentences:
+        correct_sent = correct(line)
+t3 = time.time()
+print('[correct] spend time: %f s' % (t3 - t2))
+# spend time: 1.497331 s
+# spend time: 10.858631 s
