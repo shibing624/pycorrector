@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 汉字处理的工具:判断unicode是否是汉字，数字，英文，或者其他字符。以及全角符号转半角符号。
+import logging
 import re
-import os
+
 import jieba
-import codecs
 import pypinyin
 from jieba import posseg
 from pypinyin import pinyin
@@ -131,7 +131,6 @@ def segment(sentence, cut_type='word', pos=False):
     :param pos: enable POS
     :return: list
     """
-    import logging
     jieba.default_logger.setLevel(logging.ERROR)
     if pos:
         if cut_type == 'word':
@@ -159,13 +158,13 @@ def tokenize(sentence, mode='default', custom_confusion=None):
     """
     切词并返回切词位置
     :param sentence:
-    :param custom_confusion: 自定义词典
     :param mode:
+    :param custom_confusion: 自定义词典
     :return: (word, start_index, end_index) model='search'
     """
-    import logging
     if custom_confusion:
         for k, word in custom_confusion.items():
+            # if word not in jieba.finalseg.Force_Split_Words:
             jieba.add_word(word)
     jieba.default_logger.setLevel(logging.ERROR)
     return list(jieba.tokenize(sentence, mode=mode))

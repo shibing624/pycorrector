@@ -221,9 +221,9 @@ class Corrector(Detector):
         detail = []
         self.check_corrector_initialized()
         maybe_errors = self.detect(sentence)
-        for item, begin_idx, end_idx, error_type in maybe_errors:
+        for item, begin_idx, end_idx, err_type in maybe_errors:
             # 纠错，逐个处理
-            sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx, error_type)
+            sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx, err_type)
             if detail_word:
                 detail.append(detail_word)
         return sentence, detail

@@ -10,8 +10,8 @@ from pycorrector.config import common_char_path, same_pinyin_path, \
     word_freq_path, \
     custom_confusion_path
 
-
-# language_model_path = '../pycorrector/data/test/people_chars.klm'
+# 使用三元文法语言模型（people_chars.klm）纠错效果更好：
+# language_model_path = '../pycorrector/data/kenlm/people_chars.klm'
 model = Corrector(common_char_path=common_char_path,
                   same_pinyin_path=same_pinyin_path,
                   same_stroke_path=same_stroke_path,
@@ -26,3 +26,5 @@ error_sentences = [
 for line in error_sentences:
     correct_sent = model.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+
+
