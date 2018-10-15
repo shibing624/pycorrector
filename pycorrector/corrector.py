@@ -16,12 +16,12 @@ default_logger = get_logger(__file__)
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
-def load_word_dict(path):
-    word_dict = ''
+def load_char_set(path):
+    words = set()
     with codecs.open(path, 'r', encoding='utf-8') as f:
         for w in f:
-            word_dict += w.strip()
-    return word_dict
+            words.add(w.strip())
+    return words
 
 
 def load_same_pinyin(path, sep='\t'):
@@ -91,7 +91,7 @@ class Corrector(Detector):
     def initialize_corrector(self):
         t1 = time.time()
         # chinese common char dict
-        self.cn_char_set = load_word_dict(self.common_char_path)
+        self.cn_char_set = load_char_set(self.common_char_path)
         # same pinyin
         self.same_pinyin = load_same_pinyin(self.same_pinyin_text_path)
         # same stroke
