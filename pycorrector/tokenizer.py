@@ -42,7 +42,6 @@ def segment(sentence, cut_type='word', pos=False):
 class Tokenizer(object):
     def __init__(self, dict_path='', custom_word_freq_dict=None, custom_confusion_dict=None):
         self.model = jieba
-        self.custom_confusion_dict = custom_confusion_dict
         self.model.default_logger.setLevel(logging.ERROR)
         # 初始化大词典
         if os.path.exists(dict_path):
@@ -53,8 +52,8 @@ class Tokenizer(object):
                 self.model.add_word(w, freq=f)
 
         # 加载混淆集词典
-        if self.custom_confusion_dict:
-            for k, word in self.custom_confusion_dict.items():
+        if custom_confusion_dict:
+            for k, word in custom_confusion_dict.items():
                 # 添加到分词器的自定义词典中
                 self.model.add_word(k)
                 self.model.add_word(word)
