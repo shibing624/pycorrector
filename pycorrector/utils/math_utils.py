@@ -47,3 +47,43 @@ def get_sub_array(nums):
         else:
             ret.append([c])
     return ret
+
+
+def find_all_idx2(lst, item):
+    """
+    取列表中指定元素的所有下标
+    :param lst: 列表或字符串
+    :param item: 指定元素
+    :return: 下标列表
+    """
+    ids = []
+    for i in range(len(lst)):
+        if item == lst[i]:
+            ids.append(i)
+    return ids
+
+
+def find_all_idx(lst, item):
+    """
+    取列表中指定元素的所有下标
+    :param lst: 列表或字符串
+    :param item: 指定元素
+    :return: 下标列表
+    """
+    ids = []
+    pos = -1
+    for i in range(lst.count(item)):
+        pos = lst.index(item, pos + 1)
+        if pos > -1:
+            ids.append(pos)
+    return ids
+
+
+if __name__ == "__main__":
+    l = [1, 2, 3, 4, 2, 3, 4]
+    item = 2
+    print(find_all_idx(l, item))
+
+    l = '我爱中国，我是中国人'
+    item = '中国'
+    print(find_all_idx(l, item))

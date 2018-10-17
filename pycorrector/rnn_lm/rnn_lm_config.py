@@ -14,7 +14,7 @@ train_paths = [
 ]
 train_word_path = output_dir + '/train_words.txt'
 # vocab
-word_dict_path = output_dir + '/word_dict.txt'
+word_dict_path = output_dir + '/word_freq.txt'
 
 # config
 cutoff_frequency = 10

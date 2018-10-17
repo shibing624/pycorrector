@@ -23,7 +23,7 @@ test_word_path = output_dir + '/test_words.txt'
 test_label_path = output_dir + '/test_labels.txt'
 test_id_path = output_dir + '/test_ids.txt'
 # vocab
-word_dict_path = output_dir + '/word_dict.txt'
+word_dict_path = output_dir + '/word_freq.txt'
 label_dict_path = output_dir + '/label_dict.txt'
 
 # config

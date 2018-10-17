@@ -9,7 +9,7 @@ import time
 import numpy as np
 
 from pycorrector.utils.io_utils import get_logger
-from pycorrector.utils.text_utils import tokenize
+from pycorrector.tokenizer import Tokenizer
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
 default_logger = get_logger(__file__)
@@ -19,11 +19,12 @@ error_type = {"confusion": 1, "word": 2, "char": 3}
 
 
 class Detector(object):
-    def __init__(self, language_model_path='', word_freq_path='', custom_confusion_path=''):
+    def __init__(self, language_model_path='', word_freq_path='', custom_confusion_path='', custom_word_path=''):
         self.name = 'detector'
         self.language_model_path = os.path.join(pwd_path, language_model_path)
         self.word_freq_path = os.path.join(pwd_path, word_freq_path)
         self.custom_confusion_path = os.path.join(pwd_path, custom_confusion_path)
+        self.custom_word_path = os.path.join(pwd_path, custom_word_path)
         self.initialized_detector = False
 
     def initialize_detector(self):
@@ -31,14 +32,21 @@ class Detector(object):
         self.lm = kenlm.Model(self.language_model_path)
         default_logger.debug(
             'Loaded language model: %s, spend: %s s' % (self.language_model_path, str(time.time() - t1)))
-        # 字频统计
         t2 = time.time()
+        # 词、频数dict
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
         default_logger.debug('Loaded word freq file: %s, spend: %s s' %
                              (self.word_freq_path, str(time.time() - t2)))
+        # 自定义混淆集
         self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
         default_logger.debug('Loaded confusion file: %s, spend: %s s' %
                              (self.custom_confusion_path, str(time.time() - t2)))
+        # 自定义切词词典
+        self.custom_word_dict = self.load_word_freq_dict(self.custom_word_path)
+        # 合并切词词典及自定义词典
+        self.word_freq.update(self.custom_word_dict)
+        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_dict,
+                                   custom_confusion_dict=self.custom_confusion)
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -54,8 +62,11 @@ class Detector(object):
                 if line.startswith('#'):
                     continue
                 info = line.split()
+                if len(info) < 1:
+                    continue
                 word = info[0]
-                freq = int(info[1])
+                # 取词频，默认1
+                freq = int(info[1]) if len(info) > 1 else 1
                 word_freq[word] = freq
         return word_freq
 
@@ -67,11 +78,11 @@ class Detector(object):
                 if line.startswith('#'):
                     continue
                 info = line.split()
-                if len(info) < 3:
+                if len(info) < 2:
                     continue
                 variant = info[0]
                 origin = info[1]
-                freq = int(info[2])
+                freq = int(info[2]) if len(info) > 2 else 1
                 confusion[variant] = origin
                 self.word_freq[origin] = freq
         return confusion
@@ -86,6 +97,19 @@ class Detector(object):
         custom_confusion = self._get_custom_confusion_dict(path)
         self.custom_confusion.update(custom_confusion)
         default_logger.info('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
+
+    def set_custom_word(self, path):
+        self.check_detector_initialized()
+        word_freqs = self.load_word_freq_dict(path)
+        # 合并字典
+        self.custom_word_dict.update(word_freqs)
+        # 合并切词词典及自定义词典
+        self.word_freq.update(self.custom_word_dict)
+        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_dict,
+                                   custom_confusion_dict=self.custom_confusion)
+        for k, v in word_freqs.items():
+            self.set_word_frequency(k, v)
+        default_logger.info('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
 
     def ngram_score(self, chars):
         """
@@ -177,8 +201,8 @@ class Detector(object):
         # 文本归一化
         sentence = uniform(sentence)
         # 切词
-        tokens = tokenize(sentence, custom_confusion=self.custom_confusion)
-        # print(tokens)
+        tokens = self.tokenizer.token(sentence)
+        print(tokens)
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)

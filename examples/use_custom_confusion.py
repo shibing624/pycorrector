@@ -16,6 +16,13 @@
 import pycorrector
 
 error_sentences = [
+    '双十一下单到现在还没发货的，',
+    '这纸厚度如何？质量怎么样',
+    '一但工作效率提升，需要时间在工作上也减少',
+    '可否送手机膜？送膜吗',
+    '这水用来洗脸泡脚效果如何',
+    '五香的不辣吧',
+    '这款功率真有2000w吗',
     '买iPhone差，要多少钱',
     '我想喝小明同学。',
     '哪里卖苹果吧？请大叔给我让坐',
@@ -33,6 +40,7 @@ for line in error_sentences:
 
 print('*' * 53)
 pycorrector.set_custom_confusion_dict(path='./my_confusion.txt')
+pycorrector.set_custom_word(path='./my_custom_word.txt')
 for line in error_sentences:
     # idx_errors = pycorrector.detect(line)
     # print(idx_errors)

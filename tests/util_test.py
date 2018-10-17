@@ -4,7 +4,8 @@
 from pypinyin import lazy_pinyin
 
 from pycorrector.utils.text_utils import traditional2simplified, simplified2traditional
-from pycorrector.utils.text_utils import tokenize, get_homophones_by_char, get_homophones_by_pinyin
+from pycorrector.utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
+from pycorrector.tokenizer import tokenize
 
 traditional_sentence = '憂郁的臺灣烏龜'
 simplified_sentence = traditional2simplified(traditional_sentence)

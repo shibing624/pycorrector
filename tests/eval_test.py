@@ -12,7 +12,7 @@ sighan_path = os.path.join(pwd_path, '../pycorrector/data/cn/sighan15_A2.pkl')
 
 
 def get_gcmi_cor_test():
-    s = '老师工作非常幸（（辛））苦，我们要遵（（尊））敬老师。'
+    s = '青蛙是庄家的好朋友，我们要宝（（保））护它们。'
     print(get_bcmi_corpus(s))
 
 
@@ -31,5 +31,8 @@ def sighan_data_test():
     print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
     # cn_spell rate:0.2
 
-
-sighan_data_test()
+if __name__ == "__main__":
+    # get_gcmi_cor_test()
+    # eval_bcmi_data_test()
+    clp_data_test()
+    # sighan_data_test()

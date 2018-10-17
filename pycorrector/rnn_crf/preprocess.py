@@ -4,7 +4,7 @@
 from xml.dom import minidom
 
 import pycorrector.rnn_crf.rnn_crf_config as config
-from pycorrector.utils.text_utils import segment
+from pycorrector.tokenizer import segment
 
 
 def parse_xml_file(path):
@@ -79,7 +79,7 @@ def parse_txt_file(input_path, truth_path):
                 else:
                     truth_dict[text_id] = locate_dict
 
-    # read input file and get tokenize
+    # read input file and get token
     with open(input_path, 'r', encoding='utf-8') as input_f:
         for line in input_f:
             parts = line.strip().split('\t')

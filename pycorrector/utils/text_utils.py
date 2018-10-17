@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: 汉字处理的工具:判断unicode是否是汉字，数字，英文，或者其他字符。以及全角符号转半角符号。
-import logging
 import re
 
-import jieba
 import pypinyin
-from jieba import posseg
 from pypinyin import pinyin
 
 from pycorrector.utils.langconv import Converter
@@ -121,54 +118,6 @@ def simplified2traditional(sentence):
     """
     sentence = Converter('zh-hant').convert(sentence)
     return sentence
-
-
-def segment(sentence, cut_type='word', pos=False):
-    """
-    切词
-    :param sentence:
-    :param cut_type: 'word' use jieba.lcut; 'char' use list(sentence)
-    :param pos: enable POS
-    :return: list
-    """
-    jieba.default_logger.setLevel(logging.ERROR)
-    if pos:
-        if cut_type == 'word':
-            word_pos_seq = posseg.lcut(sentence)
-            word_seq, pos_seq = [], []
-            for w, p in word_pos_seq:
-                word_seq.append(w)
-                pos_seq.append(p)
-            return word_seq, pos_seq
-        elif cut_type == 'char':
-            word_seq = list(sentence)
-            pos_seq = []
-            for w in word_seq:
-                w_p = posseg.lcut(w)
-                pos_seq.append(w_p[0].flag)
-            return word_seq, pos_seq
-    else:
-        if cut_type == 'word':
-            return jieba.lcut(sentence)
-        elif cut_type == 'char':
-            return list(sentence)
-
-
-def tokenize(sentence, mode='default', custom_confusion=None):
-    """
-    切词并返回切词位置
-    :param sentence:
-    :param mode:
-    :param custom_confusion: 自定义词典
-    :return: (word, start_index, end_index) model='search'
-    """
-    if custom_confusion:
-        for k, word in custom_confusion.items():
-            # if word not in jieba.finalseg.Force_Split_Words:
-            jieba.add_word(k)
-            jieba.add_word(word)
-    jieba.default_logger.setLevel(logging.ERROR)
-    return list(jieba.tokenize(sentence, mode=mode))
 
 
 def get_homophones_by_char(input_char):

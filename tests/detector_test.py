@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
-# Brief: 
-from pycorrector.utils.text_utils import *
+# Brief:
 import pycorrector
+from pycorrector.tokenizer import segment
 
 c = pycorrector.get_same_pinyin('长')
 print('get_same_pinyin:', c)

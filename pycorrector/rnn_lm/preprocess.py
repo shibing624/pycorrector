@@ -4,7 +4,7 @@
 from xml.dom import minidom
 
 import pycorrector.rnn_lm.rnn_lm_config as config
-from pycorrector.utils.text_utils import segment
+from pycorrector.tokenizer import segment
 
 
 def parse_xml_file(path):

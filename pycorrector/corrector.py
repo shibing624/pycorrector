@@ -78,10 +78,12 @@ def load_same_stroke(path, sep='\t'):
 class Corrector(Detector):
     def __init__(self, common_char_path='', same_pinyin_path='',
                  same_stroke_path='', language_model_path='',
-                 word_freq_path='', custom_confusion_path=''):
+                 word_freq_path='', custom_confusion_path='',
+                 custom_word_path=''):
         super(Corrector, self).__init__(language_model_path=language_model_path,
                                         word_freq_path=word_freq_path,
-                                        custom_confusion_path=custom_confusion_path)
+                                        custom_confusion_path=custom_confusion_path,
+                                        custom_word_path=custom_word_path)
         self.name = 'corrector'
         self.common_char_path = os.path.join(pwd_path, common_char_path)
         self.same_pinyin_text_path = os.path.join(pwd_path, same_pinyin_path)
@@ -123,6 +125,11 @@ class Corrector(Detector):
         return self.same_stroke.get(char, set())
 
     def known(self, words):
+        """
+        取得词序列中属于常用词部分
+        :param words:
+        :return:
+        """
         return set(word for word in words if word in self.word_freq)
 
     def _confusion_char_set(self, c):
