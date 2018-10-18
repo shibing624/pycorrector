@@ -67,8 +67,9 @@ http://www.borntowin.cn/nlp/corrector.html
 ## 规则方案使用说明
 
 ### 安装依赖
+```
 pip3 install -r requirements.txt
-
+```
 
 ### 安装
 * 全自动安装：pip3 install pycorrector
@@ -99,10 +100,11 @@ print(corrected_sent, detail)
 ## 深度方案使用说明
 
 ### 安装依赖
+```
 pip3 install -r requirements.txt
 
 pip3 install git+https://www.github.com/keras-team/keras-contrib.git
-
+```
 
 ### 介绍
 
@@ -116,17 +118,39 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 各模型均可独立预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
 
 seq2seq_attention 模型使用示例:
+
+#### 配置
+
+通过修改`config.py`。
+
+
+#### 数据预处理
 ```
 cd seq2seq_attention
 # 数据预处理
 python3 preprocess.py
-# 训练
-python3 train.py
-# 预测
-python3 infer.py
 
 ```
-- 配置：通过修改`config.py`。
+自动新建文件夹output，在output下生成train.txt和test.txt文件，文件内容示例：
+
+```
+src: 不 然 的 话 ， 两 方 面 的 问 题 都 不 能 决 绝 ， 而 对 双 方 导 致 不 良 影 响 。
+dst: 不 然 的 话 ， 两 方 面 的 问 题 都 不 能 解 决 ， 而 对 双 方 产 生 不 良 影 响 。
+src: 你 们 的 这 种 精 神 使 我 更 加 勇 气 ， 努 力 学 习 。
+dst: 你 们 的 这 种 精 神 使 我 增 加 勇 气 ， 努 力 学 习 。
+```
+
+#### 训练
+```
+# 训练
+python3 train.py
+```
+
+#### 预测
+```
+# 预测
+python3 infer.py
+```
 
 
 预测输出效果样例:
