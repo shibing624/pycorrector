@@ -130,9 +130,8 @@ python3 infer.py
 
 
 预测输出效果样例:
-```
+
 ![long correct result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/long_text.png)
-```
 
 
 
