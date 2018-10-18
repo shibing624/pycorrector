@@ -27,3 +27,5 @@ ngram_score = corrector.ngram_score
 ppl_score = corrector.ppl_score
 word_frequency = corrector.word_frequency
 detect = corrector.detect
+enable_char_error = corrector.enable_char_error
+enable_word_error = corrector.enable_word_error

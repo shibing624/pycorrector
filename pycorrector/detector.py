@@ -25,28 +25,37 @@ class Detector(object):
         self.word_freq_path = os.path.join(pwd_path, word_freq_path)
         self.custom_confusion_path = os.path.join(pwd_path, custom_confusion_path)
         self.custom_word_path = os.path.join(pwd_path, custom_word_path)
+        self.is_char_error_detect = True
+        self.is_word_error_detect = True
         self.initialized_detector = False
 
     def initialize_detector(self):
         t1 = time.time()
         self.lm = kenlm.Model(self.language_model_path)
-        default_logger.debug(
-            'Loaded language model: %s, spend: %s s' % (self.language_model_path, str(time.time() - t1)))
         t2 = time.time()
+        default_logger.debug(
+            'Loaded language model: %s, spend: %s s' % (self.language_model_path, str(t2 - t1)))
         # 词、频数dict
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
-        default_logger.debug('Loaded word freq file: %s, spend: %s s' %
-                             (self.word_freq_path, str(time.time() - t2)))
+        t3 = time.time()
+        default_logger.debug('Loaded word freq file: %s, size: %d, spend: %s s' %
+                             (self.word_freq_path, len(self.word_freq), str(t3 - t2)))
         # 自定义混淆集
         self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
-        default_logger.debug('Loaded confusion file: %s, spend: %s s' %
-                             (self.custom_confusion_path, str(time.time() - t2)))
+        t4 = time.time()
+        default_logger.debug('Loaded confusion file: %s, size: %d, spend: %s s' %
+                             (self.custom_confusion_path, len(self.custom_confusion), str(t4 - t3)))
         # 自定义切词词典
         self.custom_word_dict = self.load_word_freq_dict(self.custom_word_path)
         # 合并切词词典及自定义词典
         self.word_freq.update(self.custom_word_dict)
+        t5 = time.time()
+        default_logger.debug('Loaded custom word file: %s, size: %d, spend: %s s' %
+                             (self.custom_confusion_path, len(self.custom_word_dict), str(t5 - t4)))
         self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_dict,
                                    custom_confusion_dict=self.custom_confusion)
+        t6 = time.time()
+        default_logger.info('Loaded dict ok, spend: %s s' % str(t6 - t1))
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -55,6 +64,11 @@ class Detector(object):
 
     @staticmethod
     def load_word_freq_dict(path):
+        """
+        加载切词词典
+        :param path:
+        :return:
+        """
         word_freq = {}
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -71,6 +85,11 @@ class Detector(object):
         return word_freq
 
     def _get_custom_confusion_dict(self, path):
+        """
+        取自定义困惑集
+        :param path:
+        :return: dict, {variant: origin}, eg: {"交通先行": "交通限行"}
+        """
         confusion = {}
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -83,8 +102,8 @@ class Detector(object):
                 variant = info[0]
                 origin = info[1]
                 freq = int(info[2]) if len(info) > 2 else 1
-                confusion[variant] = origin
                 self.word_freq[origin] = freq
+                confusion[variant] = origin
         return confusion
 
     def set_language_model_path(self, path):
@@ -110,6 +129,22 @@ class Detector(object):
         for k, v in word_freqs.items():
             self.set_word_frequency(k, v)
         default_logger.info('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
+
+    def enable_char_error(self, enable=True):
+        """
+        is open char error detect
+        :param enable:
+        :return:
+        """
+        self.is_char_error_detect = enable
+
+    def enable_word_error(self, enable=True):
+        """
+        is open word error detect
+        :param enable:
+        :return:
+        """
+        self.is_word_error_detect = enable
 
     def ngram_score(self, chars):
         """
@@ -149,19 +184,23 @@ class Detector(object):
     @staticmethod
     def _check_contain_error(maybe_err, maybe_errors):
         """
-        检测错误集合是否已经包含该错误位置
-        :param maybe_err:
+        检测错误集合(maybe_errors)是否已经包含该错误位置（maybe_err)
+        :param maybe_err: [error_word, begin_pos, end_pos, error_type]
         :param maybe_errors:
         :return:
         """
+        error_word_idx = 0
+        begin_idx = 1
+        end_idx = 2
         for err in maybe_errors:
-            if maybe_err[0] in err[0] and maybe_err[1] >= err[1] and maybe_err[2] <= err[2]:
+            if maybe_err[error_word_idx] in err[error_word_idx] and maybe_err[begin_idx] >= err[begin_idx] and \
+                            maybe_err[end_idx] <= err[end_idx]:
                 return True
         return False
 
     def _add_maybe_error_item(self, maybe_err, maybe_errors):
         """
-        新增该错误位置
+        新增错误
         :param maybe_err:
         :param maybe_errors:
         :return:
@@ -194,6 +233,11 @@ class Detector(object):
         return list(maybe_error_indices[0])
 
     def detect(self, sentence):
+        """
+        检测句子中的疑似错误信息，包括[词、位置、错误类型]
+        :param sentence:
+        :return: [error_word, begin_pos, end_pos, error_type]
+        """
         maybe_errors = []
         if not sentence.strip():
             return maybe_errors
@@ -201,7 +245,7 @@ class Detector(object):
         # 文本归一化
         sentence = uniform(sentence)
         # 切词
-        tokens = self.tokenizer.token(sentence)
+        tokens = self.tokenizer.tokenize(sentence)
         # print(tokens)
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
@@ -210,52 +254,54 @@ class Detector(object):
                 maybe_err = [confuse, idx, idx + len(confuse), error_type["confusion"]]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
-        # 未登录词加入疑似错误词典
-        for word, begin_idx, end_idx in tokens:
-            # pass blank
-            if not word.strip():
-                continue
-            # punctuation
-            if word in PUNCTUATION_LIST:
-                continue
-            # pass num
-            if word.isdigit():
-                continue
-            # pass alpha
-            if is_alphabet_string(word.lower()):
-                continue
-            # in dict
-            if word in self.word_freq:
-                continue
-            maybe_err = [word, begin_idx, end_idx, error_type["word"]]
-            self._add_maybe_error_item(maybe_err, maybe_errors)
-
-        # 语言模型检测疑似错误字
-        ngram_avg_scores = []
-        try:
-            for n in [2, 3]:
-                scores = []
-                for i in range(len(sentence) - n + 1):
-                    word = sentence[i:i + n]
-                    score = self.ngram_score(list(word))
-                    scores.append(score)
-                if not scores:
+        if self.is_word_error_detect:
+            # 未登录词加入疑似错误词典
+            for word, begin_idx, end_idx in tokens:
+                # pass blank
+                if not word.strip():
                     continue
-                # 移动窗口补全得分
-                for _ in range(n - 1):
-                    scores.insert(0, scores[0])
-                    scores.append(scores[-1])
-                avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
-                ngram_avg_scores.append(avg_scores)
-
-            # 取拼接后的ngram平均得分
-            sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
-            # 取疑似错字信息
-            for i in self._get_maybe_error_index(sent_scores):
-                maybe_err = [sentence[i], i, i + 1, error_type["char"]]
+                # punctuation
+                if word in PUNCTUATION_LIST:
+                    continue
+                # pass num
+                if word.isdigit():
+                    continue
+                # pass alpha
+                if is_alphabet_string(word.lower()):
+                    continue
+                # in dict
+                if word in self.word_freq:
+                    continue
+                maybe_err = [word, begin_idx, end_idx, error_type["word"]]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
-        except IndexError as ie:
-            default_logger.warn("index error, sentence:" + sentence + str(ie))
-        except Exception as e:
-            default_logger.warn("detect error, sentence:" + sentence + str(e))
+
+        if self.is_char_error_detect:
+            # 语言模型检测疑似错误字
+            ngram_avg_scores = []
+            try:
+                for n in [2, 3]:
+                    scores = []
+                    for i in range(len(sentence) - n + 1):
+                        word = sentence[i:i + n]
+                        score = self.ngram_score(list(word))
+                        scores.append(score)
+                    if not scores:
+                        continue
+                    # 移动窗口补全得分
+                    for _ in range(n - 1):
+                        scores.insert(0, scores[0])
+                        scores.append(scores[-1])
+                    avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
+                    ngram_avg_scores.append(avg_scores)
+
+                # 取拼接后的ngram平均得分
+                sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
+                # 取疑似错字信息
+                for i in self._get_maybe_error_index(sent_scores):
+                    maybe_err = [sentence[i], i, i + 1, error_type["char"]]
+                    self._add_maybe_error_item(maybe_err, maybe_errors)
+            except IndexError as ie:
+                default_logger.warn("index error, sentence:" + sentence + str(ie))
+            except Exception as e:
+                default_logger.warn("detect error, sentence:" + sentence + str(e))
         return sorted(maybe_errors, key=lambda k: k[1], reverse=False)

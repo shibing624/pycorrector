@@ -58,7 +58,7 @@ class Tokenizer(object):
                 self.model.add_word(k)
                 self.model.add_word(word)
 
-    def token(self, sentence):
+    def tokenize(self, sentence):
         """
         切词并返回切词位置
         :param sentence:

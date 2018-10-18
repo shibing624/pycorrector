@@ -16,8 +16,8 @@
 import pycorrector
 
 error_sentences = [
-    '双十一下单到现在还没发货的，',
     '这纸厚度如何？质量怎么样',
+    '双十一下单到现在还没发货的，',
     '一但工作效率提升，需要时间在工作上也减少',
     '可否送手机膜？送膜吗',
     '这水用来洗脸泡脚效果如何',
@@ -31,19 +31,19 @@ error_sentences = [
     '交通先行了怎么过去啊？',
 
 ]
-for line in error_sentences:
-    # idx_errors = pycorrector.detect(line)
-    # print(idx_errors)
-
-    correct_sent = pycorrector.correct(line)
-    print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+# for line in error_sentences:
+#     idx_errors = pycorrector.detect(line)
+#     print(idx_errors)
+#
+#     correct_sent = pycorrector.correct(line)
+#     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 
 print('*' * 53)
 pycorrector.set_custom_confusion_dict(path='./my_confusion.txt')
 pycorrector.set_custom_word(path='./my_custom_word.txt')
 for line in error_sentences:
-    # idx_errors = pycorrector.detect(line)
-    # print(idx_errors)
+    idx_errors = pycorrector.detect(line)
+    print(idx_errors)
     correct_sent = pycorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 

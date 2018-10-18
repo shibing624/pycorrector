@@ -4,6 +4,8 @@
 from pycorrector import corrector
 
 error_sentences = [
+    '这纸厚度如何？质量怎么样',
+    '一但工作效率提升，需要时间在工作上也减少',
     "第一章图表示全球产龄妇女人口同计每五年增加的产龄妇女人口一值往上升。",
     "一但工作效率提升，需要时间在工作上也减少，足以照顾老人。",
     "早婚，有可能行成了「少子化」现象",
@@ -11,6 +13,7 @@ error_sentences = [
     "相反的，生太多孩子的社会要有政府多鼓励少生孩子。",
     "一年又一年的过去，产龄妇女跟着变多，但婴儿的个数却是在慢慢的下降。",
     "由图可见到产龄妇女的人数是慢慢的加倍，而婴儿的数字已然是逐渐减少。",
+    '双十一下单到现在还没发货的，',
 
     '汽车新式在这条路上',
     '中国人工只能布局很不错',
@@ -37,4 +40,5 @@ error_sentences = [
 ]
 for line in error_sentences:
     correct_sent = corrector.correct(line)
+    print(corrector.detect(line))
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
