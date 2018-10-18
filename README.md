@@ -64,12 +64,10 @@
 http://www.borntowin.cn/nlp/corrector.html
 
 
-## 使用说明
+## 规则方案使用说明
 
-### 依赖
+### 安装依赖
 pip3 install -r requirements.txt
-
-pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 
 ### 安装
@@ -97,6 +95,47 @@ print(corrected_sent, detail)
 少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
 ```
 
+
+## 深度方案使用说明
+
+### 安装依赖
+pip3 install -r requirements.txt
+
+pip3 install git+https://www.github.com/keras-team/keras-contrib.git
+
+
+### 介绍
+
+本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文件纠错任务上有一点小小的启发就是我莫大的荣幸了。
+
+主要使用了4种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`，每种方法单独放在文件夹中，
+都可以独立运行，相互之间无依赖。
+
+
+### 使用方法
+各模型均可独立预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
+
+seq2seq_attention 模型使用示例:
+```
+cd seq2seq_attention
+# 数据预处理
+python3 preprocess.py
+# 训练
+python3 train.py
+# 预测
+python3 infer.py
+
+```
+- 配置：通过修改`config.py`。
+
+
+预测输出效果样例:
+```
+![long correct result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/long_text.png)
+```
+
+
+
 ## 自定义语言模型
 
 语言模型对于纠错步骤至关重要，目前我能收集到的语料数据有人民日报数据。大家可以用中文维基（繁体转简体，pycorrector.utils下有此功能）等更大的语料数据训练效果更好的语言模型，
@@ -110,6 +149,7 @@ print(corrected_sent, detail)
     4）kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
 
 网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11。尊重版权，传播请注明出处。
+
 
 ## 贡献及优化点(TODO)
 
