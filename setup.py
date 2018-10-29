@@ -2,72 +2,30 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 from __future__ import print_function
+
+import sys
+
 from setuptools import setup, find_packages
+
 from pycorrector import __version__
 
-long_description = '''
-## Usage
+if sys.version_info < (3,):
+    sys.exit('Sorry, Python3 is required for pycorrector.')
 
-### install
-* pip3 install pycorrector 
-* Or download https://github.com/shibing624/corrector Unzip and run python3 setup.py install
+with open('README.md') as f:
+    readme = f.read()
 
-### correct 
-input:
-```
-import pycorrector
+with open('LICENSE') as f:
+    license = f.read()
 
-corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
-print(corrected_sent, detail)
-
-```
-
-output:
-```
-少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
-```
-
-----
-
-
-# corrector
-中文错别字纠正工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python开发。
-
-**corrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
-
-## 特征
-### 语言模型
-* Kenlm（统计语言模型工具）
-* RNNLM（TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型）
-
-## 使用说明
-
-### 安装
-* 全自动安装：pip3 install pycorrector 
-* 半自动安装：下载 https://github.com/shibing624/corrector 解压缩并运行 python3 setup.py install
-
-### 纠错 
-使用示例:
-```
-import pycorrector
-
-corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
-print(corrected_sent, detail)
-
-```
-
-输出:
-```
-少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
-```  
-    
-'''
+with open('requirements.txt') as f:
+    reqs = f.read()
 
 setup(
     name='pycorrector',
     version=__version__,
     description='Chinese Text Error corrector',
-    long_description=long_description,
+    long_description=readme,
     author='XuMing',
     author_email='xuming624@qq.com',
     url='https://github.com/shibing624/corrector',
@@ -86,18 +44,11 @@ setup(
         'Topic :: Text Processing :: Linguistic',
     ],
     keywords='NLP,correction,Chinese error corrector,corrector',
-    install_requires=[
-        'scipy',
-        'scikit-learn',
-        'pypinyin',
-        'kenlm',
-        'jieba',
-        'tensorflow',
-        'keras>=2.1.5',
-    ],
+    install_requires=reqs.strip().split('\n'),
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
         'pycorrector': ['*.*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/*', 'utils/*'],
-    }
+    },
+    test_suite='tests',
 )

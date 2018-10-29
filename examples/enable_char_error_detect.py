@@ -28,6 +28,7 @@ for line in error_sentences:
 print('*' * 53)
 
 pycorrector.enable_char_error(enable=False)
+# pycorrector.enable_word_error(enable=False)
 for line in error_sentences:
     # idx_errors = pycorrector.detect(line)
     # print(idx_errors)
