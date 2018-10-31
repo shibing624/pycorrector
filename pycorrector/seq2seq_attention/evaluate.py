@@ -5,7 +5,7 @@
 """
 
 import numpy as np
-from keras.callbacks import Callback,EarlyStopping
+from keras.callbacks import Callback, EarlyStopping
 
 from pycorrector.seq2seq_attention.corpus_reader import str2id, id2str
 from pycorrector.seq2seq_attention.reader import GO_TOKEN, EOS_TOKEN

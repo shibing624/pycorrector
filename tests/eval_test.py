@@ -26,13 +26,35 @@ def clp_data_test():
     print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
     # cn_spell rate:0.2
 
+
 def sighan_data_test():
     rate, right_dict, wrong_dict = eval_sighan_corpus(sighan_path, True)
     print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
     # cn_spell rate:0.2
 
+
+def get_confusion_dict():
+    confusions = []
+    sighan_data = load_pkl(clp_path)
+    for error_sentence, right_detail in sighan_data:
+        if right_detail:
+            if right_detail[0][1:] not in confusions:
+                confusions.append(right_detail[0][1:])
+
+    sighan_data = load_pkl(sighan_path)
+    for error_sentence, right_detail in sighan_data:
+        if right_detail:
+            if right_detail[0][1:] not in confusions:
+                confusions.append(right_detail[0][1:])
+    with open('a.txt', 'w', encoding='utf-8') as f:
+        for i in confusions:
+            f.write(i[0] + '\t' + i[1] + '\n')
+
+
 if __name__ == "__main__":
     # get_gcmi_cor_test()
     # eval_bcmi_data_test()
     clp_data_test()
-    # sighan_data_test()
+    sighan_data_test()
+    #get_confusion_、dict()
+

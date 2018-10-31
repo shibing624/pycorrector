@@ -1,9 +1,28 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-from pycorrector import corrector
+import pycorrector
+
+# pycorrector.set_language_model_path(path='/Users/xuming06/Documents/Data/normal_train_lm.klm')
 
 error_sentences = [
+    '橄榄的和这款哪个比较好用？味道都是一样的么？',
+    '这个跟 原木纯品 那个啥区别？不是原木纸浆做的？',
+    '能充几次呢？',
+    '这是酸奶还是像饮料一样的奶？',
+    '现在银色的K2P是MTK还是博通啊？',
+    '是浓稠的还是稀薄的？',
+    '这个到底有多辣？',
+    'U盘有送挂绳吗',
+    '果子酸吗？有烂的吗？',
+    '刚下单买了一箱，需要明天到货，先问下味道如何',
+    '2周岁22斤宝宝用多大的啊？',
+    '请问这茶是一条装的吗',
+    '有坏的果吗',
+    '生产日期怎么样 新嘛',
+    '插上去的时候是驱蚊液放下面的吗？',
+
+    '服装店里的衣服各试各样',
     '这纸厚度如何？质量怎么样',
     '一但工作效率提升，需要时间在工作上也减少',
     "第一章图表示全球产龄妇女人口同计每五年增加的产龄妇女人口一值往上升。",
@@ -29,7 +48,6 @@ error_sentences = [
     '疝気医院那好 疝気专科百科问答',
     '成都医院治扁平苔鲜贵吗_国家2甲医院',
     '少先队员因该为老人让坐',
-    '服装店里的衣服各试各样',
     '一只小鱼船浮在平净的河面上',
     '我的家乡是有明的渔米之乡',
     ' _ ,',
@@ -39,6 +57,6 @@ error_sentences = [
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
 ]
 for line in error_sentences:
-    correct_sent = corrector.correct(line)
-    print(corrector.detect(line))
+    print(pycorrector.corrector.detect(line))
+    correct_sent = pycorrector.corrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

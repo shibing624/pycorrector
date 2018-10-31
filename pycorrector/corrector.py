@@ -2,6 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: corrector with spell and stroke
 import codecs
+import operator
 import os
 import time
 
@@ -223,6 +224,8 @@ class Corrector(Detector):
             maybe_right_items = self._generate_items(item)
             if not maybe_right_items:
                 return corrected_sent, detail
+            if item not in maybe_right_items:
+                maybe_right_items.append(item)
             corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
 
         # output
@@ -240,10 +243,14 @@ class Corrector(Detector):
         """
         detail = []
         self.check_corrector_initialized()
+        # 长句切分为短句
+        # sentences = re.split(r"；|，|。|\?\s|;\s|,\s", sentence)
         maybe_errors = self.detect(sentence)
+        maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=True)
         for item, begin_idx, end_idx, err_type in maybe_errors:
-            # 纠错，逐个处理
+            # 纠错，逐个处理，trick: 类似翻译模型，倒序处理
             sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx, err_type)
             if detail_word:
                 detail.append(detail_word)
+        detail = sorted(detail, key=operator.itemgetter(2))
         return sentence, detail
