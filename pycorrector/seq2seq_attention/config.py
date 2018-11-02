@@ -25,6 +25,7 @@ batch_size = 64
 epochs = 40
 rnn_hidden_dim = 128
 maxlen = 400
+use_gpu = False
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

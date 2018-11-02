@@ -6,7 +6,7 @@
 import os
 
 from keras import backend as K
-from keras.layers import Input, Lambda, Layer, Embedding, Bidirectional, Dense, Activation, GRU
+from keras.layers import Input, Lambda, Layer, Embedding, Bidirectional, Dense, Activation, GRU, CuDNNGRU
 from keras.models import Model
 from keras.optimizers import Adam
 
@@ -66,10 +66,12 @@ class Interact(Layer):
 
 
 class Seq2seqAttnModel(object):
-    def __init__(self, chars, hidden_dim=128, attn_model_path=None):
+    def __init__(self, chars, hidden_dim=128, attn_model_path=None, use_gpu=False, dropout=0.2):
         self.chars = chars
         self.hidden_dim = hidden_dim
         self.model_path = attn_model_path
+        self.use_gpu = use_gpu
+        self.dropout = dropout
 
     def build_model(self):
         # 搭建seq2seq模型
@@ -88,13 +90,21 @@ class Seq2seqAttnModel(object):
         x = embedding(x)
         y = embedding(y)
 
-        # encoder，双层双向GRU
-        x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True))(x)
-        x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True))(x)
-
-        # decoder，双层单向GRU
-        y = GRU(self.hidden_dim, return_sequences=True)(y)
-        y = GRU(self.hidden_dim, return_sequences=True)(y)
+        # encoder，双层双向GRU; decoder，双层单向GRU
+        if self.use_gpu:
+            # encoder
+            x = Bidirectional(CuDNNGRU(int(self.hidden_dim / 2), return_sequences=True))(x)
+            x = Bidirectional(CuDNNGRU(int(self.hidden_dim / 2), return_sequences=True))(x)
+            # decoder
+            y = CuDNNGRU(self.hidden_dim, return_sequences=True)(y)
+            y = CuDNNGRU(self.hidden_dim, return_sequences=True)(y)
+        else:
+            # encoder
+            x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True, dropout=self.dropout))(x)
+            x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True, dropout=self.dropout))(x)
+            # decoder
+            y = GRU(self.hidden_dim, return_sequences=True, dropout=self.dropout)(y)
+            y = GRU(self.hidden_dim, return_sequences=True, dropout=self.dropout)(y)
 
         xy = Interact()([y, x, x_mask])
         xy = Dense(512, activation='relu')(xy)
