@@ -37,11 +37,11 @@ def parse_xml_file(path):
         texts = split_2_short_text(text)
         corrections = split_2_short_text(correction)
         if len(texts) != len(corrections):
-            print('error:' + text + '\t' + correction)
+            # print('error:' + text + '\t' + correction)
             continue
         for i in range(len(texts)):
             if len(texts[i]) > 40:
-                print('error:' + texts[i] + '\t' + corrections[i])
+                # print('error:' + texts[i] + '\t' + corrections[i])
                 continue
             source = segment(texts[i], cut_type='char')
             target = segment(corrections[i], cut_type='char')

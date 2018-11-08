@@ -181,7 +181,7 @@ python3 infer.py
 - [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
 - [x] 添加中文语法错误检测及纠正能力
 - [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
-- [ ] seq2seq_attention 添加dropout，减少过拟合
+- [x] seq2seq_attention 添加dropout，减少过拟合
 
 
 ## 参考
