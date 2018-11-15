@@ -3,7 +3,9 @@
 @author:XuMing（xuming624@qq.com)
 @description: Inference
 """
+import sys
 
+sys.path.append('../..')
 import torch
 from torch import optim
 

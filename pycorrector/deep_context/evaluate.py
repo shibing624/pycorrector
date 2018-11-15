@@ -9,7 +9,9 @@ Modifications copyright (C) 2018 Tatsuya Aoki
 This code is based on https://github.com/orenmel/context2vec/blob/master/context2vec/eval/mscc_text_tokenize.py
 Used to convert the Microsoft Sentence Completion Challnege (MSCC) learning corpus into a one-sentence-per-line format.
 """
+import sys
 
+sys.path.append('../..')
 import glob
 import os
 import sys
