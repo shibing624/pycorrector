@@ -45,12 +45,17 @@ def train(train_path: str,
     if not os.path.isfile(train_path):
         raise FileNotFoundError
 
+    # make output dir
+    output_dir = os.path.dirname(emb_path)
+    if output_dir and not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     print('Loading input file')
     counter = 0
     with open(train_path, mode='r', encoding='utf-8') as f:
         for line in f:
             sentence = line.strip().lower().split()
-            if 0 < len(sentence) < maxlen:
+            if 0 < len(sentence):
                 counter += 1
 
     sentences = np.empty(counter, dtype=object)
@@ -58,11 +63,11 @@ def train(train_path: str,
     with open(train_path, 'r', encoding='utf-8') as f:
         for line in f:
             sentence = line.strip().lower().split()
-            if 0 < len(sentence) < maxlen:
-                sentences[counter] = np.array(sentence)
+            if 0 < len(sentence):
+                sentences[counter] = np.array(sentence[:maxlen])
                 counter += 1
 
-    print('Creating dataset')
+    print('Creating dataset, data size:', counter)
     dataset = Dataset(sentences, batch_size, min_freq, device)
     counter = np.array([dataset.vocab.freqs[word] if word in dataset.vocab.freqs else 0
                         for word in dataset.vocab.itos])
@@ -82,6 +87,22 @@ def train(train_path: str,
     print('batch_size:', batch_size, 'epochs:', epochs, 'word_embed_size:', word_embed_size, 'hidden_size:',
           hidden_size, 'device:', device)
     print('model:', model)
+
+    # save model config
+    output_config_file = model_path + '.config.json'
+    write_config(output_config_file,
+                 vocab_size=len(dataset.vocab),
+                 word_embed_size=word_embed_size,
+                 hidden_size=hidden_size,
+                 n_layers=n_layers,
+                 bidirectional=True,
+                 use_mlp=use_mlp,
+                 dropout=dropout,
+                 pad_index=dataset.pad_index,
+                 unk_token=dataset.unk_token,
+                 bos_token=dataset.bos_token,
+                 eos_token=dataset.eos_token,
+                 learning_rate=learning_rate)
 
     interval = 1e6
     for epoch in range(epochs):
@@ -119,28 +140,9 @@ def train(train_path: str,
                     last_accum_loss = float(total_loss)
                     last_word_count = word_count
 
-        print('total_loss:', total_loss.item())
-
-    output_dir = os.path.dirname(emb_path)
-    if output_dir and not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-    write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path)
-    torch.save(model.state_dict(), model_path)
-    torch.save(optimizer.state_dict(), model_path + '.optim')
-    output_config_file = model_path + '.config.json'
-    write_config(output_config_file,
-                 vocab_size=len(dataset.vocab),
-                 word_embed_size=word_embed_size,
-                 hidden_size=hidden_size,
-                 n_layers=n_layers,
-                 bidirectional=True,
-                 use_mlp=use_mlp,
-                 dropout=dropout,
-                 pad_index=dataset.pad_index,
-                 unk_token=dataset.unk_token,
-                 bos_token=dataset.bos_token,
-                 eos_token=dataset.eos_token,
-                 learning_rate=learning_rate)
+        print('epoch:[{}/{}], total_loss:[{}]'.format(epoch + 1, epochs, total_loss.item()))
+        write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path + '.epoch_' + str(epoch + 1))
+        torch.save(model, model_path + '.epoch_' + str(epoch + 1))
 
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ def inference(model_path,
         device = torch.device('cpu')
 
     # load model
-    model, config_dict = read_model(model_path, device)
+    model, config_dict = read_model(model_path)
     unk_token = config_dict['unk_token']
     bos_token = config_dict['bos_token']
     eos_token = config_dict['eos_token']
@@ -64,24 +64,10 @@ def inference(model_path,
             print(value.item(), itos[key.item()])
 
 
-def read_model(model_path, device):
+def read_model(model_path):
     config_file = model_path + '.config.json'
     config_dict = read_config(config_file)
-    model = Context2vec(vocab_size=config_dict['vocab_size'],
-                        counter=[1] * config_dict['vocab_size'],
-                        word_embed_size=config_dict['word_embed_size'],
-                        hidden_size=config_dict['hidden_size'],
-                        n_layers=config_dict['n_layers'],
-                        bidirectional=config_dict['bidirectional'],
-                        use_mlp=config_dict['use_mlp'],
-                        dropout=config_dict['dropout'],
-                        pad_index=config_dict['pad_index'],
-                        device=device,
-                        inference=True).to(device)
-    model.load_state_dict(torch.load(model_path))
-    optimizer = optim.Adam(model.parameters(), lr=config_dict['learning_rate'])
-    optimizer.load_state_dict(torch.load(model_path + '.optim'))
-    model.eval()
+    model = torch.load(model_path)
     return model, config_dict
 
 

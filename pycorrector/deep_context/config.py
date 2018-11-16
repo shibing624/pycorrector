@@ -11,7 +11,7 @@ output_dir = 'output'
 raw_train_paths = [
     # '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
     # '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-    '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+    #'../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
     '../data/cn/CGED/sample_HSK_TrainingSet.xml',
 ]
 
