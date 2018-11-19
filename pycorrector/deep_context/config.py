@@ -9,9 +9,9 @@ output_dir = 'output'
 
 # chinese corpus
 raw_train_paths = [
-    # '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
-    # '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-    #'../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
+    '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
+    '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
+    '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
     '../data/cn/CGED/sample_HSK_TrainingSet.xml',
 ]
 
@@ -31,10 +31,10 @@ use_mlp = True
 dropout = 0.0
 
 # train
-maxlen = 64
-epochs = 2
-batch_size = 64
-min_freq = 3
+maxlen = 400
+epochs = 30
+batch_size = 128
+min_freq = 10
 ns_power = 0.75
 learning_rate = 1e-3
 gpu_id = 0
