@@ -146,17 +146,19 @@ def train(train_path: str,
         # find best model
         is_best = cur_loss < best_loss
         best_loss = min(cur_loss, best_loss)
-        save_checkpoint(epoch, model, model_path, dataset, use_cuda, emb_path, is_best)
+        save_checkpoint(epoch, model, optimizer, model_path, dataset, use_cuda, emb_path, is_best)
         print('epoch:[{}/{}], total_loss:[{}], best_cur_loss:[{}]'
               .format(epoch + 1, epochs, total_loss.item(), best_loss))
 
 
-def save_checkpoint(epoch, model, model_path, dataset, use_cuda, emb_path, is_best):
+def save_checkpoint(epoch, model, optimizer, model_path, dataset, use_cuda, emb_path, is_best):
     write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path + '.epoch_' + str(epoch + 1))
-    torch.save(model, model_path + '.epoch_' + str(epoch + 1))
+    torch.save(model.state_dict(), model_path + '.epoch_' + str(epoch + 1))
+    torch.save(optimizer.state_dict(), model_path + '_optim'+ '.epoch_' + str(epoch + 1))
     if is_best:
         write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path)
-        torch.save(model, model_path)
+        torch.save(model.state_dict(), model_path)
+        torch.save(optimizer.state_dict(), model_path + '_optim')
 
 
 if __name__ == "__main__":

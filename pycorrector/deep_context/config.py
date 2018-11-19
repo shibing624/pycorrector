@@ -21,7 +21,7 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 emb_path = os.path.join(output_dir, 'emb.vec')
-model_path = os.path.join(output_dir, 'deep_context.model')
+model_path = os.path.join(output_dir, 'model')
 
 # nets
 word_embed_size = 200
@@ -32,7 +32,7 @@ dropout = 0.0
 
 # train
 maxlen = 64
-epochs = 4
+epochs = 2
 batch_size = 64
 min_freq = 3
 ns_power = 0.75

@@ -7,15 +7,30 @@ import sys
 
 sys.path.append('../..')
 import torch
-
+from torch import optim
+from pycorrector.deep_context.network import Context2vec
 from pycorrector.deep_context import config
 from pycorrector.deep_context.data_util import read_config, load_vocab
 
 
-def read_model(model_path):
+def read_model(model_path, device):
     config_file = model_path + '.config.json'
     config_dict = read_config(config_file)
-    model = torch.load(model_path)
+    model = Context2vec(vocab_size=config_dict['vocab_size'],
+                        counter=[1] * config_dict['vocab_size'],
+                        word_embed_size=config_dict['word_embed_size'],
+                        hidden_size=config_dict['hidden_size'],
+                        n_layers=config_dict['n_layers'],
+                        bidirectional=config_dict['bidirectional'],
+                        use_mlp=config_dict['use_mlp'],
+                        dropout=config_dict['dropout'],
+                        pad_index=config_dict['pad_index'],
+                        device=device,
+                        inference=True).to(device)
+    model.load_state_dict(torch.load(model_path))
+    optimizer = optim.Adam(model.parameters(), lr=config_dict['learning_rate'])
+    optimizer.load_state_dict(torch.load(model_path + '_optim'))
+    model.eval()
     return model, config_dict
 
 
@@ -31,7 +46,7 @@ def get_infer_data(model_path,
         device = torch.device('cpu')
 
     # load model
-    model, config_dict = read_model(model_path)
+    model, config_dict = read_model(model_path, device)
     unk_token = config_dict['unk_token']
     bos_token = config_dict['bos_token']
     eos_token = config_dict['eos_token']
@@ -80,3 +95,4 @@ if __name__ == "__main__":
                                                                                 config.gpu_id)
     for i in sents:
         infer_one_sentence(i, model, unk_token, bos_token, eos_token, itos, stoi, device)
+        print()

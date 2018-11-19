@@ -144,7 +144,7 @@ if __name__ == '__main__':
         device = torch.device('cpu')
 
     # load model
-    model, config_dict = read_model(model_path)
+    model, config_dict = read_model(model_path, device)
     unk_token = config_dict['unk_token']
     bos_token = config_dict['bos_token']
     eos_token = config_dict['eos_token']
