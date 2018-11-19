@@ -32,7 +32,7 @@ dropout = 0.0
 
 # train
 maxlen = 64
-epochs = 2
+epochs = 4
 batch_size = 64
 min_freq = 3
 ns_power = 0.75

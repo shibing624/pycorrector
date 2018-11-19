@@ -105,6 +105,7 @@ def train(train_path: str,
                  learning_rate=learning_rate)
 
     interval = 1e6
+    best_loss = 1e3
     for epoch in range(epochs):
         begin_time = time.time()
         cur_at = begin_time
@@ -113,6 +114,7 @@ def train(train_path: str,
         next_count = interval
         last_accum_loss = 0.0
         last_word_count = 0
+        cur_loss = 0
         for iterator in dataset.get_batch_iter(batch_size):
             for batch in iterator:
                 sentence = getattr(batch, 'sentence')
@@ -139,10 +141,22 @@ def train(train_path: str,
                     cur_at = now
                     last_accum_loss = float(total_loss)
                     last_word_count = word_count
+                    cur_loss = cur_mean_loss
 
-        print('epoch:[{}/{}], total_loss:[{}]'.format(epoch + 1, epochs, total_loss.item()))
-        write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path + '.epoch_' + str(epoch + 1))
-        torch.save(model, model_path + '.epoch_' + str(epoch + 1))
+        # find best model
+        is_best = cur_loss < best_loss
+        best_loss = min(cur_loss, best_loss)
+        save_checkpoint(epoch, model, model_path, dataset, use_cuda, emb_path, is_best)
+        print('epoch:[{}/{}], total_loss:[{}], best_cur_loss:[{}]'
+              .format(epoch + 1, epochs, total_loss.item(), best_loss))
+
+
+def save_checkpoint(epoch, model, model_path, dataset, use_cuda, emb_path, is_best):
+    write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path + '.epoch_' + str(epoch + 1))
+    torch.save(model, model_path + '.epoch_' + str(epoch + 1))
+    if is_best:
+        write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path)
+        torch.save(model, model_path)
 
 
 if __name__ == "__main__":
