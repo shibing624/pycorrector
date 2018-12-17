@@ -5,5 +5,6 @@ kenlm==0.0.0
 jieba
 tensorflow==1.9.0
 keras>=2.1.5
-torch<=0.4.1
+torch>=0.4.1
 torchtext
+pytorch-pretrained-bert
