@@ -25,6 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message
 logger = logging.getLogger(__name__)
 
 MASK_TOKEN = "[MASK]"
+MASK_ID = 103
 
 
 class InputExample(object):
@@ -51,11 +52,12 @@ class InputExample(object):
 class InputFeatures(object):
     """A single set of features of data."""
 
-    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, label_id=None):
+    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, label_id=None, input_tokens=None):
         self.input_ids = input_ids
         self.input_mask = input_mask
         self.segment_ids = segment_ids
         self.mask_ids = mask_ids
+        self.input_tokens = input_tokens
         self.label_id = label_id
 
 
@@ -144,8 +146,7 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length):
             segment_ids += [1] * (len(tokens_b) + 1)
 
         input_ids = tokenizer.convert_tokens_to_ids(tokens)
-        _mask_id = 103
-        mask_ids = [i for i, v in enumerate(input_ids) if v == _mask_id]
+        mask_ids = [i for i, v in enumerate(input_ids) if v == MASK_ID]
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
         input_mask = [1] * len(input_ids)
@@ -175,7 +176,8 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length):
             InputFeatures(input_ids=input_ids,
                           input_mask=input_mask,
                           mask_ids=mask_ids,
-                          segment_ids=segment_ids))
+                          segment_ids=segment_ids,
+                          input_tokens=tokens))
     return features
 
 
@@ -277,7 +279,7 @@ def main():
         logger.info("***** Running predictions *****")
         logger.info("  Num orig examples = %d", len(eval_examples))
         logger.info("  Num split examples = %d", len(eval_features))
-        logger.info("Start evaluating")
+        logger.info("Start predict ...")
         for f in eval_features:
             input_ids = torch.tensor([f.input_ids])
             segment_ids = torch.tensor([f.segment_ids])
@@ -286,11 +288,10 @@ def main():
             # confirm we were able to predict 'henson'
             masked_ids = f.mask_ids
             if masked_ids:
-                print(masked_ids)
                 predicted_index = torch.argmax(predictions[0, masked_ids]).item()
-                print("result:")
                 predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
-                print(predicted_index, predicted_token)
+                print('original text is:', f.input_tokens)
+                print('Mask predict is:', predicted_token)
 
 
 if __name__ == "__main__":
