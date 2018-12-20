@@ -85,6 +85,26 @@ def read_lm_examples(input_file):
     return examples
 
 
+def read_lm_sentence(sentence):
+    """Read a list of `InputExample`s from an input line."""
+    examples = []
+    unique_id = 0
+    line = sentence.strip()
+    if line:
+        text_a = None
+        text_b = None
+        m = re.match(r"^(.*) \|\|\| (.*)$", line)
+        if m is None:
+            text_a = line
+        else:
+            text_a = m.group(1)
+            text_b = m.group(2)
+        examples.append(
+            InputExample(guid=unique_id, text_a=text_a, text_b=text_b))
+        unique_id += 1
+    return examples
+
+
 def _truncate_seq_pair(tokens_a, tokens_b, max_length):
     """Truncates a sequence pair in place to the maximum length."""
 
@@ -208,10 +228,6 @@ def main():
                         type=int,
                         default=42,
                         help="random seed for initialization")
-    parser.add_argument("--do_lower_case",
-                        default=True,
-                        action='store_true',
-                        help="Whether to lower case the input text. True for uncased models, False for cased models.")
 
     args = parser.parse_args()
 
@@ -284,14 +300,15 @@ def main():
             input_ids = torch.tensor([f.input_ids])
             segment_ids = torch.tensor([f.segment_ids])
             predictions = model(input_ids, segment_ids)
-
             # confirm we were able to predict 'henson'
             masked_ids = f.mask_ids
             if masked_ids:
-                predicted_index = torch.argmax(predictions[0, masked_ids]).item()
-                predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
-                print('original text is:', f.input_tokens)
-                print('Mask predict is:', predicted_token)
+                print(masked_ids)
+                for idx, i in enumerate(masked_ids):
+                    predicted_index = torch.argmax(predictions[0, i]).item()
+                    predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
+                    print('original text is:', f.input_tokens)
+                    print('Mask predict is:', predicted_token)
 
 
 if __name__ == "__main__":

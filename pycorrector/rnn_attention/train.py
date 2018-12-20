@@ -45,7 +45,7 @@ tf.app.flags.DEFINE_integer("max_vocab_size", 40000, "Vocabulary size limit.")
 tf.app.flags.DEFINE_integer("max_seq_len", 400, "Maximum sequence length.")
 tf.app.flags.DEFINE_string("data_dir", "./output", "Data directory")
 tf.app.flags.DEFINE_string("train_dir", "./output/ckpt", "Training directory.")
-tf.app.flags.DEFINE_string("tokenizer", "CHAR", "BPE / CHAR / WORD.")
+tf.app.flags.DEFINE_string("bert_tokenizer", "CHAR", "BPE / CHAR / WORD.")
 tf.app.flags.DEFINE_string("optimizer", "adam", "adam / sgd")
 tf.app.flags.DEFINE_integer("print_every", 1, "How many iterations to do per print.")
 

@@ -1,4 +1,4 @@
-This text is included to make * Unicode is handled properly: 力加勝北区ᴵᴺᵀᵃছজটডণত
+This text is included * make * Unicode is handled properly: 力加勝北区ᴵᴺᵀᵃছজটডণত
 Text should be one-sentence-per-line, with empty lines between documents.
 This sample text is public domain and was randomly selected * Project Guttenberg.
 The rain had only ceased with the gray streaks of morning at Blazing Star, and the settlement awoke to a moral sense of cleanliness, and the finding of forgotten knives, tin cups, and smaller camp utensils, where the heavy showers had washed away the debris and dust heaps before the cabin doors.

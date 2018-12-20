@@ -152,7 +152,7 @@ class Corrector(Detector):
         return confusion_word_set
 
     # TODO: need more faster
-    def _generate_items(self, word, fraction=1):
+    def generate_items(self, word, fraction=1):
         """
         生成纠错候选集
         :param word:
@@ -197,43 +197,14 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
-    def _correct_item(self, sentence, item, begin_idx, end_idx, err_type):
+    def lm_correct_item(self, item, maybe_right_items, before_sent, after_sent):
         """
-        纠正字词错误
-        :param sentence:
-        :param item:
-        :param begin_idx:
-        :param end_idx:
-        :param err_type: 错误类型
-        :return: corrected word 修正的词语
+        通过语音模型纠正字词错误
         """
-        corrected_sent = sentence
-        detail = []
-
-        before_sent = sentence[:begin_idx]
-        after_sent = sentence[end_idx:]
-
-        # 困惑集中指定的词，直接取结果
-        if err_type == error_type["confusion"]:
-            corrected_item = self.custom_confusion[item]
-        else:
-            # 对非中文的错字不做处理
-            if not is_chinese_string(item):
-                return corrected_sent, detail
-            # 取得所有可能正确的词
-            maybe_right_items = self._generate_items(item)
-            if not maybe_right_items:
-                return corrected_sent, detail
-            if item not in maybe_right_items:
-                maybe_right_items.append(item)
-            corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
-
-        # output
-        if corrected_item != item:
-            corrected_sent = before_sent + corrected_item + after_sent
-            # default_logger.debug('predict:' + item + '=>' + corrected_item)
-            detail = [item, corrected_item, begin_idx, end_idx]
-        return corrected_sent, detail
+        if item not in maybe_right_items:
+            maybe_right_items.append(item)
+        corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
+        return corrected_item
 
     def correct(self, sentence):
         """
@@ -246,11 +217,30 @@ class Corrector(Detector):
         # 长句切分为短句
         # sentences = re.split(r"；|，|。|\?\s|;\s|,\s", sentence)
         maybe_errors = self.detect(sentence)
+        # trick: 类似翻译模型，倒序处理
         maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=True)
         for item, begin_idx, end_idx, err_type in maybe_errors:
-            # 纠错，逐个处理，trick: 类似翻译模型，倒序处理
-            sentence, detail_word = self._correct_item(sentence, item, begin_idx, end_idx, err_type)
-            if detail_word:
+            # 纠错，逐个处理
+            before_sent = sentence[:begin_idx]
+            after_sent = sentence[end_idx:]
+
+            # 困惑集中指定的词，直接取结果
+            if err_type == error_type["confusion"]:
+                corrected_item = self.custom_confusion[item]
+            else:
+                # 对非中文的错字不做处理
+                if not is_chinese_string(item):
+                    continue
+                # 取得所有可能正确的词
+                maybe_right_items = self.generate_items(item)
+                if not maybe_right_items:
+                    continue
+                corrected_item = self.lm_correct_item(item, maybe_right_items, before_sent, after_sent)
+            # output
+            if corrected_item != item:
+                sentence = before_sent + corrected_item + after_sent
+                # default_logger.debug('predict:' + item + '=>' + corrected_item)
+                detail_word = [item, corrected_item, begin_idx, end_idx]
                 detail.append(detail_word)
         detail = sorted(detail, key=operator.itemgetter(2))
         return sentence, detail
