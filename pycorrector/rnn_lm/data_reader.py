@@ -43,7 +43,7 @@ def process_data(file_name, word_dict_path=None, cutoff_frequency=10):
     word_to_int = dict(zip(vocab, range(len(vocab))))
     if word_dict_path:
         save_dict(word_to_int, word_dict_path)
-    data_vector = [list(map(lambda word: word_to_int.get(word, len(vocab)), i)) for i in data]
+    data_vector = [list(map(lambda word: word_to_int.get(word, 0), i)) for i in data]
     return data_vector, word_to_int
 
 
