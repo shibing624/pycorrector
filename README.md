@@ -61,7 +61,7 @@
 
 ## demo
 
-http://www.borntowin.cn/product/corrector
+https://www.borntowin.cn/product/corrector
 
 
 ## 规则方案使用说明
