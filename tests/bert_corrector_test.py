@@ -4,8 +4,7 @@
 @description: 
 """
 
-from pycorrector.bert import bert_corrector
-from pycorrector.bert import config
+from pycorrector.bert import bert_corrector, config
 
 error_sentences = [
     '汽车新式在这条路上',
