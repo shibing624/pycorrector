@@ -21,10 +21,10 @@ tgt_test_path = os.path.join(output_dir, 'tgt-test.txt')
 
 vocab_path = os.path.join(output_dir, 'vocab.txt')
 
-maximum_length = 100
-shuffle_buffer_size = 1000000
+maximum_length = 50
+shuffle_buffer_size = 10000
 gradients_accum = 8
-train_steps = 1000
+train_steps = 10000
 save_every = 1000
 report_every = 50
 
