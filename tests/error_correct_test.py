@@ -6,6 +6,7 @@ import pycorrector
 # pycorrector.set_language_model_path(path='/Users/xuming06/Documents/Data/normal_train_lm.klm')
 
 error_sentences = [
+    '我认识一个人张宁，他喜欢张玲，说了张林很多好话，张林为老人作了很多好事',
     '橄榄的和这款哪个比较好用？味道都是一样的么？',
     '这个跟 原木纯品 那个啥区别？不是原木纸浆做的？',
     '能充几次呢？',
@@ -55,6 +56,7 @@ error_sentences = [
     '有了宠物出租地方另一方面还可以题高人类对动物的了解，因为那些专业人氏可以指导我们对于动物的习惯。',  # 题高 => 提高 专业人氏 => 专业人士
     '三个凑皮匠胜过一个诸葛亮也有道理。',  # 凑
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
+
 ]
 for line in error_sentences:
     print(pycorrector.corrector.detect(line))

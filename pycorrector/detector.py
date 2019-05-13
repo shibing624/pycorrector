@@ -8,23 +8,33 @@ import time
 
 import numpy as np
 
-from pycorrector.utils.io_utils import get_logger
 from pycorrector.tokenizer import Tokenizer
+from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
-default_logger = get_logger(__file__)
+logger = get_logger(__file__)
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 error_type = {"confusion": 1, "word": 2, "char": 3}
 
 
 class Detector(object):
-    def __init__(self, language_model_path='', word_freq_path='', custom_confusion_path='', custom_word_path=''):
+    def __init__(self,
+                 language_model_path='',
+                 word_freq_path='',
+                 custom_word_freq_path='',
+                 custom_confusion_path='',
+                 person_name_path='',
+                 place_name_path='',
+                 stopwords_path=''):
         self.name = 'detector'
         self.language_model_path = os.path.join(pwd_path, language_model_path)
         self.word_freq_path = os.path.join(pwd_path, word_freq_path)
+        self.custom_word_freq_path = os.path.join(pwd_path, custom_word_freq_path)
         self.custom_confusion_path = os.path.join(pwd_path, custom_confusion_path)
-        self.custom_word_path = os.path.join(pwd_path, custom_word_path)
+        self.person_name_path = os.path.join(pwd_path, person_name_path)
+        self.place_name_path = os.path.join(pwd_path, place_name_path)
+        self.stopwords_path = os.path.join(pwd_path, stopwords_path)
         self.is_char_error_detect = True
         self.is_word_error_detect = True
         self.initialized_detector = False
@@ -33,29 +43,37 @@ class Detector(object):
         t1 = time.time()
         self.lm = kenlm.Model(self.language_model_path)
         t2 = time.time()
-        default_logger.debug(
+        logger.debug(
             'Loaded language model: %s, spend: %s s' % (self.language_model_path, str(t2 - t1)))
         # 词、频数dict
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
         t3 = time.time()
-        default_logger.debug('Loaded word freq file: %s, size: %d, spend: %s s' %
-                             (self.word_freq_path, len(self.word_freq), str(t3 - t2)))
+        logger.debug('Loaded word freq file: %s, size: %d, spend: %s s' %
+                     (self.word_freq_path, len(self.word_freq), str(t3 - t2)))
         # 自定义混淆集
         self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
         t4 = time.time()
-        default_logger.debug('Loaded confusion file: %s, size: %d, spend: %s s' %
-                             (self.custom_confusion_path, len(self.custom_confusion), str(t4 - t3)))
+        logger.debug('Loaded confusion file: %s, size: %d, spend: %s s' %
+                     (self.custom_confusion_path, len(self.custom_confusion), str(t4 - t3)))
         # 自定义切词词典
-        self.custom_word_dict = self.load_word_freq_dict(self.custom_word_path)
+        self.custom_word_freq = self.load_word_freq_dict(self.custom_word_freq_path)
+        self.person_names = self.load_word_freq_dict(self.person_name_path)
+        self.place_names = self.load_word_freq_dict(self.place_name_path)
+        self.stopwords = self.load_word_freq_dict(self.stopwords_path)
         # 合并切词词典及自定义词典
-        self.word_freq.update(self.custom_word_dict)
+        self.custom_word_freq.update(self.person_names)
+        self.custom_word_freq.update(self.place_names)
+        self.custom_word_freq.update(self.stopwords)
+
+        self.word_freq.update(self.custom_word_freq)
         t5 = time.time()
-        default_logger.debug('Loaded custom word file: %s, size: %d, spend: %s s' %
-                             (self.custom_confusion_path, len(self.custom_word_dict), str(t5 - t4)))
-        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_dict,
+        logger.debug('Loaded custom word file: %s, size: %d, spend: %s s' %
+                     (self.custom_confusion_path, len(self.custom_word_freq), str(t5 - t4)))
+        logger.debug('Loaded all word freq file done, size: %d' % len(self.word_freq))
+        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_freq,
                                    custom_confusion_dict=self.custom_confusion)
         t6 = time.time()
-        default_logger.info('Loaded dict ok, spend: %s s' % str(t6 - t1))
+        logger.info('Loaded dict ok, spend: %s s' % str(t6 - t1))
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -109,26 +127,26 @@ class Detector(object):
     def set_language_model_path(self, path):
         self.check_detector_initialized()
         self.lm = kenlm.Model(path)
-        default_logger.info('Loaded language model: %s' % path)
+        logger.info('Loaded language model: %s' % path)
 
     def set_custom_confusion_dict(self, path):
         self.check_detector_initialized()
         custom_confusion = self._get_custom_confusion_dict(path)
         self.custom_confusion.update(custom_confusion)
-        default_logger.info('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
+        logger.info('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
 
     def set_custom_word(self, path):
         self.check_detector_initialized()
         word_freqs = self.load_word_freq_dict(path)
         # 合并字典
-        self.custom_word_dict.update(word_freqs)
+        self.custom_word_freq.update(word_freqs)
         # 合并切词词典及自定义词典
-        self.word_freq.update(self.custom_word_dict)
-        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_dict,
+        self.word_freq.update(self.custom_word_freq)
+        self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_freq,
                                    custom_confusion_dict=self.custom_confusion)
         for k, v in word_freqs.items():
             self.set_word_frequency(k, v)
-        default_logger.info('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
+        logger.info('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
 
     def enable_char_error(self, enable=True):
         """
@@ -301,7 +319,7 @@ class Detector(object):
                     maybe_err = [sentence[i], i, i + 1, error_type["char"]]
                     self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
-                default_logger.warn("index error, sentence:" + sentence + str(ie))
+                logger.warn("index error, sentence:" + sentence + str(ie))
             except Exception as e:
-                default_logger.warn("detect error, sentence:" + sentence + str(e))
+                logger.warn("detect error, sentence:" + sentence + str(e))
         return sorted(maybe_errors, key=lambda k: k[1], reverse=False)

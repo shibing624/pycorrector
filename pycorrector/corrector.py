@@ -77,14 +77,26 @@ def load_same_stroke(path, sep='\t'):
 
 
 class Corrector(Detector):
-    def __init__(self, common_char_path='', same_pinyin_path='',
-                 same_stroke_path='', language_model_path='',
-                 word_freq_path='', custom_confusion_path='',
-                 custom_word_path=''):
+    def __init__(self,
+                 common_char_path='data/common_char_set.txt',
+                 same_pinyin_path='data/same_pinyin.txt',
+                 same_stroke_path='data/same_stroke.txt',
+                 language_model_path='data/kenlm/people_chars_lm.klm',
+                 word_freq_path='data/word_freq.txt',
+                 custom_word_freq_path='data/custom_word_freq.txt',
+                 custom_confusion_path='data/custom_confusion.txt',
+                 person_name_path='data/person_name.txt',
+                 place_name_path='data/place_name.txt',
+                 stopwords_path='data/stopwords.txt'
+                 ):
         super(Corrector, self).__init__(language_model_path=language_model_path,
                                         word_freq_path=word_freq_path,
+                                        custom_word_freq_path=custom_word_freq_path,
                                         custom_confusion_path=custom_confusion_path,
-                                        custom_word_path=custom_word_path)
+                                        person_name_path=person_name_path,
+                                        place_name_path=place_name_path,
+                                        stopwords_path=stopwords_path
+                                        )
         self.name = 'corrector'
         self.common_char_path = os.path.join(pwd_path, common_char_path)
         self.same_pinyin_text_path = os.path.join(pwd_path, same_pinyin_path)
@@ -239,7 +251,7 @@ class Corrector(Detector):
             # output
             if corrected_item != item:
                 sentence = before_sent + corrected_item + after_sent
-                # default_logger.debug('predict:' + item + '=>' + corrected_item)
+                # logger.debug('predict:' + item + '=>' + corrected_item)
                 detail_word = [item, corrected_item, begin_idx, end_idx]
                 detail.append(detail_word)
         detail = sorted(detail, key=operator.itemgetter(2))

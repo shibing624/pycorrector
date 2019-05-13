@@ -9,7 +9,7 @@ import os
 sys.path.append('../..')
 import torch
 import operator
-from pycorrector.config import language_model_path, word_freq_path, custom_word_path, custom_confusion_path
+from pycorrector.config import language_model_path, word_freq_path, custom_word_freq_path, custom_confusion_path
 from pycorrector.bert import config
 from pycorrector.bert.bert_masked_lm import MASK_ID, InputFeatures
 from pycorrector.corrector import error_type
@@ -29,7 +29,7 @@ class BertCorrector(Detector):
         super(BertCorrector, self).__init__(language_model_path=language_model_path,
                                             word_freq_path=word_freq_path,
                                             custom_confusion_path=custom_confusion_path,
-                                            custom_word_path=custom_word_path)
+                                            custom_word_freq_path=custom_word_freq_path)
         self.name = 'bert_corrector'
         self.bert_model_dir = os.path.join(pwd_path, bert_model_dir)
         self.bert_model_vocab = os.path.join(pwd_path, bert_model_vocab)
