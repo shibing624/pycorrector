@@ -77,8 +77,7 @@ def load_same_stroke(path, sep='\t'):
 
 
 class Corrector(Detector):
-    def __init__(self,
-                 common_char_path='data/common_char_set.txt',
+    def __init__(self, common_char_path='data/common_char_set.txt',
                  same_pinyin_path='data/same_pinyin.txt',
                  same_stroke_path='data/same_stroke.txt',
                  language_model_path='data/kenlm/people_chars_lm.klm',
@@ -87,16 +86,14 @@ class Corrector(Detector):
                  custom_confusion_path='data/custom_confusion.txt',
                  person_name_path='data/person_name.txt',
                  place_name_path='data/place_name.txt',
-                 stopwords_path='data/stopwords.txt'
-                 ):
+                 stopwords_path='data/stopwords.txt'):
         super(Corrector, self).__init__(language_model_path=language_model_path,
                                         word_freq_path=word_freq_path,
                                         custom_word_freq_path=custom_word_freq_path,
                                         custom_confusion_path=custom_confusion_path,
                                         person_name_path=person_name_path,
                                         place_name_path=place_name_path,
-                                        stopwords_path=stopwords_path
-                                        )
+                                        stopwords_path=stopwords_path)
         self.name = 'corrector'
         self.common_char_path = os.path.join(pwd_path, common_char_path)
         self.same_pinyin_text_path = os.path.join(pwd_path, same_pinyin_path)

@@ -3,13 +3,13 @@
 @author:XuMing（xuming624@qq.com)
 @description: use bert corrector chinese char error
 """
-import sys
 import os
+import sys
 
 sys.path.append('../..')
 import torch
 import operator
-from pycorrector.config import language_model_path, word_freq_path, custom_word_freq_path, custom_confusion_path
+
 from pycorrector.bert import config
 from pycorrector.bert.bert_masked_lm import MASK_ID, InputFeatures
 from pycorrector.corrector import error_type
@@ -26,10 +26,7 @@ class BertCorrector(Detector):
     def __init__(self, bert_model_dir='',
                  bert_model_vocab='',
                  max_seq_length=384):
-        super(BertCorrector, self).__init__(language_model_path=language_model_path,
-                                            word_freq_path=word_freq_path,
-                                            custom_confusion_path=custom_confusion_path,
-                                            custom_word_freq_path=custom_word_freq_path)
+        super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
         self.bert_model_dir = os.path.join(pwd_path, bert_model_dir)
         self.bert_model_vocab = os.path.join(pwd_path, bert_model_vocab)

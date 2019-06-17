@@ -19,14 +19,13 @@ error_type = {"confusion": 1, "word": 2, "char": 3}
 
 
 class Detector(object):
-    def __init__(self,
-                 language_model_path='',
-                 word_freq_path='',
-                 custom_word_freq_path='',
-                 custom_confusion_path='',
-                 person_name_path='',
-                 place_name_path='',
-                 stopwords_path=''):
+    def __init__(self, language_model_path='data/kenlm/people_chars_lm.klm',
+                 word_freq_path='data/word_freq.txt',
+                 custom_word_freq_path='data/custom_word_freq.txt',
+                 custom_confusion_path='data/custom_confusion.txt',
+                 person_name_path='data/person_name.txt',
+                 place_name_path='data/place_name.txt',
+                 stopwords_path='data/stopwords.txt'):
         self.name = 'detector'
         self.language_model_path = os.path.join(pwd_path, language_model_path)
         self.word_freq_path = os.path.join(pwd_path, word_freq_path)
