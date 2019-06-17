@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
+sys.path.append("../")
 import pycorrector
 
 # pycorrector.set_language_model_path(path='/Users/xuming06/Documents/Data/normal_train_lm.klm')

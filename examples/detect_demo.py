@@ -3,6 +3,10 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+
+import sys
+sys.path.append("../")
+
 import tracemalloc
 tracemalloc.start(10)
 time1 = tracemalloc.take_snapshot()

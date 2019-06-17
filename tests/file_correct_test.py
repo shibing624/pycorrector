@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: 
 import sys
-
+sys.path.append("../")
 from pycorrector import corrector
 
 in_file = sys.argv[1]

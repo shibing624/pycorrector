@@ -3,6 +3,8 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import sys
+sys.path.append("../")
 import pycorrector
 
 # 做为一个合格的小仙女	作为一个合格的小仙女

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
+sys.path.append("../")
 from pycorrector.en_spell import *
 
 def correction_t():

@@ -3,6 +3,8 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import sys
+sys.path.append("../")
 from pycorrector import Corrector
 
 from pycorrector.config import common_char_path, same_pinyin_path, \

@@ -3,6 +3,11 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+
+
+import sys
+sys.path.append("../")
+
 import pycorrector
 
 corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')

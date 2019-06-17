@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-
+import sys
+sys.path.append("../")
 import time
 from pycorrector import correct, detect
 

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
+
+sys.path.append("../")
 import os
 
 from pycorrector.eval import *
@@ -56,5 +59,4 @@ if __name__ == "__main__":
     # eval_bcmi_data_test()
     clp_data_test()
     sighan_data_test()
-    #get_confusion_、dict()
-
+    # get_confusion_、dict()

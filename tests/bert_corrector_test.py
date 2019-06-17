@@ -3,7 +3,8 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
-
+import sys
+sys.path.append("../")
 from pycorrector.bert import bert_corrector, config
 
 error_sentences = [

@@ -12,7 +12,9 @@
 # 耐得住欲妄	耐得住欲望
 # 交通先行	交通限行
 # 苹果吧   苹果八
+import sys
 
+sys.path.append("../")
 import pycorrector
 
 error_sentences = [
