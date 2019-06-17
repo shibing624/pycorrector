@@ -3,6 +3,8 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import sys
+sys.path.append('../..')
 import os
 
 import opennmt as onmt
