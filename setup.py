@@ -26,6 +26,7 @@ setup(
     version=__version__,
     description='Chinese Text Error corrector',
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='XuMing',
     author_email='xuming624@qq.com',
     url='https://github.com/shibing624/corrector',
@@ -48,7 +49,9 @@ setup(
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
-        'pycorrector': ['*.*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/*', 'utils/*'],
+        'pycorrector': ['*.*', 'LICENSE', 'README.*', 'data/*', 'data/kenlm/people_chars_lm.klm', 'utils/*',
+                        'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'seq2seq/*',
+                        'seq2seq_attention/*', 'transformer/*'],
     },
     test_suite='tests',
 )

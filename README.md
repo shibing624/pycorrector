@@ -1,5 +1,13 @@
+![alt text](docs/logo.svg)
+
+[![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pycorrector/LICENSE)
+![Language](https://img.shields.io/badge/Language-Python-blue.svg)
+![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
+
+
 # pycorrector
-[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/deepmipt/DeepPavlov/blob/master/LICENSE) ![](https://img.shields.io/badge/Language-Python-blue.svg) ![](https://img.shields.io/badge/Python-3.X-red.svg)
 
 中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python3开发。
 
@@ -174,7 +182,7 @@ python3 infer.py
 网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11。尊重版权，传播请注明出处。
 
 
-## 贡献及优化点(TODO)
+## 贡献及优化点
 
 - [x] 使用RNN语言模型来提高纠错准确率
 - [x] 优化形似字字典，提高形似字纠错准确率
