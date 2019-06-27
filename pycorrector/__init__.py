@@ -8,7 +8,7 @@ from .corrector import Corrector
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 from .utils.text_utils import traditional2simplified, simplified2traditional
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 corrector = Corrector(common_char_path=common_char_path,
                       same_pinyin_path=same_pinyin_path,
