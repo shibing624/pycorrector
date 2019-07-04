@@ -5,6 +5,7 @@
 from .corrector import Corrector
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 from .utils.text_utils import traditional2simplified, simplified2traditional
+from .utils.io_utils import set_log_level
 
 __version__ = '0.1.8'
 
@@ -21,3 +22,4 @@ word_frequency = corrector.word_frequency
 detect = corrector.detect
 enable_char_error = corrector.enable_char_error
 enable_word_error = corrector.enable_word_error
+set_log_level = set_log_level

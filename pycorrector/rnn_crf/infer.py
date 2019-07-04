@@ -9,9 +9,7 @@ from pycorrector.rnn_crf.data_reader import load_test_id
 from pycorrector.rnn_crf.data_reader import pad_sequence
 from pycorrector.rnn_crf.data_reader import vectorize_data
 from pycorrector.rnn_crf.rnn_crf_model import load_model
-from pycorrector.utils.io_utils import get_logger
-
-logger = get_logger(__name__)
+from pycorrector.utils.io_utils import logger
 
 
 def infer(save_model_path, test_id_path, test_word_path, test_label_path,

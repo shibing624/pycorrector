@@ -9,10 +9,9 @@ import time
 import numpy as np
 
 from pycorrector.tokenizer import Tokenizer
-from pycorrector.utils.io_utils import get_logger
+from pycorrector.utils.io_utils import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
-logger = get_logger(__file__)
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
 error_type = {"confusion": 1, "word": 2, "char": 3}
 

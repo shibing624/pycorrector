@@ -8,9 +8,7 @@ from sklearn.model_selection import train_test_split
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, save_word_dict
 from pycorrector.seq2seq.seq2seq_model import create_model, callback, evaluate
-from pycorrector.utils.io_utils import get_logger
-
-logger = get_logger(__name__)
+from pycorrector.utils.io_utils import logger
 
 
 def data_generator(encoder_input_data, decoder_input_data, decoder_target_data, batch_size):

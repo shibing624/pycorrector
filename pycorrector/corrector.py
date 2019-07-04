@@ -10,11 +10,9 @@ from pypinyin import lazy_pinyin
 
 from pycorrector import config
 from pycorrector.detector import Detector, error_type
-from pycorrector.utils.io_utils import get_logger
+from pycorrector.utils.io_utils import logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
-
-logger = get_logger(__file__)
 
 
 def load_char_set(path):

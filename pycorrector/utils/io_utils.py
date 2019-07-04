@@ -6,23 +6,33 @@ import os
 import pickle
 
 
-def get_logger(name, log_file=None):
+def get_logger(name, log_file=None, log_level='DEBUG'):
     """
     logger
     :param name: 模块名称
     :param log_file: 日志文件，如无则输出到标准输出
+    :param log_level: 日志级别
     :return:
     """
-    format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    if not log_file:
-        handle = logging.StreamHandler()
-    else:
-        handle = logging.FileHandler(log_file)
-    handle.setFormatter(format)
     logger = logging.getLogger(name)
+    logger.setLevel(log_level)
+    formatter = logging.Formatter('[%(levelname)7s %(asctime)s %(module)s:%(lineno)d] %(message)s',
+                                  datefmt='%Y%m%d %I:%M:%S')
+    if log_file:
+        f_handle = logging.FileHandler(log_file)
+        f_handle.setFormatter(formatter)
+        logger.addHandler(f_handle)
+    handle = logging.StreamHandler()
+    handle.setFormatter(formatter)
     logger.addHandler(handle)
-    logger.setLevel(logging.DEBUG)
     return logger
+
+
+logger = get_logger(__name__, log_file=None, log_level='DEBUG')
+
+
+def set_log_level(log_level):
+    logger.setLevel(log_level)
 
 
 def load_pkl(pkl_path):
@@ -48,3 +58,14 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
     with open(pkl_path, 'wb') as f:
         # pickle.dump(vocab, f, protocol=pickle.HIGHEST_PROTOCOL)
         pickle.dump(vocab, f, protocol=0)
+
+if __name__ == '__main__':
+    logger.debug('hi')
+    logger.info('hi')
+    logger.error('hi')
+    logger.warning('hi')
+    set_log_level('INFO')
+    logger.debug('hi')
+    logger.info('hi')
+    logger.error('hi')
+    logger.warning('hi')

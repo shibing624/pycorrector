@@ -4,9 +4,7 @@
 from codecs import open
 
 from pycorrector.seq2seq.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
-from pycorrector.utils.io_utils import get_logger
-
-logger = get_logger(__name__)
+from pycorrector.utils.io_utils import logger
 
 
 def save_word_dict(dict_data, save_path):
