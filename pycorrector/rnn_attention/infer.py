@@ -42,7 +42,7 @@ tf.app.flags.DEFINE_string("data_dir", "./output", "Data directory")
 tf.app.flags.DEFINE_string("train_dir", "./output/ckpt", "Training directory.")
 tf.app.flags.DEFINE_string("bert_tokenizer", "CHAR", "Set to WORD to train word level model.")
 tf.app.flags.DEFINE_integer("beam_size", 8, "Size of beam.")
-tf.app.flags.DEFINE_string("lmfile", '../data/kenlm/people_chars.klm', "arpa file of the language model.")
+tf.app.flags.DEFINE_string("lmfile", '../data/kenlm/people_chars_lm.klm', "arpa file of the language model.")
 tf.app.flags.DEFINE_float("alpha", 0.3, "Language model relative weight.")
 
 FLAGS = tf.app.flags.FLAGS

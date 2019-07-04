@@ -3,7 +3,7 @@
 # Brief:
 from xml.dom import minidom
 
-import pycorrector.rnn_crf.rnn_crf_config as config
+from pycorrector.rnn_crf import config
 from pycorrector.tokenizer import segment
 
 
@@ -120,7 +120,7 @@ def save_data_list(data_list, data_path):
 if __name__ == '__main__':
     # train data
     train_words, train_labels = [], []
-    for path in config.train_paths:
+    for path in config.raw_train_paths:
         _, word_list, label_list = parse_xml_file(path)
         train_words.extend(word_list)
         train_labels.extend(label_list)

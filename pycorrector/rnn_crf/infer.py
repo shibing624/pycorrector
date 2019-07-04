@@ -2,7 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 
-from pycorrector.rnn_crf import rnn_crf_config as config
+from pycorrector.rnn_crf import config
 from pycorrector.rnn_crf.data_reader import load_dict
 from pycorrector.rnn_crf.data_reader import load_reverse_dict
 from pycorrector.rnn_crf.data_reader import load_test_id

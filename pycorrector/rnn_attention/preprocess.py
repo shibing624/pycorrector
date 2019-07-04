@@ -6,7 +6,7 @@ from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
 
-import pycorrector.rnn_attention.config as config
+from pycorrector.rnn_attention import config
 from pycorrector.tokenizer import segment
 
 

@@ -1,6 +1,6 @@
 # Copyright 2016 Stanford University
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the "License")
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -169,14 +169,14 @@ def setup_batch_decode(sess):
 
 
 def batch_decode(model, sess, x_dev, y_dev, alpha):
-    error_source = [];
-    error_target = [];
-    error_generated = [];
-    generated_score = [];
-    generated_lm_score = [];
-    generated_nw_score = [];
-    target_lm_score = [];
-    target_nw_score = [];
+    error_source = []
+    error_target = []
+    error_generated = []
+    generated_score = []
+    generated_lm_score = []
+    generated_nw_score = []
+    target_lm_score = []
+    target_nw_score = []
 
     count = 0
     for source_tokens, source_mask, target_tokens, target_mask in pair_iter(x_dev, y_dev, 1,

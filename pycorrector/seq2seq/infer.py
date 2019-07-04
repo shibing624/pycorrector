@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 from keras.models import load_model
 
-from pycorrector.seq2seq import cged_config as config
+from pycorrector.seq2seq import config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, load_word_dict
 from pycorrector.seq2seq.reader import EOS_TOKEN, GO_TOKEN
 from pycorrector.utils.io_utils import get_logger

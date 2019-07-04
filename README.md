@@ -116,9 +116,9 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 ### 介绍
 
-本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文件纠错任务上有一点小小的启发就是我莫大的荣幸了。
+本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了4种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`，每种方法单独放在文件夹中，
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`，每种方法单独放在文件夹中，
 都可以独立运行，相互之间无依赖。
 
 
@@ -195,7 +195,7 @@ python3 infer.py
 ## 参考
 
 1. [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
-2.  [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
+2. [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
 3. [《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]](http://www.aclweb.org/anthology/W/W14/W14-6835.pdf)
 4. [《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]](http://www.aclweb.org/anthology/O/O13/O13-1005.pdf)
 5. [《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]](http://aclweb.org/anthology/W14-6822)

@@ -3,7 +3,7 @@
 # Brief: error word detector
 import codecs
 import kenlm
-import os
+from pycorrector import config
 import time
 
 import numpy as np
@@ -14,26 +14,25 @@ from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
 logger = get_logger(__file__)
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
-pwd_path = os.path.abspath(os.path.dirname(__file__))
 error_type = {"confusion": 1, "word": 2, "char": 3}
 
 
 class Detector(object):
-    def __init__(self, language_model_path='data/kenlm/people_chars_lm.klm',
-                 word_freq_path='data/word_freq.txt',
-                 custom_word_freq_path='data/custom_word_freq.txt',
-                 custom_confusion_path='data/custom_confusion.txt',
-                 person_name_path='data/person_name.txt',
-                 place_name_path='data/place_name.txt',
-                 stopwords_path='data/stopwords.txt'):
+    def __init__(self, language_model_path=config.language_model_path,
+                 word_freq_path=config.word_freq_path,
+                 custom_word_freq_path=config.custom_word_freq_path,
+                 custom_confusion_path=config.custom_confusion_path,
+                 person_name_path=config.person_name_path,
+                 place_name_path=config.place_name_path,
+                 stopwords_path=config.stopwords_path):
         self.name = 'detector'
-        self.language_model_path = os.path.join(pwd_path, language_model_path)
-        self.word_freq_path = os.path.join(pwd_path, word_freq_path)
-        self.custom_word_freq_path = os.path.join(pwd_path, custom_word_freq_path)
-        self.custom_confusion_path = os.path.join(pwd_path, custom_confusion_path)
-        self.person_name_path = os.path.join(pwd_path, person_name_path)
-        self.place_name_path = os.path.join(pwd_path, place_name_path)
-        self.stopwords_path = os.path.join(pwd_path, stopwords_path)
+        self.language_model_path =  language_model_path
+        self.word_freq_path = word_freq_path
+        self.custom_word_freq_path =custom_word_freq_path
+        self.custom_confusion_path =  custom_confusion_path
+        self.person_name_path = person_name_path
+        self.place_name_path =place_name_path
+        self.stopwords_path = stopwords_path
         self.is_char_error_detect = True
         self.is_word_error_detect = True
         self.initialized_detector = False

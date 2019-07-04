@@ -8,13 +8,13 @@ import time
 
 from pypinyin import lazy_pinyin
 
+from pycorrector import config
 from pycorrector.detector import Detector, error_type
 from pycorrector.utils.io_utils import get_logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
 
-default_logger = get_logger(__file__)
-pwd_path = os.path.abspath(os.path.dirname(__file__))
+logger = get_logger(__file__)
 
 
 def load_char_set(path):
@@ -34,7 +34,7 @@ def load_same_pinyin(path, sep='\t'):
     """
     result = dict()
     if not os.path.exists(path):
-        default_logger.warn("file not exists:" + path)
+        logger.warn("file not exists:" + path)
         return result
     with codecs.open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -62,7 +62,7 @@ def load_same_stroke(path, sep='\t'):
     """
     result = dict()
     if not os.path.exists(path):
-        default_logger.warn("file not exists:" + path)
+        logger.warn("file not exists:" + path)
         return result
     with codecs.open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -77,16 +77,16 @@ def load_same_stroke(path, sep='\t'):
 
 
 class Corrector(Detector):
-    def __init__(self, common_char_path='data/common_char_set.txt',
-                 same_pinyin_path='data/same_pinyin.txt',
-                 same_stroke_path='data/same_stroke.txt',
-                 language_model_path='data/kenlm/people_chars_lm.klm',
-                 word_freq_path='data/word_freq.txt',
-                 custom_word_freq_path='data/custom_word_freq.txt',
-                 custom_confusion_path='data/custom_confusion.txt',
-                 person_name_path='data/person_name.txt',
-                 place_name_path='data/place_name.txt',
-                 stopwords_path='data/stopwords.txt'):
+    def __init__(self, common_char_path=config.common_char_path,
+                 same_pinyin_path=config.same_pinyin_path,
+                 same_stroke_path=config.same_stroke_path,
+                 language_model_path=config.language_model_path,
+                 word_freq_path=config.word_freq_path,
+                 custom_word_freq_path=config.custom_word_freq_path,
+                 custom_confusion_path=config.custom_confusion_path,
+                 person_name_path=config.person_name_path,
+                 place_name_path=config.place_name_path,
+                 stopwords_path=config.stopwords_path):
         super(Corrector, self).__init__(language_model_path=language_model_path,
                                         word_freq_path=word_freq_path,
                                         custom_word_freq_path=custom_word_freq_path,
@@ -95,9 +95,9 @@ class Corrector(Detector):
                                         place_name_path=place_name_path,
                                         stopwords_path=stopwords_path)
         self.name = 'corrector'
-        self.common_char_path = os.path.join(pwd_path, common_char_path)
-        self.same_pinyin_text_path = os.path.join(pwd_path, same_pinyin_path)
-        self.same_stroke_text_path = os.path.join(pwd_path, same_stroke_path)
+        self.common_char_path = common_char_path
+        self.same_pinyin_text_path = same_pinyin_path
+        self.same_stroke_text_path = same_stroke_path
         self.initialized_corrector = False
 
     def initialize_corrector(self):
@@ -108,7 +108,7 @@ class Corrector(Detector):
         self.same_pinyin = load_same_pinyin(self.same_pinyin_text_path)
         # same stroke
         self.same_stroke = load_same_stroke(self.same_stroke_text_path)
-        default_logger.debug("Loaded same pinyin file: %s, same stroke file: %s, spend: %.3f s." % (
+        logger.debug("Loaded same pinyin file: %s, same stroke file: %s, spend: %.3f s." % (
             self.same_pinyin_text_path, self.same_stroke_text_path, time.time() - t1))
         self.initialized_corrector = True
 

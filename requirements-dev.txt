@@ -5,6 +5,7 @@ pypinyin
 kenlm==0.0.0
 tensorflow>=1.9.0
 keras>=2.1.5
+keras-contrib==2.0.8
 torch>=0.4.1
 torchtext
 pytorch-pretrained-bert

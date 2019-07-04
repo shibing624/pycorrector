@@ -3,7 +3,6 @@
 @author:XuMing（xuming624@qq.com)
 @description: use bert corrector chinese char error
 """
-import os
 import sys
 
 sys.path.append('../..')
@@ -19,8 +18,6 @@ from pytorch_pretrained_bert import BertForMaskedLM
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 import time
 
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-
 
 class BertCorrector(Detector):
     def __init__(self, bert_model_dir='',
@@ -28,8 +25,8 @@ class BertCorrector(Detector):
                  max_seq_length=384):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
-        self.bert_model_dir = os.path.join(pwd_path, bert_model_dir)
-        self.bert_model_vocab = os.path.join(pwd_path, bert_model_vocab)
+        self.bert_model_dir = bert_model_dir
+        self.bert_model_vocab = bert_model_vocab
         self.max_seq_length = max_seq_length
         self.initialized_bert_corrector = False
 

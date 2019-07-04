@@ -5,17 +5,19 @@
 """
 import os
 
-output_dir = 'output'
-
-# chinese corpus
-raw_train_paths = [
-    '../data/cn/CGED/CGED18_HSK_TrainingSet.xml',
-    '../data/cn/CGED/CGED17_HSK_TrainingSet.xml',
-    '../data/cn/CGED/CGED16_HSK_TrainingSet.xml',
-    '../data/cn/CGED/sample_HSK_TrainingSet.xml',
-]
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # Training data path.
+# chinese corpus
+raw_train_paths = [
+    os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
+]
+
+output_dir = os.path.join(pwd_path, 'output')
+
 train_path = os.path.join(output_dir, 'train.txt')
 # Validation data path.
 test_path = os.path.join(output_dir, 'test.txt')

@@ -10,7 +10,7 @@ from pycorrector.rnn_crf.data_reader import vectorize_data
 from pycorrector.rnn_crf.rnn_crf_model import callback
 from pycorrector.rnn_crf.rnn_crf_model import create_model
 from pycorrector.utils.io_utils import get_logger
-from pycorrector.rnn_crf import rnn_crf_config as config
+from pycorrector.rnn_crf import config
 
 logger = get_logger(__name__)
 PAD_TOKEN = 'PAD'

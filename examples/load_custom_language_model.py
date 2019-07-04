@@ -4,27 +4,16 @@
 @description: 
 """
 import sys
+
 sys.path.append("../")
 from pycorrector import Corrector
-
-from pycorrector.config import common_char_path, same_pinyin_path, \
-    same_stroke_path, language_model_path, \
-    word_freq_path, \
-    custom_confusion_path, place_name_path, person_name_path, stopwords_path,custom_word_freq_path
-
+import os
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 使用三元文法语言模型（people_chars.klm）纠错效果更好：
-# language_model_path = '../pycorrector/data/kenlm/people_chars.klm'
-model = Corrector(common_char_path=common_char_path,
-                  same_pinyin_path=same_pinyin_path,
-                  same_stroke_path=same_stroke_path,
-                  language_model_path=language_model_path,
-                  word_freq_path=word_freq_path,
-                  custom_word_freq_path=custom_word_freq_path,
-                  custom_confusion_path=custom_confusion_path,
-                  person_name_path=person_name_path,
-                  place_name_path=place_name_path,
-                  stopwords_path=stopwords_path
-                  )
+new_language_model_path = os.path.join(pwd_path,'../pycorrector/data/kenlm/people_chars_lm.klm')
+model = Corrector()
+if os.path.exists(new_language_model_path):
+    model.set_language_model_path(new_language_model_path)
 
 error_sentences = [
     '少先队员因该为老人让坐',
