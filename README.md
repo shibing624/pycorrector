@@ -45,12 +45,14 @@
 
 ## 特征
 ### 模型
-* kenlm: kenlm统计语言模型工具
-* rnn_lm: TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型
-* rnn_attention模型: 参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
-* rnn_crf模型: 参考阿里巴巴2016参赛中文语法纠错比赛并取得第一名的方法
-* seq2seq模型: 使用序列模型解决文本纠错任务，文本语法纠错任务中常用模型之一
-* seq2seq_attention模型: 在seq2seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
+* kenlm：kenlm统计语言模型工具
+* rnn_lm：TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型
+* rnn_attention模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
+* rnn_crf模型：参考阿里巴巴2016参赛中文语法纠错比赛并取得第一名的方法
+* seq2seq模型：使用序列模型解决文本纠错任务，文本语法纠错任务中常用模型之一
+* seq2seq_attention模型：在seq2seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
+* transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
+* bert模型：中文fine-tuned模型，使用MASK特征纠正错字
 
 
 ### 错误检测
@@ -118,7 +120,7 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`，每种方法单独放在文件夹中，
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、`transformer`、`bert`，每种方法单独放在文件夹中，
 都可以独立运行，相互之间无依赖。
 
 

@@ -1,4 +1,4 @@
-- [x] bert correct error chat with mask feature
+# BERT model correct error character with mask feature
 
 ## fine-tuned BERT model with chinese corpus
 
@@ -13,12 +13,22 @@
 1. 下载bert官方库的chinese_L-12_H-768_A-12模型(官方链接：https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)
 2. 数据预处理
 ```bash
-python pregenerate_training_data.py --train_corpus people2014_cged_wiki.txt --bert_model chinese_L-12_H-768_A-12/vocab.txt --do_lower_case --output_dir training/ --epochs_to_generate 3 --max_seq_len 256
+python pregenerate_training_data.py \
+--train_corpus people2014_cged_wiki.txt \
+--bert_model chinese_L-12_H-768_A-12/vocab.txt \
+--do_lower_case \
+--output_dir training/ \
+--epochs_to_generate 3 \
+--max_seq_len 256
 ```
 3. fine-tune模型
 ```bash
 export CUDA_VISIBLE_DEVICES=0,1,2
-python finetune_on_pregenerated.py --pregenerated_data training/ --bert_model chinese_L-12_H-768_A-12 --do_lower_case --output_dir chinese_finetuned_lm/
+python finetune_on_pregenerated.py \
+--pregenerated_data training/ \
+--bert_model chinese_L-12_H-768_A-12 \
+--do_lower_case \
+--output_dir chinese_finetuned_lm/
 ```
 4. 结果
 ```
@@ -28,18 +38,21 @@ chinese_finetuned_lm
 └── vocab.txt
 ```
 
-PS:提供中文fine-tuned的模型，百度网盘: 链接:https://pan.baidu.com/s/1QCRe5fXSinXSY1lfm7BaQg  密码:m4mg
-下载解压后文件夹放置于data/bert_pytorch目录下。
+PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:https://pan.baidu.com/s/1QCRe5fXSinXSY1lfm7BaQg  密码:m4mg），下载解压后文件夹放置于data/bert_pytorch目录下。
 
 ### 预测result
-python tests/bert_corrector_test.py
+- run
+ `python tests/bert_corrector_test.py`
+- result
 ![result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/bert_finetuned_ch_result.png)
 
 ### 结论
 部分错字纠正可以改正，但也会过纠，甚至有语义改写的情况。
 
 ### 附录
-3块p40GPU训练3轮，超过24小时。
+- 训练时长：3块p40GPU训练3轮，超过24小时。
+- GPU机器配置：
+```
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 418.39       Driver Version: 418.39       CUDA Version: 10.1     |
 |-------------------------------+----------------------+----------------------+
@@ -56,3 +69,4 @@ python tests/bert_corrector_test.py
 | N/A   26C    P8    10W / 250W |     10MiB / 22919MiB |      0%      Default |
 +-------------------------------+----------------------+----------------------+
 
+```
