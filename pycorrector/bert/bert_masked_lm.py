@@ -9,7 +9,6 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
-import logging
 import os
 import random
 import re
@@ -19,10 +18,7 @@ import torch
 from pytorch_pretrained_bert import BertForMaskedLM
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
+from pycorrector.utils.io_utils import logger
 
 MASK_TOKEN = "[MASK]"
 MASK_ID = 103
