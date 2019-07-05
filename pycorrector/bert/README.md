@@ -1,6 +1,6 @@
 # BERT model correct error character with mask feature
 
-## fine-tuned BERT model with chinese corpus
+## Fine-tuned BERT model with chinese corpus
 
 ### chinese corpus
 
@@ -40,16 +40,16 @@ chinese_finetuned_lm
 
 PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:https://pan.baidu.com/s/1QCRe5fXSinXSY1lfm7BaQg  密码:m4mg），下载解压后文件夹放置于data/bert_pytorch目录下。
 
-### 预测result
+## Predict Result
 - run
  `python tests/bert_corrector_test.py`
 - result
 ![result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/bert_finetuned_ch_result.png)
 
 ### 结论
-部分错字纠正可以改正，但也会过纠，甚至有语义改写的情况。
+部分错字可以纠正，但也会过纠，甚至有语义改写的情况。
 
-### 附录
+## 附录
 - 训练时长：3块p40GPU训练3轮，超过24小时。
 - GPU机器配置：
 ```

@@ -4,6 +4,7 @@
 @description: 
 """
 import sys
+
 sys.path.append("../")
 from pycorrector.bert import bert_corrector, config
 
@@ -31,6 +32,24 @@ error_sentences = [
     '三个凑皮匠胜过一个诸葛亮也有道理。',  # 凑
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
 ]
+
+badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
+           '能充几次呢？',
+           '这是酸奶还是像饮料一样的奶？',
+           '现在银色的K2P是MTK还是博通啊？',
+           '是浓稠的还是稀薄的？',
+           '这个到底有多辣',
+           'U盘有送挂绳吗 ',
+           '果子酸吗？有烂的吗？',
+           '刚下单买了一箱，需要明天到货，先问下味道如何',
+           '2周岁22斤宝宝用多大的啊？',
+           '请问这茶是一条装的吗',
+           '有坏的果吗',
+           '生产日期怎么样 新嘛',
+           '插上去的时候是驱蚊液放下面的吗？',
+           '橄榄的和这款哪个比较好用？味道都是一样的么？',
+           ]
+error_sentences.extend(badcase)
 # bertCorrector = bert_corrector.BertCorrector('../pycorrector/data/bert_pytorch/multi_cased_L-12_H-768_A-12/',
 #                                              '../pycorrector/data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt',
 #                                              config.max_seq_length)
