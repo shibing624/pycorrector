@@ -36,11 +36,12 @@ class BertCorrector(Detector):
 
     def initialize_bert_corrector(self):
         t1 = time.time()
+        print("Loaded model: %s, vocab file: %s, start." %
+              (self.bert_model_dir, self.bert_model_vocab))
         self.bert_tokenizer = BertTokenizer(self.bert_model_vocab)
         # Prepare model
         self.model = BertForMaskedLM.from_pretrained(self.bert_model_dir)
-        print("Loaded model: %s, vocab file: %s, spend: %.3f s." % (
-            self.bert_model_dir, self.bert_model_vocab, time.time() - t1))
+        print("Loaded model ok, spend: %.3f s." % (time.time() - t1))
         self.initialized_bert_corrector = True
 
     def convert_sentence_to_features(self, sentence, tokenizer, max_seq_length, error_begin_idx=0, error_end_idx=0):
