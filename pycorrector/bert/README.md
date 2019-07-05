@@ -73,7 +73,7 @@ PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:ht
 ```
 - chinese corpus数据示例
 
-要求：人名日报数据以标题分段，每个标题之前添加空格。（vim参考操作为  `:%s/原标题/\r原标题`）
+要求：人名日报数据以标题分段，即每个标题之前添加空行。（vim参考操作为  `:%s/原标题/\r原标题`）
 
-截图：
+数据截图：
 ![corpus](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/peoplecorpus.png)
