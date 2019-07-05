@@ -7,7 +7,7 @@ from keras.callbacks import ModelCheckpoint
 from keras.layers import Input, LSTM, Dense
 from keras.models import Model
 
-from pycorrector.seq2seq.infer import logger
+from pycorrector.utils.logger import logger
 from pycorrector.seq2seq.reader import GO_TOKEN, EOS_TOKEN
 
 

@@ -11,7 +11,7 @@ from keras.models import load_model
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, save_word_dict, load_word_dict
 from pycorrector.seq2seq.seq2seq_model import create_model, callback, evaluate
-from pycorrector.utils.io_utils import logger
+from pycorrector.utils.logger import logger
 
 
 def train(train_path=None,

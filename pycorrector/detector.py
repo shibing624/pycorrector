@@ -9,7 +9,7 @@ import time
 import numpy as np
 
 from pycorrector.tokenizer import Tokenizer
-from pycorrector.utils.io_utils import logger
+from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
 PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"

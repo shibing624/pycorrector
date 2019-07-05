@@ -4,7 +4,7 @@
 from codecs import open
 
 from pycorrector.transformer.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
-from pycorrector.utils.io_utils import logger
+from pycorrector.utils.logger import logger
 
 
 def save_word_dict(dict_data, save_path):

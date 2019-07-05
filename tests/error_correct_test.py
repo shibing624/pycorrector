@@ -5,7 +5,7 @@ import sys
 sys.path.append("../")
 import pycorrector
 
-# pycorrector.set_language_model_path(path='/Users/xuming06/Documents/Data/normal_train_lm.klm')
+# pycorrector.set_language_model_path(path='/Users/xxx/Documents/Data/normal_train_lm.klm')
 
 error_sentences = [
     '我认识一个人张宁，他喜欢张玲，说了张林很多好话，张林为老人作了很多好事',

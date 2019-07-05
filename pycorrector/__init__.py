@@ -3,9 +3,9 @@
 # Brief: pycorrector.api
 
 from .corrector import Corrector
+from .utils.logger import set_log_level
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 from .utils.text_utils import traditional2simplified, simplified2traditional
-from .utils.io_utils import set_log_level
 
 __version__ = '0.1.8'
 

@@ -18,7 +18,7 @@ import torch
 from pytorch_pretrained_bert import BertForMaskedLM
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 
-from pycorrector.utils.io_utils import logger
+from pycorrector.utils.logger import logger
 
 MASK_TOKEN = "[MASK]"
 MASK_ID = 103
