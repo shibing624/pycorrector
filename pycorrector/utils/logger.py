@@ -34,13 +34,14 @@ logger = get_logger(__name__, log_file=None, log_level='DEBUG')
 def set_log_level(log_level='INFO'):
     logger.setLevel(log_level.upper())
 
+
 if __name__ == '__main__':
     logger.debug('hi')
     logger.info('hi')
     logger.error('hi')
     logger.warning('hi')
     set_log_level('info')
-    logger.debug('hi') # ignore
+    logger.debug('hi')  # ignore
     logger.info('hi')
     logger.error('hi')
     logger.warning('hi')

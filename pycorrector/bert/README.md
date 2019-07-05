@@ -4,7 +4,7 @@
 
 ### chinese corpus
 
-- 人名日报2014版数据（网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11）101MB.
+- 人名日报2014版数据（网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11）101MB
 - CGED三年比赛数据（本项目已经提供）2.8MB
 - 部分中文维基百科数据（wiki上自行下载）50MB
 

@@ -3,11 +3,11 @@
 # Brief: error word detector
 import codecs
 import kenlm
-from pycorrector import config
 import time
 
 import numpy as np
 
+from pycorrector import config
 from pycorrector.tokenizer import Tokenizer
 from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
@@ -25,12 +25,12 @@ class Detector(object):
                  place_name_path=config.place_name_path,
                  stopwords_path=config.stopwords_path):
         self.name = 'detector'
-        self.language_model_path =  language_model_path
+        self.language_model_path = language_model_path
         self.word_freq_path = word_freq_path
-        self.custom_word_freq_path =custom_word_freq_path
-        self.custom_confusion_path =  custom_confusion_path
+        self.custom_word_freq_path = custom_word_freq_path
+        self.custom_confusion_path = custom_confusion_path
         self.person_name_path = person_name_path
-        self.place_name_path =place_name_path
+        self.place_name_path = place_name_path
         self.stopwords_path = stopwords_path
         self.is_char_error_detect = True
         self.is_word_error_detect = True
@@ -275,7 +275,7 @@ class Detector(object):
                 # pass blank
                 if not word.strip():
                     continue
-                # punctuation
+                # pass punctuation
                 if word in PUNCTUATION_LIST:
                     continue
                 # pass num
@@ -284,7 +284,7 @@ class Detector(object):
                 # pass alpha
                 if is_alphabet_string(word.lower()):
                     continue
-                # in dict
+                # pass in dict
                 if word in self.word_freq:
                     continue
                 maybe_err = [word, begin_idx, end_idx, error_type["word"]]
