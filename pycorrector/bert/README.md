@@ -4,9 +4,10 @@
 
 ### chinese corpus
 
-- 人名日报2014版数据（网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11）
-- CGED三年比赛数据（本项目已经提供）
-- 部分中文维基百科数据（wiki上自行下载）
+- 人名日报2014版数据（网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11）101MB.
+- CGED三年比赛数据（本项目已经提供）2.8MB
+- 部分中文维基百科数据（wiki上自行下载）50MB
+
 
 ### fine-tune
 使用pytorch-pretrained-BERT的examples/lm_finetuning处理。
@@ -70,3 +71,6 @@ PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:ht
 +-------------------------------+----------------------+----------------------+
 
 ```
+- chinese corpus数据示例截图：
+要求：人名日报数据以标题分段，每个标题之前添加空格。（vim参考操作为  `:%s/原标题/\r原标题`）
+![corpus](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/peoplecorpus.png)
