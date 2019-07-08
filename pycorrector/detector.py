@@ -12,8 +12,14 @@ from pycorrector.tokenizer import Tokenizer
 from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 
-PUNCTUATION_LIST = "。，,、？：；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
-error_type = {"confusion": 1, "word": 2, "char": 3}
+PUNCTUATION_LIST = ".。,，,、?？:：;；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-"
+
+
+class ErrorType(object):
+    # error_type = {"confusion": 1, "word": 2, "char": 3}
+    confusion = 1
+    word = 2
+    char = 3
 
 
 class Detector(object):
@@ -229,8 +235,9 @@ class Detector(object):
         取疑似错字的位置，通过平均绝对离差（MAD）
         :param scores: np.array
         :param threshold: 阈值越小，得到疑似错别字越多
-        :return:
+        :return: 全部疑似错误字的index: list
         """
+        result = []
         scores = np.array(scores)
         if len(scores.shape) == 1:
             scores = scores[:, None]
@@ -239,13 +246,31 @@ class Detector(object):
         # 平均绝对离差值
         med_abs_deviation = np.median(margin_median)
         if med_abs_deviation == 0:
-            return []
+            return result
         y_score = ratio * margin_median / med_abs_deviation
         # 打平
         scores = scores.flatten()
         maybe_error_indices = np.where((y_score > threshold) & (scores < median))
         # 取全部疑似错误字的index
-        return list(maybe_error_indices[0])
+        result = list(maybe_error_indices[0])
+        return result
+
+    @staticmethod
+    def is_filter_token(token):
+        result = False
+        # pass blank
+        if not token.strip():
+            result = True
+        # pass punctuation
+        if token in PUNCTUATION_LIST:
+            result = True
+        # pass num
+        if token.isdigit():
+            result = True
+        # pass alpha
+        if is_alphabet_string(token.lower()):
+            result = True
+        return result
 
     def detect(self, sentence):
         """
@@ -266,28 +291,19 @@ class Detector(object):
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)
             if idx > -1:
-                maybe_err = [confuse, idx, idx + len(confuse), error_type["confusion"]]
-                self._add_maybe_error_item(maybe_err, maybe_errors)
+                maybe_err = [confuse, idx, idx + len(confuse), ErrorType.confusion]
+                # self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_word_error_detect:
             # 未登录词加入疑似错误词典
             for word, begin_idx, end_idx in tokens:
-                # pass blank
-                if not word.strip():
-                    continue
-                # pass punctuation
-                if word in PUNCTUATION_LIST:
-                    continue
-                # pass num
-                if word.isdigit():
-                    continue
-                # pass alpha
-                if is_alphabet_string(word.lower()):
+                # pass filter word
+                if self.is_filter_token(word):
                     continue
                 # pass in dict
                 if word in self.word_freq:
                     continue
-                maybe_err = [word, begin_idx, end_idx, error_type["word"]]
+                maybe_err = [word, begin_idx, end_idx, ErrorType.word]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_char_error_detect:
@@ -309,11 +325,15 @@ class Detector(object):
                     avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
                     ngram_avg_scores.append(avg_scores)
 
-                # 取拼接后的ngram平均得分
+                # 取拼接后的n-gram平均得分
                 sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
                 # 取疑似错字信息
                 for i in self._get_maybe_error_index(sent_scores):
-                    maybe_err = [sentence[i], i, i + 1, error_type["char"]]
+                    token = sentence[i]
+                    # pass filter word
+                    if self.is_filter_token(token):
+                        continue
+                    maybe_err = [token, i, i + 1, ErrorType.char]  # token, begin_idx, end_idx, error_type
                     self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warn("index error, sentence:" + sentence + str(ie))

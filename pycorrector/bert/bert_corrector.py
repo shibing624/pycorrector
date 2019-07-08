@@ -11,8 +11,7 @@ import operator
 
 from pycorrector.bert import config
 from pycorrector.bert.bert_masked_lm import MASK_ID, InputFeatures
-from pycorrector.corrector import error_type
-from pycorrector.detector import Detector
+from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.text_utils import is_chinese_string
 from pytorch_pretrained_bert import BertForMaskedLM
 from pytorch_pretrained_bert.tokenization import BertTokenizer
@@ -130,9 +129,9 @@ class BertCorrector(Detector):
             after_sent = sentence[end_idx:]
 
             # 困惑集中指定的词，直接取结果
-            if err_type == error_type["confusion"]:
+            if err_type == ErrorType.confusion:
                 corrected_item = self.custom_confusion[item]
-            elif err_type == error_type["char"]:
+            elif err_type == ErrorType.char:
                 # 对非中文的错字不做处理
                 if not is_chinese_string(item):
                     continue
@@ -140,7 +139,7 @@ class BertCorrector(Detector):
                     continue
                 # 取得所有可能正确的字
                 corrected_item = self.bert_lm_infer(sentence, error_begin_idx=begin_idx, error_end_idx=end_idx)
-            elif err_type == error_type["word"]:
+            elif err_type == ErrorType.word:
                 corrected_item = item
             else:
                 print('not strand error_type')

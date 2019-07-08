@@ -9,7 +9,7 @@ import time
 from pypinyin import lazy_pinyin
 
 from pycorrector import config
-from pycorrector.detector import Detector, error_type
+from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
@@ -177,7 +177,7 @@ class Corrector(Detector):
         if len(word) == 1:
             # same one char pinyin
             confusion = [i for i in self._confusion_char_set(word[0]) if i]
-            candidates_2_order.extend(confusion)
+            candidates_1_order.extend(confusion)
         if len(word) == 2:
             # same first char pinyin
             confusion = [i + word[1:] for i in self._confusion_char_set(word[0]) if i]
@@ -232,7 +232,7 @@ class Corrector(Detector):
             after_sent = sentence[end_idx:]
 
             # 困惑集中指定的词，直接取结果
-            if err_type == error_type["confusion"]:
+            if err_type == ErrorType.confusion:
                 corrected_item = self.custom_confusion[item]
             else:
                 # 对非中文的错字不做处理
