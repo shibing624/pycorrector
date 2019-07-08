@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
 from xml.dom import minidom
 
+sys.path.append('../..')
 from pycorrector.rnn_crf import config
 from pycorrector.tokenizer import segment
 

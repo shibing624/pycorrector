@@ -2,9 +2,11 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: train rnn language model
 import os
+import sys
 
 import tensorflow as tf
 
+sys.path.append('../..')
 from pycorrector.rnn_lm import config
 from pycorrector.rnn_lm.data_reader import process_data, generate_batch
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model

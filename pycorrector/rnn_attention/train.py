@@ -17,7 +17,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import json
 import logging
 import os
 import sys
@@ -26,6 +25,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
+sys.path.append('../..')
 from pycorrector.rnn_attention.nlc_data import prepare_nlc_data, initialize_vocabulary
 from pycorrector.rnn_attention.nlc_model import NLCModel
 from pycorrector.rnn_attention.util import get_tokenizer

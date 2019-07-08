@@ -4,7 +4,9 @@
 
 import numpy as np
 from sklearn.model_selection import train_test_split
+import sys
 
+sys.path.append('../..')
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.corpus_reader import CGEDReader, save_word_dict
 from pycorrector.seq2seq.seq2seq_model import create_model, callback, evaluate

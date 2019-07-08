@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
 
+sys.path.append('../..')
 from pycorrector.rnn_crf import config
 from pycorrector.rnn_crf.data_reader import load_dict
 from pycorrector.rnn_crf.data_reader import load_reverse_dict

@@ -21,10 +21,12 @@ from __future__ import division
 from __future__ import print_function
 
 import kenlm
+import sys
 
 import numpy as np
 import tensorflow as tf
 
+sys.path.append('../..')
 from pycorrector.rnn_attention.nlc_data import *
 from pycorrector.rnn_attention.nlc_model import NLCModel
 from pycorrector.rnn_attention.util import get_tokenizer
@@ -88,6 +90,7 @@ def detokenize(sents, reverse_vocab):
             if t >= len(START_VOCAB):
                 outsent += reverse_vocab[t]
         return outsent
+
     a = [detok_sent(s) for s in sents]
     return [detok_sent(s) for s in sents]
 
@@ -136,7 +139,6 @@ def decode():
 
     if FLAGS.lmfile is not None:
         print("Loading Language model from %s" % FLAGS.lmfile)
-        # lm = kenlm.LanguageModel(FLAGS.lmfile)
         lm = kenlm.Model(FLAGS.lmfile)
     else:
         print('No lmfile, better to add kenlm arpa data file')

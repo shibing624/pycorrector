@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import sys
+
+sys.path.append('../..')
 import numpy as np
 
 from pycorrector.rnn_crf.data_reader import build_dict
