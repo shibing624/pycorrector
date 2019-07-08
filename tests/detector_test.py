@@ -9,12 +9,12 @@ from pycorrector.tokenizer import segment
 sent1 = '少先队员应该为老人让座'
 sent_seg = segment(sent1)
 ppl = pycorrector.ppl_score(sent_seg)
-print('ppl_score:', ppl)
+print(sent1, 'ppl_score:', ppl)
 
 sent2 = '少先队员因该为老人让坐'
 sent_seg = segment(sent2)
 ppl = pycorrector.ppl_score(sent_seg)
-print('ppl_score:', ppl)
+print(sent2, 'ppl_score:', ppl)
 
 print(sent1, pycorrector.detect(sent1))
 print(sent2, pycorrector.detect(sent2))

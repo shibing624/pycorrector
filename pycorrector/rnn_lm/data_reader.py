@@ -18,9 +18,12 @@ def process_data(file_name, word_dict_path=None, cutoff_frequency=10):
         count = 0
         for line in f:
             content = line.strip()
+            # 兼容加空格和不加空格的切词处理
             content = content.replace(' ', '')
-            if len(content) < MIN_LEN or len(content) > MAX_LEN:
+            if len(content) < MIN_LEN:
                 continue
+            if len(content) > MAX_LEN:
+                content = content[:MAX_LEN]
             content = START_TOKEN + content + END_TOKEN
             data.append(content)
             count = count + 1
