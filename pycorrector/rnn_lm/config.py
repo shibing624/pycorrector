@@ -24,7 +24,7 @@ batch_size = 64
 learning_rate = 0.01
 
 model_prefix = 'lm'
-num_save_epochs = 6
+num_save_epochs = 4
 epochs = 20
 
 if not os.path.exists(output_dir):
