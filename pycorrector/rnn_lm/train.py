@@ -11,7 +11,7 @@ from pycorrector.rnn_lm import config
 from pycorrector.rnn_lm.data_reader import process_data, generate_batch
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 def main(_):
@@ -34,7 +34,7 @@ def main(_):
     saver = tf.train.Saver(tf.global_variables())
     init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
     # start
-    with tf.Session(config=tf.ConfigProto(log_devic_placement=True, allow_soft_placement=True)) as sess:
+    with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
         # init
         sess.run(init_op)
 
