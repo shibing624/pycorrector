@@ -30,7 +30,7 @@ class Detector(object):
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
                  stopwords_path=config.stopwords_path,
-                 enable_rnnlm=True,
+                 enable_rnnlm=False,
                  rnnlm_vocab_path=config.rnnlm_vocab_path,
                  rnnlm_model_dir=config.rnnlm_model_dir):
         self.name = 'detector'
