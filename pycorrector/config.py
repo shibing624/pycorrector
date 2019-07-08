@@ -25,3 +25,6 @@ person_name_path = os.path.join(pwd_path, 'data/person_name.txt')
 place_name_path = os.path.join(pwd_path, 'data/place_name.txt')
 # 停用词
 stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
+# RNN语言模型
+rnnlm_vocab_path = os.path.join(pwd_path, 'rnn_lm/output/word_freq.txt')
+rnnlm_model_dir = os.path.join(pwd_path, 'rnn_lm/output/model/')

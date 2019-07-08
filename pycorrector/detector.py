@@ -2,12 +2,12 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: error word detector
 import codecs
-import kenlm
 import time
 
 import numpy as np
 
 from pycorrector import config
+from pycorrector.rnn_lm.lm import LM
 from pycorrector.tokenizer import Tokenizer
 from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
@@ -29,7 +29,10 @@ class Detector(object):
                  custom_confusion_path=config.custom_confusion_path,
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
-                 stopwords_path=config.stopwords_path):
+                 stopwords_path=config.stopwords_path,
+                 enable_rnnlm=True,
+                 rnnlm_vocab_path=config.rnnlm_vocab_path,
+                 rnnlm_model_dir=config.rnnlm_model_dir):
         self.name = 'detector'
         self.language_model_path = language_model_path
         self.word_freq_path = word_freq_path
@@ -41,10 +44,17 @@ class Detector(object):
         self.is_char_error_detect = True
         self.is_word_error_detect = True
         self.initialized_detector = False
+        self.enable_rnnlm = enable_rnnlm
+        self.rnnlm_vocab_path = rnnlm_vocab_path
+        self.rnnlm_model_dir = rnnlm_model_dir
 
     def initialize_detector(self):
         t1 = time.time()
-        self.lm = kenlm.Model(self.language_model_path)
+        if self.enable_rnnlm:
+            self.lm = LM(self.rnnlm_model_dir, self.rnnlm_vocab_path)
+        else:
+            import kenlm
+            self.lm = kenlm.Model(self.language_model_path)
         t2 = time.time()
         logger.debug(
             'Loaded language model: %s, spend: %s s' % (self.language_model_path, str(t2 - t1)))
@@ -129,6 +139,7 @@ class Detector(object):
 
     def set_language_model_path(self, path):
         self.check_detector_initialized()
+        import kenlm
         self.lm = kenlm.Model(path)
         logger.info('Loaded language model: %s' % path)
 

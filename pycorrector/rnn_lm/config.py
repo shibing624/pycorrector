@@ -17,18 +17,15 @@ output_dir = os.path.join(pwd_path, 'output')
 train_word_path = output_dir + '/train_words.txt'
 # vocab
 word_dict_path = output_dir + '/word_freq.txt'
-
+model_dir = output_dir + '/model'
 # config
-cutoff_frequency = 10
+cutoff_frequency = 5
 batch_size = 64
 learning_rate = 0.01
-model_dir = output_dir + '/model'
+
 model_prefix = 'lm'
 num_save_epochs = 6
 epochs = 20
-
-# infer
-gen_file_path = output_dir + '/gen.txt'
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
