@@ -60,7 +60,7 @@ def main(_):
                     print('Epoch: %d, batch: %d, training loss: %.6f, ppl: %.1f' % (epoch, batch, loss, perplexity))
                 if epoch % config.num_save_epochs == 0:
                     saver.save(sess, os.path.join(config.model_dir, config.model_prefix), global_step=epoch)
-                    print('save model to %s,  epoch:%d' % (config.model_dir + config.model_prefix, epoch))
+                    print('Save model to %s,  epoch:%d' % (config.model_dir + config.model_prefix, epoch))
         except KeyboardInterrupt:
             print('Interrupt manually, try saving checkpoint for now...')
             saver.save(sess, os.path.join(config.model_dir, config.model_prefix), global_step=epoch)

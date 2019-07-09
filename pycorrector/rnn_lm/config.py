@@ -20,11 +20,11 @@ word_dict_path = output_dir + '/word_freq.txt'
 model_dir = output_dir + '/model'
 # config
 cutoff_frequency = 5
-batch_size = 64
-learning_rate = 0.01
+batch_size = 128
+learning_rate = 0.001
 
 model_prefix = 'lm'
-num_save_epochs = 4
+num_save_epochs = 1
 epochs = 20
 
 if not os.path.exists(output_dir):
