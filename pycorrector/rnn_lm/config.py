@@ -14,7 +14,7 @@ raw_train_paths = [
     # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
 ]
 output_dir = os.path.join(pwd_path, 'output')
-train_word_path = output_dir + '/train_words.txt'
+train_word_path = output_dir + '/train_words.txt' # change it with ch_wiki file path or other big file
 # vocab
 word_dict_path = output_dir + '/word_freq.txt'
 model_dir = output_dir + '/model'

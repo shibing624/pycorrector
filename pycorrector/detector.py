@@ -53,7 +53,14 @@ class Detector(object):
         if self.enable_rnnlm:
             self.lm = LM(self.rnnlm_model_dir, self.rnnlm_vocab_path)
         else:
-            import kenlm
+            try:
+                import kenlm
+            except ImportError:
+                raise ImportError('pycorrector dependencies are not fully installed, '
+                                  'they are required for statistical language model.'
+                                  'Please use "pip install kenlm" to install it, not support Win.'
+                                  'if you are Win, Please install tensorflow and set enable_rnnlm=True.')
+
             self.lm = kenlm.Model(self.language_model_path)
         t2 = time.time()
         logger.debug(

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import os
 import sys
 
 import numpy as np
@@ -10,6 +11,8 @@ sys.path.append('../..')
 from pycorrector.rnn_lm import config
 from pycorrector.rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
 def to_word(predict, vocabs):

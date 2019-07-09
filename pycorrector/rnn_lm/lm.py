@@ -3,6 +3,7 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 
 import numpy as np
 import tensorflow as tf
@@ -10,6 +11,8 @@ import tensorflow as tf
 from pycorrector.rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 from pycorrector.utils.logger import logger
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
 class LM:

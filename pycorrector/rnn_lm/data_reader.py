@@ -33,7 +33,7 @@ def process_data(file_name, word_dict_path=None, cutoff_frequency=10):
 
     total_words = []
     for line in data:
-        total_words += [word for word in line]
+        total_words += [word for word in line if word.strip()]
     counter = dict()
     for k, v in collections.Counter(total_words).items():
         if v < cutoff_frequency:
@@ -58,13 +58,16 @@ def save_dict(dict_data, save_path):
 
 def load_word_dict(save_path):
     dict_data = dict()
+    error_count = 10000  # 解决词表对齐问题
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.strip().split()
+            items = line.split()
             try:
                 dict_data[items[0]] = int(items[1])
             except IndexError:
                 print('error', line)
+                dict_data[str(error_count)] = error_count
+                error_count += 1
     return dict_data
 
 
