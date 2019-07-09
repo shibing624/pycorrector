@@ -4,13 +4,13 @@
 @description: 
 """
 import os
+import time
 
 import numpy as np
 import tensorflow as tf
 
 from pycorrector.rnn_lm.data_reader import UNK_TOKEN, END_TOKEN, START_TOKEN, load_word_dict
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
-from pycorrector.utils.logger import logger
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
@@ -21,7 +21,7 @@ class LM:
         self.idx_to_word = {v: k for k, v in self.word_to_idx.items()}
         self.learning_rate = learning_rate
         self.batch_size = batch_size
-
+        t1 = time.time()
         tf.reset_default_graph()
         self.input_data = tf.placeholder(tf.int32, [batch_size, None])
         self.output_targets = tf.placeholder(tf.int32, [batch_size, None])
@@ -41,7 +41,6 @@ class LM:
         self.sess.run(init_op)
         checkpoint = tf.train.latest_checkpoint(model_path)
         saver.restore(self.sess, checkpoint)
-        logger.info("loading model from the checkpoint {0}".format(checkpoint))
 
     def perplexities(self, sentences):
         result = []
@@ -50,11 +49,12 @@ class LM:
         return result
 
     def score(self, sentence, *args, **kwargs):
-        sentence = ''.join([i for i in sentence if i])
+        sentence = ''.join([i for i in sentence if i.strip()])
         return self.perplexity(sentence)
 
     def perplexity(self, sentence):
-        sentence = ''.join([i for i in sentence if i])
+        sentence = ''.join([i for i in sentence if i.strip()])
+        # print('sentence:', sentence)
         ppl = 0
         # data idx
         x = [self.word_to_idx[c] if c in self.word_to_idx else self.word_to_idx[UNK_TOKEN] for c in sentence]
@@ -68,9 +68,9 @@ class LM:
             perplexity = self.sess.run(self.model['perplexity'],
                                        feed_dict={self.input_data: x[i:i + 1, :],
                                                   self.output_targets: y[i:i + 1, :]})
-            # logger.debug('{0} -> {1}, perplexity: {2}'.format(self.idx_to_word[x[i:i + 1, :].tolist()[0][0]],
-            #                                                   self.idx_to_word[y[i:i + 1, :].tolist()[0][0]],
-            #                                                   perplexity))
+            # print('{0} -> {1}, perplexity: {2}'.format(self.idx_to_word[x[i:i + 1, :].tolist()[0][0]],
+            #                                            self.idx_to_word[y[i:i + 1, :].tolist()[0][0]],
+            #                                            perplexity))
             if i == 0 or i == word_count:
                 continue
             ppl += perplexity
