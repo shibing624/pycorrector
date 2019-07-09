@@ -74,14 +74,7 @@
 https://www.borntowin.cn/product/corrector
 
 
-## 规则方案使用说明
-
-### 安装依赖
-```
-pip3 install -r requirements.txt
-```
-
-### 安装
+## 安装
 * 全自动安装：pip3 install pycorrector
 * 半自动安装：
 ```
@@ -90,6 +83,13 @@ cd pycorrector
 python3 setup.py install
 ```
 
+## 规则方案使用说明
+
+
+### 安装依赖
+```
+pip3 install -r requirements.txt
+```
 
 ### 纠错  
 使用示例:
@@ -111,7 +111,7 @@ print(corrected_sent, detail)
 
 ### 安装依赖
 ```
-pip3 install -r requirements.txt
+pip3 install -r requirements-dev.txt
 
 pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 ```
@@ -120,12 +120,12 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、`transformer`、`bert`，每种方法单独放在文件夹中，
-都可以独立运行，相互之间无依赖。
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、`transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`指导，
+各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
-各模型均可独立预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
+各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
 
 seq2seq_attention 模型使用示例:
 
