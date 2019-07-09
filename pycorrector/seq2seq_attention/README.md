@@ -1,4 +1,4 @@
-- [x] seq2seq attention model
+# Seq2seq Attention Model
 
 ## preprocess with short text
 

@@ -1,4 +1,4 @@
-- [x] transformer model
+# Transformer Model
 
 ## preprocess with short text
 
