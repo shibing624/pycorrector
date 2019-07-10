@@ -194,6 +194,15 @@ class Detector(object):
         self.check_detector_initialized()
         return self.lm.score(' '.join(chars), bos=False, eos=False)
 
+    def char_scores(self, chars):
+        """
+        取RNN语言模型各字的得分
+        :param chars: list, 以字切分
+        :return: scores, list
+        """
+        self.check_detector_initialized()
+        return self.lm.char_scores(chars)
+
     def ppl_score(self, words):
         """
         取语言模型困惑度得分，越小句子越通顺
@@ -274,6 +283,32 @@ class Detector(object):
         return result
 
     @staticmethod
+    def _get_rnn_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
+        """
+        取疑似错字的位置，通过平均绝对离差（MAD）
+        :param scores: np.array
+        :param threshold: 阈值越小，得到疑似错别字越多
+        :return: 全部疑似错误字的index: list
+        """
+        result = []
+        scores = np.array(scores)
+        if len(scores.shape) == 1:
+            scores = scores[:, None]
+        median = np.median(scores, axis=0)  # get median of all scores
+        margin_median = np.sqrt(np.sum((scores - median) ** 2, axis=-1))  # deviation from the median
+        # 平均绝对离差值
+        med_abs_deviation = np.median(margin_median)
+        if med_abs_deviation == 0:
+            return result
+        y_score = ratio * margin_median / med_abs_deviation
+        # 打平
+        scores = scores.flatten()
+        maybe_error_indices = np.where((y_score > threshold) & (scores < median))
+        # 取全部疑似错误字的index
+        result = list(maybe_error_indices[0])
+        return result
+
+    @staticmethod
     def is_filter_token(token):
         result = False
         # pass blank
@@ -327,34 +362,24 @@ class Detector(object):
 
         if self.is_char_error_detect:
             # 语言模型检测疑似错误字
-            ngram_avg_scores = []
             if self.enable_rnnlm:
-                n = 5
-                scores = []
-                for i in range(len(sentence) - n + 1):
-                    word = sentence[i:i + n]
-                    score = self.ngram_score(list(word))
-                    scores.append(score)
-                if scores:
-                    # 移动窗口补全得分
-                    for _ in range(n - 1):
-                        scores.insert(0, scores[0])
-                        scores.append(scores[-1])
-                    avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
-                    ngram_avg_scores.append(avg_scores)
+                scores = self.char_scores(sentence)
+                # avg_scores = [sum(scores) / len(scores)]
+                # ngram_avg_scores.append(avg_scores)
 
-                    # 取拼接后的n-gram平均得分
-                    sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
-                    # 取疑似错字信息
-                    for i in self._get_maybe_error_index(sent_scores):
-                        token = sentence[i]
-                        # pass filter word
-                        if self.is_filter_token(token):
-                            continue
-                        maybe_err = [token, i, i + 1, ErrorType.char]  # token, begin_idx, end_idx, error_type
-                        self._add_maybe_error_item(maybe_err, maybe_errors)
+                # 平均得分
+                # sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
+                # 取疑似错字信息
+                for i in self._get_maybe_error_index(scores):
+                    token = sentence[i]
+                    # pass filter word
+                    if self.is_filter_token(token):
+                        continue
+                    maybe_err = [token, i, i + 1, ErrorType.char]  # token, begin_idx, end_idx, error_type
+                    self._add_maybe_error_item(maybe_err, maybe_errors)
             else:
                 try:
+                    ngram_avg_scores = []
                     for n in [2, 3]:
                         scores = []
                         for i in range(len(sentence) - n + 1):

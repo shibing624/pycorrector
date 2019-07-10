@@ -52,6 +52,26 @@ class LM:
         sentence = ''.join([i for i in sentence if i.strip()])
         return self.perplexity(sentence)
 
+    def char_scores(self, sentence):
+        result = []
+        sentence = ''.join([i for i in sentence if i.strip()])
+        # data idx
+        x = [self.word_to_idx[c] if c in self.word_to_idx else self.word_to_idx[UNK_TOKEN] for c in sentence]
+        x = [self.word_to_idx[START_TOKEN]] + x + [self.word_to_idx[END_TOKEN]]
+        # reshape
+        y = np.array(x[1:]).reshape((-1, self.batch_size))
+        x = np.array(x[:-1]).reshape((-1, self.batch_size))
+        # get each word perplexity
+        word_count = x.shape[0]
+        for i in range(word_count):
+            perplexity = self.sess.run(self.model['perplexity'],
+                                       feed_dict={self.input_data: x[i:i + 1, :],
+                                                  self.output_targets: y[i:i + 1, :]})
+            if i == 0 or i == word_count:
+                continue
+            result.append(perplexity)
+        return result
+
     def perplexity(self, sentence):
         sentence = ''.join([i for i in sentence if i.strip()])
         # print('sentence:', sentence)

@@ -10,7 +10,7 @@ import torch
 import operator
 
 from pycorrector.bert import config
-from pycorrector.bert.bert_masked_lm import MASK_ID, InputFeatures
+from pycorrector.bert.bert_masked_lm import  InputFeatures,MASK_TOKEN
 from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.text_utils import is_chinese_string
 from pytorch_pretrained_bert import BertForMaskedLM
@@ -38,6 +38,7 @@ class BertCorrector(Detector):
         print("Loaded model: %s, vocab file: %s, start." %
               (self.bert_model_dir, self.bert_model_vocab))
         self.bert_tokenizer = BertTokenizer(self.bert_model_vocab)
+        self.MASK_ID = self.bert_tokenizer.convert_tokens_to_ids([MASK_TOKEN])[0]
         # Prepare model
         self.model = BertForMaskedLM.from_pretrained(self.bert_model_dir)
         print("Loaded model ok, spend: %.3f s." % (time.time() - t1))
@@ -60,7 +61,7 @@ class BertCorrector(Detector):
         segment_ids = [0] * len(tokens)
 
         input_ids = self.bert_tokenizer.convert_tokens_to_ids(tokens)
-        mask_ids = [i for i, v in enumerate(input_ids) if v == MASK_ID]
+        mask_ids = [i for i, v in enumerate(input_ids) if v == self.MASK_ID]
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
         input_mask = [1] * len(input_ids)
@@ -71,12 +72,17 @@ class BertCorrector(Detector):
         input_mask += padding
         segment_ids += padding
 
+        # Original:
         features.append(
             InputFeatures(input_ids=input_ids,
                           input_mask=input_mask,
                           mask_ids=mask_ids,
                           segment_ids=segment_ids,
                           input_tokens=tokens))
+
+        # Update:
+        # features = create_sequential_mask(input_tokens, input_ids, input_mask, segment_ids,
+        #                                   FLAGS.max_predictions_per_seq)
         return features
 
     def check_vocab_has_all_token(self, sentence):

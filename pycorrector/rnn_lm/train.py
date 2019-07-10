@@ -2,6 +2,7 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: train rnn language model
 import os
+import random
 import sys
 
 import tensorflow as tf
@@ -17,6 +18,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "4,5,6,7"
 def main(_):
     # build vocab and word dict
     data_vector, word_to_int = process_data(config.train_word_path, config.word_dict_path, config.cutoff_frequency)
+    random.shuffle(data_vector)
     # batch data
     batches_inputs, batches_outputs = generate_batch(config.batch_size, data_vector, word_to_int)
     # placeholder

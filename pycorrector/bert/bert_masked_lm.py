@@ -8,6 +8,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import sys
+
+sys.path.append('../..')
 import argparse
 import os
 import random
@@ -21,7 +24,6 @@ from pytorch_pretrained_bert.tokenization import BertTokenizer
 from pycorrector.utils.logger import logger
 
 MASK_TOKEN = "[MASK]"
-MASK_ID = 103
 
 
 class InputExample(object):
@@ -48,13 +50,13 @@ class InputExample(object):
 class InputFeatures(object):
     """A single set of features of data."""
 
-    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, label_id=None, input_tokens=None):
+    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, mask_positions=None, input_tokens=None):
         self.input_ids = input_ids
         self.input_mask = input_mask
+        self.input_tokens = input_tokens
         self.segment_ids = segment_ids
         self.mask_ids = mask_ids
-        self.input_tokens = input_tokens
-        self.label_id = label_id
+        self.mask_positions = mask_positions
 
 
 def read_lm_examples(input_file):
@@ -118,10 +120,49 @@ def _truncate_seq_pair(tokens_a, tokens_b, max_length):
             tokens_b.pop()
 
 
-def convert_examples_to_features(examples, tokenizer, max_seq_length):
+def is_subtoken(x):
+    return x.startswith("##")
+
+
+def create_masked_lm_prediction(input_ids, mask_position, mask_count=1, mask_id=103):
+    new_input_ids = list(input_ids)
+    masked_lm_labels = []
+    masked_lm_positions = list(range(mask_position, mask_position + mask_count))
+    for i in masked_lm_positions:
+        new_input_ids[i] = mask_id
+        masked_lm_labels.append(input_ids[i])
+    return new_input_ids, masked_lm_positions, masked_lm_labels
+
+
+def create_sequential_mask(input_tokens, input_ids, input_mask, segment_ids, mask_id=103, tokenizer=None):
+    """Mask each token/word sequentially"""
+    features = []
+    i = 1
+    while i < len(input_tokens) - 1:
+        mask_count = 1
+        while is_subtoken(input_tokens[i + mask_count]):
+            mask_count += 1
+
+        input_ids_new, masked_lm_positions, masked_lm_labels = create_masked_lm_prediction(input_ids, i, mask_count,
+                                                                                           mask_id)
+        feature = InputFeatures(
+            input_ids=input_ids_new,
+            input_mask=input_mask,
+            segment_ids=segment_ids,
+            mask_ids=masked_lm_labels,
+            mask_positions=masked_lm_positions,
+            input_tokens=tokenizer.convert_ids_to_tokens(input_ids_new))
+        features.append(feature)
+        i += mask_count
+    return features
+
+
+def convert_examples_to_features(examples, tokenizer, max_seq_length,
+                                 mask_token='[MASK]', mask_id=103):
     """Loads a data file into a list of `InputBatch`s."""
 
-    features = []
+    all_features = []
+    all_tokens = []
     for (example_index, example) in enumerate(examples):
         tokens_a = tokenizer.tokenize(example.text_a)
         tokens_b = None
@@ -152,7 +193,7 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length):
         # For classification tasks, the first vector (corresponding to [CLS]) is
         # used as as the "sentence vector". Note that this only makes sense because
         # the entire model is fine-tuned.
-        tokens_a = [i.replace('*', MASK_TOKEN) for i in tokens_a]
+        tokens_a = [i.replace('*', mask_token) for i in tokens_a]
         tokens = ["[CLS]"] + tokens_a + ["[SEP]"]
         segment_ids = [0] * len(tokens)
 
@@ -162,7 +203,7 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length):
             segment_ids += [1] * (len(tokens_b) + 1)
 
         input_ids = tokenizer.convert_tokens_to_ids(tokens)
-        mask_ids = [i for i, v in enumerate(input_ids) if v == MASK_ID]
+        mask_ids = [i for i, v in enumerate(input_ids) if v == mask_id]
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
         input_mask = [1] * len(input_ids)
@@ -185,36 +226,42 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length):
                 [str(x) for x in tokens]))
             logger.info("input_ids: %s" % " ".join([str(x) for x in input_ids]))
             logger.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
-            logger.info(
-                "segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
+            logger.info("segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
 
-        features.append(
-            InputFeatures(input_ids=input_ids,
-                          input_mask=input_mask,
-                          mask_ids=mask_ids,
-                          segment_ids=segment_ids,
-                          input_tokens=tokens))
-    return features
+        # features.append(
+        #     InputFeatures(input_ids=input_ids,
+        #                   input_mask=input_mask,
+        #                   mask_ids=mask_ids,
+        #                   segment_ids=segment_ids,
+        #                   input_tokens=tokens))
+
+        features = create_sequential_mask(tokens, input_ids, input_mask, segment_ids, mask_id, tokenizer)
+        all_features.extend(features)
+        all_tokens.extend(tokens)
+
+    return all_features, all_tokens
 
 
 def main():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--bert_model_dir", default=None, type=str, required=True,
+    parser.add_argument("--bert_model_dir", default='../data/bert_pytorch/multi_cased_L-12_H-768_A-12/',
+                        type=str,
                         help="Bert pre-trained model config dir")
-    parser.add_argument("--bert_model_vocab", default=None, type=str, required=True,
+    parser.add_argument("--bert_model_vocab", default='../data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt',
+                        type=str,
                         help="Bert pre-trained model vocab path")
-    parser.add_argument("--output_dir", default="./output", type=str, required=True,
+    parser.add_argument("--output_dir", default="./output", type=str,
                         help="The output directory where the model checkpoints and predictions will be written.")
 
     # Other parameters
-    parser.add_argument("--predict_file", default=None, type=str,
+    parser.add_argument("--predict_file", default='../data/cn/lm_test_zh.txt', type=str,
                         help="for predictions.")
-    parser.add_argument("--max_seq_length", default=384, type=int,
+    parser.add_argument("--max_seq_length", default=128, type=int,
                         help="The maximum total input sequence length after WordPiece tokenization. Sequences "
                              "longer than this will be truncated, and sequences shorter than this will be padded.")
-    parser.add_argument("--doc_stride", default=128, type=int,
+    parser.add_argument("--doc_stride", default=64, type=int,
                         help="When splitting up a long document into chunks, how much stride to take between chunks.")
     parser.add_argument("--learning_rate", default=5e-5, type=float, help="The initial learning rate for Adam.")
     parser.add_argument("--verbose_logging", default=False, action='store_true',
@@ -236,6 +283,8 @@ def main():
         os.makedirs(args.output_dir)
 
     tokenizer = BertTokenizer(args.bert_model_vocab)
+    MASK_ID = tokenizer.convert_tokens_to_ids([MASK_TOKEN])[0]
+    print('MASK_ID,', MASK_ID)
 
     # Prepare model
     model = BertForMaskedLM.from_pretrained(args.bert_model_dir)
@@ -266,6 +315,7 @@ def main():
     segments_ids = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     # Convert inputs to PyTorch tensors
+    print('tokens, segments_ids:', indexed_tokens, segments_ids)
     tokens_tensor = torch.tensor([indexed_tokens])
     segments_tensors = torch.tensor([segments_ids])
     # Load pre-trained model (weights)
@@ -283,28 +333,44 @@ def main():
 
     if args.predict_file:
         eval_examples = read_lm_examples(input_file=args.predict_file)
-        eval_features = convert_examples_to_features(
+        eval_features, all_tokens = convert_examples_to_features(
             examples=eval_examples,
             tokenizer=tokenizer,
-            max_seq_length=args.max_seq_length)
+            max_seq_length=args.max_seq_length,
+            mask_token=MASK_TOKEN,
+            mask_id=MASK_ID)
 
+        print('input tokens:', all_tokens)
         logger.info("***** Running predictions *****")
         logger.info("  Num orig examples = %d", len(eval_examples))
         logger.info("  Num split examples = %d", len(eval_features))
         logger.info("Start predict ...")
         for f in eval_features:
+            print('tokens, segments_ids, mask_positions, mask_ids:',
+                  f.input_ids, f.segment_ids, f.mask_positions, f.mask_ids)
             input_ids = torch.tensor([f.input_ids])
             segment_ids = torch.tensor([f.segment_ids])
+            masked_ids = torch.tensor([f.mask_ids])
             predictions = model(input_ids, segment_ids)
             # confirm we were able to predict 'henson'
-            masked_ids = f.mask_ids
-            if masked_ids:
-                print(masked_ids)
-                for idx, i in enumerate(masked_ids):
-                    predicted_index = torch.argmax(predictions[0, i]).item()
-                    predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
+            mask_positions = f.mask_positions
+
+            if mask_positions:
+                for idx, i in enumerate(mask_positions):
+                    if not i:
+                        continue
+                    scores = predictions[0, i]
+                    # predicted_index = torch.argmax(scores).item()
+                    top_scores = torch.sort(scores, 0, True)
+                    top_score_val = top_scores[0][:5]
+                    top_score_idx = top_scores[1][:5]
+                    # predicted_prob = predictions[0, i][predicted_index].item()
+                    # predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
                     print('original text is:', f.input_tokens)
-                    print('Mask predict is:', predicted_token)
+                    # print('Mask predict is:', predicted_token, ' prob:', predicted_prob)
+                    for j in range(len(top_score_idx)):
+                        print('Mask predict is:', tokenizer.convert_ids_to_tokens([top_score_idx[j].item()])[0],
+                              ' prob:', top_score_val[j].item())
 
 
 if __name__ == "__main__":
