@@ -40,7 +40,7 @@ PS:提供使用以上方法训练20轮后的中文bi-lstm语言模型，位于`o
 - run
  `python tests/detector_test.py`
 - result
-![result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/bert_finetuned_ch_result.png)
+待补充TODO
 
 ### 结论
 与统计语言模型kenlm相比，深度rnn语言模型效果稍好，错误检测部分的误召回有降低，纠错部分依然有误纠的情况。

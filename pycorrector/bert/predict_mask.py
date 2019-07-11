@@ -160,7 +160,7 @@ def create_sequential_mask(input_tokens, input_ids, input_mask, segment_ids, mas
 def convert_examples_to_features(examples, tokenizer, max_seq_length,
                                  mask_token='[MASK]', mask_id=103):
     """Loads a data file into a list of `InputBatch`s."""
-
+    features = []
     all_features = []
     all_tokens = []
     for (example_index, example) in enumerate(examples):
@@ -203,7 +203,7 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length,
             segment_ids += [1] * (len(tokens_b) + 1)
 
         input_ids = tokenizer.convert_tokens_to_ids(tokens)
-        mask_ids = [i for i, v in enumerate(input_ids) if v == mask_id]
+        mask_positions = [i for i, v in enumerate(input_ids) if v == mask_id]
         # The mask has 1 for real tokens and 0 for padding tokens. Only real
         # tokens are attended to.
         input_mask = [1] * len(input_ids)
@@ -228,18 +228,19 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length,
             logger.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
             logger.info("segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
 
-        # features.append(
-        #     InputFeatures(input_ids=input_ids,
-        #                   input_mask=input_mask,
-        #                   mask_ids=mask_ids,
-        #                   segment_ids=segment_ids,
-        #                   input_tokens=tokens))
+        features.append(
+            InputFeatures(input_ids=input_ids,
+                          input_mask=input_mask,
+                          mask_positions=mask_positions,
+                          segment_ids=segment_ids,
+                          input_tokens=tokens))
+        # Mask each word
+        # features = create_sequential_mask(tokens, input_ids, input_mask, segment_ids, mask_id, tokenizer)
+        # all_features.extend(features)
+        # all_tokens.extend(tokens)
+        # return all_features, all_tokens
 
-        features = create_sequential_mask(tokens, input_ids, input_mask, segment_ids, mask_id, tokenizer)
-        all_features.extend(features)
-        all_tokens.extend(tokens)
-
-    return all_features, all_tokens
+    return features
 
 
 def main():
@@ -333,24 +334,20 @@ def main():
 
     if args.predict_file:
         eval_examples = read_lm_examples(input_file=args.predict_file)
-        eval_features, all_tokens = convert_examples_to_features(
+        eval_features = convert_examples_to_features(
             examples=eval_examples,
             tokenizer=tokenizer,
             max_seq_length=args.max_seq_length,
             mask_token=MASK_TOKEN,
             mask_id=MASK_ID)
 
-        print('input tokens:', all_tokens)
         logger.info("***** Running predictions *****")
         logger.info("  Num orig examples = %d", len(eval_examples))
         logger.info("  Num split examples = %d", len(eval_features))
         logger.info("Start predict ...")
         for f in eval_features:
-            print('tokens, segments_ids, mask_positions, mask_ids:',
-                  f.input_ids, f.segment_ids, f.mask_positions, f.mask_ids)
             input_ids = torch.tensor([f.input_ids])
             segment_ids = torch.tensor([f.segment_ids])
-            masked_ids = torch.tensor([f.mask_ids])
             predictions = model(input_ids, segment_ids)
             # confirm we were able to predict 'henson'
             mask_positions = f.mask_positions

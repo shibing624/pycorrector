@@ -329,7 +329,7 @@ class Detector(object):
         """
         检测句子中的疑似错误信息，包括[词、位置、错误类型]
         :param sentence:
-        :return: [error_word, begin_pos, end_pos, error_type]
+        :return: list[list], [error_word, begin_pos, end_pos, error_type]
         """
         maybe_errors = []
         if not sentence.strip():

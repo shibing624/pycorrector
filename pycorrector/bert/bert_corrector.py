@@ -1,28 +1,51 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing（xuming624@qq.com)
-@description: use bert corrector chinese char error
+@description: use bert correct chinese char error
 """
-import sys
-
-sys.path.append('../..')
-import torch
 import operator
-
-from pycorrector.bert import config
-from pycorrector.bert.bert_masked_lm import  InputFeatures,MASK_TOKEN
-from pycorrector.detector import Detector, ErrorType
-from pycorrector.utils.text_utils import is_chinese_string
-from pytorch_pretrained_bert import BertForMaskedLM
-from pytorch_pretrained_bert.tokenization import BertTokenizer
+import sys
 import time
 
+import torch
+from pytorch_pretrained_bert import BertForMaskedLM
+from pytorch_pretrained_bert.tokenization import BertTokenizer
 
-class BertCorrector(Detector):
+sys.path.append('../..')
+from pycorrector.bert import config
+from pycorrector.bert.bert_detector import BertDetector
+from pycorrector.detector import ErrorType
+from pycorrector.utils.text_utils import is_chinese_string
+from pycorrector.utils.logger import logger
+
+MASK_TOKEN = "[MASK]"
+
+
+class InputFeatures(object):
+    """A single set of features of data."""
+
+    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, mask_positions=None, input_tokens=None):
+        self.input_ids = input_ids
+        self.input_mask = input_mask
+        self.input_tokens = input_tokens
+        self.segment_ids = segment_ids
+        self.mask_ids = mask_ids
+        self.mask_positions = mask_positions
+
+
+class BertCorrector(BertDetector):
     def __init__(self, bert_model_dir='',
                  bert_model_vocab='',
-                 max_seq_length=384):
-        super(BertCorrector, self).__init__()
+                 max_seq_length=128,
+                 predict_batch_size=8,
+                 max_predictions_per_seq=20,
+                 threshold=0.001):
+        super(BertCorrector, self).__init__(bert_model_dir=bert_model_dir,
+                                            bert_model_vocab=bert_model_vocab,
+                                            max_seq_length=max_seq_length,
+                                            predict_batch_size=predict_batch_size,
+                                            max_predictions_per_seq=max_predictions_per_seq,
+                                            threshold=threshold)
         self.name = 'bert_corrector'
         self.bert_model_dir = bert_model_dir
         self.bert_model_vocab = bert_model_vocab
@@ -35,13 +58,11 @@ class BertCorrector(Detector):
 
     def initialize_bert_corrector(self):
         t1 = time.time()
-        print("Loaded model: %s, vocab file: %s, start." %
-              (self.bert_model_dir, self.bert_model_vocab))
         self.bert_tokenizer = BertTokenizer(self.bert_model_vocab)
         self.MASK_ID = self.bert_tokenizer.convert_tokens_to_ids([MASK_TOKEN])[0]
         # Prepare model
         self.model = BertForMaskedLM.from_pretrained(self.bert_model_dir)
-        print("Loaded model ok, spend: %.3f s." % (time.time() - t1))
+        logger.debug("Loaded model ok, path: %s, spend: %.3f s." % (self.bert_model_dir, time.time() - t1))
         self.initialized_bert_corrector = True
 
     def convert_sentence_to_features(self, sentence, tokenizer, max_seq_length, error_begin_idx=0, error_end_idx=0):
@@ -80,9 +101,6 @@ class BertCorrector(Detector):
                           segment_ids=segment_ids,
                           input_tokens=tokens))
 
-        # Update:
-        # features = create_sequential_mask(input_tokens, input_ids, input_mask, segment_ids,
-        #                                   FLAGS.max_predictions_per_seq)
         return features
 
     def check_vocab_has_all_token(self, sentence):
@@ -94,16 +112,13 @@ class BertCorrector(Detector):
                 break
         return flag
 
-    def bert_lm_infer(self, sentence, error_begin_idx=0, error_end_idx=0):
+    def bert_lm_infer(self, sentence):
         self.check_bert_corrector_initialized()
-        corrected_item = sentence[error_begin_idx:error_end_idx]
+        corrected_item = ''
         eval_features = self.convert_sentence_to_features(
             sentence=sentence,
             tokenizer=self.bert_tokenizer,
-            max_seq_length=self.max_seq_length,
-            error_begin_idx=error_begin_idx,
-            error_end_idx=error_end_idx
-        )
+            max_seq_length=self.max_seq_length)
 
         for f in eval_features:
             input_ids = torch.tensor([f.input_ids])
@@ -115,8 +130,8 @@ class BertCorrector(Detector):
                 for idx, i in enumerate(masked_ids):
                     predicted_index = torch.argmax(predictions[0, i]).item()
                     predicted_token = self.bert_tokenizer.convert_ids_to_tokens([predicted_index])[0]
-                    print('original text is:', f.input_tokens)
-                    print('Mask predict is:', predicted_token)
+                    logger.debug('original text is:', f.input_tokens)
+                    logger.debug('Mask predict is:', predicted_token)
                     corrected_item = predicted_token
         return corrected_item
 
@@ -128,16 +143,12 @@ class BertCorrector(Detector):
         """
         detail = []
         maybe_errors = self.detect(sentence)
-        maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=False)
         for item, begin_idx, end_idx, err_type in maybe_errors:
             # 纠错，逐个处理
             before_sent = sentence[:begin_idx]
             after_sent = sentence[end_idx:]
 
-            # 困惑集中指定的词，直接取结果
-            if err_type == ErrorType.confusion:
-                corrected_item = self.custom_confusion[item]
-            elif err_type == ErrorType.char:
+            if err_type == ErrorType.char:
                 # 对非中文的错字不做处理
                 if not is_chinese_string(item):
                     continue
@@ -163,6 +174,10 @@ if __name__ == "__main__":
                                   config.bert_model_vocab,
                                   config.max_seq_length)
 
-    error_sentence_1 = '少先队员因该为老人让座.机七学习是人工智能领遇最能体现智能的一个分知'
-    correct_sent = bertCorrector.correct(error_sentence_1)
-    print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+    error_sentences = ['少先队员因该为老人让座',
+                       '少先队员因该为老人让坐',
+                       '机七学习是人工智能领遇最能体现智能的一个分支',
+                       '机七学习是人工智能领遇最能体现智能的一个分知']
+    for error_sentence in error_sentences:
+        correct_sent = bertCorrector.correct(error_sentence)
+        print("original sentence:{} => correct sentence:{}".format(error_sentence, correct_sent))
