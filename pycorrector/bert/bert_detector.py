@@ -80,7 +80,7 @@ class BertDetector(object):
             init_checkpoint=self.bert_checkpoint)
 
         # If TPU is not available, this will fall back to normal Estimator on CPU or GPU.
-        self.model = tf.contrib.tpu.TPUEstimator(
+        self.estimator = tf.contrib.tpu.TPUEstimator(
             use_tpu=False,
             model_fn=model_fn,
             config=tf.contrib.tpu.RunConfig(),
@@ -415,7 +415,7 @@ class BertDetector(object):
             seq_length=self.max_seq_length,
             max_predictions_per_seq=self.max_predictions_per_seq)
 
-        predictions = self.model.predict(input_fn=predict_input_fn)
+        predictions = self.estimator.predict(input_fn=predict_input_fn)
         result = self._parse_predictions(predictions, all_tokens)
         return result
 

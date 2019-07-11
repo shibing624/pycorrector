@@ -13,24 +13,12 @@ from pytorch_pretrained_bert.tokenization import BertTokenizer
 
 sys.path.append('../..')
 from pycorrector.bert import config
-from pycorrector.bert.bert_detector import BertDetector
+from pycorrector.bert.bert_detector import BertDetector, InputFeatures
 from pycorrector.detector import ErrorType
 from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.logger import logger
 
 MASK_TOKEN = "[MASK]"
-
-
-class InputFeatures(object):
-    """A single set of features of data."""
-
-    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, mask_positions=None, input_tokens=None):
-        self.input_ids = input_ids
-        self.input_mask = input_mask
-        self.input_tokens = input_tokens
-        self.segment_ids = segment_ids
-        self.mask_ids = mask_ids
-        self.mask_positions = mask_positions
 
 
 class BertCorrector(BertDetector):
@@ -65,7 +53,7 @@ class BertCorrector(BertDetector):
         logger.debug("Loaded model ok, path: %s, spend: %.3f s." % (self.bert_model_dir, time.time() - t1))
         self.initialized_bert_corrector = True
 
-    def convert_sentence_to_features(self, sentence, tokenizer, max_seq_length, error_begin_idx=0, error_end_idx=0):
+    def convert_sentence_to_features(self, sentence, max_seq_length, error_begin_idx, error_end_idx):
         """Loads a sentence into a list of `InputBatch`s."""
         self.check_bert_corrector_initialized()
         features = []
@@ -112,13 +100,15 @@ class BertCorrector(BertDetector):
                 break
         return flag
 
-    def bert_lm_infer(self, sentence):
+    def predict_mask_token(self, sentence, error_begin_idx, error_end_idx):
         self.check_bert_corrector_initialized()
-        corrected_item = ''
+        corrected_item = sentence[error_begin_idx:error_end_idx]
         eval_features = self.convert_sentence_to_features(
             sentence=sentence,
-            tokenizer=self.bert_tokenizer,
-            max_seq_length=self.max_seq_length)
+            max_seq_length=self.max_seq_length,
+            error_begin_idx=error_begin_idx,
+            error_end_idx=error_end_idx
+        )
 
         for f in eval_features:
             input_ids = torch.tensor([f.input_ids])
@@ -130,8 +120,8 @@ class BertCorrector(BertDetector):
                 for idx, i in enumerate(masked_ids):
                     predicted_index = torch.argmax(predictions[0, i]).item()
                     predicted_token = self.bert_tokenizer.convert_ids_to_tokens([predicted_index])[0]
-                    logger.debug('original text is:', f.input_tokens)
-                    logger.debug('Mask predict is:', predicted_token)
+                    logger.debug('original text is: %s' % f.input_tokens)
+                    logger.debug('Mask predict is: %s' % predicted_token)
                     corrected_item = predicted_token
         return corrected_item
 
@@ -155,7 +145,7 @@ class BertCorrector(BertDetector):
                 if not self.check_vocab_has_all_token(sentence):
                     continue
                 # 取得所有可能正确的字
-                corrected_item = self.bert_lm_infer(sentence, error_begin_idx=begin_idx, error_end_idx=end_idx)
+                corrected_item = self.predict_mask_token(sentence, begin_idx, end_idx)
             elif err_type == ErrorType.word:
                 corrected_item = item
             else:
