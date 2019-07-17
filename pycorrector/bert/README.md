@@ -34,10 +34,12 @@ python finetune_on_pregenerated.py \
 4. 结果
 ```
 chinese_finetuned_lm
-├── config.json
+├── bert_config.json
+├── config.json  (copy by bert_config.json)
 ├── pytorch_model.bin
 └── vocab.txt
 ```
+
 
 PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:https://pan.baidu.com/s/1QCRe5fXSinXSY1lfm7BaQg  密码:m4mg），下载解压后文件夹放置于data/bert_pytorch目录下。
 
