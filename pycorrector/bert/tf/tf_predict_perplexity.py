@@ -25,9 +25,8 @@ import sys
 import numpy as np
 import tensorflow as tf
 
-sys.path.append('../..')
-from pycorrector.bert import modeling
-from pycorrector.bert import tokenization
+sys.path.append('../../..')
+from pycorrector.bert.tf import modeling,tokenization
 
 MASK_TOKEN = "[MASK]"
 flags = tf.flags
@@ -36,11 +35,11 @@ FLAGS = flags.FLAGS
 flags.DEFINE_integer("max_predictions_per_seq", 20,
                      "In this task, it also refers to maximum number of masked tokens per word.")
 
-flags.DEFINE_string("bert_config_file", "../data/bert_pytorch/multi_cased_L-12_H-768_A-12/bert_config.json",
+flags.DEFINE_string("bert_config_file", "../data/bert_models/multi_cased_L-12_H-768_A-12/bert_config.json",
                     "The config json file corresponding to the pre-trained BERT model. "
                     "This specifies the model architecture.")
 
-flags.DEFINE_string("bert_model_dir", "../data/bert_pytorch/multi_cased_L-12_H-768_A-12/",
+flags.DEFINE_string("bert_model_dir", "../data/bert_models/multi_cased_L-12_H-768_A-12/",
                     "The dir path of  the pre-trained BERT model. "
                     "This specifies the model architecture.")
 
@@ -51,10 +50,10 @@ flags.DEFINE_string("input_file", "../data/cn/lm_test_zh.txt",
 flags.DEFINE_string("output_dir", "./output",
                     "The output directory where the model checkpoints will be written.")
 
-flags.DEFINE_string("vocab_file", "../data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt",
+flags.DEFINE_string("vocab_file", "../data/bert_models/multi_cased_L-12_H-768_A-12/vocab.txt",
                     "The vocabulary file that the BERT model was trained on.")
 # Other parameters
-flags.DEFINE_string("init_checkpoint", "../data/bert_pytorch/multi_cased_L-12_H-768_A-12/bert_model.ckpt",
+flags.DEFINE_string("init_checkpoint", "../data/bert_models/multi_cased_L-12_H-768_A-12/bert_model.ckpt",
                     "Initial checkpoint (usually from a pre-trained BERT model).")
 
 flags.DEFINE_bool("do_lower_case", True,
@@ -138,7 +137,7 @@ def model_fn_builder(bert_config, init_checkpoint, use_tpu,
             token_type_ids=segment_ids,
             use_one_hot_embeddings=use_one_hot_embeddings)
 
-        masked_lm_example_loss = get_masked_lm_output(
+        masked_lm_example_loss, masked_lm_log_probs = get_masked_lm_output(
             bert_config, model.get_sequence_output(), model.get_embedding_table(),
             masked_lm_positions, masked_lm_ids)
 
@@ -208,8 +207,7 @@ def get_masked_lm_output(bert_config, input_tensor, output_weights, positions,
             label_ids, depth=bert_config.vocab_size, dtype=tf.float32)
         per_example_loss = -tf.reduce_sum(log_probs * one_hot_labels, axis=[-1])
         loss = tf.reshape(per_example_loss, [-1, tf.shape(positions)[1]])
-        # TODO: dynamic gather from per_example_loss
-    return loss
+    return loss, log_probs
 
 
 def gather_indexes(sequence_tensor, positions):
@@ -417,6 +415,7 @@ def parse_result(result, all_tokens, output_file=None):
     word_count_per_sent = 0
     sentence = {}
     for word_loss in result:
+        print(word_loss)
         # start of a sentence
         if all_tokens[i] == "[CLS]":
             sentence = {}

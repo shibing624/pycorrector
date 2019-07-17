@@ -50,7 +50,8 @@ class InputExample(object):
 class InputFeatures(object):
     """A single set of features of data."""
 
-    def __init__(self, input_ids, input_mask, segment_ids, mask_ids=None, mask_positions=None, input_tokens=None):
+    def __init__(self, input_ids, input_mask, segment_ids,
+                 mask_ids=None, mask_positions=None, input_tokens=None):
         self.input_ids = input_ids
         self.input_mask = input_mask
         self.input_tokens = input_tokens
@@ -247,10 +248,10 @@ def main():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--bert_model_dir", default='../data/bert_pytorch/multi_cased_L-12_H-768_A-12/',
+    parser.add_argument("--bert_model_dir", default='../data/bert_models/chinese_finetuned_lm/',
                         type=str,
                         help="Bert pre-trained model config dir")
-    parser.add_argument("--bert_model_vocab", default='../data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt',
+    parser.add_argument("--bert_model_vocab", default='../data/bert_models/chinese_finetuned_lm/vocab.txt',
                         type=str,
                         help="Bert pre-trained model vocab path")
     parser.add_argument("--output_dir", default="./output", type=str,
@@ -301,14 +302,13 @@ def main():
     model.to(device)
 
     # Tokenized input
-    text = "吸 烟 的 人 容 易 得 癌 症"
-    print(text)
+    text = "吸烟的人容易得癌症"
     tokenized_text = tokenizer.tokenize(text)
+    print(text, '=>', tokenized_text)
 
     # Mask a token that we will try to predict back with `BertForMaskedLM`
     masked_index = 8
     tokenized_text[masked_index] = '[MASK]'
-    print(tokenized_text)
 
     # Convert token to vocabulary indices
     indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
@@ -321,16 +321,74 @@ def main():
     segments_tensors = torch.tensor([segments_ids])
     # Load pre-trained model (weights)
     model.eval()
-
     # Predict all tokens
     predictions = model(tokens_tensor, segments_tensors)
-
-    # confirm we were able to predict 'henson'
     predicted_index = torch.argmax(predictions[0, masked_index]).item()
     print(predicted_index)
     predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
     print(predicted_token)
     # infer one line end
+
+    # predict ppl and prob of each word
+    text = "吸烟的人容易得癌症"
+    tokenized_text = tokenizer.tokenize(text)
+    indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
+    # Define sentence A and B indices associated to 1st and 2nd sentences (see paper)
+    segments_ids = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    tokens_tensor = torch.tensor([indexed_tokens])
+    segments_tensors = torch.tensor([segments_ids])
+    sentence_loss = 0.0
+    sentence_count = 0
+    for idx, label in enumerate(text):
+        print(label)
+        label_id = tokenizer.convert_tokens_to_ids([label])[0]
+        lm_labels = [-1, -1, -1, -1, -1, -1, -1, -1, -1]
+        if idx != 0:
+            lm_labels[idx] = label_id
+        if idx == 1:
+            lm_labels = indexed_tokens
+        print(lm_labels)
+        masked_lm_labels = torch.tensor([lm_labels])
+
+        # Predict all tokens
+        loss = model(tokens_tensor, segments_tensors, masked_lm_labels=masked_lm_labels)
+        print('loss:', loss)
+        prob = float(np.exp(-loss.item()))
+        print('prob:', prob)
+        sentence_loss += prob
+        sentence_count += 1
+    ppl = float(np.exp(sentence_loss / sentence_count))
+    print('ppl:', ppl)
+
+    # confirm we were able to predict 'henson'
+    # infer each word with mask one
+    text = "吸烟的人容易得癌症"
+    for masked_index, label in enumerate(text):
+        tokenized_text = tokenizer.tokenize(text)
+        print(text, '=>', tokenized_text)
+        tokenized_text[masked_index] = '[MASK]'
+        print(tokenized_text)
+
+        # Convert token to vocabulary indices
+        indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
+        tokens_tensor = torch.tensor([indexed_tokens])
+        segments_tensors = torch.tensor([segments_ids])
+        predictions = model(tokens_tensor, segments_tensors)
+        print('expected label:', label)
+
+        predicted_index = torch.argmax(predictions[0, masked_index]).item()
+        predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
+        print('predict label:', predicted_token)
+
+        scores = predictions[0, masked_index]
+        # predicted_index = torch.argmax(scores).item()
+        top_scores = torch.sort(scores, 0, True)
+        top_score_val = top_scores[0][:5]
+        top_score_idx = top_scores[1][:5]
+        for j in range(len(top_score_idx)):
+            print('Mask predict is:', tokenizer.convert_ids_to_tokens([top_score_idx[j].item()])[0],
+                  ' prob:', top_score_val[j].item())
+        print()
 
     if args.predict_file:
         eval_examples = read_lm_examples(input_file=args.predict_file)

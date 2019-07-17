@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append("../")
-from pycorrector.bert import bert_corrector, config
+from pycorrector.bert import bert_corrector
 
 error_sentences = [
     '汽车新式在这条路上',
@@ -50,13 +50,8 @@ badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
            '橄榄的和这款哪个比较好用？味道都是一样的么？',
            ]
 error_sentences.extend(badcase)
-# bertCorrector = bert_corrector.BertCorrector('../pycorrector/data/bert_pytorch/multi_cased_L-12_H-768_A-12/',
-#                                              '../pycorrector/data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt',
-#                                              config.max_seq_length)
 
-bertCorrector = bert_corrector.BertCorrector(config.bert_model_dir,
-                                             config.bert_model_vocab,
-                                             config.max_seq_length)
+bertCorrector = bert_corrector.BertCorrector()
 for line in error_sentences:
     correct_sent = bertCorrector.correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

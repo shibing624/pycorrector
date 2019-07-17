@@ -8,11 +8,8 @@ import os
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
-# bert_model_dir = os.path.join(pwd_path, '../data/bert_pytorch/chinese_finetuned_lm')
-bert_model_dir = os.path.join(pwd_path, '../data/bert_pytorch/multi_cased_L-12_H-768_A-12')
-# bert_model_vocab = os.path.join(pwd_path, '../data/bert_pytorch/chinese_finetuned_lm/vocab.txt')
-bert_model_vocab = os.path.join(pwd_path, '../data/bert_pytorch/multi_cased_L-12_H-768_A-12/vocab.txt')
+bert_model_dir = os.path.join(pwd_path, '../data/bert_models/chinese_finetuned_lm')
+bert_model_vocab = os.path.join(pwd_path, '../data/bert_models/finetuned_chinese_lm/vocab.txt')
 output_dir = os.path.join(pwd_path, './output')
-predict_file = os.path.join(pwd_path, '../data/bert_pytorch/samples/sample_text.txt')
-max_seq_length = 384
-do_lower_case = True
+max_seq_length = 128
+threshold = 0.1

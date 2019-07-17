@@ -8,5 +8,5 @@ keras>=2.1.5
 keras-contrib==2.0.8
 torch>=0.4.1
 torchtext
-pytorch-pretrained-bert
+pytorch-transformers
 OpenNMT-tf

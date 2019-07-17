@@ -54,4 +54,4 @@ def trigram_correct(sentence):
 
 
 if __name__ == '__main__':
-    trigram_correct("桥为什么修的想过山车一样")
+    trigram_correct("少先队员因该为老人让坐")
