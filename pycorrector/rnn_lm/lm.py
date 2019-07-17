@@ -67,6 +67,9 @@ class LM:
             perplexity = self.sess.run(self.model['perplexity'],
                                        feed_dict={self.input_data: x[i:i + 1, :],
                                                   self.output_targets: y[i:i + 1, :]})
+            print('{0} -> {1}, perplexity: {2}'.format(self.idx_to_word[x[i:i + 1, :].tolist()[0][0]],
+                                                       self.idx_to_word[y[i:i + 1, :].tolist()[0][0]],
+                                                       perplexity))
             if i == 0 or i == word_count:
                 continue
             result.append(perplexity)

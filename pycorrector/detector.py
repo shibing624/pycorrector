@@ -283,27 +283,18 @@ class Detector(object):
         return result
 
     @staticmethod
-    def _get_rnn_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
+    def _get_maybe_error_index_by_rnnlm(scores, n=3):
         """
-        取疑似错字的位置，通过平均绝对离差（MAD）
-        :param scores: np.array
+        取疑似错字的位置，通过平均值上下三倍标准差之间属于正常点
+        :param scores: list, float
         :param threshold: 阈值越小，得到疑似错别字越多
         :return: 全部疑似错误字的index: list
         """
-        result = []
-        scores = np.array(scores)
-        if len(scores.shape) == 1:
-            scores = scores[:, None]
-        median = np.median(scores, axis=0)  # get median of all scores
-        margin_median = np.sqrt(np.sum((scores - median) ** 2, axis=-1))  # deviation from the median
-        # 平均绝对离差值
-        med_abs_deviation = np.median(margin_median)
-        if med_abs_deviation == 0:
-            return result
-        y_score = ratio * margin_median / med_abs_deviation
-        # 打平
-        scores = scores.flatten()
-        maybe_error_indices = np.where((y_score > threshold) & (scores < median))
+        std = np.std(scores, ddof=1)
+        mean = np.mean(scores)
+        down_limit = mean - n * std
+        upper_limit = mean + n * std
+        maybe_error_indices = np.where((scores > upper_limit) | (scores < down_limit))
         # 取全部疑似错误字的index
         result = list(maybe_error_indices[0])
         return result
@@ -364,13 +355,8 @@ class Detector(object):
             # 语言模型检测疑似错误字
             if self.enable_rnnlm:
                 scores = self.char_scores(sentence)
-                # avg_scores = [sum(scores) / len(scores)]
-                # ngram_avg_scores.append(avg_scores)
-
-                # 平均得分
-                # sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
                 # 取疑似错字信息
-                for i in self._get_maybe_error_index(scores):
+                for i in self._get_maybe_error_index_by_rnnlm(scores):
                     token = sentence[i]
                     # pass filter word
                     if self.is_filter_token(token):

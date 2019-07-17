@@ -80,6 +80,8 @@ text_list = ['欢迎来到王者农药',
              '妹妹走之前还得给他再个新电脑',
              '项目做的比较急，吊唁的package不多，如果有更好的方案，求告知，谢谢啦！'
              ]
+
+error_sentences.extend(text_list)
 for line in error_sentences:
     print(pycorrector.detect(line))
     correct_sent = pycorrector.correct(line)
