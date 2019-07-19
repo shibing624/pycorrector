@@ -244,6 +244,7 @@ class Inference:
         beam_copy = beam_attn_out.topk(1, dim=3)[1].squeeze(-1)
         beam_copy = beam_copy[:, :, 0].transpose(0, 1)
         wdidx_copy = beam_copy.data.cpu().numpy()
+
         gen_text = beam_seq.data.cpu().numpy()[0, 0]
         gen_text = [self.id2vocab[wd] if wd in self.id2vocab else ext_id2oov[wd] for wd in gen_text]
         gen_text = gen_text[1:]
@@ -255,11 +256,12 @@ class Inference:
                 break
             if gen_text[j] == PAD_TOKEN:
                 gen_text[j] = ''
+        gen_text.insert(0, src_arr[0][0])
         return ''.join(gen_text)
 
     def infer(self, text):
-        a, b, c, d, e = self._encode_text(text)
-        gen_text = self._beam_search(a, b, c, d, e)
+        ext_id2oov, src_var, src_var_ex, src_arr, src_msk = self._encode_text(text)
+        gen_text = self._beam_search(ext_id2oov, src_var, src_var_ex, src_arr, src_msk)
         return gen_text
 
 
@@ -280,9 +282,10 @@ if __name__ == "__main__":
         gen = inference.infer(i)
         print('input:', i, 'output:', gen)
 
-    # infer test file
-    infer_by_file(model_path=config.model_path,
-                  output_dir=config.output_dir,
-                  test_path=config.test_path,
-                  predict_out_path=config.predict_out_path,
-                  vocab_path=config.vocab_path)
+    if not os.path.exists(config.predict_out_path):
+        # infer test file
+        infer_by_file(model_path=config.model_path,
+                      output_dir=config.output_dir,
+                      test_path=config.test_path,
+                      predict_out_path=config.predict_out_path,
+                      vocab_path=config.vocab_path)
