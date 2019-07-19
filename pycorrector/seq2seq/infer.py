@@ -12,7 +12,7 @@ from torch.autograd import Variable
 sys.path.append('../..')
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.data_reader import create_batch_file, process_minibatch_explicit_test, \
-    show_progress, UNK_TOKEN, load_word_dict, PAD_TOKEN
+    show_progress, load_word_dict, PAD_TOKEN, END_TOKEN, UNK_TOKEN
 from pycorrector.seq2seq.beam_search import fast_beam_search
 from pycorrector.seq2seq.seq2seq_model import Seq2Seq
 from pycorrector.utils.logger import logger
@@ -107,7 +107,10 @@ def infer_by_file(model_path,
                     for j in range(len(gen_text)):
                         if gen_text[j] == UNK_TOKEN:
                             gen_text[j] = src_arr[b][wdidx_copy[b, j]]
-                    arr.append(' '.join(gen_text))
+                        if gen_text[j] == END_TOKEN:
+                            gen_text = gen_text[:j]
+                            break
+                    arr.append(''.join(gen_text))
                     arr.append(trg_arr[b])
                     f.write(' '.join(arr) + '\n')
 
@@ -249,7 +252,10 @@ class Inference:
             for j in range(len(gen_text)):
                 if gen_text[j] == UNK_TOKEN:
                     gen_text[j] = src_arr[b][wdidx_copy[b, j]]
-            arr.append(' '.join(gen_text))
+                if gen_text[j] == END_TOKEN:
+                    gen_text = gen_text[:j]
+                    break
+            arr.append(''.join(gen_text))
             arr.append(src_arr[b])
 
         return arr
@@ -261,12 +267,8 @@ class Inference:
 
 
 if __name__ == "__main__":
-    infer_by_file(model_path=config.model_path,
-                  output_dir=config.output_dir,
-                  test_path=config.test_path,
-                  predict_out_path=config.predict_out_path,
-                  vocab_path=config.vocab_path)
     inputs = [
+        '少先队员因该给老人让坐',
         '少先队员应该给老人让坐',
         '没有解决这个问题，',
         '由我起开始做。',
@@ -280,6 +282,9 @@ if __name__ == "__main__":
     for i in inputs:
         inference.infer(i)
 
-    while True:
-        input_str = input('input your string:')
-        inference.infer(input_str)
+    # infer test file
+    infer_by_file(model_path=config.model_path,
+                  output_dir=config.output_dir,
+                  test_path=config.test_path,
+                  predict_out_path=config.predict_out_path,
+                  vocab_path=config.vocab_path)
