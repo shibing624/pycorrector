@@ -120,14 +120,14 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、`transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`指导，
-各模型可独立运行，相互之间无依赖。
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、
+`transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
-各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
+各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`为例：
 
-seq2seq_attention 模型使用示例:
+seq2seq 模型使用示例:
 
 #### 配置
 
@@ -136,37 +136,43 @@ seq2seq_attention 模型使用示例:
 
 #### 数据预处理
 ```
-cd seq2seq_attention
+cd seq2seq
 # 数据预处理
-python3 preprocess.py
+python preprocess.py
 
 ```
-自动新建文件夹output，在output下生成train.txt和test.txt文件，文件内容示例：
+自动新建文件夹output，在output下生成`train.txt`和`test.txt`文件，以TAB（"\t"）间隔错误文本和纠正文本，文件内容示例：
 
 ```
-src: 不 然 的 话 ， 两 方 面 的 问 题 都 不 能 决 绝 ， 而 对 双 方 导 致 不 良 影 响 。
-dst: 不 然 的 话 ， 两 方 面 的 问 题 都 不 能 解 决 ， 而 对 双 方 产 生 不 良 影 响 。
-src: 你 们 的 这 种 精 神 使 我 更 加 勇 气 ， 努 力 学 习 。
-dst: 你 们 的 这 种 精 神 使 我 增 加 勇 气 ， 努 力 学 习 。
+据科学理论，被动吸烟者的危害比吸烟者更厉害。	据科学理论，被动吸烟者受到的危害比吸烟者更厉害。
+希望少吸烟。	希望烟民们少吸烟。
+但其实禁烟这种事情非常难。	但禁烟这种事情其实非常难。
 ```
+
 
 #### 训练
 ```
-# 训练
-python3 train.py
+python train.py
 ```
+训练过程截图：
+![train image](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/seq2seq_train.png)
+
 
 #### 预测
 ```
-# 预测
-python3 infer.py
+python infer.py
 ```
 
 
-预测输出效果样例:
+预测输出效果样例：
+```
+input: 少先队员因该给老人让坐 output: 少先队员因该给老人让座
+input: 少先队员应该给老人让坐 output: 少先队员应该给老人让座
+input: 没有解决这个问题， output: 没有解决这个问题，，
+input: 由我起开始做。 output: 由我起开始做
+input: 由我起开始做 output: 由我开始做
 
-![long correct result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/long_text.png)
-
+```
 
 
 ## 自定义语言模型
@@ -192,6 +198,7 @@ python3 infer.py
 - [x] 添加中文语法错误检测及纠正能力
 - [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
 - [x] seq2seq_attention 添加dropout，减少过拟合
+- [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
 
 
 ## 参考
@@ -203,7 +210,7 @@ python3 infer.py
 5. [《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]](http://aclweb.org/anthology/W14-6822)
 6. [《Neural Language Correction with Character-Based Attention》[Ziang Xie, 2016]](https://arxiv.org/pdf/1603.09727.pdf)
 7. [《Chinese Spelling Check System Based on Tri-gram Model》[Qiang Huang, 2014]](http://www.anthology.aclweb.org/W/W14/W14-6827.pdf)
-
+8. [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
 
 ----
 
