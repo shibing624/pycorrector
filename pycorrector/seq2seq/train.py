@@ -50,10 +50,14 @@ def train(train_path=config.train_path,
           save_model_batch_num=config.save_model_batch_num,
           gpu_id=config.gpu_id):
     print('Training model...')
-    use_cuda = torch.cuda.is_available() and gpu_id > -1
-    if use_cuda:
-        device = torch.device('cuda:{}'.format(gpu_id))
-        torch.cuda.set_device(gpu_id)
+
+    if gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+        if torch.cuda.is_available():
+            device = torch.device('cuda:{}'.format(gpu_id))
+            torch.cuda.set_device(gpu_id)
+        else:
+            device = torch.device('cpu')
     else:
         device = torch.device('cpu')
     print('device:', device)
