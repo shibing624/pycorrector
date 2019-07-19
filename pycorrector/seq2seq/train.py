@@ -117,17 +117,12 @@ def train(train_path=config.train_path,
     # train models
     losses = []
     start_time = time.time()
-    cclb = 0
     last_model_path = ''
+    model.train()
     for epoch in range(uf_model[0], epochs):
         n_batch = create_batch_file(output_dir, file_type='train', file_path=train_path, batch_size=batch_size)
         print('The number of batches: {}'.format(n_batch))
         for batch_id in range(n_batch):
-            if cclb == 0 and batch_id <= uf_model[1]:
-                continue
-            else:
-                cclb += 1
-
             ext_id2oov, src_arr, trg_input_arr, src_arr_ex, trg_output_arr_ex = process_minibatch_explicit(
                 batch_id=batch_id,
                 output_dir=output_dir,
