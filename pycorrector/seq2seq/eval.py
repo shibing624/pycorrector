@@ -9,9 +9,10 @@ import time
 import numpy as np
 import torch
 from torch.autograd import Variable
+
 sys.path.append('../..')
 from pycorrector.seq2seq.data_reader import create_batch_file, process_minibatch_explicit, \
-    show_progress
+    show_progress, PAD_TOKEN
 
 
 def eval(model, model_path, val_path, output_dir, batch_size, vocab2id, src_seq_lens, trg_seq_lens, device):
@@ -27,7 +28,9 @@ def eval(model, model_path, val_path, output_dir, batch_size, vocab2id, src_seq_
         if not os.path.exists(val_path):
             print("error, val file not found.", val_path)
             return
-        val_batch = create_batch_file(output_dir=output_dir, file_type='validate', file_path=val_path,
+        val_batch = create_batch_file(output_dir=output_dir,
+                                      file_type='validate',
+                                      file_path=val_path,
                                       batch_size=batch_size)
         print('The number of batches (test): {}'.format(val_batch))
         for batch_id in range(batch_size):
@@ -50,7 +53,7 @@ def eval(model, model_path, val_path, output_dir, batch_size, vocab2id, src_seq_
             trg_output_var_ex = trg_output_var_ex.to(device)
 
             weight_mask = torch.ones(len(vocab2id) + len(ext_id2oov)).to(device)
-            weight_mask[vocab2id['<pad>']] = 0
+            weight_mask[vocab2id[PAD_TOKEN]] = 0
             loss_criterion = torch.nn.NLLLoss(weight=weight_mask).to(device)
 
             logits, attn_, p_gen, loss_cv = model(src_var.to(device), trg_input_var.to(device))

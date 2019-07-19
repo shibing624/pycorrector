@@ -9,16 +9,15 @@ from codecs import open
 from collections import Counter
 
 # Define constants associated with the usual special tokens.
-PAD_ID = 0
-GO_ID = 1
-END_ID = 2
-UNK_ID = 3
-
 PAD_TOKEN = 'PAD'
 GO_TOKEN = 'GO'
 END_TOKEN = 'END'
 UNK_TOKEN = 'UNK'
 
+# PAD_ID = 0
+# GO_ID = 1
+# END_ID = 2
+# UNK_ID = 3
 
 def save_word_dict(dict_data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
@@ -274,7 +273,6 @@ def process_minibatch_explicit_test(batch_id,
 
     src_wt = [itm[:src_lens] for itm in src_wt]
     src_msk = [itm + [0.0] * (src_lens - len(itm)) for itm in src_wt]
-    # src_msk = Variable(torch.FloatTensor(src_wt))
 
     src_arr = [itm[:src_lens] for itm in src_arr]
     src_arr = [itm + [PAD_TOKEN] * (src_lens - len(itm)) for itm in src_arr]

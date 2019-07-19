@@ -12,7 +12,7 @@ from torch.autograd import Variable
 
 sys.path.append('../..')
 from pycorrector.seq2seq import config
-from pycorrector.seq2seq.data_reader import PAD_ID, save_word_dict, create_batch_file, process_minibatch_explicit, \
+from pycorrector.seq2seq.data_reader import PAD_TOKEN, save_word_dict, create_batch_file, process_minibatch_explicit, \
     build_dataset, read_vocab
 from pycorrector.utils.logger import logger
 from pycorrector.seq2seq.seq2seq_model import Seq2Seq
@@ -54,8 +54,7 @@ def train(train_path=config.train_path,
     if gpu_id > -1:
         os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
         if torch.cuda.is_available():
-            device = torch.device('cuda:{}'.format(gpu_id))
-            torch.cuda.set_device(gpu_id)
+            device = torch.device('cuda')
         else:
             device = torch.device('cpu')
     else:
@@ -149,7 +148,7 @@ def train(train_path=config.train_path,
             trg_output_var_ex = trg_output_var_ex.to(device)
 
             weight_mask = torch.ones(len(vocab2id) + len(ext_id2oov)).to(device)
-            weight_mask[PAD_ID] = 0
+            weight_mask[vocab2id[PAD_TOKEN]] = 0
             loss_criterion = torch.nn.NLLLoss(weight=weight_mask).to(device)
 
             logits, attn_, p_gen, loss_cv = model(src_var, trg_input_var)
@@ -182,8 +181,6 @@ def train(train_path=config.train_path,
                 (end_time - start_time) / 3600.0])
 
             if batch_id % save_model_batch_num == 0:
-                with open(os.path.join(save_model_dir, 'loss.txt'), 'a', encoding='utf-8') as f:
-                    f.write(str(losses) + '\n')
                 model_path = os.path.join(save_model_dir, 'seq2seq_' + str(epoch) + '_' + str(batch_id) + '.model')
                 with open(model_path, 'wb') as f:
                     torch.save(model.state_dict(), f)
@@ -202,7 +199,8 @@ def train(train_path=config.train_path,
             del logits, attn_, p_gen, loss_cv, loss
 
         with open(os.path.join(save_model_dir, 'loss.txt'), 'a', encoding='utf-8') as f:
-            f.write(str(losses) + '\n')
+            for i in losses:
+                f.write(str(i) + '\n')
         model_path = os.path.join(save_model_dir, 'seq2seq_' + str(epoch) + '_' + str(batch_id) + '.model')
         with open(model_path, 'wb') as f:
             torch.save(model.state_dict(), f)
@@ -213,6 +211,7 @@ def train(train_path=config.train_path,
     # Eval model
     eval(model, last_model_path, val_path, output_dir, batch_size, vocab2id, src_seq_lens, trg_seq_lens, device)
     logger.info("Eval has finished.")
+
 
 if __name__ == "__main__":
     train()

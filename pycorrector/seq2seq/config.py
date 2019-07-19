@@ -25,15 +25,15 @@ vocab_path = os.path.join(output_dir, 'vocab.txt')
 vocab_max_size = 50000
 vocab_min_count = 5
 
-batch_size = 8
-epochs = 10
+batch_size = 32
+epochs = 30
 gpu_id = 0
 save_model_batch_num = 100
 
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')
 
-model_path = os.path.join(save_model_dir, 'seq2seq_model_2_1.model')
+model_path = os.path.join(save_model_dir, 'seq2seq_model_9_500.model')
 
 predict_out_path = os.path.join(output_dir, 'test_out.txt')
 if not os.path.exists(output_dir):
