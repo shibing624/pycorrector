@@ -33,7 +33,7 @@ save_model_batch_num = 100
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')
 
-model_path = os.path.join(save_model_dir, 'seq2seq_model_9_500.model')
+model_path = os.path.join(save_model_dir, 'seq2seq_9_500.model')
 
 predict_out_path = os.path.join(output_dir, 'test_out.txt')
 if not os.path.exists(output_dir):
