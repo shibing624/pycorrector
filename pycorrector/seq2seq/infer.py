@@ -244,21 +244,18 @@ class Inference:
         beam_copy = beam_attn_out.topk(1, dim=3)[1].squeeze(-1)
         beam_copy = beam_copy[:, :, 0].transpose(0, 1)
         wdidx_copy = beam_copy.data.cpu().numpy()
-        arr = []
-        for b in range(len(src_arr)):
-            gen_text = beam_seq.data.cpu().numpy()[b, 0]
-            gen_text = [self.id2vocab[wd] if wd in self.id2vocab else ext_id2oov[wd] for wd in gen_text]
-            gen_text = gen_text[1:]
-            for j in range(len(gen_text)):
-                if gen_text[j] == UNK_TOKEN:
-                    gen_text[j] = src_arr[b][wdidx_copy[b, j]]
-                if gen_text[j] == END_TOKEN:
-                    gen_text = gen_text[:j]
-                    break
-            arr.append(''.join(gen_text))
-            arr.append(src_arr[b])
-
-        return arr
+        gen_text = beam_seq.data.cpu().numpy()[0, 0]
+        gen_text = [self.id2vocab[wd] if wd in self.id2vocab else ext_id2oov[wd] for wd in gen_text]
+        gen_text = gen_text[1:]
+        for j in range(len(gen_text)):
+            if gen_text[j] == UNK_TOKEN:
+                gen_text[j] = src_arr[0][wdidx_copy[0, j]]
+            if gen_text[j] == END_TOKEN:
+                gen_text = gen_text[:j]
+                break
+            if gen_text[j] == PAD_TOKEN:
+                gen_text[j] = ''
+        return ''.join(gen_text)
 
     def infer(self, text):
         a, b, c, d, e = self._encode_text(text)
@@ -281,7 +278,7 @@ if __name__ == "__main__":
                           model_path=config.model_path)
     for i in inputs:
         gen = inference.infer(i)
-        print(gen)
+        print('input:', i, 'output:', gen)
 
     # infer test file
     infer_by_file(model_path=config.model_path,
