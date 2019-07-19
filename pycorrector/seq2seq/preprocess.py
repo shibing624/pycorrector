@@ -11,15 +11,6 @@ from xml.dom import minidom
 from sklearn.model_selection import train_test_split
 
 from pycorrector.seq2seq import config
-from pycorrector.tokenizer import segment
-
-split_symbol = ['，', '。', '？', '！']
-
-
-def split_2_short_text(sentence):
-    for i in split_symbol:
-        sentence = sentence.replace(i, i + '\t')
-    return sentence.split('\t')
 
 
 def parse_xml_file(path):
@@ -35,20 +26,11 @@ def parse_xml_file(path):
         correction = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
 
-        texts = split_2_short_text(text)
-        corrections = split_2_short_text(correction)
-        if len(texts) != len(corrections):
-            print('error:' + text + '\t' + correction)
-            continue
-        for i in range(len(texts)):
-            if len(texts[i]) > 40:
-                print('error:' + texts[i] + '\t' + corrections[i])
-                continue
-            source = segment(texts[i], cut_type='char')
-            target = segment(corrections[i], cut_type='char')
-            pair = [source, target]
-            if pair not in data_list:
-                data_list.append(pair)
+        source = text.strip()
+        target = correction.strip()
+        pair = [source, target]
+        if pair not in data_list:
+            data_list.append(pair)
     return data_list
 
 
@@ -56,8 +38,7 @@ def _save_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for src, dst in data_list:
-            f.write('src: ' + ' '.join(src) + '\n')
-            f.write('dst: ' + ' '.join(dst) + '\n')
+            f.write(src + '\t' + dst + '\n')
             count += 1
         print("save line size:%d to %s" % (count, data_path))
 

@@ -18,19 +18,23 @@ output_dir = os.path.join(pwd_path, 'output')
 # Training data path.
 train_path = os.path.join(output_dir, 'train.txt')
 # Validation data path.
+val_path = os.path.join(output_dir, 'test.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
-input_vocab_path = os.path.join(output_dir, 'input_vocab.txt')
-target_vocab_path = os.path.join(output_dir, 'target_vocab.txt')
+vocab_path = os.path.join(output_dir, 'vocab.txt')
+vocab_max_size = 50000
+vocab_min_count = 5
 
-# config
-batch_size = 128
-epochs = 60
-rnn_hidden_dim = 256
+batch_size = 8
+epochs = 10
+gpu_id = 0
+save_model_batch_num = 100
+
 # Path of the model saved
-save_model_path = os.path.join(output_dir, 'cged_seq2seq_model.h5')
-encoder_model_path = os.path.join(output_dir, 'cged_seq2seq_encoder.h5')
-decoder_model_path = os.path.join(output_dir, 'cged_seq2seq_decoder.h5')
+save_model_dir = os.path.join(output_dir, 'models')
 
+model_path = os.path.join(save_model_dir, 'seq2seq_model_2_1.model')
+
+predict_out_path = os.path.join(output_dir, 'test_out.txt')
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

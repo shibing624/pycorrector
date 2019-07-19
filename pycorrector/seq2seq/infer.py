@@ -1,92 +1,111 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing <xuming624@qq.com>
-# Brief: 
+# Author: Tian Shi <tshi@vt.edu>, XuMing <xuming624@qq.com>
+# Brief:
 
-import numpy as np
-import tensorflow as tf
-from keras.models import load_model
 import sys
+import time
+
+import torch
+from torch.autograd import Variable
 
 sys.path.append('../..')
 from pycorrector.seq2seq import config
-from pycorrector.seq2seq.corpus_reader import CGEDReader, load_word_dict
-from pycorrector.seq2seq.reader import EOS_TOKEN, GO_TOKEN
-from pycorrector.utils.logger import logger
+from pycorrector.seq2seq.data_reader import create_batch_file, process_minibatch_explicit_test, \
+    show_progress, UNK_TOKEN, load_word_dict
+from pycorrector.seq2seq.beam_search import fast_beam_search
+from pycorrector.seq2seq.seq2seq_model import Seq2Seq
 
 
-class Infer(object):
-    def __init__(self, config=None):
-        train_path = config.train_path
-        encoder_model_path = config.encoder_model_path
-        decoder_model_path = config.decoder_model_path
-        save_input_token_path = config.input_vocab_path
-        save_target_token_path = config.target_vocab_path
+def infer_by_file(model_path,
+                  output_dir,
+                  test_path,
+                  predict_out_path,
+                  vocab_path,
+                  src_seq_lens=128,
+                  trg_seq_lens=128,
+                  beam_size=5,
+                  batch_size=1,
+                  device=torch.device('cpu')):
+    test_batch = create_batch_file(output_dir, 'test', test_path, batch_size=batch_size)
+    print('The number of batches (test): {}'.format(test_batch))
 
-        # load dict
-        self.input_token_index = load_word_dict(save_input_token_path)
-        self.target_token_index = load_word_dict(save_target_token_path)
+    vocab2id = load_word_dict(vocab_path)
+    id2vocab = {v: k for k, v in vocab2id.items()}
+    print('The vocabulary file:%s, size: %s' % (vocab_path, len(vocab2id)))
 
-        data_reader = CGEDReader(train_path)
-        input_texts, target_texts = data_reader.build_dataset(train_path)
-        self.max_input_texts_len = max([len(text) for text in input_texts])
-        self.max_target_texts_len = max([len(text) for text in target_texts])
-        logger.info("Data loaded.")
+    model = Seq2Seq(
+        src_vocab_size=len(vocab2id),
+        trg_vocab_size=len(vocab2id),
+        src_nlayer=1,
+        pointer_net=True,
+        shared_emb=True,
+        attn_decoder=True,
+        share_emb_weight=True,
+        device=device).to(device)
+    print(model)
 
-        # load model
-        self.encoder_model = load_model(encoder_model_path)
-        self.decoder_model = load_model(decoder_model_path)
-        logger.info("Loaded seq2seq model.")
-        self.graph = tf.get_default_graph()
+    model.eval()
+    with torch.no_grad():
+        print("Model file {}".format(model_path))
+        print("Batch Size = {}, Beam Size = {}".format(batch_size, beam_size))
+        model.load_state_dict(torch.load(model_path))
 
-    def _decode_sequence(self, encoder_input_data):
-        decoded_sentence = ''
-        with self.graph.as_default():
-            # Encode the input as state vectors.
-            states_value = self.encoder_model.predict(encoder_input_data)
+        start_time = time.time()
+        with open(predict_out_path, 'w', encoding='utf-8') as f:
+            for batch_id in range(test_batch):
+                ext_id2oov, src_var, src_var_ex, src_arr, src_msk, trg_arr = process_minibatch_explicit_test(
+                    batch_id=batch_id,
+                    output_dir=output_dir,
+                    batch_size=batch_size,
+                    vocab2id=vocab2id,
+                    src_lens=src_seq_lens)
 
-            # Generate empty target sequence of length 1.
-            target_seq = np.zeros((1, 1, len(self.target_token_index)))
-            # Populate the first character of target sequence with the start character.
-            # first_char = encoder_input_data[0]
-            target_seq[0, 0, self.target_token_index[GO_TOKEN]] = 1.0
+                src_var = Variable(torch.LongTensor(src_var)).to(device)
+                src_var_ex = Variable(torch.LongTensor(src_var_ex)).to(device)
+                src_msk = Variable(torch.FloatTensor(src_msk)).to(device)
 
-            reverse_target_char_index = dict(
-                (i, char) for char, i in self.target_token_index.items())
+                beam_seq, beam_prb, beam_attn_out = fast_beam_search(
+                    model=model,
+                    src_text=src_var,
+                    src_text_ex=src_var_ex,
+                    vocab2id=vocab2id,
+                    ext_id2oov=ext_id2oov,
+                    beam_size=beam_size,
+                    max_len=trg_seq_lens,
+                    network='lstm',
+                    pointer_net=True,
+                    oov_explicit=True,
+                    attn_decoder=True)
+                src_msk = src_msk.repeat(1, beam_size).view(src_msk.size(0), beam_size, src_seq_lens).unsqueeze(0)
+                # copy unknown words
+                beam_attn_out = beam_attn_out * src_msk
+                beam_copy = beam_attn_out.topk(1, dim=3)[1].squeeze(-1)
+                beam_copy = beam_copy[:, :, 0].transpose(0, 1)
+                wdidx_copy = beam_copy.data.cpu().numpy()
+                for b in range(len(trg_arr)):
+                    arr = []
+                    gen_text = beam_seq.data.cpu().numpy()[b, 0]
+                    gen_text = [id2vocab[wd] if wd in id2vocab else ext_id2oov[wd] for wd in gen_text]
+                    gen_text = gen_text[1:]
+                    for j in range(len(gen_text)):
+                        if gen_text[j] == UNK_TOKEN:
+                            gen_text[j] = src_arr[b][wdidx_copy[b, j]]
+                    arr.append(' '.join(gen_text))
+                    arr.append(trg_arr[b])
+                    f.write(' '.join(arr) + '\n')
 
-            for _ in range(self.max_target_texts_len):
-                output_tokens, h, c = self.decoder_model.predict([target_seq] + states_value)
-                # Sample a token
-                sampled_token_index = np.argmax(output_tokens[0, -1, :])
-                sampled_char = reverse_target_char_index[sampled_token_index]
-                # Exit condition: either hit max length
-                # or find stop character.
-                if sampled_char == EOS_TOKEN:
-                    break
-                decoded_sentence += sampled_char
-                # Update the target sequence (of length 1).
-                target_seq = np.zeros((1, 1, len(self.target_token_index)))
-                target_seq[0, 0, sampled_token_index] = 1.0
-                # Update states
-                states_value = [h, c]
-        return decoded_sentence
-
-    def infer(self, input_text):
-        encoder_input_data = np.zeros((1, self.max_input_texts_len, len(self.input_token_index)),
-                                      dtype='float32')
-        # one hot representation
-        for i, char in enumerate(input_text):
-            if char in self.input_token_index:
-                encoder_input_data[0, i, self.input_token_index[char]] = 1.0
-        # Take one sequence decoding.
-        decoded_sentence = self._decode_sequence(encoder_input_data)
-        logger.info('Input sentence:%s' % input_text)
-        logger.info('Decoded sentence:%s' % decoded_sentence)
+                end_time = time.time()
+                show_progress(batch_id, test_batch, str((end_time - start_time) / 3600)[:8] + "h")
 
 
 if __name__ == "__main__":
-    inference = Infer(config=config)
+    infer_by_file(model_path=config.model_path,
+         output_dir=config.output_dir,
+         test_path=config.test_path,
+         predict_out_path=config.predict_out_path,
+         vocab_path=config.vocab_path)
     inputs = [
-        '由我起开始做。',
+        '少先队员应该给老人让坐',
         '没有解决这个问题，',
         '由我起开始做。',
         '由我起开始做',
