@@ -5,6 +5,8 @@
 import torch
 from torch.autograd import Variable
 
+from .data_reader import PAD_TOKEN, END_TOKEN, UNK_TOKEN
+
 
 def tensor_transformer(input_seq, batch_size, beam_size):
     seq = input_seq.unsqueeze(2)
@@ -54,15 +56,15 @@ def fast_beam_search(
     else:
         encoder_hy, hidden_decoder_new, h_attn_new, past_attn_new, past_dehy_new = model.forward_encoder(src_text_rep)
 
-    beam_seq = Variable(torch.LongTensor(batch_size, beam_size, max_len + 1).fill_(vocab2id['<pad>'])).to(device)
-    beam_seq[:, :, 0] = vocab2id['<s>']
+    beam_seq = Variable(torch.LongTensor(batch_size, beam_size, max_len + 1).fill_(vocab2id[PAD_TOKEN])).to(device)
+    beam_seq[:, :, 0] = vocab2id[END_TOKEN]
     beam_prb = torch.FloatTensor(batch_size, beam_size).fill_(1.0)
-    last_wd = Variable(torch.LongTensor(batch_size, beam_size, 1).fill_(vocab2id['<s>'])).to(device)
+    last_wd = Variable(torch.LongTensor(batch_size, beam_size, 1).fill_(vocab2id[END_TOKEN])).to(device)
     beam_attn_out = Variable(torch.FloatTensor(max_len, batch_size, beam_size, src_seq_len).fill_(0.0)).to(device)
 
     for j in range(max_len):
         if oov_explicit:
-            last_wd[last_wd >= len(vocab2id)] = vocab2id['<unk>']
+            last_wd[last_wd >= len(vocab2id)] = vocab2id[UNK_TOKEN]
         if network == 'lstm':
             logits, (h0, c0), h_attn, past_attn, p_gen, attn_, past_dehy = model.forward_onestep_decoder(
                 j, last_wd.view(-1, 1), (h0_new, c0_new),
