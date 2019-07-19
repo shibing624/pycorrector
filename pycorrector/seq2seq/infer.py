@@ -136,7 +136,7 @@ class Inference:
                 device = torch.device('cpu')
         else:
             device = torch.device('cpu')
-        logger.info('device:', device)
+        print('device:', device)
         # load vocab
         self.vocab2id = load_word_dict(vocab_path)
         self.id2vocab = {v: k for k, v in self.vocab2id.items()}
