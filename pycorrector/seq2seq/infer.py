@@ -2,6 +2,7 @@
 # Author: Tian Shi <tshi@vt.edu>, XuMing <xuming624@qq.com>
 # Brief:
 
+import os
 import sys
 import time
 
@@ -26,7 +27,16 @@ def infer_by_file(model_path,
                   trg_seq_lens=128,
                   beam_size=5,
                   batch_size=1,
-                  device=torch.device('cpu')):
+                  gpu_id=0):
+    if gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+        if torch.cuda.is_available():
+            device = torch.device('cuda')
+        else:
+            device = torch.device('cpu')
+    else:
+        device = torch.device('cpu')
+    print('device:', device)
     test_batch = create_batch_file(output_dir, 'test', test_path, batch_size=batch_size)
     print('The number of batches (test): {}'.format(test_batch))
 
@@ -49,7 +59,12 @@ def infer_by_file(model_path,
     with torch.no_grad():
         print("Model file {}".format(model_path))
         print("Batch Size = {}, Beam Size = {}".format(batch_size, beam_size))
-        model.load_state_dict(torch.load(model_path))
+        try:
+            model.load_state_dict(torch.load(model_path))
+        except RuntimeError as e:
+            print('Load model to CPU')
+            # 把所有的张量加载到CPU中
+            model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
 
         start_time = time.time()
         with open(predict_out_path, 'w', encoding='utf-8') as f:
@@ -76,7 +91,8 @@ def infer_by_file(model_path,
                     network='lstm',
                     pointer_net=True,
                     oov_explicit=True,
-                    attn_decoder=True)
+                    attn_decoder=True,
+                    device=device)
                 src_msk = src_msk.repeat(1, beam_size).view(src_msk.size(0), beam_size, src_seq_lens).unsqueeze(0)
                 # copy unknown words
                 beam_attn_out = beam_attn_out * src_msk
@@ -106,7 +122,18 @@ class Inference:
                  trg_seq_lens=128,
                  beam_size=5,
                  batch_size=1,
-                 device=torch.device('cpu')):
+                 gpu_id=0):
+        use_gpu = False
+        if gpu_id > -1:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+            if torch.cuda.is_available():
+                device = torch.device('cuda')
+                use_gpu = True
+            else:
+                device = torch.device('cpu')
+        else:
+            device = torch.device('cpu')
+        logger.info('device:', device)
         # load vocab
         self.vocab2id = load_word_dict(vocab_path)
         self.id2vocab = {v: k for k, v in self.vocab2id.items()}
@@ -115,7 +142,11 @@ class Inference:
         # load model
         start_time = time.time()
         self.model = self._create_model(self.vocab2id, device)
-        self.model.load_state_dict(torch.load(model_path))
+        if use_gpu:
+            self.model.load_state_dict(torch.load(model_path))
+        else:
+            # 把所有的张量加载到CPU中
+            self.model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
         logger.info("Loaded model:%s, spend:%s s" % (model_path, time.time() - start_time))
 
         self.model.eval()
@@ -200,9 +231,11 @@ class Inference:
             network='lstm',
             pointer_net=True,
             oov_explicit=True,
-            attn_decoder=True)
-        src_msk = src_msk.repeat(1, self.beam_size).view(src_msk.size(0), self.beam_size, self.src_seq_lens).unsqueeze(
-            0)
+            attn_decoder=True,
+            device=self.device)
+        src_msk = src_msk.repeat(1, self.beam_size) \
+            .view(src_msk.size(0), self.beam_size, self.src_seq_lens) \
+            .unsqueeze(0)
         # copy unknown words
         beam_attn_out = beam_attn_out * src_msk
         beam_copy = beam_attn_out.topk(1, dim=3)[1].squeeze(-1)

@@ -25,7 +25,7 @@ def fast_beam_search(
         pointer_net=True,
         oov_explicit=True,
         attn_decoder=True,
-        device=torch.device("cpu")):
+        device=torch.device("cuda")):
     """
     fast beam search
     :param model:
@@ -39,14 +39,16 @@ def fast_beam_search(
     :param pointer_net:
     :param oov_explicit:
     :param attn_decoder:
+    :param device:
     :return:
     """
     batch_size = src_text.size(0)
     src_seq_len = src_text.size(1)
-    src_text_rep = src_text.unsqueeze(1).clone().repeat(1, beam_size, 1).view(-1, src_text.size(1)).to(device)
+    src_text_rep = src_text.unsqueeze(1).clone().repeat(1, beam_size, 1) \
+        .view(-1, src_text.size(1)).to(device)
     if oov_explicit:
-        src_text_rep_ex = src_text_ex.unsqueeze(1).clone().repeat(1, beam_size, 1).view(-1, src_text_ex.size(1)).to(
-            device)
+        src_text_rep_ex = src_text_ex.unsqueeze(1).clone().repeat(1, beam_size, 1) \
+            .view(-1, src_text_ex.size(1)).to(device)
     if network == 'lstm':
         encoder_hy, (h0_new, c0_new), h_attn_new, past_attn_new, past_dehy_new = model.forward_encoder(src_text_rep)
     else:
