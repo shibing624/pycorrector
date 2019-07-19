@@ -110,6 +110,9 @@ def infer_by_file(model_path,
                         if gen_text[j] == END_TOKEN:
                             gen_text = gen_text[:j]
                             break
+                        if gen_text[j] == PAD_TOKEN:
+                            gen_text[j] = ''
+                    gen_text.insert(0, src_arr[b][0])
                     arr.append(''.join(gen_text))
                     arr.append(trg_arr[b])
                     f.write(' '.join(arr) + '\n')
