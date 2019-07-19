@@ -280,7 +280,8 @@ if __name__ == "__main__":
     inference = Inference(vocab_path=config.vocab_path,
                           model_path=config.model_path)
     for i in inputs:
-        inference.infer(i)
+        gen = inference.infer(i)
+        print(gen)
 
     # infer test file
     infer_by_file(model_path=config.model_path,
