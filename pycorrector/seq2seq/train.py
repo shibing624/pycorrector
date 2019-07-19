@@ -185,7 +185,8 @@ def train(train_path=config.train_path,
                 end_time = time.time()
                 sen_pred = [id2vocab[x] if x in id2vocab else ext_id2oov[x] for x in word_prob[0]]
                 print('epoch={}, batch={}, loss={}, loss_cv={}, time_escape={}s={}h'.format(
-                    epoch, batch_id,
+                    epoch,
+                    batch_id,
                     loss.data.cpu().numpy(),
                     loss_cv.data.cpu().numpy()[0],
                     end_time - start_time, (end_time - start_time) / 3600.0
