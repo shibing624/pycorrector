@@ -269,7 +269,7 @@ class Detector(object):
         if len(scores.shape) == 1:
             scores = scores[:, None]
         median = np.median(scores, axis=0)  # get median of all scores
-        margin_median = np.sqrt(np.sum((scores - median) ** 2, axis=-1))  # deviation from the median
+        margin_median = np.abs(scores - median).flatten()  # deviation from the median
         # 平均绝对离差值
         med_abs_deviation = np.median(margin_median)
         if med_abs_deviation == 0:
