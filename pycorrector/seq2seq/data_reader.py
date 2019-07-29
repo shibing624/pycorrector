@@ -11,13 +11,9 @@ from collections import Counter
 # Define constants associated with the usual special tokens.
 PAD_TOKEN = 'PAD'
 GO_TOKEN = 'GO'
-END_TOKEN = 'END'
+EOS_TOKEN = 'EOS'
 UNK_TOKEN = 'UNK'
 
-# PAD_ID = 0
-# GO_ID = 1
-# END_ID = 2
-# UNK_ID = 3
 
 def save_word_dict(dict_data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
@@ -108,9 +104,9 @@ def process_minibatch_explicit(batch_id,
         for line in f:
             line = line.strip()
             parts = line.split('\t')
-            wrongs = list(parts[0])
-            wrongs = list(filter(None, wrongs))
-            for wd in wrongs:
+            lefts = list(parts[0])
+            lefts = list(filter(None, lefts))
+            for wd in lefts:
                 if wd not in vocab2id:
                     ext_vocab[wd] = {}
             rights = list(parts[1])
@@ -137,9 +133,10 @@ def process_minibatch_explicit(batch_id,
             if len(parts) != 2:
                 print("error line, part len not 2. ", line)
                 continue
+
             # trg
             rights = list(parts[1])
-            rights = list(filter(None, rights)) + [END_TOKEN]
+            rights = [GO_TOKEN] + list(filter(None, rights)) + [EOS_TOKEN]
             trg_lens.append(len(rights))
             # UNK
             right2id = [
@@ -157,23 +154,23 @@ def process_minibatch_explicit(batch_id,
             trg_arr_ex.append(right2id)
 
             # src
-            wrongs = list(parts[0])
-            wrongs = list(filter(None, wrongs))
-            src_lens.append(len(wrongs))
+            lefts = list(parts[0])
+            lefts = list(filter(None, lefts))
+            src_lens.append(len(lefts))
             # UNK
-            wrong2id = [
+            left2id = [
                 vocab2id[wd] if wd in vocab2id
                 else vocab2id[UNK_TOKEN]
-                for wd in wrongs
+                for wd in lefts
             ]
-            src_arr.append(wrong2id)
+            src_arr.append(left2id)
             # extend vocab
-            wrong2id = [
+            left2id = [
                 vocab2id[wd] if wd in vocab2id
                 else ext_vocab[wd]
-                for wd in wrongs
+                for wd in lefts
             ]
-            src_arr_ex.append(wrong2id)
+            src_arr_ex.append(left2id)
 
     src_max_lens = max_lens[0]
     trg_max_lens = max_lens[1]
@@ -226,10 +223,10 @@ def process_minibatch_explicit_test(batch_id,
         for line in f:
             line = line.strip()
             parts = line.split('\t')
-            wrongs = list(parts[0])
-            wrongs = list(filter(None, wrongs))
+            lefts = list(parts[0])
+            lefts = list(filter(None, lefts))
 
-            for wd in wrongs:
+            for wd in lefts:
                 if wd not in vocab2id:
                     ext_vocab[wd] = {}
         cnt = len(vocab2id)
@@ -250,20 +247,20 @@ def process_minibatch_explicit_test(batch_id,
             if len(parts) != 2:
                 print("error line, part len not 2. ", line)
                 continue
-            wrongs = list(parts[0])
-            wrongs = list(filter(None, wrongs))
-            src_arr.append(wrongs)
+            lefts = list(parts[0])
+            lefts = list(filter(None, lefts))
+            src_arr.append(lefts)
 
             rights = list(parts[1])
             rights = list(filter(None, rights))
             trg_arr.append(' '.join(rights))
 
-            wrong2id = [vocab2id[wd] if wd in vocab2id else vocab2id[UNK_TOKEN] for wd in wrongs]
-            src_idx.append(wrong2id)
-            wrong2id = [vocab2id[wd] if wd in vocab2id else ext_vocab[wd] for wd in wrongs]
-            src_idx_ex.append(wrong2id)
-            wrong2wt = [0.0 if wd in vocab2id else 1.0 for wd in wrongs]
-            src_wt.append(wrong2wt)
+            left2id = [vocab2id[wd] if wd in vocab2id else vocab2id[UNK_TOKEN] for wd in lefts]
+            src_idx.append(left2id)
+            left2id = [vocab2id[wd] if wd in vocab2id else ext_vocab[wd] for wd in lefts]
+            src_idx_ex.append(left2id)
+            left2wt = [0.0 if wd in vocab2id else 1.0 for wd in lefts]
+            src_wt.append(left2wt)
 
     src_idx = [itm[:src_lens] for itm in src_idx]
     src_var = [itm + [vocab2id[PAD_TOKEN]] * (src_lens - len(itm)) for itm in src_idx]
@@ -282,7 +279,7 @@ def process_minibatch_explicit_test(batch_id,
 
 def read_vocab(input_texts, max_size=50000, min_count=5):
     token_counts = Counter()
-    special_tokens = [PAD_TOKEN, GO_TOKEN, END_TOKEN, UNK_TOKEN]
+    special_tokens = [PAD_TOKEN, GO_TOKEN, EOS_TOKEN, UNK_TOKEN]
     for line in input_texts:
         for char in line.strip():
             char = char.strip()

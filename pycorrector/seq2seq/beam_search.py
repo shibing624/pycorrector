@@ -5,7 +5,7 @@
 import torch
 from torch.autograd import Variable
 
-from .data_reader import PAD_TOKEN, END_TOKEN, UNK_TOKEN
+from .data_reader import PAD_TOKEN, EOS_TOKEN, UNK_TOKEN
 
 
 def tensor_transformer(input_seq, batch_size, beam_size):
@@ -57,9 +57,9 @@ def fast_beam_search(
         encoder_hy, hidden_decoder_new, h_attn_new, past_attn_new, past_dehy_new = model.forward_encoder(src_text_rep)
 
     beam_seq = Variable(torch.LongTensor(batch_size, beam_size, max_len + 1).fill_(vocab2id[PAD_TOKEN])).to(device)
-    beam_seq[:, :, 0] = vocab2id[END_TOKEN]
+    beam_seq[:, :, 0] = vocab2id[EOS_TOKEN]
     beam_prb = torch.FloatTensor(batch_size, beam_size).fill_(1.0)
-    last_wd = Variable(torch.LongTensor(batch_size, beam_size, 1).fill_(vocab2id[END_TOKEN])).to(device)
+    last_wd = Variable(torch.LongTensor(batch_size, beam_size, 1).fill_(vocab2id[EOS_TOKEN])).to(device)
     beam_attn_out = Variable(torch.FloatTensor(max_len, batch_size, beam_size, src_seq_len).fill_(0.0)).to(device)
 
     for j in range(max_len):

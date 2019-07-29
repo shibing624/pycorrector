@@ -66,7 +66,7 @@ error_sentences = [
 ]
 
 
-d = Detector(enable_rnnlm=True)
+d = Detector(enable_rnnlm=False)
 for i in error_sentences:
     print(i, d.detect(i))
 

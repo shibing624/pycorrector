@@ -12,7 +12,7 @@ from torch.autograd import Variable
 sys.path.append('../..')
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.data_reader import create_batch_file, process_minibatch_explicit_test, \
-    show_progress, load_word_dict, PAD_TOKEN, END_TOKEN, UNK_TOKEN
+    show_progress, load_word_dict, PAD_TOKEN, EOS_TOKEN, UNK_TOKEN
 from pycorrector.seq2seq.beam_search import fast_beam_search
 from pycorrector.seq2seq.seq2seq_model import Seq2Seq
 from pycorrector.utils.logger import logger
@@ -107,12 +107,12 @@ def infer_by_file(model_path,
                     for j in range(len(gen_text)):
                         if gen_text[j] == UNK_TOKEN:
                             gen_text[j] = src_arr[b][wdidx_copy[b, j]]
-                        if gen_text[j] == END_TOKEN:
+                        if gen_text[j] == EOS_TOKEN:
                             gen_text = gen_text[:j]
                             break
                         if gen_text[j] == PAD_TOKEN:
                             gen_text[j] = ''
-                    gen_text.insert(0, src_arr[b][0])
+                    # gen_text.insert(0, src_arr[b][0])
                     arr.append(''.join(gen_text))
                     arr.append(trg_arr[b])
                     f.write(' '.join(arr) + '\n')
@@ -254,12 +254,12 @@ class Inference:
         for j in range(len(gen_text)):
             if gen_text[j] == UNK_TOKEN:
                 gen_text[j] = src_arr[0][wdidx_copy[0, j]]
-            if gen_text[j] == END_TOKEN:
+            if gen_text[j] == EOS_TOKEN:
                 gen_text = gen_text[:j]
                 break
             if gen_text[j] == PAD_TOKEN:
                 gen_text[j] = ''
-        gen_text.insert(0, src_arr[0][0])
+        # gen_text.insert(0, src_arr[0][0])
         return ''.join(gen_text)
 
     def infer(self, text):
