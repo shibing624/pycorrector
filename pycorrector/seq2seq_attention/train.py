@@ -66,11 +66,12 @@ def train(train_path='', test_path='', save_vocab_path='', attn_model_path='',
         char2id = {j: i for i, j in id2char.items()}
         save_word_dict(char2id, save_vocab_path)
 
-    model = Seq2seqAttnModel(chars,
+    model = Seq2seqAttnModel(len(char2id),
                              attn_model_path=attn_model_path,
                              hidden_dim=hidden_dim,
-                             gpu_id=gpu_id,
-                             dropout=dropout).build_model()
+                             dropout=dropout,
+                             gpu_id=gpu_id
+                             ).build_model()
     evaluator = Evaluate(model, attn_model_path, char2id, id2char, maxlen)
     model.fit_generator(data_generator(input_texts, target_texts, char2id, batch_size, maxlen),
                         steps_per_epoch=(len(input_texts) + batch_size - 1) // batch_size,

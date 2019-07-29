@@ -14,16 +14,19 @@ from pycorrector.seq2seq_attention.evaluate import gen_target
 from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
 
 
-class Inference(object):
-    def __init__(self, save_vocab_path='', attn_model_path='', maxlen=400):
+class Inference:
+    def __init__(self, save_vocab_path='', attn_model_path='', maxlen=400, gpu_id=0):
         if os.path.exists(save_vocab_path):
             self.char2id = load_word_dict(save_vocab_path)
             self.id2char = {int(j): i for i, j in self.char2id.items()}
-            self.chars = set([i for i in self.char2id.keys()])
         else:
             print('not exist vocab path')
-        seq2seq_attn_model = Seq2seqAttnModel(self.chars, attn_model_path=attn_model_path)
-        self.model = seq2seq_attn_model.build_model()
+        self.model = Seq2seqAttnModel(len(self.char2id),
+                                      attn_model_path=attn_model_path,
+                                      hidden_dim=128,
+                                      dropout=0.0,
+                                      gpu_id=gpu_id
+                                      ).build_model()
         self.maxlen = maxlen
 
     def infer(self, sentence):
@@ -43,7 +46,8 @@ if __name__ == "__main__":
     ]
     inference = Inference(save_vocab_path=config.save_vocab_path,
                           attn_model_path=config.attn_model_path,
-                          maxlen=400)
+                          maxlen=400,
+                          gpu_id=config.gpu_id)
     for i in inputs:
         target = inference.infer(i)
         print('input:' + i)

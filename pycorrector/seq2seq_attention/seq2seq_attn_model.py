@@ -65,9 +65,9 @@ class Interact(Layer):
                 input_shape[0][2] + input_shape[1][2] * 2)
 
 
-class Seq2seqAttnModel(object):
-    def __init__(self, chars, hidden_dim=128, attn_model_path=None, dropout=0.2, gpu_id=0):
-        self.chars = chars
+class Seq2seqAttnModel:
+    def __init__(self, vocab_size, hidden_dim=128, attn_model_path=None, dropout=0.2, gpu_id=0):
+        self.vocab_size = vocab_size
         self.hidden_dim = hidden_dim
         self.model_path = attn_model_path
         if gpu_id > -1:
@@ -90,12 +90,13 @@ class Seq2seqAttnModel(object):
         x_prior = ScaleShift()(x_one_hot)  # 学习输出的先验分布（target的字词很可能在input出现过）
 
         # embedding
-        embedding = Embedding(len(self.chars), self.hidden_dim)
+        embedding = Embedding(self.vocab_size, self.hidden_dim)
         x = embedding(x)
         y = embedding(y)
 
         # encoder，双层双向GRU; decoder，双层单向GRU
         if self.use_gpu:
+            print("use GPU")
             # encoder
             x = Bidirectional(CuDNNGRU(int(self.hidden_dim / 2), return_sequences=True))(x)
             x = Bidirectional(CuDNNGRU(int(self.hidden_dim / 2), return_sequences=True))(x)
@@ -103,6 +104,7 @@ class Seq2seqAttnModel(object):
             y = CuDNNGRU(self.hidden_dim, return_sequences=True)(y)
             y = CuDNNGRU(self.hidden_dim, return_sequences=True)(y)
         else:
+            print("use CPU")
             # encoder
             x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True, dropout=self.dropout))(x)
             x = Bidirectional(GRU(int(self.hidden_dim / 2), return_sequences=True, dropout=self.dropout))(x)
@@ -112,7 +114,7 @@ class Seq2seqAttnModel(object):
 
         xy = Interact()([y, x, x_mask])
         xy = Dense(512, activation='relu')(xy)
-        xy = Dense(len(self.chars))(xy)
+        xy = Dense(self.vocab_size)(xy)
         xy = Lambda(lambda x: (x[0] + x[1]) / 2)([xy, x_prior])  # 与先验结果平均
         xy = Activation('softmax')(xy)
 
@@ -135,7 +137,7 @@ class Seq2seqAttnModel(object):
         """
         x, x_mask = x
         x = K.cast(x, 'int32')
-        x = K.one_hot(x, len(self.chars))
+        x = K.one_hot(x, self.vocab_size)
         x = K.sum(x_mask * x, 1, keepdims=True)
         x = K.cast(K.greater(x, 0.5), 'float32')
         return x
