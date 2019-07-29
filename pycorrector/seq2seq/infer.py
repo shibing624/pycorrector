@@ -198,12 +198,12 @@ class Inference:
         src_wt = []
 
         src_arr.append(tokens)
-        wrong2id = [self.vocab2id[wd] if wd in self.vocab2id else self.vocab2id[UNK_TOKEN] for wd in tokens]
-        src_idx.append(wrong2id)
-        wrong2id = [self.vocab2id[wd] if wd in self.vocab2id else ext_vocab[wd] for wd in tokens]
-        src_idx_ex.append(wrong2id)
-        wrong2wt = [0.0 if wd in self.vocab2id else 1.0 for wd in tokens]
-        src_wt.append(wrong2wt)
+        left2id = [self.vocab2id[wd] if wd in self.vocab2id else self.vocab2id[UNK_TOKEN] for wd in tokens]
+        src_idx.append(left2id)
+        left2id = [self.vocab2id[wd] if wd in self.vocab2id else ext_vocab[wd] for wd in tokens]
+        src_idx_ex.append(left2id)
+        left2wt = [0.0 if wd in self.vocab2id else 1.0 for wd in tokens]
+        src_wt.append(left2wt)
 
         src_idx = [itm[:self.src_seq_lens] for itm in src_idx]
         src_var = [itm + [self.vocab2id[PAD_TOKEN]] * (self.src_seq_lens - len(itm)) for itm in src_idx]

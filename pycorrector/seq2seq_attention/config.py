@@ -30,7 +30,7 @@ epochs = 40
 rnn_hidden_dim = 128
 maxlen = 400
 dropout = 0.0
-use_gpu = False
+gpu_id = 0
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

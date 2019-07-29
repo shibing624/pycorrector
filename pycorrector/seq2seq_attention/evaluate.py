@@ -39,7 +39,7 @@ def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3, max_targ
         yid = []
         scores = []
         for k in range(len(xid)):
-            if _yid[k][-1] == char2id[EOS_TOKEN]:  # 找到<end>就返回
+            if _yid[k][-1] == char2id[EOS_TOKEN]:  # 找到EOS就返回
                 return id2str(_yid[k][1:-1], id2char)
             else:
                 yid.append(_yid[k])

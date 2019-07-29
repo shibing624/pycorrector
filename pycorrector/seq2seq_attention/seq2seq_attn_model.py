@@ -66,11 +66,15 @@ class Interact(Layer):
 
 
 class Seq2seqAttnModel(object):
-    def __init__(self, chars, hidden_dim=128, attn_model_path=None, use_gpu=False, dropout=0.2):
+    def __init__(self, chars, hidden_dim=128, attn_model_path=None, dropout=0.2, gpu_id=0):
         self.chars = chars
         self.hidden_dim = hidden_dim
         self.model_path = attn_model_path
-        self.use_gpu = use_gpu
+        if gpu_id > -1:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
+
+        use_gpu = K.tensorflow_backend._get_available_gpus()
+        self.use_gpu = True if use_gpu else False
         self.dropout = dropout
 
     def build_model(self):

@@ -42,7 +42,7 @@ def get_validation_data(input_texts, target_texts, char2id, maxlen=400):
 
 
 def train(train_path='', test_path='', save_vocab_path='', attn_model_path='',
-          batch_size=64, epochs=100, maxlen=400, hidden_dim=128, dropout=0.2, use_gpu=False):
+          batch_size=64, epochs=100, maxlen=400, hidden_dim=128, dropout=0.2, gpu_id=0):
     data_reader = CGEDReader(train_path)
     input_texts, target_texts = data_reader.build_dataset(train_path)
     test_input_texts, test_target_texts = data_reader.build_dataset(test_path)
@@ -69,7 +69,7 @@ def train(train_path='', test_path='', save_vocab_path='', attn_model_path='',
     model = Seq2seqAttnModel(chars,
                              attn_model_path=attn_model_path,
                              hidden_dim=hidden_dim,
-                             use_gpu=use_gpu,
+                             gpu_id=gpu_id,
                              dropout=dropout).build_model()
     evaluator = Evaluate(model, attn_model_path, char2id, id2char, maxlen)
     model.fit_generator(data_generator(input_texts, target_texts, char2id, batch_size, maxlen),
@@ -89,4 +89,4 @@ if __name__ == "__main__":
           maxlen=config.maxlen,
           hidden_dim=config.rnn_hidden_dim,
           dropout=config.dropout,
-          use_gpu=config.use_gpu)
+          gpu_id=config.gpu_id)
