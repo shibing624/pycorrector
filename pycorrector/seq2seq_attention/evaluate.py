@@ -5,18 +5,17 @@
 """
 
 import numpy as np
-from keras.callbacks import Callback, EarlyStopping
+from keras.callbacks import Callback
 
-from pycorrector.seq2seq_attention.corpus_reader import str2id, id2str
-from pycorrector.seq2seq_attention.reader import GO_TOKEN, EOS_TOKEN
+from pycorrector.seq2seq_attention.data_reader import str2id, id2str, GO_TOKEN, EOS_TOKEN
 
 
-def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3, max_target_len=50):
+def gen_target(input_text, model, vocab2id, id2vocab, maxlen=400, topk=3, max_target_len=50):
     """beam search解码
     每次只保留topk个最优候选结果；如果topk=1，那么就是贪心搜索
     """
-    xid = np.array([str2id(input_text, char2id, maxlen)] * topk)  # 输入转id
-    yid = np.array([[char2id[GO_TOKEN]]] * topk)  # 解码均以GO开始
+    xid = np.array([str2id(input_text, vocab2id, maxlen)] * topk)  # 输入转id
+    yid = np.array([[vocab2id[GO_TOKEN]]] * topk)  # 解码均以GO开始
     scores = [0] * topk  # 候选答案分数
     for i in range(max_target_len):  # 强制要求target不超过maxlen字
         proba = model.predict([xid, yid])[:, i, :]  # 预测
@@ -39,14 +38,14 @@ def gen_target(input_text, model, char2id, id2char, maxlen=400, topk=3, max_targ
         yid = []
         scores = []
         for k in range(len(xid)):
-            if _yid[k][-1] == char2id[EOS_TOKEN]:  # 找到EOS就返回
-                return id2str(_yid[k][1:-1], id2char)
+            if _yid[k][-1] == vocab2id[EOS_TOKEN]:  # 找到EOS就返回
+                return id2str(_yid[k][1:-1], id2vocab)
             else:
                 yid.append(_yid[k])
                 scores.append(_scores[k])
         yid = np.array(yid)
     # 如果maxlen字都找不到EOS，直接返回
-    return id2str(yid[np.argmax(scores)][1:-1], id2char)
+    return id2str(yid[np.argmax(scores)][1:-1], id2vocab)
 
 
 class Evaluate(Callback):
@@ -71,3 +70,4 @@ class Evaluate(Callback):
         if logs['val_loss'] <= self.lowest:
             self.lowest = logs['val_loss']
             self.model.save_weights(self.attn_model_path)
+            print("best val_loss: ", self.lowest, " save model: ", self.attn_model_path)

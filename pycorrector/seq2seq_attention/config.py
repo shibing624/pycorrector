@@ -24,13 +24,16 @@ test_path = os.path.join(output_dir, 'test.txt')
 save_vocab_path = os.path.join(output_dir, 'vocab.txt')
 attn_model_path = os.path.join(output_dir, 'attn_model.weight')
 
-# config
+vocab_max_size = 50000
+vocab_min_count = 5
+
 batch_size = 64
 epochs = 40
 rnn_hidden_dim = 128
 maxlen = 400
 dropout = 0.0
 gpu_id = 0
+
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

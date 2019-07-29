@@ -61,12 +61,12 @@ def train(train_path=config.train_path,
         device = torch.device('cpu')
     print('device:', device)
     source_texts, target_texts = build_dataset(train_path)
-    print('source_texts:', source_texts[0])
-    print('target_texts:', target_texts[0])
-
-    vocab2id = read_vocab(source_texts, max_size=vocab_max_size, min_count=vocab_min_count)
+    vocab2id = read_vocab(source_texts + target_texts, max_size=vocab_max_size, min_count=vocab_min_count)
     num_encoder_tokens = len(vocab2id)
     max_input_texts_len = max([len(text) for text in source_texts])
+
+    print('source_texts:', source_texts[0])
+    print('target_texts:', target_texts[0])
     print('num of samples:', len(source_texts))
     print('num of unique input tokens:', num_encoder_tokens)
     print('max sequence length for inputs:', max_input_texts_len)

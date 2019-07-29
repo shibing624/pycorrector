@@ -3,13 +3,13 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 import sys
 
 sys.path.append('../..')
-import os
 
 from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.corpus_reader import load_word_dict
+from pycorrector.seq2seq_attention.data_reader import load_word_dict
 from pycorrector.seq2seq_attention.evaluate import gen_target
 from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
 
@@ -17,11 +17,11 @@ from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
 class Inference:
     def __init__(self, save_vocab_path='', attn_model_path='', maxlen=400, gpu_id=0):
         if os.path.exists(save_vocab_path):
-            self.char2id = load_word_dict(save_vocab_path)
-            self.id2char = {int(j): i for i, j in self.char2id.items()}
+            self.vocab2id = load_word_dict(save_vocab_path)
+            self.id2vocab = {int(j): i for i, j in self.vocab2id.items()}
         else:
             print('not exist vocab path')
-        self.model = Seq2seqAttnModel(len(self.char2id),
+        self.model = Seq2seqAttnModel(len(self.vocab2id),
                                       attn_model_path=attn_model_path,
                                       hidden_dim=128,
                                       dropout=0.0,
@@ -30,7 +30,7 @@ class Inference:
         self.maxlen = maxlen
 
     def infer(self, sentence):
-        return gen_target(sentence, self.model, self.char2id, self.id2char, self.maxlen, topk=3)
+        return gen_target(sentence, self.model, self.vocab2id, self.id2vocab, self.maxlen, topk=3)
 
 
 if __name__ == "__main__":
