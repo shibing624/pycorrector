@@ -32,6 +32,7 @@ python preprocess.py
 download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB]
 ```
 
+
 generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char
 
 
