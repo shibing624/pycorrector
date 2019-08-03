@@ -18,16 +18,18 @@ This meta-algorithm can be used along with any attention based seq2seq model.
 The OOV words UNK in summaries are manually replaced with words in source articles using attention weights.
 
 ## preprocess
-```
-cd conv_seq2seq
+
 
 - toy train data
+```
+cd conv_seq2seq
 python preprocess.py
+
+```
 
 - big train data
 download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB]
 
-```
 
 generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char
 
@@ -68,5 +70,5 @@ input: 由我起开始做 output: 由我开始做
 
 ### reference
 1. [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
-2. [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
+2. [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
 2. [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
