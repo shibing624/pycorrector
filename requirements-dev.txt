@@ -11,3 +11,4 @@ torchtext
 pytorch-transformers
 OpenNMT-tf
 shutil
+fairseq

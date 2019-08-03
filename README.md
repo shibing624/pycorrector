@@ -48,11 +48,11 @@
 * kenlm：kenlm统计语言模型工具
 * rnn_lm：TensorFlow、PaddlePaddle均有实现栈式双向LSTM的语言模型
 * rnn_attention模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
-* rnn_crf模型：参考阿里巴巴2016参赛中文语法纠错比赛并取得第一名的方法
-* seq2seq模型：使用序列模型解决文本纠错任务，文本语法纠错任务中常用模型之一
+* rnn_crf模型：参考阿里巴巴2016参赛中文语法纠错比赛CGED2018并取得第一名的方法
 * seq2seq_attention模型：在seq2seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
 * transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
 * bert模型：中文fine-tuned模型，使用MASK特征纠正错字
+* conv_seq2seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩。
 
 
 ### 错误检测
