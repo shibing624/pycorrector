@@ -52,7 +52,7 @@
 * seq2seq_attention模型：在seq2seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
 * transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
 * bert模型：中文fine-tuned模型，使用MASK特征纠正错字
-* conv_seq2seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩。
+* conv_seq2seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩
 
 
 ### 错误检测
