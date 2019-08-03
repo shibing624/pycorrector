@@ -12,19 +12,19 @@ from pycorrector import __version__
 if sys.version_info < (3,):
     sys.exit('Sorry, Python3 is required for pycorrector.')
 
-with open('README.md') as f:
+with open('README.md', 'r', encoding='utf-8') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
+with open('LICENSE', 'r', encoding='utf-8') as f:
     license = f.read()
 
-with open('requirements.txt') as f:
+with open('requirements.txt', 'r', encoding='utf-8') as f:
     reqs = f.read()
 
 setup(
     name='pycorrector',
     version=__version__,
-    description='Chinese Text Error corrector',
+    description='Chinese Text Error Corrector',
     long_description=readme,
     long_description_content_type='text/markdown',
     author='XuMing',

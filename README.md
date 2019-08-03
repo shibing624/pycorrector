@@ -120,14 +120,14 @@ pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`seq2seq`、`seq2seq_attention`、
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`rnn_crf`、`conv_seq2seq`、`seq2seq_attention`、
 `transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
-各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`为例：
+各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
 
-seq2seq 模型使用示例:
+seq2seq_attention 模型使用示例:
 
 #### 配置
 
@@ -136,7 +136,7 @@ seq2seq 模型使用示例:
 
 #### 数据预处理
 ```
-cd seq2seq
+cd seq2seq_attention
 # 数据预处理
 python preprocess.py
 
@@ -189,6 +189,11 @@ input: 由我起开始做 output: 由我开始做
 
 网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11。尊重版权，传播请注明出处。
 
+## 中文纠错数据集
+1. NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
+训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[114.5MB]，该数据格式是原始文本，未做切词处理。
+2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8](https://pan.baidu.com/s/18JXm1KGmRu3Pe45jt2sYBQ)[190MB]，该数据集已经切词，可用作数据扩增
+3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
 
 ## 贡献及优化点
 
@@ -211,6 +216,7 @@ input: 由我起开始做 output: 由我开始做
 6. [《Neural Language Correction with Character-Based Attention》[Ziang Xie, 2016]](https://arxiv.org/pdf/1603.09727.pdf)
 7. [《Chinese Spelling Check System Based on Tri-gram Model》[Qiang Huang, 2014]](http://www.anthology.aclweb.org/W/W14/W14-6827.pdf)
 8. [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
+9. [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
 
 ----
 
