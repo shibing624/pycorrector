@@ -1,4 +1,4 @@
-# Neural Text Error Correction with CNN Sequence-to-Sequence Model
+# Neural Text Error Correction with Conv Seq2Seq Model
 
 
 ## Features
@@ -25,16 +25,7 @@ The OOV words UNK in summaries are manually replaced with words in source articl
 cd conv_seq2seq
 python preprocess.py
 ```
-
-- big train data
-
-download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB]
-
-
-
-generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char
-
-
+result:
 ```
 # train.src:
 吸 烟 对 人 的 健 康 有 害 处 ， 这 是 各 个 人 都 知 道 的 事 实 。
@@ -46,6 +37,15 @@ generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` an
 也 许 每 个 家 庭 都 有 子 女 而 担 心 子 女 的 现 在 和 未 来 。
 如 服 装 ， 若 有 一 个 很 流 行 的 样 式 ， 人 们 就 赶 快 地 追 求 。
 ```
+
+- big train data
+
+download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB]
+
+
+
+generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char
+
 
 
 ## train
