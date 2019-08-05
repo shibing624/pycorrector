@@ -51,7 +51,7 @@ setup(
     package_data={
         'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*',
                         'data/kenlm/people_chars_lm.klm', 'utils/*',
-                        'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'seq2seq/*',
+                        'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'conv_seq2seq/*',
                         'seq2seq_attention/*', 'transformer/*'],
     },
     test_suite='tests',

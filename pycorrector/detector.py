@@ -59,8 +59,8 @@ class Detector(object):
             except ImportError:
                 raise ImportError('pycorrector dependencies are not fully installed, '
                                   'they are required for statistical language model.'
-                                  'Please use "pip install kenlm" to install it, not support Win.'
-                                  'if you are Win, Please install tensorflow and set enable_rnnlm=True.')
+                                  'Please use "pip install kenlm" to install it.'
+                                  'if you are Win, Please install kenlm in cgwin.')
 
             self.lm = kenlm.Model(self.language_model_path)
             logger.debug('Loaded language model: %s, spend: %s s' % (self.language_model_path, str(time.time() - t1)))
@@ -92,8 +92,6 @@ class Detector(object):
                      (self.custom_confusion_path, len(self.custom_word_freq), str(t5 - t4)))
         self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_freq,
                                    custom_confusion_dict=self.custom_confusion)
-        t6 = time.time()
-        logger.info('Loaded dict ok, spend: %s s' % str(t6 - t1))
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -148,13 +146,13 @@ class Detector(object):
         self.check_detector_initialized()
         import kenlm
         self.lm = kenlm.Model(path)
-        logger.info('Loaded language model: %s' % path)
+        logger.debug('Loaded language model: %s' % path)
 
     def set_custom_confusion_dict(self, path):
         self.check_detector_initialized()
         custom_confusion = self._get_custom_confusion_dict(path)
         self.custom_confusion.update(custom_confusion)
-        logger.info('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
+        logger.debug('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
 
     def set_custom_word(self, path):
         self.check_detector_initialized()
@@ -167,7 +165,7 @@ class Detector(object):
                                    custom_confusion_dict=self.custom_confusion)
         for k, v in word_freqs.items():
             self.set_word_frequency(k, v)
-        logger.info('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
+        logger.debug('Loaded custom word path: %s, size: %d' % (path, len(word_freqs)))
 
     def enable_char_error(self, enable=True):
         """
