@@ -70,13 +70,15 @@ def gen_fairseq_data(source_lang,
 
 
 if __name__ == '__main__':
-    # train data
+    # toy train data
     data_list = []
     for path in config.raw_train_paths:
         data_list.extend(parse_xml_file(path))
     train_lst, val_lst = train_test_split(data_list, test_size=0.1)
     save_data(train_lst, config.train_src_path, config.train_trg_path)
     save_data(val_lst, config.val_src_path, config.val_trg_path)
+
+    # generate fairseq format data with toy train data
     gen_fairseq_data(config.train_src_path.split('.')[-1],
                      config.train_trg_path.split('.')[-1],
                      config.trainpref,

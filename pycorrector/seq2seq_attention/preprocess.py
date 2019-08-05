@@ -9,7 +9,7 @@ from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
-
+from pycorrector.tokenizer import segment
 from pycorrector.seq2seq_attention import config
 
 
@@ -26,7 +26,10 @@ def parse_xml_file(path):
         correction = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
 
-        pair = [text.strip(), correction.strip()]
+        source = segment(text.strip(), cut_type='char')
+        target = segment(correction.strip(), cut_type='char')
+
+        pair = [source, target]
         if pair not in data_list:
             data_list.append(pair)
     return data_list
@@ -36,7 +39,7 @@ def _save_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for src, dst in data_list:
-            f.write(src + '\t' + dst + '\n')
+            f.write(' '.join(src) + '\t' + ' '.join(dst) + '\n')
             count += 1
         print("save line size:%d to %s" % (count, data_path))
 

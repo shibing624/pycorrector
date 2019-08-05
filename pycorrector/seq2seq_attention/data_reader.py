@@ -82,7 +82,7 @@ def show_progress(curr, total, time=""):
 
 def str2id(s, vocab2id, maxlen):
     # 文字转id
-    return [vocab2id.get(c, vocab2id[UNK_TOKEN]) for c in s[:maxlen]]
+    return [vocab2id.get(c.strip(), vocab2id[UNK_TOKEN]) for c in s[:maxlen] if c.strip()]
 
 
 def padding(x, vocab2id):

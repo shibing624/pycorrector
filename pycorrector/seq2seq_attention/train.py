@@ -3,12 +3,13 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 import sys
 
-sys.path.append('../..')
-import os
-
 import numpy as np
+from keras.callbacks import EarlyStopping
+
+sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
 from pycorrector.seq2seq_attention.data_reader import build_dataset, read_vocab, str2id, padding, load_word_dict, \
@@ -73,11 +74,12 @@ def train(train_path='', test_path='', save_vocab_path='', attn_model_path='',
                              gpu_id=gpu_id
                              ).build_model()
     evaluator = Evaluate(model, attn_model_path, vocab2id, id2vocab, maxlen)
+    earlystop = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
     model.fit_generator(data_generator(source_texts, target_texts, vocab2id, batch_size, maxlen),
                         steps_per_epoch=(len(source_texts) + batch_size - 1) // batch_size,
                         epochs=epochs,
                         validation_data=get_validation_data(test_input_texts, test_target_texts, vocab2id, maxlen),
-                        callbacks=[evaluator])
+                        callbacks=[evaluator, earlystop])
 
 
 if __name__ == "__main__":

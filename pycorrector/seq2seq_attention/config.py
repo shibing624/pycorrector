@@ -8,10 +8,10 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 # Training data path.
 # chinese corpus
 raw_train_paths = [
-    os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
-    # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
 ]
 
 output_dir = os.path.join(pwd_path, 'output')
@@ -22,9 +22,9 @@ test_path = os.path.join(output_dir, 'test.txt')
 
 # seq2seq_attn_train config
 save_vocab_path = os.path.join(output_dir, 'vocab.txt')
-attn_model_path = os.path.join(output_dir, 'attn_model.weight')
+attn_model_path = os.path.join(output_dir, 'attn_model.h5')
 
-vocab_max_size = 50000
+vocab_max_size = 6000
 vocab_min_count = 5
 
 batch_size = 64
