@@ -191,7 +191,7 @@ input: 由我起开始做 output: 由我开始做
 
 ## 中文纠错数据集
 1. NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
-训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[114.5MB]，该数据格式是原始文本，未做切词处理。
+训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
 2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8](https://pan.baidu.com/s/18JXm1KGmRu3Pe45jt2sYBQ)[190MB]，该数据集已经切词，可用作数据扩增
 3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
 
