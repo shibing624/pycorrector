@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
+import os
 import sys
-
-sys.path.append('../..')
-
 from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
+
+sys.path.append('../..')
+
 from pycorrector.tokenizer import segment
 from pycorrector.conv_seq2seq import config
 
@@ -70,15 +71,17 @@ def gen_fairseq_data(source_lang,
 
 
 if __name__ == '__main__':
-    # toy train data
-    data_list = []
-    for path in config.raw_train_paths:
-        data_list.extend(parse_xml_file(path))
-    train_lst, val_lst = train_test_split(data_list, test_size=0.1)
-    save_data(train_lst, config.train_src_path, config.train_trg_path)
-    save_data(val_lst, config.val_src_path, config.val_trg_path)
+    # if exist download big data, only generate fairseq data
+    if not os.path.exists(config.train_src_path):
+        # not exist big data, generate toy train data
+        data_list = []
+        for path in config.raw_train_paths:
+            data_list.extend(parse_xml_file(path))
+        train_lst, val_lst = train_test_split(data_list, test_size=0.1)
+        save_data(train_lst, config.train_src_path, config.train_trg_path)
+        save_data(val_lst, config.val_src_path, config.val_trg_path)
 
-    # generate fairseq format data with toy train data
+    # generate fairseq format data with prepared train data
     gen_fairseq_data(config.train_src_path.split('.')[-1],
                      config.train_trg_path.split('.')[-1],
                      config.trainpref,

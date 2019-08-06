@@ -6,7 +6,7 @@ import os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # Training data path.
-# chinese corpus
+# toy chinese corpus
 raw_train_paths = [
     # os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
     # os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
@@ -21,15 +21,15 @@ train_src_path = os.path.join(output_dir, 'train.src')
 train_trg_path = os.path.join(output_dir, 'train.trg')
 
 # Validation data path.
-valpref = os.path.join(output_dir, 'val')
-val_src_path = os.path.join(output_dir, 'val.src')
-val_trg_path = os.path.join(output_dir, 'val.trg')
+valpref = os.path.join(output_dir, 'valid')
+val_src_path = os.path.join(output_dir, 'valid.src')
+val_trg_path = os.path.join(output_dir, 'valid.trg')
 
 
 # Path of the fairseq data saved
 data_bin_dir = os.path.join(output_dir, 'bin')
 
-test_path = os.path.join(output_dir, 'test.txt')
+test_path = os.path.join(output_dir, 'valid.src')
 
 vocab_path = os.path.join(output_dir, 'vocab.txt')
 vocab_max_size = 6000
@@ -43,6 +43,6 @@ gpu_id = -1
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')
 
-predict_out_path = os.path.join(output_dir, 'test_out.txt')
+predict_out_path = os.path.join(output_dir, 'valid.src.predict')
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

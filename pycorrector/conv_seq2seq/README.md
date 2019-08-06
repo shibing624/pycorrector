@@ -25,6 +25,9 @@ The OOV words UNK in summaries are manually replaced with words in source articl
 cd conv_seq2seq
 python preprocess.py
 ```
+
+generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char.
+
 result:
 ```
 # train.src:
@@ -40,13 +43,32 @@ result:
 
 - big train data
 
-download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB]
+1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `conv_seq2seq/output` folder.
+2. run `preprocess.py`.
+```
+python preprocess.py
+```
 
-
-
-generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char
-
-
+generate fairseq format data in `bin` folder:
+```
+> tree output
+output
+├── bin
+│   ├── dict.src.txt
+│   ├── dict.trg.txt
+│   ├── train.src-trg.src.bin
+│   ├── train.src-trg.src.idx
+│   ├── train.src-trg.trg.bin
+│   ├── train.src-trg.trg.idx
+│   ├── valid.src-trg.src.bin
+│   ├── valid.src-trg.src.idx
+│   ├── valid.src-trg.trg.bin
+│   └── valid.src-trg.trg.idx
+├── train.src
+├── train.trg
+├── val.src
+└── val.trg
+```
 
 ## train
 
