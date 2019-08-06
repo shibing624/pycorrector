@@ -49,10 +49,10 @@ result:
 python preprocess.py
 ```
 
-generate fairseq format data in `bin` folder:
+generate fairseq format data to `bin` folder:
 ```
 > tree conv_seq2seq/output
-output
+conv_seq2seq/output
 ├── bin
 │   ├── dict.src.txt
 │   ├── dict.trg.txt
@@ -66,8 +66,8 @@ output
 │   └── valid.src-trg.trg.idx
 ├── train.src
 ├── train.trg
-├── val.src
-└── val.trg
+├── valid.src
+└── valid.trg
 ```
 
 ## train
