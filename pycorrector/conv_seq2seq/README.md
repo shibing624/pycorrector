@@ -26,7 +26,7 @@ cd conv_seq2seq
 python preprocess.py
 ```
 
-generate toy train data(`train.src` and `train.trg`) and valid data(`val.src` and `val.trg`), segment by char.
+generate toy train data(`train.src` and `train.trg`) and valid data(`valid.src` and `valid.trg`), segment by char.
 
 result:
 ```
@@ -51,7 +51,7 @@ python preprocess.py
 
 generate fairseq format data in `bin` folder:
 ```
-> tree output
+> tree conv_seq2seq/output
 output
 ├── bin
 │   ├── dict.src.txt
