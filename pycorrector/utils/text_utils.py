@@ -10,8 +10,15 @@ from pycorrector.utils.langconv import Converter
 
 
 def is_chinese(uchar):
-    """判断一个unicode是否是汉字"""
-    if '\u4e00' <= uchar <= '\u9fa5':
+    cd = uchar
+    if sys.version_info < (3,):
+        if type(cd) is str:
+            cd = uchar.decode('utf-8')
+    else:
+        if type(cd) is not str:
+            cd = uchar.decode('utf-8')
+
+    if cd >= u'\u4e00' and cd <= u'\u9fa5':
         return True
     else:
         return False
