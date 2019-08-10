@@ -6,8 +6,8 @@ GPU_ID=0
 DATA_BIN_DIR="output/bin/"
 OUT_DIR="output/models"
 BATCH_SIZE=64
-MAX_LEN=100
-MAX_TOKENS=6400
+MAX_LEN=400
+MAX_TOKENS=25600
 SEED=1
 
 CUDA_VISIBLE_DEVICES="${GPU_ID}" python3 -m fairseq_cli.train \

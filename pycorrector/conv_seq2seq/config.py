@@ -35,13 +35,13 @@ vocab_path = os.path.join(output_dir, 'vocab.txt')
 vocab_max_size = 6000
 
 arch = 'fconv'
-batch_size = 32
-max_len = 128
-epochs = 50
-gpu_id = -1
+batch_size = 64
+max_len = 400
+# epochs = 50
 
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')
+best_model_path = os.path.join(save_model_dir, 'checkpoint_best.pt')
 
 predict_out_path = os.path.join(output_dir, 'valid.src.predict')
 if not os.path.exists(output_dir):
