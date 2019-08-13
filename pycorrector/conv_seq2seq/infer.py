@@ -14,11 +14,12 @@ from pycorrector.conv_seq2seq import config
 from pycorrector.conv_seq2seq import interactive
 
 
-def infer(model_path, vocab_dir, arch, test_data, max_len):
+def infer(model_path, vocab_dir, arch, test_data, max_len, temperature=0.8):
     parser = options.get_generation_parser(interactive=True)
     parser.set_defaults(arch=arch,
                         input=test_data,
                         max_tokens=max_len,
+                        temperature=temperature,
                         path=model_path)
     args = options.parse_args_and_arch(parser, input_args=[vocab_dir])
     return interactive.main(args)
@@ -44,7 +45,8 @@ if __name__ == '__main__':
                     vocab_dir=config.data_bin_dir,
                     arch=config.arch,
                     test_data=[' '.join(list(i)) for i in inputs],
-                    max_len=config.max_len)
+                    max_len=config.max_len,
+                    temperature=config.temperature)
     print("output:", outputs)
 
     # 通过文件预测
@@ -54,5 +56,3 @@ if __name__ == '__main__':
                     test_data=config.val_src_path,
                     max_len=config.max_len)
     print("output:", outputs)
-
-

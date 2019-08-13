@@ -3,7 +3,7 @@
 # Brief: infer with conv seq2seq model
 
 GPU_ID=0
-INPUT_FILE="output/val.src"
+INPUT_FILE="output/valid.src"
 OUTPUT_FILE="output/beamserch_out.txt"
 DATA_BIN_DIR="output/bin/"
 MODEL="output/models/checkpoint_best.pt"

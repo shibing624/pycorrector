@@ -25,7 +25,6 @@ valpref = os.path.join(output_dir, 'valid')
 val_src_path = os.path.join(output_dir, 'valid.src')
 val_trg_path = os.path.join(output_dir, 'valid.trg')
 
-
 # Path of the fairseq data saved
 data_bin_dir = os.path.join(output_dir, 'bin')
 
@@ -38,6 +37,11 @@ arch = 'fconv'
 batch_size = 64
 max_len = 400
 # epochs = 50
+
+
+# (float, optional): temperature, where values >1.0 produce more uniform samples
+# and values <1.0 produce sharper samples (default: 1.0)
+temperature = 0.8
 
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')
