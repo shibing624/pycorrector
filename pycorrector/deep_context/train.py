@@ -38,7 +38,6 @@ def train(train_path: str,
     use_cuda = torch.cuda.is_available() and gpu_id > -1
     if use_cuda:
         device = torch.device('cuda:{}'.format(gpu_id))
-        torch.cuda.set_device(gpu_id)
     else:
         device = torch.device('cpu')
 
