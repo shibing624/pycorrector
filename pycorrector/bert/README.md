@@ -10,7 +10,7 @@
 
 
 ### fine-tune
-使用pytorch-transformers(旧称pytorch-pretrained-BERT)的examples/lm_finetuning处理。
+使用![pytorch-transformers](https://github.com/huggingface/pytorch-transformers)(旧称pytorch-pretrained-BERT)的![examples/lm_finetuning](https://github.com/huggingface/pytorch-transformers/tree/master/examples/lm_finetuning)处理。
 1. 下载bert官方库的chinese_L-12_H-768_A-12模型(官方链接：https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)
 2. 数据预处理
 ```bash
@@ -29,13 +29,14 @@ python finetune_on_pregenerated.py \
 --pregenerated_data training/ \
 --bert_model chinese_L-12_H-768_A-12 \
 --do_lower_case \
---output_dir chinese_finetuned_lm/
+--output_dir chinese_finetuned_lm/ \
+--epochs 3
 ```
 4. 结果
 ```
 chinese_finetuned_lm
 ├── bert_config.json
-├── config.json  (copy by bert_config.json)
+├── config.json  (copy bert_config.json)
 ├── pytorch_model.bin
 └── vocab.txt
 ```

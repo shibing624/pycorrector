@@ -39,6 +39,7 @@ if __name__ == '__main__':
         '不能人类实现更美好的将来。',
         '这几年前时间，',
         '歌曲使人的感到快乐，',
+        '少先队员因该为老人让坐，',
         '会能够大幅减少互相抱怨的情况。'
     ]
     outputs = infer(model_path=config.best_model_path,

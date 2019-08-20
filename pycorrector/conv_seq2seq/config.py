@@ -41,7 +41,7 @@ max_len = 400
 
 # (float, optional): temperature, where values >1.0 produce more uniform samples
 # and values <1.0 produce sharper samples (default: 1.0)
-temperature = 0.8
+temperature = 1.0
 
 # Path of the model saved
 save_model_dir = os.path.join(output_dir, 'models')

@@ -12,7 +12,7 @@ from pycorrector.rnn_lm import config
 from pycorrector.rnn_lm.data_reader import process_data, generate_batch
 from pycorrector.rnn_lm.rnn_lm_model import rnn_model
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "4,5,6,7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 def main(_):
