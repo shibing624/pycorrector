@@ -89,7 +89,7 @@ class Detector(object):
         self.word_freq.update(self.custom_word_freq)
         t5 = time.time()
         logger.debug('Loaded custom word file: %s, size: %d, spend: %s s' %
-                     (self.custom_confusion_path, len(self.custom_word_freq), str(t5 - t4)))
+                     (self.custom_word_freq_path, len(self.custom_word_freq), str(t5 - t4)))
         self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_freq,
                                    custom_confusion_dict=self.custom_confusion)
         self.initialized_detector = True
