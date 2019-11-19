@@ -222,7 +222,8 @@ input: 由我起开始做 output: 由我开始做
 
 ## 讨论群
 ![image](https://user-images.githubusercontent.com/12003487/69050479-17fd9900-0a3d-11ea-8788-7a9898db2380.png)
-新建微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术。
+
+微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。
 
 ----
 
