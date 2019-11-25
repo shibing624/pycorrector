@@ -218,6 +218,12 @@ input: 由我起开始做 output: 由我开始做
 9. [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
 10. [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
 
+
+## 讨论群
+![image](https://user-images.githubusercontent.com/12003487/69050479-17fd9900-0a3d-11ea-8788-7a9898db2380.png)
+
+微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。
+
 ----
 
 # pycorrector
