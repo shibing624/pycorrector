@@ -8,7 +8,7 @@ sys.path.append('../..')
 from xml.dom import minidom
 
 from pycorrector.deep_context import config
-from pycorrector.tokenizer import segment
+from pycorrector.utils.tokenizer import segment
 
 
 def parse_xml_file(path):

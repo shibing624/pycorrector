@@ -48,7 +48,7 @@ PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:ht
 - run
  `python tests/bert_corrector_test.py`
 - result
-![result](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/bert_finetuned_ch_result.png)
+![result](../../docs/git_image/bert_finetuned_ch_result.png)
 
 ### 结论
 部分错字可以纠正，但也会过纠，甚至有语义改写的情况。
@@ -79,4 +79,4 @@ PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接:ht
 要求：人名日报数据以标题分段，即每个标题之前添加空行。（vim参考操作为  `:%s/原标题/\r原标题`）
 
 数据截图：
-![corpus](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/git_image/peoplecorpus.png)
+![corpus](../../docs/git_image/peoplecorpus.png)

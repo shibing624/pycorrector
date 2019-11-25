@@ -33,12 +33,12 @@ error_sentences = [
     '交通先行了怎么过去啊？',
 
 ]
-# for line in error_sentences:
-#     idx_errors = pycorrector.detect(line)
-#     print(idx_errors)
-#
-#     correct_sent = pycorrector.correct(line)
-#     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+for line in error_sentences:
+    idx_errors = pycorrector.detect(line)
+    print(idx_errors)
+
+    correct_sent = pycorrector.correct(line)
+    print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
 
 print('*' * 53)
 pycorrector.set_custom_confusion_dict(path='./my_confusion.txt')

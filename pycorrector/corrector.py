@@ -15,65 +15,6 @@ from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
 
 
-def load_char_set(path):
-    words = set()
-    with codecs.open(path, 'r', encoding='utf-8') as f:
-        for w in f:
-            words.add(w.strip())
-    return words
-
-
-def load_same_pinyin(path, sep='\t'):
-    """
-    加载同音字
-    :param path:
-    :param sep:
-    :return:
-    """
-    result = dict()
-    if not os.path.exists(path):
-        logger.warn("file not exists:" + path)
-        return result
-    with codecs.open(path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-            parts = line.split(sep)
-            if parts and len(parts) > 2:
-                key_char = parts[0]
-                same_pron_same_tone = set(list(parts[1]))
-                same_pron_diff_tone = set(list(parts[2]))
-                value = same_pron_same_tone.union(same_pron_diff_tone)
-                if len(key_char) > 1 or not value:
-                    continue
-                result[key_char] = value
-    return result
-
-
-def load_same_stroke(path, sep='\t'):
-    """
-    加载形似字
-    :param path:
-    :param sep:
-    :return:
-    """
-    result = dict()
-    if not os.path.exists(path):
-        logger.warn("file not exists:" + path)
-        return result
-    with codecs.open(path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-            parts = line.split(sep)
-            if parts and len(parts) > 1:
-                for i, c in enumerate(parts):
-                    result[c] = set(list(parts[:i] + parts[i + 1:]))
-    return result
-
-
 class Corrector(Detector):
     def __init__(self, common_char_path=config.common_char_path,
                  same_pinyin_path=config.same_pinyin_path,
@@ -98,14 +39,73 @@ class Corrector(Detector):
         self.same_stroke_text_path = same_stroke_path
         self.initialized_corrector = False
 
+    @staticmethod
+    def load_char_set(path):
+        words = set()
+        with codecs.open(path, 'r', encoding='utf-8') as f:
+            for w in f:
+                words.add(w.strip())
+        return words
+
+    @staticmethod
+    def load_same_pinyin(path, sep='\t'):
+        """
+        加载同音字
+        :param path:
+        :param sep:
+        :return:
+        """
+        result = dict()
+        if not os.path.exists(path):
+            logger.warn("file not exists:" + path)
+            return result
+        with codecs.open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('#'):
+                    continue
+                parts = line.split(sep)
+                if parts and len(parts) > 2:
+                    key_char = parts[0]
+                    same_pron_same_tone = set(list(parts[1]))
+                    same_pron_diff_tone = set(list(parts[2]))
+                    value = same_pron_same_tone.union(same_pron_diff_tone)
+                    if len(key_char) > 1 or not value:
+                        continue
+                    result[key_char] = value
+        return result
+
+    @staticmethod
+    def load_same_stroke(path, sep='\t'):
+        """
+        加载形似字
+        :param path:
+        :param sep:
+        :return:
+        """
+        result = dict()
+        if not os.path.exists(path):
+            logger.warn("file not exists:" + path)
+            return result
+        with codecs.open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('#'):
+                    continue
+                parts = line.split(sep)
+                if parts and len(parts) > 1:
+                    for i, c in enumerate(parts):
+                        result[c] = set(list(parts[:i] + parts[i + 1:]))
+        return result
+
     def initialize_corrector(self):
         t1 = time.time()
         # chinese common char dict
-        self.cn_char_set = load_char_set(self.common_char_path)
+        self.cn_char_set = self.load_char_set(self.common_char_path)
         # same pinyin
-        self.same_pinyin = load_same_pinyin(self.same_pinyin_text_path)
+        self.same_pinyin = self.load_same_pinyin(self.same_pinyin_text_path)
         # same stroke
-        self.same_stroke = load_same_stroke(self.same_stroke_text_path)
+        self.same_stroke = self.load_same_stroke(self.same_stroke_text_path)
         logger.debug("Loaded same pinyin file: %s, same stroke file: %s, spend: %.3f s." % (
             self.same_pinyin_text_path, self.same_stroke_text_path, time.time() - t1))
         self.initialized_corrector = True

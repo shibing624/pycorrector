@@ -40,7 +40,6 @@ import pycorrector
 # 保险公司：流程出错一毛不陪 保险公司：流程出错一毛不赔
 
 
-# pycorrector.set_language_model_path(path='../pycorrector/data/test/people_chars.klm')
 error_sentences = [
     '这就是报应，赤-裸-裸的报应啊！',
     '搜索关注【落红小说】微亅信丨公亅众丨号 回复',

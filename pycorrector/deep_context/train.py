@@ -6,8 +6,6 @@
 
 import os
 import sys
-
-sys.path.append('../..')
 import time
 from codecs import open
 
@@ -15,6 +13,7 @@ import numpy as np
 import torch
 from torch import optim
 
+sys.path.append('../..')
 from pycorrector.deep_context import config
 from pycorrector.deep_context.data_util import write_embedding, write_config
 from pycorrector.deep_context.network import Context2vec

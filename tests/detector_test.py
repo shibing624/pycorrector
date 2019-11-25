@@ -5,8 +5,8 @@ import sys
 
 sys.path.append("../")
 from pycorrector.detector import Detector
-from pycorrector.tokenizer import segment
-
+from pycorrector.utils.tokenizer import segment
+from pycorrector.corrector import Corrector
 
 error_sentences = [
     '少先队员因该为老人让坐',
@@ -66,9 +66,10 @@ error_sentences = [
 ]
 
 
-d = Detector(enable_rnnlm=False)
+d = Corrector()
 for i in error_sentences:
     print(i, d.detect(i))
+    print(i, d.correct(i))
 
 
 sent1 = '少先队员应该为老人让座'
