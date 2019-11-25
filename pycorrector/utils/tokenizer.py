@@ -64,7 +64,7 @@ class Tokenizer(object):
     def tokenize(self, sentence):
         """
         切词并返回切词位置
-        :param sentence:
-        :return: (word, start_index, end_index) model='default'
+        :param sentence: query
+        :return: (w, start, start + width) model='default'
         """
         return list(self.model.tokenize(sentence))

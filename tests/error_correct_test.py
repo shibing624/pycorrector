@@ -6,8 +6,6 @@ import sys
 sys.path.append("../")
 import pycorrector
 
-# pycorrector.set_language_model_path(path='../pycorrector/data/cn/people_chars.klm')
-
 error_sentences = [
     '桥为什么修的想过山车一样',
     '我认识一个人张宁，他喜欢张玲，说了张林很多好话，张林为老人作了很多好事',  # [['玲', '令', 13, 14], ['张林为', '长林为', 24, 27]]
@@ -64,7 +62,23 @@ error_sentences = [
 
 ]
 
+error_sentences1 = ['能充几次呢？',
+                   '现在银色的K2P是MTK还是博通啊？',
+                   '这个到底有多辣',
+                   'U盘有送挂绳吗',
+                   '2周岁22斤宝宝用多大的啊',
+                   '果子酸吗？有烂的吗？',
+                   '生产日期怎么样 新嘛',
+                   '这纸厚度如何？质量怎么样',
+                   '想不想在来一次比赛',
+                   '权利的游戏第八季']
 for line in error_sentences:
+    print(line)
     print(pycorrector.detect(line))
-    correct_sent = pycorrector.correct(line)
-    print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+    print(pycorrector.correct(line))
+
+
+for line in error_sentences1:
+    print(line)
+    print(pycorrector.detect(line))
+    print(pycorrector.correct(line))

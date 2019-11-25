@@ -333,9 +333,6 @@ class Detector(object):
         self.check_detector_initialized()
         # 文本归一化
         sentence = uniform(sentence)
-        # 切词
-        tokens = self.tokenizer.tokenize(sentence)
-        # print(tokens)
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)
@@ -344,15 +341,17 @@ class Detector(object):
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_word_error_detect:
+            # 切词
+            tokens = self.tokenizer.tokenize(sentence)
             # 未登录词加入疑似错误词典
-            for word, begin_idx, end_idx in tokens:
+            for token, begin_idx, end_idx in tokens:
                 # pass filter word
-                if self.is_filter_token(word):
+                if self.is_filter_token(token):
                     continue
                 # pass in dict
-                if word in self.word_freq:
+                if token in self.word_freq:
                     continue
-                maybe_err = [word, begin_idx, end_idx, ErrorType.word]
+                maybe_err = [token, begin_idx, end_idx, ErrorType.word]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_char_error_detect:
@@ -381,6 +380,9 @@ class Detector(object):
                     token = sentence[i]
                     # pass filter word
                     if self.is_filter_token(token):
+                        continue
+                    # pass in stop word dict
+                    if token in self.stopwords:
                         continue
                     maybe_err = [token, i, i + 1, ErrorType.char]  # token, begin_idx, end_idx, error_type
                     self._add_maybe_error_item(maybe_err, maybe_errors)
