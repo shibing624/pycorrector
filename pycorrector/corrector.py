@@ -221,10 +221,8 @@ class Corrector(Detector):
         """
         detail = []
         self.check_corrector_initialized()
-        # 长句切分为短句
-        # sentences = re.split(r"；|，|。|\?\s|;\s|,\s", sentence)
         maybe_errors = self.detect(sentence)
-        # trick: 类似翻译模型，倒序处理
+        # 倒序处理
         maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=True)
         for item, begin_idx, end_idx, err_type in maybe_errors:
             # 纠错，逐个处理

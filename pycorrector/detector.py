@@ -3,6 +3,7 @@
 # Brief: error word detector
 import codecs
 import os
+import re
 import time
 
 import numpy as np
@@ -12,6 +13,11 @@ from pycorrector.utils.get_file import get_file
 from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string
 from pycorrector.utils.tokenizer import Tokenizer
+
+# \u4E00-\u9FD5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
+# \r\n|\s : whitespace characters. Will not be handled.
+re_han = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&\._]+)", re.U)
+re_skip = re.compile("(\r\n|\s)", re.U)
 
 PUNCTUATION_LIST = ".。,，,、?？:：;；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-_——「」"
 
@@ -287,11 +293,11 @@ class Detector(object):
         return result
 
     @staticmethod
-    def _get_maybe_error_index_by_rnnlm(scores, n=3):
+    def _get_maybe_error_index_by_stddev(scores, n=1):
         """
-        取疑似错字的位置，通过平均值上下三倍标准差之间属于正常点
+        取疑似错字的位置，通过平均值上下n倍标准差之间属于正常点
         :param scores: list, float
-        :param threshold: 阈值越小，得到疑似错别字越多
+        :param n: n倍
         :return: 全部疑似错误字的index: list
         """
         std = np.std(scores, ddof=1)
@@ -321,11 +327,6 @@ class Detector(object):
         return result
 
     def detect(self, sentence):
-        """
-        检测句子中的疑似错误信息，包括[词、位置、错误类型]
-        :param sentence:
-        :return: list[list], [error_word, begin_pos, end_pos, error_type]
-        """
         maybe_errors = []
         if not sentence.strip():
             return maybe_errors
@@ -333,11 +334,32 @@ class Detector(object):
         self.check_detector_initialized()
         # 文本归一化
         sentence = uniform(sentence)
+        # 长句切分为短句
+        blocks = re_han.split(sentence)
+        start_idx = 0
+        for blk in blocks:
+            if not blk:
+                continue
+            if re_han.match(blk):
+                maybe_errors += self._detect_short(blk, start_idx)
+                start_idx += len(blk)
+            else:
+                start_idx += len(blk)
+        return maybe_errors
+
+    def _detect_short(self, sentence, start_idx=0):
+        """
+        检测句子中的疑似错误信息，包括[词、位置、错误类型]
+        :param sentence:
+        :param start_idx:
+        :return: list[list], [error_word, begin_pos, end_pos, error_type]
+        """
+        maybe_errors = []
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)
             if idx > -1:
-                maybe_err = [confuse, idx, idx + len(confuse), ErrorType.confusion]
+                maybe_err = [confuse, idx + start_idx, idx + len(confuse) + start_idx, ErrorType.confusion]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_word_error_detect:
@@ -351,7 +373,7 @@ class Detector(object):
                 # pass in dict
                 if token in self.word_freq:
                     continue
-                maybe_err = [token, begin_idx, end_idx, ErrorType.word]
+                maybe_err = [token, begin_idx + start_idx, end_idx + start_idx, ErrorType.word]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         if self.is_char_error_detect:
@@ -376,7 +398,7 @@ class Detector(object):
                 # 取拼接后的n-gram平均得分
                 sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
                 # 取疑似错字信息
-                for i in self._get_maybe_error_index(sent_scores):
+                for i in self._get_maybe_error_index_by_stddev(sent_scores):
                     token = sentence[i]
                     # pass filter word
                     if self.is_filter_token(token):
@@ -384,7 +406,8 @@ class Detector(object):
                     # pass in stop word dict
                     if token in self.stopwords:
                         continue
-                    maybe_err = [token, i, i + 1, ErrorType.char]  # token, begin_idx, end_idx, error_type
+                    maybe_err = [token, i + start_idx, i + 1 + start_idx,
+                                 ErrorType.char]  # token, begin_idx, end_idx, error_type
                     self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warn("index error, sentence:" + sentence + str(ie))
