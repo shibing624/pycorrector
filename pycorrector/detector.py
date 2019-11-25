@@ -24,6 +24,13 @@ class ErrorType(object):
 
 
 class Detector(object):
+    pre_trained_language_models = {
+        # 百度提供语言模型 2.95GB
+        'zh_giga.no_cna_cmn.prune01244.klm': 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
+        # 人民日报训练语言模型 20MB
+        'people_chars_lm.klm': 'https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm'
+    }
+
     def __init__(self, language_model_path=config.language_model_path,
                  word_freq_path=config.word_freq_path,
                  custom_word_freq_path=config.custom_word_freq_path,
@@ -53,8 +60,11 @@ class Detector(object):
                               'Please use "pip install kenlm" to install it.'
                               'if you are Win, Please install kenlm in cgwin.')
         if not os.path.exists(self.language_model_path):
+            filename = self.pre_trained_language_models.get(self.language_model_path,
+                                                            'zh_giga.no_cna_cmn.prune01244.klm')
+            url = self.pre_trained_language_models.get(filename)
             get_file(
-                config.language_model_name, config.language_model_url, extract=True,
+                filename, url, extract=True,
                 cache_dir=config.USER_DIR,
                 cache_subdir=config.USER_DATA_DIR,
                 verbose=1

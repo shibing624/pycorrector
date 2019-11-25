@@ -12,10 +12,7 @@ if not USER_DIR.exists():
 USER_DATA_DIR = USER_DIR.joinpath('datasets')
 if not USER_DATA_DIR.exists():
     USER_DATA_DIR.mkdir()
-# language model path(百度语言模型,2.95G)
-language_model_url = 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm'
-language_model_name = 'zh_giga.no_cna_cmn.prune01244.klm'
-language_model_path = os.path.join(USER_DATA_DIR, language_model_name)
+language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 通用分词词典文件  format: 词语 词频
