@@ -267,7 +267,7 @@ class Detector(object):
             maybe_errors.append(maybe_err)
 
     @staticmethod
-    def _get_maybe_error_index(scores, ratio=0.6745, threshold=1.4):
+    def _get_maybe_error_index(scores, ratio=0.6745, threshold=2):
         """
         取疑似错字的位置，通过平均绝对离差（MAD）
         :param scores: np.array
@@ -293,7 +293,7 @@ class Detector(object):
         return result
 
     @staticmethod
-    def _get_maybe_error_index_by_stddev(scores, n=1):
+    def _get_maybe_error_index_by_stddev(scores, n=2):
         """
         取疑似错字的位置，通过平均值上下n倍标准差之间属于正常点
         :param scores: list, float
@@ -398,7 +398,7 @@ class Detector(object):
                 # 取拼接后的n-gram平均得分
                 sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
                 # 取疑似错字信息
-                for i in self._get_maybe_error_index_by_stddev(sent_scores):
+                for i in self._get_maybe_error_index(sent_scores):
                     token = sentence[i]
                     # pass filter word
                     if self.is_filter_token(token):
