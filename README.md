@@ -207,16 +207,16 @@ input: 由我起开始做 output: 由我开始做
 
 ## 参考
 
-1. [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
-2. [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
-3. [《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]](http://www.aclweb.org/anthology/W/W14/W14-6835.pdf)
-4. [《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]](http://www.aclweb.org/anthology/O/O13/O13-1005.pdf)
-5. [《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]](http://aclweb.org/anthology/W14-6822)
-6. [《Neural Language Correction with Character-Based Attention》[Ziang Xie, 2016]](https://arxiv.org/pdf/1603.09727.pdf)
-7. [《Chinese Spelling Check System Based on Tri-gram Model》[Qiang Huang, 2014]](http://www.anthology.aclweb.org/W/W14/W14-6827.pdf)
-8. [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
-9. [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
-10. [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
+* [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
+* [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
+* [《Chinese Spelling Error Detection and Correction Based on Language Model, Pronunciation, and Shape》[Yu, 2013]](http://www.aclweb.org/anthology/W/W14/W14-6835.pdf)
+* [《Chinese Spelling Checker Based on Statistical Machine Translation》[Chiu, 2013]](http://www.aclweb.org/anthology/O/O13/O13-1005.pdf)
+* [《Chinese Word Spelling Correction Based on Rule Induction》[yeh, 2014]](http://aclweb.org/anthology/W14-6822)
+* [《Neural Language Correction with Character-Based Attention》[Ziang Xie, 2016]](https://arxiv.org/pdf/1603.09727.pdf)
+* [《Chinese Spelling Check System Based on Tri-gram Model》[Qiang Huang, 2014]](http://www.anthology.aclweb.org/W/W14/W14-6827.pdf)
+* [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
+* [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
+* [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
 
 
 ## 讨论群
