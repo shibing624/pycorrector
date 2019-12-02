@@ -7,8 +7,6 @@ from .utils.logger import set_log_level
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 from .utils.text_utils import traditional2simplified, simplified2traditional
 
-__version__ = '0.2.0'
-
 corrector = Corrector()
 get_same_pinyin = corrector.get_same_pinyin
 get_same_stroke = corrector.get_same_stroke

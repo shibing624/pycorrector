@@ -7,7 +7,8 @@ import sys
 
 from setuptools import setup, find_packages
 
-from pycorrector import __version__
+__version__ = None
+exec(open('pycorrector/version.py').read())
 
 if sys.version_info < (3,):
     sys.exit('Sorry, Python3 is required for pycorrector.')
@@ -50,7 +51,7 @@ setup(
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
         'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*',
-                        'data/kenlm/people_chars_lm.klm', 'utils/*',
+                        'utils/*',
                         'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'conv_seq2seq/*',
                         'seq2seq_attention/*', 'transformer/*'],
     },
