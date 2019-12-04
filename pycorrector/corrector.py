@@ -206,7 +206,7 @@ class Corrector(Detector):
 
     def lm_correct_item(self, item, maybe_right_items, before_sent, after_sent):
         """
-        通过语音模型纠正字词错误
+        通过语言模型纠正字词错误
         """
         if item not in maybe_right_items:
             maybe_right_items.append(item)
@@ -237,10 +237,10 @@ class Corrector(Detector):
                 if not is_chinese_string(item):
                     continue
                 # 取得所有可能正确的词
-                maybe_right_items = self.generate_items(item)
-                if not maybe_right_items:
+                candidates = self.generate_items(item)
+                if not candidates:
                     continue
-                corrected_item = self.lm_correct_item(item, maybe_right_items, before_sent, after_sent)
+                corrected_item = self.lm_correct_item(item, candidates, before_sent, after_sent)
             # output
             if corrected_item != item:
                 sentence = before_sent + corrected_item + after_sent
