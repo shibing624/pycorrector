@@ -3,6 +3,10 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import sys
+
+sys.path.append('..')
+import pycorrector
 
 # 那天花板上的钻石可比鸡弹（（蛋））还大啊。
 # 才般（（搬））进装修好没多久的新宫殿里。
@@ -39,11 +43,6 @@ text = ['那天花板上的钻石可比鸡弹还大啊',
         '有老怪坐阵难怪他们高枕无忧了。',
         '有了这一番旁证博引。',
         ]
-
-import sys
-
-sys.path.append('..')
-import pycorrector
 
 
 def test1():

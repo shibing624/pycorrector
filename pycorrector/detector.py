@@ -55,6 +55,14 @@ class Detector(object):
         self.is_char_error_detect = True
         self.is_word_error_detect = True
         self.initialized_detector = False
+        self.lm = None
+        self.word_freq = None
+        self.custom_confusion = None
+        self.custom_word_freq = None
+        self.person_names = None
+        self.place_names = None
+        self.stopwords = None
+        self.tokenizer = None
 
     def initialize_detector(self):
         t1 = time.time()
@@ -395,20 +403,21 @@ class Detector(object):
                     avg_scores = [sum(scores[i:i + n]) / len(scores[i:i + n]) for i in range(len(sentence))]
                     ngram_avg_scores.append(avg_scores)
 
-                # 取拼接后的n-gram平均得分
-                sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
-                # 取疑似错字信息
-                for i in self._get_maybe_error_index(sent_scores):
-                    token = sentence[i]
-                    # pass filter word
-                    if self.is_filter_token(token):
-                        continue
-                    # pass in stop word dict
-                    if token in self.stopwords:
-                        continue
-                    maybe_err = [token, i + start_idx, i + 1 + start_idx,
-                                 ErrorType.char]  # token, begin_idx, end_idx, error_type
-                    self._add_maybe_error_item(maybe_err, maybe_errors)
+                if ngram_avg_scores:
+                    # 取拼接后的n-gram平均得分
+                    sent_scores = list(np.average(np.array(ngram_avg_scores), axis=0))
+                    # 取疑似错字信息
+                    for i in self._get_maybe_error_index(sent_scores):
+                        token = sentence[i]
+                        # pass filter word
+                        if self.is_filter_token(token):
+                            continue
+                        # pass in stop word dict
+                        if token in self.stopwords:
+                            continue
+                        maybe_err = [token, i + start_idx, i + start_idx + 1,
+                                     ErrorType.char]  # token, begin_idx, end_idx, error_type
+                        self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warn("index error, sentence:" + sentence + str(ie))
             except Exception as e:

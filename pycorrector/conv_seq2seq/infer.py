@@ -25,7 +25,7 @@ def infer(model_path, vocab_dir, arch, test_data, max_len, temperature):
     return interactive.main(args)
 
 
-def infer_interactive(model_path, vocab_dir, arch, max_len, temperature):
+def infer_interactive(model_path, vocab_dir, arch, max_len, temperature=1.0):
     return infer(model_path, vocab_dir, arch, '-', max_len, temperature)
 
 

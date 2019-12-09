@@ -3,6 +3,10 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import sys
+
+sys.path.append('..')
+import pycorrector
 
 text = ['做的最倒霉的一件事就帮尼哥檫脚。'
         '那天花板上的钻石可比鸡弹还大啊'
@@ -23,11 +27,6 @@ text = ['做的最倒霉的一件事就帮尼哥檫脚。'
         '有了这一番旁证博引。',
         '这个跟 原木纯品 那个啥区别？不是原木纸浆做的?'
         ]
-
-import sys
-
-sys.path.append('..')
-import pycorrector
 
 
 def demo1():

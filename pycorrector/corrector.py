@@ -38,6 +38,9 @@ class Corrector(Detector):
         self.same_pinyin_text_path = same_pinyin_path
         self.same_stroke_text_path = same_stroke_path
         self.initialized_corrector = False
+        self.cn_char_set = None
+        self.same_pinyin = None
+        self.same_stroke = None
 
     @staticmethod
     def load_char_set(path):
@@ -102,12 +105,17 @@ class Corrector(Detector):
         t1 = time.time()
         # chinese common char dict
         self.cn_char_set = self.load_char_set(self.common_char_path)
+
         # same pinyin
         self.same_pinyin = self.load_same_pinyin(self.same_pinyin_text_path)
+        t2 = time.time()
+        logger.debug("Loaded same pinyin file: %s, spend: %.3f s." % (
+            self.same_pinyin_text_path, t2 - t1))
+
         # same stroke
         self.same_stroke = self.load_same_stroke(self.same_stroke_text_path)
-        logger.debug("Loaded same pinyin file: %s, same stroke file: %s, spend: %.3f s." % (
-            self.same_pinyin_text_path, self.same_stroke_text_path, time.time() - t1))
+        logger.debug("Loaded same stroke file: %s, spend: %.3f s." % (
+            self.same_stroke_text_path, time.time() - t2))
         self.initialized_corrector = True
 
     def check_corrector_initialized(self):
@@ -204,14 +212,33 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fraction + 1]
 
-    def lm_correct_item(self, item, maybe_right_items, before_sent, after_sent):
+    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, n=5, threshold=50):
         """
         通过语言模型纠正字词错误
         """
-        if item not in maybe_right_items:
-            maybe_right_items.append(item)
-        corrected_item = min(maybe_right_items, key=lambda k: self.ppl_score(list(before_sent + k + after_sent)))
-        return corrected_item
+        result = cur_item
+        if cur_item not in candidates:
+            candidates.append(cur_item)
+
+        ppl_scores = {i: self.ppl_score(list(before_sent + i + after_sent)) for i in candidates}
+        sorted_ppl_scores = sorted(ppl_scores.items(), key=lambda d: d[1])
+
+        # 增加正确字词的修正范围，减少误纠
+        top_items = []
+        top_score = 0.0
+        for i, v in enumerate(sorted_ppl_scores):
+            v_word = v[0]
+            v_score = v[1]
+            if i == 0:
+                top_score = v_score
+                top_items.append(v_word)
+            elif i < n and v_score < top_score + threshold:
+                top_items.append(v_word)
+            else:
+                break
+        if cur_item not in top_items:
+            result = top_items[0]
+        return result
 
     def correct(self, sentence):
         """
@@ -222,30 +249,30 @@ class Corrector(Detector):
         detail = []
         self.check_corrector_initialized()
         maybe_errors = self.detect(sentence)
-        # 倒序处理
-        maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=True)
-        for item, begin_idx, end_idx, err_type in maybe_errors:
+        # 顺序处理
+        maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=False)
+        for cur_item, begin_idx, end_idx, err_type in maybe_errors:
             # 纠错，逐个处理
             before_sent = sentence[:begin_idx]
             after_sent = sentence[end_idx:]
 
             # 困惑集中指定的词，直接取结果
             if err_type == ErrorType.confusion:
-                corrected_item = self.custom_confusion[item]
+                corrected_item = self.custom_confusion[cur_item]
             else:
                 # 对非中文的错字不做处理
-                if not is_chinese_string(item):
+                if not is_chinese_string(cur_item):
                     continue
                 # 取得所有可能正确的词
-                candidates = self.generate_items(item)
+                candidates = self.generate_items(cur_item)
                 if not candidates:
                     continue
-                corrected_item = self.lm_correct_item(item, candidates, before_sent, after_sent)
+                corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent,
+                                                          n=5, threshold=50)
             # output
-            if corrected_item != item:
+            if corrected_item != cur_item:
                 sentence = before_sent + corrected_item + after_sent
-                # logger.debug('predict:' + item + '=>' + corrected_item)
-                detail_word = [item, corrected_item, begin_idx, end_idx]
+                detail_word = [cur_item, corrected_item, begin_idx, end_idx]
                 detail.append(detail_word)
         detail = sorted(detail, key=operator.itemgetter(2))
         return sentence, detail
