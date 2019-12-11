@@ -203,6 +203,8 @@ input: 由我起开始做 output: 由我开始做
 - [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
 - [x] seq2seq_attention 添加dropout，减少过拟合
 - [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
+- [ ] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
+- [ ] 升级代码，兼容TensorFlow 2.0库
 
 
 ## 参考

@@ -10,7 +10,7 @@ sys.path.append("../")
 from pycorrector import Corrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-model = Corrector(language_model_path=pwd_path + '/../pycorrector/data/kenlm/people_chars_lm.klm')
+model = Corrector(language_model_path=pwd_path + '/../pycorrector/data/people_chars_lm.klm')
 
 error_sentences = [
     '少先队员因该为老人让坐',

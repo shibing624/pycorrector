@@ -10,33 +10,33 @@
 
 
 ### fine-tune
-使用[pytorch-transformers](https://github.com/huggingface/pytorch-transformers)(旧称pytorch-pretrained-BERT)的[examples/lm_finetuning](https://github.com/huggingface/pytorch-transformers/blob/master/examples/run_lm_finetuning.py)处理。
-1. 下载bert官方库的chinese_L-12_H-768_A-12模型(官方链接：https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)
-2. 数据预处理
+使用[transformers](https://github.com/huggingface/transformers/blob/master/examples/run_lm_finetuning.py)(旧称pytorch-pretrained-BERT)的[examples/run_lm_finetuning](https://github.com/huggingface/transformers/blob/master/examples/run_lm_finetuning.py)处理。
+- fine-tune模型
 ```bash
-python pregenerate_training_data.py \
---train_corpus people2014_cged_wiki.txt \
---bert_model chinese_L-12_H-768_A-12/vocab.txt \
---do_lower_case \
---output_dir training/ \
---epochs_to_generate 3 \
---max_seq_len 256
-```
-3. fine-tune模型
-```bash
+
 export CUDA_VISIBLE_DEVICES=0,1,2
-python finetune_on_pregenerated.py \
---pregenerated_data training/ \
---bert_model chinese_L-12_H-768_A-12 \
---do_lower_case \
---output_dir chinese_finetuned_lm/ \
---epochs 3
+export TRAIN_FILE=people2014_cged_wiki.txt
+export TEST_FILE=people2014_cged_wiki.txt
+
+python run_lm_finetuning.py \
+    --output_dir=chinese_finetuned_lm \
+    --model_type=bert \
+    --model_name_or_path=bert-base-chinese \
+    --do_train \
+    --train_data_file=$TRAIN_FILE \
+    --do_eval \
+    --eval_data_file=$TEST_FILE \
+    --mlm
+    --num_train_epochs=3
+
+
 ```
-4. 结果
+- 结果
+该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型保存在`output_dir`中。
+
 ```
 chinese_finetuned_lm
-├── bert_config.json
-├── config.json  (copy bert_config.json)
+├── config.json
 ├── pytorch_model.bin
 └── vocab.txt
 ```
