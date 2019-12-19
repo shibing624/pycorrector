@@ -7,7 +7,7 @@ keras>=2.1.5
 keras-contrib==2.0.8
 torch>=0.4.1
 torchtext
-pytorch-transformers
-OpenNMT-tf
+transformers==2.2.1
+OpenNMT-tf==1.22.0
 shutil
-fairseq
+fairseq==0.7.2
