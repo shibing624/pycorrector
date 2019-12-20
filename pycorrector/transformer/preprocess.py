@@ -21,7 +21,7 @@ def split_2_short_text(sentence):
     return sentence.split('\t')
 
 
-def parse_xml_file(path):
+def parse_xml_file(path, use_short_text=False, maximum_length=200):
     print('Parse data from %s' % path)
     data_list = []
     dom_tree = minidom.parse(path)
@@ -34,14 +34,18 @@ def parse_xml_file(path):
         correction = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
 
-        texts = split_2_short_text(text)
-        corrections = split_2_short_text(correction)
+        if use_short_text:
+            texts = split_2_short_text(text)
+            corrections = split_2_short_text(correction)
+        else:
+            texts = [text]
+            corrections = [correction]
         if len(texts) != len(corrections):
-            # print('error:' + text + '\t' + correction)
+            print('error diff:' + text + '\t' + correction)
             continue
         for i in range(len(texts)):
-            if len(texts[i]) > 40:
-                # print('error:' + texts[i] + '\t' + corrections[i])
+            if len(texts[i]) > maximum_length:
+                print('error long:' + texts[i] + '\t' + corrections[i])
                 continue
             source = segment(texts[i], cut_type='char')
             target = segment(corrections[i], cut_type='char')
@@ -67,16 +71,12 @@ def transform_corpus_data(data_list, train_src_path, train_tgt_path, test_src_pa
     _save_data(test_lst, test_src_path, test_tgt_path)
 
 
-def touch_empty_file(file_path):
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write("")
-
-
 if __name__ == '__main__':
     # train data
     data_list = []
     for path in config.raw_train_paths:
-        data_list.extend(parse_xml_file(path))
+        data_list.extend(
+            parse_xml_file(path, use_short_text=config.use_short_text, maximum_length=config.maximum_length))
     transform_corpus_data(data_list,
                           config.src_train_path,
                           config.tgt_train_path,
