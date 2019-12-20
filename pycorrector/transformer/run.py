@@ -96,7 +96,9 @@ plt.xlabel('Depth')
 plt.xlim((0, 512))
 plt.ylabel('Position')
 plt.colorbar()
-plt.show() # 在这里左右边分别为原来2i 和 2i+1的特征
+# plt.show() # 在这里左右边分别为原来2i 和 2i+1的特征
+plt.savefig("position.png")
+plt.clf()
 
 # 3.掩码¶
 # 为了避免输入中padding的token对句子语义的影响，需要将padding位mark掉，原来为0的padding项的mark输出为1
@@ -436,6 +438,9 @@ temp_learing_rate = CustomSchedule(d_model)
 plt.plot(temp_learing_rate(tf.range(40000, dtype=tf.float32)))
 plt.xlabel('learning rate')
 plt.ylabel('train step')
+plt.savefig("train_step.png")
+plt.clf()
+
 
 loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,
                                                             reduction='none')
