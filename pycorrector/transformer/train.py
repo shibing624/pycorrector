@@ -53,6 +53,7 @@ def main(model_dir='',
         "source_vocabulary": vocab_path,
         "target_vocabulary": vocab_path
     })
+
     # opennmt train model
     train(model_dir,
           inputter,
