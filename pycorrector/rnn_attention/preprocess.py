@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 from pycorrector.rnn_attention import config
-from pycorrector.tokenizer import segment
+from pycorrector.utils.tokenizer import segment
 
 
 def parse_xml_file(path):

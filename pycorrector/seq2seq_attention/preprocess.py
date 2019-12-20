@@ -9,7 +9,7 @@ from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
-from pycorrector.tokenizer import segment
+from pycorrector.utils.tokenizer import segment
 from pycorrector.seq2seq_attention import config
 
 

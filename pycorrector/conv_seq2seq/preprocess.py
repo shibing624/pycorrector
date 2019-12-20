@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 
-from pycorrector.tokenizer import segment
+from pycorrector.utils.tokenizer import segment
 from pycorrector.conv_seq2seq import config
 
 

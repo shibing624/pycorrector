@@ -10,7 +10,7 @@ from xml.dom import minidom
 from sklearn.model_selection import train_test_split
 
 from pycorrector.transformer import config
-from pycorrector.tokenizer import segment
+from pycorrector.utils.tokenizer import segment
 
 split_symbol = ['，', '。', '？', '！']
 
