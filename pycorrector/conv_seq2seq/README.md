@@ -78,7 +78,7 @@ sh train.sh
 
 ## infer
 ```
-sh infer.sh
+python infer.py
 ```
 
 ### result
