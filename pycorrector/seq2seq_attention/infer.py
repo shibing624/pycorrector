@@ -3,10 +3,8 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 import sys
-
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 
 sys.path.append('../..')
 
@@ -24,6 +22,8 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     :param attn_img_path:
     :return:
     """
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as ticker
     from matplotlib import font_manager
     my_font = font_manager.FontProperties(fname="/Library/Fonts/Songti.ttc")
 
@@ -50,7 +50,11 @@ def infer(model, sentence, attention_image_path='attn.png'):
     print('Predicted translation: {}'.format(result))
 
     attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
-    plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
+    try:
+        plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
+    except Exception as e:
+        print(e)
+        pass
 
 
 if __name__ == "__main__":
@@ -69,7 +73,8 @@ if __name__ == "__main__":
                          batch_size=config.batch_size, maxlen=config.maxlen, checkpoint_path=config.model_dir,
                          gpu_id=config.gpu_id)
     for id, i in enumerate(inputs):
-        infer(model, i, str(id) + ".png")
+        img_path = os.path.join(config.output_dir, str(id) + ".png")
+        infer(model, i, img_path)
 
 # result:
 # input:由我起开始做。
