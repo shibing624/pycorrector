@@ -26,11 +26,6 @@ def tokenize(lang,maxlen):
 
 def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_path='', embedding_dim=256,
           batch_size=64, epochs=4, maxlen=400, hidden_dim=1024, gpu_id=0):
-    src_sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 做 定 声 明 。"
-    tgt_sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 签 声 明 。"
-    print(preprocess_sentence(src_sentence))
-    print(preprocess_sentence(tgt_sentence))
-
     source_texts, target_texts = create_dataset(train_path, None)
     print(source_texts[-1])
     print(target_texts[-1])

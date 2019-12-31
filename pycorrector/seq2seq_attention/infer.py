@@ -20,14 +20,17 @@ from pycorrector.seq2seq_attention.train import tokenize
 
 # function for plotting the attention weights
 def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
+    from matplotlib import font_manager
+    my_font = font_manager.FontProperties(fname="/Library/Fonts/Songti.ttc")
+
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(1, 1, 1)
     ax.matshow(attention, cmap='viridis')
 
     fontdict = {'fontsize': 14}
 
-    ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90)
-    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict)
+    ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90, fontproperties=my_font)
+    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict, fontproperties=my_font)
 
     ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
@@ -38,14 +41,14 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     plt.clf()
 
 
-def infer(model, sentence='由我起开始做。'):
+def infer(model, sentence='由我起开始做。', attention_image_path='attn.png'):
     result, sentence, attention_plot = model.evaluate(sentence)
 
     print('Input: %s' % (sentence))
     print('Predicted translation: {}'.format(result))
 
     attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
-    plot_attention(attention_plot, sentence.split(' '), result.split(' '), config.attention_image_path)
+    plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
 
 
 if __name__ == "__main__":
@@ -69,8 +72,8 @@ if __name__ == "__main__":
                          hidden_dim=config.hidden_dim,
                          batch_size=config.batch_size, maxlen=config.maxlen, checkpoint_path=config.model_dir,
                          gpu_id=config.gpu_id)
-    for i in inputs:
-        infer(model, i)
+    for id, i in enumerate(inputs):
+        infer(model, i, str(id) + ".png")
 
 # result:
 # input:由我起开始做。

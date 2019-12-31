@@ -115,7 +115,7 @@ class Seq2SeqModel(object):
 
         decoder = Decoder(self.vocab_tar_size, embedding_dim, hidden_dim, batch_size)
 
-        sample_decoder_output, _, _ = decoder(tf.random.uniform((64, 1)),
+        sample_decoder_output, _, _ = decoder(tf.random.uniform((batch_size, 1)),
                                               sample_hidden, sample_output)
 
         print('Decoder output shape: (batch_size, vocab size) {}'.format(sample_decoder_output.shape))
@@ -196,7 +196,8 @@ class Seq2SeqModel(object):
 
     def evaluate(self, sentence):
         attention_plot = np.zeros((self.maxlen, self.maxlen))
-        sentence = preprocess_sentence(sentence)
+        char_split_sent = ' '.join(list(sentence))
+        sentence = preprocess_sentence(char_split_sent)
 
         inputs = [self.source_word2id[i] for i in sentence.split(' ') if i in self.source_word2id]
         inputs = tf.keras.preprocessing.sequence.pad_sequences([inputs],

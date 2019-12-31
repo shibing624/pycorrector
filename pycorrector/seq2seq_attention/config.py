@@ -29,11 +29,11 @@ attention_image_path = os.path.join(output_dir, 'attention.png')
 vocab_max_size = 6000
 vocab_min_count = 5
 
-batch_size = 64
-epochs = 1
+batch_size = 32
+epochs = 4
 embedding_dim = 256
-hidden_dim = 1024
-maxlen = 128
+hidden_dim = 256
+maxlen = 16
 gpu_id = 0
 
 if not os.path.exists(output_dir):
