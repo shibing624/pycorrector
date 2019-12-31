@@ -3,95 +3,80 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
-import os
 import sys
 
-import numpy as np
-from keras.callbacks import EarlyStopping
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.data_reader import build_dataset, read_vocab, str2id, padding, load_word_dict, \
-    save_word_dict, GO_TOKEN, EOS_TOKEN
-from pycorrector.seq2seq_attention.evaluate import Evaluate
-from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
+from pycorrector.seq2seq_attention.data_reader import preprocess_sentence, create_dataset, max_length,save_word_dict
+from pycorrector.seq2seq_attention.model import Seq2SeqModel
 
 
-def data_generator(input_texts, target_texts, vocab2id, batch_size, maxlen=400):
-    # 数据生成器
-    while True:
-        X, Y = [], []
-        for i in range(len(input_texts)):
-            X.append(str2id(input_texts[i], vocab2id, maxlen))
-            Y.append([vocab2id[GO_TOKEN]] + str2id(target_texts[i], vocab2id, maxlen) + [vocab2id[EOS_TOKEN]])
-            if len(X) == batch_size:
-                X = np.array(padding(X, vocab2id))
-                Y = np.array(padding(Y, vocab2id))
-                yield [X, Y], None
-                X, Y = [], []
+def tokenize(lang,maxlen):
+    lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
+    lang_tokenizer.fit_on_texts(lang)
+    seq = lang_tokenizer.texts_to_sequences(lang)
+    seq = tf.keras.preprocessing.sequence.pad_sequences(seq, maxlen=maxlen, padding='post')
+    lang_word2id = lang_tokenizer.word_index
+    return seq, lang_word2id
 
 
-def get_validation_data(input_texts, target_texts, vocab2id, maxlen=400):
-    # 数据生成器
-    X, Y = [], []
-    for i in range(len(input_texts)):
-        X.append(str2id(input_texts[i], vocab2id, maxlen))
-        Y.append([vocab2id[GO_TOKEN]] + str2id(target_texts[i], vocab2id, maxlen) + [vocab2id[EOS_TOKEN]])
-        X = np.array(padding(X, vocab2id))
-        Y = np.array(padding(Y, vocab2id))
-        return [X, Y], None
+def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_path='', embedding_dim=256,
+          batch_size=64, epochs=4, maxlen=400, hidden_dim=1024, gpu_id=0):
+    src_sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 做 定 声 明 。"
+    tgt_sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 签 声 明 。"
+    print(preprocess_sentence(src_sentence))
+    print(preprocess_sentence(tgt_sentence))
 
+    source_texts, target_texts = create_dataset(train_path, None)
+    print(source_texts[-1])
+    print(target_texts[-1])
 
-def train(train_path='', test_path='', save_vocab_path='', attn_model_path='',
-          batch_size=64, epochs=100, maxlen=400, hidden_dim=128, dropout=0.2,
-          vocab_max_size=50000, vocab_min_count=5, gpu_id=0):
-    source_texts, target_texts = build_dataset(train_path)
-    test_input_texts, test_target_texts = build_dataset(test_path)
+    source_seq, source_word2id = tokenize(source_texts,maxlen)
+    target_seq, target_word2id = tokenize(target_texts,maxlen)
+    save_word_dict(source_word2id, save_src_vocab_path)
+    save_word_dict(target_word2id, save_trg_vocab_path)
 
-    # load or save word dict
-    if os.path.exists(save_vocab_path):
-        vocab2id = load_word_dict(save_vocab_path)
-    else:
-        print('Training data...')
-        vocab2id = read_vocab(source_texts + target_texts, max_size=vocab_max_size, min_count=vocab_min_count)
-        num_encoder_tokens = len(vocab2id)
-        max_input_texts_len = max([len(text) for text in source_texts])
+    # Calculate max_length of the target tensors
+    max_length_target, max_length_source = max_length(target_seq), max_length(source_seq)
+    print(max_length_target, max_length_source)
 
-        print('input_texts:', source_texts[0])
-        print('target_texts:', target_texts[0])
-        print('num of samples:', len(source_texts))
-        print('num of unique input tokens:', num_encoder_tokens)
-        print('max sequence length for inputs:', max_input_texts_len)
-        save_word_dict(vocab2id, save_vocab_path)
+    # Creating training and validation sets using an 80-20 split
+    source_seq_train, source_seq_val, target_seq_train, target_seq_val = train_test_split(source_seq,
+                                                                                          target_seq,
+                                                                                          test_size=0.2)
 
-    id2vocab = {int(j): i for i, j in vocab2id.items()}
-    print('The vocabulary file:%s, size: %s' % (save_vocab_path, len(vocab2id)))
-    model = Seq2seqAttnModel(len(vocab2id),
-                             attn_model_path=attn_model_path,
-                             hidden_dim=hidden_dim,
-                             dropout=dropout,
-                             gpu_id=gpu_id
-                             ).build_model()
-    evaluator = Evaluate(model, attn_model_path, vocab2id, id2vocab, maxlen)
-    earlystop = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto')
-    model.fit_generator(data_generator(source_texts, target_texts, vocab2id, batch_size, maxlen),
-                        steps_per_epoch=(len(source_texts) + batch_size - 1) // batch_size,
-                        epochs=epochs,
-                        validation_data=get_validation_data(test_input_texts, test_target_texts, vocab2id, maxlen),
-                        callbacks=[evaluator, earlystop])
+    # Show length
+    print(len(source_seq_train), len(target_seq_train), len(source_seq_val), len(target_seq_val))
+
+    steps_per_epoch = len(source_seq_train) // batch_size
+    print(steps_per_epoch)
+    dataset = tf.data.Dataset.from_tensor_slices((source_seq_train, target_seq_train)).shuffle(len(source_seq_train))
+    dataset = dataset.batch(batch_size, drop_remainder=True)
+    example_source_batch, example_target_batch = next(iter(dataset))
+    model = Seq2SeqModel(example_source_batch, source_word2id, target_word2id, embedding_dim=embedding_dim,
+                         hidden_dim=hidden_dim, batch_size=batch_size, maxlen=maxlen, checkpoint_path=model_dir,
+                         gpu_id=gpu_id)
+    model.train(dataset, steps_per_epoch, epochs=epochs)
+
+    sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 。"
+    result, sentence, attention_plot = model.evaluate(sentence)
+
+    print('Input: %s' % (sentence))
+    print('Predicted translation: {}'.format(result))
 
 
 if __name__ == "__main__":
     train(train_path=config.train_path,
-          test_path=config.test_path,
-          save_vocab_path=config.save_vocab_path,
-          attn_model_path=config.attn_model_path,
+          model_dir=config.model_dir,
+          save_src_vocab_path=config.save_src_vocab_path,
+          save_trg_vocab_path=config.save_trg_vocab_path,
+          embedding_dim=config.embedding_dim,
           batch_size=config.batch_size,
           epochs=config.epochs,
           maxlen=config.maxlen,
-          hidden_dim=config.rnn_hidden_dim,
-          dropout=config.dropout,
-          vocab_max_size=config.vocab_max_size,
-          vocab_min_count=config.vocab_min_count,
+          hidden_dim=config.hidden_dim,
           gpu_id=config.gpu_id)

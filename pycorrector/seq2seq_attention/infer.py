@@ -3,34 +3,49 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
-import os
 import sys
+
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import tensorflow as tf
 
 sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.data_reader import load_word_dict
-from pycorrector.seq2seq_attention.evaluate import gen_target
-from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
+from pycorrector.seq2seq_attention.model import Seq2SeqModel
+
+from pycorrector.seq2seq_attention.data_reader import create_dataset
+from pycorrector.seq2seq_attention.train import tokenize
 
 
-class Inference:
-    def __init__(self, save_vocab_path='', attn_model_path='', maxlen=400, gpu_id=0):
-        if os.path.exists(save_vocab_path):
-            self.vocab2id = load_word_dict(save_vocab_path)
-            self.id2vocab = {int(j): i for i, j in self.vocab2id.items()}
-        else:
-            print('not exist vocab path')
-        self.model = Seq2seqAttnModel(len(self.vocab2id),
-                                      attn_model_path=attn_model_path,
-                                      hidden_dim=128,
-                                      dropout=0.0,
-                                      gpu_id=gpu_id
-                                      ).build_model()
-        self.maxlen = maxlen
+# function for plotting the attention weights
+def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(1, 1, 1)
+    ax.matshow(attention, cmap='viridis')
 
-    def infer(self, sentence):
-        return gen_target(sentence, self.model, self.vocab2id, self.id2vocab, self.maxlen, topk=3)
+    fontdict = {'fontsize': 14}
+
+    ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90)
+    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict)
+
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+
+    # plt.show()
+    if attn_img_path:
+        plt.savefig(attn_img_path)
+    plt.clf()
+
+
+def infer(model, sentence='由我起开始做。'):
+    result, sentence, attention_plot = model.evaluate(sentence)
+
+    print('Input: %s' % (sentence))
+    print('Predicted translation: {}'.format(result))
+
+    attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
+    plot_attention(attention_plot, sentence.split(' '), result.split(' '), config.attention_image_path)
 
 
 if __name__ == "__main__":
@@ -44,17 +59,18 @@ if __name__ == "__main__":
         '歌曲使人的感到快乐，',
         '会能够大幅减少互相抱怨的情况。'
     ]
-    inference = Inference(save_vocab_path=config.save_vocab_path,
-                          attn_model_path=config.attn_model_path,
-                          maxlen=400,
-                          gpu_id=config.gpu_id)
+    source_texts, target_texts = create_dataset(config.train_path, None)
+    source_seq, source_word2id = tokenize(source_texts, config.maxlen)
+    target_seq, target_word2id = tokenize(target_texts, config.maxlen)
+    dataset = tf.data.Dataset.from_tensor_slices((source_seq, target_seq)).shuffle(len(source_seq))
+    dataset = dataset.batch(config.batch_size, drop_remainder=True)
+    example_source_batch, example_target_batch = next(iter(dataset))
+    model = Seq2SeqModel(example_source_batch, source_word2id, target_word2id, embedding_dim=config.embedding_dim,
+                         hidden_dim=config.hidden_dim,
+                         batch_size=config.batch_size, maxlen=config.maxlen, checkpoint_path=config.model_dir,
+                         gpu_id=config.gpu_id)
     for i in inputs:
-        target = inference.infer(i)
-        print('input:' + i)
-        print('output:' + target)
-    while True:
-        sent = input('input:')
-        print("output:" + inference.infer(sent))
+        infer(model, i)
 
 # result:
 # input:由我起开始做。

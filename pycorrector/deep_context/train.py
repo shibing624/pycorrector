@@ -104,6 +104,7 @@ def train(train_path: str,
 
     interval = 1e6
     best_loss = 1e3
+    print("train start...")
     for epoch in range(epochs):
         begin_time = time.time()
         cur_at = begin_time
