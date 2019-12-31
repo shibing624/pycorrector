@@ -43,18 +43,19 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     plt.clf()
 
 
-def infer(model, sentence, attention_image_path='attn.png'):
+def infer(model, sentence, attention_image_path=''):
     result, sentence, attention_plot = model.evaluate(sentence)
 
     print('Input: %s' % (sentence))
     print('Predicted translation: {}'.format(result))
 
     attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
-    try:
-        plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
-    except Exception as e:
-        print(e)
-        pass
+    if attention_image_path:
+        try:
+            plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
+        except Exception as e:
+            print(e)
+            pass
 
 
 if __name__ == "__main__":

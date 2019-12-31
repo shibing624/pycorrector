@@ -6,12 +6,12 @@ import os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # Training data path.
-# chinese corpus
+# toy chinese corpus
 raw_train_paths = [
-    # os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
-    # os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
-    # os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
 ]
 
 output_dir = os.path.join(pwd_path, 'output')
@@ -24,13 +24,12 @@ test_path = os.path.join(output_dir, 'test.txt')
 save_src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 save_trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_dir = os.path.join(output_dir, 'models')
-attention_image_path = os.path.join(output_dir, 'attention.png')
 
 vocab_max_size = 6000
 vocab_min_count = 5
 
 batch_size = 32
-epochs = 4
+epochs = 40
 embedding_dim = 256
 hidden_dim = 256
 maxlen = 16
