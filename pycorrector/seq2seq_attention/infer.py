@@ -26,9 +26,7 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(1, 1, 1)
     ax.matshow(attention, cmap='viridis')
-
-    fontdict = {'fontsize': 14}
-
+    fontdict = {'fontsize': 12}
     ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90, fontproperties=my_font)
     ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict, fontproperties=my_font)
 
@@ -55,8 +53,6 @@ if __name__ == "__main__":
     inputs = [
         '由我起开始做。',
         '没有解决这个问题，',
-        '由我起开始做。',
-        '由我起开始做',
         '不能人类实现更美好的将来。',
         '这几年前时间，',
         '歌曲使人的感到快乐，',
