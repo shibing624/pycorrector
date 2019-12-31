@@ -196,7 +196,7 @@ class Seq2SeqModel(object):
 
     def evaluate(self, sentence):
         attention_plot = np.zeros((self.maxlen, self.maxlen))
-        char_split_sent = ' '.join(list(sentence))
+        char_split_sent = ' '.join(list(sentence.replace(" ", "")))
         sentence = preprocess_sentence(char_split_sent)
 
         inputs = [self.source_word2id[i] for i in sentence.split(' ') if i in self.source_word2id]

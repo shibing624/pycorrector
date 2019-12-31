@@ -57,7 +57,7 @@ def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_pa
                          gpu_id=gpu_id)
     model.train(dataset, steps_per_epoch, epochs=epochs)
 
-    sentence = u"例 如 病 人 必 须 在 思 想 清 醒 时 。"
+    sentence = "例 如 病 人 必 须 在 思 想 清 醒 时 。"
     result, sentence, attention_plot = model.evaluate(sentence)
 
     print('Input: %s' % (sentence))
