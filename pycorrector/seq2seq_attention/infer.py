@@ -7,19 +7,23 @@ import sys
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import tensorflow as tf
 
 sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
 from pycorrector.seq2seq_attention.model import Seq2SeqModel
-
-from pycorrector.seq2seq_attention.data_reader import create_dataset
-from pycorrector.seq2seq_attention.train import tokenize
+from pycorrector.seq2seq_attention.data_reader import load_word_dict
 
 
-# function for plotting the attention weights
 def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
+    """
+    Plotting the attention weights
+    :param attention:
+    :param sentence:
+    :param predicted_sentence:
+    :param attn_img_path:
+    :return:
+    """
     from matplotlib import font_manager
     my_font = font_manager.FontProperties(fname="/Library/Fonts/Songti.ttc")
 
@@ -39,7 +43,7 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     plt.clf()
 
 
-def infer(model, sentence='由我起开始做。', attention_image_path='attn.png'):
+def infer(model, sentence, attention_image_path='attn.png'):
     result, sentence, attention_plot = model.evaluate(sentence)
 
     print('Input: %s' % (sentence))
@@ -58,13 +62,9 @@ if __name__ == "__main__":
         '歌曲使人的感到快乐，',
         '会能够大幅减少互相抱怨的情况。'
     ]
-    source_texts, target_texts = create_dataset(config.train_path, None)
-    source_seq, source_word2id = tokenize(source_texts, config.maxlen)
-    target_seq, target_word2id = tokenize(target_texts, config.maxlen)
-    dataset = tf.data.Dataset.from_tensor_slices((source_seq, target_seq)).shuffle(len(source_seq))
-    dataset = dataset.batch(config.batch_size, drop_remainder=True)
-    example_source_batch, example_target_batch = next(iter(dataset))
-    model = Seq2SeqModel(example_source_batch, source_word2id, target_word2id, embedding_dim=config.embedding_dim,
+    source_word2id = load_word_dict(config.save_src_vocab_path)
+    target_word2id = load_word_dict(config.save_trg_vocab_path)
+    model = Seq2SeqModel(source_word2id, target_word2id, embedding_dim=config.embedding_dim,
                          hidden_dim=config.hidden_dim,
                          batch_size=config.batch_size, maxlen=config.maxlen, checkpoint_path=config.model_dir,
                          gpu_id=config.gpu_id)

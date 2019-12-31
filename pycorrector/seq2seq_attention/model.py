@@ -94,33 +94,15 @@ class Decoder(tf.keras.Model):
 
 
 class Seq2SeqModel(object):
-    def __init__(self, example_source_batch, source_word2id, target_word2id, embedding_dim=256, hidden_dim=1024,
+    def __init__(self, source_word2id, target_word2id, embedding_dim=256, hidden_dim=1024,
                  batch_size=64, maxlen=128, checkpoint_path='', gpu_id=0):
         if gpu_id > -1:
             os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
         self.vocab_src_size = len(source_word2id) + 1
         self.vocab_tar_size = len(target_word2id) + 1
-        encoder = Encoder(self.vocab_src_size, embedding_dim, hidden_dim, batch_size)
-        # sample input
-        sample_hidden = encoder.initialize_hidden_state()
-        sample_output, sample_hidden = encoder(example_source_batch, sample_hidden)
-        print('Encoder output shape: (batch size, sequence length, hidden_dim) {}'.format(sample_output.shape))
-        print('Encoder Hidden state shape: (batch size, hidden_dim) {}'.format(sample_hidden.shape))
-
-        attention_layer = BahdanauAttention(10)
-        attention_result, attention_weights = attention_layer(sample_hidden, sample_output)
-
-        print("Attention result shape: (batch size, hidden_dim) {}".format(attention_result.shape))
-        print("Attention weights shape: (batch_size, sequence_length, 1) {}".format(attention_weights.shape))
-
-        decoder = Decoder(self.vocab_tar_size, embedding_dim, hidden_dim, batch_size)
-
-        sample_decoder_output, _, _ = decoder(tf.random.uniform((batch_size, 1)),
-                                              sample_hidden, sample_output)
-
-        print('Decoder output shape: (batch_size, vocab size) {}'.format(sample_decoder_output.shape))
-        self.encoder = encoder
-        self.decoder = decoder
+        self.encoder = Encoder(self.vocab_src_size, embedding_dim, hidden_dim, batch_size)
+        self.attention_layer = BahdanauAttention(10)
+        self.decoder = Decoder(self.vocab_tar_size, embedding_dim, hidden_dim, batch_size)
         self.optimizer = tf.keras.optimizers.Adam()
         self.hidden_dim = hidden_dim
         self.batch_size = batch_size
@@ -136,7 +118,21 @@ class Seq2SeqModel(object):
             self.checkpoint.restore(self.ckpt_manager.latest_checkpoint)
             print('last checkpoit restore, checkpoint path:', checkpoint_path)
 
-    def train(self, dataset, steps_per_epoch, epochs=10):
+    def train(self, example_source_batch, dataset, steps_per_epoch, epochs=10):
+        # sample input
+        sample_hidden = self.encoder.initialize_hidden_state()
+        sample_output, sample_hidden = self.encoder(example_source_batch, sample_hidden)
+        print('Encoder output shape: (batch size, sequence length, hidden_dim) {}'.format(sample_output.shape))
+        print('Encoder Hidden state shape: (batch size, hidden_dim) {}'.format(sample_hidden.shape))
+
+        attention_result, attention_weights = self.attention_layer(sample_hidden, sample_output)
+        print("Attention result shape: (batch size, hidden_dim) {}".format(attention_result.shape))
+        print("Attention weights shape: (batch_size, sequence_length, 1) {}".format(attention_weights.shape))
+
+        sample_decoder_output, _, _ = self.decoder(tf.random.uniform((self.batch_size, 1)),
+                                                   sample_hidden, sample_output)
+        print('Decoder output shape: (batch_size, vocab size) {}'.format(sample_decoder_output.shape))
+
         loss_object = tf.keras.losses.SparseCategoricalCrossentropy(
             from_logits=True, reduction='none')
 

@@ -11,11 +11,11 @@ from sklearn.model_selection import train_test_split
 sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.data_reader import preprocess_sentence, create_dataset, max_length,save_word_dict
+from pycorrector.seq2seq_attention.data_reader import create_dataset, max_length, save_word_dict
 from pycorrector.seq2seq_attention.model import Seq2SeqModel
 
 
-def tokenize(lang,maxlen):
+def tokenize(lang, maxlen):
     lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
     lang_tokenizer.fit_on_texts(lang)
     seq = lang_tokenizer.texts_to_sequences(lang)
@@ -30,8 +30,8 @@ def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_pa
     print(source_texts[-1])
     print(target_texts[-1])
 
-    source_seq, source_word2id = tokenize(source_texts,maxlen)
-    target_seq, target_word2id = tokenize(target_texts,maxlen)
+    source_seq, source_word2id = tokenize(source_texts, maxlen)
+    target_seq, target_word2id = tokenize(target_texts, maxlen)
     save_word_dict(source_word2id, save_src_vocab_path)
     save_word_dict(target_word2id, save_trg_vocab_path)
 
@@ -52,10 +52,10 @@ def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_pa
     dataset = tf.data.Dataset.from_tensor_slices((source_seq_train, target_seq_train)).shuffle(len(source_seq_train))
     dataset = dataset.batch(batch_size, drop_remainder=True)
     example_source_batch, example_target_batch = next(iter(dataset))
-    model = Seq2SeqModel(example_source_batch, source_word2id, target_word2id, embedding_dim=embedding_dim,
+    model = Seq2SeqModel(source_word2id, target_word2id, embedding_dim=embedding_dim,
                          hidden_dim=hidden_dim, batch_size=batch_size, maxlen=maxlen, checkpoint_path=model_dir,
                          gpu_id=gpu_id)
-    model.train(dataset, steps_per_epoch, epochs=epochs)
+    model.train(example_source_batch, dataset, steps_per_epoch, epochs=epochs)
 
     sentence = "例 如 病 人 必 须 在 思 想 清 醒 时 。"
     result, sentence, attention_plot = model.evaluate(sentence)

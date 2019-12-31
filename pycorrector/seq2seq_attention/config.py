@@ -21,7 +21,7 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 # seq2seq_attn_train config
-save_src_vocab_path = os.path.join(output_dir, 'vocab_srouce.txt')
+save_src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 save_trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_dir = os.path.join(output_dir, 'models')
 attention_image_path = os.path.join(output_dir, 'attention.png')
