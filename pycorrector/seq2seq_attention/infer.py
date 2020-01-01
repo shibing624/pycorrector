@@ -31,7 +31,7 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     ax = fig.add_subplot(1, 1, 1)
     ax.matshow(attention, cmap='viridis')
     fontdict = {'fontsize': 12}
-    ax.set_xticklabels([''] + sentence, fontdict=fontdict,  fontproperties=my_font) # rotation=90,
+    ax.set_xticklabels([''] + sentence, fontdict=fontdict, fontproperties=my_font)  # rotation=90,
     ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict, fontproperties=my_font)
 
     ax.xaxis.set_major_locator(ticker.MultipleLocator(1))

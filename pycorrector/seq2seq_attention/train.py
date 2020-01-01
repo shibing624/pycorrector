@@ -6,7 +6,6 @@
 import sys
 
 import tensorflow as tf
-from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 
@@ -35,32 +34,31 @@ def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_pa
     save_word_dict(source_word2id, save_src_vocab_path)
     save_word_dict(target_word2id, save_trg_vocab_path)
 
+    # Show length
+    print(source_seq[-1])
+    print(target_seq[-1])
+
     # Calculate max_length of the target tensors
     max_length_target, max_length_source = max_length(target_seq), max_length(source_seq)
-    print(max_length_target, max_length_source)
+    print(max_length_source, max_length_target)
+    print(len(source_seq), len(target_seq))
 
-    # Creating training and validation sets using an 80-20 split
-    source_seq_train, source_seq_val, target_seq_train, target_seq_val = train_test_split(source_seq,
-                                                                                          target_seq,
-                                                                                          test_size=0.2)
-
-    # Show length
-    print(len(source_seq_train), len(target_seq_train), len(source_seq_val), len(target_seq_val))
-
-    steps_per_epoch = len(source_seq_train) // batch_size
+    steps_per_epoch = len(source_seq) // batch_size
     print(steps_per_epoch)
-    dataset = tf.data.Dataset.from_tensor_slices((source_seq_train, target_seq_train)).shuffle(len(source_seq_train))
+    dataset = tf.data.Dataset.from_tensor_slices((source_seq, target_seq)).shuffle(len(source_seq))
     dataset = dataset.batch(batch_size, drop_remainder=True)
     example_source_batch, example_target_batch = next(iter(dataset))
+    # Build model
     model = Seq2SeqModel(source_word2id, target_word2id, embedding_dim=embedding_dim,
                          hidden_dim=hidden_dim, batch_size=batch_size, maxlen=maxlen, checkpoint_path=model_dir,
                          gpu_id=gpu_id)
+    # Train
     model.train(example_source_batch, dataset, steps_per_epoch, epochs=epochs)
 
+    # Evaluate one sentence
     sentence = "例 如 病 人 必 须 在 思 想 清 醒 时 。"
     result, sentence, attention_plot = model.evaluate(sentence)
-
-    print('Input: %s' % (sentence))
+    print('Input: %s' % sentence)
     print('Predicted translation: {}'.format(result))
 
 

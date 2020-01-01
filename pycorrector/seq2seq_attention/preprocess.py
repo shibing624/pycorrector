@@ -2,13 +2,12 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import sys
-
-sys.path.append('../..')
-
 from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
+
+sys.path.append('../..')
 from pycorrector.utils.tokenizer import segment
 from pycorrector.seq2seq_attention import config
 

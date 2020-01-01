@@ -9,8 +9,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from pycorrector.seq2seq_attention.data_reader import GO_TOKEN, EOS_TOKEN
-from pycorrector.seq2seq_attention.data_reader import preprocess_sentence
+from .data_reader import GO_TOKEN, EOS_TOKEN, preprocess_sentence
 
 
 class Encoder(tf.keras.Model):
@@ -113,7 +112,7 @@ class Seq2SeqModel(object):
                                               encoder=self.encoder,
                                               decoder=self.decoder)
         # Load model
-        self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, checkpoint_path, max_to_keep=3)
+        self.ckpt_manager = tf.train.CheckpointManager(self.checkpoint, checkpoint_path, max_to_keep=5)
         if self.ckpt_manager.latest_checkpoint:
             self.checkpoint.restore(self.ckpt_manager.latest_checkpoint)
             print('last checkpoit restore, checkpoint path:', checkpoint_path)
@@ -186,8 +185,7 @@ class Seq2SeqModel(object):
                     epoch + 1, ckpt_save_path
                 ))
 
-            print('Epoch {} Loss {:.4f}'.format(epoch + 1,
-                                                total_loss / steps_per_epoch))
+            print('Epoch {} Loss {:.4f}'.format(epoch + 1, total_loss / steps_per_epoch))
             print('Time taken for 1 epoch {} sec\n'.format(time.time() - start))
 
     def evaluate(self, sentence):
