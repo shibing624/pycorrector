@@ -106,7 +106,7 @@ print(corrected_sent, detail)
 ```
 
 #### 注意
-规则方法默认会从该路径`~/pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载并放置于该位置即可。
+规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载并放置于该位置即可。
 
 
 ## 深度方案使用说明
