@@ -3,6 +3,7 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 import sys
 
 import tensorflow as tf
@@ -63,6 +64,8 @@ def train(train_path='', model_dir='', save_src_vocab_path='', save_trg_vocab_pa
 
 
 if __name__ == "__main__":
+    if config.gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
     train(train_path=config.train_path,
           model_dir=config.model_dir,
           save_src_vocab_path=config.save_src_vocab_path,

@@ -4,7 +4,7 @@
 @description: 
 """
 import sys
-
+import os
 import tensorflow as tf
 
 sys.path.append('../..')
@@ -13,6 +13,10 @@ from pycorrector.transformer import config
 from pycorrector.transformer.model import translate, model, checkpoint
 
 if __name__ == "__main__":
+    if config.gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+    else:
+        os.environ["CUDA_VISIBLE_DEVICES"] = '-1'
     data_config = {
         "source_vocabulary": config.src_vocab_path,
         "target_vocabulary": config.tgt_vocab_path

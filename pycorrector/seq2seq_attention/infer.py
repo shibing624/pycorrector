@@ -59,6 +59,10 @@ def infer(model, sentence, attention_image_path=''):
 
 
 if __name__ == "__main__":
+    if config.gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+    else:
+        os.environ["CUDA_VISIBLE_DEVICES"] = '-1'
     inputs = [
         '以 前 ， 包 括 中 国 ， 我 国 也 是 。',
         '我 现 在 好 得 多 了 。',
