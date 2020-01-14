@@ -106,7 +106,7 @@ print(corrected_sent, detail)
 ```
 
 #### 注意
-规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载并放置于该位置即可。
+规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置即可。
 
 
 ## 深度方案使用说明
@@ -209,8 +209,8 @@ input: 由我起开始做 output: 由我开始做
 - [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
 - [x] seq2seq_attention 添加dropout，减少过拟合
 - [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
-- [ ] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
-- [ ] 升级代码，兼容TensorFlow 2.0库
+- [x] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
+- [x] 升级代码，兼容TensorFlow 2.0库
 
 ## 讨论群
 
