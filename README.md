@@ -115,7 +115,6 @@ print(corrected_sent, detail)
 ```
 pip3 install -r requirements-dev.txt
 
-pip3 install git+https://www.github.com/keras-team/keras-contrib.git
 ```
 
 ### 介绍
