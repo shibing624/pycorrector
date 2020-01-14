@@ -13,13 +13,13 @@ from pycorrector.seq2seq_attention.model import Seq2SeqModel
 from pycorrector.seq2seq_attention.data_reader import load_word_dict
 
 
-def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
+def plot_attention(attention, sentence, predicted_sentence, img_path):
     """
     Plotting the attention weights
     :param attention:
     :param sentence:
     :param predicted_sentence:
-    :param attn_img_path:
+    :param img_path:
     :return:
     """
     import matplotlib.pyplot as plt
@@ -38,8 +38,8 @@ def plot_attention(attention, sentence, predicted_sentence, attn_img_path=''):
     ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
 
     # plt.show()
-    if attn_img_path:
-        plt.savefig(attn_img_path)
+    plt.savefig(img_path)
+    print("save attention weight image to :", img_path)
     plt.clf()
 
 
@@ -60,9 +60,8 @@ def infer(model, sentence, attention_image_path=''):
 
 if __name__ == "__main__":
     inputs = [
-        '由我起开始做。',
-        '没有解决这个问题，',
-        '不能人类实现更美好的将来。',
+        '以 前 ， 包 括 中 国 ， 我 国 也 是 。',
+        '我 现 在 好 得 多 了 。',
         '这几年前时间，',
         '歌曲使人的感到快乐，',
         '会能够大幅减少互相抱怨的情况。'
