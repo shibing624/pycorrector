@@ -9,52 +9,76 @@ import sys
 sys.path.append('../..')
 
 from pycorrector.seq2seq_attention import config
+from pycorrector.seq2seq_attention.model import Seq2SeqModel
 from pycorrector.seq2seq_attention.data_reader import load_word_dict
-from pycorrector.seq2seq_attention.evaluate import gen_target
-from pycorrector.seq2seq_attention.seq2seq_attn_model import Seq2seqAttnModel
 
 
-class Inference:
-    def __init__(self, save_vocab_path='', attn_model_path='', maxlen=400, gpu_id=0):
-        if os.path.exists(save_vocab_path):
-            self.vocab2id = load_word_dict(save_vocab_path)
-            self.id2vocab = {int(j): i for i, j in self.vocab2id.items()}
-        else:
-            print('not exist vocab path')
-        self.model = Seq2seqAttnModel(len(self.vocab2id),
-                                      attn_model_path=attn_model_path,
-                                      hidden_dim=128,
-                                      dropout=0.0,
-                                      gpu_id=gpu_id
-                                      ).build_model()
-        self.maxlen = maxlen
+def plot_attention(attention, sentence, predicted_sentence, img_path):
+    """
+    Plotting the attention weights
+    :param attention:
+    :param sentence:
+    :param predicted_sentence:
+    :param img_path:
+    :return:
+    """
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as ticker
+    from matplotlib import font_manager
+    my_font = font_manager.FontProperties(fname="/Library/Fonts/Songti.ttc")
 
-    def infer(self, sentence):
-        return gen_target(sentence, self.model, self.vocab2id, self.id2vocab, self.maxlen, topk=3)
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(1, 1, 1)
+    ax.matshow(attention, cmap='viridis')
+    fontdict = {'fontsize': 12}
+    ax.set_xticklabels([''] + sentence, fontdict=fontdict, fontproperties=my_font)  # rotation=90,
+    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict, fontproperties=my_font)
+
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+
+    # plt.show()
+    plt.savefig(img_path)
+    print("save attention weight image to :", img_path)
+    plt.clf()
+
+
+def infer(model, sentence, attention_image_path=''):
+    result, sentence, attention_plot = model.evaluate(sentence)
+
+    print('Input: %s' % (sentence))
+    print('Predicted translation: {}'.format(result))
+
+    attention_plot = attention_plot[:len(result.split(' ')), :len(sentence.split(' '))]
+    if attention_image_path:
+        try:
+            plot_attention(attention_plot, sentence.split(' '), result.split(' '), attention_image_path)
+        except Exception as e:
+            print(e)
+            pass
 
 
 if __name__ == "__main__":
+    if config.gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
+    else:
+        os.environ["CUDA_VISIBLE_DEVICES"] = '-1'
     inputs = [
-        '由我起开始做。',
-        '没有解决这个问题，',
-        '由我起开始做。',
-        '由我起开始做',
-        '不能人类实现更美好的将来。',
+        '以 前 ， 包 括 中 国 ， 我 国 也 是 。',
+        '我 现 在 好 得 多 了 。',
         '这几年前时间，',
         '歌曲使人的感到快乐，',
         '会能够大幅减少互相抱怨的情况。'
     ]
-    inference = Inference(save_vocab_path=config.save_vocab_path,
-                          attn_model_path=config.attn_model_path,
-                          maxlen=400,
-                          gpu_id=config.gpu_id)
-    for i in inputs:
-        target = inference.infer(i)
-        print('input:' + i)
-        print('output:' + target)
-    while True:
-        sent = input('input:')
-        print("output:" + inference.infer(sent))
+    source_word2id = load_word_dict(config.save_src_vocab_path)
+    target_word2id = load_word_dict(config.save_trg_vocab_path)
+    model = Seq2SeqModel(source_word2id, target_word2id, embedding_dim=config.embedding_dim,
+                         hidden_dim=config.hidden_dim,
+                         batch_size=config.batch_size, maxlen=config.maxlen, checkpoint_path=config.model_dir,
+                         gpu_id=config.gpu_id)
+    for id, i in enumerate(inputs):
+        img_path = os.path.join(config.output_dir, str(id) + ".png")
+        infer(model, i, img_path)
 
 # result:
 # input:由我起开始做。

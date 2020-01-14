@@ -11,6 +11,7 @@ def save_word_dict(dict_data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
         for k, v in dict_data.items():
             f.write("%s\t%d\n" % (k, v))
+    print("save to %s " % save_path)
 
 
 def load_word_dict(save_path):
@@ -102,9 +103,9 @@ class CGEDReader(Reader):
     def read_vocab(input_texts):
         vocab = {PAD_TOKEN, EOS_TOKEN, GO_TOKEN}
         for line in input_texts:
-            for char in line:
-                if char not in vocab:
-                    vocab.add(char)
+            for token in line:
+                if token not in vocab:
+                    vocab.add(token)
         return sorted(list(vocab))
 
 

@@ -78,7 +78,8 @@ sh train.sh
 
 ## infer
 ```
-python infer.py
+python3 infer.py
+
 ```
 
 ### result

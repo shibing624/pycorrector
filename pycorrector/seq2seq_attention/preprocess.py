@@ -2,13 +2,12 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief:
 import sys
-
-sys.path.append('../..')
-
 from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
+
+sys.path.append('../..')
 from pycorrector.utils.tokenizer import segment
 from pycorrector.seq2seq_attention import config
 
@@ -44,7 +43,7 @@ def _save_data(data_list, data_path):
         print("save line size:%d to %s" % (count, data_path))
 
 
-def transform_corpus_data(data_list, train_data_path, test_data_path):
+def save_corpus_data(data_list, train_data_path, test_data_path):
     train_lst, test_lst = train_test_split(data_list, test_size=0.1)
     _save_data(train_lst, train_data_path)
     _save_data(test_lst, test_data_path)
@@ -55,4 +54,4 @@ if __name__ == '__main__':
     data_list = []
     for path in config.raw_train_paths:
         data_list.extend(parse_xml_file(path))
-    transform_corpus_data(data_list, config.train_path, config.test_path)
+    save_corpus_data(data_list, config.train_path, config.test_path)

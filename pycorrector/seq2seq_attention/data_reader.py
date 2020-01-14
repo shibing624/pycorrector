@@ -6,11 +6,13 @@ import sys
 from codecs import open
 from collections import Counter
 
+from pycorrector.utils.text_utils import convert_to_unicode
+
 # Define constants associated with the usual special tokens.
-PAD_TOKEN = 'PAD'
-GO_TOKEN = 'GO'
-EOS_TOKEN = 'EOS'
-UNK_TOKEN = 'UNK'
+PAD_TOKEN = '<pad>'
+GO_TOKEN = '<go>'
+EOS_TOKEN = '<eos>'
+UNK_TOKEN = '<unk>'
 
 
 def save_word_dict(dict_data, save_path):
@@ -31,7 +33,7 @@ def load_word_dict(save_path):
     return dict_data
 
 
-def read_vocab(input_texts, max_size=50000, min_count=5):
+def read_vocab(input_texts, max_size=None, min_count=0):
     token_counts = Counter()
     special_tokens = [PAD_TOKEN, GO_TOKEN, EOS_TOKEN, UNK_TOKEN]
     for line in input_texts:
@@ -50,27 +52,31 @@ def read_vocab(input_texts, max_size=50000, min_count=5):
     return vocab2id
 
 
-def read_samples_by_string(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            parts = line.lower().strip().split('\t')
-            if len(parts) != 2:
-                print('error ', line)
-                continue
-            source, target = parts[0], parts[1]
-            yield source, target
+def max_length(tensor):
+    return max(len(t) for t in tensor)
 
 
-def build_dataset(path):
-    print('Read data, path:{0}'.format(path))
-    sources, targets = [], []
-    for source, target in read_samples_by_string(path):
-        sources.append(source)
-        targets.append(target)
-    return sources, targets
+def create_dataset(path, num_examples):
+    """
+    # 1. Remove the accents
+    # 2. Clean the sentences
+    # 3. Return word pairs in the format: [ENGLISH, SPANISH]
+    :param path:
+    :param num_examples:
+    :return:
+    """
+    lines = open(path, 'r', encoding='utf-8').read().strip().split('\n')
+    word_pairs = [[preprocess_sentence(w) for w in l.split('\t')] for l in lines[:num_examples]]
+    return zip(*word_pairs)
+
+
+def preprocess_sentence(w):
+    w = convert_to_unicode(w.lower().strip())
+    w = w.rstrip().strip()
+    # adding a start and an end token to the sentence
+    # so that the model know when to start and stop predicting.
+    w = GO_TOKEN + ' ' + w + ' ' + EOS_TOKEN
+    return w
 
 
 def show_progress(curr, total, time=""):
@@ -78,19 +84,3 @@ def show_progress(curr, total, time=""):
     dstr = '[' + '>' * int(round(prog_ / 4)) + ' ' * (25 - int(round(prog_ / 4))) + ']'
     sys.stdout.write(dstr + str(prog_) + '%' + time + '\r')
     sys.stdout.flush()
-
-
-def str2id(s, vocab2id, maxlen):
-    # 文字转id
-    return [vocab2id.get(c.strip(), vocab2id[UNK_TOKEN]) for c in s[:maxlen] if c.strip()]
-
-
-def padding(x, vocab2id):
-    # padding至batch内的最大长度
-    ml = max([len(i) for i in x])
-    return [i + [vocab2id[PAD_TOKEN]] * (ml - len(i)) for i in x]
-
-
-def id2str(ids, id2vocab):
-    # id转文字，找不到的用空字符代替
-    return ''.join([id2vocab.get(i, UNK_TOKEN) for i in ids])

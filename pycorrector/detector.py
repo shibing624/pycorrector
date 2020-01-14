@@ -11,7 +11,7 @@ import numpy as np
 from pycorrector import config
 from pycorrector.utils.get_file import get_file
 from pycorrector.utils.logger import logger
-from pycorrector.utils.text_utils import uniform, is_alphabet_string
+from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode
 from pycorrector.utils.tokenizer import Tokenizer
 
 # \u4E00-\u9FD5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
@@ -31,7 +31,7 @@ class ErrorType(object):
 
 class Detector(object):
     pre_trained_language_models = {
-        # 百度提供语言模型 2.95GB
+        # 语言模型 2.95GB
         'zh_giga.no_cna_cmn.prune01244.klm': 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
         # 人民日报训练语言模型 20MB
         'people_chars_lm.klm': 'https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm'
@@ -340,6 +340,8 @@ class Detector(object):
             return maybe_errors
         # 初始化
         self.check_detector_initialized()
+        # 编码统一，utf-8 to unicode
+        sentence = convert_to_unicode(sentence)
         # 文本归一化
         sentence = uniform(sentence)
         # 长句切分为短句

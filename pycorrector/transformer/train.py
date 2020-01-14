@@ -3,25 +3,25 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+import os
 import sys
 
-sys.path.append('../..')
-import os
+import tensorflow as tf
 
-import opennmt as onmt
+sys.path.append('../..')
 
 from pycorrector.transformer import config
-from pycorrector.transformer.corpus_reader import CGEDReader, load_word_dict, save_word_dict
-from pycorrector.transformer.model import source_inputter, target_inputter, train
+from pycorrector.transformer.corpus_reader import CGEDReader, save_word_dict
+from pycorrector.transformer.model import train, model, checkpoint
 
 
 def main(model_dir='',
          src_train_path='',
          tgt_train_path='',
-         vocab_path='',
+         src_vocab_path='',
+         tgt_vocab_path='',
+         batch_size=32,
          maximum_length=100,
-         shuffle_buffer_size=1000000,
-         gradients_accum=8,
          train_steps=10000,
          save_every=1000,
          report_every=50):
@@ -30,11 +30,7 @@ def main(model_dir='',
     tgt_input_texts = data_reader.build_dataset(tgt_train_path)
 
     # load or save word dict
-    if os.path.exists(vocab_path):
-        char2id = load_word_dict(vocab_path)
-        id2char = {int(j): i for i, j in char2id.items()}
-        chars = set([i for i in char2id.keys()])
-    else:
+    if not os.path.exists(src_vocab_path):
         print('Training data...')
         print('input_texts:', src_input_texts[0])
         print('target_texts:', tgt_input_texts[0])
@@ -43,37 +39,46 @@ def main(model_dir='',
         print('num of samples:', len(src_input_texts))
         print('max sequence length for inputs:', max_input_texts_len)
 
-        chars = data_reader.read_vocab(src_input_texts + tgt_input_texts)
-        id2char = {i: j for i, j in enumerate(chars)}
+        src_vocab = data_reader.read_vocab(src_input_texts)
+        id2char = {i: j for i, j in enumerate(src_vocab)}
         char2id = {j: i for i, j in id2char.items()}
-        save_word_dict(char2id, vocab_path)
+        save_word_dict(char2id, src_vocab_path)
 
-    inputter = onmt.inputters.ExampleInputter(source_inputter, target_inputter)
-    inputter.initialize({
-        "source_vocabulary": vocab_path,
-        "target_vocabulary": vocab_path
-    })
-    # opennmt train model
-    train(model_dir,
-          inputter,
-          src_train_path,
-          tgt_train_path,
+        tgt_vocab = data_reader.read_vocab(tgt_input_texts)
+        id2char = {i: j for i, j in enumerate(tgt_vocab)}
+        char2id = {j: i for i, j in id2char.items()}
+        save_word_dict(char2id, tgt_vocab_path)
+
+    data_config = {
+        "source_vocabulary": src_vocab_path,
+        "target_vocabulary": tgt_vocab_path
+    }
+
+    model.initialize(data_config)
+
+    checkpoint_manager = tf.train.CheckpointManager(checkpoint, model_dir, max_to_keep=5)
+    if checkpoint_manager.latest_checkpoint is not None:
+        tf.get_logger().info("Restoring parameters from %s", checkpoint_manager.latest_checkpoint)
+        checkpoint.restore(checkpoint_manager.latest_checkpoint)
+
+    train(src_train_path, tgt_train_path, checkpoint_manager,
+          batch_size=batch_size,
           maximum_length=maximum_length,
-          shuffle_buffer_size=shuffle_buffer_size,
-          gradients_accum=gradients_accum,
           train_steps=train_steps,
           save_every=save_every,
           report_every=report_every)
 
 
 if __name__ == "__main__":
+    if config.gpu_id > -1:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
     main(config.model_dir,
          src_train_path=config.src_train_path,
          tgt_train_path=config.tgt_train_path,
-         vocab_path=config.vocab_path,
+         src_vocab_path=config.src_vocab_path,
+         tgt_vocab_path=config.tgt_vocab_path,
+         batch_size=config.batch_size,
          maximum_length=config.maximum_length,
-         shuffle_buffer_size=config.shuffle_buffer_size,
-         gradients_accum=config.gradients_accum,
          train_steps=config.train_steps,
          save_every=config.save_every,
          report_every=config.report_every)

@@ -58,5 +58,5 @@ def get_set(lines):
 
 if __name__ == '__main__':
     print(correction_t())
-    spell_t(get_set(open('../pycorrector/data/en/spell-testset1.txt')),verbose=True)  # Dev set
-    spell_t(get_set(open('../pycorrector/data/en/spell-testset2.txt')),verbose=True)  # final test set
+    spell_t(get_set(open('../pycorrector/data/src/spell-testset1.txt')),verbose=True)  # Dev set
+    spell_t(get_set(open('../pycorrector/data/src/spell-testset2.txt')),verbose=True)  # final test set

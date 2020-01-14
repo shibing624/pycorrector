@@ -6,12 +6,12 @@ import os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # Training data path.
-# chinese corpus
+# toy chinese corpus
 raw_train_paths = [
-    # os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
-    # os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
     # os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
 ]
 
 output_dir = os.path.join(pwd_path, 'output')
@@ -21,19 +21,16 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 # seq2seq_attn_train config
-save_vocab_path = os.path.join(output_dir, 'vocab.txt')
-attn_model_path = os.path.join(output_dir, 'attn_model.h5')
+save_src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
+save_trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
+model_dir = os.path.join(output_dir, 'models')
 
-vocab_max_size = 6000
-vocab_min_count = 5
-
-batch_size = 64
-epochs = 40
-rnn_hidden_dim = 128
-maxlen = 400
-dropout = 0.0
+batch_size = 32
+epochs = 10
+embedding_dim = 256
+hidden_dim = 256
+maxlen = 32
 gpu_id = 0
-
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
