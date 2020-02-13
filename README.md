@@ -13,6 +13,10 @@
 
 **pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
+## demo
+
+https://www.borntowin.cn/product/corrector
+
 ## 问题
 
 中文文本纠错任务，常见错误类型包括：
@@ -68,9 +72,6 @@
 1. 现在的处理手段，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法上有更大的突破。
 2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
 
-## demo
-
-https://www.borntowin.cn/product/corrector
 
 
 ## 安装
@@ -114,14 +115,13 @@ print(corrected_sent, detail)
 ### 安装依赖
 ```
 pip3 install -r requirements-dev.txt
-
 ```
 
 ### 介绍
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`rnn_attention`、`conv_seq2seq`、`seq2seq_attention`、
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`conv_seq2seq`、`seq2seq_attention`、
 `transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
