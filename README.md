@@ -83,7 +83,7 @@ cd pycorrector
 python3 setup.py install
 ```
 
-通过以上两种方法的任何一种完成安装都可以。如果不想安装，可以下载[github源码包](https://github.com/shibing624/pycorrector/archive/master.zip)，需要安装下面的依赖库才能正常使用。
+通过以上两种方法的任何一种完成安装都可以。如果不想安装，可以下载[github源码包](https://github.com/shibing624/pycorrector/archive/master.zip)，安装下面依赖再使用。
 
 #### 安装依赖
 ```
@@ -107,7 +107,7 @@ output:
 少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
 ```
 
-> 规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置即可。
+> 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
 
 
 - 错误检测
@@ -128,7 +128,8 @@ output:
 
 
 - 关闭字粒度纠错
-默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低，可以关闭字粒度纠错，这样可以提高纠错准确率，以及提高纠错速度。
+
+默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低。关闭字粒度纠错，这样可以提高纠错准确率，提高纠错速度。
 ```
 
 import pycorrector
@@ -144,14 +145,14 @@ output:
 ```
 '我的喉咙发炎了要买点阿莫西林吃', [['细林', '西林', 12, 14]]
 ```
-> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式纠错召回高一些，但是整体准确率会低一些；
+> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式纠错召回高一些，但是整体准确率会低；
 
 > 如果追求准确率而不追求召回率的话，建议将`enable`设为`False`，仅使用错词纠正。
 
 
 - 加载自定义混淆集
 
-通过加载自定义混淆集，支持用户指定错误纠正。
+通过加载自定义混淆集，支持用户纠正已知的错误。
 
 ```
 import pycorrector
@@ -161,7 +162,9 @@ pycorrector.set_log_level('INFO')
 error_sentence_1 = '买iPhone差，要多少钱'
 correct_sent = pycorrector.correct(error_sentence_1)
 print(correct_sent)
+
 print('*' * 53)
+
 pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
 correct_sent = pycorrector.correct(error_sentence_1)
 print(correct_sent)
@@ -184,13 +187,11 @@ iphone差 iphoneX 100
 
 - 加载自定义语言模型
 
-默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑
-使用`pycorrector`程序可能会有些许吃力。
+默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或者使用我用人民日报数据训练的[模型](https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm)，模型文件20M，纠错准确率有损失。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的[模型](https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm)，模型小（20M），准确率低些。
 
 ```
-
 from pycorrector import Corrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
@@ -200,7 +201,6 @@ model = Corrector(language_model_path=lm_path)
 corrected_sent, detail = model.correct('少先队员因该为老人让坐')
 print(corrected_sent, detail)
 
-
 ```
 
 output:
@@ -208,7 +208,7 @@ output:
 少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
 ```
 
-具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是下载的20M模型文件。
+具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
 
 
 ## 深度模型使用说明
