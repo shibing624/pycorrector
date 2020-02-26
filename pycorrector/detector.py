@@ -417,8 +417,9 @@ class Detector(object):
                         # pass in stop word dict
                         if token in self.stopwords:
                             continue
+                        # token, begin_idx, end_idx, error_type
                         maybe_err = [token, i + start_idx, i + start_idx + 1,
-                                     ErrorType.char]  # token, begin_idx, end_idx, error_type
+                                     ErrorType.char]
                         self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warn("index error, sentence:" + sentence + str(ie))

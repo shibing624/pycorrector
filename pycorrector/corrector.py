@@ -166,10 +166,9 @@ class Corrector(Detector):
             confusion_word_set = {self.custom_confusion[word]}
         return confusion_word_set
 
-    # TODO: need more faster
     def generate_items(self, word, fraction=1):
         """
-        生成纠错候选集
+        生成纠错候选集, need more faster
         :param word:
         :param fraction:
         :return:
@@ -249,7 +248,7 @@ class Corrector(Detector):
         detail = []
         self.check_corrector_initialized()
         maybe_errors = self.detect(sentence)
-        # 顺序处理
+        # 排序
         maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=False)
         for cur_item, begin_idx, end_idx, err_type in maybe_errors:
             # 纠错，逐个处理
