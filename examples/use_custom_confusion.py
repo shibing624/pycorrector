@@ -17,7 +17,6 @@ if __name__ == '__main__':
         '我想喝小明同学。',
         '哪里卖苹果吧？请大叔给我让坐',
         '交通先行了怎么过去啊？',
-
     ]
     for line in error_sentences:
         correct_sent = pycorrector.correct(line)

@@ -13,11 +13,11 @@
 
 **pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
-## demo
+## Demo
 
 https://www.borntowin.cn/product/corrector
 
-## 问题
+## Question
 
 中文文本纠错任务，常见错误类型包括：
 
@@ -34,7 +34,7 @@ https://www.borntowin.cn/product/corrector
 其中'形似字错误'主要针对五笔或者笔画手写输入等。
 
 
-## 解决方案
+## Plan
 ### 规则的解决思路
 1. 中文纠错分为两步走，第一步是错误检测，第二步是错误纠正；
 2. 错误检测部分先通过结巴中文分词器切词，由于句子中含有错别字，所以切词结果往往会有切分错误的情况，这样从字粒度和词粒度两方面检测错误，
@@ -47,7 +47,7 @@ https://www.borntowin.cn/product/corrector
 3. seq2seq模型是使用encoder-decoder结构解决序列转换问题，目前在序列转换任务中（如机器翻译、对话生成、文本摘要、图像描述）使用最广泛、效果最好的模型之一。
 
 
-## 特征
+## Feature
 ### 模型
 * kenlm：kenlm统计语言模型工具
 * rnn_attention模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
@@ -74,7 +74,7 @@ https://www.borntowin.cn/product/corrector
 
 
 
-## 安装
+## Install
 * 全自动安装：pip3 install pycorrector
 * 半自动安装：
 ```
@@ -83,16 +83,17 @@ cd pycorrector
 python3 setup.py install
 ```
 
-## 规则方案使用说明
+通过以上两种方法的任何一种完成安装都可以。如果不想安装，可以下载[github源码包](https://github.com/shibing624/pycorrector/archive/master.zip)，需要安装下面的依赖库才能正常使用。
 
-
-### 安装依赖
+#### 安装依赖
 ```
 pip3 install -r requirements.txt
 ```
 
-### 纠错  
-使用示例:
+## Usage
+
+- 文本纠错
+
 ```
 import pycorrector
 
@@ -101,16 +102,116 @@ print(corrected_sent, detail)
 
 ```
 
-输出:
+output:
 ```
 少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
 ```
 
-#### 注意
-规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置即可。
+> 规则方法默认会从该路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置即可。
 
 
-## 深度方案使用说明
+- 错误检测
+```
+
+import pycorrector
+
+idx_errors = pycorrector.detect('少先队员因该为老人让坐')
+print(idx_errors)
+
+```
+
+output:
+```
+[['因该', 4, 6, 'word'], ['坐', 10, 11, 'char']]
+```
+> 返回类型是`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
+
+
+- 关闭字粒度纠错
+默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低，可以关闭字粒度纠错，这样可以提高纠错准确率，以及提高纠错速度。
+```
+
+import pycorrector
+
+error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
+pycorrector.enable_char_error(enable=False)
+correct_sent = pycorrector.correct(error_sentence_1)
+print(correct_sent)
+
+```
+
+output:
+```
+'我的喉咙发炎了要买点阿莫西林吃', [['细林', '西林', 12, 14]]
+```
+> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式纠错召回高一些，但是整体准确率会低一些；
+
+> 如果追求准确率而不追求召回率的话，建议将`enable`设为`False`，仅使用错词纠正。
+
+
+- 加载自定义混淆集
+
+通过加载自定义混淆集，支持用户指定错误纠正。
+
+```
+import pycorrector
+
+pycorrector.set_log_level('INFO')
+
+error_sentence_1 = '买iPhone差，要多少钱'
+correct_sent = pycorrector.correct(error_sentence_1)
+print(correct_sent)
+print('*' * 53)
+pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
+correct_sent = pycorrector.correct(error_sentence_1)
+print(correct_sent)
+
+```
+
+output:
+```
+('买iPhone差，要多少钱', [])
+*****************************************************
+('买iphoneX，要多少钱', [['iphone差', 'iphoneX', 1, 8]])
+```
+
+具体demo见[example/use_custom_confusion.py](./examples/use_custom_confusion.py)，其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
+```
+iphone差 iphoneX 100
+```
+> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径。
+
+
+- 加载自定义语言模型
+
+默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑
+使用`pycorrector`程序可能会有些许吃力。
+
+支持用户加载自己训练的kenlm语言模型，或者使用我用人民日报数据训练的[模型](https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm)，模型文件20M，纠错准确率有损失。
+
+```
+
+from pycorrector import Corrector
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+lm_path = os.path.join(pwd_path, './people_chars_lm.klm')
+model = Corrector(language_model_path=lm_path)
+
+corrected_sent, detail = model.correct('少先队员因该为老人让坐')
+print(corrected_sent, detail)
+
+
+```
+
+output:
+```
+少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
+```
+
+具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是下载的20M模型文件。
+
+
+## 深度模型使用说明
 
 ### 安装依赖
 ```
