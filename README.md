@@ -201,7 +201,6 @@ input: 由我起开始做 output: 由我开始做
 
 ## 贡献及优化点
 
-- [x] 使用RNN语言模型来提高纠错准确率
 - [x] 优化形似字字典，提高形似字纠错准确率
 - [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
 - [x] 添加中文语法错误检测及纠正能力
@@ -210,6 +209,8 @@ input: 由我起开始做 output: 由我开始做
 - [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
 - [x] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
 - [x] 升级代码，兼容TensorFlow 2.0库
+- [ ] 支持人名、地名、机构名、药品名等自定义保护词典的文本纠错
+- [ ] 升级bert纠错逻辑，提升基于mask的纠错效率
 
 ## 讨论群
 
