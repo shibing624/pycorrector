@@ -16,8 +16,8 @@ from pycorrector.utils.tokenizer import Tokenizer
 
 # \u4E00-\u9FD5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
 # \r\n|\s : whitespace characters. Will not be handled.
-re_han = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&\._]+)", re.U)
-re_skip = re.compile("(\r\n|\s)", re.U)
+re_han = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&]+)", re.U)
+re_skip = re.compile("(\r\n\\s)", re.U)
 
 PUNCTUATION_LIST = ".。,，,、?？:：;；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-_——「」"
 
@@ -64,7 +64,7 @@ class Detector(object):
         self.stopwords = None
         self.tokenizer = None
 
-    def initialize_detector(self):
+    def _initialize_detector(self):
         t1 = time.time()
         try:
             import kenlm
@@ -116,7 +116,7 @@ class Detector(object):
 
     def check_detector_initialized(self):
         if not self.initialized_detector:
-            self.initialize_detector()
+            self._initialize_detector()
 
     @staticmethod
     def load_word_freq_dict(path):

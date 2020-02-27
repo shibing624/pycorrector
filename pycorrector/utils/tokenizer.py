@@ -66,18 +66,18 @@ class Tokenizer(object):
                 self.model.add_word(k)
                 self.model.add_word(word)
 
-    def tokenize(self, unicode_sentence, mode="search", HMM=True, n=2):
+    def tokenize(self, unicode_sentence, mode="search"):
         """
-        切词并返回切词位置
+        切词并返回切词位置, search mode用于错误扩召回
         :param unicode_sentence: query
         :param mode: search, default, ngram
         :param HMM: enable HMM
-        :param n: ngram N
         :return: (w, start, start + width) model='default'
         """
         if mode == 'ngram':
+            n = 2
             result_set = set()
-            tokens = self.model.lcut(unicode_sentence, HMM=HMM)
+            tokens = self.model.lcut(unicode_sentence)
             tokens_len = len(tokens)
             start = 0
             for i in range(0, tokens_len):
@@ -94,27 +94,14 @@ class Tokenizer(object):
             results = list(result_set)
             result = sorted(results, key=lambda x: x[-1])
         else:
-            result = list(self.model.tokenize(unicode_sentence, mode=mode, HMM=HMM))
+            result = list(self.model.tokenize(unicode_sentence, mode=mode))
         return result
 
 
 if __name__ == '__main__':
-    txt = ["我不要你花钱,这些路曲近通幽",
-           "这个消息不胫儿走",
-           "这个消息不径而走",
-           "这个消息不胫而走",
-           "复方甘草口服溶液限田基",
-           "张老师经常背课到深夜，我们要体晾老师的心苦。",
-           '新进人员时，知识当然还不过，可是人有很有精神，面对工作很认真的话，很快就学会、体会。',
-           "小牛曲清去蛋白提取物乙"]
+    text = "这个消息在北京城里不胫儿走"
+    print(text)
     t = Tokenizer()
-    for i in txt:
-        txt_seg = t.tokenize(i)
-        txt_seg_s = t.tokenize(i, 'search')
-        txt_seg_s_n = t.tokenize(i, 'search', False)
-        txt_seg_s_f = t.tokenize(i, 'default', False)
-        print(i)
-        print(txt_seg)
-        print(txt_seg_s)
-        print(txt_seg_s_n)
-        print(txt_seg_s_f)
+    print('deault', t.tokenize(text, 'default'))
+    print('search', t.tokenize(text, 'search'))
+    print('ngram', t.tokenize(text, 'ngram'))

@@ -101,7 +101,7 @@ class Corrector(Detector):
                         result[c] = set(list(parts[:i] + parts[i + 1:]))
         return result
 
-    def initialize_corrector(self):
+    def _initialize_corrector(self):
         t1 = time.time()
         # chinese common char dict
         self.cn_char_set = self.load_char_set(self.common_char_path)
@@ -120,7 +120,7 @@ class Corrector(Detector):
 
     def check_corrector_initialized(self):
         if not self.initialized_corrector:
-            self.initialize_corrector()
+            self._initialize_corrector()
 
     def get_same_pinyin(self, char):
         """

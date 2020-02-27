@@ -210,6 +210,18 @@ output:
 
 具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
 
+## Evaluate
+
+提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)，该脚本有两个功能：
+- 构建评估样本集：自动生成评估集[pycorrector/data/eval_corpus.json](pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
+- 计算纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
+
+执行该脚本后得到，规则方法纠错效果评估如下：
+```
+- 准确率：320/500=64%
+- 召回率：152/300=50.67%
+```
+看来还有比较大的提升空间，误杀和漏召回的都有。
 
 ## 深度模型使用说明
 

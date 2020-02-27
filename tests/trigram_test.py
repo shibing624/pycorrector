@@ -10,8 +10,8 @@ sys.path.append("../")
 import pycorrector
 
 c = pycorrector.corrector
-c.initialize_corrector()
-c.initialize_detector()
+c.check_corrector_initialized()
+c.check_detector_initialized()
 same_pinyin = c.same_pinyin
 same_shape = c.same_stroke
 model = c.lm

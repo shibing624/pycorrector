@@ -44,6 +44,35 @@ def test_chengyu():
     correct_sent = pycorrector.correct(error_sentence_1)
     print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
 
+    # 这家伙还蛮格（（恪））尽职守的。
+    # 报应接中迩（（而））来。
+    # 人群穿（（川））流不息。
+    # 这个消息不径（（胫））而走。
+    # 眼前的场景美仑（（轮））美幻简直超出了人类的想象。
+    # 看着这两个人谈笑风声（（生））我心理（（里））不由有些忌妒。
+    # 有了这一番旁证（（征））博引。
+    x = [
+        '这家伙还蛮格尽职守的',
+        '报应接中迩来',  # 接踵而来
+        '人群穿流不息',
+        '这个消息不径而走',
+        '这个消息不胫儿走',
+        '眼前的场景美仑美幻简直超出了人类的想象',
+        '看着这两个人谈笑风声我心理不由有些忌妒',
+        '有了这一番旁证博引',
+        '有了这一番旁针博引',
+    ]
+
+    for i in x:
+        print(i, pycorrector.detect(i))
+        print(i, pycorrector.correct(i))
+
+    pycorrector.enable_char_error(enable=True)
+    print("-" * 42)
+    for i in x:
+        print(i, pycorrector.detect(i))
+        print(i, pycorrector.correct(i))
+
 
 def test_suyu():
     """测试俗语纠错"""
@@ -56,3 +85,32 @@ def test_suyu():
     error_sentence_1 = '这么多字让他写也是赶鸭子打架'  # 赶鸭子上架
     correct_sent = pycorrector.correct(error_sentence_1)
     print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+
+def test_ner():
+    from pycorrector.utils.tokenizer import segment
+    from pycorrector.corrector import Corrector
+    c = Corrector()
+    c.check_corrector_initialized()
+    c.check_detector_initialized()
+    error_sentences = [
+        '这个消息在北京城里不胫儿走',
+        '大家已经满头大汉了，休息吧',
+        '我不要你花钱,这些路曲近通幽',  # 曲径通幽
+        '这个消息不胫儿走',
+        '这个消息不径而走',  # 胫
+        '真的是无稽之谈',
+        '真的是无集之谈',  # 集
+        '小丽宝儿的学习成绩一落千仗太失望了',
+        '肉骨头是索然无味',
+        '肉骨头是索染无味',  # 然
+        '看书是一心一意，绝不东张夕望，好厉害。',  # 西
+        "复方甘草口服液好喝吗",
+        '新进人员时，知识当然还不过，可是人有很有精神，面对工作很认真的话，很快就学会、体会。',
+    ]
+    for line in error_sentences:
+        print(line)
+        print("segment:", segment(line))
+        print("tokenize:", c.tokenizer.tokenize(line))
+        print(c.detect(line))
+        correct_sent = c.correct(line)
+        print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
