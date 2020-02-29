@@ -83,9 +83,16 @@ cd pycorrector
 python3 setup.py install
 ```
 
+
 通过以上两种方法的任何一种完成安装都可以。如果不想安装，可以下载[github源码包](https://github.com/shibing624/pycorrector/archive/master.zip)，安装下面依赖再使用。
 
 #### 安装依赖
+* kenlm安装
+```
+pip3 install https://github.com/kpu/kenlm/archive/master.zip
+```
+
+* 其他库包安装
 ```
 pip3 install -r requirements.txt
 ```
