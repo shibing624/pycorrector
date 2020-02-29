@@ -17,6 +17,13 @@ def test_segment():
     print(segment(error_sentence_1))
     import jieba
     print(list(jieba.tokenize(error_sentence_1)))
+    import jieba.posseg as pseg
+    words = pseg.lcut("我爱北京天安门")  # jieba默认模式
+    print('old:', words)
+    # jieba.enable_paddle()  # 启动paddle模式。 0.40版之后开始支持，早期版本不支持
+    # words = pseg.cut("我爱北京天安门", use_paddle=True)  # paddle模式
+    # for word, flag in words:
+    #     print('new:','%s %s' % (word, flag))
 
 
 def test_tokenizer():

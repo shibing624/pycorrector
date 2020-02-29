@@ -16,7 +16,7 @@ def get_logger(name, log_file=None, log_level='DEBUG'):
     """
     logger = logging.getLogger(name)
     logger.setLevel(log_level.upper())
-    formatter = logging.Formatter('[%(levelname)7s %(asctime)s %(module)s:%(lineno)d] %(message)s',
+    formatter = logging.Formatter('[%(levelname)7s %(asctime)s %(module)s:%(lineno)4d] %(message)s',
                                   datefmt='%Y%m%d %I:%M:%S')
     if log_file:
         f_handle = logging.FileHandler(log_file)

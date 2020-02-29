@@ -4,7 +4,6 @@
 import codecs
 import operator
 import os
-import time
 
 from pypinyin import lazy_pinyin
 
@@ -102,20 +101,12 @@ class Corrector(Detector):
         return result
 
     def _initialize_corrector(self):
-        t1 = time.time()
-        # chinese common char dict
+        # chinese common char
         self.cn_char_set = self.load_char_set(self.common_char_path)
-
         # same pinyin
         self.same_pinyin = self.load_same_pinyin(self.same_pinyin_text_path)
-        t2 = time.time()
-        logger.debug("Loaded same pinyin file: %s, spend: %.3f s." % (
-            self.same_pinyin_text_path, t2 - t1))
-
         # same stroke
         self.same_stroke = self.load_same_stroke(self.same_stroke_text_path)
-        logger.debug("Loaded same stroke file: %s, spend: %.3f s." % (
-            self.same_stroke_text_path, time.time() - t2))
         self.initialized_corrector = True
 
     def check_corrector_initialized(self):

@@ -84,19 +84,13 @@ class Detector(object):
                 verbose=1
             )
         self.lm = kenlm.Model(self.language_model_path)
-        logger.debug('Loaded language model: %s, spend: %s s' % (self.language_model_path, str(time.time() - t1)))
+        t2 = time.time()
+        logger.debug('Loaded language model: %s, spend: %.3f s.' % (self.language_model_path, t2 - t1))
 
         # 词、频数dict
-        t2 = time.time()
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
-        t3 = time.time()
-        logger.debug('Loaded word freq file: %s, size: %d, spend: %s s' %
-                     (self.word_freq_path, len(self.word_freq), str(t3 - t2)))
         # 自定义混淆集
         self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
-        t4 = time.time()
-        logger.debug('Loaded confusion file: %s, size: %d, spend: %s s' %
-                     (self.custom_confusion_path, len(self.custom_confusion), str(t4 - t3)))
         # 自定义切词词典
         self.custom_word_freq = self.load_word_freq_dict(self.custom_word_freq_path)
         self.person_names = self.load_word_freq_dict(self.person_name_path)
@@ -107,11 +101,10 @@ class Detector(object):
         self.custom_word_freq.update(self.place_names)
         self.custom_word_freq.update(self.stopwords)
         self.word_freq.update(self.custom_word_freq)
-        t5 = time.time()
-        logger.debug('Loaded custom word file: %s, size: %d, spend: %s s' %
-                     (self.custom_word_freq_path, len(self.custom_word_freq), str(t5 - t4)))
         self.tokenizer = Tokenizer(dict_path=self.word_freq_path, custom_word_freq_dict=self.custom_word_freq,
                                    custom_confusion_dict=self.custom_confusion)
+        t3 = time.time()
+        logger.debug('Loaded dict file, spend: %.3f s.' % (t3 - t2))
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -211,15 +204,6 @@ class Detector(object):
         """
         self.check_detector_initialized()
         return self.lm.score(' '.join(chars), bos=False, eos=False)
-
-    def char_scores(self, chars):
-        """
-        取RNN语言模型各字的得分
-        :param chars: list, 以字切分
-        :return: scores, list
-        """
-        self.check_detector_initialized()
-        return self.lm.char_scores(chars)
 
     def ppl_score(self, words):
         """
