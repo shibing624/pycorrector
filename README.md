@@ -217,6 +217,37 @@ output:
 
 具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
 
+
+### Command Line Usage
+- 命令行模式
+
+支持批量文本纠错。
+```
+python3 -m pycorrector -h
+usage: __main__.py [-h] -o OUTPUT [-n] [-d] input
+
+@description:
+
+positional arguments:
+  input                 the input file path, file encode need utf-8.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        the output file path.
+  -n, --no_char         disable char detect mode.
+  -d, --detail          print detail info
+
+```
+
+case：
+```
+python3 -m pycorrector input.txt -o out.txt -n -d
+
+```
+> 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
+
+
 ### Evaluate
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)，该脚本有两个功能：
