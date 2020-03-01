@@ -91,7 +91,4 @@ def test_full_scores_chars_length():
     print(len(n), len(sentence_char_split.split()))
     assert len(n) == len(sentence_char_split.split())
     k = list(model.full_scores(sentence_char_split, bos=False, eos=True))
-    print(k,len(k))
-
-
-    model.ngr
+    print(k, len(k))
