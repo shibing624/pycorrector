@@ -33,6 +33,17 @@ def test_brand():
     print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
 
 
+def test_person_name():
+    """测试人名纠错"""
+    error_sentence_1 = '发行人共同实际控制人萧华、霍荣铨、邓啟棠、张旗康分别'  # 误杀，萧华-肖
+    correct_sent = pycorrector.correct(error_sentence_1)
+    print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+
+    error_sentence_1 = '上述承诺内容系本人真实意思表示'  # 误杀：系-及
+    correct_sent = pycorrector.correct(error_sentence_1)
+    print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+
+
 def test_chengyu():
     """测试成语纠错"""
     pycorrector.enable_char_error(enable=False)
@@ -85,6 +96,7 @@ def test_suyu():
     error_sentence_1 = '这么多字让他写也是赶鸭子打架'  # 赶鸭子上架
     correct_sent = pycorrector.correct(error_sentence_1)
     print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+
 
 def test_ner():
     from pycorrector.utils.tokenizer import segment
