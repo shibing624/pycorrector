@@ -101,12 +101,11 @@ pip3 install -r requirements.txt
 
 - 文本纠错
 
-```
+```python
 import pycorrector
 
 corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
 print(corrected_sent, detail)
-
 ```
 
 output:
@@ -118,13 +117,11 @@ output:
 
 
 - 错误检测
-```
-
+```python
 import pycorrector
 
 idx_errors = pycorrector.detect('少先队员因该为老人让坐')
 print(idx_errors)
-
 ```
 
 output:
@@ -135,10 +132,22 @@ output:
 
 
 - 关闭字粒度纠错
+```python
+import pycorrector
 
-默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低。关闭字粒度纠错，这样可以提高纠错准确率，提高纠错速度。
+error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
+correct_sent = pycorrector.correct(error_sentence_1)
+print(correct_sent)
+
 ```
 
+output:
+```
+'我的喉咙发炎了要买点阿莫西林吉', [['细林', '西林', 12, 14], ['吃', '吉', 14, 15]]
+```
+
+上例中`吃`发生误纠，如下代码关闭字粒度纠错：
+```python
 import pycorrector
 
 error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
@@ -152,42 +161,49 @@ output:
 ```
 '我的喉咙发炎了要买点阿莫西林吃', [['细林', '西林', 12, 14]]
 ```
-> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式纠错召回高一些，但是整体准确率会低；
+
+默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低。关闭字粒度纠错，这样可以提高纠错准确率，提高纠错速度。
+
+> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式可以召回字粒度错误，但是整体准确率会低；
 
 > 如果追求准确率而不追求召回率的话，建议将`enable`设为`False`，仅使用错词纠正。
 
 
 - 加载自定义混淆集
 
-通过加载自定义混淆集，支持用户纠正已知的错误。
+通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）错误补召回；2）误杀加白。
 
-```
+```python
 import pycorrector
 
 pycorrector.set_log_level('INFO')
-
-error_sentence_1 = '买iPhone差，要多少钱'
-correct_sent = pycorrector.correct(error_sentence_1)
-print(correct_sent)
+error_sentences = [
+    '买iPhone差，要多少钱',
+    '共同实际控制人萧华、霍荣铨、张旗康',
+]
+for line in error_sentences:
+    print(pycorrector.correct(line))
 
 print('*' * 53)
-
 pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
-correct_sent = pycorrector.correct(error_sentence_1)
-print(correct_sent)
+for line in error_sentences:
+    print(pycorrector.correct(line))
 
 ```
 
 output:
 ```
 ('买iPhone差，要多少钱', [])
+('共同实际控制人萧华、霍荣铨、张启康', [['张旗康', '张启康', 14, 17]])
 *****************************************************
 ('买iphoneX，要多少钱', [['iphone差', 'iphoneX', 1, 8]])
+('共同实际控制人萧华、霍荣铨、张旗康', [])
 ```
 
 具体demo见[example/use_custom_confusion.py](./examples/use_custom_confusion.py)，其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
 ```
 iphone差 iphoneX 100
+张旗康 张旗康
 ```
 > `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径。
 
@@ -198,7 +214,7 @@ iphone差 iphoneX 100
 
 支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的[模型](https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm)，模型小（20M），准确率低些。
 
-```
+```python
 from pycorrector import Corrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))

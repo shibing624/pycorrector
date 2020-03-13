@@ -36,6 +36,8 @@ def test_brand():
 def test_person_name():
     """测试人名纠错"""
     error_sentence_1 = '发行人共同实际控制人萧华、霍荣铨、邓啟棠、张旗康分别'  # 误杀，萧华-肖
+    import jieba.posseg
+    print(jieba.posseg.lcut(error_sentence_1))
     correct_sent = pycorrector.correct(error_sentence_1)
     print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
 
