@@ -4,12 +4,11 @@
 import sys
 
 sys.path.append("../")
-from pycorrector.detector import Detector
 from pycorrector.utils.tokenizer import segment
 from pycorrector.corrector import Corrector
 
 error_sentences = [
-    '少先队员因该为老人让坐',
+    '少先队员因该为老人让坐,1234567890，123a-bc,bcsd123入狱dfs,方式，监控。水电费？及。"是文法的上午"下午说："也是"好的',
     '桥为什么修的想过山车一样',  # 修', '秀
     '我认识一个人张宁，他喜欢张玲，说了张林很多好话，张林为老人作了很多好事',  # [['玲', '令', 13, 14], ['张林为', '长林为', 24, 27]]
     '橄榄的和这款哪个比较好用？味道都是一样的么？',
@@ -65,12 +64,9 @@ error_sentences = [
 
 ]
 
-
 d = Corrector()
 for i in error_sentences:
     print(i, d.detect(i))
-    print(i, d.correct(i))
-
 
 sent1 = '少先队员应该为老人让座'
 sent_seg = segment(sent1)
@@ -87,5 +83,3 @@ print(sent2, d.detect(sent2))
 
 freq = d.word_frequency('龟龙麟凤')
 print('freq:', freq)
-
-

@@ -11,7 +11,7 @@ import numpy as np
 from pycorrector import config
 from pycorrector.utils.get_file import get_file
 from pycorrector.utils.logger import logger
-from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode
+from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
 from pycorrector.utils.tokenizer import Tokenizer
 
 # \u4E00-\u9FD5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
@@ -119,6 +119,9 @@ class Detector(object):
         :return:
         """
         word_freq = {}
+        if not os.path.exists(path):
+            logger.warning('file not found.%s' % path)
+            return word_freq
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
@@ -140,6 +143,9 @@ class Detector(object):
         :return: dict, {variant: origin}, eg: {"交通先行": "交通限行"}
         """
         confusion = {}
+        if not os.path.exists(path):
+            logger.warning('file not found.%s' % path)
+            return confusion
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
@@ -263,6 +269,7 @@ class Detector(object):
         """
         取疑似错字的位置，通过平均绝对离差（MAD）
         :param scores: np.array
+        :param ratio: 正态分布表参数
         :param threshold: 阈值越小，得到疑似错别字越多
         :return: 全部疑似错误字的index: list
         """
@@ -316,32 +323,50 @@ class Detector(object):
         # pass alpha
         if is_alphabet_string(token.lower()):
             result = True
+        # pass not chinese
+        if not is_chinese_string(token):
+            result = True
         return result
 
-    def detect(self, sentence):
-        maybe_errors = []
-        if not sentence.strip():
-            return maybe_errors
-        # 初始化
-        self.check_detector_initialized()
-        # 编码统一，utf-8 to unicode
-        sentence = convert_to_unicode(sentence)
-        # 文本归一化
-        sentence = uniform(sentence)
-        # 长句切分为短句
-        blocks = re_han.split(sentence)
+    @staticmethod
+    def split_2_short_text(text, include_symbol=False):
+        """
+        长句切分为短句
+        :param text: str
+        :param include_symbol: bool
+        :return: (sentence, idx)
+        """
+        result = []
+        blocks = re_han.split(text)
         start_idx = 0
         for blk in blocks:
             if not blk:
                 continue
-            if re_han.match(blk):
-                maybe_errors += self._detect_short(blk, start_idx)
-                start_idx += len(blk)
+            if include_symbol:
+                result.append((blk, start_idx))
             else:
-                start_idx += len(blk)
+                if re_han.match(blk):
+                    result.append((blk, start_idx))
+            start_idx += len(blk)
+        return result
+
+    def detect(self, text):
+        maybe_errors = []
+        if not text.strip():
+            return maybe_errors
+        # 初始化
+        self.check_detector_initialized()
+        # 编码统一，utf-8 to unicode
+        text = convert_to_unicode(text)
+        # 文本归一化
+        text = uniform(text)
+        # 长句切分为短句
+        blocks = self.split_2_short_text(text)
+        for blk, idx in blocks:
+            maybe_errors += self.detect_short(blk, idx)
         return maybe_errors
 
-    def _detect_short(self, sentence, start_idx=0):
+    def detect_short(self, sentence, start_idx=0):
         """
         检测句子中的疑似错误信息，包括[词、位置、错误类型]
         :param sentence:
@@ -349,6 +374,8 @@ class Detector(object):
         :return: list[list], [error_word, begin_pos, end_pos, error_type]
         """
         maybe_errors = []
+        # 初始化
+        self.check_detector_initialized()
         # 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
             idx = sentence.find(confuse)

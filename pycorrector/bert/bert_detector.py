@@ -95,7 +95,6 @@ class BertDetector(object):
         """
         句子改错
         :param sentence: 句子文本
-        :param threshold: 阈值
         :return: list[list], [error_word, begin_pos, end_pos, error_type]
         """
         maybe_errors = []

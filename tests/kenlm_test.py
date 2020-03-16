@@ -92,3 +92,63 @@ def test_full_scores_chars_length():
     assert len(n) == len(sentence_char_split.split())
     k = list(model.full_scores(sentence_char_split, bos=False, eos=True))
     print(k, len(k))
+
+
+def test_ppl_sentence():
+    """测试句子粒度的ppl得分"""
+    sentence_char_split1 = ' '.join('先救挨饿的人，然后治疗病人。')
+    sentence_char_split2 = ' '.join('先就挨饿的人，然后治疗病人。')
+    n = model.perplexity(sentence_char_split1)
+    print('1', n)
+    n = model.perplexity(sentence_char_split2)
+    print(n)
+
+    part_char_split1 = ' '.join('先救挨饿的人')
+    part_char_split2 = ' '.join('先就挨饿的人')
+    n = model.perplexity(part_char_split1)
+    print('2', n)
+    n = model.perplexity(part_char_split2)
+    print(n)
+
+    part_char_split1 = '先救挨'
+    part_char_split2 = '先就挨'
+    n1 = model.perplexity(part_char_split1)
+    print('3', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)
+    assert n1 == n2
+
+    part_char_split1 = '先 救 挨'
+    part_char_split2 = '先 就 挨'
+    n1 = model.perplexity(part_char_split1)
+    print('4', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)
+
+    part_char_split1 = '先 救 挨 饿 的 人'
+    part_char_split2 = '先 就 挨 饿 的 人'
+    n1 = model.perplexity(part_char_split1)
+    print('5', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)
+
+    part_char_split1 = '先 救 挨 饿 的 人 ，'
+    part_char_split2 = '先 就 挨 饿 的 人 ，'
+    n1 = model.perplexity(part_char_split1)
+    print('6', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)
+
+    part_char_split1 = '先 救 挨 饿 的 人 ， 然 后 治 疗 病 人'
+    part_char_split2 = '先 就 挨 饿 的 人 ， 然 后 治 疗 病 人'
+    n1 = model.perplexity(part_char_split1)
+    print('7', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)
+
+    part_char_split1 = '先 救 挨 饿 的 人 ， 然 后 治 疗 病 人 。'
+    part_char_split2 = '先 就 挨 饿 的 人 ， 然 后 治 疗 病 人 。'
+    n1 = model.perplexity(part_char_split1)
+    print('8', n1)
+    n2 = model.perplexity(part_char_split2)
+    print(n2)

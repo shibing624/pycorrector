@@ -17,6 +17,7 @@ from pycorrector.utils.math_utils import find_all_idx
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 eval_data_path = os.path.join(pwd_path, '../data/eval_corpus.json')
+output_eval_error_path = os.path.join(pwd_path, './eval_corpus_error.json')
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):
@@ -81,16 +82,16 @@ def eval_bcmi_data(data_path, verbose=False):
             if not error_sentence:
                 continue
             pred_sentence, pred_detail = pycorrector.correct(error_sentence)
-            if verbose:
-                print('input sentence:', error_sentence)
-                print('pred sentence:', pred_sentence, pred_detail)
-                print('right sentence:', right_sentence, right_detail)
             total_count += 1
             if right_sentence == pred_sentence:
                 right_count += 1
                 right_result[error_sentence] = [right_sentence, pred_sentence]
             else:
                 wrong_result[error_sentence] = [right_sentence, pred_sentence]
+                if verbose:
+                    print('input sentence:', error_sentence)
+                    print('pred sentence:', pred_sentence, pred_detail)
+                    print('right sentence:', right_sentence, right_detail)
     if verbose:
         print('right count:', right_count, ';total_count:', total_count)
     right_rate = 0.0
@@ -178,7 +179,7 @@ def build_cged_no_error_corpus(data_path, output_path, limit_size=500):
     save_json(corpus, output_path)
 
 
-def build_eval_corpus():
+def build_eval_corpus(output_eval_path=eval_data_path):
     bcmi_path = os.path.join(pwd_path, '../data/cn/bcmi.txt')
     clp_path = os.path.join(pwd_path, '../data/cn/clp14_C1.pkl')
     sighan_path = os.path.join(pwd_path, '../data/cn/sighan15_A2.pkl')
@@ -201,17 +202,17 @@ def build_eval_corpus():
     no_errors = load_json(no_error_path)
 
     corpus = sample(char_errors, 100) + sample(word_errors, 100) + sample(grammar_errors, 100) + sample(no_errors, 200)
-    save_json(corpus, eval_data_path)
-    print("save eval corpus done", eval_data_path)
+    save_json(corpus, output_eval_path)
+    print("save eval corpus done", output_eval_path)
     os.remove(char_error_path)
     os.remove(word_error_path)
     os.remove(grammar_error_path)
     os.remove(no_error_path)
 
 
-def eval_corpus(eval_error_path, verbose=True):
+def eval_corpus(input_eval_path=eval_data_path, output_eval_path=output_eval_error_path, verbose=True):
     res = []
-    corpus = load_json(eval_data_path)
+    corpus = load_json(input_eval_path)
     total_count = 0
     right_count = 0
     right_rate = 0.0
@@ -252,10 +253,9 @@ def eval_corpus(eval_error_path, verbose=True):
           'recall_rate:{},recall_right_count:{},recall_total_count:{}'.format(right_rate, right_count, total_count,
                                                                               recall_rate, recall_right_count,
                                                                               recall_total_count))
-    save_json(res, eval_error_path)
+    save_json(res, output_eval_path)
 
 
 if __name__ == "__main__":
     # build_eval_corpus()
-    eval_error_path = os.path.join(pwd_path, './eval_corpus_error.json')
-    eval_corpus(eval_error_path)
+    eval_corpus(eval_data_path, output_eval_path=output_eval_error_path)

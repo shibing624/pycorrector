@@ -63,22 +63,26 @@ error_sentences = [
 ]
 
 error_sentences1 = ['能充几次呢？',
-                   '现在银色的K2P是MTK还是博通啊？',
-                   '这个到底有多辣',
-                   'U盘有送挂绳吗',
-                   '2周岁22斤宝宝用多大的啊',
-                   '果子酸吗？有烂的吗？',
-                   '生产日期怎么样 新嘛',
-                   '这纸厚度如何？质量怎么样',
-                   '想不想在来一次比赛',
-                   '权利的游戏第八季']
-for line in error_sentences:
-    print(line)
-    print(pycorrector.detect(line))
-    print(pycorrector.correct(line))
+                    '现在银色的K2P是MTK还是博通啊？',
+                    '这个到底有多辣',
+                    'U盘有送挂绳吗',
+                    '2周岁22斤宝宝用多大的啊',
+                    '果子酸吗？有烂的吗？',
+                    '生产日期怎么样 新嘛',
+                    '这纸厚度如何？质量怎么样',
+                    '想不想在来一次比赛',
+                    '权利的游戏第八季']
 
 
-for line in error_sentences1:
-    print(line)
-    print(pycorrector.detect(line))
-    print(pycorrector.correct(line))
+def test_sent1():
+    for line in error_sentences:
+        print(line)
+        print(pycorrector.detect(line))
+        print(pycorrector.correct(line))
+
+
+def test_sent2():
+    for line in error_sentences1:
+        print(line)
+        print(pycorrector.detect(line))
+        print(pycorrector.correct(line))

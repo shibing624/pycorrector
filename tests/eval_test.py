@@ -21,17 +21,17 @@ def test_get_bcmi_data():
 
 def test_eval_bcmi_data():
     rate, right_dict, wrong_dict = eval_bcmi_data(bcmi_path, True)
-    print('right rate:{}, right_dict:{}, wrong_dict:{}'.format(rate, right_dict, wrong_dict))
-    # right count: 104 ;sentence size: 383, right rate:0.271
+    print('bcmi right rate:{}'.format(rate))
+    # bcmi right rate:0.2591623036649215
 
 
 def test_clp_data():
     rate = eval_sighan_corpus(clp_path, True)
-    print('right rate:{}'.format(rate))
-    # rate:1.6
+    print('clp right rate:{}'.format(rate))
+    # clp right rate:0.5927051671732523
 
 
 def test_sighan_data():
     rate = eval_sighan_corpus(sighan_path, True)
-    print('right rate:{}'.format(rate))
-    # rate:1.53
+    print('sighan right rate:{}'.format(rate))
+    # sighan right rate:0.5724725943970768

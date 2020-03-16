@@ -33,3 +33,5 @@ person_name_path = os.path.join(pwd_path, 'data/person_name.txt')
 place_name_path = os.path.join(pwd_path, 'data/place_name.txt')
 # 停用词
 stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
+# 搭配词
+ngram_words_path = os.path.join(pwd_path, 'data/ngram_words.txt')

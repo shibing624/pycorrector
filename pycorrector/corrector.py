@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: corrector with spell and stroke
+
 import codecs
 import operator
 import os
@@ -11,7 +12,7 @@ from pycorrector import config
 from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance_word
-from pycorrector.utils.text_utils import is_chinese_string
+from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 
 
 class Corrector(Detector):
@@ -42,11 +43,15 @@ class Corrector(Detector):
         self.same_stroke = None
 
     @staticmethod
-    def load_char_set(path):
+    def load_set_file(path):
         words = set()
         with codecs.open(path, 'r', encoding='utf-8') as f:
             for w in f:
-                words.add(w.strip())
+                w = w.strip()
+                if w.startswith('#'):
+                    continue
+                if w:
+                    words.add(w)
         return words
 
     @staticmethod
@@ -72,9 +77,8 @@ class Corrector(Detector):
                     same_pron_same_tone = set(list(parts[1]))
                     same_pron_diff_tone = set(list(parts[2]))
                     value = same_pron_same_tone.union(same_pron_diff_tone)
-                    if len(key_char) > 1 or not value:
-                        continue
-                    result[key_char] = value
+                    if key_char and value:
+                        result[key_char] = value
         return result
 
     @staticmethod
@@ -102,7 +106,7 @@ class Corrector(Detector):
 
     def _initialize_corrector(self):
         # chinese common char
-        self.cn_char_set = self.load_char_set(self.common_char_path)
+        self.cn_char_set = self.load_set_file(self.common_char_path)
         # same pinyin
         self.same_pinyin = self.load_same_pinyin(self.same_pinyin_text_path)
         # same stroke
@@ -157,54 +161,64 @@ class Corrector(Detector):
             confusion_word_set = {self.custom_confusion[word]}
         return confusion_word_set
 
-    def generate_items(self, word, fraction=1):
+    def generate_items(self, word, fragment=1):
         """
-        生成纠错候选集, need more faster
+        生成纠错候选集, 需要评估哪种方法的候选最有效
         :param word:
-        :param fraction:
+        :param fragment: 分段
         :return:
         """
-        candidates_1_order = []
-        candidates_2_order = []
-        candidates_3_order = []
+        # 1字
+        candidates_1 = []
+        # 2字
+        candidates_2 = []
+        # 多于2字
+        candidates_3 = []
+
         # same pinyin word
-        candidates_1_order.extend(self._confusion_word_set(word))
+        candidates_1.extend(self._confusion_word_set(word))
         # custom confusion word
-        candidates_1_order.extend(self._confusion_custom_set(word))
+        candidates_1.extend(self._confusion_custom_set(word))
         # same pinyin char
         if len(word) == 1:
             # same one char pinyin
             confusion = [i for i in self._confusion_char_set(word[0]) if i]
-            candidates_1_order.extend(confusion)
+            candidates_1.extend(confusion)
         if len(word) == 2:
             # same first char pinyin
             confusion = [i + word[1:] for i in self._confusion_char_set(word[0]) if i]
-            candidates_2_order.extend(confusion)
+            candidates_2.extend(confusion)
             # same last char pinyin
             confusion = [word[:-1] + i for i in self._confusion_char_set(word[-1]) if i]
-            candidates_2_order.extend(confusion)
+            candidates_2.extend(confusion)
         if len(word) > 2:
             # same mid char pinyin
             confusion = [word[0] + i + word[2:] for i in self._confusion_char_set(word[1])]
-            candidates_3_order.extend(confusion)
+            candidates_3.extend(confusion)
 
             # same first word pinyin
             confusion_word = [i + word[-1] for i in self._confusion_word_set(word[:-1])]
-            candidates_3_order.extend(confusion_word)
+            candidates_3.extend(confusion_word)
 
             # same last word pinyin
             confusion_word = [word[0] + i for i in self._confusion_word_set(word[1:])]
-            candidates_3_order.extend(confusion_word)
+            candidates_3.extend(confusion_word)
 
         # add all confusion word list
-        confusion_word_set = set(candidates_1_order + candidates_2_order + candidates_3_order)
+        confusion_word_set = set(candidates_1 + candidates_2 + candidates_3)
         confusion_word_list = [item for item in confusion_word_set if is_chinese_string(item)]
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
-        return confusion_sorted[:len(confusion_word_list) // fraction + 1]
+        return confusion_sorted[:len(confusion_word_list) // fragment + 1]
 
-    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, n=5, threshold=50):
+    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57):
         """
         通过语言模型纠正字词错误
+        :param cur_item: 当前词
+        :param candidates: 候选词
+        :param before_sent: 前半部分句子
+        :param after_sent: 后半部分句子
+        :param threshold: ppl阈值, 原始字词替换后大于ppl则是错误
+        :return: str, correct item, 正确的字词
         """
         result = cur_item
         if cur_item not in candidates:
@@ -222,7 +236,8 @@ class Corrector(Detector):
             if i == 0:
                 top_score = v_score
                 top_items.append(v_word)
-            elif i < n and v_score < top_score + threshold:
+            # 通过阈值修正范围
+            elif v_score < top_score + threshold:
                 top_items.append(v_word)
             else:
                 break
@@ -230,39 +245,40 @@ class Corrector(Detector):
             result = top_items[0]
         return result
 
-    def correct(self, sentence):
+    def correct(self, text):
         """
         句子改错
-        :param sentence: 句子文本
+        :param text: 文本
         :return: 改正后的句子, list(wrong, right, begin_idx, end_idx)
         """
-        detail = []
+        text_new = ''
+        details = []
         self.check_corrector_initialized()
-        maybe_errors = self.detect(sentence)
-        # 排序
-        maybe_errors = sorted(maybe_errors, key=operator.itemgetter(2), reverse=False)
-        for cur_item, begin_idx, end_idx, err_type in maybe_errors:
-            # 纠错，逐个处理
-            before_sent = sentence[:begin_idx]
-            after_sent = sentence[end_idx:]
+        # 编码统一，utf-8 to unicode
+        text = convert_to_unicode(text)
+        # 长句切分为短句
+        blocks = self.split_2_short_text(text, include_symbol=True)
+        for blk, idx in blocks:
+            maybe_errors = self.detect_short(blk, idx)
+            for cur_item, begin_idx, end_idx, err_type in maybe_errors:
+                # 纠错，逐个处理
+                before_sent = blk[:(begin_idx - idx)]
+                after_sent = blk[(end_idx - idx):]
 
-            # 困惑集中指定的词，直接取结果
-            if err_type == ErrorType.confusion:
-                corrected_item = self.custom_confusion[cur_item]
-            else:
-                # 对非中文的错字不做处理
-                if not is_chinese_string(cur_item):
-                    continue
-                # 取得所有可能正确的词
-                candidates = self.generate_items(cur_item)
-                if not candidates:
-                    continue
-                corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent,
-                                                          n=5, threshold=50)
-            # output
-            if corrected_item != cur_item:
-                sentence = before_sent + corrected_item + after_sent
-                detail_word = [cur_item, corrected_item, begin_idx, end_idx]
-                detail.append(detail_word)
-        detail = sorted(detail, key=operator.itemgetter(2))
-        return sentence, detail
+                # 困惑集中指定的词，直接取结果
+                if err_type == ErrorType.confusion:
+                    corrected_item = self.custom_confusion[cur_item]
+                else:
+                    # 取得所有可能正确的词
+                    candidates = self.generate_items(cur_item)
+                    if not candidates:
+                        continue
+                    corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent)
+                # output
+                if corrected_item != cur_item:
+                    blk = before_sent + corrected_item + after_sent
+                    detail_word = [cur_item, corrected_item, begin_idx, end_idx]
+                    details.append(detail_word)
+            text_new += blk
+        details = sorted(details, key=operator.itemgetter(2))
+        return text_new, details
