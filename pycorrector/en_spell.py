@@ -2,8 +2,8 @@
 # Author: XuMing <xuming624@qq.com>
 # Brief: english correction
 # refer to http://norvig.com/spell-correct.html
-import re
 import os
+import re
 from collections import Counter
 
 
@@ -26,7 +26,7 @@ def P(word, N=sum(WORDS.values())):
     return WORDS[word] / N
 
 
-def correction(word):
+def en_correct(word):
     """
     most probable spelling correction for word
     :param word:
@@ -78,12 +78,15 @@ def edits2(word):
 
 
 if __name__ == '__main__':
-    c1 = correction('speling')
+    c1 = en_correct('speling')
     print(c1)
-    c2 = correction('gorrect')
+    c2 = en_correct('gorrect')
     print(c2)
     comm = WORDS.most_common(10)
     print(comm)
     max_word = max(WORDS, key=P)
     print(max_word)
     print(P('speling'))
+    erros = ['something', 'is', 'hapenning', 'here']
+    for i in erros:
+        print(en_correct(i))

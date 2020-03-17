@@ -16,6 +16,16 @@ bert_models
 python3 bert_corrector.py
 ```
 
+3. 评估
+
+- run
+ `python tests/bert_corrector_test.py`
+- result
+![result](../../docs/git_image/bert_result.png)
+
+纠错结果还算可圈可点，速度有点慢，可以用albert-tiny之类的参数小些的模型加速预测。
+
+
 ## Fine-tuned BERT model with chinese corpus
 
 ### chinese corpus
@@ -48,24 +58,15 @@ python run_lm_finetuning.py \
 
 ```
 - 结果
-该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型保存在`output_dir`中。
-
+该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型放置于`data/bert_models`目录下：
 ```
-chinese_finetuned_lm
-├── config.json
-├── pytorch_model.bin
-└── vocab.txt
+bert_models
+└── chinese_finetuned_lm
+    ├── config.json
+    ├── pytorch_model.bin
+    └── vocab.txt
 ```
-
-
-PS:提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e），下载解压后文件夹放置于data/bert_pytorch目录下。
-
-## Predict Result
-- run
- `python tests/bert_corrector_test.py`
-- result
-![result](../../docs/git_image/bert_finetuned_ch_result.png)
-
+提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e）。
 
 ## 附录
 - 训练时长：3块p40GPU训练3轮，超过24小时。

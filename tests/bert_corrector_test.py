@@ -9,6 +9,10 @@ sys.path.append("../")
 from pycorrector.bert import bert_corrector
 
 error_sentences = [
+    '少先队员因该为老人让坐',
+    '少 先  队 员 因 该 为 老人让坐',
+    '机七学习是人工智能领遇最能体现智能的一个分知',
+    '今天心情很好',
     '汽车新式在这条路上',
     '中国人工只能布局很不错',
     '想不想在来一次比赛',
@@ -53,5 +57,5 @@ error_sentences.extend(badcase)
 
 bertCorrector = bert_corrector.BertCorrector()
 for line in error_sentences:
-    correct_sent = bertCorrector.correct(line)
+    correct_sent = bertCorrector.bert_correct(line)
     print("original sentence:{} => correct sentence:{}".format(line, correct_sent))

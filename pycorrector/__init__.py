@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
-# Brief: pycorrector.api
+# Brief: init
 
 from .config import language_model_path
 from .corrector import Corrector
+from .en_spell import en_correct
 from .utils.logger import set_log_level
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin, traditional2simplified, \
     simplified2traditional

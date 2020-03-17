@@ -234,6 +234,56 @@ output:
 具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
 
 
+- 英文拼写纠错
+
+支持英文单词的拼写错误纠正。
+
+```python
+import pycorrector
+
+sent_lst = ['what', 'hapenning', 'how', 'to', 'speling', 'it', 'you', 'can', 'gorrect', 'it']
+for i in sent_lst:
+    print(i, '=>', pycorrector.en_correct(i))
+```
+
+output:
+```
+what => what
+hapenning => happening
+how => how
+to => to
+speling => spelling
+it => it
+you => you
+can => can
+gorrect => correct
+it => it
+```
+
+
+- 中文简繁互换
+
+支持中文繁体到简体的转换，和简体到繁体的转换。
+
+```python
+import pycorrector
+
+traditional_sentence = '憂郁的臺灣烏龜'
+simplified_sentence = pycorrector.traditional2simplified(traditional_sentence)
+print(traditional_sentence, '=>', simplified_sentence)
+
+simplified_sentence = '忧郁的台湾乌龟'
+traditional_sentence = pycorrector.simplified2traditional(simplified_sentence)
+print(simplified_sentence, '=>', traditional_sentence)
+```
+
+output:
+```
+憂郁的臺灣烏龜 => 忧郁的台湾乌龟
+忧郁的台湾乌龟 => 憂郁的臺灣烏龜
+```
+
+
 ### Command Line Usage
 - 命令行模式
 
@@ -331,7 +381,6 @@ python train.py
 python infer.py
 ```
 
-
 预测输出效果样例：
 ```
 input: 少先队员因该给老人让坐 output: 少先队员因该给老人让座
@@ -376,14 +425,15 @@ input: 由我起开始做 output: 由我开始做
 - [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
 - [x] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
 - [x] 升级代码，兼容TensorFlow 2.0库
-- [ ] 支持人名、地名、机构名、药品名等自定义保护词典的文本纠错
-- [ ] 升级bert纠错逻辑，提升基于mask的纠错效率
+- [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 
 ## 讨论群
 
 微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。
 
-PS: 由于微信群满100人了，扫码加不了。加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
+PS: 由于微信群满100人了，扫码加不了。扫我微信二维码，或者搜索我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
+<img src="./docs/git_image/wechat.jpeg" width="200" />
+
 
 ## 参考
 
