@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief: error word detector
+
 import codecs
 import os
 import re
@@ -18,8 +19,6 @@ from pycorrector.utils.tokenizer import Tokenizer
 # \r\n|\s : whitespace characters. Will not be handled.
 re_han = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&]+)", re.U)
 re_skip = re.compile("(\r\n\\s)", re.U)
-
-PUNCTUATION_LIST = ".。,，,、?？:：;；{}[]【】“‘’”《》/!！%……（）<>@#$~^￥%&*\"\'=+-_——「」"
 
 
 class ErrorType(object):
@@ -313,9 +312,6 @@ class Detector(object):
         result = False
         # pass blank
         if not token.strip():
-            result = True
-        # pass punctuation
-        if token in PUNCTUATION_LIST:
             result = True
         # pass num
         if token.isdigit():

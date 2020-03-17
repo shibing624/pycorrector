@@ -141,6 +141,7 @@ class Corrector(Detector):
         :param words:
         :return:
         """
+        self.check_detector_initialized()
         return set(word for word in words if word in self.word_freq)
 
     def _confusion_char_set(self, c):
@@ -163,11 +164,12 @@ class Corrector(Detector):
 
     def generate_items(self, word, fragment=1):
         """
-        生成纠错候选集, 需要评估哪种方法的候选最有效
+        生成纠错候选集
         :param word:
         :param fragment: 分段
         :return:
         """
+        self.check_corrector_initialized()
         # 1字
         candidates_1 = []
         # 2字
