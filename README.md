@@ -309,7 +309,6 @@ optional arguments:
 case：
 ```
 python3 -m pycorrector input.txt -o out.txt -n -d
-
 ```
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
@@ -357,7 +356,6 @@ seq2seq_attention 模型使用示例:
 cd seq2seq_attention
 # 数据预处理
 python preprocess.py
-
 ```
 自动新建文件夹output，在output下生成`train.txt`和`test.txt`文件，以TAB（"\t"）间隔错误文本和纠正文本，文本以空格切分词，文件内容示例：
 
@@ -388,7 +386,6 @@ input: 少先队员应该给老人让坐 output: 少先队员应该给老人让�
 input: 没有解决这个问题， output: 没有解决这个问题，，
 input: 由我起开始做。 output: 由我起开始做
 input: 由我起开始做 output: 由我开始做
-
 ```
 
 
@@ -432,7 +429,8 @@ input: 由我起开始做 output: 由我开始做
 微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。
 
 PS: 由于微信群满100人了，扫码加不了。扫我微信二维码，或者搜索我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
-<img src="./docs/git_image/wechat.jpeg" width="200" />
+
+<img src="./docs/git_image/wechat.jpeg" width="300" />
 
 
 ## 参考

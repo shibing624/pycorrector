@@ -57,5 +57,5 @@ error_sentences.extend(badcase)
 
 bertCorrector = bert_corrector.BertCorrector()
 for line in error_sentences:
-    correct_sent = bertCorrector.bert_correct(line)
-    print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+    correct_sent, err = bertCorrector.bert_correct(line)
+    print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))

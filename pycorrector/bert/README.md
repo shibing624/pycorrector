@@ -58,6 +58,7 @@ python run_lm_finetuning.py \
 
 ```
 - 结果
+
 该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型放置于`data/bert_models`目录下：
 ```
 bert_models
