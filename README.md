@@ -430,7 +430,7 @@ input: 由我起开始做 output: 由我开始做
 
 PS: 由于微信群满100人了，扫码加不了。扫我微信二维码，或者搜索我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
 
-<img src="./docs/git_image/wechat.jpeg" width="300" />
+<img src="./docs/git_image/wechat.jpeg" width="200" />
 
 
 ## 参考

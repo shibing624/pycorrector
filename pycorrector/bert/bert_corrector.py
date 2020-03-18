@@ -35,7 +35,7 @@ class BertCorrector(Corrector):
         """
         句子纠错
         :param text: 句子文本
-        :return: list[list], [error_word, begin_pos, end_pos, error_type]
+        :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
         """
         text_new = ''
         details = []
@@ -65,7 +65,7 @@ class BertCorrector(Corrector):
                         if candidates:
                             for token_str in top_tokens:
                                 if token_str in candidates:
-                                    details.append([s, token_str, idx, idx + 1])
+                                    details.append([s, token_str, start_idx + idx, start_idx + idx + 1])
                                     s = token_str
                                     break
                 blk_new += s
@@ -77,6 +77,7 @@ class BertCorrector(Corrector):
 if __name__ == "__main__":
     d = BertCorrector()
     error_sentences = [
+        '疝気医院那好 为老人让坐，疝気专科百科问答',
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',
         '机七学习是人工智能领遇最能体现智能的一个分知',
