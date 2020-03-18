@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing <xuming624@qq.com>
 # Brief:
-import sys
 
-sys.path.append("../")
+import sys
 import os
+sys.path.append("../")
+
 from pycorrector.utils.eval import eval_bcmi_data, get_bcmi_corpus, eval_sighan_corpus
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
@@ -35,3 +36,4 @@ def test_sighan_data():
     rate = eval_sighan_corpus(sighan_path, True)
     print('sighan right rate:{}'.format(rate))
     # sighan right rate:0.5724725943970768
+

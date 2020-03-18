@@ -180,6 +180,11 @@ def build_cged_no_error_corpus(data_path, output_path, limit_size=500):
 
 
 def build_eval_corpus(output_eval_path=eval_data_path):
+    """
+    生成评估样本集，抽样分布可修改
+    :param output_eval_path:
+    :return: json file
+    """
     bcmi_path = os.path.join(pwd_path, '../data/cn/bcmi.txt')
     clp_path = os.path.join(pwd_path, '../data/cn/clp14_C1.pkl')
     sighan_path = os.path.join(pwd_path, '../data/cn/sighan15_A2.pkl')
@@ -256,6 +261,59 @@ def eval_corpus(input_eval_path=eval_data_path, output_eval_path=output_eval_err
     save_json(res, output_eval_path)
 
 
+def eval_corpus_by_bert(input_eval_path=eval_data_path, output_eval_path=output_eval_error_path, verbose=True):
+    from pycorrector.bert.bert_corrector import BertCorrector
+    model = BertCorrector()
+    res = []
+    corpus = load_json(input_eval_path)
+    total_count = 0
+    right_count = 0
+    right_rate = 0.0
+    recall_rate = 0.0
+    recall_right_count = 0
+    recall_total_count = 0
+    for data_dict in corpus:
+        text = data_dict.get('text', '')
+        correction = data_dict.get('correction', '')
+        errors = data_dict.get('errors', [])
+
+        #  pred_detail: list(wrong, right, begin_idx, end_idx)
+        pred_sentence, pred_detail = model.bert_correct(text)
+        # compute recall
+        if errors:
+            recall_total_count += 1
+            if errors and pred_detail and correction == pred_sentence:
+                recall_right_count += 1
+
+        # compute precision
+        if correction == pred_sentence:
+            right_count += 1
+        else:
+            err_data_dict = copy.deepcopy(data_dict)
+            err_data_dict['pred_sentence'] = pred_sentence
+            err_data_dict['pred_errors'] = str(pred_detail)
+            res.append(err_data_dict)
+            if verbose:
+                print('truth:', text, errors)
+                print('predict:', pred_sentence, pred_detail)
+        total_count += 1
+
+    if total_count > 0:
+        right_rate = right_count / total_count
+    if recall_total_count > 0:
+        recall_rate = recall_right_count / recall_total_count
+    print('right_rate:{}, right_count:{}, total_count:{};\n'
+          'recall_rate:{},recall_right_count:{},recall_total_count:{}'.format(right_rate, right_count, total_count,
+                                                                              recall_rate, recall_right_count,
+                                                                              recall_total_count))
+    save_json(res, output_eval_path)
 if __name__ == "__main__":
+    # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
     # build_eval_corpus()
+
+    # 评估规则方法的纠错准召率
     eval_corpus(eval_data_path, output_eval_path=output_eval_error_path)
+
+    # 评估bert模型的纠错准召率
+    bert_path = os.path.join(pwd_path, './eval_corpus_error_by_bert.json')
+    eval_corpus_by_bert(eval_data_path, output_eval_path=bert_path)
