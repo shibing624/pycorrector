@@ -307,6 +307,8 @@ def eval_corpus_by_bert(input_eval_path=eval_data_path, output_eval_path=output_
                                                                               recall_rate, recall_right_count,
                                                                               recall_total_count))
     save_json(res, output_eval_path)
+
+
 if __name__ == "__main__":
     # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
     # build_eval_corpus()

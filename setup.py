@@ -51,7 +51,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
     package_data={
-        'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*',
+        'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*', 'data/en/big.txt',
                         'utils/*',
                         'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'conv_seq2seq/*',
                         'seq2seq_attention/*', 'transformer/*'],
