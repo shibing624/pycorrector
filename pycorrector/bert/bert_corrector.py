@@ -23,13 +23,14 @@ class BertCorrector(Corrector):
                  bert_model_path=config.bert_model_path):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
-        self.mask = '[MASK]'
         t1 = time.time()
         self.model = pipeline('fill-mask',
                               model=bert_model_path,
                               config=bert_config_path,
                               tokenizer=bert_model_dir)
-        logger.debug('Loaded bert model: %s, spend: %.3f s.' % (bert_model_dir, time.time() - t1))
+        if self.model:
+            self.mask = self.model.tokenizer.mask_token
+            logger.debug('Loaded bert model: %s, spend: %.3f s.' % (bert_model_dir, time.time() - t1))
 
     def bert_correct(self, text):
         """
