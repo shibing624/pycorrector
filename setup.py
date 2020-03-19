@@ -32,6 +32,8 @@ setup(
     author_email='xuming624@qq.com',
     url='https://github.com/shibing624/pycorrector',
     license="Apache 2.0",
+    zip_safe=False,
+    python_requires='>=3.5',
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
@@ -46,14 +48,12 @@ setup(
         'Topic :: Text Processing :: Indexing',
         'Topic :: Text Processing :: Linguistic',
     ],
+    platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
     keywords='NLP,correction,Chinese error corrector,corrector',
     install_requires=reqs.strip().split('\n'),
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
-    package_data={
-        'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*', 'data/en/big.txt',
-                        'utils/*',
-                        'bert/*', 'deep_context/*', 'rnn_attention/*', 'rnn_crf/*', 'rnn_lm/*', 'conv_seq2seq/*',
-                        'seq2seq_attention/*', 'transformer/*'],
-    },
+    package_data={'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*', 'data/en/big.txt',
+                                  'utils/*.', 'bert/*', 'deep_context/*', 'conv_seq2seq/*', 'seq2seq_attention/*',
+                                  'transformer/*']}
 )
