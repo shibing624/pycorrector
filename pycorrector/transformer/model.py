@@ -8,7 +8,6 @@ prefetching, token-based batching, gradients accumulation, beam search, etc.
 requires: tensorflow==2.0.0, OpenNMT-tf==2.4.0
 """
 
-
 import logging
 
 import opennmt as onmt

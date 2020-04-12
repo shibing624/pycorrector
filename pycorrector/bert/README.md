@@ -2,7 +2,7 @@
 
 ## 使用说明
 
-1. 下载fine-tuned的预训练BERT MLM模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e），解压后放置于`data/bert_models`目录下。
+1. 下载用中文文本fine-tuned3轮后的预训练BERT MLM模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e），解压后放置于`data/bert_models`目录下。
 ```
 bert_models
 └── chinese_finetuned_lm
@@ -90,7 +90,7 @@ bert_models
     ├── pytorch_model.bin
     └── vocab.txt
 ```
-提供使用以上方法fine-tune3轮后的中文bert模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e）。
+使用以上方法fine-tune3轮后的中文bert模型，下载见使用说明的网盘链接。
 
 ## 附录
 - 训练时长：3块p40GPU训练3轮，超过24小时。
