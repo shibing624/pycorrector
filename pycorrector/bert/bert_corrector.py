@@ -50,7 +50,7 @@ class BertCorrector(Corrector):
             for idx, s in enumerate(blk):
                 # 对非中文的错误不做处理
                 if is_chinese_string(s):
-                    sentence_lst = list(blk)
+                    sentence_lst = list(blk_new + blk[idx:])
                     sentence_lst[idx] = self.mask
                     sentence_new = ''.join(sentence_lst)
                     predicts = self.model(sentence_new)
