@@ -9,7 +9,7 @@
 
 # pycorrector
 
-中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python3开发。
+中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python3.6开发。
 
 **pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
@@ -75,12 +75,12 @@ https://www.borntowin.cn/product/corrector
 
 
 ## Install
-* 全自动安装：pip3 install pycorrector
+* 全自动安装：pip install pycorrector
 * 半自动安装：
 ```
 git clone https://github.com/shibing624/pycorrector.git
 cd pycorrector
-python3 setup.py install
+python setup.py install
 ```
 
 
@@ -89,12 +89,12 @@ python3 setup.py install
 #### 安装依赖
 * kenlm安装
 ```
-pip3 install https://github.com/kpu/kenlm/archive/master.zip
+pip install https://github.com/kpu/kenlm/archive/master.zip
 ```
 
 * 其他库包安装
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -289,7 +289,7 @@ output:
 
 支持批量文本纠错。
 ```
-python3 -m pycorrector -h
+python -m pycorrector -h
 usage: __main__.py [-h] -o OUTPUT [-n] [-d] input
 
 @description:
@@ -308,7 +308,7 @@ optional arguments:
 
 case：
 ```
-python3 -m pycorrector input.txt -o out.txt -n -d
+python -m pycorrector input.txt -o out.txt -n -d
 ```
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
@@ -330,7 +330,7 @@ python3 -m pycorrector input.txt -o out.txt -n -d
 
 ### 安装依赖
 ```
-pip3 install -r requirements-dev.txt
+pip install -r requirements-dev.txt
 ```
 
 ### 介绍
@@ -465,7 +465,7 @@ error, it can be used for Chinese Pinyin and stroke input method.
 ## Usage
 
 ### install
-* pip install pycorrector / pip3 install pycorrector 
+* pip install pycorrector / pip install pycorrector 
 * Or download https://github.com/shibing624/pycorrector, Unzip and run: python setup.py install
 
 ### correct  
