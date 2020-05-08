@@ -59,7 +59,7 @@ Bert模型纠错效果评估如下：
 
 
 ### fine-tune
-使用[transformers](https://github.com/huggingface/transformers/blob/master/examples/run_lm_finetuning.py)(旧称pytorch-pretrained-BERT)的[examples/run_lm_finetuning](https://github.com/huggingface/transformers/blob/master/examples/run_lm_finetuning.py)处理。
+使用[transformers](https://github.com/huggingface/transformers)(旧称pytorch-pretrained-BERT)的[examples/language-modeling/run_language_modeling.py](https://github.com/huggingface/transformers/blob/master/examples/language-modeling/run_language_modeling.py)处理。
 - fine-tune模型
 ```bash
 
@@ -67,7 +67,8 @@ export CUDA_VISIBLE_DEVICES=0,1,2
 export TRAIN_FILE=people2014_cged_wiki.txt
 export TEST_FILE=people2014_cged_wiki.txt
 
-python run_lm_finetuning.py \
+
+python run_language_modeling.py \
     --output_dir=chinese_finetuned_lm \
     --model_type=bert \
     --model_name_or_path=bert-base-chinese \
@@ -76,9 +77,6 @@ python run_lm_finetuning.py \
     --do_eval \
     --eval_data_file=$TEST_FILE \
     --mlm
-    --num_train_epochs=3
-
-
 ```
 - 结果
 
