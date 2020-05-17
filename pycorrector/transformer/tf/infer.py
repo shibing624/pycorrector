@@ -7,10 +7,10 @@ import sys
 import os
 import tensorflow as tf
 
-sys.path.append('../..')
+sys.path.append('../../..')
 
-from pycorrector.transformer import config
-from pycorrector.transformer.model import translate, model, checkpoint
+from pycorrector.transformer.tf import config
+from pycorrector.transformer.tf.model import translate, model, checkpoint
 
 if __name__ == "__main__":
     if config.gpu_id > -1:

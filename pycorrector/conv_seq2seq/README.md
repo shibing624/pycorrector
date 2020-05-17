@@ -1,6 +1,5 @@
 # Neural Text Error Correction with Conv Seq2Seq Model
 
-
 ## Features
 
 The model is equipped with following features:
@@ -17,7 +16,17 @@ We implemented an efficient beam search algorithm that can also handle cases whe
 This meta-algorithm can be used along with any attention based seq2seq model.
 The OOV words UNK in summaries are manually replaced with words in source articles using attention weights.
 
-## preprocess
+## Usage
+
+### Requirements
+* pip安装依赖包
+```
+fairseq>=0.9.0
+torch>=1.3.1
+```
+
+
+### Preprocess
 
 
 - toy train data
@@ -70,19 +79,19 @@ conv_seq2seq/output
 └── valid.trg
 ```
 
-## train
+### Train
 
 ```
 sh train.sh
 ```
 
-## infer
+### Infer
 ```
-python3 infer.py
+python infer.py
 
 ```
 
-### result
+### Result
 ```
 input: 少先队员因该给老人让坐 output: 少先队员因该给老人让座
 input: 少先队员应该给老人让坐 output: 少先队员应该给老人让座
@@ -92,7 +101,7 @@ input: 由我起开始做 output: 由我开始做
 
 ```
 
-### reference
+## Reference
 1. [《基于深度学习的中文文本自动校对研究与实现》[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
 2. [《A Sequence to Sequence Learning for Chinese Grammatical Error Correction》[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
 2. [《Neural Abstractive Text Summarization with Sequence-to-Sequence Models》[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)

@@ -3,7 +3,7 @@
 # Brief: Corpus for model
 from codecs import open
 
-from pycorrector.transformer.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
+from pycorrector.transformer.tf.reader import Reader, PAD_TOKEN, EOS_TOKEN, GO_TOKEN
 from pycorrector.utils.logger import logger
 
 

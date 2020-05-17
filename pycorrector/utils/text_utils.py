@@ -189,3 +189,7 @@ if __name__ == "__main__":
     print(is_chinese('喜'))
     print(is_chinese_string('喜,'))
     print(is_chinese_string('丽，'))
+
+    traditional_sentence = '憂郁的臺灣烏龜'
+    simplified_sentence = traditional2simplified(traditional_sentence)
+    print(traditional_sentence, simplified_sentence)

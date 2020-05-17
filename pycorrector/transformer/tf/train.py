@@ -8,11 +8,11 @@ import sys
 
 import tensorflow as tf
 
-sys.path.append('../..')
+sys.path.append('../../..')
 
-from pycorrector.transformer import config
-from pycorrector.transformer.corpus_reader import CGEDReader, save_word_dict
-from pycorrector.transformer.model import train, model, checkpoint
+from pycorrector.transformer.tf import config
+from pycorrector.transformer.tf.corpus_reader import CGEDReader, save_word_dict
+from pycorrector.transformer.tf.model import train, model, checkpoint
 
 
 def main(model_dir='',

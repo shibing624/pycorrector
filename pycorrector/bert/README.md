@@ -1,6 +1,14 @@
 # BERT model correct error character with mask feature
 
+
+### Requirements
+* pip安装依赖包
+```
+pip install transformers>=2.2.1
+```
+
 ## 使用说明
+
 
 1. 下载用中文文本fine-tuned3轮后的预训练BERT MLM模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e），解压后放置于`data/bert_models`目录下。
 ```

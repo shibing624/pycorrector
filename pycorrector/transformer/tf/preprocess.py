@@ -3,13 +3,13 @@
 # Brief:
 import sys
 
-sys.path.append('../..')
+sys.path.append('../../..')
 from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
 
-from pycorrector.transformer import config
+from pycorrector.transformer.tf import config
 from pycorrector.utils.tokenizer import segment
 
 split_symbol = ['，', '。', '？', '！']
