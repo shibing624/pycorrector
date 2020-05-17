@@ -16,7 +16,7 @@ from torch import optim
 sys.path.append('../..')
 from pycorrector.deep_context import config
 from pycorrector.deep_context.data_util import write_embedding, write_config
-from pycorrector.deep_context.network import Context2vec
+from pycorrector.deep_context.model import Context2vec
 from pycorrector.deep_context.reader import Dataset
 
 
@@ -35,10 +35,9 @@ def train(train_path: str,
           dropout=0.0,
           gpu_id=0):
     use_cuda = torch.cuda.is_available() and gpu_id > -1
+    device = torch.device('cpu')
     if use_cuda:
         device = torch.device('cuda:{}'.format(gpu_id))
-    else:
-        device = torch.device('cpu')
 
     if not os.path.isfile(train_path):
         raise FileNotFoundError
@@ -97,12 +96,14 @@ def train(train_path: str,
                  use_mlp=use_mlp,
                  dropout=dropout,
                  pad_index=dataset.pad_index,
+                 pad_token=dataset.pad_token,
                  unk_token=dataset.unk_token,
                  bos_token=dataset.bos_token,
                  eos_token=dataset.eos_token,
-                 learning_rate=learning_rate)
+                 learning_rate=learning_rate
+                 )
 
-    interval = 1e6
+    interval = 1e5
     best_loss = 1e3
     print("train start...")
     for epoch in range(epochs):
@@ -129,35 +130,33 @@ def train(train_path: str,
                 minibatch_size, sentence_length = target.size()
                 word_count += minibatch_size * sentence_length
                 accum_mean_loss = float(total_loss) / word_count if total_loss > 0.0 else 0.0
+                cur_mean_loss = (float(total_loss) - last_accum_loss) / (word_count - last_word_count)
+                cur_loss = cur_mean_loss
                 if word_count >= next_count:
                     now = time.time()
                     duration = now - cur_at
                     throuput = float((word_count - last_word_count)) / (now - cur_at)
-                    cur_mean_loss = (float(total_loss) - last_accum_loss) / (word_count - last_word_count)
                     print('{} words, {:.2f} sec, {:.2f} words/sec, {:.4f} accum_loss/word, {:.4f} cur_loss/word'
                           .format(word_count, duration, throuput, accum_mean_loss, cur_mean_loss))
                     next_count += interval
                     cur_at = now
                     last_accum_loss = float(total_loss)
                     last_word_count = word_count
-                    cur_loss = cur_mean_loss
 
         # find best model
         is_best = cur_loss < best_loss
         best_loss = min(cur_loss, best_loss)
-        save_checkpoint(epoch, model, optimizer, model_path, dataset, use_cuda, emb_path, is_best)
         print('epoch:[{}/{}], total_loss:[{}], best_cur_loss:[{}]'
               .format(epoch + 1, epochs, total_loss.item(), best_loss))
+        if is_best:
+            save_checkpoint(model, optimizer, model_path, dataset, use_cuda, emb_path)
+            print('epoch:{}, save new bert model:{}'.format(epoch + 1, model_path))
 
 
-def save_checkpoint(epoch, model, optimizer, model_path, dataset, use_cuda, emb_path, is_best):
-    write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path + '.epoch_' + str(epoch + 1))
-    torch.save(model.state_dict(), model_path + '.epoch_' + str(epoch + 1))
-    torch.save(optimizer.state_dict(), model_path + '_optim' + '.epoch_' + str(epoch + 1))
-    if is_best:
-        write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path)
-        torch.save(model.state_dict(), model_path)
-        torch.save(optimizer.state_dict(), model_path + '_optim')
+def save_checkpoint(model, optimizer, model_path, dataset, use_cuda, emb_path):
+    write_embedding(dataset.vocab.itos, model.criterion.W, use_cuda, emb_path)
+    torch.save(model.state_dict(), model_path)
+    torch.save(optimizer.state_dict(), model_path + '_optim')
 
 
 if __name__ == "__main__":
@@ -174,4 +173,5 @@ if __name__ == "__main__":
           config.n_layers,
           config.min_freq,
           config.dropout,
-          config.gpu_id)
+          config.gpu_id
+          )

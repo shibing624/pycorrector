@@ -5,10 +5,11 @@
 """
 import sys
 
-sys.path.append('../..')
 import torch
 from torch import optim
-from pycorrector.deep_context.network import Context2vec
+
+sys.path.append('../..')
+from pycorrector.deep_context.model import Context2vec
 from pycorrector.deep_context import config
 from pycorrector.deep_context.data_util import read_config, load_vocab
 
@@ -26,7 +27,8 @@ def read_model(model_path, device):
                         dropout=config_dict['dropout'],
                         pad_index=config_dict['pad_index'],
                         device=device,
-                        inference=True).to(device)
+                        inference=True
+                        ).to(device)
     model.load_state_dict(torch.load(model_path))
     optimizer = optim.Adam(model.parameters(), lr=config_dict['learning_rate'])
     optimizer.load_state_dict(torch.load(model_path + '_optim'))
@@ -36,7 +38,8 @@ def read_model(model_path, device):
 
 def get_infer_data(model_path,
                    emb_path,
-                   gpu_id):
+                   gpu_id
+                   ):
     # device
     use_cuda = torch.cuda.is_available() and gpu_id > -1
     if use_cuda:
@@ -50,13 +53,14 @@ def get_infer_data(model_path,
     unk_token = config_dict['unk_token']
     bos_token = config_dict['bos_token']
     eos_token = config_dict['eos_token']
+    pad_token = config_dict['pad_token']
 
     # read vocab from word_emb path
     itos, stoi = load_vocab(emb_path)
 
     # norm weight
     model.norm_embedding_weight(model.criterion.W)
-    return model, unk_token, bos_token, eos_token, itos, stoi, device
+    return model, unk_token, bos_token, eos_token, pad_token, itos, stoi, device
 
 
 def return_split_sentence(sentence):
@@ -72,7 +76,9 @@ def return_split_sentence(sentence):
         return tokens, target_pos
 
 
-def infer_one_sentence(sentence, model, unk_token, bos_token, eos_token, itos, stoi, device):
+def infer_one_sentence(sentence, model, unk_token, bos_token, eos_token, pad_token, itos, stoi, device):
+    pred_words = []
+    tokens, target_pos = [], 0
     try:
         tokens, target_pos = return_split_sentence(sentence)
     except SyntaxError:
@@ -81,18 +87,23 @@ def infer_one_sentence(sentence, model, unk_token, bos_token, eos_token, itos, s
     tokens = [bos_token] + tokens + [eos_token]
     indexed_sentence = [stoi[token] if token in stoi else stoi[unk_token] for token in tokens]
     input_tokens = torch.tensor(indexed_sentence, dtype=torch.long, device=device).unsqueeze(0)
-    topv, topi = model.run_inference(input_tokens, target=None, target_pos=target_pos)
+    topv, topi = model.run_inference(input_tokens, target=None, target_pos=target_pos, k=10)
     for value, key in zip(topv, topi):
-        print(value.item(), itos[key.item()])
+        score = value.item()
+        word = itos[key.item()]
+        if word in [unk_token, bos_token, eos_token, pad_token]:
+            continue
+        pred_words.append((word, score))
+    return pred_words
 
 
 if __name__ == "__main__":
     sents = ["而 且 我 希 望 不 再 存 在 抽 [] 的 人 。",
              "男 女 分 班 的 问 题 有 什 [] 好 处 ？",
              "由 我 开 始 [] 起 。"]
-    model, unk_token, bos_token, eos_token, itos, stoi, device = get_infer_data(config.model_path,
-                                                                                config.emb_path,
-                                                                                config.gpu_id)
+    model, unk_token, bos_token, eos_token, pad_token, itos, stoi, device = get_infer_data(config.model_path,
+                                                                                           config.emb_path,
+                                                                                           config.gpu_id)
     for i in sents:
-        infer_one_sentence(i, model, unk_token, bos_token, eos_token, itos, stoi, device)
-        print()
+        r = infer_one_sentence(i, model, unk_token, bos_token, eos_token, pad_token, itos, stoi, device)
+        print(i, r)

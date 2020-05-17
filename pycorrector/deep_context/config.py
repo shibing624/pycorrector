@@ -22,8 +22,9 @@ train_path = os.path.join(output_dir, 'train.txt')
 # Validation data path.
 test_path = os.path.join(output_dir, 'test.txt')
 
-emb_path = os.path.join(output_dir, 'emb.vec')
-model_path = os.path.join(output_dir, 'model')
+model_dir = os.path.join(output_dir, 'models')
+emb_path = os.path.join(model_dir, 'word_emb.txt')
+model_path = os.path.join(model_dir, 'model.pth')
 
 # nets
 word_embed_size = 200
@@ -34,16 +35,12 @@ dropout = 0.0
 
 # train
 maxlen = 400
-epochs = 30
+epochs = 2
 batch_size = 128
 min_freq = 10
 ns_power = 0.75
 learning_rate = 1e-3
 gpu_id = 0
 
-# evaluate with mscc data set
-question_file = 'YOUR_DATASET_DIR/Holmes.machine_format.questions.txt'
-answer_file = 'YOUR_DATASET_DIR/Holmes.machine_format.answers.txt'
-
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)

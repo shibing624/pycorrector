@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing（xuming624@qq.com)
-@description: 
+@description: build torchtext dataset
 """
 
 import numpy as np
@@ -87,4 +87,5 @@ class Dataset(object):
                                 sort_key=sort,
                                 train=True,
                                 repeat=False,
-                                device=self.device)
+                                device=self.device
+                                )
