@@ -8,10 +8,10 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 # Training data path.
 # toy chinese corpus
 raw_train_paths = [
-    os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
-    os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
-    # os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED18_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED17_HSK_TrainingSet.xml'),
+    # os.path.join(pwd_path, '../data/cn/CGED/CGED16_HSK_TrainingSet.xml'),
+    os.path.join(pwd_path, '../data/cn/CGED/sample_HSK_TrainingSet.xml'),
 ]
 
 output_dir = os.path.join(pwd_path, 'output')
@@ -30,13 +30,12 @@ data_bin_dir = os.path.join(output_dir, 'bin')
 
 test_path = os.path.join(output_dir, 'valid.src')
 
-vocab_path = os.path.join(output_dir, 'vocab.txt')
-vocab_max_size = 6000
+vocab_max_size = 10000
+joined_dictionary = True
 
-arch = 'fconv'
+arch = 'transformer'
 batch_size = 64
 max_len = 400
-
 
 # (float, optional): temperature, where values >1.0 produce more uniform samples
 # and values <1.0 produce sharper samples (default: 1.0)

@@ -11,9 +11,9 @@
 
 ### Requirements
 * pip安装依赖包
-```
-tensorflow>=2.0.0 # tensorflow-gpu>=2.0.0
-OpenNMT-tf==2.4.0
+```bash
+pip install tensorflow>=2.0.0 OpenNMT-tf==2.4.0
+# tensorflow-gpu>=2.0.0
 ```
 
 ### Preprocess

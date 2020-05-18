@@ -20,9 +20,9 @@ The OOV words UNK in summaries are manually replaced with words in source articl
 
 ### Requirements
 * pip安装依赖包
-```
-fairseq>=0.9.0
-torch>=1.3.1
+```bash
+pip install fairseq>=0.9.0 torch>=1.3.1
+
 ```
 
 
