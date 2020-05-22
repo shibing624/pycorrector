@@ -436,8 +436,24 @@ PS: 由于微信群满100人了，扫码加不了。扫我微信二维码，或�
 
 <img src="./docs/git_image/wechat.jpeg" width="200" />
 
+## 引用
 
-## 参考
+如果你在研究中使用了pycorrector，请按如下格式引用：
+
+```latex
+@software{pycorrector,
+  author = {Xu Ming},
+  title = {{pycorrector: Text Correction Tool}},
+  year = {2020},
+  url = {https://github.com/shibing624/pycorrector},
+}
+```
+
+## License
+
+pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。pycorrector受版权法保护，侵权必究。
+
+## References
 
 * [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
 * [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
