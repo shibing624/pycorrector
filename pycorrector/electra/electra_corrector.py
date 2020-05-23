@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing（xuming624@qq.com)
-@description: use bert detect and correct chinese char error
+@description: use Electra model detect and correct chinese char error
 """
 
 import operator
