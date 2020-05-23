@@ -56,7 +56,7 @@ https://www.borntowin.cn/product/corrector
 * transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
 * bert模型：中文fine-tuned模型，使用MASK特征纠正错字
 * conv_seq2seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩
-
+* electra模型：斯坦福和谷歌联合提出的一种更具效率的预训练模型，同等资源下，该方法学习的上下文表示大大优于通过BERT和XLNet等方法
 
 ### 错误检测
 * 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子文本平均值，则判定该字是疑似错别字的概率大。
@@ -338,7 +338,7 @@ pip install -r requirements-dev.txt
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
 主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`conv_seq2seq`、`seq2seq_attention`、
-`transformer`、`bert`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
+`transformer`、`bert`、`electra`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
@@ -424,7 +424,7 @@ PS：
 - [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
 - [x] seq2seq_attention 添加dropout，减少过拟合
 - [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
-- [x] 更新bert的fine-tuned使用wiki，适配transformers 2.2.1库
+- [x] 更新bert的fine-tuned使用wiki，适配transformers 2.10.0库
 - [x] 升级代码，兼容TensorFlow 2.0库
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 
@@ -465,7 +465,7 @@ pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用
 * [Neural Abstractive Text Summarization with Sequence-to-Sequence Models[Tian Shi, 2018]](https://arxiv.org/abs/1812.02303)
 * [基于深度学习的中文文本自动校对研究与实现[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
 * [A Sequence to Sequence Learning for Chinese Grammatical Error Correction[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
-
+* [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://openreview.net/pdf?id=r1xMH1BtvB)
 
 
 ----
