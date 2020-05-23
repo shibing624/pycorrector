@@ -202,7 +202,7 @@ output:
 
 具体demo见[example/use_custom_confusion.py](./examples/use_custom_confusion.py)，其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
 ```
-iphone差 iphoneX 100
+iPhone差 iPhoneX 100
 张旗康 张旗康
 ```
 > `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径。
