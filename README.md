@@ -531,7 +531,7 @@ going.
 ### Further Reading
 * [Roger Mitton has a survey article on spell checking.](http://www.dcs.bbk.ac.uk/~roger/spellchecking.html)
 
-# Reference
-1. [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
-2. [Norvig’s spelling corrector(java version)](http://raelcunha.com/spell-correct/)
+# References
+* [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
+* [Norvig’s spelling corrector(java version)](http://raelcunha.com/spell-correct/)
 
