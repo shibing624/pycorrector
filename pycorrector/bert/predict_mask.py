@@ -9,30 +9,26 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
+import os
 
 from transformers import pipeline
 
 MASK_TOKEN = "[MASK]"
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 def main():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--bert_model_dir", default='../data/bert_models/chinese_finetuned_lm/',
+    parser.add_argument("--bert_model_dir", default=os.path.join(pwd_path, '../data/bert_models/chinese_finetuned_lm/'),
                         type=str,
                         help="Bert pre-trained model dir")
-    parser.add_argument("--bert_model_path", default='../data/bert_models/chinese_finetuned_lm/pytorch_model.bin',
-                        type=str,
-                        help="Bert pre-trained model path")
-    parser.add_argument("--bert_config_path", default='../data/bert_models/chinese_finetuned_lm/config.json',
-                        type=str,
-                        help="Bert pre-trained model config path")
     args = parser.parse_args()
 
     nlp = pipeline('fill-mask',
-                   model=args.bert_model_path,
-                   config=args.bert_config_path,
+                   model=args.bert_model_dir,
                    tokenizer=args.bert_model_dir
                    )
     i = nlp('hi lili, What is the name of the [MASK] ?')

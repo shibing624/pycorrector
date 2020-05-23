@@ -4,7 +4,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install transformers>=2.2.1
+pip install transformers>=2.10.0
 ```
 
 ## 使用说明

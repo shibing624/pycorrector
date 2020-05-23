@@ -5,28 +5,27 @@
 """
 
 import operator
+import os
 import sys
 import time
 
 from transformers import pipeline
 
 sys.path.append('../..')
-from pycorrector.bert import config
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
 
 class BertCorrector(Corrector):
-    def __init__(self, bert_model_dir=config.bert_model_dir,
-                 bert_config_path=config.bert_config_path,
-                 bert_model_path=config.bert_model_path):
+    def __init__(self, bert_model_dir=os.path.join(pwd_path, '../data/bert_models/chinese_finetuned_lm/')):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
         t1 = time.time()
         self.model = pipeline('fill-mask',
-                              model=bert_model_path,
-                              config=bert_config_path,
+                              model=bert_model_dir,
                               tokenizer=bert_model_dir)
         if self.model:
             self.mask = self.model.tokenizer.mask_token
