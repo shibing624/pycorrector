@@ -53,5 +53,5 @@ setup(
     package_dir={'pycorrector': 'pycorrector'},
     package_data={'pycorrector': ['*.*', 'LICENSE', '../LICENSE', 'README.*', '../*.txt', 'data/*', 'data/en/big.txt',
                                   'utils/*.', 'bert/*', 'deep_context/*', 'conv_seq2seq/*', 'seq2seq_attention/*',
-                                  'transformer/*']}
+                                  'transformer/*', 'electra/*']}
 )
