@@ -13,7 +13,7 @@
 * pip安装依赖包
 ```
 torch>=1.3.1
-torchtext
+torchtext==0.3.0
 ```
 
 ### Preprocess
