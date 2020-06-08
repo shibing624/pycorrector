@@ -7,7 +7,7 @@
 * 多层级的双向lstm模型，文本语义表征能力更强
 * 简单MLP预测未知词
 
-![framework](../../docs/framework_context.jpeg)
+![framework](../../docs/git_image/framework_context.jpeg)
 图片来源:https://github.com/SenticNet/context2vec
 
 ## Usage
