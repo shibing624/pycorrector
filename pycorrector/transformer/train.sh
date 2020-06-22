@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: Train transformer model
 
 GPU_ID=0

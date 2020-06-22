@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: english correction
 # refer to http://norvig.com/spell-correct.html
 import os

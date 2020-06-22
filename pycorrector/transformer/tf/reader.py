@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: Date reader for training transformer model (opennmt)
 from collections import Counter
 

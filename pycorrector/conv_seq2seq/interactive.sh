@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: infer with conv seq2seq model
 
 GPU_ID=0

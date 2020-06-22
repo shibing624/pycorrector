@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: infer
 
 DATA_BIN_DIR="output/bin/"

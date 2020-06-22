@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description: This example demonstrates how to train a standard Transformer model using
 OpenNMT-tf as a library in about 200 lines of code. While relatively short,
 this example contains some advanced concepts such as dataset bucketing and

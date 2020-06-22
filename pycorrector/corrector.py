@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing <xuming624@qq.com>
+# Author: XuMing(xuming624@qq.com)
 # Brief: corrector with spell and stroke
 
 import codecs
