@@ -219,7 +219,7 @@ class Corrector(Detector):
         :param candidates: 候选词
         :param before_sent: 前半部分句子
         :param after_sent: 后半部分句子
-        :param threshold: ppl阈值, 原始字词替换后大于ppl则是错误
+        :param threshold: ppl阈值, 原始字词替换后大于该ppl值则认为是错误
         :return: str, correct item, 正确的字词
         """
         result = cur_item
@@ -247,11 +247,15 @@ class Corrector(Detector):
             result = top_items[0]
         return result
 
-    def correct(self, text):
+    def correct(self, text, include_symbol=True, num_fragment=1, threshold=57, **kwargs):
         """
         句子改错
-        :param text: 文本
-        :return: 改正后的句子, list(wrong, right, begin_idx, end_idx)
+        :param text: str, query 文本
+        :param include_symbol: bool, 是否包含标点符号
+        :param num_fragment: 纠错候选集分段数, 1 / (num_fragment + 1)
+        :param threshold: 语言模型纠错ppl阈值
+        :param kwargs: ...
+        :return: text (str)改正后的句子, list(wrong, right, begin_idx, end_idx)
         """
         text_new = ''
         details = []
@@ -259,7 +263,7 @@ class Corrector(Detector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_2_short_text(text, include_symbol=True)
+        blocks = self.split_2_short_text(text, include_symbol=include_symbol)
         for blk, idx in blocks:
             maybe_errors = self.detect_short(blk, idx)
             for cur_item, begin_idx, end_idx, err_type in maybe_errors:
@@ -272,10 +276,11 @@ class Corrector(Detector):
                     corrected_item = self.custom_confusion[cur_item]
                 else:
                     # 取得所有可能正确的词
-                    candidates = self.generate_items(cur_item)
+                    candidates = self.generate_items(cur_item, fragment=num_fragment)
                     if not candidates:
                         continue
-                    corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent)
+                    corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent,
+                                                              threshold=threshold)
                 # output
                 if corrected_item != cur_item:
                     blk = before_sent + corrected_item + after_sent
