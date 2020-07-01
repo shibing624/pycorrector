@@ -12,7 +12,7 @@ if not USER_DIR.exists():
 USER_DATA_DIR = USER_DIR.joinpath('datasets')
 if not USER_DATA_DIR.exists():
     USER_DATA_DIR.mkdir()
-language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
+language_model_path = os.path.join(str(USER_DATA_DIR), 'zh_giga.no_cna_cmn.prune01244.klm')
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 通用分词词典文件  format: 词语 词频
