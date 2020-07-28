@@ -432,9 +432,11 @@ PS：
 ## 讨论群
 
 微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。微信群，扫码加入。
+
 <img src="./docs/git_image/wechat_group2.jpeg" width="200" />
 
 如果群满了，可以加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
+
 <img src="./docs/git_image/wechat.jpeg" width="200" />
 
 ## 引用
