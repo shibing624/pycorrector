@@ -15,8 +15,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-torch>=1.3.1
-torchtext==0.3.0
+pip install torch>=1.3.1 torchtext==0.3.0
 ```
 
 ### Preprocess
