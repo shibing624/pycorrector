@@ -78,7 +78,7 @@ class Detector(object):
             url = self.pre_trained_language_models.get(filename)
             get_file(
                 filename, url, extract=True,
-                cache_dir=config.USER_DIR,
+                cache_dir='~',
                 cache_subdir=config.USER_DATA_DIR,
                 verbose=1
             )

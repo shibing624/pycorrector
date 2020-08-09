@@ -8,10 +8,6 @@ src: i don't know if it is good or bad but we are a generation who's grown up wi
 dst: i don't know if it is good or bad but we are a generation which has grown up with technology's progress
 src: modern technology doesn't changed my daily life , it just allows to evoluate in this new world
 dst: modern technology doesn't change my daily life , it just allows me to evoluate in this new world
-src: .
-dst: .
-src: . 
-dst: . 
 src: dear sir/madam , 
 dst: dear sir/madam , 
 src: i'm writing to complain about the show , that i have recently attended to at your theatre
@@ -1918,8 +1914,6 @@ src: now we have free time to do anything else , while machine is doing our work
 dst: now we have free time to do something else while the machine is doing our work
 src: it's connected with our house , our workplace and e
 dst: it's connected with our house , our workplace etc
-src: c
-dst: 
 src: for example , earlier i used to wash my clothes by hand , but now i have the last version of wash machine and now there are no any reasons to do it by hand
 dst: for example , before , i used to wash my clothes by hand , but now i have the latest version of washing machine and now there are no reasons to do it by hand
 src: earlier it took me 3 hours , but now it is my free time and i can go for a walk with my friends

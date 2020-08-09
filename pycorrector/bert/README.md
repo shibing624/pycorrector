@@ -4,13 +4,13 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install transformers>=2.10.0
+pip install transformers==2.10.0
 ```
 
 ## 使用说明
 
 
-1. 下载用中文文本fine-tuned3轮后的预训练BERT MLM模型（网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e），解压后放置于`data/bert_models`目录下。
+1. 下载用中文文本fine-tuned3轮后的预训练BERT MLM模型（百度网盘链接: https://pan.baidu.com/s/14E7jtEgEtxWnwcggRBWeiw 提取码: dd9e；飞书链接: https://l6pmn3b1eo.feishu.cn/file/boxcnevzS1RYa1J7gLXz0Jtjwyf?from=from_qr_code   密码: KljQ），解压后放置于`data/bert_models`目录下。
 ```
 bert_models
 └── chinese_finetuned_lm

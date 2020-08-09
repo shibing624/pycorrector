@@ -4,17 +4,15 @@
 
 import os
 
-from pathlib import Path
-
-USER_DIR = Path.expanduser(Path('~')).joinpath('.pycorrector')
-if not USER_DIR.exists():
-    USER_DIR.mkdir()
-USER_DATA_DIR = USER_DIR.joinpath('datasets')
-if not USER_DATA_DIR.exists():
-    USER_DATA_DIR.mkdir()
-language_model_path = os.path.join(str(USER_DATA_DIR), 'zh_giga.no_cna_cmn.prune01244.klm')
-
 pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+# -----用户目录，存储模型文件-----
+USER_DATA_DIR = os.path.expanduser('~/.pycorrector/datasets')
+if not os.path.exists(USER_DATA_DIR):
+    os.makedirs(USER_DATA_DIR)
+language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
+
+# -----词典文件路径-----
 # 通用分词词典文件  format: 词语 词频
 word_freq_path = os.path.join(pwd_path, 'data/word_freq.txt')
 # 中文常用字符集
