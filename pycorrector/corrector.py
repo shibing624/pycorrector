@@ -101,7 +101,9 @@ class Corrector(Detector):
                 parts = line.split(sep)
                 if parts and len(parts) > 1:
                     for i, c in enumerate(parts):
-                        result[c] = set(list(parts[:i] + parts[i + 1:]))
+                        exist = result.get(c, set())
+                        current = set(list(parts[:i] + parts[i + 1:]))
+                        result[c] = exist.union(current) 
         return result
 
     def _initialize_corrector(self):
