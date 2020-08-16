@@ -36,50 +36,32 @@ def convert_to_unicode(text):
 
 def is_chinese(uchar):
     """判断一个unicode是否是汉字"""
-    if '\u4e00' <= uchar <= '\u9fa5':
-        return True
-    else:
-        return False
+    return '\u4e00' <= uchar <= '\u9fa5'
 
 
 def is_chinese_string(string):
     """判断是否全为汉字"""
-    for c in string:
-        if not is_chinese(c):
-            return False
-    return True
+    return all(is_chinese(c) for c in string)
 
 
 def is_number(uchar):
     """判断一个unicode是否是数字"""
-    if u'u0030' <= uchar <= u'u0039':
-        return True
-    else:
-        return False
+    return u'u0030' <= uchar <= u'u0039'
 
 
 def is_alphabet(uchar):
     """判断一个unicode是否是英文字母"""
-    if (u'u0041' <= uchar <= u'u005a') or (u'u0061' <= uchar <= u'u007a'):
-        return True
-    else:
-        return False
+    return u'u0041' <= uchar <= u'u005a' or u'u0061' <= uchar <= u'u007a'
 
 
 def is_alphabet_string(string):
     """判断是否全部为英文字母"""
-    for c in string:
-        if c < 'a' or c > 'z':
-            return False
-    return True
+    return all('a' <= c <= 'z' for c in string)
 
 
 def is_other(uchar):
     """判断是否非汉字，数字和英文字符"""
-    if not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar)):
-        return True
-    else:
-        return False
+    return not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar)):
 
 
 def B2Q(uchar):
@@ -131,8 +113,7 @@ def traditional2simplified(sentence):
     :param sentence: 待转换的句子
     :return: 将句子中繁体字转换为简体字之后的句子
     """
-    sentence = Converter('zh-hans').convert(sentence)
-    return sentence
+    return Converter('zh-hans').convert(sentence)
 
 
 def simplified2traditional(sentence):
@@ -141,8 +122,7 @@ def simplified2traditional(sentence):
     :param sentence: 待转换的句子
     :return: 将句子中简体字转换为繁体字之后的句子
     """
-    sentence = Converter('zh-hant').convert(sentence)
-    return sentence
+    return Converter('zh-hant').convert(sentence)
 
 
 def get_homophones_by_char(input_char):
