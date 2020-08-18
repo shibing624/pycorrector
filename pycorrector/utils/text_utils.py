@@ -61,7 +61,7 @@ def is_alphabet_string(string):
 
 def is_other(uchar):
     """判断是否非汉字，数字和英文字符"""
-    return not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar)):
+    return not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar))
 
 
 def B2Q(uchar):
