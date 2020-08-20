@@ -1,14 +1,15 @@
-sudo: false
+os: linux
+dist: focal
 language: python
-matrix:
+jobs:
   include:
-    - python: 3.4
-      env: TOXENV=py34
-    - python: 3.5
-      env: TOXENV=py35
     - python: 3.6
-      env: TOXENV=py36
-    - python: 3.6
-      env: TOXENV=pypi-lint
-    - python: 3.6
-      env: TOXENV=codestyle
+    - python: 3.7
+    - python: 3.8
+install:
+  - pip install --upgrade pip wheel
+  - pip install -r requirements.txt -r requirements-dev.txt flake8 pytest
+script:
+  - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+  #- flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics || true
+  - pytest || true
