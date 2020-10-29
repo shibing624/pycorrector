@@ -13,6 +13,7 @@ from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.tokenizer import segment
 
 
 class Corrector(Detector):
@@ -214,6 +215,14 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fragment + 1]
 
+    def segment(self, text, cut_type='char'):
+        """
+        纠错模块的切词，默认采用字粒度
+        :param text: 需要切词的句子
+        :return: list
+        """
+        return segment(text, cut_type=cut_type)
+
     def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57):
         """
         通过语言模型纠正字词错误
@@ -228,7 +237,7 @@ class Corrector(Detector):
         if cur_item not in candidates:
             candidates.append(cur_item)
 
-        ppl_scores = {i: self.ppl_score(list(before_sent + i + after_sent)) for i in candidates}
+        ppl_scores = {i: self.ppl_score(self.segment(before_sent + i + after_sent)) for i in candidates}
         sorted_ppl_scores = sorted(ppl_scores.items(), key=lambda d: d[1])
 
         # 增加正确字词的修正范围，减少误纠
