@@ -1,5 +1,4 @@
 jieba==0.39
 pypinyin
-kenlm
 numpy
 six

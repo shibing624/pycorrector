@@ -29,7 +29,7 @@
 - 语法错误，如 想象难以-难以想象
 
 当然，针对不同业务场景，这些问题并不一定全部存在，比如输入法中需要处理前四种，搜索引擎需要处理所有类型，语音识别后文本纠错只需要处理前两种，
-其中'形似字错误'主要针对五笔或者笔画手写输入等。本项目重点解决其中的谐音、混淆音、字词补全、形似字错误、中文拼音全拼、语法错误带来的纠错任务。
+其中'形似字错误'主要针对五笔或者笔画手写输入等。本项目重点解决其中的谐音、混淆音、形似字错误、中文拼音全拼、语法错误带来的纠错任务。
 
 
 ## Solution
@@ -454,7 +454,7 @@ PS：
 ```latex
 @software{pycorrector,
   author = {Xu Ming},
-  title = {{pycorrector: Text Correction Tool}},
+  title = {{pycorrector: Text Error Correction Tool}},
   year = {2020},
   url = {https://github.com/shibing624/pycorrector},
 }
