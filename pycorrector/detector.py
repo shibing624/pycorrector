@@ -168,9 +168,8 @@ class Detector(object):
 
     def set_custom_confusion_dict(self, path):
         self.check_detector_initialized()
-        custom_confusion = self._get_custom_confusion_dict(path)
-        self.custom_confusion.update(custom_confusion)
-        logger.debug('Loaded confusion path: %s, size: %d' % (path, len(custom_confusion)))
+        self.custom_confusion = self._get_custom_confusion_dict(path)
+        logger.debug('Loaded confusion path: %s, size: %d' % (path, len(self.custom_confusion)))
 
     def set_custom_word(self, path):
         self.check_detector_initialized()
