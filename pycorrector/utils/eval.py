@@ -388,7 +388,7 @@ def eval_corpus500_by_ernie(input_eval_path=eval_data_path, output_eval_path='',
         save_json(res, output_eval_path)
 
 
-def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
+def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=1000):
     total_count = 0
     right_count = 0
     right_rate = 0.0

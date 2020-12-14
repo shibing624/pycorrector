@@ -71,6 +71,28 @@
 2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
 
 
+### Evaluate
+
+提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
+- 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
+- 计算两个数据集的纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
+
+
+测试环境：
+- 测试机器：MacBook Pro (i5)
+- CPU：2.3 GHz Intel Core i5
+- GPU：None
+- 内存：8 GB 2133 MHz LPDDR3
+
+| 数据集 | 模型 | 准确率 | 召回率 | 每百条预测时长（秒） | QPS |
+| :------- | :--------- | :---------: | :---------: | :---------: | :---------: |
+| sighan_15 | rule | 17.98% | 15.37% | 11 | 9 |
+| sighan_15 | bert | 37.62% | 36.46% | 503 | 0.19 |
+| sighan_15 | ernie | 29.70% | 28.13% | 655 | 0.15 |
+| corpus500 | rule | 48.60% | 28.13% | 11 | 9 |
+| corpus500 | bert | 58.60% | 35.00% | 503 | 0.19 |
+| corpus500 | ernie | 59.80% | 41.33% | 655 | 0.15 |
+
 
 ## Install
 * 全自动安装：pip install pycorrector
@@ -310,29 +332,6 @@ python -m pycorrector input.txt -o out.txt -n -d
 ```
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
-
-### Evaluate
-
-提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)，该脚本有两个功能：
-- 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](../data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
-- 计算纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
-
-各模型纠错效果评估如下：
-
-测试环境：
-- 测试机器：MacBook Pro (i5)
-- CPU：2.3 GHz Intel Core i5
-- GPU：None
-- 内存：8 GB 2133 MHz LPDDR3
-
-| 数据集 | 模型 | 准确率 | 召回率 | 每百条预测时长（秒） | QPS |
-| :------- | :--------- | :---------: | :---------: | :---------: | :---------: |
-| sighan_15 | rule | 11.88% | 0.07% | 11 | 9 |
-| sighan_15 | bert | 37.62% | 36.46% | 503 | 0.19 |
-| sighan_15 | ernie | 29.70% | 28.13% | 655 | 0.15 |
-| corpus500 | rule | 48.60% | 28.13% | 11 | 9 |
-| corpus500 | bert | 58.60% | 35.00% | 503 | 0.19 |
-| corpus500 | ernie | 59.80% | 41.33% | 655 | 0.15 |
 
 ## 深度模型使用说明
 

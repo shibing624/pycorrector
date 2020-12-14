@@ -10,11 +10,11 @@ sys.path.append("../")
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
-# right_rate:0.17065868263473055, right_count:399, total_count:2338;
-# recall_rate:0.14633068081343945, recall_right_count:331, recall_total_count:2262, spend_time:4.128874719142914 min
+# right_rate:0.1798201798201798, right_count:180, total_count:1001;
+# recall_rate:0.15376676986584106, recall_right_count:149, recall_total_count:969, spend_time:121.65223574638367 s
 def test_eval_rule_with_sighan_2015():
     from pycorrector.utils.eval import eval_sighan_2015_by_rule
-    eval_sighan_2015_by_rule(num_limit_lines=-1)
+    eval_sighan_2015_by_rule()
 
 
 # right_rate:0.37623762376237624, right_count:38, total_count:101;

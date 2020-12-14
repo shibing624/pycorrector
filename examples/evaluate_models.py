@@ -21,8 +21,8 @@ def demo():
 
 def main(args):
     if args.data == 'sighan_15' and args.model == 'rule':
-        # right_rate:0.1188118811881188, right_count:12, total_count:101;
-        # recall_rate:0.07291666666666667, recall_right_count:7, recall_total_count:96, spend_time:11 s
+        # right_rate:0.1798201798201798, right_count:180, total_count:1001;
+        # recall_rate:0.15376676986584106, recall_right_count:149, recall_total_count:969, spend_time:121 s
         from pycorrector.utils.eval import eval_sighan_2015_by_rule
         eval_sighan_2015_by_rule()
     if args.data == 'sighan_15' and args.model == 'bert':
