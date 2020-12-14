@@ -216,7 +216,7 @@ def build_eval_corpus(output_eval_path=eval_data_path):
     os.remove(no_error_path)
 
 
-def eval_corpus(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
+def eval_corpus500_by_rule(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
     res = []
     corpus = load_json(input_eval_path)
     total_count = 0
@@ -270,7 +270,7 @@ def eval_corpus(input_eval_path=eval_data_path, output_eval_path='', verbose=Tru
         save_json(res, output_eval_path)
 
 
-def eval_corpus_by_bert(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
+def eval_corpus500_by_bert(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
     from pycorrector.bert.bert_corrector import BertCorrector
     model = BertCorrector()
     res = []
@@ -329,7 +329,7 @@ def eval_corpus_by_bert(input_eval_path=eval_data_path, output_eval_path='', ver
         save_json(res, output_eval_path)
 
 
-def eval_corpus_by_ernie(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
+def eval_corpus500_by_ernie(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
     from pycorrector.ernie.ernie_corrector import ErnieCorrector
     model = ErnieCorrector()
     res = []
@@ -387,7 +387,8 @@ def eval_corpus_by_ernie(input_eval_path=eval_data_path, output_eval_path='', ve
     if output_eval_path:
         save_json(res, output_eval_path)
 
-def eval_rule_with_sighan_2015(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
+
+def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
     total_count = 0
     right_count = 0
     right_rate = 0.0
@@ -442,7 +443,7 @@ def eval_rule_with_sighan_2015(sighan_path=sighan_2015_path, verbose=True, num_l
                                                                                                  spend_time))
 
 
-def eval_bert_with_sighan_2015(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
+def eval_sighan_2015_by_bert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
     from pycorrector.bert.bert_corrector import BertCorrector
     model = BertCorrector()
     total_count = 0
@@ -499,7 +500,7 @@ def eval_bert_with_sighan_2015(sighan_path=sighan_2015_path, verbose=True, num_l
                                                                                                  spend_time))
 
 
-def eval_ernie_with_sighan_2015(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
+def eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
     from pycorrector.ernie.ernie_corrector import ErnieCorrector
     model = ErnieCorrector()
     total_count = 0
@@ -560,7 +561,7 @@ if __name__ == "__main__":
     # build_eval_corpus()
 
     # 评估规则方法的纠错准召率
-    eval_corpus(eval_data_path)
+    eval_corpus500_by_rule(eval_data_path)
 
     # 评估bert模型的纠错准召率
-    eval_corpus_by_bert(eval_data_path)
+    eval_corpus500_by_bert(eval_data_path)

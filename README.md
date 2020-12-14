@@ -314,15 +314,25 @@ python -m pycorrector input.txt -o out.txt -n -d
 ### Evaluate
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)，该脚本有两个功能：
-- 构建评估样本集：自动生成评估集[pycorrector/data/eval_corpus.json](pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
+- 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](../data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
 - 计算纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
 
-执行该脚本后得到，规则方法纠错效果评估如下：
-- 准确率：320/500=64%
-- 召回率：152/300=50.67%
+各模型纠错效果评估如下：
 
-看来还有比较大的提升空间，误杀和漏召回的都有。
+测试环境：
+- 测试机器：MacBook Pro (i5)
+- CPU：2.3 GHz Intel Core i5
+- GPU：None
+- 内存：8 GB 2133 MHz LPDDR3
 
+| 数据集 | 模型 | 准确率 | 召回率 | 每百条预测时长（秒） | QPS |
+| :------- | :--------- | :---------: | :---------: | :---------: | :---------: |
+| sighan_15 | rule | 11.88% | 0.07% | 11 | 9 |
+| sighan_15 | bert | 37.62% | 36.46% | 503 | 0.19 |
+| sighan_15 | ernie | 29.70% | 28.13% | 655 | 0.15 |
+| corpus500 | rule | 48.60% | 28.13% | 11 | 9 |
+| corpus500 | bert | 58.60% | 35.00% | 503 | 0.19 |
+| corpus500 | ernie | 59.80% | 41.33% | 655 | 0.15 |
 
 ## 深度模型使用说明
 
@@ -424,7 +434,7 @@ PS：
 2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增
 3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
 
-## 贡献及优化点
+## 功能点
 
 - [x] 优化形似字字典，提高形似字纠错准确率
 - [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
@@ -436,6 +446,17 @@ PS：
 - [x] 升级代码，兼容TensorFlow 2.0库
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 - [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
+
+### 2020.12.14 update:
+1. 新增paddle的ERNIE模型用于纠错识别，兼容字粒度和词粒度处理，当前字粒度效果稍好。
+2. 规则方法：去掉加载默认的custom_confusion和custom_word_freq，提供设置方法，便于扩展。
+3. 新增branch：develop，方便merge新功能。
+
+### 后续优化列表：
+1. 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
+2. 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
+3. 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
+4. 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。
 
 ## 讨论群
 

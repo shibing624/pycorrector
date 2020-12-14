@@ -23,8 +23,8 @@ python3 ernie_corrector.py
 
 - run
 ```python
-from pycorrector.utils.eval import eval_bert_with_sighan_2015
-eval_bert_with_sighan_2015()
+from pycorrector.utils.eval import eval_sighan_2015_by_bert
+eval_sighan_2015_by_bert()
 ```
 example:
 
@@ -43,24 +43,14 @@ example:
 执行该评估脚本后，
 
 ERNIE模型纠错效果评估如下：
-- 准确率：/500=%
-- 召回率：/300=%
+- 准确率：59.80%
+- 召回率：41.33%
 
 
 
 可以看出ERNIE模型对文本有强大的表达能力，仅仅依赖预训练的MLM模型，在纠错能力上就比优化良久的专家规则方法稍差而已，而且看结果细节一些纠正还挺靠谱。
 
 看来选择一个好的模型，选择一个正确的方向真的很重要。我在这里只能希望规则的方法尽量做到扩展性好些，深度模型尽量做到调研各种模型全一些，深入一些。
-
-
-
-## Fine-tuned ERNIE model with chinese corpus
-
-### chinese corpus
-
-- 人名日报2014版数据（网盘链接:https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A  密码:uc11）101MB
-- CGED三年比赛数据（本项目已经提供）2.8MB
-- 部分中文维基百科数据（wiki上自行下载）50MB
 
 
 

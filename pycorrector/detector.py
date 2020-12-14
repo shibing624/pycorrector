@@ -175,7 +175,7 @@ class Detector(object):
         self.custom_confusion = self._get_custom_confusion_dict(path)
         logger.debug('Loaded confusion path: %s, size: %d' % (path, len(self.custom_confusion)))
 
-    def set_custom_word(self, path):
+    def set_custom_word_freq(self, path):
         self.check_detector_initialized()
         word_freqs = self.load_word_freq_dict(path)
         # 合并字典
