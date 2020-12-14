@@ -22,8 +22,8 @@ class Corrector(Detector):
                  same_stroke_path=config.same_stroke_path,
                  language_model_path=config.language_model_path,
                  word_freq_path=config.word_freq_path,
-                 custom_word_freq_path=config.custom_word_freq_path,
-                 custom_confusion_path=config.custom_confusion_path,
+                 custom_word_freq_path='',
+                 custom_confusion_path='',
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
                  stopwords_path=config.stopwords_path):
@@ -215,15 +215,7 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fragment + 1]
 
-    def segment(self, text, cut_type='char'):
-        """
-        纠错模块的切词，默认采用字粒度
-        :param text: 需要切词的句子
-        :return: list
-        """
-        return segment(text, cut_type=cut_type)
-
-    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57):
+    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57, cut_type='char'):
         """
         通过语言模型纠正字词错误
         :param cur_item: 当前词
@@ -231,13 +223,14 @@ class Corrector(Detector):
         :param before_sent: 前半部分句子
         :param after_sent: 后半部分句子
         :param threshold: ppl阈值, 原始字词替换后大于该ppl值则认为是错误
+        :param cut_type: 切词方式, 字粒度
         :return: str, correct item, 正确的字词
         """
         result = cur_item
         if cur_item not in candidates:
             candidates.append(cur_item)
 
-        ppl_scores = {i: self.ppl_score(self.segment(before_sent + i + after_sent)) for i in candidates}
+        ppl_scores = {i: self.ppl_score(segment(before_sent + i + after_sent, cut_type=cut_type)) for i in candidates}
         sorted_ppl_scores = sorted(ppl_scores.items(), key=lambda d: d[1])
 
         # 增加正确字词的修正范围，减少误纠

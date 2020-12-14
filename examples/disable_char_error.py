@@ -11,7 +11,10 @@ sys.path.append("../")
 import pycorrector
 
 if __name__ == '__main__':
-    error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
+    sent = '少先队员因该为老人让坐'
+    corrected_sent, detail = pycorrector.correct(sent)
+    print(corrected_sent, detail)
+    print("*" * 42)
     pycorrector.enable_char_error(enable=False)
-    correct_sent = pycorrector.correct(error_sentence_1)
-    print("original sentence:{} => correct sentence:{}".format(error_sentence_1, correct_sent))
+    correct_sent = pycorrector.correct(sent)
+    print("original sentence:{} => correct sentence:{}".format(sent, correct_sent))

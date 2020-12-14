@@ -38,8 +38,8 @@ class Detector(object):
 
     def __init__(self, language_model_path=config.language_model_path,
                  word_freq_path=config.word_freq_path,
-                 custom_word_freq_path=config.custom_word_freq_path,
-                 custom_confusion_path=config.custom_confusion_path,
+                 custom_word_freq_path='',
+                 custom_confusion_path='',
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
                  stopwords_path=config.stopwords_path):
@@ -118,21 +118,23 @@ class Detector(object):
         :return:
         """
         word_freq = {}
-        if not os.path.exists(path):
-            logger.warning('file not found.%s' % path)
-            return word_freq
-        with codecs.open(path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith('#'):
-                    continue
-                info = line.split()
-                if len(info) < 1:
-                    continue
-                word = info[0]
-                # 取词频，默认1
-                freq = int(info[1]) if len(info) > 1 else 1
-                word_freq[word] = freq
+        if path:
+            if not os.path.exists(path):
+                logger.warning('file not found.%s' % path)
+                return word_freq
+            else:
+                with codecs.open(path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('#'):
+                            continue
+                        info = line.split()
+                        if len(info) < 1:
+                            continue
+                        word = info[0]
+                        # 取词频，默认1
+                        freq = int(info[1]) if len(info) > 1 else 1
+                        word_freq[word] = freq
         return word_freq
 
     def _get_custom_confusion_dict(self, path):
@@ -142,22 +144,24 @@ class Detector(object):
         :return: dict, {variant: origin}, eg: {"交通先行": "交通限行"}
         """
         confusion = {}
-        if not os.path.exists(path):
-            logger.warning('file not found.%s' % path)
-            return confusion
-        with codecs.open(path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith('#'):
-                    continue
-                info = line.split()
-                if len(info) < 2:
-                    continue
-                variant = info[0]
-                origin = info[1]
-                freq = int(info[2]) if len(info) > 2 else 1
-                self.word_freq[origin] = freq
-                confusion[variant] = origin
+        if path:
+            if not os.path.exists(path):
+                logger.warning('file not found.%s' % path)
+                return confusion
+            else:
+                with codecs.open(path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('#'):
+                            continue
+                        info = line.split()
+                        if len(info) < 2:
+                            continue
+                        variant = info[0]
+                        origin = info[1]
+                        freq = int(info[2]) if len(info) > 2 else 1
+                        self.word_freq[origin] = freq
+                        confusion[variant] = origin
         return confusion
 
     def set_language_model_path(self, path):
@@ -222,7 +226,7 @@ class Detector(object):
         """
         取词在样本中的词频
         :param word:
-        :return:
+        :return: dict
         """
         self.check_detector_initialized()
         return self.word_freq.get(word, 0)
@@ -240,8 +244,8 @@ class Detector(object):
         """
         检测错误集合(maybe_errors)是否已经包含该错误位置（maybe_err)
         :param maybe_err: [error_word, begin_pos, end_pos, error_type]
-        :param maybe_errors:
-        :return:
+        :param maybe_errors:list
+        :return: bool
         """
         error_word_idx = 0
         begin_idx = 1
@@ -308,6 +312,11 @@ class Detector(object):
 
     @staticmethod
     def is_filter_token(token):
+        """
+        是否为需过滤字词
+        :param token: 字词
+        :return: bool
+        """
         result = False
         # pass blank
         if not token.strip():
@@ -345,7 +354,25 @@ class Detector(object):
             start_idx += len(blk)
         return result
 
+    @staticmethod
+    def split_text_by_maxlen(text, maxlen=512):
+        """
+        长句切分为短句，每个短句maxlen个字
+        :param text: str
+        :param maxlen: int, 最大长度
+        :return: list, (sentence, idx)
+        """
+        result = []
+        for i in range(0, len(text), maxlen):
+            result.append((text[i:i + maxlen], i))
+        return result
+
     def detect(self, text):
+        """
+        文本错误检测
+        :param text: 长文本
+        :return: 错误index
+        """
         maybe_errors = []
         if not text.strip():
             return maybe_errors

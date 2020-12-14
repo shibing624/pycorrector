@@ -9,8 +9,9 @@ import sys
 sys.path.append("../")
 from pycorrector import Corrector
 
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
 if __name__ == '__main__':
-    pwd_path = os.path.abspath(os.path.dirname(__file__))
     lm_path = os.path.join(pwd_path, '../pycorrector/data/people_chars_lm.klm')
     model = Corrector(language_model_path=lm_path)
 

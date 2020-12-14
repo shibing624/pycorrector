@@ -2,38 +2,51 @@
 # Author: XuMing(xuming624@qq.com)
 # Brief:
 
-import sys
 import os
+import sys
+
 sys.path.append("../")
 
-from pycorrector.utils.eval import eval_bcmi_data, get_bcmi_corpus, eval_sighan_corpus
-
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-bcmi_path = os.path.join(pwd_path, '../pycorrector/data/cn/bcmi.txt')
-clp_path = os.path.join(pwd_path, '../pycorrector/data/cn/clp14_C1.pkl')
-sighan_path = os.path.join(pwd_path, '../pycorrector/data/cn/sighan15_A2.pkl')
-cged_path = os.path.join(pwd_path, '../pycorrector/data/cn/CGED/CGED16_HSK_TrainingSet.xml')
 
 
-def test_get_bcmi_data():
-    s = '青蛙是庄家的好朋友，我们要宝（（保））护它们。'
-    print(get_bcmi_corpus(s))
+# right_rate:0.17065868263473055, right_count:399, total_count:2338;
+# recall_rate:0.14633068081343945, recall_right_count:331, recall_total_count:2262, spend_time:4.128874719142914 min
+def test_eval_rule_with_sighan_2015():
+    from pycorrector.utils.eval import eval_rule_with_sighan_2015
+    eval_rule_with_sighan_2015(num_limit_lines=-1)
 
 
-def test_eval_bcmi_data():
-    rate, right_dict, wrong_dict = eval_bcmi_data(bcmi_path, True)
-    print('bcmi right rate:{}'.format(rate))
-    # bcmi right rate:0.2591623036649215
+# right_rate:0.37623762376237624, right_count:38, total_count:101;
+# recall_rate:0.3541666666666667, recall_right_count:34, recall_total_count:96, spend_time:550.4112601280212 s
+def test_eval_bert_with_sighan_2015():
+    from pycorrector.utils.eval import eval_bert_with_sighan_2015
+    eval_bert_with_sighan_2015(num_limit_lines=100)
 
 
-def test_clp_data():
-    rate = eval_sighan_corpus(clp_path, True)
-    print('clp right rate:{}'.format(rate))
-    # clp right rate:0.5927051671732523
+# right_rate:0.297029702970297, right_count:30, total_count:101;
+# recall_rate:0.2708333333333333, recall_right_count:26, recall_total_count:96, spend_time:928.6698520183563 s
+def test_eval_ernie_with_sighan_2015():
+    from pycorrector.utils.eval import eval_ernie_with_sighan_2015
+    eval_ernie_with_sighan_2015(num_limit_lines=100)
+
+# right_rate:0.486, right_count:243, total_count:500;
+# recall_rate:0.18,recall_right_count:54,recall_total_count:300
+def test_eval_rule_with_500():
+    from pycorrector.utils.eval import eval_corpus, eval_data_path
+    # 评估规则方法的纠错准召率
+    eval_corpus()
 
 
-def test_sighan_data():
-    rate = eval_sighan_corpus(sighan_path, True)
-    print('sighan right rate:{}'.format(rate))
-    # sighan right rate:0.5724725943970768
+# right_rate:0.58, right_count:290, total_count:500;
+# recall_rate:0.37333333333333335,recall_right_count:112,recall_total_count:300
+def test_eval_bert_with_500():
+    from pycorrector.utils.eval import eval_corpus_by_bert, eval_data_path
+    # 评估bert模型的纠错准召率
+    eval_corpus_by_bert()
 
+#
+def test_eval_ernie_with_500():
+    from pycorrector.utils.eval import eval_corpus_by_ernie, eval_data_path
+    # 评估bert模型的纠错准召率
+    eval_corpus_by_ernie()

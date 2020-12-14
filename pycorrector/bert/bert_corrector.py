@@ -43,7 +43,7 @@ class BertCorrector(Corrector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_2_short_text(text, include_symbol=True)
+        blocks = self.split_text_by_maxlen(text, maxlen=128)
         for blk, start_idx in blocks:
             blk_new = ''
             for idx, s in enumerate(blk):

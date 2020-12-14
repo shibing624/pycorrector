@@ -23,7 +23,7 @@ if __name__ == '__main__':
     for line in error_sentences:
         print(pycorrector.correct(line))
 
-    print('*' * 53)
+    print('*' * 42)
     pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
     for line in error_sentences:
         print(pycorrector.correct(line))

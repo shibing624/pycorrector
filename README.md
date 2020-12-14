@@ -176,7 +176,7 @@ import pycorrector
 
 pycorrector.set_log_level('INFO')
 error_sentences = [
-    '买iPhone差，要多少钱',
+    '买iphonex，要多少钱',
     '共同实际控制人萧华、霍荣铨、张旗康',
 ]
 for line in error_sentences:
@@ -191,10 +191,10 @@ for line in error_sentences:
 
 output:
 ```
-('买iPhone差，要多少钱', [])   # "iPhone差"漏召，应该是"iphoneX"
+('买iphonex，要多少钱', [])   # "iphonex"漏召，应该是"iphoneX"
 ('共同实际控制人萧华、霍荣铨、张启康', [['张旗康', '张启康', 14, 17]]) # "张启康"误杀，应该不用纠
 *****************************************************
-('买iPhoneX，要多少钱', [['iPhone差', 'iPhoneX', 1, 8]])
+('买iphonex，要多少钱', [['iphonex', 'iphoneX', 1, 8]])
 ('共同实际控制人萧华、霍荣铨、张旗康', [])
 ```
 
