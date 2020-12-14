@@ -52,9 +52,10 @@
 * rnn_crf模型：参考阿里巴巴2016参赛中文语法纠错比赛CGED2018并取得第一名的方法(整理中)
 * seq2seq_attention模型：在seq2seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
 * transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
-* bert模型：中文fine-tuned模型，使用MASK特征纠正错字
+* BERT模型：中文fine-tuned模型，使用MASK特征纠正错字
 * conv_seq2seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩
 * electra模型：斯坦福和谷歌联合提出的一种更具效率的预训练模型，学习文本上下文表示优于同等计算资源的BERT和XLNet
+* ERNIE模型：百度公司提出的基于知识增强的语义表示模型，有可适配中文的强大语义表征能力。在情感分析、文本匹配、自然语言推理、词法分析、阅读理解、智能问答等16个公开数据集上超越世界领先技术
 
 ### 错误检测
 * 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子文本平均值，则判定该字是疑似错别字的概率大。
@@ -71,7 +72,7 @@
 2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
 
 
-### Evaluate
+## Evaluate
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
 - 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
