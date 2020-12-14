@@ -1,5 +1,6 @@
 # ERNIE model correct text error with mask feature
 
+ERNIE model reference: https://github.com/PaddlePaddle/ERNIE
 
 ### Requirements
 * pip安装依赖包
