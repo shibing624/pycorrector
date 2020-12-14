@@ -7,6 +7,8 @@
 pip install paddlepaddle==1.8.4 # pip install paddlepaddle-gpu
 ```
 
+依赖PaddlePaddle 1.7.0+， 请参考[这里](https://www.paddlepaddle.org.cn/install/quick)安装 PaddlePaddle。
+
 ## 使用说明
 
 
