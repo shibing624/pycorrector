@@ -1,3 +1,5 @@
+English | [简体中文](README.md)
+
 ![alt text](docs/logo.svg)
 
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
