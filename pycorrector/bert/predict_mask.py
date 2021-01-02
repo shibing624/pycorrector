@@ -10,8 +10,10 @@ from __future__ import print_function
 
 import argparse
 import os
+import sys
 
-from transformers import pipeline
+sys.path.append('../..')
+from pycorrector.transformers import pipeline
 
 MASK_TOKEN = "[MASK]"
 

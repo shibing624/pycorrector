@@ -10,22 +10,21 @@ import sys
 import time
 
 import torch
-from transformers import pipeline, ElectraForPreTraining
 
 sys.path.append('../..')
+from pycorrector.transformers import pipeline, ElectraForPreTraining
+
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
+D_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_discriminator_pytorch/")
+G_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_generator_pytorch/")
 
 
 class ElectraCorrector(Corrector):
-    def __init__(self, d_mdel_dir=os.path.join(pwd_path,
-                                               "../data/electra_models/chinese_electra_base_discriminator_pytorch/"),
-                 g_model_dir=os.path.join(pwd_path,
-                                          "../data/electra_models/chinese_electra_base_generator_pytorch/"),
-                 ):
+    def __init__(self, d_model_dir=D_model_dir, g_model_dir=G_model_dir):
         super(ElectraCorrector, self).__init__()
         self.name = 'electra_corrector'
         t1 = time.time()
@@ -33,7 +32,7 @@ class ElectraCorrector(Corrector):
                                 model=g_model_dir,
                                 tokenizer=g_model_dir
                                 )
-        self.d_model = ElectraForPreTraining.from_pretrained(d_mdel_dir)
+        self.d_model = ElectraForPreTraining.from_pretrained(d_model_dir)
 
         if self.g_model:
             self.mask = self.g_model.tokenizer.mask_token
@@ -45,7 +44,7 @@ class ElectraCorrector(Corrector):
         predictions = torch.round((torch.sign(discriminator_outputs[0]) + 1) / 2)
 
         error_ids = []
-        for index, s in enumerate(predictions.tolist()[1:-1]):
+        for index, s in enumerate(predictions.tolist()[0][1:-1]):
             if s > 0.0:
                 error_ids.append(index)
         return error_ids

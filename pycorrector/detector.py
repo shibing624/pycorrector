@@ -11,9 +11,10 @@ import numpy as np
 
 from pycorrector import config
 from pycorrector.utils.get_file import get_file
-from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
 from pycorrector.utils.tokenizer import Tokenizer
+from pycorrector.utils.logger import logger
+
 
 # \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
 # \r\n|\s : whitespace characters. Will not be handled.

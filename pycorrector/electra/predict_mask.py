@@ -7,7 +7,9 @@
 import os
 
 import torch
-from transformers import ElectraForPreTraining, ElectraTokenizer, pipeline
+import sys
+sys.path.append('../..')
+from pycorrector.transformers import pipeline, ElectraForPreTraining, ElectraTokenizer
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,12 +23,12 @@ def fill_mask_demo():
         model=G_model_dir,
         tokenizer=G_model_dir
     )
-
+    print(nlp.tokenizer.mask_token)
     print(
         nlp(f"HuggingFace is creating a {nlp.tokenizer.mask_token} that the community uses to solve NLP tasks.")
     )
 
-    i = nlp('hi lili, What is the name of the [MASK] ?')
+    i = nlp('hi, What is your [MASK] ?')
     print(i)
 
     i = nlp('今天[MASK]情很好')
@@ -47,7 +49,8 @@ def detect_error_demo():
 
     print(list(zip(fake_tokens, predictions.tolist())))
     print("fixed " + '*' * 42)
-    print(list(zip(fake_tokens, predictions.tolist()[1:-1])))
+    print(predictions.tolist())
+    print(list(zip(fake_tokens, predictions.tolist()[0][1:-1])))
 
 
 if __name__ == '__main__':

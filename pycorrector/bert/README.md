@@ -4,7 +4,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install transformers==2.10.0
+pip install tokenizers==0.9.4 torch>=1.3.1
 ```
 
 ## 使用说明
@@ -55,6 +55,25 @@ Bert模型纠错效果评估如下：
 
 看来选择一个好的模型，选择一个正确的方向真的很重要。我在这里只能希望规则的方法尽量做到扩展性好些，深度模型尽量做到调研各种模型全一些，深入一些。
 
+
+
+## 快速加载
+
+本项目迁移了[Huggingface-Transformers 4.2.0dev0](https://github.com/huggingface/transformers)到`pycorrector/transformers`，更新了兼容代码，可支持BERT模型，可通过如下命令调用。
+
+example: [predict_mask.py](predict_mask.py)
+
+```python
+from pycorrector.transformers import pipeline
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+model_dir = os.path.join(pwd_path, "../data/bert_models/chinese_finetuned_lm/")
+nlp = pipeline('fill-mask', model=model_dir)
+
+i = nlp('今天[MASK]情很好')
+print(i)
+
+```
 
 
 ## Fine-tuned BERT model with chinese corpus

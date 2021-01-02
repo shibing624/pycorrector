@@ -9,12 +9,11 @@ import os
 import sys
 import time
 
-from transformers import pipeline
-
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
+from pycorrector.transformers import pipeline
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
