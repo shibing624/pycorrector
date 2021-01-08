@@ -28,10 +28,12 @@ class ElectraCorrector(Corrector):
         super(ElectraCorrector, self).__init__()
         self.name = 'electra_corrector'
         t1 = time.time()
-        self.g_model = pipeline("fill-mask",
-                                model=g_model_dir,
-                                tokenizer=g_model_dir
-                                )
+        self.g_model = pipeline(
+            "fill-mask",
+            model=g_model_dir,
+            tokenizer=g_model_dir,
+            device=0,  # gpu device id
+        )
         self.d_model = ElectraForPreTraining.from_pretrained(d_model_dir)
 
         if self.g_model:

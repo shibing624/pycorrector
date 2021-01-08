@@ -21,7 +21,8 @@ def fill_mask_demo():
     nlp = pipeline(
         "fill-mask",
         model=G_model_dir,
-        tokenizer=G_model_dir
+        tokenizer=G_model_dir,
+        device=0,  # gpu device id
     )
     print(nlp.tokenizer.mask_token)
     print(

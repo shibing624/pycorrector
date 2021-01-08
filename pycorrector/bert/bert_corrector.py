@@ -23,9 +23,12 @@ class BertCorrector(Corrector):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
         t1 = time.time()
-        self.model = pipeline('fill-mask',
-                              model=bert_model_dir,
-                              tokenizer=bert_model_dir)
+        self.model = pipeline(
+            'fill-mask',
+            model=bert_model_dir,
+            tokenizer=bert_model_dir,
+            device=0,  # gpu device id
+        )
         if self.model:
             self.mask = self.model.tokenizer.mask_token
             logger.debug('Loaded bert model: %s, spend: %.3f s.' % (bert_model_dir, time.time() - t1))

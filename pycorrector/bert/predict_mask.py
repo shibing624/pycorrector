@@ -31,7 +31,8 @@ def main():
 
     nlp = pipeline('fill-mask',
                    model=args.bert_model_dir,
-                   tokenizer=args.bert_model_dir
+                   tokenizer=args.bert_model_dir,
+                   device=0,  # gpu device id
                    )
     i = nlp('hi lili, What is the name of the [MASK] ?')
     print(i)

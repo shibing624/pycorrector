@@ -43,7 +43,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Topic :: Text Processing :: Linguistic',
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
     platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
     keywords='NLP,correction,Chinese error corrector,corrector',
