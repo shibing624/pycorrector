@@ -38,6 +38,7 @@ def train(train_path: str,
     device = torch.device('cpu')
     if use_cuda:
         device = torch.device('cuda:{}'.format(gpu_id))
+        print("use gpu, gpu_id={}".format(gpu_id))
 
     if not os.path.isfile(train_path):
         raise FileNotFoundError

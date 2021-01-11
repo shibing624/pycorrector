@@ -3,7 +3,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install tokenizers==0.9.4 torch>=1.3.1
+pip install tokenizers==0.9.4 torch>=1.3.1 tqdm==4.50.2
 ```
 
 ## 使用说明

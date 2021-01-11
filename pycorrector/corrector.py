@@ -8,16 +8,17 @@ import os
 
 from pypinyin import lazy_pinyin
 
-from pycorrector import config
-from pycorrector.detector import Detector, ErrorType
-from pycorrector.utils.logger import logger
-from pycorrector.utils.math_utils import edit_distance_word
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
-from pycorrector.utils.tokenizer import segment
+from . import config
+from .detector import Detector, ErrorType
+from .utils.logger import logger
+from .utils.math_utils import edit_distance_word
+from .utils.text_utils import is_chinese_string, convert_to_unicode
+from .utils.tokenizer import segment
 
 
 class Corrector(Detector):
-    def __init__(self, common_char_path=config.common_char_path,
+    def __init__(self,
+                 common_char_path=config.common_char_path,
                  same_pinyin_path=config.same_pinyin_path,
                  same_stroke_path=config.same_stroke_path,
                  language_model_path=config.language_model_path,
@@ -26,14 +27,16 @@ class Corrector(Detector):
                  custom_confusion_path='',
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
-                 stopwords_path=config.stopwords_path):
+                 stopwords_path=config.stopwords_path
+                 ):
         super(Corrector, self).__init__(language_model_path=language_model_path,
                                         word_freq_path=word_freq_path,
                                         custom_word_freq_path=custom_word_freq_path,
                                         custom_confusion_path=custom_confusion_path,
                                         person_name_path=person_name_path,
                                         place_name_path=place_name_path,
-                                        stopwords_path=stopwords_path)
+                                        stopwords_path=stopwords_path
+                                        )
         self.name = 'corrector'
         self.common_char_path = common_char_path
         self.same_pinyin_text_path = same_pinyin_path
@@ -104,7 +107,7 @@ class Corrector(Detector):
                     for i, c in enumerate(parts):
                         exist = result.get(c, set())
                         current = set(list(parts[:i] + parts[i + 1:]))
-                        result[c] = exist.union(current) 
+                        result[c] = exist.union(current)
         return result
 
     def _initialize_corrector(self):

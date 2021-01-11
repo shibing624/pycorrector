@@ -52,8 +52,8 @@ class ErnieCorrector(Corrector):
         self.rev_dict[self.ernie_tokenizer.pad_id] = ''  # replace [PAD]
         self.rev_dict[self.ernie_tokenizer.sep_id] = ''  # replace [PAD]
         self.rev_dict[self.ernie_tokenizer.unk_id] = ''  # replace [PAD]
-        self.model = ErnieCloze.from_pretrained(model_dir)
-        self.model.eval()
+        self.cloze = ErnieCloze.from_pretrained(model_dir)
+        self.cloze.eval()
         logger.debug('Loaded ernie model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
         self.mask_id = self.ernie_tokenizer.mask_id  # 3
         self.mask_token = self.rev_dict[self.mask_id]  # "[MASK]"
@@ -64,7 +64,7 @@ class ErnieCorrector(Corrector):
         ids, id_types = self.ernie_tokenizer.encode(sentence_with_mask)
         ids = np.expand_dims(ids, 0)
         ids = D.to_variable(ids)
-        logits = self.model(ids).numpy()
+        logits = self.cloze(ids).numpy()
         output_ids = np.argsort(logits, -1)
         masks_ret = []
         # 倒序，取最可能预测词topN

@@ -8,6 +8,7 @@ import operator
 import os
 import sys
 import time
+import kenlm # import kenlm before torch, when torch>=1.7.1
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode

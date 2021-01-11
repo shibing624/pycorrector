@@ -182,7 +182,6 @@ class ErnieTokenizer(object):
 
     def encode(self, text, pair=None, truncate_to=None):
         text_id = np.array(self.convert_tokens_to_ids(self.tokenize(text)), dtype=np.int64)
-        text_id_type = np.zeros_like(text_id, dtype=np.int64)
         if pair is not None:
             pair_id = np.array(self.convert_tokens_to_ids(self.tokenize(pair)), dtype=np.int64)
         else:

@@ -10,7 +10,7 @@ from codecs import open
 from random import sample
 from xml.dom import minidom
 
-sys.path.append("../")
+sys.path.append("../..")
 import pycorrector
 from pycorrector.utils.io_utils import load_json, save_json
 from pycorrector.utils.io_utils import load_pkl
@@ -388,7 +388,7 @@ def eval_corpus500_by_ernie(input_eval_path=eval_data_path, output_eval_path='',
         save_json(res, output_eval_path)
 
 
-def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=1000):
+def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
     total_count = 0
     right_count = 0
     right_rate = 0.0
@@ -560,8 +560,9 @@ if __name__ == "__main__":
     # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
     # build_eval_corpus()
 
+    eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
     # 评估规则方法的纠错准召率
-    eval_corpus500_by_rule(eval_data_path)
+    # eval_corpus500_by_rule(eval_data_path)
 
     # 评估bert模型的纠错准召率
-    eval_corpus500_by_bert(eval_data_path)
+    # eval_corpus500_by_bert(eval_data_path)

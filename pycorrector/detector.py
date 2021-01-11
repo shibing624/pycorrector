@@ -9,12 +9,11 @@ import time
 
 import numpy as np
 
-from pycorrector import config
-from pycorrector.utils.get_file import get_file
-from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
-from pycorrector.utils.tokenizer import Tokenizer
-from pycorrector.utils.logger import logger
-
+from . import config
+from .utils.get_file import get_file
+from .utils.logger import logger
+from .utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
+from .utils.tokenizer import Tokenizer
 
 # \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
 # \r\n|\s : whitespace characters. Will not be handled.
@@ -37,13 +36,15 @@ class Detector(object):
         'people_chars_lm.klm': 'https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm'
     }
 
-    def __init__(self, language_model_path=config.language_model_path,
+    def __init__(self,
+                 language_model_path=config.language_model_path,
                  word_freq_path=config.word_freq_path,
                  custom_word_freq_path='',
                  custom_confusion_path='',
                  person_name_path=config.person_name_path,
                  place_name_path=config.place_name_path,
-                 stopwords_path=config.stopwords_path):
+                 stopwords_path=config.stopwords_path
+                 ):
         self.name = 'detector'
         self.language_model_path = language_model_path
         self.word_freq_path = word_freq_path
@@ -253,7 +254,7 @@ class Detector(object):
         end_idx = 2
         for err in maybe_errors:
             if maybe_err[error_word_idx] in err[error_word_idx] and maybe_err[begin_idx] >= err[begin_idx] and \
-                            maybe_err[end_idx] <= err[end_idx]:
+                    maybe_err[end_idx] <= err[end_idx]:
                 return True
         return False
 

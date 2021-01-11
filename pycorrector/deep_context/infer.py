@@ -38,15 +38,15 @@ def read_model(model_path, device):
 
 def get_infer_data(model_path,
                    emb_path,
-                   gpu_id
+                   gpu_id,
                    ):
     # device
+    device = torch.device('cpu')
     use_cuda = torch.cuda.is_available() and gpu_id > -1
     if use_cuda:
         device = torch.device('cuda:{}'.format(gpu_id))
         torch.cuda.set_device(gpu_id)
-    else:
-        device = torch.device('cpu')
+        print("use gpu, gpu_id={}".format(gpu_id))
 
     # load model
     model, config_dict = read_model(model_path, device)
