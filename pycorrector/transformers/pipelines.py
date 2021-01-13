@@ -481,12 +481,14 @@ class Pipeline(_ScikitCompat):
         self.tokenizer = tokenizer
         self.modelcard = modelcard
         self.framework = framework
-        self.device = device if framework == "tf" else torch.device("cpu" if device < 0 else "cuda:{}".format(device))
+        self.device = device if framework == "tf" else torch.device(
+            "cpu" if device < 0 or not torch.cuda.is_available() else "cuda:{}".format(device))
         self.binary_output = binary_output
 
         # Special handling
         if self.framework == "pt" and self.device.type == "cuda":
             self.model = self.model.to(self.device)
+            logger.info('use cuda:{}'.format(device))
 
         # Update config with task specific parameters
         task_specific_params = self.model.config.task_specific_params

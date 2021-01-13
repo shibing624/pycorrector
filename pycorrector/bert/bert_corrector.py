@@ -8,19 +8,19 @@ import operator
 import os
 import sys
 import time
-import kenlm # import kenlm before torch, when torch>=1.7.1
+import kenlm  # import kenlm before torch, when torch>=1.7.1
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.transformers import pipeline
-
+from pycorrector import config
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 class BertCorrector(Corrector):
-    def __init__(self, bert_model_dir=os.path.join(pwd_path, '../data/bert_models/chinese_finetuned_lm/')):
+    def __init__(self, bert_model_dir=config.bert_model_dir):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
         t1 = time.time()

@@ -9,22 +9,20 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
-import os
 import sys
 
 sys.path.append('../..')
 from pycorrector.transformers import pipeline
+from pycorrector import config
 
 MASK_TOKEN = "[MASK]"
-
-pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 def main():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--bert_model_dir", default=os.path.join(pwd_path, '../data/bert_models/chinese_finetuned_lm/'),
+    parser.add_argument("--bert_model_dir", default=config.bert_model_dir,
                         type=str,
                         help="Bert pre-trained model dir")
     args = parser.parse_args()

@@ -31,3 +31,11 @@ stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 ngram_words_path = os.path.join(pwd_path, 'data/ngram_words.txt')
 # 英文文本
 en_text_path = os.path.join(pwd_path, 'data/en/big.txt')
+
+# -----深度模型文件路径 -----
+# bert模型文件夹路径
+bert_model_dir = os.path.join(USER_DATA_DIR, 'bert_models/chinese_finetuned_lm/')
+# ernie模型文件夹路径: /Users/name/.paddle-ernie-cache/
+# electra模型文件夹路径
+electra_D_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_discriminator_pytorch/")
+electra_G_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_generator_pytorch/")

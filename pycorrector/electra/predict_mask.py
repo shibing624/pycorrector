@@ -4,24 +4,20 @@
 @description:
 """
 
-import os
+import sys
 
 import torch
-import sys
+
 sys.path.append('../..')
 from pycorrector.transformers import pipeline, ElectraForPreTraining, ElectraTokenizer
-
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-
-D_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_discriminator_pytorch/")
-G_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_generator_pytorch/")
+from pycorrector import config
 
 
 def fill_mask_demo():
     nlp = pipeline(
         "fill-mask",
-        model=G_model_dir,
-        tokenizer=G_model_dir,
+        model=config.electra_G_model_dir,
+        tokenizer=config.electra_G_model_dir,
         device=0,  # gpu device id
     )
     print(nlp.tokenizer.mask_token)
@@ -37,8 +33,8 @@ def fill_mask_demo():
 
 
 def detect_error_demo():
-    tokenizer = ElectraTokenizer.from_pretrained(D_model_dir)
-    discriminator = ElectraForPreTraining.from_pretrained(D_model_dir)
+    tokenizer = ElectraTokenizer.from_pretrained(config.electra_D_model_dir)
+    discriminator = ElectraForPreTraining.from_pretrained(config.electra_D_model_dir)
 
     sentence = '今天新情很好'
     fake_tokens = tokenizer.tokenize(sentence)

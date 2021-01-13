@@ -5,7 +5,6 @@
 """
 
 import operator
-import os
 import sys
 import time
 
@@ -17,14 +16,11 @@ from pycorrector.transformers import pipeline, ElectraForPreTraining
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
-
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-D_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_discriminator_pytorch/")
-G_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_generator_pytorch/")
+from pycorrector import config
 
 
 class ElectraCorrector(Corrector):
-    def __init__(self, d_model_dir=D_model_dir, g_model_dir=G_model_dir):
+    def __init__(self, d_model_dir=config.electra_D_model_dir, g_model_dir=config.electra_G_model_dir):
         super(ElectraCorrector, self).__init__()
         self.name = 'electra_corrector'
         t1 = time.time()

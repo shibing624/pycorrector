@@ -7,6 +7,9 @@ import sys
 
 sys.path.append("../")
 from pycorrector.bert import bert_corrector
+from pycorrector.electra import electra_corrector
+from pycorrector.ernie import ernie_corrector
+from pycorrector.corrector import Corrector
 
 error_sentences = [
     '真麻烦你了。希望你们好好的跳无',
@@ -36,27 +39,27 @@ error_sentences = [
     '有了宠物出租地方另一方面还可以题高人类对动物的了解，因为那些专业人氏可以指导我们对于动物的习惯。',  # 题高 => 提高 专业人氏 => 专业人士
     '三个凑皮匠胜过一个诸葛亮也有道理。',  # 凑
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
+    '今天心情很好',
+    '今天新情很好',
 ]
 
-badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
-           '能充几次呢？',
-           '这是酸奶还是像饮料一样的奶？',
-           '现在银色的K2P是MTK还是博通啊？',
-           '是浓稠的还是稀薄的？',
-           '这个到底有多辣',
-           'U盘有送挂绳吗 ',
-           '果子酸吗？有烂的吗？',
-           '刚下单买了一箱，需要明天到货，先问下味道如何',
-           '2周岁22斤宝宝用多大的啊？',
-           '请问这茶是一条装的吗',
-           '有坏的果吗',
-           '生产日期怎么样 新嘛',
-           '插上去的时候是驱蚊液放下面的吗？',
-           '橄榄的和这款哪个比较好用？味道都是一样的么？',
-           ]
-error_sentences.extend(badcase)
 
-bertCorrector = bert_corrector.BertCorrector()
-for line in error_sentences:
-    correct_sent, err = bertCorrector.bert_correct(line)
-    print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+def main():
+    m_rule = Corrector()
+    m_bert = bert_corrector.BertCorrector()
+    m_electra = electra_corrector.ElectraCorrector()
+    m_ernie = ernie_corrector.ErnieCorrector()
+    for line in error_sentences:
+        correct_sent, err = m_rule.correct(line)
+        print("rule original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        correct_sent, err = m_bert.bert_correct(line)
+        print("bert original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        corrected_sent, err = m_electra.electra_correct(line)
+        print("electra original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        corrected_sent, err = m_ernie.ernie_correct(line)
+        print("ernie original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print()
+
+
+if __name__ == '__main__':
+    main()
