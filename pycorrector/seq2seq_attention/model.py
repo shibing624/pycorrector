@@ -9,7 +9,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from .data_reader import GO_TOKEN, EOS_TOKEN, preprocess_sentence
+from .data_reader import SOS_TOKEN, EOS_TOKEN, preprocess_sentence
 
 
 class Encoder(tf.keras.Model):
@@ -142,7 +142,7 @@ class Seq2SeqModel(object):
             with tf.GradientTape() as tape:
                 enc_output, enc_hidden = self.encoder(inp, enc_hidden)
                 dec_hidden = enc_hidden
-                dec_input = tf.expand_dims([self.target_word2id[GO_TOKEN]] * self.batch_size, 1)
+                dec_input = tf.expand_dims([self.target_word2id[SOS_TOKEN]] * self.batch_size, 1)
                 # Teacher forcing - feeding the target as the next input
                 for t in range(1, targ.shape[1]):
                     # passing enc_output to the decoder
@@ -202,7 +202,7 @@ class Seq2SeqModel(object):
         hidden = [tf.zeros((1, self.hidden_dim))]
         enc_out, enc_hidden = self.encoder(inputs, hidden)
         dec_hidden = enc_hidden
-        dec_input = tf.expand_dims([self.target_word2id[GO_TOKEN]], 0)
+        dec_input = tf.expand_dims([self.target_word2id[SOS_TOKEN]], 0)
         target_id2word = {v: k for k, v in self.target_word2id.items()}
         for t in range(self.maxlen):
             predictions, dec_hidden, attention_weights = self.decoder(dec_input,

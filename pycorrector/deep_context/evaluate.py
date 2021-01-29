@@ -151,9 +151,10 @@ if __name__ == '__main__':
 
     # read vocab from word_emb path
     itos, stoi = load_vocab(emb_path)
-
-    mscc_evaluation(config.question_file,
-                    config.answer_file,
+    question_file = ''
+    answer_file = ''
+    mscc_evaluation(question_file,
+                    answer_file,
                     'mscc.result',
                     model,
                     stoi,

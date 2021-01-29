@@ -6,11 +6,10 @@ import sys
 from codecs import open
 from collections import Counter
 
-from pycorrector.utils.text_utils import convert_to_unicode
 
 # Define constants associated with the usual special tokens.
 PAD_TOKEN = '<pad>'
-GO_TOKEN = '<go>'
+SOS_TOKEN = '<sos>'
 EOS_TOKEN = '<eos>'
 UNK_TOKEN = '<unk>'
 
@@ -35,7 +34,7 @@ def load_word_dict(save_path):
 
 def read_vocab(input_texts, max_size=None, min_count=0):
     token_counts = Counter()
-    special_tokens = [PAD_TOKEN, GO_TOKEN, EOS_TOKEN, UNK_TOKEN]
+    special_tokens = [PAD_TOKEN, SOS_TOKEN, EOS_TOKEN, UNK_TOKEN]
     for line in input_texts:
         for char in line.strip():
             char = char.strip()
@@ -71,11 +70,10 @@ def create_dataset(path, num_examples):
 
 
 def preprocess_sentence(w):
-    w = convert_to_unicode(w.lower().strip())
-    w = w.rstrip().strip()
+    w = w.lower().strip()
     # adding a start and an end token to the sentence
     # so that the model know when to start and stop predicting.
-    w = GO_TOKEN + ' ' + w + ' ' + EOS_TOKEN
+    w = SOS_TOKEN + ' ' + w + ' ' + EOS_TOKEN
     return w
 
 
