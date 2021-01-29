@@ -10,9 +10,12 @@
 # - [OpenNMT-py](https://github.com/OpenNMT/OpenNMT-py)
 """
 
+import sys
+
 import torch
 from sklearn.model_selection import train_test_split
 
+sys.path.append('../..')
 from pycorrector.seq2seq import config
 from pycorrector.seq2seq.data_reader import gen_examples
 from pycorrector.seq2seq.data_reader import read_vocab, create_dataset, one_hot, save_word_dict, load_word_dict
@@ -24,7 +27,8 @@ print('device: %s' % device)
 
 def evaluate_model(model, data, device, loss_fn):
     model.eval()
-    total_num_words = total_loss = 0.
+    total_num_words = 0.
+    total_loss = 0.
     with torch.no_grad():
         for it, (mb_x, mb_x_len, mb_y, mb_y_len) in enumerate(data):
             mb_x = torch.from_numpy(mb_x).to(device).long()
@@ -53,7 +57,8 @@ def train_model(model, train_data, device, loss_fn, optimizer, model_path, epoch
 
     for epoch in range(epochs):
         model.train()
-        total_num_words = total_loss = 0.
+        total_num_words = 0.
+        total_loss = 0.
         for it, (mb_x, mb_x_len, mb_y, mb_y_len) in enumerate(train_data):
             mb_x = torch.from_numpy(mb_x).to(device).long()
             mb_x_len = torch.from_numpy(mb_x_len).to(device).long()
@@ -81,7 +86,7 @@ def train_model(model, train_data, device, loss_fn, optimizer, model_path, epoch
 
             if it % 100 == 0:
                 print("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
-                                                                      loss.item()))
+                                                                          loss.item()))
         cur_loss = total_loss / total_num_words
         print("Epoch :{}/{}, Training loss:{:.4f}".format(epoch, epochs, cur_loss))
         if epoch % 1 == 0:

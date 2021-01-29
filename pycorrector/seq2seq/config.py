@@ -26,12 +26,12 @@ trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_path = os.path.join(output_dir, 'model.pth')
 
 batch_size = 32
-epochs = 10
+epochs = 50
 max_length = 128
 gpu_id = 0
-dropout = 0.2
-embed_size = 50
-hidden_size = 50
+dropout = 0.5
+embed_size = 128
+hidden_size = 128
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

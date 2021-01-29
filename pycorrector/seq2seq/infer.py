@@ -39,7 +39,7 @@ class Inference(object):
 
     def predict(self, query):
         id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
-        print(query)
+
         src_ids = [self.src_2_ids[i] for i in query if i in self.src_2_ids]
         mb_x = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
         mb_x_len = torch.from_numpy(np.array([len(src_ids)])).long().to(device)
@@ -60,14 +60,15 @@ if __name__ == "__main__":
     m = Inference(config.model_path, config.src_vocab_path, config.trg_vocab_path, embed_size=config.embed_size,
                   hidden_size=config.hidden_size, dropout=config.dropout)
     inputs = [
-        '以 前 ， 包 括 中 国 ， 我 国 也 是 。',
-        '我 现 在 好 得 多 了 。',
+        '我现在好得多了。',
         '这几年前时间，',
         '歌曲使人的感到快乐，',
         '会能够大幅减少互相抱怨的情况。'
     ]
     for id, q in enumerate(inputs):
+        print(q)
         print(m.predict(q))
+        print()
 # result:
 # input:由我起开始做。
 # output:我开始做。
