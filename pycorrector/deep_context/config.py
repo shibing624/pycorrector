@@ -35,9 +35,9 @@ dropout = 0.0
 
 # train
 maxlen = 400
-epochs = 2
+epochs = 20
 batch_size = 64
-min_freq = 10
+min_freq = 1
 ns_power = 0.75
 learning_rate = 1e-3
 gpu_id = 0
