@@ -23,20 +23,20 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 model_dir = os.path.join(output_dir, 'models')
-emb_path = os.path.join(model_dir, 'word_emb.txt')
 model_path = os.path.join(model_dir, 'model.pth')
+vocab_path = os.path.join(model_dir, 'vocab.txt')
 
 # nets
 word_embed_size = 200
 hidden_size = 200
-n_layers = 1
+n_layers = 2
 use_mlp = True
 dropout = 0.0
 
 # train
 maxlen = 400
 epochs = 2
-batch_size = 128
+batch_size = 64
 min_freq = 10
 ns_power = 0.75
 learning_rate = 1e-3

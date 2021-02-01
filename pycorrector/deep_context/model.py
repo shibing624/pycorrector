@@ -17,7 +17,6 @@ class Context2vec(nn.Module):
                  word_embed_size,
                  hidden_size,
                  n_layers,
-                 bidirectional,
                  use_mlp,
                  dropout,
                  pad_index,
