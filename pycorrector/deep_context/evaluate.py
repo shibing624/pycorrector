@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description: evaluate with mscc data set
 
 The function create_mscc_dataset is Copyright 2016 Oren Melamud

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description: loss function
 """
 import torch
@@ -48,14 +48,14 @@ class NegativeSampling(nn.Module):
 
 
 class WalkerAlias(object):
-    '''
+    """
     This is from Chainer's implementation.
     You can find the original code at
     https://github.com/chainer/chainer/blob/v4.4.0/chainer/utils/walker_alias.py
     This class is
         Copyright (c) 2015 Preferred Infrastructure, Inc.
         Copyright (c) 2015 Preferred Networks, Inc.
-    '''
+    """
 
     def __init__(self, probs):
         prob = np.array(probs, np.float32)

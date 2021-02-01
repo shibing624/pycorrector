@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description: 
 """
 
@@ -26,7 +26,7 @@ def train(train_path: str,
           use_mlp=True,
           batch_size=64,
           epochs=3,
-          maxlen=64,
+          maxlen=128,
           word_embed_size=200,
           hidden_size=200,
           learning_rate=0.0001,
