@@ -251,14 +251,23 @@ class ConvSeq2Seq(nn.Module):
         # attention = [batch size, trg len - 1, src len]
         return output, attention
 
-    def translate(self, x, sos_idx):
+    def translate(self, x, sos):
+        """
+        Predict x
+        :param x: input tensor
+        :param sos: SOS tensor
+        :return: preds, attns
+        """
         encoder_conved, encoder_combined = self.encoder(x)
         preds = []
         attns = []
+        trg_indexes = [sos]
         for i in range(self.max_length):
-            output, attention = self.decoder(sos_idx, encoder_conved, encoder_combined)
-            pred_token = output.argmax(2)[:, -1].item()
-            preds.append(pred_token)
+            trg_tensor = torch.LongTensor(trg_indexes).unsqueeze(0).to(self.device)
+            output, attention = self.decoder(trg_tensor, encoder_conved, encoder_combined)
+            pred = output.argmax(2)[:, -1].item()
+            preds.append(pred)
             attns.append(attention)
+            trg_indexes.append(pred)
 
         return preds, attns

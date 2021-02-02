@@ -46,6 +46,7 @@ class Inference(object):
                                      device=device,
                                      max_length=max_length).to(device)
         self.model.load_state_dict(torch.load(model_path))
+        self.model.eval()
         self.arch = arch
         self.max_length = max_length
 
@@ -55,11 +56,12 @@ class Inference(object):
         tokens = [SOS_TOKEN] + tokens + [EOS_TOKEN]
         src_ids = [self.src_2_ids[i] for i in tokens if i in self.src_2_ids]
 
-        sos_idx = torch.Tensor([[self.trg_2_ids[SOS_TOKEN]]]).long().to(device)
+        sos_idx = self.trg_2_ids[SOS_TOKEN]
         if self.arch == 'seq2seq':
             src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
             src_tensor_len = torch.from_numpy(np.array([len(src_ids)])).long().to(device)
-            translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_idx, self.max_length)
+            sos_tensor = torch.Tensor([[self.trg_2_ids[SOS_TOKEN]]]).long().to(device)
+            translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_tensor, self.max_length)
             translation = [self.id_2_trgs[i] for i in translation.data.cpu().numpy().reshape(-1) if i in self.id_2_trgs]
         else:
             src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
