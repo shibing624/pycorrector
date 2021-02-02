@@ -394,7 +394,7 @@ python preprocess.py
 ```
 python train.py
 ```
-设置`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
+设置`config.py`中`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
 #### 预测
 ```
