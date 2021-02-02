@@ -394,9 +394,7 @@ python preprocess.py
 ```
 python train.py
 ```
-训练过程截图：
-![train image](./docs/git_image/convseq2seq_train.png)
-
+设置`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
 #### 预测
 ```
