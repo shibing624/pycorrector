@@ -31,7 +31,7 @@ trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_path = os.path.join(output_dir, 'model_{}_{}.pth'.format(dataset, arch))
 
 batch_size = 32
-epochs = 2
+epochs = 200
 max_length = 128
 gpu_id = 0
 dropout = 0.25
