@@ -395,7 +395,7 @@ python preprocess.py
 python train.py
 ```
 训练过程截图：
-![train image](./docs/git_image/seq2seq_train.png)
+![train image](./docs/git_image/convseq2seq_train.png)
 
 
 #### 预测
@@ -403,14 +403,9 @@ python train.py
 python infer.py
 ```
 
-预测输出效果样例：
-```
-input: 少先队员因该给老人让坐 output: 少先队员因该给老人让座
-input: 少先队员应该给老人让坐 output: 少先队员应该给老人让座
-input: 没有解决这个问题， output: 没有解决这个问题，，
-input: 由我起开始做。 output: 由我起开始做
-input: 由我起开始做 output: 由我开始做
-```
+预测输出效果样例截图：
+
+![result image](./docs/git_image/convseq2seq_ret.png)
 
 
 PS：

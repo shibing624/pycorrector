@@ -56,10 +56,26 @@ python infer.py
 
 ```
 
+
 ### Result
 ```
-input: 少先队员应该给老人让坐 output: 少先队员应该给老人让座
-input: 由我起开始做 output: 由我开始做
+input  : 老是较书。
+predict: 老师教书。
+
+input  : 感谢等五分以后，碰到一位很棒的奴生跟我可聊。
+predict: 感谢等五分以后，碰到一位很棒的女生跟我可聊。
+
+input  : 遇到一位很棒的奴生跟我聊天。
+predict: 遇到一位很棒的女生跟我聊天。
+
+input  : 遇到一位很美的女生跟我疗天。
+predict: 遇到一位很美的女生跟我疗天。
+
+input  : 他们只能有两个选择：接受降新或自动离职。
+predict: 他们只能有两个选择：接受降薪或自动离职。
+
+input  : 王天华开心得一直说话。
+predict: 王天华开心地一直说话。
 
 ```
-![short correct result](../../docs/git_image/short_result.png)
+![result image](../../docs/git_image/convseq2seq_ret.png)

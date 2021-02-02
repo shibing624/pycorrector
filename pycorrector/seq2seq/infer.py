@@ -95,8 +95,8 @@ if __name__ == "__main__":
         '王天华开心得一直说话。'
     ]
     for id, q in enumerate(inputs):
-        print(q)
-        print(m.predict(q))
+        print('input  :', q)
+        print('predict:', m.predict(q))
         print()
 # result:
 # input:由我起开始做。
