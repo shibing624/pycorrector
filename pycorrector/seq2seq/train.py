@@ -187,8 +187,8 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
     train_src, train_trg = one_hot(source_texts, target_texts, src_2_ids, trg_2_ids, sort_by_len=True)
 
     k = 0
-    print(" ".join([id_2_trgs[i] for i in train_trg[k]]))
-    print(" ".join([id_2_srcs[i] for i in train_src[k]]))
+    print('src:', ' '.join([id_2_srcs[i] for i in train_src[k]]))
+    print('trg:', ' '.join([id_2_trgs[i] for i in train_trg[k]]))
 
     train_data = gen_examples(train_src, train_trg, batch_size, max_length)
     if arch == 'seq2seq':

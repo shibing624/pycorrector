@@ -23,7 +23,7 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 dataset = 'sighan'  # 'sighan' or 'cged'
-arch = 'convseq2seq'  # 'seq2seq' or 'convseq2seq'
+arch = 'seq2seq'  # 'seq2seq' or 'convseq2seq'
 
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
