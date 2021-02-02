@@ -62,7 +62,7 @@ class Inference(object):
             translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_idx, self.max_length)
             translation = [self.id_2_trgs[i] for i in translation.data.cpu().numpy().reshape(-1) if i in self.id_2_trgs]
         else:
-            src_tensor = torch.LongTensor(src_ids).unsqueeze(0).to(device)
+            src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
             translation, attn = self.model.translate(src_tensor, sos_idx)
             translation = [self.id_2_trgs[i] for i in translation if i in self.id_2_trgs]
 

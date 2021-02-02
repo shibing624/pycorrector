@@ -105,8 +105,7 @@ def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_pat
 
 def evaluate_convseq2seq_model(model, data, device, loss_fn):
     model.eval()
-    total_loss = 0.
-    total_iter = 0.
+    last_loss = 0.
     with torch.no_grad():
         for it, (mb_x, mb_x_len, mb_y, mb_y_len) in enumerate(data):
             src = torch.from_numpy(mb_x).to(device).long()
@@ -121,9 +120,8 @@ def evaluate_convseq2seq_model(model, data, device, loss_fn):
             # output = [batch size * trg len - 1, output dim]
             # trg = [batch size * trg len - 1]
             loss = loss_fn(output, trg)
-            total_loss += loss.item()
-            total_iter += 1
-    print("Evaluation loss:{:.4f}".format(total_loss / total_iter))
+            last_loss = loss.item()
+    print("Evaluation loss:{:.4f}".format(last_loss))
 
 
 def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=20):
@@ -152,7 +150,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
             # update optimizer
             optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
+            # torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
             optimizer.step()
 
             if it % 100 == 0:
