@@ -3,10 +3,12 @@
 
 ## Features
 
-* 基于Attention机制的sequence to sequence模型
+* 基于Attention机制的Sequence to Sequence模型
 * Luong Attention
+* Conv Seq2Seq model, GPU并行计算，训练加速
 * 训练加速tricks：dataset bucketing, prefetching, token-based batching, gradients accumulation
 * beam search
+* chinese samples: sighan2015 sample data, CGED sample data
 
 ## Usage
 
@@ -32,17 +34,6 @@ result:
 # train.txt:
 如 服 装 ， 若 有 一 个 很 流 行 的 形 式 ， 人 们 就 赶 快 地 追 求 。\t如 服 装 ， 若 有 一 个 很 流 行 的 样 式 ， 人 们 就 赶 快 地 追 求 。
 ```
-
-![short train](../../docs/git_image/short_train.png)
-
-- big train data
-
-1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
-2. run `preprocess.py`.
-```
-python preprocess.py
-```
-
 
 ### Train
 
@@ -79,3 +70,12 @@ predict: 王天华开心地一直说话。
 
 ```
 ![result image](../../docs/git_image/convseq2seq_ret.png)
+
+
+### big train data
+
+1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
+2. run `preprocess.py`.
+```
+python preprocess.py
+```

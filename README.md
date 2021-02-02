@@ -366,9 +366,9 @@ pip install -r requirements-dev.txt
 
 
 ### 使用方法
-各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`为例：
+各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`序列生成模型为例。
 
-seq2seq 模型使用示例:
+[seq2seq](./pycorrector/seq2seq) 模型使用示例:
 
 #### 配置
 

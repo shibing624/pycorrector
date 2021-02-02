@@ -33,8 +33,6 @@ result:
 如 服 装 ， 若 有 一 个 很 流 行 的 形 式 ， 人 们 就 赶 快 地 追 求 。\t如 服 装 ， 若 有 一 个 很 流 行 的 样 式 ， 人 们 就 赶 快 地 追 求 。
 ```
 
-![short train](../../docs/git_image/short_train.png)
-
 - big train data
 
 1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq_attention/output` folder.
@@ -62,4 +60,4 @@ input: 少先队员应该给老人让坐 output: 少先队员应该给老人让�
 input: 由我起开始做 output: 由我开始做
 
 ```
-![short correct result](../../docs/git_image/short_result.png)
+![short correct result](../../../docs/git_image/short_result.png)
