@@ -8,11 +8,11 @@ import sys
 
 import tensorflow as tf
 
-sys.path.append('../..')
+sys.path.append('../../..')
 
-from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.data_reader import create_dataset, max_length, save_word_dict
-from pycorrector.seq2seq_attention.model import Seq2SeqModel
+from pycorrector.seq2seq.tf import config
+from pycorrector.seq2seq.tf.data_reader import create_dataset, max_length, save_word_dict
+from pycorrector.seq2seq.tf.model import Seq2SeqModel
 
 
 def tokenize(lang, maxlen):

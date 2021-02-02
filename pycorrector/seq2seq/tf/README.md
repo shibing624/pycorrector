@@ -4,7 +4,7 @@
 ## Features
 
 * 基于Attention机制的sequence to sequence模型
-* Luong Attention
+* BahdanauAttention
 * 训练加速tricks：dataset bucketing, prefetching, token-based batching, gradients accumulation
 * beam search
 
@@ -13,7 +13,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-torch>=1.4.0
+tensorflow>=2.0.0 # tensorflow-gpu>=2.0.0
 ```
 
 ### Preprocess
@@ -21,7 +21,7 @@ torch>=1.4.0
 
 - toy train data
 ```
-cd seq2seq
+cd seq2seq_attention
 python preprocess.py
 ```
 
@@ -37,7 +37,7 @@ result:
 
 - big train data
 
-1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
+1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq_attention/output` folder.
 2. run `preprocess.py`.
 ```
 python preprocess.py

@@ -249,7 +249,7 @@ iPhone差 iPhoneX 100
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的[模型](https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm)，模型小（20M），准确率低些。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（20M），准确率低些。
 
 ```python
 from pycorrector import Corrector
@@ -361,14 +361,14 @@ pip install -r requirements-dev.txt
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`conv_seq2seq`、`seq2seq_attention`、
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`seq2seq`、
 `transformer`、`bert`、`electra`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
-各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq_attention`为例：
+各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`为例：
 
-seq2seq_attention 模型使用示例:
+seq2seq 模型使用示例:
 
 #### 配置
 

@@ -90,7 +90,9 @@ def get_minibatches(n, minibatch_size, shuffle=True):
     return minibatches
 
 
-def prepare_data(seqs):
+def prepare_data(seqs, max_length=None):
+    if max_length:
+        seqs = [seq[:max_length] for seq in seqs]
     lengths = [len(seq) for seq in seqs]
     n_samples = len(seqs)
     max_len = np.max(lengths)
@@ -102,19 +104,19 @@ def prepare_data(seqs):
     return x, x_lengths  # x_mask
 
 
-def gen_examples(src_sentences, trg_sentences, batch_size):
+def gen_examples(src_sentences, trg_sentences, batch_size, max_length=None):
     minibatches = get_minibatches(len(src_sentences), batch_size)
     examples = []
     for minibatch in minibatches:
         mb_src_sentences = [src_sentences[t] for t in minibatch]
         mb_trg_sentences = [trg_sentences[t] for t in minibatch]
-        mb_x, mb_x_len = prepare_data(mb_src_sentences)
-        mb_y, mb_y_len = prepare_data(mb_trg_sentences)
+        mb_x, mb_x_len = prepare_data(mb_src_sentences, max_length)
+        mb_y, mb_y_len = prepare_data(mb_trg_sentences, max_length)
         examples.append((mb_x, mb_x_len, mb_y, mb_y_len))
     return examples
 
 
-def one_hot(src_sentences, trg_sentences, src_dict, trg_dict, sort_by_len=False):
+def one_hot(src_sentences, trg_sentences, src_dict, trg_dict, sort_by_len=True):
     """vector the sequences.
     """
     out_src_sentences = [[src_dict.get(w, 0) for w in sent] for sent in src_sentences]

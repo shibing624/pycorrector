@@ -131,10 +131,25 @@ class Seq2Seq(nn.Module):
     Seq2Seq, 最后我们构建Seq2Seq模型把encoder, attention, decoder串到一起
     """
 
-    def __init__(self, encoder, decoder):
+    def __init__(self,
+                 encoder_vocab_size,
+                 decoder_vocab_size,
+                 embed_size,
+                 enc_hidden_size,
+                 dec_hidden_size,
+                 dropout,
+                 ):
         super(Seq2Seq, self).__init__()
-        self.encoder = encoder
-        self.decoder = decoder
+        self.encoder = Encoder(vocab_size=encoder_vocab_size,
+                               embed_size=embed_size,
+                               enc_hidden_size=enc_hidden_size,
+                               dec_hidden_size=dec_hidden_size,
+                               dropout=dropout)
+        self.decoder = Decoder(vocab_size=decoder_vocab_size,  # len(trg_2_ids),
+                               embed_size=embed_size,
+                               enc_hidden_size=enc_hidden_size,
+                               dec_hidden_size=dec_hidden_size,
+                               dropout=dropout)
 
     def forward(self, x, x_lengths, y, y_lengths):
         encoder_out, hid = self.encoder(x, x_lengths)

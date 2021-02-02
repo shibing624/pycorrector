@@ -6,11 +6,11 @@
 import os
 import sys
 
-sys.path.append('../..')
+sys.path.append('../../..')
 
-from pycorrector.seq2seq_attention import config
-from pycorrector.seq2seq_attention.model import Seq2SeqModel
-from pycorrector.seq2seq_attention.data_reader import load_word_dict
+from pycorrector.seq2seq.tf import config
+from pycorrector.seq2seq.tf.model import Seq2SeqModel
+from pycorrector.seq2seq.tf.data_reader import load_word_dict
 
 
 def plot_attention(attention, sentence, predicted_sentence, img_path):

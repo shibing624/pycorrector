@@ -7,9 +7,9 @@ from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split
 
-sys.path.append('../..')
+sys.path.append('../../..')
 from pycorrector.utils.tokenizer import segment
-from pycorrector.seq2seq_attention import config
+from pycorrector.seq2seq.tf import config
 
 
 def parse_xml_file(path):

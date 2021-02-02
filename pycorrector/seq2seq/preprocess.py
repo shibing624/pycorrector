@@ -34,6 +34,25 @@ def parse_xml_file(path):
     return data_list
 
 
+def segment_file(path):
+    data_list = []
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith("#"):
+                continue
+            parts = line.split("\t")
+            if len(parts) != 2:
+                continue
+            source = segment(parts[0].strip(), cut_type='char')
+            target = segment(parts[1].strip(), cut_type='char')
+
+            pair = [source, target]
+            if pair not in data_list:
+                data_list.append(pair)
+    return data_list
+
+
 def _save_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
@@ -52,6 +71,9 @@ def save_corpus_data(data_list, train_data_path, test_data_path):
 if __name__ == '__main__':
     # train data
     data_list = []
-    for path in config.raw_train_paths:
-        data_list.extend(parse_xml_file(path))
+    if config.dataset == 'sighan':
+        data_list.extend(segment_file(config.sighan_train_path))
+    else:
+        for path in config.cged_train_paths:
+            data_list.extend(parse_xml_file(path))
     save_corpus_data(data_list, config.train_path, config.test_path)
