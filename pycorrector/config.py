@@ -39,3 +39,5 @@ bert_model_dir = os.path.join(USER_DATA_DIR, 'bert_models/chinese_finetuned_lm/'
 # electra模型文件夹路径
 electra_D_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_discriminator_pytorch/")
 electra_G_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_generator_pytorch/")
+# macbert模型文件路径
+macbert_model_dir = os.path.join(USER_DATA_DIR, 'macbert_models/chinese_finetuned_correction/')
