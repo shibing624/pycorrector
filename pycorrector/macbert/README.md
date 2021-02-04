@@ -16,7 +16,7 @@ macbert_models
     └── vocab.txt
 ```
 
-2. 运行`bert_corrector.py`进行纠错。
+2. 运行`macbert_corrector.py`进行纠错。
 
 ```
 python3 macbert_corrector.py
