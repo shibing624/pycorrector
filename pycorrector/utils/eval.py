@@ -556,13 +556,131 @@ def eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_li
                                                                                                  spend_time))
 
 
+def eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
+    from pycorrector.macbert.macbert_corrector import MacBertCorrector
+    model = MacBertCorrector()
+    total_count = 0
+    right_count = 0
+    right_rate = 0.0
+    recall_rate = 0.0
+    recall_right_count = 0
+    recall_total_count = 0
+    start_time = time.time()
+    with open(sighan_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) != 2:
+                continue
+            if 0 < num_limit_lines < total_count:
+                continue
+            src = parts[0]
+            trg = parts[1]
+
+            pred, pred_detail = model.macbert_correct(src)
+
+            if src != trg:
+                recall_total_count += 1
+
+            if pred == trg:
+                right_count += 1
+                if src != trg:
+                    recall_right_count += 1
+                if verbose:
+                    print("\nright:")
+                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
+            else:
+                if verbose:
+                    print("\nwrong:")
+                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
+            total_count += 1
+
+    spend_time = time.time() - start_time
+    if total_count > 0:
+        right_rate = right_count / total_count
+    if recall_total_count > 0:
+        recall_rate = recall_right_count / recall_total_count
+    print('right_rate:{}, right_count:{}, total_count:{};\n'
+          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
+                                                                                                 right_count,
+                                                                                                 total_count,
+                                                                                                 recall_rate,
+                                                                                                 recall_right_count,
+                                                                                                 recall_total_count,
+                                                                                                 spend_time))
+
+
+def eval_corpus500_by_macbert(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
+    from pycorrector.macbert.macbert_corrector import MacBertCorrector
+    model = MacBertCorrector()
+    res = []
+    corpus = load_json(input_eval_path)
+    total_count = 0
+    right_count = 0
+    right_rate = 0.0
+    recall_rate = 0.0
+    recall_right_count = 0
+    recall_total_count = 0
+    start_time = time.time()
+    for data_dict in corpus:
+        text = data_dict.get('text', '')
+        correction = data_dict.get('correction', '')
+        errors = data_dict.get('errors', [])
+
+        #  pred_detail: list(wrong, right, begin_idx, end_idx)
+        pred_sentence, pred_detail = model.macbert_correct(text)
+        # compute recall
+        if errors:
+            recall_total_count += 1
+            if errors and pred_detail and correction == pred_sentence:
+                recall_right_count += 1
+
+        # compute precision
+        if correction == pred_sentence:
+            right_count += 1
+            print("\nright:")
+            print('truth  :', text, errors)
+            print('predict:', pred_sentence, pred_detail)
+        else:
+            err_data_dict = copy.deepcopy(data_dict)
+            err_data_dict['pred_sentence'] = pred_sentence
+            err_data_dict['pred_errors'] = str(pred_detail)
+            res.append(err_data_dict)
+            if verbose:
+                print("\nwrong:")
+                print('input  :', text)
+                print('truth  :', correction, errors)
+                print('predict:', pred_sentence, pred_detail)
+        total_count += 1
+    spend_time = time.time() - start_time
+    if total_count > 0:
+        right_rate = right_count / total_count
+    if recall_total_count > 0:
+        recall_rate = recall_right_count / recall_total_count
+    print('right_rate:{}, right_count:{}, total_count:{};\n'
+          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
+                                                                                                 right_count,
+                                                                                                 total_count,
+                                                                                                 recall_rate,
+                                                                                                 recall_right_count,
+                                                                                                 recall_total_count,
+                                                                                                 spend_time))
+    if output_eval_path:
+        save_json(res, output_eval_path)
+
+
 if __name__ == "__main__":
     # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
     # build_eval_corpus()
 
-    eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
+    # eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
     # 评估规则方法的纠错准召率
     # eval_corpus500_by_rule(eval_data_path)
 
     # 评估bert模型的纠错准召率
     # eval_corpus500_by_bert(eval_data_path)
+    eval_corpus500_by_macbert(eval_data_path)
+    eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
+

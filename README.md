@@ -91,9 +91,11 @@
 | sighan_15 | rule | cpu | 17.98% | 15.37% | 11 | 9 |
 | sighan_15 | bert | gpu | 37.62% | 36.46% | 95 | 1.05 |
 | sighan_15 | ernie | gpu | 29.70% | 28.13% | 102 | 0.98 |
+| sighan_15 | macbert | gpu | 63.64% | 63.64% | - | - |
 | corpus500 | rule | cpu | 48.60% | 28.13% | 11 | 9 |
 | corpus500 | bert | gpu | 58.60% | 35.00% | 95 | 1.05 |
 | corpus500 | ernie | gpu | 59.80% | 41.33% | 102 | 0.98 |
+| corpus500 | macbert | gpu | 56.20% | 42.67% | - | - |
 
 ### 开发环境：
 - 机器：MacBook Pro (i5) macOS 个人开发机
@@ -507,3 +509,4 @@ pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用
 * [基于深度学习的中文文本自动校对研究与实现[杨宗霖, 2019]](https://github.com/shibing624/pycorrector/blob/master/docs/基于深度学习的中文文本自动校对研究与实现.pdf)
 * [A Sequence to Sequence Learning for Chinese Grammatical Error Correction[Hongkai Ren, 2018]](https://link.springer.com/chapter/10.1007/978-3-319-99501-4_36)
 * [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://openreview.net/pdf?id=r1xMH1BtvB)
+* [Revisiting Pre-trained Models for Chinese Natural Language Processing](https://arxiv.org/abs/2004.13922)
