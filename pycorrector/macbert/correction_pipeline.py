@@ -1,21 +1,22 @@
+# -*- coding: utf-8 -*-
 """
 @Time   :   2021-02-03 18:22:45
 @File   :   correction_pipeline.py
 @Author :   Abtion
 @Email  :   abtion{at}outlook.com
+
+reference: https://github.com/huggingface/transformers/blob/master/src/transformers/pipelines/text2text_generation.py.
+
 """
-from collections import OrderedDict
 import sys
+from collections import OrderedDict
+
+import torch
 
 sys.path.append('../..')
 
 from pycorrector.transformers import Pipeline, BertConfig, BertForMaskedLM
-from pycorrector.transformers.file_utils import is_tf_available
 from pycorrector.transformers.tokenization_utils import TruncationStrategy
-import torch
-
-if is_tf_available():
-    import tensorflow as tf
 
 MODEL_MAC_BERT_LM_MAPPING = OrderedDict(
     [
@@ -28,7 +29,6 @@ MODEL_MAC_BERT_LM_MAPPING = OrderedDict(
 class CorrectionPipeline(Pipeline):
     """
     因transformers没有内置的较合适的Pipeline，故新建了一个Pipeline类。
-    Some codes copy from https://github.com/huggingface/transformers/blob/master/src/transformers/pipelines/text2text_generation.py.
     """
     return_name = "corrected"
 
@@ -103,11 +103,8 @@ class CorrectionPipeline(Pipeline):
         with self.device_placement():
             inputs = self._parse_and_tokenize(*args, padding=padding, truncation=truncation)
 
-            if self.framework == "pt":
-                inputs = self.ensure_tensor_on_device(**inputs)
-                input_length = inputs["input_ids"].shape[-1]
-            elif self.framework == "tf":
-                input_length = tf.shape(inputs["input_ids"])[-1].numpy()
+            inputs = self.ensure_tensor_on_device(**inputs)
+            input_length = inputs["input_ids"].shape[-1]
 
             max_length = self.model.config.max_position_embeddings
             self.check_inputs(input_length, max_length)

@@ -16,7 +16,7 @@ macbert_models
     └── vocab.txt
 ```
 
-2. 运行`bert_corrector.py`进行纠错。
+2. 运行`macbert_corrector.py`进行纠错。
 
 ```
 python3 macbert_corrector.py
@@ -27,7 +27,7 @@ python3 macbert_corrector.py
 - run
   `python tests/macbert_corrector_test.py`
 - result
-  ![result](../../docs/git_image/macbert_result.png)
+  ![result](../../docs/git_image/macbert_result.jpg)
 
 纠错结果除部分英文大小写问题外，在sighan15上达到了sota水平。
 
@@ -62,7 +62,7 @@ MacBert模型在sighan15上纠错效果评估如下：
 
 本项目基于pycorrector迁移的`pycorrector/transformers`，可支持BERT模型，可通过如下命令调用。当然，你也可使用官方的transformers库进行调用。
 
-example: [correct_deom.py](correct_demo.py)
+example: [correct_demo.py](correct_demo.py)
 
 ```python
 from pycorrector.macbert.macbert_corrector import MacBertCorrector

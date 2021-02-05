@@ -6,8 +6,6 @@
 """
 import sys
 
-import os
-
 sys.path.append("../")
 from pycorrector.macbert import macbert_corrector
 

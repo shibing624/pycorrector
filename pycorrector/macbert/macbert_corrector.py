@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 @Time   :   2021-02-03 18:05:54
 @File   :   macbert_corrector.py
@@ -5,28 +6,24 @@
 @Email  :   abtion{at}outlook.com
 """
 import operator
-import os
 import sys
 import time
 
 # import kenlm  # import kenlm before torch, when torch>=1.7.1
-import torch
 
 sys.path.append('../..')
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
-from .correction_pipeline import CorrectionPipeline
+from pycorrector.macbert.correction_pipeline import CorrectionPipeline
 from pycorrector import config
 from pycorrector.transformers import BertTokenizer, BertForMaskedLM
-
-pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 class MacBertCorrector(Corrector):
     def __init__(self, bert_model_dir=config.macbert_model_dir):
         super(MacBertCorrector, self).__init__()
-        self.name = 'bert_corrector'
+        self.name = 'macbert_corrector'
         t1 = time.time()
         bert_model = BertForMaskedLM.from_pretrained(bert_model_dir)
         tokenizer = BertTokenizer.from_pretrained(bert_model_dir)
@@ -34,7 +31,7 @@ class MacBertCorrector(Corrector):
             task='correction',
             model=bert_model,
             tokenizer=tokenizer,
-            device=-1,  # gpu device id
+            device=0,  # gpu device id
         )
         if self.model:
             self.mask = self.model.tokenizer.mask_token
@@ -58,7 +55,7 @@ class MacBertCorrector(Corrector):
         text_new = ''.join([rst['corrected_text'] for rst in results])
         for i, ori_char in enumerate(text):
             if ori_char == ' ':
-                text_new = f'{text_new[:i]} {text_new[i:]}'
+                text_new = text_new[:i] + text_new[i:]
                 continue
             if i >= len(text_new):
                 continue
