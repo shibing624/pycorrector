@@ -29,7 +29,7 @@ python3 macbert_corrector.py
 - result
   ![result](../../docs/git_image/macbert_result.jpg)
 
-纠错结果除部分英文大小写问题外，在sighan15上达到了sota水平。
+纠错结果除部分英文大小写问题外，在sighan15上达到了SOTA水平。
 
 ### Evaluate
 
@@ -66,7 +66,6 @@ example: [correct_demo.py](correct_demo.py)
 
 ```python
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
-from pycorrector import config
 
 model_dir = "~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction"
 nlp = MacBertCorrector(model_dir).macbert_correct
@@ -74,6 +73,23 @@ nlp = MacBertCorrector(model_dir).macbert_correct
 i = nlp('今天新情很好')
 print(i)
 
+```
+
+如果你需要直接使用huggingface/transformers调用
+
+```python
+import torch
+from transformers import AutoTokenizer, AutoModel
+
+model_dir = "~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction"
+model = AutoModel.from_pretrained(model_dir)
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
+
+text = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+outputs = model(**tokenizer(text,padding=True, return_tensors='pt'))
+corrected_text = tokenizer.decode(torch.argmax(outputs.logits,dim=-1), skip_special_tokens=True)
+
+print(corrected_text)
 ```
 
 ## 训练
