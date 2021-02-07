@@ -49,7 +49,7 @@
 
 ## Feature
 ### 模型
-* kenlm：kenlm统计语言模型工具
+* kenlm：kenlm统计语言模型工具，规则方法，语言模型纠错，利用混淆集，扩展性强
 * deep_context模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
 * Seq2Seq模型：在Seq2Seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
 * ConvSeq2Seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩

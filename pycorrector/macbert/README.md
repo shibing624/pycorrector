@@ -77,6 +77,13 @@ print(i)
 
 如果你需要直接使用huggingface/transformers调用
 
+1.先pip安装transformers库:
+
+```
+pip install transformers
+```
+2.使用以下示例执行：
+
 ```python
 import torch
 from transformers import AutoTokenizer, AutoModel
@@ -87,7 +94,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
 text = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
 outputs = model(**tokenizer(text,padding=True, return_tensors='pt'))
-corrected_text = tokenizer.decode(torch.argmax(outputs.logits,dim=-1), skip_special_tokens=True)
+corrected_text = tokenizer.decode(torch.argmax(outputs.logits, dim=-1), skip_special_tokens=True)
 
 print(corrected_text)
 ```
