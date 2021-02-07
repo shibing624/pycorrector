@@ -682,5 +682,5 @@ if __name__ == "__main__":
     # 评估bert模型的纠错准召率
     # eval_corpus500_by_bert(eval_data_path)
     eval_corpus500_by_macbert(eval_data_path)
-    eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
+    eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=-1)
 

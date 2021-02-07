@@ -51,11 +51,11 @@ class MacBertCorrector(Corrector):
         blocks = self.split_text_by_maxlen(text, maxlen=128)
         blocks = [block[0] for block in blocks]
         results = self.model(blocks)
-        # text_new 不含空格
         text_new = ''.join([rst['corrected_text'] for rst in results])
         for i, ori_char in enumerate(text):
             if ori_char == ' ':
-                text_new = text_new[:i] + text_new[i:]
+                # pipeline 处理后的 text_new 不含空格，在此处补充空格。
+                text_new = text_new[:i] + ' ' + text_new[i:]
                 continue
             if i >= len(text_new):
                 continue
