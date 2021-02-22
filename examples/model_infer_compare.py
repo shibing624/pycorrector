@@ -10,6 +10,7 @@ from pycorrector.bert import bert_corrector
 from pycorrector.electra import electra_corrector
 from pycorrector.ernie import ernie_corrector
 from pycorrector.corrector import Corrector
+from pycorrector.macbert import macbert_corrector
 
 error_sentences = [
     '真麻烦你了。希望你们好好的跳无',
@@ -49,6 +50,7 @@ def main():
     m_bert = bert_corrector.BertCorrector()
     m_electra = electra_corrector.ElectraCorrector()
     m_ernie = ernie_corrector.ErnieCorrector()
+    m_macbert = macbert_corrector.MacBertCorrector()
     for line in error_sentences:
         correct_sent, err = m_rule.correct(line)
         print("rule original sentence:{} => {}, err:{}".format(line, correct_sent, err))
@@ -58,6 +60,8 @@ def main():
         print("electra original sentence:{} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_ernie.ernie_correct(line)
         print("ernie original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        corrected_sent, err = m_macbert.macbert_correct(line)
+        print("macbert original sentence:{} => {}, err:{}".format(line, correct_sent, err))
         print()
 
 
