@@ -80,23 +80,26 @@ print(i)
 1.先pip安装transformers库:
 
 ```
-pip install transformers
+pip install "transformers>4.0"
 ```
 2.使用以下示例执行：
 
 ```python
 import torch
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModelForMaskedLM
 
 model_dir = "~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction"
-model = AutoModel.from_pretrained(model_dir)
+model = AutoModelForMaskedLM.from_pretrained(model_dir)
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
-text = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
-outputs = model(**tokenizer(text,padding=True, return_tensors='pt'))
-corrected_text = tokenizer.decode(torch.argmax(outputs.logits, dim=-1), skip_special_tokens=True)
+texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+corrected_texts = []
+for ids, text in zip(outputs.logits, texts):
+    _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+    corrected_texts.append(_text[:len(text)])
 
-print(corrected_text)
+print(corrected_texts)
 ```
 
 ## 训练
