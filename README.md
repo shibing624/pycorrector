@@ -458,12 +458,7 @@ PS：
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 - [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
 
-### 2020.12.14 update:
-1. 新增paddle的ERNIE模型用于纠错识别，兼容字粒度和词粒度处理，当前字粒度效果稍好。
-2. 规则方法：去掉加载默认的custom_confusion和custom_word_freq，提供设置方法，便于扩展。
-3. 新增branch：develop，方便merge新功能。
-
-### 后续优化列表：
+### TODO：
 1. 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
 2. 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
 3. 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
