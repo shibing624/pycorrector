@@ -486,7 +486,7 @@ PS：
 ```latex
 @software{pycorrector,
   author = {Xu Ming},
-  title = {{pycorrector: Text Error Correction Tool}},
+  title = {pycorrector: Text Error Correction Tool},
   year = {2020},
   url = {https://github.com/shibing624/pycorrector},
 }
