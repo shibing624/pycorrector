@@ -40,6 +40,7 @@
 2. 错误检测部分先通过结巴中文分词器切词，由于句子中含有错别字，所以切词结果往往会有切分错误的情况，这样从字粒度和词粒度两方面检测错误，
 整合这两种粒度的疑似错误结果，形成疑似错误位置候选集；
 3. 错误纠正部分，是遍历所有的疑似错误位置，并使用音似、形似词典替换错误位置的词，然后通过语言模型计算句子困惑度，对所有候选集结果比较并排序，得到最优纠正词。
+
 PS：[网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 
 ### 深度模型的解决思路
@@ -116,6 +117,7 @@ python setup.py install
 ```
 pip install https://github.com/kpu/kenlm/archive/master.zip
 ```
+[安装kenlm-wiki](https://github.com/shibing624/pycorrector/wiki/Install-Kenlm(%E5%AE%89%E8%A3%85kenlm)
 
 * 其他库包安装
 ```
@@ -399,6 +401,7 @@ PS：
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
 
 ## 自定义语言模型
+[什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
 
 语言模型对于纠错步骤至关重要，当前默认使用的是从千兆中文文本训练的中文语言模型[zh_giga.no_cna_cmn.prune01244.klm(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)。
 
