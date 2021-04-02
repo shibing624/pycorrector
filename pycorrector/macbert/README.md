@@ -104,4 +104,7 @@ print(corrected_texts)
 
 ## 训练
 
+* [transformers官方fine-tuning示例-ipynb](https://github.com/huggingface/notebooks/blob/master/examples/language_modeling.ipynb)
+* [transformers官方fine-tuning示例-colab](https://colab.research.google.com/github/huggingface/notebooks/blob/master/examples/language_modeling.ipynb#scrollTo=q-EIELH43l_T)
+
 如果需要训练，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
