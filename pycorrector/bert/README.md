@@ -88,6 +88,10 @@ print(i)
 
 ### fine-tune
 使用[transformers](https://github.com/huggingface/transformers)(旧称pytorch-pretrained-BERT)的[examples/language-modeling/run_language_modeling.py](https://github.com/huggingface/transformers/blob/master/examples/language-modeling/run_language_modeling.py)处理。
+
+* [transformers官方fine-tuning示例-ipynb](https://github.com/huggingface/notebooks/blob/master/examples/language_modeling.ipynb)
+* [transformers官方fine-tuning示例-colab](https://colab.research.google.com/github/huggingface/notebooks/blob/master/examples/language_modeling.ipynb#scrollTo=q-EIELH43l_T)
+
 - fine-tune模型
 ```bash
 
