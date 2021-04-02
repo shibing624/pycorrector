@@ -117,7 +117,7 @@ python setup.py install
 ```
 pip install https://github.com/kpu/kenlm/archive/master.zip
 ```
-[安装kenlm-wiki](https://github.com/shibing624/pycorrector/wiki/Install-Kenlm(%E5%AE%89%E8%A3%85kenlm)
+[安装kenlm-wiki](https://github.com/shibing624/pycorrector/wiki/Install-kenlm)
 
 * 其他库包安装
 ```
@@ -351,8 +351,8 @@ pip install -r requirements-dev.txt
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的`seq2seq`、
-`transformer`、`bert`、`macbert`、`electra`，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[seq2seq](./pycorrector/seq2seq)、
+[transformer](./pycorrector/transformer)、[bert](./pycorrector/bert)、[macbert](./pycorrector/macbert)、[electra](./pycorrector/electra)，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
@@ -367,7 +367,7 @@ pip install -r requirements-dev.txt
 
 #### 数据预处理
 ```
-cd seq2seq_attention
+cd seq2seq
 # 数据预处理
 python preprocess.py
 ```
