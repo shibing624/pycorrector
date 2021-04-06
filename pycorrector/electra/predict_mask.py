@@ -40,7 +40,6 @@ def detect_error_demo():
     fake_tokens = tokenizer.tokenize(sentence)
     print(fake_tokens)
     fake_inputs = tokenizer.encode(sentence, return_tensors="pt")
-
     discriminator_outputs = discriminator(fake_inputs)
     predictions = torch.round((torch.sign(discriminator_outputs[0]) + 1) / 2)
 
