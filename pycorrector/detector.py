@@ -17,7 +17,7 @@ from .utils.tokenizer import Tokenizer
 
 # \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
 # \r\n|\s : whitespace characters. Will not be handled.
-re_han = re.compile("([\u4E00-\u9F5a-zA-Z0-9+#&]+)", re.U)
+re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
 re_skip = re.compile("(\r\n\\s)", re.U)
 
 
