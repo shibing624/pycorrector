@@ -15,6 +15,7 @@ def get_logger(name, log_file=None, log_level='DEBUG'):
     :return:
     """
     logger = logging.getLogger(name)
+    logger.propagate = False
     logger.setLevel(log_level.upper())
     formatter = logging.Formatter('[%(levelname)7s %(asctime)s %(module)s:%(lineno)4d] %(message)s',
                                   datefmt='%Y%m%d %I:%M:%S')

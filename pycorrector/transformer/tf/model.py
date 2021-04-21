@@ -8,13 +8,9 @@ prefetching, token-based batching, gradients accumulation, beam search, etc.
 requires: tensorflow==2.0.0, OpenNMT-tf==2.4.0
 """
 
-import logging
-
 import opennmt as onmt
 import tensorflow as tf
 import tensorflow_addons as tfa
-
-tf.get_logger().setLevel(logging.INFO)
 
 # Define the model. For the purpose of this example, the model components
 # (encoder, decoder, etc.) will be called separately.
@@ -119,11 +115,11 @@ def train(source_file,
         loss = training_step(source, target)
         step = optimizer.iterations.numpy()
         if step % report_every == 0:
-            tf.get_logger().info(
+            print(
                 "Step = %d ; Learning rate = %f ; Loss = %f",
                 step, learning_rate(step), loss)
         if step % save_every == 0:
-            tf.get_logger().info("Saving checkpoint for step %d", step)
+            print("Saving checkpoint for step %d", step)
             checkpoint_manager.save(checkpoint_number=step)
         if step == train_steps:
             break

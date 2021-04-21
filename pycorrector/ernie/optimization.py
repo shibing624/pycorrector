@@ -13,19 +13,17 @@
 # limitations under the License.
 
 from __future__ import absolute_import
-from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import logging
 import re
 
 import paddle.fluid as F
 import paddle.fluid.dygraph as D
 import paddle.fluid.layers as L
 
-log = logging.getLogger(__name__)
+from ..utils.logger import logger
 
 
 def linear_warmup_decay(learning_rate, warmup_steps, num_train_steps):
@@ -91,7 +89,7 @@ def optimization(loss,
         else:
             raise ValueError("Unkown learning rate scheduler, should be "
                              "'noam_decay' or 'linear_warmup_decay'")
-        log.debug('using Adam')
+        logger.debug('using Adam')
         optimizer = F.optimizer.Adam(learning_rate=scheduled_lr)
     else:
         scheduled_lr = L.create_global_var(
@@ -100,14 +98,14 @@ def optimization(loss,
             value=learning_rate,
             dtype='float32',
             persistable=True)
-        log.debug('using Adam')
+        logger.debug('using Adam')
 
         optimizer = F.optimizer.Adam(learning_rate=scheduled_lr)
         optimizer._learning_rate_map[F.default_main_program(
         )] = scheduled_lr
 
     if use_fp16:
-        log.info('AMP activated')
+        logger.info('AMP activated')
         optimizer = F.contrib.mixed_precision.decorate(optimizer,
                                                        amp_lists=F.contrib.mixed_precision.AutoMixedPrecisionLists(
                                                            custom_black_varnames={"loss"},
@@ -156,10 +154,10 @@ class AdamW(F.optimizer.AdamOptimizer):
     def apply_optimize(self, loss, startup_program, params_grads):
         super(AdamW, self).apply_optimize(loss, startup_program, params_grads)
         for p, g in params_grads:
-            # log.debug(L.reduce_mean(p))
+            # logger.debug(L.reduce_mean(p))
             if not self.pat.match(p.name):
                 L.assign(p * (1. - self.wd * self.current_step_lr()), p)
-            # log.debug(L.reduce_mean(p))
+            # logger.debug(L.reduce_mean(p))
 
 
 class LinearDecay(D.learning_rate_scheduler.LearningRateDecay):
@@ -190,7 +188,7 @@ class LinearDecay(D.learning_rate_scheduler.LearningRateDecay):
             tmp_step_num = self.step_num
             tmp_decay_steps = self.decay_steps
             if self.cycle:
-                div_res = fluid.layers.ceil(
+                div_res = F.layers.ceil(
                     self.create_lr_var(tmp_step_num / float(self.decay_steps)))
                 if tmp_step_num == 0:
                     div_res = self.create_lr_var(1.0)

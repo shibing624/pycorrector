@@ -16,13 +16,14 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import logging
 import os
+import sys
 from pathlib import Path
 
 from tqdm import tqdm
 
-log = logging.getLogger(__name__)
+sys.path.append('../..')
+from pycorrector.utils.logger import logger
 
 
 def _fetch_from_remote(url, force_download=False, cached_dir='~/.paddle-ernie-cache'):
@@ -48,11 +49,11 @@ def _fetch_from_remote(url, force_download=False, cached_dir='~/.paddle-ernie-ca
                 if chunk:
                     f.write(chunk)
                     f.flush()
-            log.debug('extacting... to %s' % tmpfile)
+            logger.debug('extacting... to %s' % tmpfile)
             with tarfile.open(tmpfile.as_posix())  as tf:
                 tf.extractall(path=cached_dir_model.as_posix())
         os.remove(tmpfile.as_posix())
-    log.debug('%s cached in %s' % (url, cached_dir))
+    logger.debug('%s cached in %s' % (url, cached_dir))
     return cached_dir_model
 
 

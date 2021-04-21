@@ -38,17 +38,16 @@ from zipfile import ZipFile, is_zipfile
 
 import numpy as np
 import requests
+import torch
 from filelock import FileLock
 from tqdm.auto import tqdm
-from pycorrector.utils.logger import logger
 
+from pycorrector.utils.logger import logger
 
 ENV_VARS_TRUE_VALUES = {"1", "ON", "YES"}
 ENV_VARS_TRUE_AND_AUTO_VALUES = ENV_VARS_TRUE_VALUES.union({"AUTO"})
-import torch
 
 _torch_available = True  # pylint: disable=invalid-name
-logger.info("PyTorch version {} available.".format(torch.__version__))
 _tf_available = False
 
 try:
@@ -71,11 +70,6 @@ try:
 
     # Check we're not importing a "datasets" directory somewhere
     _datasets_available = hasattr(datasets, "__version__") and hasattr(datasets, "load_dataset")
-    if _datasets_available:
-        logger.debug(f"Successfully imported datasets version {datasets.__version__}")
-    else:
-        logger.debug("Imported a datasets object but this doesn't seem to be the 🤗 datasets library.")
-
 except ImportError:
     _datasets_available = False
 

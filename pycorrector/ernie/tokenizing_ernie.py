@@ -18,7 +18,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import io
-import logging
 import re
 from functools import partial
 from pathlib import Path
@@ -27,10 +26,9 @@ import numpy as np
 import six
 
 from .file_utils import _fetch_from_remote
+from ..utils.logger import logger
 
 open = partial(io.open, encoding='utf8')
-
-log = logging.getLogger(__name__)
 
 _max_input_chars_per_word = 100
 
@@ -85,10 +83,10 @@ class ErnieTokenizer(object):
     def from_pretrained(cls, pretrain_dir_or_url, force_download=False, **kwargs):
         if pretrain_dir_or_url in cls.resource_map:
             url = cls.resource_map[pretrain_dir_or_url]
-            log.info('get pretrain dir from %s' % url)
+            logger.info('get pretrain dir from %s' % url)
             pretrain_dir = Path(_fetch_from_remote(url, force_download=force_download))
         else:
-            log.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
+            logger.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
             pretrain_dir = Path(pretrain_dir_or_url)
         if not pretrain_dir.exists():
             raise ValueError('pretrain dir not found: %s' % pretrain_dir)
@@ -130,7 +128,7 @@ class ErnieTokenizer(object):
                 continue
             pat_str += '(%s)|' % re.escape(t)
         pat_str += r'([a-zA-Z0-9]+|\S)'
-        log.debug('regex: %s' % pat_str)
+        logger.debug('regex: %s' % pat_str)
         self.pat = re.compile(pat_str)
         self.encoding = encoding
 
@@ -201,10 +199,10 @@ class ErnieTinyTokenizer(ErnieTokenizer):
     def from_pretrained(cls, pretrain_dir_or_url, force_download=False, **kwargs):
         if pretrain_dir_or_url in cls.resource_map:
             url = cls.resource_map[pretrain_dir_or_url]
-            log.info('get pretrain dir from %s' % url)
+            logger.info('get pretrain dir from %s' % url)
             pretrain_dir = _fetch_from_remote(url, force_download)
         else:
-            log.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
+            logger.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
             pretrain_dir = Path(pretrain_dir_or_url)
         if not pretrain_dir.exists():
             raise ValueError('pretrain dir not found: %s' % pretrain_dir)

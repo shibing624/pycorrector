@@ -18,7 +18,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import json
-import logging
 from pathlib import Path
 
 import paddle.fluid as F
@@ -26,8 +25,7 @@ import paddle.fluid.dygraph as D
 import paddle.fluid.layers as L
 
 from .file_utils import _fetch_from_remote, add_docstring
-
-log = logging.getLogger(__name__)
+from ..utils.logger import logger
 
 
 def _build_linear(n_in, n_out, name, init, act=None):
@@ -197,10 +195,10 @@ class PretrainedModel(object):
     def from_pretrained(cls, pretrain_dir_or_url, force_download=False, **kwargs):
         if not Path(pretrain_dir_or_url).exists() and pretrain_dir_or_url in cls.resource_map:
             url = cls.resource_map[pretrain_dir_or_url]
-            log.info('get pretrain dir from %s' % url)
+            logger.info('get pretrain dir from %s' % url)
             pretrain_dir = Path(_fetch_from_remote(url, force_download))
         else:
-            log.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
+            logger.info('pretrain dir %s not in %s, read from local' % (pretrain_dir_or_url, repr(cls.resource_map)))
             pretrain_dir = Path(pretrain_dir_or_url)
 
         if not pretrain_dir.exists():
@@ -215,17 +213,17 @@ class PretrainedModel(object):
         cfg_dict = dict(json.loads(config_path.open().read()), **kwargs)
         model = cls(cfg_dict, name=name_prefix)
 
-        log.info('loading pretrained model from %s' % pretrain_dir)
+        logger.info('loading pretrained model from %s' % pretrain_dir)
 
         # if os.path.exists(param_path):
         #    raise NotImplementedError()
-        #    log.debug('load pretrained weight from program state')
+        #    logger.debug('load pretrained weight from program state')
         #    F.io.load_program_state(param_path) #buggy in dygraph.gurad, push paddle to fix
         if state_dict_path.with_suffix('.pdparams').exists():
             m, _ = D.load_dygraph(state_dict_path.as_posix())
             for k, v in model.state_dict().items():
                 if k not in m:
-                    log.warn('param:%s not set in pretrained model, skip' % k)
+                    logger.warn('param:%s not set in pretrained model, skip' % k)
                     m[k] = v
             model.set_dict(m)
         else:
@@ -238,7 +236,7 @@ class ErnieModel(D.Layer, PretrainedModel):
         """
         Fundamental pretrained Ernie model
         """
-        log.debug('init ErnieModel with config: %s' % repr(cfg))
+        logger.debug('init ErnieModel with config: %s' % repr(cfg))
         D.Layer.__init__(self)
         d_model = cfg['hidden_size']
         d_emb = cfg.get('emb_size', cfg['hidden_size'])
