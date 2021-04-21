@@ -46,12 +46,12 @@ def is_chinese_string(string):
 
 def is_number(uchar):
     """判断一个unicode是否是数字"""
-    return u'u0030' <= uchar <= u'u0039'
+    return '\u0030' <= uchar <= '\u0039'
 
 
 def is_alphabet(uchar):
     """判断一个unicode是否是英文字母"""
-    return u'u0041' <= uchar <= u'u005a' or u'u0061' <= uchar <= u'u007a'
+    return '\u0041' <= uchar <= '\u005a' or '\u0061' <= uchar <= '\u007a'
 
 
 def is_alphabet_string(string):
