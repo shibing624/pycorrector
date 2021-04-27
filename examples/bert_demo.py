@@ -7,6 +7,7 @@ import sys
 
 sys.path.append("..")
 from pycorrector.bert.bert_corrector import BertCorrector
+
 if __name__ == '__main__':
 
     error_sentences = [
