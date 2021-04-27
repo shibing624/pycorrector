@@ -6,8 +6,7 @@
 import sys
 
 sys.path.append("..")
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
-
+from pycorrector.bert.bert_corrector import BertCorrector
 if __name__ == '__main__':
 
     error_sentences = [
@@ -18,7 +17,7 @@ if __name__ == '__main__':
         '我的家乡是有明的渔米之乡',
     ]
 
-    m = MacBertCorrector()
+    m = BertCorrector()
     for line in error_sentences:
-        correct_sent, err = m.macbert_correct(line)
+        correct_sent, err = m.bert_correct(line)
         print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))
