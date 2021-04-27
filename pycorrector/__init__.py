@@ -7,8 +7,8 @@ from .bert.bert_corrector import BertCorrector
 from .config import language_model_path
 from .corrector import Corrector
 from .en_spell import en_correct
-from .ernie import ernie_corrector
-from .ernie.ernie_corrector import ErnieCorrector
+# from .ernie import ernie_corrector
+# from .ernie.ernie_corrector import ErnieCorrector
 from .macbert import macbert_corrector
 from .macbert.macbert_corrector import MacBertCorrector
 from .utils import text_utils, get_file, tokenizer, io_utils, math_utils
