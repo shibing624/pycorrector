@@ -9,7 +9,6 @@ sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 if __name__ == '__main__':
-
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
         '少先队员因该为老人让坐',
@@ -21,4 +20,4 @@ if __name__ == '__main__':
     m = MacBertCorrector()
     for line in error_sentences:
         correct_sent, err = m.macbert_correct(line)
-        print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("query:{} => {}, err:{}".format(line, correct_sent, err))

@@ -356,10 +356,11 @@ pip install -r requirements-dev.txt
 
 
 ### 使用方法
+各模型均可独立的预处理数据、训练、预测。
 
 - MacBert模型
 
-基于预训练模型预测：
+基于MacBert预训练模型的纠错：
 
 ```python3
 import sys
@@ -368,7 +369,6 @@ sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 if __name__ == '__main__':
-
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
         '少先队员因该为老人让坐',
@@ -380,20 +380,20 @@ if __name__ == '__main__':
     m = MacBertCorrector()
     for line in error_sentences:
         correct_sent, err = m.macbert_correct(line)
-        print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("query:{} => {}, err:{}".format(line, correct_sent, err))
 ```
 
 output：
-```sh
-original sentence:真麻烦你了。希望你们好好的跳无 => 真麻烦你了。希望你们好好的跳舞, err:[['无', '舞', 14, 15]]
-original sentence:少先队员因该为老人让坐 => 少先队员应该为老人让座, err:[['因', '应', 4, 5], ['坐', '座', 10, 11]]
-original sentence:机七学习是人工智能领遇最能体现智能的一个分知 => 机器学习是人工智能领域最能体现智能的一个分支, err:[['七', '器', 1, 2], ['遇', '域', 10, 11], ['知', '支', 21, 22]]
-original sentence:一只小鱼船浮在平净的河面上 => 一只小渔船浮在平静的河面上, err:[['鱼', '渔', 3, 4], ['净', '静', 8, 9]]
-original sentence:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[['明', '名', 6, 7]]
+```bash
+query:真麻烦你了。希望你们好好的跳无 => 真麻烦你了。希望你们好好的跳舞, err:[['无', '舞', 14, 15]]
+query:少先队员因该为老人让坐 => 少先队员应该为老人让坐, err:[['因', '应', 4, 5]]
+query:机七学习是人工智能领遇最能体现智能的一个分知 => 机器学习是人工智能领域最能体现智能的一个分知, err:[['七', '器', 1, 2], ['遇', '域', 10, 11]]
+query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的河面上, err:[]
+query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[['明', '名', 6, 7]]
 ```
 
 - Seq2Seq模型
-各模型均可独立的预处理数据、训练、预测，下面以其中`seq2seq`序列生成模型为例。
+
 
 [seq2seq](./pycorrector/seq2seq) 模型使用示例:
 
