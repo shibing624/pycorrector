@@ -114,10 +114,7 @@ class ErnieCorrector(Corrector):
                     sentence_new = ' '.join(sentence_lst)
                     # 预测，默认取top5
                     predicts = self.predict_mask(sentence_new)
-                    top_tokens = []
-                    for p in predicts:
-                        top_tokens.append(p.get('token', ''))
-
+                    top_tokens = [p.get('token', '') for p in predicts]
                     if top_tokens and (s not in top_tokens):
                         # 取得所有可能正确的词
                         candidates = self.generate_items(s)
