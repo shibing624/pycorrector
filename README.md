@@ -360,7 +360,24 @@ pip install -r requirements-dev.txt
 
 - MacBert模型
 
-基于MacBert预训练模型的纠错：
+基于MacBert预训练模型的纠错
+
+1. 模型下载
+
+下载fine-tune后的预训练[MacBert MLM模型-密码QKz3](https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB)，解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
+
+```
+macbert_models
+└── chinese_finetuned_correction
+    ├── config.json
+    ├── added_tokens.json
+    ├── pytorch_model.bin
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    └── vocab.txt
+```
+
+2. 纠错
 
 ```python3
 import sys
