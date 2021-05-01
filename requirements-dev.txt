@@ -1,4 +1,4 @@
-jieba==0.39
+jieba>=0.39
 pypinyin
 scikit-learn>=0.19.1
 torch>=1.3.1

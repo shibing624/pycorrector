@@ -1,4 +1,4 @@
-jieba==0.39
+jieba>=0.39
 pypinyin
 numpy
 six
