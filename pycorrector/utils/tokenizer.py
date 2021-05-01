@@ -17,6 +17,15 @@ from jieba import posseg
 jieba.setLogLevel(log_level="ERROR")
 
 
+def whitespace_tokenize(text):
+    """Runs basic whitespace cleaning and splitting on a peice of text."""
+    text = text.strip()
+    if not text:
+        return []
+    tokens = text.split()
+    return tokens
+
+
 def segment(sentence, cut_type='word', pos=False):
     """
     切词

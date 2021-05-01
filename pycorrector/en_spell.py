@@ -2,14 +2,12 @@
 # Author: XuMing(xuming624@qq.com)
 # Brief: english correction
 # refer to http://norvig.com/spell-correct.html
-import os
 import re
 from collections import Counter
 
 from pycorrector import config
 from pycorrector.utils.logger import logger
-
-pwd_path = os.path.abspath(os.path.dirname(__file__))
+from pycorrector.utils.tokenizer import whitespace_tokenize
 
 
 def words(text):
@@ -63,7 +61,7 @@ class EnSpell(object):
         N = sum(self.WORDS.values())
         return self.WORDS[word] / N
 
-    def correct(self, word):
+    def correct_word(self, word):
         """
         most probable spelling correction for word
         :param word:
@@ -71,6 +69,17 @@ class EnSpell(object):
         """
         self.check_init()
         return max(self.candidates(word), key=self.probability)
+
+    def correct(self, text):
+        """
+        most probable spelling correction for text
+        :param text:
+        :return:
+        """
+        self.check_init()
+        tokens = whitespace_tokenize(text)
+        res = [self.correct_word(w) if len(w) > 1 else w for w in tokens]
+        return res
 
     def candidates(self, word):
         """
@@ -95,11 +104,13 @@ en_correct = spell.correct
 en_probability = spell.probability
 
 if __name__ == '__main__':
-    c1 = en_correct('speling')
+    c1 = en_correct('speling is herr.! !')
     print(c1)
     c2 = en_correct('gorrect')
     print(c2)
     print(en_probability('speling'))
-    erros = ['something', 'is', 'hapenning', 'here']
-    for i in erros:
+    errors = ['something', 'is', 'hapenning', 'here']
+    for i in errors:
         print(en_correct(i))
+    sent = 'something is happending here.!'
+    print(sent, en_correct(sent))
