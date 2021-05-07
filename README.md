@@ -1,6 +1,6 @@
 [English](README.en.md) | 简体中文
 
-![alt text](docs/logo.svg)
+![alt text](docs/pycorrector.png)
 
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
