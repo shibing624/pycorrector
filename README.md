@@ -4,7 +4,7 @@
 
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pycorrector/LICENSE)
+[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 ![Language](https://img.shields.io/badge/Language-Python-blue.svg)
 ![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
 
@@ -16,6 +16,23 @@
 **pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
 
+
+**Guide**
+
+- [Question](#Question)
+- [Solution](#Solution)
+- [Feature](#Feature)
+- [Evaluate](#Evaluate)
+- [Install](#install)
+- [Usage](#usage)
+- [Deep Model Usage](#deep-model-usage)
+- [Dataset](#Dataset)
+- [Custom Language Model](#custom-language-model)
+- [Todo](#Todo)
+- [Wechat Group](#wechat-group)
+- [Cite](#Cite)
+- [Contribute](#contribute)
+- [Reference](#reference)
 
 ## Question
 
@@ -77,6 +94,8 @@ PS：[网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 
 
 ## Evaluate
+<details>
+<summary>查看评估结论</summary>
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
 - 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
@@ -99,6 +118,7 @@ PS：[网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 | corpus500 | ernie | gpu | 59.80% | 41.33% | 102 | 0.98 |
 | corpus500 | macbert | gpu | 56.20% | 42.67% | - | - |
 
+</details>
 
 ## Install
 * 全自动安装：pip install pycorrector
@@ -142,6 +162,8 @@ output:
 
 > 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
 
+<details>
+<summary>查看更多使用说明</summary>
 
 - 错误检测
 ```python
@@ -268,13 +290,16 @@ output:
 ```python
 import pycorrector
 
-sent_lst = ['what', 'hapenning', 'how', 'to', 'speling', 'it', 'you', 'can', 'gorrect', 'it']
-for i in sent_lst:
-    print(i, '=>', pycorrector.en_correct(i))
+sent = "what happending ? how to speling it can you gorrect it"
+r = pycorrector.en_correct(sent)
+print(sent, '=>', r)
 ```
 
 output:
 ```
+=> ['what', 'happening', '?', 'how', 'to', 'spelling', 'it', 'can', 'you', 'correct', 'it']
+
+
 what => what
 hapenning => happening
 how => how
@@ -310,8 +335,6 @@ output:
 忧郁的台湾乌龟 => 憂郁的臺灣烏龜
 ```
 
-
-### Command Line Usage
 - 命令行模式
 
 支持批量文本纠错。
@@ -338,9 +361,9 @@ case：
 python -m pycorrector input.txt -o out.txt -n -d
 ```
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
+</details>
 
-
-## 深度模型使用说明
+## Deep Model Usage
 
 ### 安装依赖
 ```
@@ -409,6 +432,8 @@ query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的�
 query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[['明', '名', 6, 7]]
 ```
 
+<details>
+<summary>查看Seq2Seq模型</summary>
 - Seq2Seq模型
 
 
@@ -453,8 +478,25 @@ python infer.py
 PS：
 1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)测试。
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
+</details>
 
-## 自定义语言模型
+## Dataset
+
+
+| 数据集 | 语料 | 下载链接 | 压缩包大小 |
+| :------- | :--------- | :---------: | :---------: |
+| **`人民日报2014版语料`** | 人民日报2014版 | [百度网盘（密码uc11）](https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A) <br/> [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
+| **`NLPCC 2018 GEC官方数据集`** | NLPCC2018-GEC | [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz) | 114M |
+| **`NLPCC 2018+HSK熟语料`** | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M |
+| **`NLPCC 2018+HSK原始语料`** | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) | 81M |
+
+
+1. NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
+训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
+2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增
+3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
+
+## Custom Language Model
 [什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
 
 语言模型对于纠错步骤至关重要，当前默认使用的是从千兆中文文本训练的中文语言模型[zh_giga.no_cna_cmn.prune01244.klm(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)。
@@ -472,23 +514,7 @@ PS：
 尊重版权，传播请注明出处。
 
 
-## 数据集下载
-
-
-| 数据集 | 语料 | 下载链接 | 压缩包大小 |
-| :------- | :--------- | :---------: | :---------: |
-| **`人民日报2014版语料`** | 人民日报2014版 | [百度网盘（密码uc11）](https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A) <br/> [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
-| **`NLPCC 2018 GEC官方数据集`** | NLPCC2018-GEC | [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz) | 114M |
-| **`NLPCC 2018+HSK熟语料`** | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M |
-| **`NLPCC 2018+HSK原始语料`** | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) | 81M |
-
-
-1. NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
-训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
-2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增
-3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
-
-## 功能点
+## Todo
 
 - [x] 优化形似字字典，提高形似字纠错准确率
 - [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
@@ -500,14 +526,12 @@ PS：
 - [x] 升级代码，兼容TensorFlow 2.0库
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 - [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
+- [ ] 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
+- [ ] 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
+- [ ] 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
+- [ ] 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。
 
-### TODO：
-1. 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
-2. 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
-3. 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
-4. 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。
-
-## 讨论群
+## Wechat Group
 
 微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。微信群，扫码加入。
 
@@ -515,7 +539,7 @@ PS：
 
 <img src="./docs/git_image/wechat.jpeg" width="200" />
 
-## 引用
+## Cite
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
 
@@ -532,7 +556,18 @@ PS：
 
 pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。pycorrector受版权法保护，侵权必究。
 
-## References
+
+
+## Contribute
+
+项目代码还很粗糙，如果大家对代码有所改进，欢迎提交回本项目，在提交之前，注意以下两点：
+
+ - 在`tests`添加相应的单元测试
+ - 使用`python setup.py test`来运行所有单元测试，确保所有单测都是通过的
+
+之后即可提交PR。
+
+## Reference
 
 * [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
 * [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
