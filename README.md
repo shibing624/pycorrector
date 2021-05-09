@@ -437,7 +437,6 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 
 - Seq2Seq模型
 
-
 [seq2seq](./pycorrector/seq2seq) 模型使用示例:
 
 #### 配置

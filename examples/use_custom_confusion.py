@@ -9,7 +9,7 @@ import sys
 sys.path.append("../")
 import pycorrector
 
-# pycorrector.set_log_level('INFO')
+pycorrector.set_log_level('INFO')
 if __name__ == '__main__':
 
     error_sentences = [
