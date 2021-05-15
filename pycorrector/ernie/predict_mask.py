@@ -64,7 +64,7 @@ def predict_mask(sentence_with_mask):
     """
     ids, id_types = tokenizer.encode(sentence_with_mask)
     mask_id = tokenizer.mask_id
-    print(ids, id_types, mask_id)
+    # print(ids, id_types, mask_id)
     ids = np.expand_dims(ids, 0)
     ids = D.to_variable(ids)
     logits = ernie(ids).numpy()
@@ -84,7 +84,6 @@ def predict_mask(sentence_with_mask):
     print(out)
     out = np.array(out)
     out = np.transpose(out).tolist()
-    print(out)
     print(' '.join([''.join(i) for i in out]))
     return out
 
@@ -109,3 +108,5 @@ print(i)
 
 i = predict_mask('机器学习是人工[MASK][MASK]领遇最能体现智能的一个分知')
 print(i)
+
+print(predict_mask('机[MASK]学习是人工智能领遇最能体现[MASK][MASK]的一个[MASK][MASK]'))

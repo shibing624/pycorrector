@@ -39,7 +39,8 @@ class CorrectionPipeline(Pipeline):
             MODEL_MAC_BERT_LM_MAPPING
         )
 
-    def check_inputs(self, input_length: int, max_length: int):
+    @staticmethod
+    def check_inputs(input_length: int, max_length: int):
         """
         Checks wether there might be something wrong with given input with regard to the model.
         """
@@ -84,9 +85,8 @@ class CorrectionPipeline(Pipeline):
 
         prefix = self.model.config.prefix if self.model.config.prefix is not None else ""
         if isinstance(args[0], list):
-            assert (
-                    self.tokenizer.pad_token_id is not None
-            ), "Please make sure that the tokenizer has a pad_token_id when using a batch input"
+            assert (self.tokenizer.pad_token_id is not None
+                    ), "Please make sure that the tokenizer has a pad_token_id when using a batch input"
             args = ([prefix + arg for arg in args[0]],)
             padding = True
 

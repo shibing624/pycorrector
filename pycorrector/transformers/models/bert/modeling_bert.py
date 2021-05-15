@@ -15,7 +15,6 @@
 # limitations under the License.
 """PyTorch BERT model. """
 
-
 import math
 import os
 import warnings
@@ -27,6 +26,8 @@ import torch.utils.checkpoint
 from torch import nn
 from torch.nn import CrossEntropyLoss, MSELoss
 
+from pycorrector.utils.logger import logger
+from .configuration_bert import BertConfig
 from ...activations import ACT2FN
 from ...file_utils import (
     ModelOutput,
@@ -52,9 +53,6 @@ from ...modeling_utils import (
     find_pruneable_heads_and_indices,
     prune_linear_layer,
 )
-from pycorrector.utils.logger import logger
-from .configuration_bert import BertConfig
-
 
 _CONFIG_FOR_DOC = "BertConfig"
 _TOKENIZER_FOR_DOC = "BertTokenizer"
@@ -116,8 +114,8 @@ def load_tf_weights_in_bert(model, config, tf_checkpoint_path):
         # adam_v and adam_m are variables used in AdamWeightDecayOptimizer to calculated m and v
         # which are not required for using pretrained model
         if any(
-            n in ["adam_v", "adam_m", "AdamWeightDecayOptimizer", "AdamWeightDecayOptimizer_1", "global_step"]
-            for n in name
+                n in ["adam_v", "adam_m", "AdamWeightDecayOptimizer", "AdamWeightDecayOptimizer_1", "global_step"]
+                for n in name
         ):
             logger.info("Skipping {}".format("/".join(name)))
             continue
@@ -150,7 +148,7 @@ def load_tf_weights_in_bert(model, config, tf_checkpoint_path):
             array = np.transpose(array)
         try:
             assert (
-                pointer.shape == array.shape
+                    pointer.shape == array.shape
             ), f"Pointer shape {pointer.shape} and array shape {array.shape} mismatched"
         except AssertionError as e:
             e.args += (pointer.shape, array.shape)
@@ -179,7 +177,7 @@ class BertEmbeddings(nn.Module):
         self.position_embedding_type = getattr(config, "position_embedding_type", "absolute")
 
     def forward(
-        self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None, past_key_values_length=0
+            self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None, past_key_values_length=0
     ):
         if input_ids is not None:
             input_shape = input_ids.size()
@@ -189,7 +187,7 @@ class BertEmbeddings(nn.Module):
         seq_length = input_shape[1]
 
         if position_ids is None:
-            position_ids = self.position_ids[:, past_key_values_length : seq_length + past_key_values_length]
+            position_ids = self.position_ids[:, past_key_values_length: seq_length + past_key_values_length]
 
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=self.position_ids.device)
@@ -238,14 +236,14 @@ class BertSelfAttention(nn.Module):
         return x.permute(0, 2, 1, 3)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
         mixed_query_layer = self.query(hidden_states)
 
@@ -372,14 +370,14 @@ class BertAttention(nn.Module):
         self.pruned_heads = self.pruned_heads.union(heads)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
         self_outputs = self.self(
             hidden_states,
@@ -439,14 +437,14 @@ class BertLayer(nn.Module):
         self.output = BertOutput(config)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
         self_attn_past_key_value = past_key_value[:2] if past_key_value is not None else None
@@ -514,17 +512,17 @@ class BertEncoder(nn.Module):
         self.layer = nn.ModuleList([BertLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=False,
-        output_hidden_states=False,
-        return_dict=True,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=False,
+            output_hidden_states=False,
+            return_dict=True,
     ):
         all_hidden_states = () if output_hidden_states else None
         all_self_attentions = () if output_attentions else None
@@ -857,20 +855,20 @@ class BertModel(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -1006,18 +1004,18 @@ class BertForPreTraining(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=BertForPreTrainingOutput, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        next_sentence_label=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            next_sentence_label=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape ``(batch_size, sequence_length)``, `optional`):
@@ -1090,7 +1088,6 @@ class BertForPreTraining(BertPreTrainedModel):
     """Bert Model with a `language modeling` head on top for CLM fine-tuning. """, BERT_START_DOCSTRING
 )
 class BertLMHeadModel(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
 
@@ -1114,21 +1111,21 @@ class BertLMHeadModel(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=CausalLMOutputWithCrossAttentions, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        labels=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            labels=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -1236,7 +1233,6 @@ class BertLMHeadModel(BertPreTrainedModel):
 
 @add_start_docstrings("""Bert Model with a `language modeling` head on top. """, BERT_START_DOCSTRING)
 class BertForMaskedLM(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
 
@@ -1268,19 +1264,19 @@ class BertForMaskedLM(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -1355,18 +1351,18 @@ class BertForNextSentencePrediction(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=NextSentencePredictorOutput, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
-        **kwargs
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
+            **kwargs
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1463,17 +1459,17 @@ class BertForSequenceClassification(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1547,17 +1543,17 @@ class BertForMultipleChoice(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1621,7 +1617,6 @@ class BertForMultipleChoice(BertPreTrainedModel):
     BERT_START_DOCSTRING,
 )
 class BertForTokenClassification(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1642,17 +1637,17 @@ class BertForTokenClassification(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -1712,7 +1707,6 @@ class BertForTokenClassification(BertPreTrainedModel):
     BERT_START_DOCSTRING,
 )
 class BertForQuestionAnswering(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1732,18 +1726,18 @@ class BertForQuestionAnswering(BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
     )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        start_positions=None,
-        end_positions=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            start_positions=None,
+            end_positions=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         start_positions (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
