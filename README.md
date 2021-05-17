@@ -148,6 +148,8 @@ pip install -r requirements.txt
 
 - 文本纠错
 
+示例[base_demo.py](examples/base_demo.py)
+
 ```python
 import pycorrector
 
@@ -157,7 +159,7 @@ print(corrected_sent, detail)
 
 output:
 ```
-少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
+少先队员应该为老人让座 [('因该', '应该', 4, 6), ('坐', '座', 10, 11)]
 ```
 
 > 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
@@ -166,6 +168,9 @@ output:
 <summary>查看更多使用说明</summary>
 
 - 错误检测
+
+示例[detect_demo.py](examples/detect_demo.py)
+
 ```python
 import pycorrector
 
@@ -181,6 +186,9 @@ output:
 
 
 - 关闭字粒度纠错
+
+示例[disable_char_error.py](examples/disable_char_error.py)
+
 ```python
 import pycorrector
 
@@ -192,7 +200,7 @@ print(correct_sent)
 
 output:
 ```
-'我的喉咙发炎了要买点阿莫西林吉', [['细林', '西林', 12, 14], ['吃', '吉', 14, 15]]
+'我的喉咙发炎了要买点阿莫西林吉', [('细林', '西林', 12, 14), ('吃', '吉', 14, 15)]
 ```
 
 上例中`吃`发生误纠，如下代码关闭字粒度纠错：
@@ -208,7 +216,7 @@ print(correct_sent)
 
 output:
 ```
-'我的喉咙发炎了要买点阿莫西林吃', [['细林', '西林', 12, 14]]
+'我的喉咙发炎了要买点阿莫西林吃', [('细林', '西林', 12, 14)]
 ```
 
 默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低。关闭字粒度纠错，这样可以提高纠错准确率，提高纠错速度。
@@ -221,6 +229,7 @@ output:
 - 加载自定义混淆集
 
 通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）错误补召回；2）误杀加白。
+示例[use_custom_confusion.py](examples/use_custom_confusion.py)
 
 ```python
 import pycorrector
@@ -233,7 +242,7 @@ error_sentences = [
 for line in error_sentences:
     print(pycorrector.correct(line))
 
-print('*' * 53)
+print('*' * 42)
 pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
 for line in error_sentences:
     print(pycorrector.correct(line))
@@ -263,6 +272,8 @@ iPhone差 iPhoneX 100
 
 支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（20M），准确率低些。
 
+示例[load_custom_language_model.py](examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
+
 ```python
 from pycorrector import Corrector
 
@@ -277,15 +288,15 @@ print(corrected_sent, detail)
 
 output:
 ```
-少先队员应该为老人让座 [[('因该', '应该', 4, 6)], [('坐', '座', 10, 11)]]
+少先队员应该为老人让座 [('因该', '应该', 4, 6), ('坐', '座', 10, 11)]
 ```
-
-具体demo见[example/load_custom_language_model.py](./examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
 
 
 - 英文拼写纠错
 
-支持英文单词的拼写错误纠正，演示demo[en_correct_demo.py](examples/en_correct_demo.py)。
+支持英文单词的拼写错误纠正。
+
+示例[en_correct_demo.py](examples/en_correct_demo.py)
 
 ```python
 import pycorrector
@@ -308,6 +319,8 @@ what happending? how to speling it, can you gorrect it?
 - 中文简繁互换
 
 支持中文繁体到简体的转换，和简体到繁体的转换。
+
+示例[traditional_simplified_chinese_demo.py](examples/traditional_simplified_chinese_demo.py)
 
 ```python
 import pycorrector
@@ -377,6 +390,8 @@ pip install -r requirements-dev.txt
 
 基于MacBert预训练模型的纠错
 
+示例[macbert_demo.py](examples/macbert_demo.py)
+
 1. 模型下载
 
 下载fine-tune后的预训练[MacBert MLM模型-密码QKz3](https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB)，解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
@@ -417,11 +432,11 @@ if __name__ == '__main__':
 
 output：
 ```bash
-query:真麻烦你了。希望你们好好的跳无 => 真麻烦你了。希望你们好好的跳舞, err:[['无', '舞', 14, 15]]
-query:少先队员因该为老人让坐 => 少先队员应该为老人让坐, err:[['因', '应', 4, 5]]
-query:机七学习是人工智能领遇最能体现智能的一个分知 => 机器学习是人工智能领域最能体现智能的一个分知, err:[['七', '器', 1, 2], ['遇', '域', 10, 11]]
+query:真麻烦你了。希望你们好好的跳无 => 真麻烦你了。希望你们好好的跳舞, err:[('无', '舞', 14, 15)]
+query:少先队员因该为老人让坐 => 少先队员应该为老人让坐, err:[('因', '应', 4, 5)]
+query:机七学习是人工智能领遇最能体现智能的一个分知 => 机器学习是人工智能领域最能体现智能的一个分知, err:[('七', '器', 1, 2), ('遇', '域', 10, 11)]
 query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的河面上, err:[]
-query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[['明', '名', 6, 7]]
+query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[('明', '名', 6, 7)]
 ```
 
 <details>
