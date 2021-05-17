@@ -83,7 +83,7 @@ class ElectraCorrector(Corrector):
                         if candidates:
                             for token_str in top_tokens:
                                 if token_str in candidates:
-                                    details.append([s, token_str, start_idx + idx, start_idx + idx + 1])
+                                    details.append((s, token_str, start_idx + idx, start_idx + idx + 1))
                                     sentence_lst[idx] = token_str
                                     break
                     # 还原

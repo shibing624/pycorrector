@@ -56,7 +56,7 @@ def is_alphabet(uchar):
 
 def is_alphabet_string(string):
     """判断是否全部为英文字母"""
-    return all('a' <= c <= 'z' for c in string)
+    return all(is_alphabet(c) for c in string)
 
 
 def is_other(uchar):
@@ -173,3 +173,5 @@ if __name__ == "__main__":
     traditional_sentence = '憂郁的臺灣烏龜'
     simplified_sentence = traditional2simplified(traditional_sentence)
     print(traditional_sentence, simplified_sentence)
+    print(is_alphabet_string('Teacher'))
+    print(is_alphabet_string('Teacher '))

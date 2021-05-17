@@ -2,9 +2,9 @@
 # Author: XuMing(xuming624@qq.com)
 # Brief: corrector with spell and stroke
 
-import codecs
 import operator
 import os
+from codecs import open
 
 from pypinyin import lazy_pinyin
 
@@ -49,7 +49,7 @@ class Corrector(Detector):
     @staticmethod
     def load_set_file(path):
         words = set()
-        with codecs.open(path, 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             for w in f:
                 w = w.strip()
                 if w.startswith('#'):
@@ -70,7 +70,7 @@ class Corrector(Detector):
         if not os.path.exists(path):
             logger.warn("file not exists:" + path)
             return result
-        with codecs.open(path, 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
                 if line.startswith('#'):
@@ -97,7 +97,7 @@ class Corrector(Detector):
         if not os.path.exists(path):
             logger.warn("file not exists:" + path)
             return result
-        with codecs.open(path, 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
                 if line.startswith('#'):
@@ -291,7 +291,7 @@ class Corrector(Detector):
                 # output
                 if corrected_item != cur_item:
                     blk = before_sent + corrected_item + after_sent
-                    detail_word = [cur_item, corrected_item, begin_idx, end_idx]
+                    detail_word = (cur_item, corrected_item, begin_idx, end_idx)
                     details.append(detail_word)
             text_new += blk
         details = sorted(details, key=operator.itemgetter(2))

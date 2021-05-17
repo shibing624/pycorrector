@@ -2,9 +2,9 @@
 # Author: XuMing(xuming624@qq.com)
 # Brief: error word detector
 
-import codecs
 import os
 import time
+from codecs import open
 
 import numpy as np
 
@@ -119,7 +119,7 @@ class Detector(object):
                 logger.warning('file not found.%s' % path)
                 return word_freq
             else:
-                with codecs.open(path, 'r', encoding='utf-8') as f:
+                with open(path, 'r', encoding='utf-8') as f:
                     for line in f:
                         line = line.strip()
                         if line.startswith('#'):
@@ -145,7 +145,7 @@ class Detector(object):
                 logger.warning('file not found.%s' % path)
                 return confusion
             else:
-                with codecs.open(path, 'r', encoding='utf-8') as f:
+                with open(path, 'r', encoding='utf-8') as f:
                     for line in f:
                         line = line.strip()
                         if line.startswith('#'):

@@ -61,7 +61,7 @@ class MacBertCorrector(Corrector):
             if i >= len(text_new):
                 continue
             if ori_char != text_new[i]:
-                details.append([ori_char, text_new[i], i, i + 1])
+                details.append((ori_char, text_new[i], i, i + 1))
 
         details = sorted(details, key=operator.itemgetter(2))
         return text_new, details

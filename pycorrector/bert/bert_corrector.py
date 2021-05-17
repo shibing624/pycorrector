@@ -70,7 +70,7 @@ class BertCorrector(Corrector):
                         if candidates:
                             for token_str in top_tokens:
                                 if token_str in candidates:
-                                    details.append([s, token_str, start_idx + idx, start_idx + idx + 1])
+                                    details.append((s, token_str, start_idx + idx, start_idx + idx + 1))
                                     s = token_str
                                     break
                 blk_new += s

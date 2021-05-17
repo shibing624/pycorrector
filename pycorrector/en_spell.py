@@ -6,11 +6,14 @@
 import gzip
 import json
 import operator
+import os
+from codecs import open
 from collections import Counter
 
 from pycorrector import config
 from pycorrector.utils.logger import logger
-from pycorrector.utils.tokenizer import whitespace_tokenize
+from pycorrector.utils.text_utils import is_alphabet_string
+from pycorrector.utils.tokenizer import whitespace_tokenize, split_2_short_text
 
 
 def get_word_freq_dict_from_text(text):
@@ -21,6 +24,7 @@ class EnSpell(object):
     def __init__(self, word_freq_dict={}):
         # Word freq dict, k=word, v=int(freq)
         self.word_freq_dict = word_freq_dict
+        self.custom_confusion = {}
 
     def _init(self):
         with gzip.open(config.en_dict_path, "rb") as f:
@@ -102,30 +106,64 @@ class EnSpell(object):
         sort_candi_prob = sorted(candi_prob.items(), key=operator.itemgetter(1))
         return sort_candi_prob[-1][0]
 
-    def correct(self, text):
+    def _get_custom_confusion_dict(self, path):
         """
-        most probable spelling correction for text
-        :param text:
+        取自定义困惑集
+        :param path:
+        :return: dict, {variant: origin}, eg: {"交通先行": "交通限行"}
+        """
+        confusion = {}
+        if path and os.path.exists(path):
+            with open(path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith('#'):
+                        continue
+                    terms = line.split()
+                    if len(terms) < 2:
+                        continue
+                    wrong = terms[0]
+                    right = terms[1]
+                    confusion[wrong] = right
+        return confusion
+
+    def set_en_custom_confusion_dict(self, path):
+        """
+        设置混淆纠错词典
+        :param path:
         :return:
         """
         self.check_init()
-        tokens = whitespace_tokenize(text)
-        res = [self.correct_word(w) if len(w) > 1 else w for w in tokens]
-        return res
+        self.custom_confusion = self._get_custom_confusion_dict(path)
+        logger.debug('Loaded en spell confusion path: %s, size: %d' % (path, len(self.custom_confusion)))
 
-
-spell = EnSpell()
-en_correct = spell.correct
-en_probability = spell.probability
-
-if __name__ == '__main__':
-    c1 = en_correct('speling is herr. do you know! !')
-    print(c1)
-    c2 = en_correct('gorrect')
-    print(c2)
-    print(en_probability('speling'))
-    errors = ['something', 'is', 'hapenning', 'here']
-    for i in errors:
-        print(en_correct(i))
-    sent = 'something is happending here, i konw!'
-    print(sent, en_correct(sent))
+    def correct(self, text, include_symbol=True):
+        """
+        most probable spelling correction for text
+        :param text: input query
+        :param include_symbol: True, default
+        :return: corrected_text, details [(wrong_word, right_word, begin_idx, end_idx), ...]
+        example:
+        cann you speling it? [['cann', 'can'], ['speling', 'spelling']]
+        """
+        self.check_init()
+        text_new = ''
+        details = []
+        blocks = split_2_short_text(text, include_symbol=include_symbol)
+        for w, idx in blocks:
+            # 大于1个字符的英文词
+            if len(w) > 1 and is_alphabet_string(w):
+                if w in self.custom_confusion:
+                    corrected_item = self.custom_confusion[w]
+                else:
+                    corrected_item = self.correct_word(w)
+                if corrected_item != w:
+                    begin_idx = idx
+                    end_idx = idx + len(w)
+                    detail_word = (w, corrected_item, begin_idx, end_idx)
+                    details.append(detail_word)
+                    w = corrected_item
+            text_new += w
+        # 以begin_idx排序
+        details = sorted(details, key=operator.itemgetter(2))
+        return text_new, details

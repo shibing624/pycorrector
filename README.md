@@ -285,31 +285,23 @@ output:
 
 - 英文拼写纠错
 
-支持英文单词的拼写错误纠正。
+支持英文单词的拼写错误纠正，演示demo[en_correct_demo.py](examples/en_correct_demo.py)。
 
 ```python
 import pycorrector
 
-sent = "what happending ? how to speling it can you gorrect it"
-r = pycorrector.en_correct(sent)
-print(sent, '=>', r)
+sent = "what happending? how to speling it, can you gorrect it?"
+corrected_text, details = pycorrector.en_correct(sent)
+print(sent, '=>', corrected_text)
+print(details)
 ```
 
 output:
 ```
-=> ['what', 'happening', '?', 'how', 'to', 'spelling', 'it', 'can', 'you', 'correct', 'it']
+what happending? how to speling it, can you gorrect it?
+=> what happening? how to spelling it, can you correct it?
+[('happending', 'happening', 5, 15), ('speling', 'spelling', 24, 31), ('gorrect', 'correct', 44, 51)]
 
-
-what => what
-hapenning => happening
-how => how
-to => to
-speling => spelling
-it => it
-you => you
-can => can
-gorrect => correct
-it => it
 ```
 
 

@@ -4,12 +4,13 @@
 
 from .config import language_model_path
 from .corrector import Corrector
-from .en_spell import en_correct
+from .en_spell import EnSpell
 from .utils import text_utils, get_file, tokenizer, io_utils, math_utils
 from .utils.logger import set_log_level
 from .utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin, traditional2simplified, \
     simplified2traditional
 
+# 中文纠错
 ct = Corrector()
 get_same_pinyin = ct.get_same_pinyin
 get_same_stroke = ct.get_same_stroke
@@ -23,3 +24,9 @@ word_frequency = ct.word_frequency
 detect = ct.detect
 enable_char_error = ct.enable_char_error
 enable_word_error = ct.enable_word_error
+
+# 英文纠错
+sp = EnSpell()
+en_correct = sp.correct
+en_probability = sp.probability
+set_en_custom_confusion_dict = sp.set_en_custom_confusion_dict
