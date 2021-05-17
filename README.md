@@ -270,15 +270,15 @@ iPhone差 iPhoneX 100
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（20M），准确率低些。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率低些。
 
-示例[load_custom_language_model.py](examples/load_custom_language_model.py)，其中`./people_chars_lm.klm`是自定义语言模型文件。
+示例[load_custom_language_model.py](examples/load_custom_language_model.py)，其中[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)是自定义语言模型文件。
 
 ```python
 from pycorrector import Corrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-lm_path = os.path.join(pwd_path, './people_chars_lm.klm')
+lm_path = os.path.join(pwd_path, './people2014corpus_chars.klm')
 model = Corrector(language_model_path=lm_path)
 
 corrected_sent, detail = model.correct('少先队员因该为老人让坐')
