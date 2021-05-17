@@ -11,7 +11,7 @@ sys.path.append("..")
 import pycorrector
 
 if __name__ == '__main__':
-    sent = "what happending ? how to speling it can you gorrect it"
+    sent = "what happending? how to speling it can you gorrect it."
     r = pycorrector.en_correct(sent)
     print(sent, '=>', r)
 

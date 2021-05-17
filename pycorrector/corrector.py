@@ -13,7 +13,7 @@ from .detector import Detector, ErrorType
 from .utils.logger import logger
 from .utils.math_utils import edit_distance_word
 from .utils.text_utils import is_chinese_string, convert_to_unicode
-from .utils.tokenizer import segment
+from .utils.tokenizer import segment, split_2_short_text
 
 
 class Corrector(Detector):
@@ -270,7 +270,7 @@ class Corrector(Detector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_2_short_text(text, include_symbol=include_symbol)
+        blocks = split_2_short_text(text, include_symbol=include_symbol)
         for blk, idx in blocks:
             maybe_errors = self.detect_short(blk, idx)
             for cur_item, begin_idx, end_idx, err_type in maybe_errors:

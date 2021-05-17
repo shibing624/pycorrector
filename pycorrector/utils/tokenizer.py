@@ -10,19 +10,62 @@ from __future__ import print_function
 
 import logging
 import os
+import re
 
 import jieba
 from jieba import posseg
 
 jieba.setLogLevel(log_level="ERROR")
 
+# \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
+# \r\n|\s : whitespace characters. Will not be handled.
+re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
+re_skip = re.compile("(\r\n\\s)", re.U)
+
+
+def split_2_short_text(text, include_symbol=False):
+    """
+    长句切分为短句
+    :param text: str
+    :param include_symbol: bool
+    :return: (sentence, idx)
+    """
+    result = []
+    blocks = re_han.split(text)
+    start_idx = 0
+    for blk in blocks:
+        if not blk:
+            continue
+        if include_symbol:
+            result.append((blk, start_idx))
+        else:
+            if re_han.match(blk):
+                result.append((blk, start_idx))
+        start_idx += len(blk)
+    return result
+
+
+def split_text_by_maxlen(text, maxlen=512):
+    """
+    长句切分为短句，每个短句maxlen个字
+    :param text: str
+    :param maxlen: int, 最大长度
+    :return: list, (sentence, idx)
+    """
+    result = []
+    for i in range(0, len(text), maxlen):
+        result.append((text[i:i + maxlen], i))
+    return result
+
 
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a peice of text."""
-    text = text.strip()
+    tokens = []
     if not text:
-        return []
-    tokens = text.split()
+        return tokens
+    sents = split_2_short_text(text, include_symbol=True)
+    for sent, idx in sents:
+        tokens.extend(sent.split())
     return tokens
 
 
@@ -110,7 +153,13 @@ class Tokenizer(object):
 if __name__ == '__main__':
     text = "这个消息在北京城里不胫儿走"
     print(text)
+
     t = Tokenizer()
     print('deault', t.tokenize(text, 'default'))
     print('search', t.tokenize(text, 'search'))
     print('ngram', t.tokenize(text, 'ngram'))
+
+    paragraph = "The first time I heard that song was in Hawaii on radio. " \
+                "I was just a kid, and loved it very much! What a fantastic song!"
+    cutwords1 = whitespace_tokenize(paragraph)  # 分词
+    print('【my分词结果：】', cutwords1)

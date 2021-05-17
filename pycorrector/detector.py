@@ -4,7 +4,6 @@
 
 import codecs
 import os
-import re
 import time
 
 import numpy as np
@@ -13,12 +12,7 @@ from . import config
 from .utils.get_file import get_file
 from .utils.logger import logger
 from .utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
-from .utils.tokenizer import Tokenizer
-
-# \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
-# \r\n|\s : whitespace characters. Will not be handled.
-re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
-re_skip = re.compile("(\r\n\\s)", re.U)
+from .utils.tokenizer import Tokenizer, split_2_short_text
 
 
 class ErrorType(object):
@@ -334,41 +328,6 @@ class Detector(object):
             result = True
         return result
 
-    @staticmethod
-    def split_2_short_text(text, include_symbol=False):
-        """
-        长句切分为短句
-        :param text: str
-        :param include_symbol: bool
-        :return: (sentence, idx)
-        """
-        result = []
-        blocks = re_han.split(text)
-        start_idx = 0
-        for blk in blocks:
-            if not blk:
-                continue
-            if include_symbol:
-                result.append((blk, start_idx))
-            else:
-                if re_han.match(blk):
-                    result.append((blk, start_idx))
-            start_idx += len(blk)
-        return result
-
-    @staticmethod
-    def split_text_by_maxlen(text, maxlen=512):
-        """
-        长句切分为短句，每个短句maxlen个字
-        :param text: str
-        :param maxlen: int, 最大长度
-        :return: list, (sentence, idx)
-        """
-        result = []
-        for i in range(0, len(text), maxlen):
-            result.append((text[i:i + maxlen], i))
-        return result
-
     def detect(self, text):
         """
         文本错误检测
@@ -385,7 +344,7 @@ class Detector(object):
         # 文本归一化
         text = uniform(text)
         # 长句切分为短句
-        blocks = self.split_2_short_text(text)
+        blocks = split_2_short_text(text)
         for blk, idx in blocks:
             maybe_errors += self.detect_short(blk, idx)
         return maybe_errors

@@ -16,6 +16,7 @@ from pycorrector.transformers import pipeline, ElectraForPreTraining
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
+from pycorrector.utils.tokenizer import split_2_short_text
 from pycorrector import config
 
 
@@ -58,7 +59,7 @@ class ElectraCorrector(Corrector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_2_short_text(text, include_symbol=True)
+        blocks = split_2_short_text(text, include_symbol=True)
         for blk, start_idx in blocks:
             error_ids = self.electra_detect(blk)
             sentence_lst = list(blk)

@@ -8,7 +8,6 @@ import operator
 import os
 import sys
 import time
-import kenlm  # import kenlm before torch, when torch>=1.7.1
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
@@ -16,6 +15,8 @@ from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.transformers import pipeline
 from pycorrector import config
+from pycorrector.utils.tokenizer import split_text_by_maxlen
+
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -46,7 +47,7 @@ class BertCorrector(Corrector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_text_by_maxlen(text, maxlen=128)
+        blocks = split_text_by_maxlen(text, maxlen=128)
         for blk, start_idx in blocks:
             blk_new = ''
             for idx, s in enumerate(blk):

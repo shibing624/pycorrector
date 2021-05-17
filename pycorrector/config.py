@@ -29,8 +29,8 @@ place_name_path = os.path.join(pwd_path, 'data/place_name.txt')
 stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 # 搭配词
 ngram_words_path = os.path.join(pwd_path, 'data/ngram_words.txt')
-# 英文文本
-en_text_path = os.path.join(pwd_path, 'data/en/big.txt')
+# 英文拼写词频文件
+en_dict_path = os.path.join(pwd_path, 'data/en/en.json.gz')
 
 # -----深度模型文件路径 -----
 # bert模型文件夹路径

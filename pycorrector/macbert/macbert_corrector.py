@@ -18,6 +18,7 @@ from pycorrector.corrector import Corrector
 from pycorrector.macbert.correction_pipeline import CorrectionPipeline
 from pycorrector import config
 from pycorrector.transformers import BertTokenizer, BertForMaskedLM
+from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 
 class MacBertCorrector(Corrector):
@@ -48,7 +49,7 @@ class MacBertCorrector(Corrector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_text_by_maxlen(text, maxlen=128)
+        blocks = split_text_by_maxlen(text, maxlen=128)
         blocks = [block[0] for block in blocks]
         results = self.model(blocks)
         text_new = ''.join([rst['corrected_text'] for rst in results])

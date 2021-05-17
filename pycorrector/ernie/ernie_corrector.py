@@ -19,7 +19,7 @@ from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.ernie.modeling_ernie import ErnieModelForPretraining, ErnieModel
 from pycorrector.ernie.tokenizing_ernie import ErnieTokenizer
-from pycorrector.utils.tokenizer import segment
+from pycorrector.utils.tokenizer import segment, split_text_by_maxlen
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -102,7 +102,7 @@ class ErnieCorrector(Corrector):
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = self.split_text_by_maxlen(text, maxlen=512)
+        blocks = split_text_by_maxlen(text, maxlen=512)
         for blk, start_idx in blocks:
             blk_new = ''
             blk = segment(blk, cut_type=ernie_cut_type, pos=False)
