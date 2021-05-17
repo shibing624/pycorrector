@@ -50,7 +50,7 @@ setup(
     install_requires=reqs.strip().split('\n'),
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
-    package_data={'pycorrector': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*', 'data/en/big.txt',
+    package_data={'pycorrector': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*', 'data/en/en.json.gz',
                                   'utils/*.', 'bert/*', 'deep_context/*', 'conv_seq2seq/*', 'seq2seq_attention/*',
                                   'transformer/*', 'electra/*']}
 )

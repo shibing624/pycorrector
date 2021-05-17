@@ -46,11 +46,11 @@ class EnTestCase(unittest.TestCase):
 
     def test_spell1(self):
         """测试英文文本纠错-dev"""
-        spell_t(get_set(open('../pycorrector/data/en/spell-testset1.txt')), verbose=True)  # Dev set
+        spell_t(get_set(open('./spell-testset1.txt')), verbose=True)  # Dev set
 
     def test_spell2(self):
         """测试英文文本纠错-test"""
-        spell_t(get_set(open('../pycorrector/data/en/spell-testset2.txt')), verbose=True)  # final test set
+        spell_t(get_set(open('./spell-testset2.txt')), verbose=True)  # final test set
 
 
 def spell_t(tests, verbose=False):
