@@ -16,6 +16,7 @@
 * pip安装依赖包
 ```
 torch>=1.4.0
+transformers
 ```
 
 ### Preprocess

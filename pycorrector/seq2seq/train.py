@@ -8,21 +8,25 @@
 # - [Tutorial from Ben Trevett](https://github.com/bentrevett/pytorch-seq2seq)
 # - [IBM seq2seq](https://github.com/IBM/pytorch-seq2seq)
 # - [OpenNMT-py](https://github.com/OpenNMT/OpenNMT-py)
+# - [text-generation](https://github.com/shibing624/text-generation)
 """
 
 import sys
 
+import pandas as pd
 import torch
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 from pycorrector.seq2seq import config
-from pycorrector.seq2seq.data_reader import gen_examples
+from pycorrector.seq2seq.data_reader import gen_examples, load_bert_data
 from pycorrector.seq2seq.data_reader import read_vocab, create_dataset, one_hot, save_word_dict, load_word_dict
 from pycorrector.seq2seq.seq2seq import Seq2Seq, LanguageModelCriterion
 from pycorrector.seq2seq.data_reader import PAD_TOKEN
 from pycorrector.seq2seq.convseq2seq import ConvSeq2Seq
+from pycorrector.utils.logger import logger
+from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('device: %s' % device)
@@ -170,54 +174,93 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
 
 
 def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs,
-          src_vocab_path, trg_vocab_path, model_path, max_length):
-    source_texts, target_texts = create_dataset(train_path, None)
+          src_vocab_path, trg_vocab_path, model_path, max_length, use_segment):
+    arch = arch.lower()
+    if arch in ['seq2seq', 'convseq2seq']:
+        source_texts, target_texts = create_dataset(train_path, None)
 
-    src_2_ids = read_vocab(source_texts)
-    trg_2_ids = read_vocab(target_texts)
-    save_word_dict(src_2_ids, src_vocab_path)
-    save_word_dict(trg_2_ids, trg_vocab_path)
-    src_2_ids = load_word_dict(src_vocab_path)
-    trg_2_ids = load_word_dict(trg_vocab_path)
+        src_2_ids = read_vocab(source_texts)
+        trg_2_ids = read_vocab(target_texts)
+        save_word_dict(src_2_ids, src_vocab_path)
+        save_word_dict(trg_2_ids, trg_vocab_path)
+        src_2_ids = load_word_dict(src_vocab_path)
+        trg_2_ids = load_word_dict(trg_vocab_path)
 
-    id_2_srcs = {v: k for k, v in src_2_ids.items()}
-    id_2_trgs = {v: k for k, v in trg_2_ids.items()}
-    train_src, train_trg = one_hot(source_texts, target_texts, src_2_ids, trg_2_ids, sort_by_len=True)
+        id_2_srcs = {v: k for k, v in src_2_ids.items()}
+        id_2_trgs = {v: k for k, v in trg_2_ids.items()}
+        train_src, train_trg = one_hot(source_texts, target_texts, src_2_ids, trg_2_ids, sort_by_len=True)
 
-    k = 0
-    print('src:', ' '.join([id_2_srcs[i] for i in train_src[k]]))
-    print('trg:', ' '.join([id_2_trgs[i] for i in train_trg[k]]))
+        k = 0
+        print('src:', ' '.join([id_2_srcs[i] for i in train_src[k]]))
+        print('trg:', ' '.join([id_2_trgs[i] for i in train_trg[k]]))
 
-    train_data = gen_examples(train_src, train_trg, batch_size, max_length)
-    if arch == 'seq2seq':
-        model = Seq2Seq(encoder_vocab_size=len(src_2_ids),
-                        decoder_vocab_size=len(trg_2_ids),
-                        embed_size=embed_size,
-                        enc_hidden_size=hidden_size,
-                        dec_hidden_size=hidden_size,
-                        dropout=dropout).to(device)
-        print(model)
-        loss_fn = LanguageModelCriterion().to(device)
-        optimizer = torch.optim.Adam(model.parameters())
+        train_data = gen_examples(train_src, train_trg, batch_size, max_length)
 
-        train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
-    else:
-        # arch == 'convseq2seq
-        trg_pad_idx = trg_2_ids[PAD_TOKEN]
-        model = ConvSeq2Seq(encoder_vocab_size=len(src_2_ids),
+        if arch == 'seq2seq':
+            # Normal seq2seq
+            model = Seq2Seq(encoder_vocab_size=len(src_2_ids),
                             decoder_vocab_size=len(trg_2_ids),
                             embed_size=embed_size,
                             enc_hidden_size=hidden_size,
                             dec_hidden_size=hidden_size,
-                            dropout=dropout,
-                            trg_pad_idx=trg_pad_idx,
-                            device=device,
-                            max_length=max_length).to(device)
-        print(model)
-        loss_fn = nn.CrossEntropyLoss(ignore_index=trg_pad_idx)
-        optimizer = torch.optim.Adam(model.parameters())
+                            dropout=dropout).to(device)
+            print(model)
+            loss_fn = LanguageModelCriterion().to(device)
+            optimizer = torch.optim.Adam(model.parameters())
 
-        train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
+            train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
+        else:
+            # Conv seq2seq model
+            trg_pad_idx = trg_2_ids[PAD_TOKEN]
+            model = ConvSeq2Seq(encoder_vocab_size=len(src_2_ids),
+                                decoder_vocab_size=len(trg_2_ids),
+                                embed_size=embed_size,
+                                enc_hidden_size=hidden_size,
+                                dec_hidden_size=hidden_size,
+                                dropout=dropout,
+                                trg_pad_idx=trg_pad_idx,
+                                device=device,
+                                max_length=max_length).to(device)
+            print(model)
+            loss_fn = nn.CrossEntropyLoss(ignore_index=trg_pad_idx)
+            optimizer = torch.optim.Adam(model.parameters())
+
+            train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
+    elif arch == 'bertseq2seq':
+        # Bert Seq2seq model
+        model_args = {
+            "reprocess_input_data": True,
+            "overwrite_output_dir": True,
+            "max_seq_length": max_length if max_length else 128,
+            "train_batch_size": batch_size if batch_size else 8,
+            "num_train_epochs": epochs if epochs else 10,
+            "save_eval_checkpoints": False,
+            "save_model_every_epoch": False,
+            "silent": False,
+            "evaluate_generated_text": True,
+            "evaluate_during_training": False,
+            "evaluate_during_training_verbose": False,
+            "use_multiprocessing": False,
+            "save_best_model": True,
+            "max_length": max_length if max_length else 128,  # The maximum length of the sequence to be generated.
+            "output_dir": "./output/bertseq2seq/",
+        }
+
+        # encoder_type=None, encoder_name=None, decoder_name=None, encoder_decoder_type=None, encoder_decoder_name=None,
+        use_cuda = True if torch.cuda.is_available() else False
+        model = Seq2SeqModel("bert", "bert-base-chinese", "bert-base-chinese", args=model_args, use_cuda=use_cuda)
+
+        print('start train bertseq2seq ...')
+        data = load_bert_data(train_path, use_segment)
+        train_data, dev_data = train_test_split(data, test_size=0.1, shuffle=True)
+
+        train_df = pd.DataFrame(train_data, columns=['input_text', 'target_text'])
+        dev_df = pd.DataFrame(dev_data, columns=['input_text', 'target_text'])
+
+        model.train_model(train_df, eval_data=dev_df)
+    else:
+        logger.error('error arch: {}'.format(arch))
+        raise ValueError("Model arch choose error. Must use one of seq2seq model.")
 
 
 if __name__ == '__main__':
@@ -231,5 +274,6 @@ if __name__ == '__main__':
           config.src_vocab_path,
           config.trg_vocab_path,
           config.model_path,
-          config.max_length
+          config.max_length,
+          config.use_segment
           )

@@ -16,6 +16,8 @@ from pycorrector.seq2seq.data_reader import load_word_dict
 from pycorrector.seq2seq.seq2seq import Seq2Seq
 from pycorrector.seq2seq.convseq2seq import ConvSeq2Seq
 from pycorrector.seq2seq.data_reader import PAD_TOKEN
+from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
+from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('device: %s' % device)
@@ -34,7 +36,9 @@ class Inference(object):
                                  enc_hidden_size=hidden_size,
                                  dec_hidden_size=hidden_size,
                                  dropout=dropout).to(device)
-        else:
+            self.model.load_state_dict(torch.load(model_path))
+            self.model.eval()
+        elif arch == 'convseq2seq':
             trg_pad_idx = self.trg_2_ids[PAD_TOKEN]
             self.model = ConvSeq2Seq(encoder_vocab_size=len(self.src_2_ids),
                                      decoder_vocab_size=len(self.trg_2_ids),
@@ -45,8 +49,18 @@ class Inference(object):
                                      trg_pad_idx=trg_pad_idx,
                                      device=device,
                                      max_length=max_length).to(device)
-        self.model.load_state_dict(torch.load(model_path))
-        self.model.eval()
+            self.model.load_state_dict(torch.load(model_path))
+            self.model.eval()
+        elif arch == 'bertseq2seq':
+            # Bert Seq2seq model
+            use_cuda = True if torch.cuda.is_available() else False
+            # encoder_type=None, encoder_name=None, decoder_name=None
+            self.model = Seq2SeqModel("bert", "output/bertseq2seq/encoder",
+                                      "output/bertseq2seq/decoder", use_cuda=use_cuda)
+            print(self.model)
+        else:
+            logger.error('error arch: {}'.format(arch))
+            raise ValueError("Model arch choose error. Must use one of seq2seq model.")
         self.arch = arch
         self.max_length = max_length
 
@@ -63,11 +77,14 @@ class Inference(object):
             sos_tensor = torch.Tensor([[self.trg_2_ids[SOS_TOKEN]]]).long().to(device)
             translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_tensor, self.max_length)
             translation = [self.id_2_trgs[i] for i in translation.data.cpu().numpy().reshape(-1) if i in self.id_2_trgs]
-        else:
+        elif self.arch == 'convseq2seq':
             src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
             translation, attn = self.model.translate(src_tensor, sos_idx)
             translation = [self.id_2_trgs[i] for i in translation if i in self.id_2_trgs]
-
+        elif self.arch == 'bertseq2seq':
+            translation = self.model.predict([query])
+        else:
+            translation = ''
         for word in translation:
             if word != EOS_TOKEN:
                 result.append(word)

@@ -12,7 +12,7 @@ from pycorrector.utils.tokenizer import segment
 from pycorrector.seq2seq import config
 
 
-def parse_xml_file(path):
+def parse_xml_file(path, use_segment, segment_type):
     print('Parse data from %s' % path)
     data_list = []
     dom_tree = minidom.parse(path)
@@ -25,8 +25,8 @@ def parse_xml_file(path):
         correction = doc.getElementsByTagName('CORRECTION')[0]. \
             childNodes[0].data.strip()
 
-        source = segment(text.strip(), cut_type='char')
-        target = segment(correction.strip(), cut_type='char')
+        source = ' '.join(segment(text.strip(), cut_type=segment_type)) if use_segment else text.strip()
+        target = ' '.join(segment(correction.strip(), cut_type=segment_type)) if use_segment else correction.strip()
 
         pair = [source, target]
         if pair not in data_list:
@@ -34,7 +34,7 @@ def parse_xml_file(path):
     return data_list
 
 
-def segment_file(path):
+def get_data_file(path, use_segment, segment_type):
     data_list = []
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -44,8 +44,8 @@ def segment_file(path):
             parts = line.split("\t")
             if len(parts) != 2:
                 continue
-            source = segment(parts[0].strip(), cut_type='char')
-            target = segment(parts[1].strip(), cut_type='char')
+            source = ' '.join(segment(parts[0].strip(), cut_type=segment_type)) if use_segment else parts[0].strip()
+            target = ' '.join(segment(parts[1].strip(), cut_type=segment_type)) if use_segment else parts[1].strip()
 
             pair = [source, target]
             if pair not in data_list:
@@ -57,7 +57,7 @@ def _save_data(data_list, data_path):
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for src, dst in data_list:
-            f.write(' '.join(src) + '\t' + ' '.join(dst) + '\n')
+            f.write(src + '\t' + dst + '\n')
             count += 1
         print("save line size:%d to %s" % (count, data_path))
 
@@ -72,8 +72,9 @@ if __name__ == '__main__':
     # train data
     data_list = []
     if config.dataset == 'sighan':
-        data_list.extend(segment_file(config.sighan_train_path))
+        data = get_data_file(config.sighan_train_path, config.use_segment, config.segment_type)
+        data_list.extend(data)
     else:
         for path in config.cged_train_paths:
-            data_list.extend(parse_xml_file(path))
+            data_list.extend(parse_xml_file(path, config.use_segment, config.segment_type))
     save_corpus_data(data_list, config.train_path, config.test_path)

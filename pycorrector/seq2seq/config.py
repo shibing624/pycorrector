@@ -16,6 +16,9 @@ cged_train_paths = [
 
 sighan_train_path = os.path.join(pwd_path, '../data/cn/sighan_2015/train.tsv')
 
+use_segment = True
+segment_type = 'char'
+
 output_dir = os.path.join(pwd_path, 'output')
 # Training data path.
 train_path = os.path.join(output_dir, 'train.txt')
@@ -23,15 +26,15 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 dataset = 'sighan'  # 'sighan' or 'cged'
-arch = 'convseq2seq'  # 'seq2seq' or 'convseq2seq'
+arch = 'bertseq2seq'  # 'seq2seq' or 'convseq2seq' or 'bertseq2seq'
 
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_path = os.path.join(output_dir, 'model_{}_{}.pth'.format(dataset, arch))
 
-batch_size = 32
-epochs = 200
+batch_size = 8  # bertseq2seq is '8', other is '32'
+epochs = 20  # bertseq2seq is '20', other is '200'
 max_length = 128
 gpu_id = 0
 dropout = 0.25
