@@ -30,7 +30,6 @@ from pycorrector.utils.logger import logger
 from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print('device: %s' % device)
 
 
 def evaluate_seq2seq_model(model, data, device, loss_fn):
@@ -269,6 +268,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
 
 
 if __name__ == '__main__':
+    print('device: %s' % device)
     train(config.arch,
           config.train_path,
           config.batch_size,

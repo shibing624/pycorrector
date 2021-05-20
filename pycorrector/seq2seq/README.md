@@ -17,6 +17,7 @@
 ```
 torch>=1.4.0
 transformers
+tensorboardX
 ```
 
 ### Preprocess

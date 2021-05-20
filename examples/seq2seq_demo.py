@@ -8,7 +8,7 @@ import os
 import sys
 
 sys.path.append("..")
-from pycorrector.seq2seq.train import train
+from pycorrector.seq2seq.train import train, device
 from pycorrector.seq2seq.infer import Inference
 from pycorrector.seq2seq.preprocess import get_data_file, parse_xml_file, save_corpus_data
 
@@ -17,7 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     # Required parameters
     parser.add_argument("--raw_train_path",
-                        default="../pycorrector/data/cn/sighan_2015.tsv", type=str,
+                        default="../pycorrector/data/cn/sighan_2015/train.tsv", type=str,
                         help="The input data dir. Should contain the .tsv files (or other data files) for the task.",
                         )
     parser.add_argument("--dataset", default="sighan", type=str,
@@ -50,7 +50,7 @@ def main():
     parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
     parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
     parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
-    parser.add_argument("--epochs", default=40, type=int, help="Epoch num.")
+    parser.add_argument("--epochs", default=1, type=int, help="Epoch num.")
 
     args = parser.parse_args()
     print(args)
@@ -64,6 +64,7 @@ def main():
     else:
         data_list.extend(parse_xml_file(args.raw_train_path, args.use_segment, args.segment_type))
     save_corpus_data(data_list, args.train_path, args.test_path)
+    print('device: %s' % device)
 
     # Train
     train(args.arch,

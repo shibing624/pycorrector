@@ -21,42 +21,12 @@ from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print('device: %s' % device)
 
 
 class Inference(object):
     def __init__(self, arch, model_dir, src_vocab_path, trg_vocab_path,
                  embed_size=50, hidden_size=50, dropout=0.5, max_length=128):
-        self.src_2_ids = load_word_dict(src_vocab_path)
-        self.trg_2_ids = load_word_dict(trg_vocab_path)
-        self.id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
-        if arch == 'seq2seq':
-            print('use seq2seq model.')
-            self.model = Seq2Seq(encoder_vocab_size=len(self.src_2_ids),
-                                 decoder_vocab_size=len(self.trg_2_ids),
-                                 embed_size=embed_size,
-                                 enc_hidden_size=hidden_size,
-                                 dec_hidden_size=hidden_size,
-                                 dropout=dropout).to(device)
-            model_path = os.path.join(model_dir, 'seq2seq.pth')
-            self.model.load_state_dict(torch.load(model_path))
-            self.model.eval()
-        elif arch == 'convseq2seq':
-            print('use convseq2seq model.')
-            trg_pad_idx = self.trg_2_ids[PAD_TOKEN]
-            self.model = ConvSeq2Seq(encoder_vocab_size=len(self.src_2_ids),
-                                     decoder_vocab_size=len(self.trg_2_ids),
-                                     embed_size=embed_size,
-                                     enc_hidden_size=hidden_size,
-                                     dec_hidden_size=hidden_size,
-                                     dropout=dropout,
-                                     trg_pad_idx=trg_pad_idx,
-                                     device=device,
-                                     max_length=max_length).to(device)
-            model_path = os.path.join(model_dir, 'convseq2seq.pth')
-            self.model.load_state_dict(torch.load(model_path))
-            self.model.eval()
-        elif arch == 'bertseq2seq':
+        if arch == 'bert2seq2seq':
             # Bert Seq2seq model
             print('use bert seq2seq model.')
             use_cuda = True if torch.cuda.is_available() else False
@@ -64,6 +34,36 @@ class Inference(object):
             # encoder_type=None, encoder_name=None, decoder_name=None
             self.model = Seq2SeqModel("bert", "{}/encoder".format(model_dir),
                                       "{}/decoder".format(model_dir), use_cuda=use_cuda)
+        elif arch in ['seq2seq', 'convseq2seq']:
+            self.src_2_ids = load_word_dict(src_vocab_path)
+            self.trg_2_ids = load_word_dict(trg_vocab_path)
+            self.id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
+            if arch == 'seq2seq':
+                print('use seq2seq model.')
+                self.model = Seq2Seq(encoder_vocab_size=len(self.src_2_ids),
+                                     decoder_vocab_size=len(self.trg_2_ids),
+                                     embed_size=embed_size,
+                                     enc_hidden_size=hidden_size,
+                                     dec_hidden_size=hidden_size,
+                                     dropout=dropout).to(device)
+                model_path = os.path.join(model_dir, 'seq2seq.pth')
+                self.model.load_state_dict(torch.load(model_path))
+                self.model.eval()
+            else:
+                print('use convseq2seq model.')
+                trg_pad_idx = self.trg_2_ids[PAD_TOKEN]
+                self.model = ConvSeq2Seq(encoder_vocab_size=len(self.src_2_ids),
+                                         decoder_vocab_size=len(self.trg_2_ids),
+                                         embed_size=embed_size,
+                                         enc_hidden_size=hidden_size,
+                                         dec_hidden_size=hidden_size,
+                                         dropout=dropout,
+                                         trg_pad_idx=trg_pad_idx,
+                                         device=device,
+                                         max_length=max_length).to(device)
+                model_path = os.path.join(model_dir, 'convseq2seq.pth')
+                self.model.load_state_dict(torch.load(model_path))
+                self.model.eval()
         else:
             logger.error('error arch: {}'.format(arch))
             raise ValueError("Model arch choose error. Must use one of seq2seq model.")
