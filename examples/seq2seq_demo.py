@@ -24,6 +24,8 @@ def main():
                         help="Dataset name. selected in the list:" + ", ".join(["sighan", "cged"])
                         )
     parser.add_argument("--no_segment", action="store_true", help="Whether not to segment train data in preprocess")
+    parser.add_argument("--do_train", action="store_true", help="Whether not to train")
+    parser.add_argument("--do_predict", action="store_true", help="Whether not to predict")
     parser.add_argument("--segment_type", default="char", type=str,
                         help="Segment data type, selected in list: " + ", ".join(["char", "word"]))
     parser.add_argument("--model_name_or_path",
@@ -57,54 +59,59 @@ def main():
 
     # Preprocess
     os.makedirs(args.model_dir, exist_ok=True)
-    args.use_segment = False if args.no_segment else True
-    data_list = []
-    if args.dataset == 'sighan':
-        data_list.extend(get_data_file(args.raw_train_path, args.use_segment, args.segment_type))
-    else:
-        data_list.extend(parse_xml_file(args.raw_train_path, args.use_segment, args.segment_type))
-    save_corpus_data(data_list, args.train_path, args.test_path)
     print('device: %s' % device)
 
     # Train
-    train(args.arch,
-          args.train_path,
-          args.batch_size,
-          args.embed_size,
-          args.hidden_size,
-          args.dropout,
-          args.epochs,
-          args.src_vocab_path,
-          args.trg_vocab_path,
-          args.model_dir,
-          args.max_length,
-          args.use_segment,
-          args.model_name_or_path,
-          )
+    if args.do_train:
+        # Preprocess
+        args.use_segment = False if args.no_segment else True
+        data_list = []
+        if args.dataset == 'sighan':
+            data_list.extend(get_data_file(args.raw_train_path, args.use_segment, args.segment_type))
+        else:
+            data_list.extend(parse_xml_file(args.raw_train_path, args.use_segment, args.segment_type))
+        save_corpus_data(data_list, args.train_path, args.test_path)
+
+        # Train model with train data file
+        train(args.arch,
+              args.train_path,
+              args.batch_size,
+              args.embed_size,
+              args.hidden_size,
+              args.dropout,
+              args.epochs,
+              args.src_vocab_path,
+              args.trg_vocab_path,
+              args.model_dir,
+              args.max_length,
+              args.use_segment,
+              args.model_name_or_path,
+              )
 
     # Predict
-    inference = Inference(args.arch,
-                          args.model_dir,
-                          args.src_vocab_path,
-                          args.trg_vocab_path,
-                          embed_size=args.embed_size,
-                          hidden_size=args.hidden_size,
-                          dropout=args.dropout,
-                          max_length=args.max_length,
-                          )
-    inputs = [
-        '老是较书。',
-        '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',
-        '遇到一位很棒的奴生跟我聊天。',
-        '遇到一位很美的女生跟我疗天。',
-        '他们只能有两个选择：接受降新或自动离职。',
-        '王天华开心得一直说话。'
-    ]
-    outputs = inference.predict(inputs)
-    for a, b in zip(inputs, outputs):
-        print('input  :', a)
-        print('predict:', b)
-        print()
+    if args.do_predict:
+        inference = Inference(args.arch,
+                              args.model_dir,
+                              args.src_vocab_path,
+                              args.trg_vocab_path,
+                              embed_size=args.embed_size,
+                              hidden_size=args.hidden_size,
+                              dropout=args.dropout,
+                              max_length=args.max_length,
+                              )
+        inputs = [
+            '老是较书。',
+            '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',
+            '遇到一位很棒的奴生跟我聊天。',
+            '遇到一位很美的女生跟我疗天。',
+            '他们只能有两个选择：接受降新或自动离职。',
+            '王天华开心得一直说话。'
+        ]
+        outputs = inference.predict(inputs)
+        for a, b in zip(inputs, outputs):
+            print('input  :', a)
+            print('predict:', b)
+            print()
 
 
 if __name__ == "__main__":

@@ -24,17 +24,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class Inference(object):
-    def __init__(self, arch, model_dir, src_vocab_path, trg_vocab_path,
+    def __init__(self, arch, model_dir, src_vocab_path=None, trg_vocab_path=None,
                  embed_size=50, hidden_size=50, dropout=0.5, max_length=128):
-        if arch == 'bert2seq2seq':
-            # Bert Seq2seq model
-            print('use bert seq2seq model.')
-            use_cuda = True if torch.cuda.is_available() else False
-
-            # encoder_type=None, encoder_name=None, decoder_name=None
-            self.model = Seq2SeqModel("bert", "{}/encoder".format(model_dir),
-                                      "{}/decoder".format(model_dir), use_cuda=use_cuda)
-        elif arch in ['seq2seq', 'convseq2seq']:
+        if arch in ['seq2seq', 'convseq2seq']:
             self.src_2_ids = load_word_dict(src_vocab_path)
             self.trg_2_ids = load_word_dict(trg_vocab_path)
             self.id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
@@ -64,6 +56,14 @@ class Inference(object):
                 model_path = os.path.join(model_dir, 'convseq2seq.pth')
                 self.model.load_state_dict(torch.load(model_path))
                 self.model.eval()
+        elif arch == 'bertseq2seq':
+            # Bert Seq2seq model
+            print('use bert seq2seq model.')
+            use_cuda = True if torch.cuda.is_available() else False
+
+            # encoder_type=None, encoder_name=None, decoder_name=None
+            self.model = Seq2SeqModel("bert", "{}/encoder".format(model_dir),
+                                      "{}/decoder".format(model_dir), use_cuda=use_cuda)
         else:
             logger.error('error arch: {}'.format(arch))
             raise ValueError("Model arch choose error. Must use one of seq2seq model.")
