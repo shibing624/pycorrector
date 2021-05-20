@@ -9,8 +9,6 @@ import operator
 import sys
 import time
 
-# import kenlm  # import kenlm before torch, when torch>=1.7.1
-
 sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
@@ -22,21 +20,21 @@ from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 
 class MacBertCorrector(Corrector):
-    def __init__(self, bert_model_dir=config.macbert_model_dir):
+    def __init__(self, macbert_model_dir=config.macbert_model_dir):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
-        bert_model = BertForMaskedLM.from_pretrained(bert_model_dir)
-        tokenizer = BertTokenizer.from_pretrained(bert_model_dir)
+        macbert_model = BertForMaskedLM.from_pretrained(macbert_model_dir)
+        tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = CorrectionPipeline(
             task='correction',
-            model=bert_model,
+            model=macbert_model,
             tokenizer=tokenizer,
             device=0,  # gpu device id
         )
         if self.model:
             self.mask = self.model.tokenizer.mask_token
-            logger.debug('Loaded bert model: %s, spend: %.3f s.' % (bert_model_dir, time.time() - t1))
+            logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
         """

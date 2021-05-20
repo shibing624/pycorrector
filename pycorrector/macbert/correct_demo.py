@@ -21,12 +21,12 @@ def main():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--bert_model_dir", default=config.macbert_model_dir,
+    parser.add_argument("--macbert_model_dir", default=config.macbert_model_dir,
                         type=str,
-                        help="Bert pre-trained model dir")
+                        help="MacBert pre-trained model dir")
     args = parser.parse_args()
 
-    nlp = MacBertCorrector(args.bert_model_dir).macbert_correct
+    nlp = MacBertCorrector(args.macbert_model_dir).macbert_correct
 
     i = nlp('今天新情很好')
     print(i)

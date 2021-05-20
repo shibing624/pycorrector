@@ -11,6 +11,7 @@
 # - [text-generation](https://github.com/shibing624/text-generation)
 """
 
+import os
 import sys
 
 import pandas as pd
@@ -58,7 +59,7 @@ def evaluate_seq2seq_model(model, data, device, loss_fn):
     print("Evaluation loss", total_loss / total_num_words)
 
 
-def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=20):
+def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=20):
     best_loss = 1e3
     train_data, dev_data = train_test_split(train_data, test_size=0.1, shuffle=True)
 
@@ -101,6 +102,7 @@ def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_pat
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
             if is_best:
+                model_path = os.path.join(model_dir, 'seq2seq.pth')
                 torch.save(model.state_dict(), model_path)
                 print('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
             if dev_data:
@@ -128,7 +130,7 @@ def evaluate_convseq2seq_model(model, data, device, loss_fn):
     print("Evaluation loss:{:.4f}".format(last_loss))
 
 
-def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=20):
+def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=20):
     print('start train...')
     best_loss = 1e3
     train_data, dev_data = train_test_split(train_data, test_size=0.1, shuffle=True)
@@ -167,6 +169,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
             if is_best:
+                model_path = os.path.join(model_dir, 'convseq2seq.pth')
                 torch.save(model.state_dict(), model_path)
                 print('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
             if dev_data:
@@ -174,7 +177,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
 
 
 def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs,
-          src_vocab_path, trg_vocab_path, model_path, max_length, use_segment):
+          src_vocab_path, trg_vocab_path, model_dir, max_length, use_segment):
     arch = arch.lower()
     if arch in ['seq2seq', 'convseq2seq']:
         source_texts, target_texts = create_dataset(train_path, None)
@@ -208,7 +211,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
             loss_fn = LanguageModelCriterion().to(device)
             optimizer = torch.optim.Adam(model.parameters())
 
-            train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
+            train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=epochs)
         else:
             # Conv seq2seq model
             trg_pad_idx = trg_2_ids[PAD_TOKEN]
@@ -225,7 +228,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
             loss_fn = nn.CrossEntropyLoss(ignore_index=trg_pad_idx)
             optimizer = torch.optim.Adam(model.parameters())
 
-            train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_path, epochs=epochs)
+            train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=epochs)
     elif arch == 'bertseq2seq':
         # Bert Seq2seq model
         model_args = {
@@ -243,7 +246,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
             "use_multiprocessing": False,
             "save_best_model": True,
             "max_length": max_length if max_length else 128,  # The maximum length of the sequence to be generated.
-            "output_dir": "./output/bertseq2seq/",
+            "output_dir": model_dir if model_dir else "./output/bertseq2seq/",
         }
 
         # encoder_type=None, encoder_name=None, decoder_name=None, encoder_decoder_type=None, encoder_decoder_name=None,
@@ -273,7 +276,7 @@ if __name__ == '__main__':
           config.epochs,
           config.src_vocab_path,
           config.trg_vocab_path,
-          config.model_path,
+          config.model_dir,
           config.max_length,
           config.use_segment
           )

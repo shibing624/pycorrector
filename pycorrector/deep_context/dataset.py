@@ -4,8 +4,8 @@
 @description: build torchtext dataset
 """
 
-from pycorrector.deep_context.data_reader import PAD_TOKEN, UNK_TOKEN, SOS_TOKEN, EOS_TOKEN, read_vocab, save_word_dict, \
-    load_word_dict, one_hot, gen_examples
+from .data_reader import PAD_TOKEN, UNK_TOKEN, SOS_TOKEN, EOS_TOKEN, read_vocab, save_word_dict, load_word_dict, \
+    one_hot, gen_examples
 
 
 class Dataset(object):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing(xuming624@qq.com)
 # Brief:
+import os
 import sys
 from codecs import open
 from xml.dom import minidom
@@ -54,6 +55,8 @@ def get_data_file(path, use_segment, segment_type):
 
 
 def _save_data(data_list, data_path):
+    dirname = os.path.dirname(data_path)
+    os.makedirs(dirname, exist_ok=True)
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for src, dst in data_list:

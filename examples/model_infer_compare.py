@@ -53,15 +53,15 @@ def main():
     m_macbert = macbert_corrector.MacBertCorrector()
     for line in error_sentences:
         correct_sent, err = m_rule.correct(line)
-        print("rule original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("rule: {} => {}, err:{}".format(line, correct_sent, err))
         correct_sent, err = m_bert.bert_correct(line)
-        print("bert original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("bert: {} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_electra.electra_correct(line)
-        print("electra original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("electra: {} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_ernie.ernie_correct(line)
-        print("ernie original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("ernie: {} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_macbert.macbert_correct(line)
-        print("macbert original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+        print("macbert: {} => {}, err:{}".format(line, correct_sent, err))
         print()
 
 

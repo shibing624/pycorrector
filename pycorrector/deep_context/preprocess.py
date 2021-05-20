@@ -28,6 +28,8 @@ def parse_xml_file(path):
 
 
 def save_data_list(data_list, data_path):
+    dirname = os.path.dirname(data_path)
+    os.makedirs(dirname, exist_ok=True)
     with open(data_path, 'w', encoding='utf-8') as f:
         count = 0
         for line in data_list:
@@ -37,9 +39,6 @@ def save_data_list(data_list, data_path):
 
 
 if __name__ == '__main__':
-    output_dir = os.path.dirname(config.train_path)
-    if output_dir and not os.path.exists(output_dir):
-        os.makedirs(output_dir)
     # train data
     train_words = []
     for path in config.raw_train_paths:
