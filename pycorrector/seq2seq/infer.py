@@ -57,40 +57,46 @@ class Inference(object):
             # encoder_type=None, encoder_name=None, decoder_name=None
             self.model = Seq2SeqModel("bert", "output/bertseq2seq/encoder",
                                       "output/bertseq2seq/decoder", use_cuda=use_cuda)
-            print(self.model)
+            print('use bert seq2seq model.')
         else:
             logger.error('error arch: {}'.format(arch))
             raise ValueError("Model arch choose error. Must use one of seq2seq model.")
         self.arch = arch
         self.max_length = max_length
 
-    def predict(self, query):
+    def predict(self, sentence_list):
         result = []
-        tokens = [token.lower() for token in query]
-        tokens = [SOS_TOKEN] + tokens + [EOS_TOKEN]
-        src_ids = [self.src_2_ids[i] for i in tokens if i in self.src_2_ids]
+        if self.arch in ['seq2seq', 'convseq2seq']:
+            for query in sentence_list:
+                out = []
+                tokens = [token.lower() for token in query]
+                tokens = [SOS_TOKEN] + tokens + [EOS_TOKEN]
+                src_ids = [self.src_2_ids[i] for i in tokens if i in self.src_2_ids]
 
-        sos_idx = self.trg_2_ids[SOS_TOKEN]
-        if self.arch == 'seq2seq':
-            src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
-            src_tensor_len = torch.from_numpy(np.array([len(src_ids)])).long().to(device)
-            sos_tensor = torch.Tensor([[self.trg_2_ids[SOS_TOKEN]]]).long().to(device)
-            translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_tensor, self.max_length)
-            translation = [self.id_2_trgs[i] for i in translation.data.cpu().numpy().reshape(-1) if i in self.id_2_trgs]
-        elif self.arch == 'convseq2seq':
-            src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
-            translation, attn = self.model.translate(src_tensor, sos_idx)
-            translation = [self.id_2_trgs[i] for i in translation if i in self.id_2_trgs]
+                sos_idx = self.trg_2_ids[SOS_TOKEN]
+                if self.arch == 'seq2seq':
+                    src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
+                    src_tensor_len = torch.from_numpy(np.array([len(src_ids)])).long().to(device)
+                    sos_tensor = torch.Tensor([[self.trg_2_ids[SOS_TOKEN]]]).long().to(device)
+                    translation, attn = self.model.translate(src_tensor, src_tensor_len, sos_tensor, self.max_length)
+                    translation = [self.id_2_trgs[i] for i in translation.data.cpu().numpy().reshape(-1) if
+                                   i in self.id_2_trgs]
+                else:
+                    src_tensor = torch.from_numpy(np.array(src_ids).reshape(1, -1)).long().to(device)
+                    translation, attn = self.model.translate(src_tensor, sos_idx)
+                    translation = [self.id_2_trgs[i] for i in translation if i in self.id_2_trgs]
+                for word in translation:
+                    if word != EOS_TOKEN:
+                        out.append(word)
+                    else:
+                        break
+                result.append(''.join(out))
         elif self.arch == 'bertseq2seq':
-            translation = self.model.predict([query])
+            corrected_sents = self.model.predict(sentence_list)
+            result = [i.replace(' ', '') for i in corrected_sents]
         else:
-            translation = ''
-        for word in translation:
-            if word != EOS_TOKEN:
-                result.append(word)
-            else:
-                break
-        return ''.join(result)
+            raise ValueError('error arch.')
+        return result
 
 
 if __name__ == "__main__":
@@ -111,9 +117,10 @@ if __name__ == "__main__":
         '他们只能有两个选择：接受降新或自动离职。',
         '王天华开心得一直说话。'
     ]
-    for id, q in enumerate(inputs):
-        print('input  :', q)
-        print('predict:', m.predict(q))
+    outputs = m.predict(inputs)
+    for a, b in zip(inputs, outputs):
+        print('input  :', a)
+        print('predict:', b)
         print()
 # result:
 # input:由我起开始做。
