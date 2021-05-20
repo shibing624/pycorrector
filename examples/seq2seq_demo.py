@@ -4,7 +4,7 @@
 @description: 
 """
 import argparse
-
+import os
 import sys
 
 sys.path.append("..")
@@ -63,6 +63,7 @@ def main():
     print(args)
 
     # Preprocess
+    os.makedirs(args.model_dir, exist_ok=True)
     args.use_segment = False if args.no_segment else True
     data_list = []
     if args.dataset == 'sighan':
