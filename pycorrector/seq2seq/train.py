@@ -177,7 +177,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
 
 
 def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs,
-          src_vocab_path, trg_vocab_path, model_dir, max_length, use_segment):
+          src_vocab_path, trg_vocab_path, model_dir, max_length, use_segment, model_name_or_path):
     arch = arch.lower()
     os.makedirs(model_dir, exist_ok=True)
     if arch in ['seq2seq', 'convseq2seq']:
@@ -250,9 +250,10 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
             "output_dir": model_dir if model_dir else "./output/bertseq2seq/",
         }
 
-        # encoder_type=None, encoder_name=None, decoder_name=None, encoder_decoder_type=None, encoder_decoder_name=None,
         use_cuda = True if torch.cuda.is_available() else False
-        model = Seq2SeqModel("bert", "bert-base-chinese", "bert-base-chinese", args=model_args, use_cuda=use_cuda)
+        # encoder_type=None, encoder_name=None, decoder_name=None
+        # encoder_name="bert-base-chinese"
+        model = Seq2SeqModel("bert", model_name_or_path, model_name_or_path, args=model_args, use_cuda=use_cuda)
 
         print('start train bertseq2seq ...')
         data = load_bert_data(train_path, use_segment)
@@ -279,5 +280,6 @@ if __name__ == '__main__':
           config.trg_vocab_path,
           config.model_dir,
           config.max_length,
-          config.use_segment
+          config.use_segment,
+          config.model_name_or_path,
           )

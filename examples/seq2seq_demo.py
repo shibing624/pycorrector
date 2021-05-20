@@ -17,9 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     # Required parameters
     parser.add_argument("--raw_train_path",
-                        default="../pycorrector/data/cn/sighan_2015.tsv",
-                        type=str,
-                        required=True,
+                        default="../pycorrector/data/cn/sighan_2015.tsv", type=str,
                         help="The input data dir. Should contain the .tsv files (or other data files) for the task.",
                         )
     parser.add_argument("--dataset", default="sighan", type=str,
@@ -29,15 +27,12 @@ def main():
     parser.add_argument("--segment_type", default="char", type=str,
                         help="Segment data type, selected in list: " + ", ".join(["char", "word"]))
     parser.add_argument("--model_name_or_path",
-                        default="bert-base-chinese",
-                        type=str,
+                        default="bert-base-chinese", type=str,
                         help="Path to pretrained model or model identifier from huggingface.co/models",
                         )
     parser.add_argument("--model_dir", default="output/bertseq2seq/", type=str, help="Dir for model save.")
     parser.add_argument("--arch",
-                        default="bertseq2seq",
-                        type=str,
-                        required=True,
+                        default="bertseq2seq", type=str,
                         help="The name of the task to train selected in the list: " + ", ".join(
                             ['seq2seq', 'convseq2seq', 'bertseq2seq']),
                         )
@@ -47,9 +42,7 @@ def main():
     parser.add_argument("--trg_vocab_path", default="output/vocab_target.txt", type=str, help="Vocab file for trg.")
 
     # Other parameters
-    parser.add_argument("--max_length",
-                        default=128,
-                        type=int,
+    parser.add_argument("--max_length", default=128, type=int,
                         help="The maximum total input sequence length after WordPiece tokenization. \n"
                              "Sequences longer than this will be truncated, sequences shorter padded.",
                         )
@@ -84,7 +77,8 @@ def main():
           args.trg_vocab_path,
           args.model_dir,
           args.max_length,
-          args.use_segment
+          args.use_segment,
+          args.model_name_or_path,
           )
 
     # Predict

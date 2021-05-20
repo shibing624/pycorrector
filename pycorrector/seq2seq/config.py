@@ -28,6 +28,8 @@ test_path = os.path.join(output_dir, 'test.txt')
 dataset = 'sighan'  # 'sighan' or 'cged'
 arch = 'bertseq2seq'  # 'seq2seq' or 'convseq2seq' or 'bertseq2seq'
 
+model_name_or_path = "bert-base-chinese"  # for bertseq2seq
+
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
