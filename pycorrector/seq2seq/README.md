@@ -20,6 +20,18 @@ transformers
 tensorboardX
 ```
 
+## Demo
+
+- bertseq2seq demo
+
+示例[seq2seq_demo.py](../../examples/seq2seq_demo.py)
+```
+cd ../../examples
+python seq2seq_demo.py --do_train --do_predict
+```
+
+## Detail
+
 ### Preprocess
 
 
