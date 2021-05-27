@@ -7,7 +7,7 @@
 import math
 import torch
 import torch.nn as nn
-from pycorrector.deep_context.loss import NegativeSampling
+from .loss import NegativeSampling
 
 
 class Context2vec(nn.Module):
@@ -21,7 +21,7 @@ class Context2vec(nn.Module):
                  dropout,
                  pad_index,
                  device,
-                 inference):
+                 is_inference):
 
         super(Context2vec, self).__init__()
         self.vocab_size = vocab_size
@@ -30,7 +30,7 @@ class Context2vec(nn.Module):
         self.n_layers = n_layers
         self.use_mlp = use_mlp
         self.device = device
-        self.inference = inference
+        self.is_inference = is_inference
         self.rnn_output_size = hidden_size
 
         self.drop = nn.Dropout(dropout)
@@ -91,7 +91,7 @@ class Context2vec(nn.Module):
         output_l2r = output_l2r[:, :-1, :]
         output_r2l = output_r2l[:, :-1, :].flip(1)
 
-        if self.inference:
+        if self.is_inference:
             # user_input: I like [] .
             # target_pos: 2 (starts from zero)
 
@@ -104,8 +104,6 @@ class Context2vec(nn.Module):
                 output_l2r = output_l2r[0, target_pos]
                 output_r2l = output_r2l[0, target_pos]
                 c_i = self.MLP(torch.cat((output_l2r, output_r2l), dim=0))
-            else:
-                raise NotImplementedError
             return c_i
         else:
             # on a training phase

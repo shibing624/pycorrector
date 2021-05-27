@@ -52,14 +52,13 @@ def main():
     parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
     parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
     parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
-    parser.add_argument("--epochs", default=1, type=int, help="Epoch num.")
+    parser.add_argument("--epochs", default=10, type=int, help="Epoch num.")
 
     args = parser.parse_args()
     print(args)
 
     # Preprocess
     os.makedirs(args.model_dir, exist_ok=True)
-    print('device: %s' % device)
 
     # Train
     if args.do_train:

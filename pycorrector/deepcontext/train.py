@@ -13,16 +13,17 @@ import torch
 from torch import optim
 
 sys.path.append('../..')
-from pycorrector.deep_context import config
-from pycorrector.deep_context.data_reader import write_config
-from pycorrector.deep_context.model import Context2vec
-from pycorrector.deep_context.dataset import Dataset
+from pycorrector.deepcontext import config
+from pycorrector.deepcontext.data_reader import write_config
+from pycorrector.deepcontext.model import Context2vec
+from pycorrector.deepcontext.dataset import Dataset
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def train(train_path,
-          model_path,
+          model_dir,
           vocab_path,
-          use_mlp=True,
           batch_size=64,
           epochs=3,
           word_embed_size=200,
@@ -30,14 +31,8 @@ def train(train_path,
           learning_rate=0.0001,
           n_layers=1,
           min_freq=1,
-          dropout=0.0,
-          gpu_id=0):
-    use_cuda = torch.cuda.is_available() and gpu_id > -1
-    device = torch.device('cpu')
-    if use_cuda:
-        device = torch.device('cuda:{}'.format(gpu_id))
-        print("use gpu, gpu_id={}".format(gpu_id))
-
+          dropout=0.0):
+    print("device: {}".format(device))
     if not os.path.isfile(train_path):
         raise FileNotFoundError
 
@@ -53,11 +48,11 @@ def train(train_path,
                         word_embed_size=word_embed_size,
                         hidden_size=hidden_size,
                         n_layers=n_layers,
-                        use_mlp=use_mlp,
+                        use_mlp=True,
                         dropout=dropout,
                         pad_index=dataset.pad_index,
                         device=device,
-                        inference=False).to(device)
+                        is_inference=False).to(device)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     print('batch_size:', batch_size, 'epochs:', epochs, 'word_embed_size:', word_embed_size, 'hidden_size:',
@@ -65,13 +60,13 @@ def train(train_path,
     print('model:', model)
 
     # save model config
-    output_config_file = model_path + '.config.json'
+    output_config_file = os.path.join(model_dir, 'config.json')
     write_config(output_config_file,
                  vocab_size=len(dataset.vocab_2_ids),
                  word_embed_size=word_embed_size,
                  hidden_size=hidden_size,
                  n_layers=n_layers,
-                 use_mlp=use_mlp,
+                 use_mlp=True,
                  dropout=dropout,
                  pad_index=dataset.pad_index,
                  pad_token=dataset.pad_token,
@@ -95,7 +90,6 @@ def train(train_path,
         cur_loss = 0
         for it, (mb_x, mb_x_len) in enumerate(dataset.train_data):
             sentence = torch.from_numpy(mb_x).to(device).long()
-            sentence_len = torch.from_numpy(mb_x_len).to(device).long()
 
             target = sentence[:, 1:-1]
             if target.size(0) == 0:
@@ -128,20 +122,15 @@ def train(train_path,
         print('epoch:[{}/{}], total_loss:[{}], best_cur_loss:[{}]'
               .format(epoch + 1, epochs, total_loss.item(), best_loss))
         if is_best:
-            save_checkpoint(model, optimizer, model_path)
-            print('epoch:{}, save new bert model:{}'.format(epoch + 1, model_path))
-
-
-def save_checkpoint(model, optimizer, model_path):
-    torch.save(model.state_dict(), model_path)
-    torch.save(optimizer.state_dict(), model_path + '_optim')
+            torch.save(model.state_dict(), os.path.join(model_dir, 'model.pth'))
+            torch.save(optimizer.state_dict(), os.path.join(model_dir, 'model_optimizer.pth'))
+            print('epoch:{}, save new bert model:{}'.format(epoch + 1, model_dir))
 
 
 if __name__ == "__main__":
     train(config.train_path,
           config.model_path,
           config.vocab_path,
-          config.use_mlp,
           config.batch_size,
           config.epochs,
           config.word_embed_size,
@@ -149,6 +138,5 @@ if __name__ == "__main__":
           config.learning_rate,
           config.n_layers,
           config.min_freq,
-          config.dropout,
-          config.gpu_id
+          config.dropout
           )

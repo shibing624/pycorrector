@@ -177,6 +177,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
 
 def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs,
           src_vocab_path, trg_vocab_path, model_dir, max_length, use_segment, model_name_or_path):
+    print("device: {}".format(device))
     arch = arch.lower()
     os.makedirs(model_dir, exist_ok=True)
     if arch in ['seq2seq', 'convseq2seq']:
