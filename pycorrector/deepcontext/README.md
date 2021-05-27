@@ -18,6 +18,18 @@
 pip install torch>=1.3.1
 ```
 
+## Demo
+
+- deepcontext demo
+
+示例[deepcontext_demo.py](../../examples/deepcontext_demo.py)
+```
+cd ../../examples
+python deepcontext_demo.py --do_train --do_predict
+```
+
+## Detail
+
 ### Preprocess
 
 
