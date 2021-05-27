@@ -6,6 +6,7 @@
 import operator
 import os
 import sys
+import time
 
 import torch
 from torch import optim
@@ -13,17 +14,21 @@ from torch import optim
 sys.path.append('../..')
 from pycorrector.deepcontext.model import Context2vec
 from pycorrector.deepcontext.data_reader import read_config, load_word_dict
-
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.tokenizer import split_text_by_maxlen
+from pycorrector.corrector import Corrector
+from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-class Inference(object):
+class Inference(Corrector):
     def __init__(self, model_dir, vocab_path):
+        super(Inference, self).__init__()
+        self.name = 'bert_corrector'
+        t1 = time.time()
         # device
-        print("device: {}".format(device))
+        logger.debug("device: {}".format(device))
         model, config_dict = self._read_model(model_dir)
         # norm weight
         model.norm_embedding_weight(model.criterion.W)
@@ -35,6 +40,7 @@ class Inference(object):
         self.model_dir = model_dir
         self.vocab_path = vocab_path
         self.mask = "[]"
+        logger.debug('Loaded deep context model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
     @staticmethod
     def _read_model(model_dir):
@@ -88,6 +94,7 @@ class Inference(object):
     def predict(self, text, **kwargs):
         details = []
         text_new = ''
+        self.check_corrector_initialized()
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句
@@ -99,13 +106,21 @@ class Inference(object):
                 if is_chinese_string(s):
                     sentence_lst = list(blk_new + blk[idx:])
                     sentence_lst[idx] = self.mask
-                    # 预测，默认取top5
+                    # 预测，默认取top10
                     predict_words = self.predict_mask_token(sentence_lst, idx, k=10)
-                    if predict_words and (s not in predict_words):
-                        # 取得top1正确的词
-                        token_str = predict_words[0][0]
-                        details.append((s, token_str, start_idx + idx, start_idx + idx + 1))
-                        s = token_str
+                    top_tokens = []
+                    for w, _ in predict_words:
+                        top_tokens.append(w)
+
+                    if top_tokens and (s not in top_tokens):
+                        # 取得所有可能正确的词
+                        candidates = self.generate_items(s)
+                        if candidates:
+                            for token_str in top_tokens:
+                                if token_str in candidates:
+                                    details.append((s, token_str, start_idx + idx, start_idx + idx + 1))
+                                    s = token_str
+                                    break
                 blk_new += s
             text_new += blk_new
         details = sorted(details, key=operator.itemgetter(2))

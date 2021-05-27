@@ -4,8 +4,10 @@
 @description: 
 """
 
+import sys
 import unittest
 
+sys.path.append('..')
 import pycorrector
 
 
