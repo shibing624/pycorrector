@@ -61,5 +61,5 @@ if __name__ == '__main__':
     else:
         for path in config.cged_train_paths:
             data_list.extend(parse_xml_file(path, config.use_segment, config.segment_type))
-
+    # save data
     save_corpus_data(data_list, config.train_path)
