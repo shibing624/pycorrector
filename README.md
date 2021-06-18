@@ -93,6 +93,9 @@ PS：[网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 1. 现在的处理手段，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法上有更大的突破。
 2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
 
+## Demo
+
+http://42.193.145.218/product/corrector/
 
 ## Evaluate
 <details>

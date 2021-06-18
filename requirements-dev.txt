@@ -7,4 +7,3 @@ tqdm==4.50.2
 tokenizers==0.9.4
 transformers
 tensorboardX
-# fairseq>=0.9.0

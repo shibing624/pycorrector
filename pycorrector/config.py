@@ -7,9 +7,8 @@ import os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # -----用户目录，存储模型文件-----
-USER_DATA_DIR = os.path.expanduser('~/.pycorrector/datasets')
-if not os.path.exists(USER_DATA_DIR):
-    os.makedirs(USER_DATA_DIR)
+USER_DATA_DIR = os.path.expanduser('~/.pycorrector/datasets/')
+os.makedirs(USER_DATA_DIR, exist_ok=True)
 language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
 
 # -----词典文件路径-----
