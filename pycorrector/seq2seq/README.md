@@ -7,8 +7,8 @@
 * Luong Attention
 * Conv Seq2Seq model, GPU并行计算，训练加速
 * 训练加速tricks：dataset bucketing, prefetching, token-based batching, gradients accumulation
-* beam search
-* chinese samples: sighan2015 sample data, CGED sample data
+* Beam Search
+* Chinese Samples: sighan2015 sample data, CGED sample data
 
 ## Usage
 
@@ -16,7 +16,7 @@
 * pip安装依赖包
 ```
 torch>=1.4.0
-transformers
+transformers>=4.4.2
 tensorboardX
 ```
 

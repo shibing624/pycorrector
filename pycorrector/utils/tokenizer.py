@@ -15,6 +15,8 @@ import re
 import jieba
 from jieba import posseg
 
+from pycorrector.utils.text_utils import is_chinese_string
+
 jieba.setLogLevel(log_level="ERROR")
 
 # \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
@@ -58,6 +60,19 @@ def split_text_by_maxlen(text, maxlen=512):
     return result
 
 
+def tokenize_words(text):
+    """Word segmentation"""
+    output = []
+    sentences = split_2_short_text(text, include_symbol=True)
+    for sentence, idx in sentences:
+        if is_chinese_string(sentence):
+            import jieba
+            output.extend(jieba.lcut(sentence))
+        else:
+            output.extend(whitespace_tokenize(sentence))
+    return output
+
+
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a peice of text."""
     tokens = []
@@ -67,6 +82,25 @@ def whitespace_tokenize(text):
     for sent, idx in sents:
         tokens.extend(sent.split())
     return tokens
+
+
+class FullTokenizer(object):
+    """Given Full tokenization."""
+
+    def __init__(self, lower=True):
+        self.lower = lower
+
+    def tokenize(self, text):
+        """Tokenizes a piece of text."""
+        res = []
+        if len(text) == 0:
+            return res
+
+        if self.lower:
+            text = text.lower()
+        # for the multilingual and Chinese
+        res = tokenize_words(text)
+        return res
 
 
 def segment(sentence, cut_type='word', pos=False):
