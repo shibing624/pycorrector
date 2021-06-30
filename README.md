@@ -127,16 +127,24 @@ http://42.193.145.218/product/corrector/
 ## Install
 * 全自动安装：pip install pycorrector
 * 半自动安装：
-```
+```shell
 git clone https://github.com/shibing624/pycorrector.git
 cd pycorrector
 python setup.py install
 ```
 
 
-通过以上两种方法的任何一种完成安装都可以。如果不想安装，可以下载[github源码包](https://github.com/shibing624/pycorrector/archive/master.zip)，安装下面依赖再使用。
+通过以上三种方法的任何一种完成安装都可以。如果不想安装依赖包，直接使用docker拉取安装好的部署环境即可。
 
 #### 安装依赖
+* docker使用：
+```shell
+docker pull shibing624/pycorrector
+docker run -it shibing624/pycorrector /bin/bash
+```
+后续调用python3使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)，示例：
+![docker](docs/docker.png)
+
 * kenlm安装
 ```
 pip install https://github.com/kpu/kenlm/archive/master.zip
