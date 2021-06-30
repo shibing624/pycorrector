@@ -142,8 +142,10 @@ python setup.py install
 docker pull shibing624/pycorrector
 docker run -it shibing624/pycorrector /bin/bash
 ```
-后续调用python3使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)，示例：
-![docker](docs/docker.png)
+后续调用python3使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)。
+
+使用示例：
+![docker](docs/git_image/docker.png)
 
 * kenlm安装
 ```
