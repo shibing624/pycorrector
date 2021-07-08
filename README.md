@@ -139,7 +139,7 @@ python setup.py install
 
 * docker使用
 ```shell
-docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.1
+docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 ```
 后续调用python3使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)。
 
