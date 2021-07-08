@@ -10,7 +10,6 @@ import sys
 sys.path.append("../")
 
 import pycorrector
-
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -30,11 +29,15 @@ def main(args):
         # recall_rate:0.3645833333333333, recall_right_count:35, recall_total_count:96, spend_time:503 s
         from pycorrector.utils.eval import eval_sighan_2015_by_bert
         eval_sighan_2015_by_bert()
+    if args.data == 'sighan_15' and args.model == 'macbert':
+        from pycorrector.utils.eval import eval_sighan_2015_by_macbert
+        eval_sighan_2015_by_macbert()
     if args.data == 'sighan_15' and args.model == 'ernie':
         # right_rate:0.297029702970297, right_count:30, total_count:101;
         # recall_rate:0.28125, recall_right_count:27, recall_total_count:96, spend_time:655 s
         from pycorrector.utils.eval import eval_sighan_2015_by_ernie
         eval_sighan_2015_by_ernie()
+
     if args.data == 'corpus500' and args.model == 'rule':
         # right_rate:0.486, right_count:243, total_count:500;
         # recall_rate:0.18, recall_right_count:54, recall_total_count:300, spend_time:78 s
@@ -49,6 +52,10 @@ def main(args):
         # 评估bert模型的纠错准召率
         out_file = os.path.join(pwd_path, './eval_corpus_error_by_bert.json')
         eval_corpus500_by_bert(eval_data_path, output_eval_path=out_file)
+    if args.data == 'corpus500' and args.model == 'macbert':
+        from pycorrector.utils.eval import eval_corpus500_by_macbert, eval_data_path
+        out_file = os.path.join(pwd_path, './eval_corpus_error_by_macbert.json')
+        eval_corpus500_by_macbert(eval_data_path, output_eval_path=out_file)
     if args.data == 'corpus500' and args.model == 'ernie':
         # right_rate:0.598, right_count:299, total_count:500;
         # recall_rate:0.41333333333333333, recall_right_count:124, recall_total_count:300, spend_time:6960 s
@@ -62,6 +69,6 @@ if __name__ == '__main__':
     demo()
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=str, default='sighan_15', help='evaluate dataset, sighan_15/corpus500')
-    parser.add_argument('--model', type=str, default='rule', help='which model to evaluate, rule/bert/ernie')
+    parser.add_argument('--model', type=str, default='rule', help='which model to evaluate, rule/bert/macbert/ernie')
     args = parser.parse_args()
     main(args)

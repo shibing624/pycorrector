@@ -116,11 +116,11 @@ http://42.193.145.218/product/corrector/
 | sighan_15 | rule | cpu | 17.98% | 15.37% | 11 | 9 |
 | sighan_15 | bert | gpu | 37.62% | 36.46% | 95 | 1.05 |
 | sighan_15 | ernie | gpu | 29.70% | 28.13% | 102 | 0.98 |
-| sighan_15 | macbert | gpu | 63.64% | 63.64% | - | - |
+| sighan_15 | macbert | gpu | 63.64% | 63.64% | 2 | 50 |
 | corpus500 | rule | cpu | 48.60% | 28.13% | 11 | 9 |
 | corpus500 | bert | gpu | 58.60% | 35.00% | 95 | 1.05 |
 | corpus500 | ernie | gpu | 59.80% | 41.33% | 102 | 0.98 |
-| corpus500 | macbert | gpu | 56.20% | 42.67% | - | - |
+| corpus500 | macbert | gpu | 56.20% | 42.67% | 2 | 50 |
 
 </details>
 
@@ -404,7 +404,7 @@ pip install -r requirements-dev.txt
 
 基于MacBert预训练模型的纠错
 
-示例[macbert_demo.py](examples/macbert_demo.py)
+示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[README](./pycorrector/macbert/README.md)
 
 1. 模型下载
 
@@ -452,6 +452,7 @@ query:机七学习是人工智能领遇最能体现智能的一个分知 => 机�
 query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的河面上, err:[]
 query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[('明', '名', 6, 7)]
 ```
+
 
 <details>
 <summary>查看Seq2Seq模型</summary>

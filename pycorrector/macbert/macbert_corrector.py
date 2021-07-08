@@ -12,14 +12,14 @@ import time
 sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
-from pycorrector.corrector import Corrector
+#from pycorrector.corrector import Corrector
 from pycorrector.macbert.correction_pipeline import CorrectionPipeline
 from pycorrector import config
 from pycorrector.transformers import BertTokenizer, BertForMaskedLM
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 
-class MacBertCorrector(Corrector):
+class MacBertCorrector(object):
     def __init__(self, macbert_model_dir=config.macbert_model_dir):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
@@ -43,7 +43,7 @@ class MacBertCorrector(Corrector):
         :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
         """
         details = []
-        self.check_corrector_initialized()
+        # self.check_corrector_initialized()
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句

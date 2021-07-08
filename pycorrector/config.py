@@ -34,9 +34,11 @@ en_dict_path = os.path.join(pwd_path, 'data/en/en.json.gz')
 # -----深度模型文件路径 -----
 # bert模型文件夹路径
 bert_model_dir = os.path.join(USER_DATA_DIR, 'bert_models/chinese_finetuned_lm/')
+os.makedirs(bert_model_dir, exist_ok=True)
 # ernie模型文件夹路径: /Users/name/.paddle-ernie-cache/
 # electra模型文件夹路径
 electra_D_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_discriminator_pytorch/")
 electra_G_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electra_base_generator_pytorch/")
 # macbert模型文件路径
 macbert_model_dir = os.path.join(USER_DATA_DIR, 'macbert_models/chinese_finetuned_correction/')
+os.makedirs(macbert_model_dir, exist_ok=True)
