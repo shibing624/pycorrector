@@ -286,7 +286,7 @@ class Detector(object):
         scores = scores.flatten()
         maybe_error_indices = np.where((y_score > threshold) & (scores < median))
         # 取全部疑似错误字的index
-        result = list(maybe_error_indices[0])
+        result = [int(i) for i in maybe_error_indices[0]]
         return result
 
     @staticmethod
