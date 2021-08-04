@@ -1,4 +1,3 @@
-[English](README.en.md) | 简体中文
 
 ![alt text](docs/pycorrector.png)
 
@@ -557,6 +556,8 @@ PS：
 ## Wechat Group
 
 微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。微信群，扫码加入。
+
+<img src="./docs/git_image/we_image.jpeg" width="200" />
 
 微信交流群满了，可以加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
 
