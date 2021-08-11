@@ -115,7 +115,7 @@ http://42.193.145.218/product/corrector/
 | sighan_15 | rule | cpu | 17.98% | 15.37% | 11 | 9 |
 | sighan_15 | bert | gpu | 37.62% | 36.46% | 95 | 1.05 |
 | sighan_15 | ernie | gpu | 29.70% | 28.13% | 102 | 0.98 |
-| sighan_15 | macbert | gpu | 63.64% | 63.64% | 2 | 50 |
+| **sighan_15** | **macbert** | **gpu** | **63.64%** | **63.64%** | **2** | **50** |
 | corpus500 | rule | cpu | 48.60% | 28.13% | 11 | 9 |
 | corpus500 | bert | gpu | 58.60% | 35.00% | 95 | 1.05 |
 | corpus500 | ernie | gpu | 59.80% | 41.33% | 102 | 0.98 |
@@ -208,7 +208,6 @@ import pycorrector
 error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
 correct_sent = pycorrector.correct(error_sentence_1)
 print(correct_sent)
-
 ```
 
 output:
@@ -224,7 +223,6 @@ error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
 pycorrector.enable_char_error(enable=False)
 correct_sent = pycorrector.correct(error_sentence_1)
 print(correct_sent)
-
 ```
 
 output:
@@ -242,6 +240,7 @@ output:
 - 加载自定义混淆集
 
 通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）错误补召回；2）误杀加白。
+
 示例[use_custom_confusion.py](examples/use_custom_confusion.py)
 
 ```python
@@ -259,7 +258,6 @@ print('*' * 42)
 pycorrector.set_custom_confusion_dict(path='./my_custom_confusion.txt')
 for line in error_sentences:
     print(pycorrector.correct(line))
-
 ```
 
 output:
@@ -296,7 +294,6 @@ model = Corrector(language_model_path=lm_path)
 
 corrected_sent, detail = model.correct('少先队员因该为老人让坐')
 print(corrected_sent, detail)
-
 ```
 
 output:
@@ -325,7 +322,6 @@ output:
 what happending? how to speling it, can you gorrect it?
 => what happening? how to spelling it, can you correct it?
 [('happending', 'happening', 5, 15), ('speling', 'spelling', 24, 31), ('gorrect', 'correct', 44, 51)]
-
 ```
 
 
@@ -355,7 +351,7 @@ output:
 
 - 命令行模式
 
-支持批量文本纠错。
+支持批量文本纠错
 ```
 python -m pycorrector -h
 usage: __main__.py [-h] -o OUTPUT [-n] [-d] input
@@ -371,7 +367,6 @@ optional arguments:
                         the output file path.
   -n, --no_char         disable char detect mode.
   -d, --detail          print detail info
-
 ```
 
 case：
