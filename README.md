@@ -548,15 +548,20 @@ PS：
 - [ ] 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
 - [ ] 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。
 
-## Wechat Group
 
-微信交流群，感兴趣的同学可以加入沟通NLP文本纠错相关技术，issues上回复不及时也可以在群里面提问。微信群，扫码加入。
+## Contact
 
-<img src="./docs/git_image/we_image.jpeg" width="200" />
+- Issue(建议)：[![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
+- 邮件我：xuming: xuming624@qq.com
+- 微信我：
+加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进NLP交流群。
 
-微信交流群满了，可以加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进群。
+<img src="docs/git_image/we_image.jpeg" width="200" /><img src="docs/git_image/wechat.jpeg" width="200" />
 
-<img src="./docs/git_image/wechat.jpeg" width="200" />
+感觉有收获可以支付宝打赏作者喝咖啡，有疑问请加微信群讨论：
+
+<img src="docs/zhifubao.png" width="150" /><img src="docs/wechat_zhifu.png" width="150" />
+
 
 ## Cite
 
