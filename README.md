@@ -553,14 +553,14 @@ PS：
 
 - Issue(建议)：[![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
 - 邮件我：xuming: xuming624@qq.com
-- 微信我：
-加我*微信号：xuming624, 备注：个人名称-NLP纠错* 进NLP交流群。
+- 微信我：加我*微信号：xuming624*, 进Python-NLP交流群，备注：*姓名-公司名-NLP*
 
-<img src="docs/git_image/we_image.jpeg" width="200" /><img src="docs/git_image/wechat.jpeg" width="200" />
+<img src="http://42.193.145.218/github_data/nlp_wechatgroup_erweima.png" width="200" /><img src="http://42.193.145.218/github_data/xm_wechat_erweima.png" width="200" />
 
-感觉有收获可以支付宝打赏作者喝咖啡，有疑问请加微信群讨论：
+读后有疑问请加微信群讨论，读后有收获可以打赏作者喝咖啡：
 
-<img src="docs/zhifubao.png" width="150" /><img src="docs/wechat_zhifu.png" width="150" />
+<img src="http://42.193.145.218/github_data/xm_wechat_zhifu.png" width="150" />
+
 
 
 ## Cite
