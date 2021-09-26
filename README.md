@@ -287,7 +287,7 @@ iPhone差 iPhoneX 100
 
 ```python
 from pycorrector import Corrector
-
+import os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 lm_path = os.path.join(pwd_path, './people2014corpus_chars.klm')
 model = Corrector(language_model_path=lm_path)
@@ -556,11 +556,6 @@ PS：
 - 微信我：加我*微信号：xuming624*, 进Python-NLP交流群，备注：*姓名-公司名-NLP*
 
 <img src="http://42.193.145.218/github_data/nlp_wechatgroup_erweima1.png" width="200" /><img src="http://42.193.145.218/github_data/xm_wechat_erweima.png" width="200" />
-
-读后有疑问请加微信群讨论，读后有收获可以打赏作者喝咖啡：
-
-<img src="http://42.193.145.218/github_data/xm_wechat_zhifu.png" width="150" />
-
 
 
 ## Cite

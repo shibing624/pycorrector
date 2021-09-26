@@ -4,6 +4,7 @@
 @description: 
 """
 import logging
+import os
 
 
 def get_logger(name, log_file=None, log_level='DEBUG'):
@@ -20,6 +21,8 @@ def get_logger(name, log_file=None, log_level='DEBUG'):
     formatter = logging.Formatter('[%(levelname)7s %(asctime)s %(module)s:%(lineno)4d] %(message)s',
                                   datefmt='%Y%m%d %I:%M:%S')
     if log_file:
+        dirname = os.path.dirname(log_file)
+        os.makedirs(dirname, exist_ok=True)
         f_handle = logging.FileHandler(log_file)
         f_handle.setFormatter(formatter)
         logger.addHandler(f_handle)
