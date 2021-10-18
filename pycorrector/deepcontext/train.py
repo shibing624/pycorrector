@@ -129,7 +129,7 @@ def train(train_path,
 
 if __name__ == "__main__":
     train(config.train_path,
-          config.model_path,
+          config.model_dir,
           config.vocab_path,
           config.batch_size,
           config.epochs,
