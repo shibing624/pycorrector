@@ -35,8 +35,8 @@ src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_dir = os.path.join(output_dir, 'model_{}'.format(dataset))
 
-batch_size = 8  # bertseq2seq is '8', other is '32'
-epochs = 40  # bertseq2seq is '40', other is '200'
+batch_size = 32
+epochs = 10  # bertseq2seq is '10', other is '200'
 max_length = 128
 
 gpu_id = 0

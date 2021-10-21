@@ -239,12 +239,12 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
             "train_batch_size": batch_size if batch_size else 8,
             "num_train_epochs": epochs if epochs else 10,
             "save_eval_checkpoints": False,
-            "save_model_every_epoch": False,
+            "save_model_every_epoch": True,
             "silent": False,
             "evaluate_generated_text": True,
-            "evaluate_during_training": False,
-            "evaluate_during_training_verbose": False,
-            "use_multiprocessing": False,
+            "evaluate_during_training": True,
+            "evaluate_during_training_verbose": True,
+            "use_multiprocessing": True,
             "save_best_model": True,
             "max_length": max_length if max_length else 128,  # The maximum length of the sequence to be generated.
             "output_dir": model_dir if model_dir else "./output/bertseq2seq/",
@@ -269,7 +269,6 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
 
 
 if __name__ == '__main__':
-    print('device: %s' % device)
     train(config.arch,
           config.train_path,
           config.batch_size,

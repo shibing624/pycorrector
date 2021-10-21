@@ -339,7 +339,7 @@ class Seq2SeqModel:
             show_running_loss=show_running_loss,
             eval_data=eval_data,
             verbose=verbose,
-            **kwargs,
+            **kwargs
         )
 
         self.save_model(self.args.output_dir, model=self.model)
