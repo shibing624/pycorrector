@@ -262,7 +262,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
 
         train_df = pd.DataFrame(train_data, columns=['input_text', 'target_text'])
         dev_df = pd.DataFrame(dev_data, columns=['input_text', 'target_text'])
-
+        os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"
         model.train_model(train_df, eval_data=dev_df)
     else:
         logger.error('error arch: {}'.format(arch))
