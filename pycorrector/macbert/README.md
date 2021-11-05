@@ -104,8 +104,28 @@ print(corrected_texts)
 
 ## 训练
 
+### 安装依赖
+```shell
+torch>=1.7.0
+pytorch-lightning>=1.1.2
+transformers==4.1.1
+```
+
+### 训练
+```shell
+cd macbert
+python train.py
+```
+### 预测
+```shell
+python infer.py
+```
+
+
+附上transformers官方fine-tune语言模型示例：
+
 * [transformers官方fine-tuning示例-ipynb](https://github.com/huggingface/notebooks/blob/master/examples/language_modeling.ipynb)
 * [transformers官方fine-tuning示例-colab](https://colab.research.google.com/github/huggingface/notebooks/blob/master/examples/language_modeling.ipynb#scrollTo=q-EIELH43l_T)
 
-如果需要训练，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
+如果需要训练SoftMaskedBertModel，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 
