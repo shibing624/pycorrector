@@ -76,8 +76,7 @@ def main():
                            _collate_fn=collator)
     ckpt_callback = ModelCheckpoint(
         monitor='val_loss',
-        dirpath=config.model_dir,
-        filename='{epoch:02d}-{val_loss:.5f}',
+        filename=config.ckpt_path,
         save_top_k=1,
         mode='min'
     )

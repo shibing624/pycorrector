@@ -35,8 +35,7 @@ pretrained_model = "hfl/chinese-macbert-base"  # official macbert pretrained mod
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
-model_dir = os.path.join(output_dir, 'model_{}'.format(dataset))
-ckpt_path = os.path.join(model_dir, 'epoch=02-val_loss=0.01904.ckpt')
+ckpt_path = os.path.join(output_dir, 'macbert4csc_model_{}.ckpt'.format(dataset))
 
 batch_size = 32
 test_batch_size = 8
