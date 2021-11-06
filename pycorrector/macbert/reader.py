@@ -39,30 +39,6 @@ class DataCollator:
         return ori_texts, cor_texts, det_labels
 
 
-def make_loaders(get_loader_fn, train_path='', valid_path='', test_path='',
-                 batch_size=32, test_batch_size=8,
-                 num_workers=4, **kwargs):
-    train_loader = None
-    if train_path and os.path.exists(train_path):
-        train_loader = get_loader_fn(train_path,
-                                     batch_size=batch_size,
-                                     shuffle=True,
-                                     num_workers=num_workers, **kwargs)
-    valid_loader = None
-    if valid_path and os.path.exists(valid_path):
-        valid_loader = get_loader_fn(valid_path,
-                                     batch_size=test_batch_size,
-                                     shuffle=False,
-                                     num_workers=num_workers, **kwargs)
-    test_loader = None
-    if test_path and os.path.exists(test_path):
-        test_loader = get_loader_fn(test_path,
-                                    batch_size=test_batch_size,
-                                    shuffle=False,
-                                    num_workers=num_workers, **kwargs)
-    return train_loader, valid_loader, test_loader
-
-
 class CscDataset(Dataset):
     def __init__(self, fp):
         with open(fp, 'r', encoding='utf-8') as f:
@@ -75,7 +51,27 @@ class CscDataset(Dataset):
         return self.data[index]['original_text'], self.data[index]['correct_text'], self.data[index]['wrong_ids']
 
 
-def get_csc_loader(fp, _collate_fn, **kwargs):
-    dataset = CscDataset(fp)
-    loader = DataLoader(dataset, collate_fn=_collate_fn, **kwargs)
-    return loader
+def make_loaders(collate_fn, train_path='', valid_path='', test_path='',
+                 batch_size=32, test_batch_size=8, num_workers=4):
+    train_loader = None
+    if train_path and os.path.exists(train_path):
+        train_loader = DataLoader(CscDataset(train_path),
+                                  batch_size=batch_size,
+                                  shuffle=True,
+                                  num_workers=num_workers,
+                                  collate_fn=collate_fn)
+    valid_loader = None
+    if valid_path and os.path.exists(valid_path):
+        valid_loader = DataLoader(CscDataset(valid_path),
+                                  batch_size=test_batch_size,
+                                  shuffle=False,
+                                  num_workers=num_workers,
+                                  collate_fn=collate_fn)
+    test_loader = None
+    if test_path and os.path.exists(test_path):
+        test_loader = DataLoader(CscDataset(test_path),
+                                 batch_size=test_batch_size,
+                                 shuffle=False,
+                                 num_workers=num_workers,
+                                 collate_fn=collate_fn)
+    return train_loader, valid_loader, test_loader

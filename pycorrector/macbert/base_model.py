@@ -111,12 +111,13 @@ class BaseTrainingEngine(pl.LightningModule):
 
 class CscTrainingModel(BaseTrainingEngine, ABC):
     """用于CSC的TrainingModel, 定义了训练及预测步骤"""
+
     def __init__(self, lr=5e-5, weight_decay=0.01, optimizer_name='AdamW',
                  loss_coefficient=0.3, device=torch.device('cuda'), *args, **kwargs):
         super().__init__(lr=lr, weight_decay=weight_decay, optimizer_name=optimizer_name, *args, **kwargs)
         # loss weight
         self.w = loss_coefficient
-        # self._device = device
+        self._device = device
 
     def training_step(self, batch, batch_idx):
         ori_text, cor_text, det_labels = batch
@@ -131,7 +132,7 @@ class CscTrainingModel(BaseTrainingEngine, ABC):
         det_y_hat = (outputs[2] > 0.5).long()
         cor_y_hat = torch.argmax((outputs[3]), dim=-1)
         encoded_x = self.tokenizer(cor_text, padding=True, return_tensors='pt')
-        # encoded_x.to(self._device)
+        encoded_x.to(self._device)
         cor_y = encoded_x['input_ids']
         cor_y_hat *= encoded_x['attention_mask']
 
@@ -175,7 +176,7 @@ class CscTrainingModel(BaseTrainingEngine, ABC):
 
     def predict(self, texts):
         inputs = self.tokenizer(texts, padding=True, return_tensors='pt')
-        # inputs.to(self._device)
+        inputs.to(self._device)
         with torch.no_grad():
             outputs = self.forward(texts)
             y_hat = torch.argmax(outputs[1], dim=-1)

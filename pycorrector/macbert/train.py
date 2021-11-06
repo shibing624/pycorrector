@@ -12,7 +12,7 @@ from transformers import BertTokenizer
 
 sys.path.append('../..')
 
-from pycorrector.macbert.reader import make_loaders, get_csc_loader, DataCollator
+from pycorrector.macbert.reader import make_loaders, DataCollator
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert import preprocess, config
@@ -77,10 +77,9 @@ def main():
     if config.ckpt_path and os.path.exists(config.ckpt_path):
         model.load_from_checkpoint(checkpoint_path=config.ckpt_path, map_location=device, tokenizer=tokenizer)
     # 加载数据
-    loaders = make_loaders(get_csc_loader, train_path=config.train_path, valid_path=config.valid_path,
+    loaders = make_loaders(collator, train_path=config.train_path, valid_path=config.valid_path,
                            test_path=config.test_path, batch_size=config.batch_size,
-                           test_batch_size=config.batch_size, num_workers=4,
-                           _collate_fn=collator)
+                           test_batch_size=config.batch_size, num_workers=4)
     ckpt_callback = ModelCheckpoint(
         monitor='val_loss',
         dirpath=config.model_dir,

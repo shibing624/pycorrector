@@ -21,16 +21,17 @@ class MacBert4Csc(CscTrainingModel, ABC):
         self.detection = nn.Linear(self.bert.config.hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
         self.tokenizer = tokenizer
+        self._device = device
 
     def forward(self, texts, cor_labels=None, det_labels=None):
         if cor_labels is not None:
             text_labels = self.tokenizer(cor_labels, padding=True, return_tensors='pt')['input_ids']
-            text_labels[text_labels == 0] = -100
-            # text_labels = text_labels.to(self._device)
+            text_labels[text_labels == 0] = -100  # -100计算损失时会忽略
+            text_labels = text_labels.to(self._device)
         else:
             text_labels = None
         encoded_text = self.tokenizer(texts, padding=True, return_tensors='pt')
-        # encoded_text.to(self._device)
+        encoded_text.to(self._device)
         bert_outputs = self.bert(**encoded_text, labels=text_labels, return_dict=True, output_hidden_states=True)
         # 检错概率
         prob = self.detection(bert_outputs.hidden_states[-1])
