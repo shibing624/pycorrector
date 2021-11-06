@@ -26,22 +26,21 @@ output_dir = os.path.join(pwd_path, 'output')
 # Training data path.
 train_path = os.path.join(output_dir, 'dev.json')
 # Validation data path.
-valid_path = ''
+valid_path = os.path.join(output_dir, 'dev.json')
 test_path = os.path.join(output_dir, 'dev.json')
 
 dataset = 'sighan'  # 'sighan' or 'cged'
+arch = 'SoftMaskedBert'
+pretrained_model = 'bert-base-chinese'  # official pretrained model, bert-base-chinese / hfl/chinese-macbert-base
 
-pretrained_model = "hfl/chinese-macbert-base"  # official macbert pretrained model
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
 trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
-ckpt_path = os.path.join(output_dir, 'macbert4csc_model_{}.ckpt'.format(dataset))
+model_dir = os.path.join(output_dir, 'model_{}'.format(dataset))
+ckpt_path = os.path.join(model_dir, 'epoch=02-val_loss=0.01904.ckpt')
 
 batch_size = 32
-test_batch_size = 8
-epochs = 10
-max_length = 128
+epochs = 1
 gpu_ids = [0]
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+os.makedirs(model_dir, exist_ok=True)

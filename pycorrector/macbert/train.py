@@ -14,6 +14,7 @@ sys.path.append('../..')
 
 from pycorrector.macbert.reader import make_loaders, get_csc_loader, DataCollator
 from pycorrector.macbert.macbert4csc import MacBert4Csc
+from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert import preprocess, config
 from pycorrector.utils.logger import logger
 
@@ -37,6 +38,7 @@ def train(model, loaders, ckpt_callback=None):
                          callbacks=[ckpt_callback])
     # 进行训练
     # train_loader中有数据
+    torch.autograd.set_detect_anomaly(True)
     if train_loader and len(train_loader) > 0:
         if valid_loader and len(valid_loader) > 0:
             trainer.fit(model, train_loader, valid_loader)
@@ -62,21 +64,27 @@ def main():
     if not os.path.exists(config.train_path):
         logger.debug('preprocess data')
         preprocess.main()
-    logger.info('load model')
+    logger.info(f'load model, model arch: {config.arch}')
     tokenizer = BertTokenizer.from_pretrained(config.pretrained_model)
     collator = DataCollator(tokenizer=tokenizer)
-    model = MacBert4Csc(tokenizer, pretrained_model=config.pretrained_model)
-
+    if config.arch == 'SoftMaskedBert':
+        model = SoftMaskedBert4Csc(tokenizer, loss_coefficient=0.8, device=device,
+                                   pretrained_model=config.pretrained_model)
+    else:
+        model = MacBert4Csc(tokenizer, loss_coefficient=0.3, device=device, pretrained_model=config.pretrained_model)
+    print(model)
     # 热启动
     if config.ckpt_path and os.path.exists(config.ckpt_path):
         model.load_from_checkpoint(checkpoint_path=config.ckpt_path, map_location=device, tokenizer=tokenizer)
     # 加载数据
-    loaders = make_loaders(get_csc_loader, train_path=config.train_path, valid_path='', test_path=config.test_path,
-                           batch_size=config.batch_size, test_batch_size=config.test_batch_size, num_workers=4,
+    loaders = make_loaders(get_csc_loader, train_path=config.train_path, valid_path=config.valid_path,
+                           test_path=config.test_path, batch_size=config.batch_size,
+                           test_batch_size=config.batch_size, num_workers=4,
                            _collate_fn=collator)
     ckpt_callback = ModelCheckpoint(
         monitor='val_loss',
-        filename=config.ckpt_path,
+        dirpath=config.model_dir,
+        filename='{epoch:02d}-{val_loss:.2f}',
         save_top_k=1,
         mode='min'
     )
