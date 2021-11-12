@@ -22,7 +22,8 @@ class FocalLoss(nn.Module):
     """
 
     def __init__(self, num_labels, activation_type='softmax', gamma=2.0, alpha=0.25, epsilon=1.e-9):
-        super().__init__()
+
+        super(FocalLoss, self).__init__()
         self.num_labels = num_labels
         self.gamma = gamma
         self.alpha = alpha
@@ -53,52 +54,55 @@ class FocalLoss(nn.Module):
         return loss.mean()
 
 
-def make_optimizer(lr, weight_decay, optimizer_name, param_dict):
+def make_optimizer(cfg, model):
     params = []
-    for key, value in param_dict:
+    for key, value in model.named_parameters():
         if not value.requires_grad:
             continue
+        lr = cfg.SOLVER.BASE_LR
+        weight_decay = cfg.SOLVER.WEIGHT_DECAY
         if "bias" in key:
-            lr = lr * 2
-            weight_decay = 0
+            lr = cfg.SOLVER.BASE_LR * cfg.SOLVER.BIAS_LR_FACTOR
+            weight_decay = cfg.SOLVER.WEIGHT_DECAY_BIAS
         params += [{"params": [value], "lr": lr, "weight_decay": weight_decay}]
-    optimizer = getattr(torch.optim, optimizer_name)(params)
+    if cfg.SOLVER.OPTIMIZER_NAME == 'SGD':
+        optimizer = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
+    else:
+        optimizer = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params)
     return optimizer
 
 
-def build_lr_scheduler(optimizer):
+def build_lr_scheduler(cfg, optimizer):
     scheduler_args = {
         "optimizer": optimizer,
 
         # warmup options
-        "warmup_factor": 0.01,
-        "warmup_epochs": 1024,
-        "warmup_method": "linear",
+        "warmup_factor": cfg.SOLVER.WARMUP_FACTOR,
+        "warmup_epochs": cfg.SOLVER.WARMUP_EPOCHS,
+        "warmup_method": cfg.SOLVER.WARMUP_METHOD,
 
         # multi-step lr scheduler options
-        "milestones": (10,),
-        "gamma": 0.9999,
+        "milestones": cfg.SOLVER.STEPS,
+        "gamma": cfg.SOLVER.GAMMA,
 
         # cosine annealing lr scheduler options
-        "max_iters": 10,
-        "delay_iters": 0,
-        "eta_min_lr": 3e-7,
+        "max_iters": cfg.SOLVER.MAX_ITER,
+        "delay_iters": cfg.SOLVER.DELAY_ITERS,
+        "eta_min_lr": cfg.SOLVER.ETA_MIN_LR,
 
     }
-    scheduler = getattr(lr_scheduler, "WarmupExponentialLR")(**scheduler_args)
-    return {'scheduler': scheduler, 'interval': 'step'}
+    scheduler = getattr(lr_scheduler, cfg.SOLVER.SCHED)(**scheduler_args)
+    return {'scheduler': scheduler, 'interval': cfg.SOLVER.INTERVAL}
 
 
 class BaseTrainingEngine(pl.LightningModule):
-    def __init__(self, lr=5e-5, weight_decay=0.01, optimizer_name='AdamW', *args, **kwargs):
+    def __init__(self, cfg, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.lr = lr
-        self.weight_decay = weight_decay
-        self.optimizer_name = optimizer_name
+        self.cfg = cfg
 
     def configure_optimizers(self):
-        optimizer = make_optimizer(self.lr, self.weight_decay, self.optimizer_name, self.named_parameters())
-        scheduler = build_lr_scheduler(optimizer)
+        optimizer = make_optimizer(self.cfg, self)
+        scheduler = build_lr_scheduler(self.cfg, optimizer)
 
         return [optimizer], [scheduler]
 
@@ -110,19 +114,20 @@ class BaseTrainingEngine(pl.LightningModule):
 
 
 class CscTrainingModel(BaseTrainingEngine, ABC):
-    """用于CSC的TrainingModel, 定义了训练及预测步骤"""
+    """
+        用于CSC的BaseModel, 定义了训练及预测步骤
+        """
 
-    def __init__(self, lr=5e-5, weight_decay=0.01, optimizer_name='AdamW',
-                 loss_coefficient=0.3, device=torch.device('cuda'), *args, **kwargs):
-        super().__init__(lr=lr, weight_decay=weight_decay, optimizer_name=optimizer_name, *args, **kwargs)
+    def __init__(self, cfg, *args, **kwargs):
+        super().__init__(cfg, *args, **kwargs)
         # loss weight
-        self.w = loss_coefficient
-        self._device = device
+        self.w = cfg.MODEL.HYPER_PARAMS[0]
 
     def training_step(self, batch, batch_idx):
         ori_text, cor_text, det_labels = batch
         outputs = self.forward(ori_text, cor_text, det_labels)
         loss = self.w * outputs[1] + (1 - self.w) * outputs[0]
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True, logger=True, batch_size=len(ori_text))
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -176,7 +181,7 @@ class CscTrainingModel(BaseTrainingEngine, ABC):
 
     def predict(self, texts):
         inputs = self.tokenizer(texts, padding=True, return_tensors='pt')
-        inputs.to(self._device)
+        inputs.to(self.cfg.MODEL.DEVICE)
         with torch.no_grad():
             outputs = self.forward(texts)
             y_hat = torch.argmax(outputs[1], dim=-1)

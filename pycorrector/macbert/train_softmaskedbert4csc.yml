@@ -1,0 +1,32 @@
+MODEL:
+  BERT_CKPT: "bert-base-chinese"
+  DEVICE: "cuda"
+  NAME: "softmaskedbert4csc"
+  GPU_IDS: [0]
+  # [loss_coefficient]
+  HYPER_PARAMS: [0.8]
+  #WEIGHTS: "output/softmaskedbert4csc/epoch=2-val_loss=0.07.ckpt"
+  WEIGHTS: ""
+
+
+DATASETS:
+  TRAIN: "output/dev.json"
+  VALID: "output/dev.json"
+  TEST: "output/dev.json"
+
+SOLVER:
+  BASE_LR: 0.0001
+  WEIGHT_DECAY: 5e-8
+  BATCH_SIZE: 32
+  MAX_EPOCHS: 10
+  ACCUMULATE_GRAD_BATCHES: 4
+
+
+TEST:
+  BATCH_SIZE: 32
+
+TASK:
+  NAME: "csc"
+
+OUTPUT_DIR: "output/softmaskedbert4csc"
+MODE: [ 'train', "test" ]

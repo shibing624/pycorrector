@@ -65,7 +65,7 @@ class EnSpell(object):
         """
         return (e2 for e1 in self.edits1(word) for e2 in self.edits1(e1))
 
-    def known(self, word_freq_dict, limit_count=500):
+    def known(self, word_freq_dict):
         """
         the subset of 'word_freq_dict' that appear in the dictionary of word_freq_dict
         :param word_freq_dict:
@@ -106,7 +106,8 @@ class EnSpell(object):
         sort_candi_prob = sorted(candi_prob.items(), key=operator.itemgetter(1))
         return sort_candi_prob[-1][0]
 
-    def _get_custom_confusion_dict(self, path):
+    @staticmethod
+    def _get_custom_confusion_dict(path):
         """
         取自定义困惑集
         :param path:

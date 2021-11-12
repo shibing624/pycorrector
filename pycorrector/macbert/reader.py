@@ -40,9 +40,8 @@ class DataCollator:
 
 
 class CscDataset(Dataset):
-    def __init__(self, fp):
-        with open(fp, 'r', encoding='utf-8') as f:
-            self.data = json.load(f)
+    def __init__(self, file_path):
+        self.data = json.load(open(file_path, 'r', encoding='utf-8'))
 
     def __len__(self):
         return len(self.data)
@@ -52,26 +51,24 @@ class CscDataset(Dataset):
 
 
 def make_loaders(collate_fn, train_path='', valid_path='', test_path='',
-                 batch_size=32, test_batch_size=8, num_workers=4):
+                 batch_size=32, num_workers=4):
     train_loader = None
     if train_path and os.path.exists(train_path):
         train_loader = DataLoader(CscDataset(train_path),
                                   batch_size=batch_size,
-                                  shuffle=True,
+                                  shuffle=False,
                                   num_workers=num_workers,
                                   collate_fn=collate_fn)
     valid_loader = None
     if valid_path and os.path.exists(valid_path):
         valid_loader = DataLoader(CscDataset(valid_path),
-                                  batch_size=test_batch_size,
-                                  shuffle=False,
+                                  batch_size=batch_size,
                                   num_workers=num_workers,
                                   collate_fn=collate_fn)
     test_loader = None
     if test_path and os.path.exists(test_path):
         test_loader = DataLoader(CscDataset(test_path),
-                                 batch_size=test_batch_size,
-                                 shuffle=False,
+                                 batch_size=batch_size,
                                  num_workers=num_workers,
                                  collate_fn=collate_fn)
     return train_loader, valid_loader, test_loader

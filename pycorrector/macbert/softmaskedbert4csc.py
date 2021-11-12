@@ -36,7 +36,7 @@ class DetectionNetwork(nn.Module):
         return prob
 
 
-class CorrectionModel(torch.nn.Module, ModuleUtilsMixin):
+class CorrectionNetwork(torch.nn.Module, ModuleUtilsMixin):
     def __init__(self, config, tokenizer, device):
         super().__init__()
         self.config = config
@@ -111,17 +111,15 @@ class CorrectionModel(torch.nn.Module, ModuleUtilsMixin):
 
 
 class SoftMaskedBert4Csc(CscTrainingModel, ABC):
-    def __init__(self, tokenizer, lr=0.0001, weight_decay=5e-8, optimizer_name='AdamW',
-                 loss_coefficient=0.8, device=torch.device('cuda'),
-                 pretrained_model='bert-base-chinese'):
-        super().__init__(lr=lr, weight_decay=weight_decay, optimizer_name=optimizer_name,
-                         loss_coefficient=loss_coefficient, device=device)
-        self.config = tfs.AutoConfig.from_pretrained(pretrained_model)
+    def __init__(self, cfg, tokenizer):
+        super().__init__(cfg)
+        self.cfg = cfg
+        self.config = tfs.AutoConfig.from_pretrained(cfg.MODEL.BERT_CKPT)
         self.detector = DetectionNetwork(self.config)
         self.tokenizer = tokenizer
-        self.corrector = CorrectionModel(self.config, tokenizer, device)
-        self.corrector.load_from_transformers_state_dict(pretrained_model)
-        self._device = device
+        self.corrector = CorrectionNetwork(self.config, tokenizer, cfg.MODEL.DEVICE)
+        self.corrector.load_from_transformers_state_dict(self.cfg.MODEL.BERT_CKPT)
+        self._device = cfg.MODEL.DEVICE
 
     def forward(self, texts, cor_labels=None, det_labels=None):
         encoded_texts = self.tokenizer(texts, padding=True, return_tensors='pt')
