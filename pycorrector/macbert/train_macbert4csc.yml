@@ -9,9 +9,9 @@ MODEL:
   WEIGHTS: ""
 
 DATASETS:
-  TRAIN: "output/dev.json"
+  TRAIN: "output/train.json"
   VALID: "output/dev.json"
-  TEST: "output/dev.json"
+  TEST: "output/test.json"
 
 SOLVER:
   BASE_LR: 5e-5
@@ -21,4 +21,4 @@ SOLVER:
   ACCUMULATE_GRAD_BATCHES: 4
 
 OUTPUT_DIR: "output/macbert4csc"
-MODE: [ 'train', "test" ]
+MODE: ["train", "test"]

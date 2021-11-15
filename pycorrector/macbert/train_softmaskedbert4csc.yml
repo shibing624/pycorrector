@@ -8,11 +8,10 @@ MODEL:
   #WEIGHTS: "output/softmaskedbert4csc/epoch=2-val_loss=0.07.ckpt"
   WEIGHTS: ""
 
-
 DATASETS:
-  TRAIN: "output/dev.json"
+  TRAIN: "output/train.json"
   VALID: "output/dev.json"
-  TEST: "output/dev.json"
+  TEST: "output/test.json"
 
 SOLVER:
   BASE_LR: 0.0001
@@ -22,4 +21,4 @@ SOLVER:
   ACCUMULATE_GRAD_BATCHES: 4
 
 OUTPUT_DIR: "output/softmaskedbert4csc"
-MODE: [ 'train', "test" ]
+MODE: ["train", "test"]

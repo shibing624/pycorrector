@@ -117,7 +117,8 @@ def main():
         new_state_dict = OrderedDict()
         if cfg.MODEL.NAME in ['macbert4csc']:
             for k, v in state_dict.items():
-                new_state_dict[k[5:]] = v
+                if k.startswith('bert.'):
+                    new_state_dict[k[5:]] = v
         else:
             new_state_dict = state_dict
         # 再保存finetune训练后的模型文件，替换原始的pytorch_model.bin

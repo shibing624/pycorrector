@@ -107,7 +107,7 @@ print(corrected_texts)
 ```shell
 pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0 
 ```
-### 下载训练数据
+### 训练数据集
 
 - 使用toy数据集，数据量：约1千条
 ```shell

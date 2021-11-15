@@ -18,7 +18,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class Inference:
-    def __init__(self, ckpt_path='output/macbert4csc/epoch=09-val_loss=0.02.ckpt',
+    def __init__(self, ckpt_path='output/macbert4csc/epoch=09-val_loss=0.01.ckpt',
                  config_file='train_macbert4csc.yml',
                  pretrained_model="hfl/chinese-macbert-base"):
         logger.debug("device: {}".format(device))
@@ -36,7 +36,7 @@ class Inference:
 
 
 if __name__ == "__main__":
-    m = Inference('output/macbert4csc/epoch=09-val_loss=0.02.ckpt',
+    m = Inference('output/macbert4csc/epoch=09-val_loss=0.01.ckpt',
                   'train_macbert4csc.yml',
                   'hfl/chinese-macbert-base')
     inputs = [

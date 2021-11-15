@@ -28,6 +28,13 @@ def read_data(fp):
 
 
 def proc_item(item):
+    """
+    处理训练数据集
+    Args:
+        item:
+    Returns:
+        list
+    """
     root = etree.XML(item)
     passages = dict()
     mistakes = []
@@ -140,9 +147,9 @@ def main():
     # 拆分训练与测试
     print('data_size:', len(rst_items))
     train_lst, dev_lst = train_test_split(rst_items, test_size=0.1, random_state=42)
-    save_json(train_lst, 'output/train.json')
-    save_json(train_lst, 'output/dev.json')
-    save_json(test_lst, 'output/test.json')
+    save_json(train_lst, os.path.join(pwd_path, 'output/train.json'))
+    save_json(train_lst, os.path.join(pwd_path, 'output/dev.json'))
+    save_json(test_lst, os.path.join(pwd_path, 'output/test.json'))
 
 
 if __name__ == '__main__':
