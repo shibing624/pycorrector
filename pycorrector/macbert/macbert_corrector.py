@@ -12,7 +12,6 @@ import time
 sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
-#from pycorrector.corrector import Corrector
 from pycorrector.macbert.correction_pipeline import CorrectionPipeline
 from pycorrector import config
 from pycorrector.transformers import BertTokenizer, BertForMaskedLM
@@ -33,7 +32,6 @@ class MacBertCorrector(object):
             device=0,  # gpu device id
         )
         if self.model:
-            self.mask = self.model.tokenizer.mask_token
             logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
@@ -43,7 +41,6 @@ class MacBertCorrector(object):
         :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
         """
         details = []
-        # self.check_corrector_initialized()
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
         # 长句切分为短句

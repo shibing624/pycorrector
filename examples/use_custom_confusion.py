@@ -20,6 +20,8 @@ if __name__ == '__main__':
         '共同实际控制人萧华、霍荣铨、张旗康',  # 误杀
         '上述承诺内容系本人真实意思表示',  # 正常
         '大家一哄而伞怎么回事',  # 成语
+        '我的老师江大桥',
+        '我的心灵支持长江大桥'
     ]
     for line in error_sentences:
         print(pycorrector.correct(line))
