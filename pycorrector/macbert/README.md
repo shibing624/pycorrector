@@ -56,7 +56,7 @@ MacBert模型在sighan15上纠错效果评估如下：
 - 准确率：63.64%
 - 召回率：63.64%
 
-由于训练使用的数据使用了sighan15的训练集，故在sighan15的测试集上表现较优，此外，由于未使用pycorrector提供的训练数据，故在首个文件的评估结果中表现一般，如需在特定训练请使用[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)进行数据的处理及训练，并使用该仓库给出的state_dict转换脚本获取pytorch_model.bin，并复制至本模型所指定的目录。
+由于训练使用的数据使用了sighan15的训练集（复现paper使用sighan15），故在sighan15的测试集上表现较优。
 
 ## 快速加载
 
@@ -105,14 +105,12 @@ print(corrected_texts)
 
 ### 安装依赖
 ```shell
-torch>=1.7.0
-pytorch-lightning>=1.1.2
-transformers>=4.1.1
+pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0 
 ```
 ### 下载训练数据
-- [中文纠错样本集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)
+- [中文纠错数据集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)
 
-格式：
+数据格式：
 ```json
 [
     {
@@ -127,7 +125,7 @@ transformers>=4.1.1
 ]
 ```
 数据集构成：
-1. SIGHAN数据集，原始文件下载地址：[http://nlp.ee.ncu.edu.tw/resource/csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)
+1. SIGHAN数据集，官方地址：[http://nlp.ee.ncu.edu.tw/resource/csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)
 2. train.sgml数据，来源：[https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml) 
 
 ### 训练
