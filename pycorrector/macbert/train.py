@@ -10,6 +10,7 @@ import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from transformers import BertTokenizer, BertForMaskedLM
 import argparse
+from collections import OrderedDict
 
 sys.path.append('../..')
 
@@ -19,7 +20,6 @@ from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert import preprocess
 from pycorrector.utils.logger import logger
 from pycorrector.macbert.defaults import _C as cfg
-from collections import OrderedDict
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -74,7 +74,7 @@ def main():
         raise ValueError("model not found.")
     # 热启动
     if cfg.MODEL.WEIGHTS and os.path.exists(cfg.MODEL.WEIGHTS):
-        model.load_from_checkpoint(checkpoint_path=cfg.MODEL.WEIGHTS, map_location=device, tokenizer=tokenizer)
+        model.load_from_checkpoint(checkpoint_path=cfg.MODEL.WEIGHTS, cfg=cfg, map_location=device, tokenizer=tokenizer)
     # 配置模型保存参数
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     ckpt_callback = ModelCheckpoint(
@@ -98,10 +98,7 @@ def main():
             trainer.fit(model, train_loader, valid_loader)
         else:
             trainer.fit(model, train_loader)
-    logger.info('train model done.')
-    # 进行测试的逻辑同训练
-    if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
-        trainer.test(model, test_loader)
+        logger.info('train model done.')
     # 模型转为transformers可加载
     if ckpt_callback and len(ckpt_callback.best_model_path) > 0:
         ckpt_path = ckpt_callback.best_model_path
@@ -111,6 +108,7 @@ def main():
         ckpt_path = ''
     logger.info(f'ckpt_path: {ckpt_path}')
     if ckpt_path and os.path.exists(ckpt_path):
+        model.load_state_dict(torch.load(ckpt_path)['state_dict'])
         # 先保存原始transformer bert model
         tokenizer.save_pretrained(cfg.OUTPUT_DIR)
         bert = BertForMaskedLM.from_pretrained(cfg.MODEL.BERT_CKPT)
@@ -124,7 +122,9 @@ def main():
             new_state_dict = state_dict
         # 再保存finetune训练后的模型文件，替换原始的pytorch_model.bin
         torch.save(new_state_dict, os.path.join(cfg.OUTPUT_DIR, 'pytorch_model.bin'))
-
+    # 进行测试的逻辑同训练
+    if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
+        trainer.test(model, test_loader)
 
 if __name__ == '__main__':
     main()

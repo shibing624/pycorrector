@@ -2,7 +2,7 @@
 
 ## 使用说明
 
-1. 下载用开源的中文文本纠错数据集fine-tune后的预训练MACBERT MLM模型（飞书文档链接: https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB
+1. 下载用中文文本纠错数据集fine-tune后的预训练MACBERT CSC纠错模型（飞书文档链接: https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB
    密码: QKz3），解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
 
 ```
@@ -72,15 +72,14 @@ nlp = MacBertCorrector(model_dir).macbert_correct
 
 i = nlp('今天新情很好')
 print(i)
-
 ```
 
 如果你需要直接使用huggingface/transformers调用
 
 1.先pip安装transformers库:
 
-```
-pip install "transformers>4.0"
+```shell
+pip install transformers>=4.1.1
 ```
 2.使用以下示例执行：
 
@@ -108,8 +107,28 @@ print(corrected_texts)
 ```shell
 torch>=1.7.0
 pytorch-lightning>=1.1.2
-transformers==4.1.1
+transformers>=4.1.1
 ```
+### 下载训练数据
+- [中文纠错样本集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)
+
+格式：
+```json
+[
+    {
+        "id": "B2-4029-3",
+        "original_text": "晚间会听到嗓音，白天的时候大家都不会太在意，但是在睡觉的时候这嗓音成为大家的恶梦。",
+        "wrong_ids": [
+            5,
+            31
+        ],
+        "correct_text": "晚间会听到噪音，白天的时候大家都不会太在意，但是在睡觉的时候这噪音成为大家的恶梦。"
+    },
+]
+```
+数据集构成：
+1. SIGHAN数据集，原始文件下载地址：[http://nlp.ee.ncu.edu.tw/resource/csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)
+2. train.sgml数据，来源：[https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml) 
 
 ### 训练
 ```shell
@@ -121,11 +140,19 @@ python train.py
 python infer.py
 ```
 
+### 调用
+以上即完成模型训练，把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下，
+就可以像上面说明使用pycorrector或者transformers调用。
 
-附上transformers官方fine-tune语言模型示例：
-
-* [transformers官方fine-tuning示例-ipynb](https://github.com/huggingface/notebooks/blob/master/examples/language_modeling.ipynb)
-* [transformers官方fine-tuning示例-colab](https://colab.research.google.com/github/huggingface/notebooks/blob/master/examples/language_modeling.ipynb#scrollTo=q-EIELH43l_T)
+```shell
+output
+└── macbert4csc
+    ├── config.json
+    ├── pytorch_model.bin
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    └── vocab.txt
+```
 
 如果需要训练SoftMaskedBertModel，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 
