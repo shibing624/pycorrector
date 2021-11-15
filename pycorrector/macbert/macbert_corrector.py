@@ -70,6 +70,8 @@ if __name__ == "__main__":
         '少 先  队 员 因 该 为 老人让坐',
         '机七学习是人工智能领遇最能体现智能的一个分知',
         '今天心情很好',
+        '老是较书。',
+        '遇到一位很棒的奴生跟我聊天。',
     ]
     for sent in error_sentences:
         corrected_sent, err = d.macbert_correct(sent)

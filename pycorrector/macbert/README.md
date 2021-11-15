@@ -108,7 +108,21 @@ print(corrected_texts)
 pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0 
 ```
 ### 下载训练数据
-- [中文纠错数据集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)
+
+- 使用toy数据集，数据量：约1千条
+```shell
+cd macbert
+python preprocess.py
+```
+得到toy数据集：
+```shell
+macbert/output
+|-- dev.json
+|-- test.json
+`-- train.json
+```
+
+- [中文纠错数据集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)，数据量：约26万条，下载后新建output文件夹并放里面，文件位置同上。
 
 数据格式：
 ```json
@@ -130,7 +144,6 @@ pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0
 
 ### 训练
 ```shell
-cd macbert
 python train.py
 ```
 ### 预测

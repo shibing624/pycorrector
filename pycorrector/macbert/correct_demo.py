@@ -36,6 +36,9 @@ def main():
     i = nlp('机其学习是人工智能领遇最能体现智能的一个分知。')
     print(i)
 
+    print(nlp('老是较书。'))
+    print(nlp('遇到一位很棒的奴生跟我聊天。'))
+
 
 if __name__ == "__main__":
     main()
