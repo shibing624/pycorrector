@@ -21,12 +21,5 @@ SOLVER:
   MAX_EPOCHS: 10
   ACCUMULATE_GRAD_BATCHES: 4
 
-
-TEST:
-  BATCH_SIZE: 32
-
-TASK:
-  NAME: "csc"
-
 OUTPUT_DIR: "output/softmaskedbert4csc"
 MODE: [ 'train', "test" ]

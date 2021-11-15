@@ -11,17 +11,20 @@ from transformers import BertTokenizer
 sys.path.append('../..')
 
 from pycorrector.macbert.macbert4csc import MacBert4Csc
-from pycorrector.macbert import config
+from pycorrector.macbert.defaults import _C as cfg
 from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 class Inference:
-    def __init__(self, ckpt_path, pretrained_model="hfl/chinese-macbert-base"):
+    def __init__(self, ckpt_path= 'output/macbert4csc/epoch=09-val_loss=0.02.ckpt',
+                 config_file='train_macbert4csc.yml',
+                 pretrained_model="hfl/chinese-macbert-base"):
         logger.debug("device: {}".format(device))
         self.tokenizer = BertTokenizer.from_pretrained(pretrained_model)
+        cfg.merge_from_file(config_file)
         self.model = MacBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
+                                                      cfg=cfg,
                                                       map_location=device,
                                                       tokenizer=self.tokenizer)
         self.model.eval()
@@ -32,7 +35,9 @@ class Inference:
 
 
 if __name__ == "__main__":
-    m = Inference(config.ckpt_path, pretrained_model=config.pretrained_model)
+    m = Inference('output/macbert4csc/epoch=09-val_loss=0.02.ckpt',
+                  'train_macbert4csc.yml',
+                  'hfl/chinese-macbert-base')
     inputs = [
         '老是较书。',
         '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',

@@ -73,7 +73,7 @@ def main():
     if cfg.MODEL.WEIGHTS and os.path.exists(cfg.MODEL.WEIGHTS):
         model.load_from_checkpoint(checkpoint_path=cfg.MODEL.WEIGHTS, map_location=device, tokenizer=tokenizer)
     # 配置模型保存参数
-    os.makedirs(cfg.OUTPUT_DIR)
+    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     ckpt_callback = ModelCheckpoint(
         monitor='val_loss',
         dirpath=cfg.OUTPUT_DIR,
