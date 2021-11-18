@@ -54,10 +54,13 @@ badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
            '生产日期怎么样 新嘛',
            '插上去的时候是驱蚊液放下面的吗？',
            '橄榄的和这款哪个比较好用？味道都是一样的么？',
+           '妈妈说：”以后做错了要主动人错哦，别赖。“，我说：”我知道了。“',
+           '他在唱”听妈妈的话“，真的很好听呢',
+           '我最爱看的是《巴黎圣母院》这书，里面思想深邃，值得回味。',
            ]
 error_sentences.extend(badcase)
 
 bertCorrector = macbert_corrector.MacBertCorrector()
 for line in error_sentences:
     correct_sent, err = bertCorrector.macbert_correct(line)
-    print("original sentence:{} => {}, err:{}".format(line, correct_sent, err))
+    print("original sentence:{} => {} err:{}".format(line, correct_sent, err))
