@@ -63,7 +63,7 @@ class MacBertCorrector(object):
 
 
 if __name__ == "__main__":
-    d = MacBertCorrector()
+    m = MacBertCorrector()
     error_sentences = [
         '疝気医院那好 为老人让坐，疝気专科百科问答',
         '少先队员因该为老人让坐',
@@ -72,7 +72,15 @@ if __name__ == "__main__":
         '今天心情很好',
         '老是较书。',
         '遇到一位很棒的奴生跟我聊天。',
+        '他的语说的很好，法语也不错',
+        '他法语说的很好，的语也不错',
+        '他们的吵翻很不错，再说他们做的咖喱鸡也好吃',
+        '影像小孩子想的快，学习管理的斑法',
+        '餐厅的换经费产适合约会',
+        '走路真的麻坊，我也没有喝的东西，在家汪了',
+        '因为爸爸在看录音机，所以我没得看',
+        '不过在许多传统国家，女人向未得到平等',
     ]
     for sent in error_sentences:
-        corrected_sent, err = d.macbert_correct(sent)
-        print("original sentence:{} => {}, err:{}".format(sent, corrected_sent, err))
+        corrected_sent, err = m.macbert_correct(sent)
+        print("original sentence:{} => {} err:{}".format(sent, corrected_sent, err))
