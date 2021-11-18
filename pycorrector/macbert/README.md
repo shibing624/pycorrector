@@ -53,8 +53,8 @@ MacBert模型纠错效果评估如下：
 
 MacBert模型在sighan15上纠错效果评估如下：
 
-- 准确率：63.64%
-- 召回率：63.64%
+- Sentence Level: 准确率：80.98% 召回率：72.92% F1:76.74%
+- Char Level: 准确率：92.47% 召回率：86.25% F1:89.25%
 
 由于训练使用的数据使用了sighan15的训练集（复现paper使用sighan15），故在sighan15的测试集上表现较优。
 
@@ -140,7 +140,7 @@ macbert/output
 ```
 数据集构成：
 1. SIGHAN数据集，官方地址：[http://nlp.ee.ncu.edu.tw/resource/csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)
-2. train.sgml数据，来源：[https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml) 
+2. Wang271K数据，来源：[https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml) 
 
 ### 训练
 ```shell

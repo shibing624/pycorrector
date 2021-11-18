@@ -402,7 +402,7 @@ pip install -r requirements-dev.txt
 
 1. 模型下载
 
-下载fine-tune后的预训练[MacBert MLM模型-密码QKz3](https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB)，解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
+下载fine-tune后的预训练[MacBert4csc模型-密码QKz3](https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB)，解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
 
 ```
 macbert_models
@@ -417,7 +417,7 @@ macbert_models
 
 2. 纠错
 
-```python3
+```python
 import sys
 
 sys.path.append("..")
@@ -501,16 +501,20 @@ PS：
 
 | 数据集 | 语料 | 下载链接 | 压缩包大小 |
 | :------- | :--------- | :---------: | :---------: |
+| **`SIGHAN+Wang271K中文纠错数据集(27万条)`** | SIGHAN+Wang271K | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
+| **`原始SIGHAN数据集`** | SIGHAN13 14 15 | [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)| 339K |
+| **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation-dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
 | **`人民日报2014版语料`** | 人民日报2014版 | [百度网盘（密码uc11）](https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A) <br/> [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
 | **`NLPCC 2018 GEC官方数据集`** | NLPCC2018-GEC | [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz) | 114M |
 | **`NLPCC 2018+HSK熟语料`** | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M |
 | **`NLPCC 2018+HSK原始语料`** | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) | 81M |
 
-
-1. NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
+说明：
+- SIGHAN+Wang271K中文纠错数据集(27万条)，是SIGHAN13、14、15年数据集和Wang271K数据集处理得到，json格式文件，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集，详见[README](pycorrector/macbert/README.md)。
+- NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
 训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
-2. 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增
-3. 以上语料，再加上CGED16、CGED17、CGED18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，网盘链接:https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130万对句子，215MB]
+- 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增。
+- NLPCC 2018 + HSK + CGED16、17、18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)，[百度网盘（密码:m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) [130万对句子，215MB]
 
 ## Custom Language Model
 [什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
