@@ -501,16 +501,16 @@ PS：
 
 | 数据集 | 语料 | 下载链接 | 压缩包大小 |
 | :------- | :--------- | :---------: | :---------: |
-| **`SIGHAN+Wang271K中文纠错数据集(27万条)`** | SIGHAN+Wang271K | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
+| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
 | **`原始SIGHAN数据集`** | SIGHAN13 14 15 | [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)| 339K |
-| **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation-dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
+| **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
 | **`人民日报2014版语料`** | 人民日报2014版 | [百度网盘（密码uc11）](https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A) <br/> [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
 | **`NLPCC 2018 GEC官方数据集`** | NLPCC2018-GEC | [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz) | 114M |
 | **`NLPCC 2018+HSK熟语料`** | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M |
 | **`NLPCC 2018+HSK原始语料`** | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) | 81M |
 
 说明：
-- SIGHAN+Wang271K中文纠错数据集(27万条)，是SIGHAN13、14、15年数据集和Wang271K数据集处理得到，json格式文件，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集，详见[README](pycorrector/macbert/README.md)。
+- SIGHAN+Wang271K中文纠错数据集(27万条)，是通过原始SIGHAN13、14、15年数据集和Wang271K数据集格式转化后得到，json格式，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集复现paper准召结果，详见[README](pycorrector/macbert/README.md)。
 - NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
 训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
 - 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增。
@@ -547,7 +547,7 @@ PS：
 - [x] 升级代码，兼容TensorFlow 2.0库
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 - [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
-- [ ] 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
+- [x] 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
 - [ ] 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
 - [ ] 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
 - [ ] 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。

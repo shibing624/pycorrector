@@ -109,22 +109,29 @@ pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0
 ```
 ### 训练数据集
 
-- 使用toy数据集，数据量：约1千条
+#### toy数据集（约1千条）
 ```shell
 cd macbert
 python preprocess.py
 ```
-得到toy数据集：
+得到toy数据集文件：
 ```shell
 macbert/output
 |-- dev.json
 |-- test.json
 `-- train.json
 ```
+#### SIGHAN+Wang271K中文纠错数据集
 
-- [中文纠错数据集](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)(提取码：01b9)，数据量：约26万条，下载后新建output文件夹并放里面，文件位置同上。
 
-数据格式：
+| 数据集 | 语料 | 下载链接 | 压缩包大小 |
+| :------- | :--------- | :---------: | :---------: |
+| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
+| **`原始SIGHAN数据集`** | SIGHAN13 14 15 | [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)| 339K |
+| **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
+
+
+SIGHAN+Wang271K中文纠错数据集，数据格式：
 ```json
 [
     {
@@ -138,9 +145,8 @@ macbert/output
     },
 ]
 ```
-数据集构成：
-1. SIGHAN数据集，官方地址：[http://nlp.ee.ncu.edu.tw/resource/csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)
-2. Wang271K数据，来源：[https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml) 
+
+下载`SIGHAN+Wang271K中文纠错数据集`，下载后新建output文件夹并放里面，文件位置同上。
 
 ### 训练
 ```shell
