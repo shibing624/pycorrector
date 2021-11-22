@@ -15,6 +15,7 @@ class MacBert4Csc(CscTrainingModel, ABC):
         super().__init__(cfg)
         self.cfg = cfg
         self.bert = BertForMaskedLM.from_pretrained(cfg.MODEL.BERT_CKPT)
+        # self.bert.resize_token_embeddings(len(tokenizer))
         self.detection = nn.Linear(self.bert.config.hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
         self.tokenizer = tokenizer

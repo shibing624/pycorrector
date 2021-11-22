@@ -42,7 +42,7 @@ class CorrectionNetwork(torch.nn.Module, ModuleUtilsMixin):
         self.config = config
         self.tokenizer = tokenizer
         self.embeddings = BertEmbeddings(self.config)
-        self.corrector = BertEncoder(self.config)
+        self.bert = BertEncoder(self.config)
         self.mask_token_id = self.tokenizer.mask_token_id
         self.cls = BertOnlyMLMHead(self.config)
         self._device = device
@@ -72,7 +72,7 @@ class CorrectionNetwork(torch.nn.Module, ModuleUtilsMixin):
         extended_attention_mask = self.get_extended_attention_mask(encoded_texts['attention_mask'],
                                                                    input_shape, device)
         head_mask = self.get_head_mask(None, self.config.num_hidden_layers)
-        encoder_outputs = self.corrector(
+        encoder_outputs = self.bert(
             cor_embed,
             attention_mask=extended_attention_mask,
             head_mask=head_mask,

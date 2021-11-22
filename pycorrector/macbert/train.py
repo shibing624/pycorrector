@@ -61,6 +61,9 @@ def main():
         preprocess.main()
     logger.info(f'load model, model arch: {cfg.MODEL.NAME}')
     tokenizer = BertTokenizer.from_pretrained(cfg.MODEL.BERT_CKPT)
+    # fixed 中文引号缺失
+    # if '“' not in tokenizer.vocab:
+    #     tokenizer.add_tokens(['“', '”'])
     collator = DataCollator(tokenizer=tokenizer)
     # 加载数据
     train_loader, valid_loader, test_loader = make_loaders(collator, train_path=cfg.DATASETS.TRAIN,
@@ -72,7 +75,7 @@ def main():
         model = MacBert4Csc(cfg, tokenizer)
     else:
         raise ValueError("model not found.")
-    # 热启动
+    # 加载之前保存的模型，继续训练
     if cfg.MODEL.WEIGHTS and os.path.exists(cfg.MODEL.WEIGHTS):
         model.load_from_checkpoint(checkpoint_path=cfg.MODEL.WEIGHTS, cfg=cfg, map_location=device, tokenizer=tokenizer)
     # 配置模型保存参数
@@ -126,6 +129,7 @@ def main():
     # 进行测试的逻辑同训练
     if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
         trainer.test(model, test_loader)
+
 
 if __name__ == '__main__':
     main()

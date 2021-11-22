@@ -23,8 +23,10 @@ class MacBertCorrector(object):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
-        macbert_model = BertForMaskedLM.from_pretrained(macbert_model_dir)
         tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
+        # tokenizer.add_tokens(['“', '”'])
+        macbert_model = BertForMaskedLM.from_pretrained(macbert_model_dir)
+        # macbert_model.resize_token_embeddings(len(tokenizer))
         self.model = CorrectionPipeline(
             task='correction',
             model=macbert_model,
