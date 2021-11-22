@@ -396,26 +396,11 @@ pip install -r requirements-dev.txt
 
 - MacBert模型
 
-基于MacBert预训练模型的纠错
+基于MacBert预训练模型的纠错，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
 示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[README](./pycorrector/macbert/README.md)
 
-1. 模型下载
-
-下载fine-tune后的预训练[MacBert4csc模型-密码QKz3](https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB)，解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
-
-```
-macbert_models
-└── chinese_finetuned_correction
-    ├── config.json
-    ├── added_tokens.json
-    ├── pytorch_model.bin
-    ├── special_tokens_map.json
-    ├── tokenizer_config.json
-    └── vocab.txt
-```
-
-2. 纠错
+使用pycorrector调用纠错：
 
 ```python
 import sys
@@ -432,7 +417,7 @@ if __name__ == '__main__':
         '我的家乡是有明的渔米之乡',
     ]
 
-    m = MacBertCorrector()
+    m = MacBertCorrector("shibing624/macbert4csc-base-chinese")
     for line in error_sentences:
         correct_sent, err = m.macbert_correct(line)
         print("query:{} => {}, err:{}".format(line, correct_sent, err))
@@ -447,6 +432,22 @@ query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的�
 query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[('明', '名', 6, 7)]
 ```
 
+使用原生transformers库调用纠错：
+```python
+import torch
+from transformers import BertTokenizer, BertForMaskedLM
+
+model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
+tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+
+texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+corrected_texts = []
+for ids, text in zip(outputs.logits, texts):
+    _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+    corrected_texts.append(_text[:len(text)])
+print(corrected_texts)
+```
 
 <details>
 <summary>查看Seq2Seq模型</summary>

@@ -8,6 +8,7 @@
 import operator
 import sys
 import time
+import os
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
@@ -23,6 +24,8 @@ class MacBertCorrector(object):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
+        if not os.path.exists(os.path.join(macbert_model_dir, 'vocab.txt')):
+            macbert_model_dir = "shibing624/macbert4csc-base-chinese"
         tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         # tokenizer.add_tokens(['“', '”'])
         macbert_model = BertForMaskedLM.from_pretrained(macbert_model_dir)

@@ -2,12 +2,49 @@
 
 ## 使用说明
 
-1. 下载用中文文本纠错数据集fine-tune后的预训练MACBERT CSC纠错模型（飞书文档链接: https://szuy1h04n8.feishu.cn/file/boxcnoKfHHtjokcZojQO2VjtQHB
-   密码: QKz3），解压后放置于`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下。
+### 快速加载
 
+本项目是MacBERT的中文文本纠错模型，可支持BERT模型，可通过如下命令调用:
+
+example: [correct_demo.py](correct_demo.py)
+
+```python
+from pycorrector.macbert.macbert_corrector import MacBertCorrector
+
+nlp = MacBertCorrector("shibing624/macbert4csc-base-chinese").macbert_correct
+
+i = nlp('今天新情很好')
+print(i)
 ```
-macbert_models
-└── chinese_finetuned_correction
+
+当然，你也可使用官方的transformers库进行调用。
+
+1.先pip安装transformers库:
+
+```shell
+pip install transformers>=4.1.1
+```
+2.使用以下示例执行：
+
+```python
+import torch
+from transformers import BertTokenizer, BertForMaskedLM
+
+model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
+tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+
+texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+corrected_texts = []
+for ids, text in zip(outputs.logits, texts):
+    _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+    corrected_texts.append(_text[:len(text)])
+print(corrected_texts)
+```
+
+模型文件组成：
+```
+macbert4csc-base-chinese
     ├── config.json
     ├── added_tokens.json
     ├── pytorch_model.bin
@@ -15,21 +52,6 @@ macbert_models
     ├── tokenizer_config.json
     └── vocab.txt
 ```
-
-2. 运行`macbert_corrector.py`进行纠错。
-
-```
-python3 macbert_corrector.py
-```
-
-3. 评估
-
-- run
-  `python tests/macbert_corrector_test.py`
-- result
-  ![result](../../docs/git_image/macbert_result.jpg)
-
-纠错结果除部分英文大小写问题外，在sighan15上达到了SOTA水平。
 
 ### Evaluate
 
@@ -56,52 +78,20 @@ MacBert模型在sighan15上纠错效果评估如下：
 - Sentence Level: 准确率：80.98% 召回率：72.92% F1:76.74%
 - Char Level: 准确率：92.47% 召回率：86.25% F1:89.25%
 
-由于训练使用的数据使用了sighan15的训练集（复现paper使用sighan15），故在sighan15的测试集上表现较优。
+由于训练使用的数据使用了sighan15的训练集（复现paper使用sighan15），故在sighan15的测试集上达到SOTA水平。
 
-## 快速加载
-
-本项目基于pycorrector迁移的`pycorrector/transformers`，可支持BERT模型，可通过如下命令调用。当然，你也可使用官方的transformers库进行调用。
-
-example: [correct_demo.py](correct_demo.py)
-
-```python
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
-
-model_dir = "~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction"
-nlp = MacBertCorrector(model_dir).macbert_correct
-
-i = nlp('今天新情很好')
-print(i)
-```
-
-如果你需要直接使用huggingface/transformers调用
-
-1.先pip安装transformers库:
-
-```shell
-pip install transformers>=4.1.1
-```
-2.使用以下示例执行：
-
-```python
-import torch
-from transformers import AutoTokenizer, AutoModelForMaskedLM
-
-model_dir = "~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction"
-model = AutoModelForMaskedLM.from_pretrained(model_dir)
-tokenizer = AutoTokenizer.from_pretrained(model_dir)
-
-texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
-outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
-corrected_texts = []
-for ids, text in zip(outputs.logits, texts):
-    _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-    corrected_texts.append(_text[:len(text)])
-
-print(corrected_texts)
-```
 
 ## 训练
+
+3. 评估
+
+- run
+  `python tests/macbert_corrector_test.py`
+- result
+  ![result](../../docs/git_image/macbert_result.jpg)
+
+纠错结果除部分英文大小写问题外，在sighan15上达到了SOTA水平。
+
 
 ### 安装依赖
 ```shell
@@ -153,13 +143,14 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 python train.py
 ```
 ### 预测
+- 方法一：直接加载保存的ckpt文件：
 ```shell
 python infer.py
 ```
 
-### 调用
-以上即完成模型训练，把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下，
-就可以像上面说明使用pycorrector或者transformers调用。
+- 方法二：加载`pytorch_model.bin`文件：
+把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下，
+就可以像上面`快速加载`使用pycorrector或者transformers调用。
 
 ```shell
 output
@@ -170,6 +161,12 @@ output
     ├── tokenizer_config.json
     └── vocab.txt
 ```
+
+demo示例[macbert_corrector.py](macbert_corrector.py):
+```
+python3 macbert_corrector.py
+```
+
 
 如果需要训练SoftMaskedBertModel，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 

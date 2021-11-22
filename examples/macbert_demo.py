@@ -8,7 +8,26 @@ import sys
 sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
+
+def use_transformer():
+    import torch
+    from transformers import BertTokenizer, BertForMaskedLM
+
+    tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+    model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
+
+    texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+    corrected_texts = []
+    for ids, text in zip(outputs.logits, texts):
+        _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+        corrected_texts.append(_text[:len(text)])
+
+    print(corrected_texts)
+
+
 if __name__ == '__main__':
+    use_transformer()
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
         '少先队员因该为老人让坐',
