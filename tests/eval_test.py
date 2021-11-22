@@ -6,6 +6,7 @@ import os
 import sys
 
 sys.path.append("../")
+import pycorrector
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -13,43 +14,14 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 # right_rate:0.1798201798201798, right_count:180, total_count:1001;
 # recall_rate:0.15376676986584106, recall_right_count:149, recall_total_count:969, spend_time:121.65223574638367 s
 def test_eval_rule_with_sighan_2015():
-    from pycorrector.utils.eval import eval_sighan_2015_by_rule
-    eval_sighan_2015_by_rule()
+    from pycorrector.utils.eval import eval_sighan2015_by_model
 
-
-# right_rate:0.37623762376237624, right_count:38, total_count:101;
-# recall_rate:0.3541666666666667, recall_right_count:34, recall_total_count:96, spend_time:550.4112601280212 s
-def test_eval_bert_with_sighan_2015():
-    from pycorrector.utils.eval import eval_sighan_2015_by_bert
-    eval_sighan_2015_by_bert(num_limit_lines=100)
-
-
-# right_rate:0.297029702970297, right_count:30, total_count:101;
-# recall_rate:0.2708333333333333, recall_right_count:26, recall_total_count:96, spend_time:928.6698520183563 s
-def test_eval_ernie_with_sighan_2015():
-    from pycorrector.utils.eval import eval_sighan_2015_by_ernie
-    eval_sighan_2015_by_ernie(num_limit_lines=100)
+    eval_sighan2015_by_model(pycorrector.correct)
 
 
 # right_rate:0.486, right_count:243, total_count:500;
 # recall_rate:0.18,recall_right_count:54,recall_total_count:300
 def test_eval_rule_with_500():
-    from pycorrector.utils.eval import eval_corpus500_by_rule
+    from pycorrector.utils.eval import eval_corpus500_by_model
     # 评估规则方法的纠错准召率
-    eval_corpus500_by_rule()
-
-
-# right_rate:0.58, right_count:290, total_count:500;
-# recall_rate:0.37333333333333335,recall_right_count:112,recall_total_count:300
-def test_eval_bert_with_500():
-    from pycorrector.utils.eval import eval_corpus500_by_bert
-    # 评估bert模型的纠错准召率
-    eval_corpus500_by_bert()
-
-
-# right_rate:0.598, right_count:299, total_count:500;
-# recall_rate:0.41333333333333333, recall_right_count:124, recall_total_count:300, spend_time:6960 s
-def test_eval_ernie_with_500():
-    from pycorrector.utils.eval import eval_corpus500_by_ernie
-    # 评估bert模型的纠错准召率
-    eval_corpus500_by_ernie()
+    eval_corpus500_by_model(pycorrector.correct)

@@ -6,6 +6,7 @@ import sys
 from codecs import open
 from sklearn.model_selection import train_test_split
 from lxml import etree
+from xml.dom import minidom
 
 sys.path.append('../..')
 from pycorrector.utils.io_utils import save_json
@@ -136,8 +137,50 @@ def proc_test_set(fp):
     return rst
 
 
+def parse_cged_file(file_dir):
+    rst = []
+    for fn in os.listdir(file_dir):
+        if fn.endswith('.xml'):
+            path = os.path.join(file_dir, fn)
+            print('Parse data from %s' % path)
+
+            dom_tree = minidom.parse(path)
+            docs = dom_tree.documentElement.getElementsByTagName('DOC')
+            for doc in docs:
+                id = ''
+                text = ''
+                texts = doc.getElementsByTagName('TEXT')
+                for i in texts:
+                    id = i.getAttribute('id')
+                    # Input the text
+                    text = i.childNodes[0].data.strip()
+                # Input the correct text
+                correction = doc.getElementsByTagName('CORRECTION')[0]. \
+                    childNodes[0].data.strip()
+                wrong_ids = []
+                for error in doc.getElementsByTagName('ERROR'):
+                    start_off = error.getAttribute('start_off')
+                    end_off = error.getAttribute('end_off')
+                    if start_off and end_off:
+                        for i in range(int(start_off), int(end_off)+1):
+                            wrong_ids.append(i)
+                source = text.strip()
+                target = correction.strip()
+
+                pair = [source, target]
+                if pair not in rst:
+                    rst.append({'id': id,
+                                'original_text': source,
+                                'wrong_ids': wrong_ids,
+                                'correct_text': target
+                                })
+    save_json(rst, os.path.join(pwd_path, 'output/cged.json'))
+    return rst
+
+
 def main():
     # 注意：训练样本过少，仅作为模型测试使用
+    # parse_cged_file(os.path.join(pwd_path, '../data/cn/CGED/'))
     sighan15_dir = os.path.join(pwd_path, '../data/cn/sighan_2015/')
     rst_items = []
     test_lst = proc_test_set(sighan15_dir)

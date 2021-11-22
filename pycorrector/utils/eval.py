@@ -101,38 +101,6 @@ def eval_bcmi_data(data_path, verbose=False):
     return right_rate, right_result, wrong_result
 
 
-def eval_sighan_corpus(pkl_path, verbose=False):
-    sighan_data = load_pkl(pkl_path)
-    total_count = 0
-    right_count = 0
-    for error_sentence, details in sighan_data:
-        ids = []
-        error_word = ''
-        right_word = ''
-        if not details:
-            continue
-        for detail in details:
-            idx = detail[0]
-            error_word = detail[1]
-            right_word = detail[2]
-            begin_idx = idx - 1
-            ids.append(begin_idx)
-        correct_sentence = error_sentence.replace(error_word, right_word)
-        #  pred_detail: list(wrong, right, begin_idx, end_idx)
-        pred_sentence, pred_detail = pycorrector.correct(error_sentence)
-        if pred_sentence == correct_sentence:
-            right_count += 1
-        else:
-            if verbose:
-                print('truth:', correct_sentence, details)
-                print('predict:', pred_sentence, pred_detail)
-        total_count += 1
-    right_rate = 0.0
-    if total_count > 0:
-        right_rate = right_count / total_count
-    return right_rate
-
-
 def build_sighan_corpus(data_path, output_path):
     corpus = []
     sighan_data = load_pkl(data_path)
@@ -216,185 +184,82 @@ def build_eval_corpus(output_eval_path=eval_data_path):
     os.remove(no_error_path)
 
 
-def eval_corpus500_by_rule(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
-    res = []
+def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=True):
+    """
+    句级评估结果，设定需要纠错为正样本，无需纠错为负样本
+    Args:
+        correct_fn:
+        input_eval_path:
+        output_eval_path:
+        verbose:
+
+    Returns:
+        Acc, Recall, F1
+    """
     corpus = load_json(input_eval_path)
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
+    TP = 0.0
+    FP = 0.0
+    FN = 0.0
+    TN = 0.0
+    total_num = 0
     start_time = time.time()
     for data_dict in corpus:
-        text = data_dict.get('text', '')
-        correction = data_dict.get('correction', '')
+        src = data_dict.get('text', '')
+        tgt = data_dict.get('correction', '')
         errors = data_dict.get('errors', [])
 
         #  pred_detail: list(wrong, right, begin_idx, end_idx)
-        pred_sentence, pred_detail = pycorrector.correct(text)
-        # compute recall
-        if errors:
-            recall_total_count += 1
-            if errors and pred_detail and correction == pred_sentence:
-                recall_right_count += 1
+        tgt_pred, pred_detail = correct_fn(src)
+        if verbose:
+            print()
+            print('input  :', src)
+            print('truth  :', tgt, errors)
+            print('predict:', tgt_pred, pred_detail)
 
-        # compute precision
-        if correction == pred_sentence:
-            right_count += 1
+        # 负样本
+        if src == tgt:
+            # 预测也为负
+            if tgt == tgt_pred:
+                TN += 1
+            # 预测为正
+            else:
+                FP += 1
+        # 正样本
         else:
-            err_data_dict = copy.deepcopy(data_dict)
-            err_data_dict['pred_sentence'] = pred_sentence
-            err_data_dict['pred_errors'] = str(pred_detail)
-            res.append(err_data_dict)
-            if verbose:
-                print("\nwrong:")
-                print('input  :', text)
-                print('truth  :', correction, errors)
-                print('predict:', pred_sentence, pred_detail)
-        total_count += 1
+            # 预测也为正
+            if tgt == tgt_pred:
+                TP += 1
+            # 预测为负
+            else:
+                FN += 1
+        total_num += 1
     spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-    if output_eval_path:
-        save_json(res, output_eval_path)
+    acc = (TP + TN) / total_num
+    precision = TP / (TP + FP) if TP > 0 else 0.0
+    recall = TP / (TP + FN) if TP > 0 else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
+    print(
+        f'Sentence Level: acc:{acc:.6f}, precision:{precision:.6f}, recall:{recall:.6f}, f1:{f1:.6f}, cost time:{spend_time} s')
+    return acc, precision, recall, f1
 
 
-def eval_corpus500_by_bert(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
-    from pycorrector.bert.bert_corrector import BertCorrector
-    model = BertCorrector()
-    res = []
-    corpus = load_json(input_eval_path)
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    for data_dict in corpus:
-        text = data_dict.get('text', '')
-        correction = data_dict.get('correction', '')
-        errors = data_dict.get('errors', [])
+def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=True):
+    """
+    SIGHAN句级评估结果，设定需要纠错为正样本，无需纠错为负样本
+    Args:
+        correct_fn:
+        input_eval_path:
+        output_eval_path:
+        verbose:
 
-        #  pred_detail: list(wrong, right, begin_idx, end_idx)
-        pred_sentence, pred_detail = model.bert_correct(text)
-        # compute recall
-        if errors:
-            recall_total_count += 1
-            if errors and pred_detail and correction == pred_sentence:
-                recall_right_count += 1
-
-        # compute precision
-        if correction == pred_sentence:
-            right_count += 1
-            print("\nright:")
-            print('truth  :', text, errors)
-            print('predict:', pred_sentence, pred_detail)
-        else:
-            err_data_dict = copy.deepcopy(data_dict)
-            err_data_dict['pred_sentence'] = pred_sentence
-            err_data_dict['pred_errors'] = str(pred_detail)
-            res.append(err_data_dict)
-            if verbose:
-                print("\nwrong:")
-                print('input  :', text)
-                print('truth  :', correction, errors)
-                print('predict:', pred_sentence, pred_detail)
-        total_count += 1
-    spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-    if output_eval_path:
-        save_json(res, output_eval_path)
-
-
-def eval_corpus500_by_ernie(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
-    from pycorrector.ernie.ernie_corrector import ErnieCorrector
-    model = ErnieCorrector()
-    res = []
-    corpus = load_json(input_eval_path)
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    for data_dict in corpus:
-        text = data_dict.get('text', '')
-        correction = data_dict.get('correction', '')
-        errors = data_dict.get('errors', [])
-
-        #  pred_detail: list(wrong, right, begin_idx, end_idx)
-        pred_sentence, pred_detail = model.ernie_correct(text)
-        # compute recall
-        if errors:
-            recall_total_count += 1
-            if errors and pred_detail and correction == pred_sentence:
-                recall_right_count += 1
-
-        # compute precision
-        if correction == pred_sentence:
-            right_count += 1
-            print("\nright:")
-            print('truth  :', text, errors)
-            print('predict:', pred_sentence, pred_detail)
-        else:
-            err_data_dict = copy.deepcopy(data_dict)
-            err_data_dict['pred_sentence'] = pred_sentence
-            err_data_dict['pred_errors'] = str(pred_detail)
-            res.append(err_data_dict)
-            if verbose:
-                print("\nwrong:")
-                print('input  :', text)
-                print('truth  :', correction, errors)
-                print('predict:', pred_sentence, pred_detail)
-        total_count += 1
-    spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-    if output_eval_path:
-        save_json(res, output_eval_path)
-
-
-def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
+    Returns:
+        Acc, Recall, F1
+    """
+    TP = 0.0
+    FP = 0.0
+    FN = 0.0
+    TN = 0.0
+    total_num = 0
     start_time = time.time()
     with open(sighan_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -404,283 +269,54 @@ def eval_sighan_2015_by_rule(sighan_path=sighan_2015_path, verbose=True, num_lim
             parts = line.split()
             if len(parts) != 2:
                 continue
-            if 0 < num_limit_lines < total_count:
-                continue
             src = parts[0]
-            trg = parts[1]
+            tgt = parts[1]
 
-            pred, pred_detail = pycorrector.correct(src)
-
-            if src != trg:
-                recall_total_count += 1
-
-            if pred == trg:
-                right_count += 1
-                if src != trg:
-                    recall_right_count += 1
-                if verbose:
-                    print("\nright:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            else:
-                if verbose:
-                    print("\nwrong:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            total_count += 1
-
-    spend_time = time.time() - start_time
-
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-
-
-def eval_sighan_2015_by_bert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
-    from pycorrector.bert.bert_corrector import BertCorrector
-    model = BertCorrector()
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    with open(sighan_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-            parts = line.split()
-            if len(parts) != 2:
-                continue
-            if 0 < num_limit_lines < total_count:
-                continue
-            src = parts[0]
-            trg = parts[1]
-
-            pred, pred_detail = model.bert_correct(src)
-
-            if src != trg:
-                recall_total_count += 1
-
-            if pred == trg:
-                right_count += 1
-                if src != trg:
-                    recall_right_count += 1
-                if verbose:
-                    print("\nright:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            else:
-                if verbose:
-                    print("\nwrong:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            total_count += 1
-
-    spend_time = time.time() - start_time
-
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-
-
-def eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
-    from pycorrector.ernie.ernie_corrector import ErnieCorrector
-    model = ErnieCorrector()
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    with open(sighan_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-            parts = line.split()
-            if len(parts) != 2:
-                continue
-            if 0 < num_limit_lines < total_count:
-                continue
-            src = parts[0]
-            trg = parts[1]
-
-            pred, pred_detail = model.ernie_correct(src)
-
-            if src != trg:
-                recall_total_count += 1
-
-            if pred == trg:
-                right_count += 1
-                if src != trg:
-                    recall_right_count += 1
-                if verbose:
-                    print("\nright:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            else:
-                if verbose:
-                    print("\nwrong:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            total_count += 1
-
-    spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-
-
-def eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=100):
-    from pycorrector.macbert.macbert_corrector import MacBertCorrector
-    model = MacBertCorrector()
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    with open(sighan_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-            parts = line.split()
-            if len(parts) != 2:
-                continue
-            if 0 < num_limit_lines < total_count:
-                continue
-            src = parts[0]
-            trg = parts[1]
-
-            pred, pred_detail = model.macbert_correct(src)
-
-            if src != trg:
-                recall_total_count += 1
-
-            if pred == trg:
-                right_count += 1
-                if src != trg:
-                    recall_right_count += 1
-                if verbose:
-                    print("\nright:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            else:
-                if verbose:
-                    print("\nwrong:")
-                    print(f'input  : {src}\ntruth  : {trg}\npredict: {pred} pred_detail: {pred_detail}')
-            total_count += 1
-
-    spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-
-
-def eval_corpus500_by_macbert(input_eval_path=eval_data_path, output_eval_path='', verbose=True):
-    from pycorrector.macbert.macbert_corrector import MacBertCorrector
-    model = MacBertCorrector()
-    res = []
-    corpus = load_json(input_eval_path)
-    total_count = 0
-    right_count = 0
-    right_rate = 0.0
-    recall_rate = 0.0
-    recall_right_count = 0
-    recall_total_count = 0
-    start_time = time.time()
-    for data_dict in corpus:
-        text = data_dict.get('text', '')
-        correction = data_dict.get('correction', '')
-        errors = data_dict.get('errors', [])
-
-        #  pred_detail: list(wrong, right, begin_idx, end_idx)
-        pred_sentence, pred_detail = model.macbert_correct(text)
-        # compute recall
-        if errors:
-            recall_total_count += 1
-            if errors and pred_detail and correction == pred_sentence:
-                recall_right_count += 1
-
-        # compute precision
-        if correction == pred_sentence:
-            right_count += 1
-            print("\nright:")
-            print('truth  :', text, errors)
-            print('predict:', pred_sentence, pred_detail)
-        else:
-            err_data_dict = copy.deepcopy(data_dict)
-            err_data_dict['pred_sentence'] = pred_sentence
-            err_data_dict['pred_errors'] = str(pred_detail)
-            res.append(err_data_dict)
+            tgt_pred, pred_detail = correct_fn(src)
             if verbose:
-                print("\nwrong:")
-                print('input  :', text)
-                print('truth  :', correction, errors)
-                print('predict:', pred_sentence, pred_detail)
-        total_count += 1
-    spend_time = time.time() - start_time
-    if total_count > 0:
-        right_rate = right_count / total_count
-    if recall_total_count > 0:
-        recall_rate = recall_right_count / recall_total_count
-    print('right_rate:{}, right_count:{}, total_count:{};\n'
-          'recall_rate:{}, recall_right_count:{}, recall_total_count:{}, spend_time:{} s'.format(right_rate,
-                                                                                                 right_count,
-                                                                                                 total_count,
-                                                                                                 recall_rate,
-                                                                                                 recall_right_count,
-                                                                                                 recall_total_count,
-                                                                                                 spend_time))
-    if output_eval_path:
-        save_json(res, output_eval_path)
+                print()
+                print('input  :', src)
+                print('truth  :', tgt)
+                print('predict:', tgt_pred, pred_detail)
+
+            # 负样本
+            if src == tgt:
+                # 预测也为负
+                if tgt == tgt_pred:
+                    TN += 1
+                # 预测为正
+                else:
+                    FP += 1
+            # 正样本
+            else:
+                # 预测也为正
+                if tgt == tgt_pred:
+                    TP += 1
+                # 预测为负
+                else:
+                    FN += 1
+            total_num += 1
+        spend_time = time.time() - start_time
+        acc = (TP + TN) / total_num
+        precision = TP / (TP + FP) if TP > 0 else 0.0
+        recall = TP / (TP + FN) if TP > 0 else 0.0
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
+        print(
+            f'Sentence Level: acc:{acc:.6f}, precision:{precision:.6f}, recall:{recall:.6f}, f1:{f1:.6f}, cost time:{spend_time} s')
+        return acc, precision, recall, f1
 
 
 if __name__ == "__main__":
     # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
     # build_eval_corpus()
 
-    # eval_sighan_2015_by_ernie(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
+    # eval_sighan_by_model(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
     # 评估规则方法的纠错准召率
-    # eval_corpus500_by_rule(eval_data_path)
+    # eval_corpus500_by_model(pycorrector.correct)
 
-    # 评估bert模型的纠错准召率
-    # eval_corpus500_by_bert(eval_data_path)
-    eval_corpus500_by_macbert(eval_data_path)
-    eval_sighan_2015_by_macbert(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=-1)
+    # 评估macbert模型的纠错准召率
+    from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
+    model = MacBertCorrector()
+    eval_corpus500_by_model(model.macbert_correct, eval_data_path, verbose=True)
+    eval_sighan2015_by_model(model.macbert_correct, sighan_path=sighan_2015_path, verbose=True)
