@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com), abtion{at}outlook.com
-# Brief:
+"""
+@author:XuMing(xuming624@qq.com), Abtion(abtion@outlook.com)
+@description:
+"""
 import os
 import sys
 from codecs import open

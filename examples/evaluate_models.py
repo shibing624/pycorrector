@@ -32,8 +32,7 @@ def main(args):
         model = BertCorrector()
         eval.eval_sighan2015_by_model(model.bert_correct)
     if args.data == 'sighan_15' and args.model == 'macbert':
-        # right_rate: 0.8118811881188119, recall_rate: 0.8125
-        # Sentence Level: acc:0.825492, precision:0.993085, recall:0.825376, f1:0.901497
+        # Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_sighan2015_by_model(model.macbert_correct)
