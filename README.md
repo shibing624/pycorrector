@@ -21,16 +21,13 @@
 
 - [Question](#Question)
 - [Solution](#Solution)
-- [Feature](#Feature)
-- [Evaluate](#Evaluate)
 - [Install](#install)
 - [Usage](#usage)
 - [Deep Model Usage](#deep-model-usage)
 - [Dataset](#Dataset)
 - [Custom Language Model](#custom-language-model)
-- [Todo](#Todo)
-- [Wechat Group](#wechat-group)
-- [Cite](#Cite)
+- [Contact](#Contact)
+- [Citation](#Citation)
 - [Contribute](#contribute)
 - [Reference](#reference)
 
@@ -58,13 +55,15 @@
 整合这两种粒度的疑似错误结果，形成疑似错误位置候选集；
 3. 错误纠正部分，是遍历所有的疑似错误位置，并使用音似、形似词典替换错误位置的词，然后通过语言模型计算句子困惑度，对所有候选集结果比较并排序，得到最优纠正词。
 
-PS：[网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
-
 ### 深度模型的解决思路
 1. 端到端的深度模型可以避免人工提取特征，减少人工工作量，RNN序列模型对文本任务拟合能力强，rnn_attention在英文文本纠错比赛中取得第一名成绩，证明应用效果不错；
 2. CRF会计算全局最优输出节点的条件概率，对句子中特定错误类型的检测，会根据整句话判定该错误，阿里参赛2016中文语法纠错任务并取得第一名，证明应用效果不错；
 3. Seq2Seq模型是使用Encoder-Decoder结构解决序列转换问题，目前在序列转换任务中（如机器翻译、对话生成、文本摘要、图像描述）使用最广泛、效果最好的模型之一；
 4. BERT/ELECTRA/ERNIE/MacBERT等预训练模型强大的语言表征能力，对NLP届带来翻天覆地的改变，海量的训练数据拟合的语言模型效果无与伦比，基于其MASK掩码的特征，可以简单改造预训练模型用于纠错，加上fine-tune，效果轻松达到最优。
+
+PS：
+- [我在B站直播纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
+- [网友源码解读](https://zhuanlan.zhihu.com/p/138981644) 
 
 ## Feature
 ### 模型
@@ -387,8 +386,9 @@ pip install -r requirements-dev.txt
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[seq2seq](./pycorrector/seq2seq)、
-[transformer](./pycorrector/transformer)、[bert](./pycorrector/bert)、[macbert](./pycorrector/macbert)、[electra](./pycorrector/electra)，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
+主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[macbert](./pycorrector/macbert)、[seq2seq](./pycorrector/seq2seq)、
+[bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)，各模型方法
+内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
 ### 使用方法
@@ -396,7 +396,7 @@ pip install -r requirements-dev.txt
 
 - MacBert模型
 
-基于MacBert预训练模型的纠错，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+基于MacBert的中文拼写纠错模型，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
 示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[README](./pycorrector/macbert/README.md)
 
@@ -477,7 +477,7 @@ output:
 你找到你最喜欢的工作，我也很高心。  =>  你找到你最喜欢的工作，我也很高兴。 [('心', '兴', 15, 16)]
 ```
 
-模型文件组成：
+模型文件：
 ```
 macbert4csc-base-chinese
     ├── config.json
@@ -602,7 +602,7 @@ PS：
 <img src="http://42.193.145.218/github_data/nlp_wechatgroup_erweima1.png" width="200" /><img src="http://42.193.145.218/github_data/xm_wechat_erweima.png" width="200" />
 
 
-## Cite
+## Citation
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
 

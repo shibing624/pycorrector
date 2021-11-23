@@ -22,8 +22,7 @@ def demo():
 def main(args):
     if args.data == 'sighan_15' and args.model == 'rule':
         demo()
-        # right_rate:0.1798201798201798, right_count:180, total_count:1001;
-        # recall_rate:0.15376676986584106, recall_right_count:149, recall_total_count:969, spend_time:121 s
+        # Sentence Level: acc:0.173225, precision:0.979592, recall:0.148541, f1:0.257965, cost time:230.92 s
         eval.eval_sighan2015_by_model(pycorrector.correct)
     if args.data == 'sighan_15' and args.model == 'bert':
         # right_rate:0.37623762376237624, right_count:38, total_count:101;
@@ -32,7 +31,7 @@ def main(args):
         model = BertCorrector()
         eval.eval_sighan2015_by_model(model.bert_correct)
     if args.data == 'sighan_15' and args.model == 'macbert':
-        # Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200
+        # Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_sighan2015_by_model(model.macbert_correct)
@@ -55,7 +54,7 @@ def main(args):
         model = BertCorrector()
         eval.eval_corpus500_by_model(model.bert_correct)
     if args.data == 'corpus500' and args.model == 'macbert':
-        # Sentence Level: acc:0.660000, precision:0.786667, recall:0.591973, f1:0.675573, cost time:28.61 s
+        # Sentence Level: acc:0.724000, precision:0.912821, recall:0.595318, f1:0.720648, cost time:6.43 s
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_corpus500_by_model(model.macbert_correct)
