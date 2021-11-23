@@ -62,7 +62,7 @@
 4. BERT/ELECTRA/ERNIE/MacBERT等预训练模型强大的语言表征能力，对NLP届带来翻天覆地的改变，海量的训练数据拟合的语言模型效果无与伦比，基于其MASK掩码的特征，可以简单改造预训练模型用于纠错，加上fine-tune，效果轻松达到最优。
 
 PS：
-- [我在B站直播纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
+- [我的纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
 - [网友源码解读](https://zhuanlan.zhihu.com/p/138981644) 
 
 ## Feature
