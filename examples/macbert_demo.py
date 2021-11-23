@@ -4,30 +4,49 @@
 @description: 
 """
 import sys
+import operator
 
 sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 
-def use_transformer():
+def use_origin_transformer():
     import torch
     from transformers import BertTokenizer, BertForMaskedLM
 
     tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
     model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 
-    texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+    texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
     outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
-    corrected_texts = []
+
+    def get_errors(corrected_text, origin_text):
+        details = []
+        for i, ori_char in enumerate(origin_text):
+            if ori_char == ' ':
+                # add blank space
+                corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+                continue
+            if i >= len(corrected_text):
+                continue
+            if ori_char != corrected_text[i]:
+                details.append((ori_char, corrected_text[i], i, i + 1))
+        details = sorted(details, key=operator.itemgetter(2))
+        return corrected_text, details
+
+    result = []
     for ids, text in zip(outputs.logits, texts):
         _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-        corrected_texts.append(_text[:len(text)])
-
-    print(corrected_texts)
+        corrected_text = _text[:len(text)]
+        corrected_text, details = get_errors(corrected_text, text)
+        print(text, ' => ', corrected_text, details)
+        result.append((corrected_text, details))
+    print(result)
+    return result
 
 
 if __name__ == '__main__':
-    use_transformer()
+    use_origin_transformer()
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
         '少先队员因该为老人让坐',

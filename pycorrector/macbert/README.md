@@ -27,19 +27,44 @@ pip install transformers>=4.1.1
 2.使用以下示例执行：
 
 ```python
+import operator
 import torch
 from transformers import BertTokenizer, BertForMaskedLM
 
-model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 
-texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
 outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
-corrected_texts = []
+
+def get_errors(corrected_text, origin_text):
+    details = []
+    for i, ori_char in enumerate(origin_text):
+        if ori_char == ' ':
+            # add blank space 
+            corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+            continue
+        if i >= len(corrected_text):
+            continue
+        if ori_char != corrected_text[i]:
+            details.append((ori_char, corrected_text[i], i, i + 1))
+    details = sorted(details, key=operator.itemgetter(2))
+    return corrected_text, details
+
+result = []
 for ids, text in zip(outputs.logits, texts):
     _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-    corrected_texts.append(_text[:len(text)])
-print(corrected_texts)
+    corrected_text = _text[:len(text)]
+    corrected_text, details = get_errors(corrected_text, text)
+    print(text, ' => ', corrected_text, details)
+    result.append((corrected_text, details))
+print(result)
+```
+
+output:
+```shell
+今天新情很好  =>  今天心情很好 [('新', '心', 2, 3)]
+你找到你最喜欢的工作，我也很高心。  =>  你找到你最喜欢的工作，我也很高兴。 [('心', '兴', 15, 16)]
 ```
 
 模型文件组成：
@@ -63,22 +88,20 @@ macbert4csc-base-chinese
 
 执行该评估脚本后，
 
-MacBert模型纠错效果评估如下：
+`shibing624/macbert4csc-base-chinese` 模型在corpus500纠错效果评估如下：
 
-- 准确率：56.20%
-- 召回率：42.67%
+- Sentence Level: acc:0.656000, precision:0.779736, recall:0.591973, f1:0.673004
 
-规则方法(加入自定义混淆集)的纠错效果评估如下：
+规则方法(加入自定义混淆集)在corpus500纠错效果评估如下：
 
-- 准确率：320/500=64%
-- 召回率：152/300=50.67%
+- Sentence Level: acc:0.64, recall:0.5067
 
-MacBert模型在sighan15上纠错效果评估如下：
+`shibing624/macbert4csc-base-chinese` 在 SIGHAN2015 测试集纠错效果评估如下：
 
-- Sentence Level: 准确率：80.98% 召回率：72.92% F1:76.74%
-- Char Level: 准确率：92.47% 召回率：86.25% F1:89.25%
+- Char Level: precision=0.9372, recall=0.8640 f1=0.8991
+- Sentence Level: precision:0.8264, recall:0.7366, f1:0.7789
 
-由于训练使用的数据使用了sighan15的训练集（复现paper使用sighan15），故在sighan15的测试集上达到SOTA水平。
+由于训练使用的数据使用了SIGHAN2015的训练集（复现paper），在SIGHAN2015的测试集上达到SOTA水平。
 
 
 ## 训练

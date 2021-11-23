@@ -433,20 +433,57 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 ```
 
 使用原生transformers库调用纠错：
+
 ```python
+import operator
 import torch
 from transformers import BertTokenizer, BertForMaskedLM
 
-model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 
-texts = ["今天心情很好", "你找到你最喜欢的工作，我也很高心。"]
+texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
 outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
-corrected_texts = []
+
+def get_errors(corrected_text, origin_text):
+    details = []
+    for i, ori_char in enumerate(origin_text):
+        if ori_char == ' ':
+            # add blank space 
+            corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+            continue
+        if i >= len(corrected_text):
+            continue
+        if ori_char != corrected_text[i]:
+            details.append((ori_char, corrected_text[i], i, i + 1))
+    details = sorted(details, key=operator.itemgetter(2))
+    return corrected_text, details
+
+result = []
 for ids, text in zip(outputs.logits, texts):
     _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-    corrected_texts.append(_text[:len(text)])
-print(corrected_texts)
+    corrected_text = _text[:len(text)]
+    corrected_text, details = get_errors(corrected_text, text)
+    print(text, ' => ', corrected_text, details)
+    result.append((corrected_text, details))
+print(result)
+```
+
+output:
+```shell
+今天新情很好  =>  今天心情很好 [('新', '心', 2, 3)]
+你找到你最喜欢的工作，我也很高心。  =>  你找到你最喜欢的工作，我也很高兴。 [('心', '兴', 15, 16)]
+```
+
+模型文件组成：
+```
+macbert4csc-base-chinese
+    ├── config.json
+    ├── added_tokens.json
+    ├── pytorch_model.bin
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    └── vocab.txt
 ```
 
 <details>

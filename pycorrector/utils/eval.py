@@ -224,6 +224,7 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
             # 预测为正
             else:
                 FP += 1
+                print('wrong')
         # 正样本
         else:
             # 预测也为正
@@ -232,6 +233,7 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
             # 预测为负
             else:
                 FN += 1
+                print('wrong')
         total_num += 1
     spend_time = time.time() - start_time
     acc = (TP + TN) / total_num
@@ -287,6 +289,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
                 # 预测为正
                 else:
                     FP += 1
+                    print('wrong')
             # 正样本
             else:
                 # 预测也为正
@@ -295,6 +298,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
                 # 预测为负
                 else:
                     FN += 1
+                    print('wrong')
             total_num += 1
         spend_time = time.time() - start_time
         acc = (TP + TN) / total_num
