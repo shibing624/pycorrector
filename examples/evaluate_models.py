@@ -55,8 +55,7 @@ def main(args):
         model = BertCorrector()
         eval.eval_corpus500_by_model(model.bert_correct)
     if args.data == 'corpus500' and args.model == 'macbert':
-        # right_rate: 0.562, recall_rate: 0.4266
-        # right_rate: 0.64, recall_rate: 0.58
+        # Sentence Level: acc:0.660000, precision:0.786667, recall:0.591973, f1:0.675573, cost time:28.61 s
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_corpus500_by_model(model.macbert_correct)

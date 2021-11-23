@@ -40,9 +40,9 @@ outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
 def get_errors(corrected_text, origin_text):
     details = []
     for i, ori_char in enumerate(origin_text):
-        if ori_char == ' ':
+        if ori_char in [' ', '“', '”', '‘', '’', '琊']:
             # add blank space 
-            corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if i >= len(corrected_text):
             continue
@@ -98,15 +98,12 @@ macbert4csc-base-chinese
 
 `shibing624/macbert4csc-base-chinese` 在 SIGHAN2015 测试集纠错效果评估如下：
 
-- Char Level: precision=0.9372, recall=0.8640 f1=0.8991
+- Char Level: precision=0.9372, recall=0.8640, f1=0.8991
 - Sentence Level: precision:0.8264, recall:0.7366, f1:0.7789
 
 由于训练使用的数据使用了SIGHAN2015的训练集（复现paper），在SIGHAN2015的测试集上达到SOTA水平。
 
-
-## 训练
-
-3. 评估
+#### 评估case
 
 - run
   `python tests/macbert_corrector_test.py`
@@ -115,6 +112,9 @@ macbert4csc-base-chinese
 
 纠错结果除部分英文大小写问题外，在sighan15上达到了SOTA水平。
 
+
+
+## 训练
 
 ### 安装依赖
 ```shell
@@ -155,11 +155,18 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
             31
         ],
         "correct_text": "晚间会听到噪音，白天的时候大家都不会太在意，但是在睡觉的时候这噪音成为大家的恶梦。"
-    },
+    }
 ]
 ```
 
 下载`SIGHAN+Wang271K中文纠错数据集`，下载后新建output文件夹并放里面，文件位置同上。
+
+#### 自有数据集
+
+把自己数据集标注好，保存为跟训练样本集一样的json格式，然后加载模型继续训练即可。
+
+1. 已有大量业务相关错误样本，主要标注错误位置（wrong_ids）和纠错后的句子(correct_text)
+2. 没有现成的错误样本，可以手动写脚本生成错误样本（original_text），根据音似、形似等特征把正确句子的指定位置（wrong_ids）字符改为错字
 
 ### 训练
 ```shell

@@ -29,6 +29,7 @@ class MacBertCorrector(object):
             macbert_model_dir = "shibing624/macbert4csc-base-chinese"
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
+        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊']
         logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
@@ -49,9 +50,9 @@ class MacBertCorrector(object):
         def get_errors(corrected_text, origin_text):
             sub_details = []
             for i, ori_char in enumerate(origin_text):
-                if ori_char == ' ':
+                if ori_char in self.unk_tokens:
                     # add blank space
-                    corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+                    corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
                     continue
                 if i >= len(corrected_text):
                     continue

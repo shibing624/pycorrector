@@ -448,9 +448,9 @@ outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
 def get_errors(corrected_text, origin_text):
     details = []
     for i, ori_char in enumerate(origin_text):
-        if ori_char == ' ':
+        if ori_char in [' ', '“', '”', '‘', '’', '琊']:
             # add blank space 
-            corrected_text = corrected_text[:i] + ' ' + corrected_text[i:]
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if i >= len(corrected_text):
             continue
