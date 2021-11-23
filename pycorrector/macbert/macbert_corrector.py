@@ -14,14 +14,14 @@ sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector import config
-
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
 class MacBertCorrector(object):
-    def __init__(self, macbert_model_dir=config.macbert_model_dir, device=-1):
+    def __init__(self, macbert_model_dir=config.macbert_model_dir):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
@@ -29,7 +29,9 @@ class MacBertCorrector(object):
             macbert_model_dir = "shibing624/macbert4csc-base-chinese"
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
+        self.model.to(device)
         self.unk_tokens = [' ', '“', '”', '‘', '’', '琊']
+        logger.debug("device: {}".format(device))
         logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
@@ -45,7 +47,8 @@ class MacBertCorrector(object):
         # 长句切分为短句
         blocks = split_text_by_maxlen(text, maxlen=128)
         blocks = [block[0] for block in blocks]
-        outputs = self.model(**self.tokenizer(blocks, padding=True, return_tensors='pt'))
+        inputs = self.tokenizer(blocks, padding=True, return_tensors='pt').to(device)
+        outputs = self.model(**inputs)
 
         def get_errors(corrected_text, origin_text):
             sub_details = []
@@ -62,8 +65,8 @@ class MacBertCorrector(object):
             return corrected_text, sub_details
 
         for ids, text in zip(outputs.logits, blocks):
-            _text = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-            corrected_text = _text[:len(text)]
+            decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+            corrected_text = decode_tokens[:len(text)]
             corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
             details.extend(sub_details)

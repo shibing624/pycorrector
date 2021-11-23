@@ -10,15 +10,18 @@ sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 
-def use_origin_transformer():
+def use_origin_transformers():
+    # 原生transformers库调用
     import torch
     from transformers import BertTokenizer, BertForMaskedLM
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
     model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
+    model = model.to(device)
 
     texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
     def get_errors(corrected_text, origin_text):
         details = []
@@ -46,7 +49,10 @@ def use_origin_transformer():
 
 
 if __name__ == '__main__':
-    use_origin_transformer()
+    # 原生transformers库调用
+    use_origin_transformers()
+
+    # pycorrector封装调用
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
         '少先队员因该为老人让坐',

@@ -30,6 +30,7 @@ class Inference:
                                                       tokenizer=self.tokenizer)
         self.model.eval()
         self.model.to(device)
+        logger.debug("device: {}".format(device))
 
     def predict(self, sentence_list):
         return self.model.predict(sentence_list)

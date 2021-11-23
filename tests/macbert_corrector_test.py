@@ -1,10 +1,10 @@
+# -*- coding: utf-8 -*-
 """
-@Time   :   2021-02-03 21:14:27
-@File   :   macbert_corrector_test.py
-@Author :   Abtion
-@Email  :   abtion{at}outlook.com
+@author:XuMing(xuming624@qq.com), Abtion(abtion@outlook.com)
+@description:
 """
 import sys
+import time
 
 sys.path.append("../")
 from pycorrector.macbert import macbert_corrector
@@ -59,8 +59,9 @@ badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
            '我最爱看的是《巴黎圣母院》这书，里面思想深邃，值得回味。',
            ]
 error_sentences.extend(badcase)
-
+start = time.time()
 bertCorrector = macbert_corrector.MacBertCorrector()
 for line in error_sentences:
     correct_sent, err = bertCorrector.macbert_correct(line)
     print("original sentence:{} => {} err:{}".format(line, correct_sent, err))
+print('time spend:', time.time() - start, ' sentence count:', len(error_sentences))
