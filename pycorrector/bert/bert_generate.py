@@ -9,9 +9,8 @@ update bert_lstm model to seq2seq
 
 import torch
 import torch.nn as nn
-
+from transformers import BertTokenizer, BertModel, BertForMaskedLM
 from pycorrector import config
-from pycorrector.transformers import BertTokenizer, BertModel, BertForMaskedLM
 
 input_text = "[CLS] I go to school by bus [SEP] "
 target_text = "我搭校车上学"

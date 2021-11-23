@@ -3,7 +3,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install tokenizers==0.9.4 torch>=1.3.1 tqdm==4.50.2
+pip install transformers tokenizers torch>=1.3.1 tqdm==4.50.2 
 ```
 
 ## 使用说明
@@ -74,12 +74,13 @@ chinese_electra_base_generator_pytorch
 
 ## 快速加载
 
-本项目迁移了[Huggingface-Transformers 4.2.0dev0](https://github.com/huggingface/transformers)到`pycorrector/transformers`，更新了兼容代码，可支持ELECTRA模型，可通过如下命令调用。
+本项目支持ELECTRA模型，可通过如下命令调用。
 
 example: [predict_mask.py](predict_mask.py)
 
 ```python
-from pycorrector.transformers import pipeline, ElectraForPreTraining, ElectraTokenizer
+import os
+from transformers import ElectraForPreTraining, ElectraTokenizer
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 D_model_dir = os.path.join(pwd_path, "../data/electra_models/chinese_electra_base_discriminator_pytorch/")

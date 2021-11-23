@@ -4,7 +4,7 @@
 ### Requirements
 * pip安装依赖包
 ```
-pip install tokenizers==0.9.4 torch>=1.3.1 tqdm==4.50.2
+pip install transformers tokenizers torch>=1.3.1 tqdm==4.50.2
 ```
 
 ## 使用说明
@@ -43,14 +43,13 @@ python3 bert_corrector.py
 
 执行该评估脚本后，
 
-Bert模型纠错效果评估如下：
-- 准确率：58.60%
-- 召回率：35.00%
+`bert4csc` 模型在corpus500纠错效果评估如下：
 
-规则方法(加入自定义混淆集)的纠错效果评估如下：
-- 准确率：320/500=64%
-- 召回率：152/300=50.67%
+- Sentence Level: acc:0.5860, recall:0.3500
 
+规则方法(加入自定义混淆集)在corpus500纠错效果评估如下：
+
+- Sentence Level: acc:0.64, recall:0.5067
 
 可以看出Bert模型对文本有强大的表达能力，仅仅依赖预训练的MLM模型，在纠错能力上就比优化良久的专家规则方法稍差而已，而且看结果细节一些纠正还挺靠谱。
 
@@ -65,7 +64,8 @@ Bert模型纠错效果评估如下：
 example: [predict_mask.py](predict_mask.py)
 
 ```python
-from pycorrector.transformers import pipeline
+import os
+from transformers import pipeline
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 model_dir = os.path.join(pwd_path, "../data/bert_models/chinese_finetuned_lm/")
@@ -112,7 +112,7 @@ python run_language_modeling.py \
 ```
 - 结果
 
-该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型放置于`data/bert_models`目录下：
+该脚本自动从S3下载`bert-base-chinese`模型，然后fine-tune训练，完后的模型放置于`~/.pycorrector/datasets/bert_models/chinese_finetuned_lm/`目录下：
 ```
 bert_models
 └── chinese_finetuned_lm

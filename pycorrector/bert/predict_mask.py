@@ -4,15 +4,11 @@
 @description: Run BERT on Masked LM.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import argparse
 import sys
+from transformers import pipeline
 
 sys.path.append('../..')
-from pycorrector.transformers import pipeline
 from pycorrector import config
 
 MASK_TOKEN = "[MASK]"
@@ -30,7 +26,7 @@ def main():
     nlp = pipeline('fill-mask',
                    model=args.bert_model_dir,
                    tokenizer=args.bert_model_dir,
-                   device=0,  # gpu device id
+                   device=-1,  # gpu device id
                    )
     i = nlp('hi lili, What is the name of the [MASK] ?')
     print(i)

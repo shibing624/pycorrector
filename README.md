@@ -608,7 +608,7 @@ PS：
 @software{pycorrector,
   author = {Xu Ming},
   title = {pycorrector: Text Error Correction Tool},
-  year = {2020},
+  year = {2021},
   url = {https://github.com/shibing624/pycorrector},
 }
 ```

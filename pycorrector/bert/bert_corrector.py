@@ -8,12 +8,11 @@ import operator
 import os
 import sys
 import time
-
+from transformers import pipeline
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
-from pycorrector.transformers import pipeline
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 
@@ -21,7 +20,7 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 class BertCorrector(Corrector):
-    def __init__(self, bert_model_dir=config.bert_model_dir):
+    def __init__(self, bert_model_dir=config.bert_model_dir, device=-1):
         super(BertCorrector, self).__init__()
         self.name = 'bert_corrector'
         t1 = time.time()
@@ -29,7 +28,7 @@ class BertCorrector(Corrector):
             'fill-mask',
             model=bert_model_dir,
             tokenizer=bert_model_dir,
-            device=0,  # gpu device id
+            device=device,  # gpu device id
         )
         if self.model:
             self.mask = self.model.tokenizer.mask_token

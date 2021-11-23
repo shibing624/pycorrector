@@ -9,13 +9,14 @@ import operator
 import sys
 import time
 import os
+from transformers import BertTokenizer, BertForMaskedLM
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector.macbert.correction_pipeline import CorrectionPipeline
 from pycorrector import config
-from pycorrector.transformers import BertTokenizer, BertForMaskedLM
+
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 

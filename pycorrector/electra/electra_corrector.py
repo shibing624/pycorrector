@@ -9,9 +9,9 @@ import sys
 import time
 
 import torch
+from transformers import pipeline, ElectraForPreTraining
 
 sys.path.append('../..')
-from pycorrector.transformers import pipeline, ElectraForPreTraining
 
 from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
 from pycorrector.utils.logger import logger
@@ -21,7 +21,7 @@ from pycorrector import config
 
 
 class ElectraCorrector(Corrector):
-    def __init__(self, d_model_dir=config.electra_D_model_dir, g_model_dir=config.electra_G_model_dir):
+    def __init__(self, d_model_dir=config.electra_D_model_dir, g_model_dir=config.electra_G_model_dir, device=-1):
         super(ElectraCorrector, self).__init__()
         self.name = 'electra_corrector'
         t1 = time.time()
@@ -29,7 +29,7 @@ class ElectraCorrector(Corrector):
             "fill-mask",
             model=g_model_dir,
             tokenizer=g_model_dir,
-            device=0,  # gpu device id
+            device=device,  # gpu device id
         )
         self.d_model = ElectraForPreTraining.from_pretrained(d_model_dir)
 

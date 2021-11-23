@@ -5,6 +5,6 @@ torch>=1.3.1
 pytorch-lightning>=1.1.2
 pandas
 tqdm==4.50.2
-tokenizers==0.9.4
 transformers>=4.4.2
+tokenizers
 tensorboardX

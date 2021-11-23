@@ -5,11 +5,11 @@
 """
 
 import sys
-
+from transformers import pipeline, ElectraForPreTraining, ElectraTokenizer
 import torch
 
 sys.path.append('../..')
-from pycorrector.transformers import pipeline, ElectraForPreTraining, ElectraTokenizer
+
 from pycorrector import config
 
 
@@ -18,7 +18,7 @@ def fill_mask_demo():
         "fill-mask",
         model=config.electra_G_model_dir,
         tokenizer=config.electra_G_model_dir,
-        device=0,  # gpu device id
+        device=-1,  # gpu device id
     )
     print(nlp.tokenizer.mask_token)
     print(

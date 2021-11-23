@@ -13,10 +13,8 @@ from collections import OrderedDict
 
 import torch
 
-sys.path.append('../..')
-
-from pycorrector.transformers import Pipeline, BertConfig, BertForMaskedLM
-from pycorrector.transformers.tokenization_utils import TruncationStrategy
+from transformers import Pipeline, BertConfig, BertForMaskedLM
+from transformers.tokenization_utils import TruncationStrategy
 
 MODEL_MAC_BERT_LM_MAPPING = OrderedDict(
     [
