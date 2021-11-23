@@ -438,12 +438,14 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 import operator
 import torch
 from transformers import BertTokenizer, BertForMaskedLM
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
+model = model.to(device)
 
 texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-outputs = model(**tokenizer(texts, padding=True, return_tensors='pt'))
+outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
 def get_errors(corrected_text, origin_text):
     details = []
