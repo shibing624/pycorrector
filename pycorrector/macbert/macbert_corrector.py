@@ -48,7 +48,8 @@ class MacBertCorrector(object):
         blocks = split_text_by_maxlen(text, maxlen=128)
         blocks = [block[0] for block in blocks]
         inputs = self.tokenizer(blocks, padding=True, return_tensors='pt').to(device)
-        outputs = self.model(**inputs)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
 
         def get_errors(corrected_text, origin_text):
             sub_details = []

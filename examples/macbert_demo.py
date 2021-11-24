@@ -21,7 +21,8 @@ def use_origin_transformers():
     model = model.to(device)
 
     texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
+    with torch.no_grad():
+        outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
     def get_errors(corrected_text, origin_text):
         details = []
