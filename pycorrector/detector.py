@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: error word detector
-
+"""
+@author:XuMing(xuming624@qq.com)
+@description: error word detector
+"""
 import os
 import time
 from codecs import open

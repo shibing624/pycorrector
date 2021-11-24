@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: init
+"""
+@author:XuMing(xuming624@qq.com)
+@description:
+"""
 
 from .config import language_model_path
 from .corrector import Corrector

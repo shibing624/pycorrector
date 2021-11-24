@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: english correction
-# refer to http://norvig.com/spell-correct.html
+"""
+@author:XuMing(xuming624@qq.com)
+@description: english correction
+refer to http://norvig.com/spell-correct.html
+"""
 
 import gzip
 import json

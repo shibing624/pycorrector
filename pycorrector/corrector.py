@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: corrector with spell and stroke
-
+"""
+@author:XuMing(xuming624@qq.com)
+@description: corrector with pinyin and stroke
+"""
 import operator
 import os
 from codecs import open
