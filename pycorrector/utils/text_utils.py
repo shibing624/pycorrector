@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author: XuMing(xuming624@qq.com)
 # Brief: 汉字处理的工具:判断unicode是否是汉字，数字，英文，或者其他字符。以及全角符号转半角符号。
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 import re
 

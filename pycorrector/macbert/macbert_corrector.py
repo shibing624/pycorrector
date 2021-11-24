@@ -30,7 +30,7 @@ class MacBertCorrector(object):
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
         self.model.to(device)
-        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊']
+        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…']
         logger.debug("device: {}".format(device))
         logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
@@ -55,12 +55,16 @@ class MacBertCorrector(object):
             sub_details = []
             for i, ori_char in enumerate(origin_text):
                 if ori_char in self.unk_tokens:
-                    # add blank space
+                    # add unk word
                     corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
                     continue
                 if i >= len(corrected_text):
                     continue
                 if ori_char != corrected_text[i]:
+                    if ori_char.lower() == corrected_text[i]:
+                        # pass english lower char
+                        corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                        continue
                     sub_details.append((ori_char, corrected_text[i], i, i + 1))
             sub_details = sorted(sub_details, key=operator.itemgetter(2))
             return corrected_text, sub_details

@@ -10,6 +10,8 @@ sys.path.append("../")
 from pycorrector.macbert import macbert_corrector
 
 error_sentences = [
+    '首金得主杨倩、三跳满分的全红婵、举重纪录创造者李雯雯……“00后”选手闪曜奥运舞台。',
+    '首金得主银色的k2p, ，。，mM是MTKkE2.iiKz还是舞台。',
     '真麻烦你了。希望你们好好的跳无',
     '少先队员因该为老人让坐',
     '少 先  队 员 因 该 为 老人让坐',

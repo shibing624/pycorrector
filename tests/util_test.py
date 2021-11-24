@@ -25,3 +25,12 @@ print('get_homophones_by_char:', pron)
 
 pron = get_homophones_by_pinyin('zha1ng')
 print('get_homophones_by_pinyin:', pron)
+
+from pycorrector.utils.text_utils import is_chinese, is_chinese_string
+s = """现在 银色的K2P是MTK还是博通啊？李雯雯……“00后”选手
+啥123kMk.23?？ ''"’
+"""
+print(s, is_chinese_string(s))
+
+for i in s:
+    print(i, is_chinese(i))

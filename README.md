@@ -445,21 +445,26 @@ model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = model.to(device)
 
 texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
+with torch.no_grad():
+    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
 def get_errors(corrected_text, origin_text):
-    details = []
+    sub_details = []
     for i, ori_char in enumerate(origin_text):
-        if ori_char in [' ', '“', '”', '‘', '’', '琊']:
-            # add blank space 
+        if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…']:
+            # add unk word
             corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if i >= len(corrected_text):
             continue
         if ori_char != corrected_text[i]:
-            details.append((ori_char, corrected_text[i], i, i + 1))
-    details = sorted(details, key=operator.itemgetter(2))
-    return corrected_text, details
+            if ori_char.lower() == corrected_text[i]:
+                # pass english lower char
+                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                continue
+            sub_details.append((ori_char, corrected_text[i], i, i + 1))
+    sub_details = sorted(sub_details, key=operator.itemgetter(2))
+    return corrected_text, sub_details
 
 result = []
 for ids, text in zip(outputs.logits, texts):
