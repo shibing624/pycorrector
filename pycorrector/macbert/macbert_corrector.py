@@ -30,7 +30,7 @@ class MacBertCorrector(object):
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
         self.model.to(device)
-        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…']
+        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']
         logger.debug("device: {}".format(device))
         logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
