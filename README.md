@@ -451,7 +451,7 @@ with torch.no_grad():
 def get_errors(corrected_text, origin_text):
     sub_details = []
     for i, ori_char in enumerate(origin_text):
-        if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…']:
+        if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
             # add unk word
             corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue

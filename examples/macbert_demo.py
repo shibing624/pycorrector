@@ -4,7 +4,6 @@
 @description: 
 """
 import sys
-import operator
 
 sys.path.append("..")
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
@@ -12,6 +11,7 @@ from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 def use_origin_transformers():
     # 原生transformers库调用
+    import operator
     import torch
     from transformers import BertTokenizer, BertForMaskedLM
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
