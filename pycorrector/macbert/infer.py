@@ -11,6 +11,7 @@ from transformers import BertTokenizer
 sys.path.append('../..')
 
 from pycorrector.macbert.macbert4csc import MacBert4Csc
+from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert.defaults import _C as cfg
 from pycorrector.utils.logger import logger
 
@@ -24,10 +25,14 @@ class Inference:
         logger.debug("device: {}".format(device))
         self.tokenizer = BertTokenizer.from_pretrained(vocab_path)
         cfg.merge_from_file(cfg_path)
-        self.model = MacBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
-                                                      cfg=cfg,
-                                                      map_location=device,
-                                                      tokenizer=self.tokenizer)
+        if 'macbert4csc' in cfg_path:
+            self.model = MacBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
+                                                          cfg=cfg,
+                                                          map_location=device,
+                                                          tokenizer=self.tokenizer)
+        else:
+            self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path, cfg=cfg, map_location=device, tokenizer=self.tokenizer)
+
         self.model.eval()
         self.model.to(device)
         logger.debug("device: {}".format(device))
@@ -38,10 +43,13 @@ class Inference:
 
 if __name__ == "__main__":
     ckpt_path = sys.argv[1]
+    vocab_path = sys.argv[2]
+    cfg_path = sys.argv[3]
     m = Inference(ckpt_path,
-                  vocab_path='output/macbert4csc/vocab.txt',
-                  cfg_path='train_macbert4csc.yml')
+                  vocab_path,
+                  cfg_path)
     inputs = [
+        '它的本领是呼风唤雨，因此能灭火防灾。狎鱼后面是獬豸。獬豸通常头上长着独角，有时又被称为独角羊。它很聪彗，而且明辨是非，象征着大公无私，又能镇压斜恶。',
         '老是较书。',
         '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',
         '遇到一位很棒的奴生跟我聊天。',
