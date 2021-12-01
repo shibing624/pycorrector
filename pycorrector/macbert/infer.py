@@ -31,7 +31,10 @@ class Inference:
                                                           map_location=device,
                                                           tokenizer=self.tokenizer)
         else:
-            self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path, cfg=cfg, map_location=device, tokenizer=self.tokenizer)
+            self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path, 
+                                                                 cfg=cfg, 
+                                                                 map_location=device, 
+                                                                 tokenizer=self.tokenizer)
 
         self.model.eval()
         self.model.to(device)
