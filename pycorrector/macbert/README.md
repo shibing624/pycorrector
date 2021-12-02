@@ -51,7 +51,7 @@ def get_errors(corrected_text, origin_text):
             continue
         if ori_char != corrected_text[i]:
             if ori_char.lower() == corrected_text[i]:
-                # pass english lower char
+                # pass english upper char
                 corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
                 continue
             sub_details.append((ori_char, corrected_text[i], i, i + 1))

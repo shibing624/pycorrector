@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: Corpus for model
+"""
+@author:XuMing(xuming624@qq.com)
+@description: Corpus for model
+"""
+
 import json
 from codecs import open
 from collections import Counter

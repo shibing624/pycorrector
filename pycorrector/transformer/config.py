@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: Use CGED corpus
+"""
+@author:XuMing(xuming624@qq.com)
+@description:
+"""
+
 import os
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))

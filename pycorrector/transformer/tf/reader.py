@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: Date reader for training transformer model (opennmt)
+"""
+@author:XuMing(xuming624@qq.com)
+@description: Date reader for training transformer model (opennmt)
+"""
 from collections import Counter
 
 # Define constants associated with the usual special tokens.

@@ -43,6 +43,11 @@ class Inference:
     def predict(self, sentence_list):
         return self.model.predict(sentence_list)
 
+def eval_sighan2015():
+    # macbert4csc Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
+    from pycorrector.macbert.macbert_corrector import MacBertCorrector
+    model = MacBertCorrector()
+    eval.eval_sighan2015_by_model(model.macbert_correct)
 
 if __name__ == "__main__":
     ckpt_path = sys.argv[1]

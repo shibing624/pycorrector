@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# Author: XuMing(xuming624@qq.com)
-# Brief: 
-from __future__ import print_function
+"""
+@author:XuMing(xuming624@qq.com)
+@description:
+"""
 
 import sys
 
@@ -42,7 +43,7 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
     platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
-    keywords='NLP,correction,Chinese error corrector,corrector',
+    keywords='NLP,correction,Chinese error correction,pycorrector',
     install_requires=reqs.strip().split('\n'),
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
