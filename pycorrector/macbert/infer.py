@@ -4,7 +4,7 @@
 @description: 
 """
 import sys
-
+import operator
 import torch
 from transformers import BertTokenizer
 
@@ -30,20 +30,76 @@ class Inference:
                                                           cfg=cfg,
                                                           map_location=device,
                                                           tokenizer=self.tokenizer)
-        else:
+        elif 'softmaskedbert4csc' in cfg_path:
             self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
                                                                  cfg=cfg,
                                                                  map_location=device,
                                                                  tokenizer=self.tokenizer)
+        else:
+            raise ValueError("model not found.")
 
         self.model.eval()
         self.model.to(device)
         logger.debug("device: {}".format(device))
 
     def predict(self, sentence_list):
+        """
+        文本纠错模型预测
+        Args:
+            sentence_list: list
+                输入文本列表
+        Returns: tuple
+            corrected_texts(list)
+        """
+        is_str = False
         if isinstance(sentence_list, str):
+            is_str = True
             sentence_list = [sentence_list]
-        return self.model.predict(sentence_list)
+        corrected_texts = self.model.predict(sentence_list)
+        if is_str:
+            return corrected_texts[0]
+        return corrected_texts
+
+    def predict_with_error_detail(self, sentence_list):
+        """
+        文本纠错模型预测，结果带错误位置信息
+        Args:
+            sentence_list: list
+                输入文本列表
+        Returns: tuple
+            corrected_texts(list), details(list)
+        """
+        details = []
+        is_str = False
+        if isinstance(sentence_list, str):
+            is_str = True
+            sentence_list = [sentence_list]
+        corrected_texts = self.model.predict(sentence_list)
+
+        def get_errors(corrected_text, origin_text):
+            sub_details = []
+            for i, ori_char in enumerate(origin_text):
+                if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
+                    # add unk word
+                    corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
+                    continue
+                if i >= len(corrected_text):
+                    continue
+                if ori_char != corrected_text[i]:
+                    if ori_char.lower() == corrected_text[i]:
+                        # pass english upper char
+                        corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                        continue
+                    sub_details.append((ori_char, corrected_text[i], i, i + 1))
+            sub_details = sorted(sub_details, key=operator.itemgetter(2))
+            return corrected_text, sub_details
+
+        for corrected_text, text in zip(corrected_texts, sentence_list):
+            corrected_text, sub_details = get_errors(corrected_text, text)
+            details.append(sub_details)
+        if is_str:
+            return corrected_texts[0], details[0]
+        return corrected_texts, details
 
 
 if __name__ == "__main__":
@@ -71,7 +127,7 @@ if __name__ == "__main__":
 
     # 在sighan2015数据集评估模型
     # macbert4csc Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
-    # softmaskedbert4csc
+    # softmaskedbert4csc Sentence Level: acc:0.796407, precision:0.994463, recall:0.793988, f1:0.882989, cost time:38 s
     from pycorrector.utils.eval import eval_sighan2015_by_model
 
-    eval_sighan2015_by_model(m.predict)
+    eval_sighan2015_by_model(m.predict_with_error_detail)
