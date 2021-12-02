@@ -31,9 +31,9 @@ class Inference:
                                                           map_location=device,
                                                           tokenizer=self.tokenizer)
         else:
-            self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path, 
-                                                                 cfg=cfg, 
-                                                                 map_location=device, 
+            self.model = SoftMaskedBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
+                                                                 cfg=cfg,
+                                                                 map_location=device,
                                                                  tokenizer=self.tokenizer)
 
         self.model.eval()
@@ -41,13 +41,10 @@ class Inference:
         logger.debug("device: {}".format(device))
 
     def predict(self, sentence_list):
+        if isinstance(sentence_list, str):
+            sentence_list = [sentence_list]
         return self.model.predict(sentence_list)
 
-def eval_sighan2015():
-    # macbert4csc Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
-    from pycorrector.macbert.macbert_corrector import MacBertCorrector
-    model = MacBertCorrector()
-    eval.eval_sighan2015_by_model(model.macbert_correct)
 
 if __name__ == "__main__":
     ckpt_path = sys.argv[1]
@@ -71,3 +68,10 @@ if __name__ == "__main__":
         print('input  :', a)
         print('predict:', b)
         print()
+
+    # 在sighan2015数据集评估模型
+    # macbert4csc Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
+    # softmaskedbert4csc
+    from pycorrector.utils.eval import eval_sighan2015_by_model
+
+    eval_sighan2015_by_model(m.predict)
