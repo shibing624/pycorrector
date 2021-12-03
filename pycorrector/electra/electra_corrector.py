@@ -19,9 +19,12 @@ from pycorrector.corrector import Corrector
 from pycorrector.utils.tokenizer import split_2_short_text
 from pycorrector import config
 
+device_id = 0 if torch.cuda.is_available() else -1
+
 
 class ElectraCorrector(Corrector):
-    def __init__(self, d_model_dir=config.electra_D_model_dir, g_model_dir=config.electra_G_model_dir, device=-1):
+    def __init__(self, d_model_dir=config.electra_D_model_dir, g_model_dir=config.electra_G_model_dir,
+                 device=device_id):
         super(ElectraCorrector, self).__init__()
         self.name = 'electra_corrector'
         t1 = time.time()

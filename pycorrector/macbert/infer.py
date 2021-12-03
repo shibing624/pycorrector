@@ -126,8 +126,8 @@ if __name__ == "__main__":
         print()
 
     # 在sighan2015数据集评估模型
-    # macbert4csc Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
-    # softmaskedbert4csc Sentence Level: acc:0.796407, precision:0.994463, recall:0.793988, f1:0.882989, cost time:38 s
+    # macbert4csc Sentence Level: acc:0.7845, precision:0.8174, recall:0.7256, f1:0.7688, cost time:10.79 s
+    # softmaskedbert4csc Sentence Level: acc:0.6964, precision:0.8065, recall:0.5064, f1:0.6222, cost time:16.20 s
     from pycorrector.utils.eval import eval_sighan2015_by_model
 
     eval_sighan2015_by_model(m.predict_with_error_detail)

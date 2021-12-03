@@ -5,7 +5,7 @@ ERNIE model reference: https://github.com/PaddlePaddle/ERNIE
 ### Requirements
 * pip安装依赖包
 ```
-pip install paddlepaddle==1.8.4 # pip install paddlepaddle-gpu
+pip install paddlepaddle==1.8.4 # pip install paddlepaddle-gpu==1.8.4
 ```
 
 依赖PaddlePaddle 1.7.0+， 请参考[这里](https://www.paddlepaddle.org.cn/install/quick)安装 PaddlePaddle。
@@ -24,8 +24,10 @@ python3 ernie_corrector.py
 
 - run
 ```python
-from pycorrector.utils.eval import eval_sighan_2015_by_bert
-eval_sighan_2015_by_bert()
+from pycorrector.utils import eval
+from pycorrector.ernie.ernie_corrector import ErnieCorrector
+model = ErnieCorrector()
+eval.eval_sighan2015_by_model(model.ernie_correct)
 ```
 example:
 

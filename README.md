@@ -9,6 +9,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
 [![Wechat Group](http://vlog.sfyc.ltd/wechat_everyday/wxgroup_logo.png?imageView2/0/w/60/h/20)](#wechat-group)
 
+[English](README.en.md) | 简体中文
+
 # pycorrector
 
 中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python3开发。
@@ -21,6 +23,7 @@
 
 - [Question](#Question)
 - [Solution](#Solution)
+- [Evaluate](#Evaluate)
 - [Install](#install)
 - [Usage](#usage)
 - [Deep Model Usage](#deep-model-usage)
@@ -96,31 +99,30 @@ PS：
 http://42.193.145.218/product/corrector/
 
 ## Evaluate
-<details>
-<summary>查看评估结论</summary>
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
-- 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
-- 计算两个数据集的纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
+- sighan15评估集：SIGHAN2015的测试集[pycorrector/data/cn/sighan_2015/test.tsv](pycorrector/data/cn/sighan_2015/test.tsv)，已经转为简体中文。
+- corpus500评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json), 包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。
+- 评估纠错准召率：采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错。
 
-### 测试环境：
-- 机器：linux(centos7) 线上机
+### 效果评估
+- 机器：linux(centos7)
 - CPU：28核  Intel(R) Xeon(R) Gold 5117 CPU @ 2.00GHz
-- GPU：Tesla P40，显存 22919 MiB(22 GB)
-- 内存：251 GB
+- GPU：Tesla V100，显存 32510 MiB(32 GB)
 
-| 数据集 | 模型 | cpu/gpu | 准确率 | 召回率 | 每百条预测时长（秒） | QPS |
-| :------- | :--------- | :--------- | :---------: | :---------: | :---------: | :---------: |
-| sighan_15 | rule | cpu | 17.98% | 15.37% | 11 | 9 |
-| sighan_15 | bert | gpu | 37.62% | 36.46% | 95 | 1.05 |
-| sighan_15 | ernie | gpu | 29.70% | 28.13% | 102 | 0.98 |
-| **sighan_15** | **macbert** | **gpu** | **63.64%** | **63.64%** | **2** | **50** |
-| corpus500 | rule | cpu | 48.60% | 28.13% | 11 | 9 |
-| corpus500 | bert | gpu | 58.60% | 35.00% | 95 | 1.05 |
-| corpus500 | ernie | gpu | 59.80% | 41.33% | 102 | 0.98 |
-| corpus500 | macbert | gpu | 56.20% | 42.67% | 2 | 50 |
+| 数据集 | 模型 | backbone | use_gpu | precision | recall | f1 | QPS |
+| :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
+| sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
+| sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 1.85 |
+| **sighan_15** | **macbert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **101** |
+| corpus500 | rule | kenlm | cpu | 0.8358 | 0.1873 | 0.3060 | 9 |
+| corpus500 | bert | bert-base-chinese + MLM | gpu | 0.8643 | 0.4047 | 0.5513 | 1.85 |
+| corpus500 | macbert4csc | macbert4csc-base-chinese | gpu | 0.9133 | 0.5987 | 0.7232 | 101 |
 
-</details>
+#### 结论
+- 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
+- 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
+- 更多模型在评估中，如：electra、ernie、seq2seq、deepcontext、transformer等
 
 ## Install
 * 全自动安装：pip install pycorrector

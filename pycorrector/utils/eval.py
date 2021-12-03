@@ -223,6 +223,7 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
             # 预测也为负
             if tgt == tgt_pred:
                 TN += 1
+                print('right')
             # 预测为正
             else:
                 FP += 1
@@ -232,6 +233,7 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
             # 预测也为正
             if tgt == tgt_pred:
                 TP += 1
+                print('right')
             # 预测为负
             else:
                 FN += 1
@@ -288,6 +290,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
                 # 预测也为负
                 if tgt == tgt_pred:
                     TN += 1
+                    print('right')
                 # 预测为正
                 else:
                     FP += 1
@@ -297,6 +300,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
                 # 预测也为正
                 if tgt == tgt_pred:
                     TP += 1
+                    print('right')
                 # 预测为负
                 else:
                     FN += 1
