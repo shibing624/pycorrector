@@ -110,14 +110,14 @@ http://42.193.145.218/product/corrector/
 - CPU：28核  Intel(R) Xeon(R) Gold 5117 CPU @ 2.00GHz
 - GPU：Tesla V100，显存 32510 MiB(32 GB)
 
-| 数据集 | 模型 | backbone | use_gpu | precision | recall | f1 | QPS |
+| 数据集 | 模型 | Backbone | CPU/GPU | Precision | Recall | F1 | QPS |
 | :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
 | sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
 | sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 1.85 |
 | **sighan_15** | **macbert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **101** |
 | corpus500 | rule | kenlm | cpu | 0.8358 | 0.1873 | 0.3060 | 9 |
 | corpus500 | bert | bert-base-chinese + MLM | gpu | 0.8643 | 0.4047 | 0.5513 | 1.85 |
-| corpus500 | macbert4csc | macbert4csc-base-chinese | gpu | 0.9133 | 0.5987 | 0.7232 | 101 |
+| corpus500 | macbert | macbert4csc-base-chinese | gpu | 0.9133 | 0.5987 | 0.7232 | 101 |
 
 #### 结论
 - 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
