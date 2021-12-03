@@ -61,9 +61,6 @@ def main():
         preprocess.main()
     logger.info(f'load model, model arch: {cfg.MODEL.NAME}')
     tokenizer = BertTokenizer.from_pretrained(cfg.MODEL.BERT_CKPT)
-    # fixed 中文引号缺失
-    # if '“' not in tokenizer.vocab:
-    #     tokenizer.add_tokens(['“', '”'])
     collator = DataCollator(tokenizer=tokenizer)
     # 加载数据
     train_loader, valid_loader, test_loader = make_loaders(collator, train_path=cfg.DATASETS.TRAIN,

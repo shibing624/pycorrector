@@ -4,7 +4,6 @@
 @description:
 """
 
-import copy
 import os
 import sys
 import time
@@ -20,7 +19,7 @@ from pycorrector.utils.math_utils import find_all_idx
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 eval_data_path = os.path.join(pwd_path, '../data/eval_corpus.json')
-sighan_2015_path = os.path.join(pwd_path, '../data/cn/sighan_2015/train.tsv')
+sighan_2015_path = os.path.join(pwd_path, '../data/cn/sighan_2015/test.tsv')
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):
@@ -153,6 +152,7 @@ def build_cged_no_error_corpus(data_path, output_path, limit_size=500):
 def build_eval_corpus(output_eval_path=eval_data_path):
     """
     生成评估样本集，抽样分布可修改
+    当前已经生成评估集，可以修改代码生成自己的样本分布
     :param output_eval_path:
     :return: json file
     """
@@ -243,7 +243,7 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
     recall = TP / (TP + FN) if TP > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
     print(
-        f'Sentence Level: acc:{acc:.6f}, precision:{precision:.6f}, recall:{recall:.6f}, f1:{f1:.6f}, cost time:{spend_time} s')
+        f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, cost time:{spend_time:.2f} s')
     return acc, precision, recall, f1
 
 
@@ -270,7 +270,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
             line = line.strip()
             if line.startswith('#'):
                 continue
-            parts = line.split()
+            parts = line.split('\t')
             if len(parts) != 2:
                 continue
             src = parts[0]
@@ -308,15 +308,11 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
         recall = TP / (TP + FN) if TP > 0 else 0.0
         f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
         print(
-            f'Sentence Level: acc:{acc:.6f}, precision:{precision:.6f}, recall:{recall:.6f}, f1:{f1:.6f}, cost time:{spend_time} s')
+            f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, cost time:{spend_time:.2f} s')
         return acc, precision, recall, f1
 
 
 if __name__ == "__main__":
-    # 生成评估数据集样本，当前已经生成评估集，可以打开注释生成自己的样本分布
-    # build_eval_corpus()
-
-    # eval_sighan_by_model(sighan_path=sighan_2015_path, verbose=True, num_limit_lines=10)
     # 评估规则方法的纠错准召率
     # eval_corpus500_by_model(pycorrector.correct)
 
@@ -324,5 +320,5 @@ if __name__ == "__main__":
     from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
     model = MacBertCorrector()
-    eval_corpus500_by_model(model.macbert_correct, eval_data_path, verbose=True)
-    eval_sighan2015_by_model(model.macbert_correct, sighan_path=sighan_2015_path, verbose=True)
+    eval_corpus500_by_model(model.macbert_correct)
+    eval_sighan2015_by_model(model.macbert_correct)
