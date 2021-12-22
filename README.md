@@ -396,11 +396,16 @@ pip install -r requirements-dev.txt
 ### 使用方法
 各模型均可独立的预处理数据、训练、预测。
 
-- MacBert模型
+- MacBert4csc模型
 
-基于MacBert的中文拼写纠错模型，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+
+模型网络结构：
+
+![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
 
 示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[README](./pycorrector/macbert/README.md)
+
 
 使用pycorrector调用纠错：
 

@@ -4,7 +4,11 @@
 
 ### 快速加载
 
-本项目是MacBERT的中文文本纠错模型，可支持BERT模型，可通过如下命令调用:
+本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。模型网络结构：
+
+![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
+
+可通过如下命令调用：
 
 example: [correct_demo.py](correct_demo.py)
 
@@ -19,7 +23,7 @@ print(i)
 
 当然，你也可使用官方的transformers库进行调用。
 
-1.先pip安装transformers库:
+1.先pip安装transformers库：
 
 ```shell
 pip install transformers>=4.1.1
