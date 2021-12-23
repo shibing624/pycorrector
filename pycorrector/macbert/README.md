@@ -4,7 +4,7 @@
 
 ### 快速加载
 
-本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。模型网络结构：
+本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。模型网络结构，参考softmaskedbert：
 
 ![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
 
@@ -179,7 +179,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 1. 已有大量业务相关错误样本，主要标注错误位置（wrong_ids）和纠错后的句子(correct_text)
 2. 没有现成的错误样本，可以手动写脚本生成错误样本（original_text），根据音似、形似等特征把正确句子的指定位置（wrong_ids）字符改为错字
 
-### 训练
+### 训练MacBert4CSC
 ```shell
 python train.py
 ```
@@ -208,6 +208,11 @@ demo示例[macbert_corrector.py](macbert_corrector.py):
 python3 macbert_corrector.py
 ```
 
+### 训练SoftMaskedBert4CSC
+```shell
+python train.py --config_file train_softmaskedbert4csc.yml
+```
 
-如果需要训练SoftMaskedBertModel，请参考[https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
+# Reference
+- [https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 
