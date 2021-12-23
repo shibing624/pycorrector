@@ -1,14 +1,15 @@
 # MacBertMaskedLM For Correction
+本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。
+
+模型网络结构，参考softmaskedbert：
+![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
 
 ## 使用说明
 
 ### 快速加载
 
-本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。模型网络结构，参考softmaskedbert：
 
-![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
-
-可通过如下命令调用：
+#### pycorrector调用
 
 example: [correct_demo.py](correct_demo.py)
 
@@ -20,7 +21,7 @@ nlp = MacBertCorrector("shibing624/macbert4csc-base-chinese").macbert_correct
 i = nlp('今天新情很好')
 print(i)
 ```
-
+#### transformers调用
 当然，你也可使用官方的transformers库进行调用。
 
 1.先pip安装transformers库：
@@ -89,7 +90,7 @@ macbert4csc-base-chinese
     └── vocab.txt
 ```
 
-### Evaluate
+## Evaluate
 
 提供评估脚本[pycorrector/utils/eval.py](../utils/eval.py)，该脚本有两个功能：
 
@@ -99,30 +100,26 @@ macbert4csc-base-chinese
 
 执行该评估脚本后，
 
-`shibing624/macbert4csc-base-chinese` 模型在corpus500纠错效果评估如下：
+`shibing624/macbert4csc-base-chinese` 模型在 corpus500 纠错效果评估如下：
 
-- Sentence Level: acc:0.656000, precision:0.779736, recall:0.591973, f1:0.673004
+- Sentence Level: acc:0.6560, precision:0.7797, recall:0.5919, f1:0.6730
 
 规则方法(加入自定义混淆集)在corpus500纠错效果评估如下：
 
-- Sentence Level: acc:0.64, recall:0.5067
+- Sentence Level: acc:0.6400, recall:0.5067
 
 `shibing624/macbert4csc-base-chinese` 在 SIGHAN2015 测试集纠错效果评估如下：
 
-- Char Level: precision=0.9372, recall=0.8640, f1=0.8991
+- Char Level:     precision:0.9372, recall:0.8640, f1:0.8991
 - Sentence Level: precision:0.8264, recall:0.7366, f1:0.7789
 
-由于训练使用的数据使用了SIGHAN2015的训练集（复现paper），在SIGHAN2015的测试集上达到SOTA水平。
+由于训练使用的数据使用了 SIGHAN2015 的训练集（复现paper），在 SIGHAN2015 的测试集上达到SOTA水平。
 
 #### 评估case
 
-- run
-  `python tests/macbert_corrector_test.py`
-- result
-  ![result](../../docs/git_image/macbert_result.jpg)
-
-纠错结果除部分英文大小写问题外，在sighan15上达到了SOTA水平。
-
+- run `python tests/macbert_corrector_test.py`
+   ![result](../../docs/git_image/macbert_result.jpg)
+在 SIGHAN2015 的测试集上达到了SOTA水平。
 
 
 ## 训练
@@ -179,7 +176,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 1. 已有大量业务相关错误样本，主要标注错误位置（wrong_ids）和纠错后的句子(correct_text)
 2. 没有现成的错误样本，可以手动写脚本生成错误样本（original_text），根据音似、形似等特征把正确句子的指定位置（wrong_ids）字符改为错字
 
-### 训练MacBert4CSC
+### 训练 MacBert4CSC 模型
 ```shell
 python train.py
 ```
@@ -208,7 +205,7 @@ demo示例[macbert_corrector.py](macbert_corrector.py):
 python3 macbert_corrector.py
 ```
 
-### 训练SoftMaskedBert4CSC
+### 训练 SoftMaskedBert4CSC 模型
 ```shell
 python train.py --config_file train_softmaskedbert4csc.yml
 ```
