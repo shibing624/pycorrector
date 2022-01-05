@@ -508,6 +508,9 @@ macbert4csc-base-chinese
 
 ![image](https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png)
 
+可直接运行示例[python ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[README](./pycorrector/ernie_csc/README.md)
+
+
 使用pycorrector调用纠错：
 
 ```python
@@ -522,7 +525,7 @@ if __name__ == '__main__':
         '一只小鱼船浮在平净的河面上',
         '我的家乡是有明的渔米之乡',
     ]
-    corrector = ErnieCSCCorrector()
+    corrector = ErnieCSCCorrector("csc-ernie-1.0")
     for line in error_sentences:
         result = corrector.ernie_csc_correct(line)[0]
         print("query:{} => {}, err:{}".format(line, result['target'], result['errors']))

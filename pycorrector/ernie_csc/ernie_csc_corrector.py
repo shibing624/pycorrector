@@ -14,8 +14,8 @@
 from paddlenlp import Taskflow
 
 class ErnieCSCCorrector(object):
-    def __init__(self):
-        self.text_correction = Taskflow("text_correction")
+    def __init__(self, model="csc-ernie-1.0"):
+        self.text_correction = Taskflow("text_correction", model=model)
 
     def ernie_csc_correct(self, text):
         """
