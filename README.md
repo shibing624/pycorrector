@@ -502,7 +502,7 @@ macbert4csc-base-chinese
 
 - ErnieCSC模型
 
-基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://github.com/PaddlePaddle/PaddleNLP)的模型库中。
+基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)的模型库中[https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
 
 模型网络结构：
 
