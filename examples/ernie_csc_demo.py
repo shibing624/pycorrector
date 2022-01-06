@@ -15,6 +15,7 @@ import sys
 
 sys.path.append("..")
 from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCSCCorrector
+
 if __name__ == '__main__':
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
@@ -26,4 +27,5 @@ if __name__ == '__main__':
     corrector = ErnieCSCCorrector("csc-ernie-1.0")
     for line in error_sentences:
         result = corrector.ernie_csc_correct(line)[0]
+        # print(result)
         print("query:{} => {}, err:{}".format(line, result['target'], result['errors']))

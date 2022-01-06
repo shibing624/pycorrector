@@ -14,7 +14,6 @@
 # limitations under the License.
 
 import sys
-import time
 
 sys.path.append("../")
 from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCSCCorrector
