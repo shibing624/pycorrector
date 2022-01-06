@@ -8,3 +8,5 @@ tqdm==4.50.2
 transformers>=4.4.2
 tokenizers
 tensorboardX
+paddlenlp
+paddlepaddle-gpu

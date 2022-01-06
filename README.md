@@ -389,7 +389,7 @@ pip install -r requirements-dev.txt
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
 主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[macbert](./pycorrector/macbert)、[seq2seq](./pycorrector/seq2seq)、
-[bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)，各模型方法
+[bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)、[ernie-csc](./pycorrector/ernie_csc)，各模型方法
 内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 
@@ -499,6 +499,77 @@ macbert4csc-base-chinese
     ├── tokenizer_config.json
     └── vocab.txt
 ```
+
+- ErnieCSC模型
+
+基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)的模型库中[https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
+
+模型网络结构：
+
+![image](https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png)
+
+可直接运行示例[python ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[README](./pycorrector/ernie_csc/README.md)
+
+
+使用pycorrector调用纠错：
+
+```python
+
+from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCSCCorrector
+
+if __name__ == '__main__':
+    error_sentences = [
+        '真麻烦你了。希望你们好好的跳无',
+        '少先队员因该为老人让坐',
+        '机七学习是人工智能领遇最能体现智能的一个分知',
+        '一只小鱼船浮在平净的河面上',
+        '我的家乡是有明的渔米之乡',
+    ]
+    corrector = ErnieCSCCorrector("csc-ernie-1.0")
+    for line in error_sentences:
+        result = corrector.ernie_csc_correct(line)[0]
+        print("query:{} => {}, err:{}".format(line, result['target'], result['errors']))
+```
+
+output:
+
+```bash
+
+query:真麻烦你了。希望你们好好的跳无 => 真麻烦你了。希望你们好好的跳舞, err:[{'position': 14, 'correction': {'无': '舞'}}]
+query:少先队员因该为老人让坐 => 少先队员应该为老人让座, err:[{'position': 4, 'correction': {'因': '应'}}, {'position': 10, 'correction': {'坐': '座'}}]
+query:机七学习是人工智能领遇最能体现智能的一个分知 => 机器学习是人工智能领域最能体现智能的一个分知, err:[{'position': 1, 'correction': {'七': '器'}}, {'position': 10, 'correction': {'遇': '域'}}]
+query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的河面上, err:[]
+query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[{'position': 6, 'correction': {'明': '名'}}]
+
+```
+
+使用原生PaddleNLP库调用纠错：
+
+可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
+
+```python
+
+from paddlenlp import Taskflow
+text_correction = Taskflow("text_correction")
+text_correction('遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。')
+text_correction('人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。')
+
+```
+
+output:
+
+```shell
+
+[{'source': '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
+    'target': '遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
+    'errors': [{'position': 3, 'correction': {'竟': '境'}}]}]
+
+[{'source': '人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。',
+    'target': '人生就是如此，经过磨练才能让自己更加茁壮，才能使自己更加乐观。',
+    'errors': [{'position': 18, 'correction': {'拙': '茁'}}]}]
+
+```
+
 
 <details>
 <summary>查看Seq2Seq模型</summary>
