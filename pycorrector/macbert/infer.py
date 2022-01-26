@@ -37,10 +37,9 @@ class Inference:
                                                                  tokenizer=self.tokenizer)
         else:
             raise ValueError("model not found.")
-
-        self.model.eval()
         self.model.to(device)
         logger.debug("device: {}".format(device))
+        self.model.eval()
 
     def predict(self, sentence_list):
         """
@@ -125,7 +124,7 @@ if __name__ == "__main__":
         print('predict:', b)
         print()
 
-    # 在sighan2015数据集评估模型
+    # 在sighan2015 test数据集评估模型
     # macbert4csc Sentence Level: acc:0.7845, precision:0.8174, recall:0.7256, f1:0.7688, cost time:10.79 s
     # softmaskedbert4csc Sentence Level: acc:0.6964, precision:0.8065, recall:0.5064, f1:0.6222, cost time:16.20 s
     from pycorrector.utils.eval import eval_sighan2015_by_model
