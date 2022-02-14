@@ -39,7 +39,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
-model = model.to(device)
+model.to(device)
 
 texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
 with torch.no_grad():
