@@ -181,7 +181,7 @@ def parse_cged_file(file_dir):
 
 
 def main():
-    # 注意：训练样本过少，仅作为模型测试使用
+    # 注意：该训练样本较少，仅作为模型测试使用
     # parse_cged_file(os.path.join(pwd_path, '../data/cn/CGED/'))
     sighan15_dir = os.path.join(pwd_path, '../data/cn/sighan_2015/')
     rst_items = []
