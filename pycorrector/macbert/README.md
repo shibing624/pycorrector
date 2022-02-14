@@ -126,7 +126,7 @@ macbert4csc-base-chinese
 
 ### 安装依赖
 ```shell
-pip install transformers>=4.1.1 pytorch-lightning>=1.1.2 torch>=1.7.0 yacs
+pip install transformers>=4.1.1 pytorch-lightning==1.1.2 torch>=1.7.0 yacs
 ```
 ### 训练数据集
 
@@ -211,5 +211,5 @@ python train.py --config_file train_softmaskedbert4csc.yml
 ```
 
 # Reference
-- [https://github.com/gitabtion/BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
+- [BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 

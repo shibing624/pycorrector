@@ -96,7 +96,9 @@ PS：
 
 ## Demo
 
-http://42.193.145.218/product/corrector/
+Demo page: http://42.193.145.218/product/corrector/
+
+HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ## Evaluate
 
