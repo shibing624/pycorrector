@@ -100,6 +100,8 @@ Demo page: http://42.193.145.218/product/corrector/
 
 HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
+![](docs/hf.png)
+
 ## Evaluate
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
