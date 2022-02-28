@@ -3,6 +3,7 @@ message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Xu"
   given-names: "Ming"
+  orcid: "https://orcid.org/0000-0003-3402-7159"
 title: "Pycorrector: Text error correction tool"
 url: "https://github.com/shibing624/pycorrector"
 data-released: 2021-12-03
