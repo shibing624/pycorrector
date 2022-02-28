@@ -729,18 +729,24 @@ PS：
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
 
+APA:
 ```latex
-@misc{pycorrector,
-  title={pycorrector: Text Error Correction Tool},
-  author={Ming Xu},
-  howpublished={https://github.com/shibing624/pycorrector},
-  year={2021}
+Xu, M. Pycorrector: Text error correction tool (Version 0.4.2) [Computer software]. https://github.com/shibing624/pycorrector
+```
+
+BibTeX:
+```latex
+@software{Xu_Pycorrector_Text_error,
+author = {Xu, Ming},
+title = {{Pycorrector: Text error correction tool}},
+url = {https://github.com/shibing624/pycorrector},
+version = {0.4.2}
 }
 ```
 
 ## License
 
-pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。pycorrector受版权法保护，侵权必究。
+pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。
 
 ## Contribute
 
