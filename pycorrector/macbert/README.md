@@ -1,8 +1,16 @@
 # MacBertMaskedLM For Correction
-本项目是MacBERT改变网络结构的中文文本纠错模型，可支持BERT类模型为backbone。
+本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。   
+> "MacBERT shares the same pre-training tasks as BERT with several modifications."  —— (Cui et al., Findings of the EMNLP 2020)
 
-模型网络结构，参考softmaskedbert：
-![arch](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/arch1.png)
+MacBERT 全称为 MLM as correction BERT，其中 MLM 指的是 masked language model。           
+MacBERT 的模型网络结构上可以选择任意 BERT 类模型，其主要特征在于预训练时不同的 MLM task 设计：
++ 使用全词屏蔽 (wwm, whole-word masking) 以及 N-gram 屏蔽策略来选择 candidate tokens 进行屏蔽；
++ BERT 类模型通常使用 `[MASK]` 来屏蔽原词，而 MacBERT 使用第三方的同义词工具来为目标词生成近义词用于屏蔽原词，特别地，当原词没有近义词时，使用随机 n-gram 来屏蔽原词；
++ 和 BERT 类模型相似地，对于每个训练样本，输入中 80% 的词被替换成近义词(原为`[MASK]`)、10%的词替换为随机词，10%的词不变。
+
+MLM as Correction 的部分，参考如下示例：     
+![macbert_examples](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_examples.jpg)
+
 
 ## 使用说明
 
@@ -180,6 +188,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 ```shell
 python train.py
 ```
+
 ### 预测
 - 方法一：直接加载保存的ckpt文件：
 ```shell
@@ -212,4 +221,5 @@ python train.py --config_file train_softmaskedbert4csc.yml
 
 # Reference
 - [BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
+- <div class="csl-entry">Cui, Y., Che, W., Liu, T., Qin, B., Wang, S., &#38; Hu, G. (2020). Revisiting Pre-Trained Models for Chinese Natural Language Processing. <i>Findings of the EMNLP</i>, 657–668. https://doi.org/10.18653/v1/2020.findings-emnlp.58</div> (The publication for [MacBERT](https://arxiv.org/pdf/2004.13922.pdf))
 
