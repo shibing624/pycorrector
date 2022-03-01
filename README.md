@@ -434,7 +434,11 @@ pip install -r requirements-dev.txt
 
 基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace的模型库[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
-模型网络结构：本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
+模型网络结构：
++ 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
++ 在通常 BERT 模型上进行了魔改，追加了一个全连接层作为错误检测即 [detection](https://github.com/shibing624/pycorrector/blob/c0f31222b7849c452cc1ec207c71e9954bd6ca08/pycorrector/macbert/macbert4csc.py#L18) 的参数，与 SoftMaskedBERT 模型不同点在于，本项目中的 MacBERT 中，只是利用 detection 层和 correction 层的 loss 加权得到最终的 loss。而不是像 SoftmaskedBERT 中需要利用 detection 层的置信概率来作为 correction 输入时不同 embeddings 间的权重。    
+
+![macbert_network](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_network.png)
 
 MacBERT 全称为 MLM as correction BERT，其中 MLM 指的是 masked language model。              
 MacBERT 的模型网络结构上可以选择任意 BERT 类模型，其主要特征在于预训练时不同的 MLM task 设计：
