@@ -738,7 +738,7 @@ BibTeX:
 ```latex
 @software{Xu_Pycorrector_Text_error,
 author = {Xu, Ming},
-title = {{Pycorrector: Text error correction tool}},
+title = {Pycorrector: Text error correction tool},
 url = {https://github.com/shibing624/pycorrector},
 version = {0.4.2}
 }
