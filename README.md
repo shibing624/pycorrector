@@ -441,7 +441,7 @@ MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最
 
 ![macbert_network](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_network.jpg)
 
-示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[README](./pycorrector/macbert/README.md)
+示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[pycorrector/macbert/README.md](./pycorrector/macbert/README.md)
 
 使用pycorrector调用纠错：
 
@@ -550,7 +550,7 @@ macbert4csc-base-chinese
 
 ![image](https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png)
 
-可直接运行示例[python ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[README](./pycorrector/ernie_csc/README.md)
+可直接运行示例[python ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[pycorrector/ernie_csc/README.md](./pycorrector/ernie_csc/README.md)
 
 使用pycorrector调用纠错：
 
@@ -679,7 +679,7 @@ PS：
 说明：
 
 - SIGHAN+Wang271K中文纠错数据集(27万条)
-  ，是通过原始SIGHAN13、14、15年数据集和Wang271K数据集格式转化后得到，json格式，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集复现paper准召结果，详见[README](pycorrector/macbert/README.md)
+  ，是通过原始SIGHAN13、14、15年数据集和Wang271K数据集格式转化后得到，json格式，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集复现paper准召结果，详见[pycorrector/macbert/README.md](pycorrector/macbert/README.md)
   。
 - NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
   训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
