@@ -88,9 +88,13 @@ class Inference:
         def get_errors(corrected_text, origin_text):
             sub_details = []
             for i, ori_char in enumerate(origin_text):
-                if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
+                if ori_char == " ":
+                    # add blank word
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i:]
+                    continue
+                if ori_char in ['“', '”', '‘', '’', '\n', '…', '—']:
                     # add unk word
-                    corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
                     continue
                 if i >= len(corrected_text):
                     continue
@@ -121,6 +125,7 @@ if __name__ == "__main__":
     inputs = [
         '它的本领是呼风唤雨，因此能灭火防灾。狎鱼后面是獬豸。獬豸通常头上长着独角，有时又被称为独角羊。它很聪彗，而且明辨是非，象征着大公无私，又能镇压斜恶。',
         '老是较书。',
+        '少先队 员因该 为老人让 坐',
         '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',
         '遇到一位很棒的奴生跟我聊天。',
         '遇到一位很美的女生跟我疗天。',
