@@ -85,28 +85,29 @@ class Inference:
             sentence_list = [sentence_list]
         corrected_texts = self.model.predict(sentence_list)
 
-        def get_errors(corrected_text, origin_text, blank_cleaned=False):
-            # blank_cleaned means if the blanks in texts are cleaned in predict().
+        def get_errors(_corrected_text, _origin_text):
             sub_details = []
-            for i, ori_char in enumerate(origin_text):
+            for i, ori_char in enumerate(_origin_text):
                 if ori_char == " ":
                     # add blank word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if blank_cleaned else i + 1:]
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i:]
                     continue
                 if ori_char in ['“', '”', '‘', '’', '\n', '…', '—']:
                     # add unk word
                     _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
                     continue
-                if i >= len(corrected_text):
+                if i >= len(_corrected_text):
                     continue
-                if ori_char != corrected_text[i]:
-                    if ori_char.lower() == corrected_text[i]:
+                if ori_char != _corrected_text[i]:
+                    # print(ori_char, corrected_text[i])
+                    if (ori_char.lower() == _corrected_text[i]) or _corrected_text[i] == '֍':
                         # pass english upper char
-                        corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                        _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
                         continue
-                    sub_details.append((ori_char, corrected_text[i], i, i + 1))
+                    sub_details.append((ori_char, _corrected_text[i], i, i + 1))
+                    # print(_corrected_text)
             sub_details = sorted(sub_details, key=operator.itemgetter(2))
-            return corrected_text, sub_details
+            return _corrected_text, sub_details
 
         for corrected_text, text in zip(corrected_texts, sentence_list):
             corrected_text, sub_details = get_errors(corrected_text, text)
