@@ -76,14 +76,23 @@ class Inference:
             sentence_list = [sentence_list]
         corrected_texts = self.model.predict(sentence_list)
 
-        def get_errors(_corrected_text, _origin_text, blanks_cleaned=False):
+        def get_errors(_corrected_text, _origin_text):
             sub_details = []
+            
+            # Flags, we found that blanks are remained but enters are cleaned.
+            blanks_cleaned = False
+            enter_cleaned = True
+            
             for i, ori_char in enumerate(_origin_text):
                 if ori_char == " ":
                     # add blank word
                     _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if blanks_cleaned else i + 1:]
                     continue
-                if ori_char in ['“', '”', '‘', '’', '\n', '…', '—']:
+                if ori_char == "\n":
+                    # add enter word
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if enter_cleaned else i + 1:]
+                    continue
+                if ori_char in ['“', '”', '‘', '’', '琊', '…', '—', '擤']:
                     # add unk word
                     _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
                     continue
