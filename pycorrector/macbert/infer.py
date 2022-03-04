@@ -85,12 +85,13 @@ class Inference:
             sentence_list = [sentence_list]
         corrected_texts = self.model.predict(sentence_list)
 
-        def get_errors(corrected_text, origin_text):
+        def get_errors(corrected_text, origin_text, blank_cleaned=False):
+            # blank_cleaned means if the blanks in texts are cleaned in predict().
             sub_details = []
             for i, ori_char in enumerate(origin_text):
                 if ori_char == " ":
                     # add blank word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i:]
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if blank_cleaned else i + 1:]
                     continue
                 if ori_char in ['“', '”', '‘', '’', '\n', '…', '—']:
                     # add unk word
