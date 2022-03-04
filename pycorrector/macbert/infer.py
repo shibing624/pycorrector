@@ -6,7 +6,6 @@
 import sys
 import torch
 import operator
-from glob import glob
 from transformers import BertTokenizer
 
 sys.path.append('../..')
@@ -26,14 +25,6 @@ class Inference:
         logger.debug("device: {}".format(device))
         self.tokenizer = BertTokenizer.from_pretrained(vocab_path)
         cfg.merge_from_file(cfg_path)
-        
-        if os.path.isdir(ckpt_path):
-            # ckpt_path is allowed to be a path to a directory.
-            # e.g., "output/macbert4csc/epoch=09-val_loss=0.01.ckpt" or 
-            #       "output/macbert4csc/" both are OK.
-            # automatically select the model file with the lowest loss.
-            ckpt_path = sorted(glob(f"{ckpt_path}/*.ckpt"), 
-                               key=lambda x: float(x[:-5].split('=')[-1]))[-1]
         
         if 'macbert4csc' in cfg_path:
             self.model = MacBert4Csc.load_from_checkpoint(checkpoint_path=ckpt_path,
@@ -85,12 +76,12 @@ class Inference:
             sentence_list = [sentence_list]
         corrected_texts = self.model.predict(sentence_list)
 
-        def get_errors(_corrected_text, _origin_text):
+        def get_errors(_corrected_text, _origin_text, blanks_cleaned=False):
             sub_details = []
             for i, ori_char in enumerate(_origin_text):
                 if ori_char == " ":
                     # add blank word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i:]
+                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if blanks_cleaned else i + 1:]
                     continue
                 if ori_char in ['“', '”', '‘', '’', '\n', '…', '—']:
                     # add unk word
