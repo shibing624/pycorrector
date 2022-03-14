@@ -20,15 +20,12 @@
 
 - [Question](#Question)
 - [Solution](#Solution)
-- [Evaluate](#Evaluate)
+- [Evaluation](#Evaluation)
 - [Install](#install)
 - [Usage](#usage)
 - [Deep Model Usage](#deep-model-usage)
 - [Dataset](#Dataset)
-- [Custom Language Model](#custom-language-model)
 - [Contact](#Contact)
-- [Citation](#Citation)
-- [Contribute](#contribute)
 - [Reference](#reference)
 
 ## Question
@@ -104,7 +101,7 @@ HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ![](docs/hf.png)
 
-## Evaluate
+## Evaluation
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)
 和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：

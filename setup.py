@@ -17,9 +17,6 @@ if sys.version_info < (3,):
 with open('README.md', 'r', encoding='utf-8') as f:
     readme = f.read()
 
-with open('requirements.txt', 'r', encoding='utf-8') as f:
-    reqs = f.read()
-
 setup(
     name='pycorrector',
     version=__version__,
@@ -44,10 +41,13 @@ setup(
     ],
     platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
     keywords='NLP,correction,Chinese error correction,pycorrector',
-    install_requires=reqs.strip().split('\n'),
+    install_requires=[
+        "jieba",
+        "pypinyin",
+        "numpy",
+        "six"
+    ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
-    package_data={'pycorrector': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*', 'data/en/en.json.gz',
-                                  'utils/*.', 'bert/*', 'deep_context/*', 'conv_seq2seq/*', 'seq2seq_attention/*',
-                                  'transformer/*', 'electra/*', 'macbert/*']}
+    package_data={'pycorrector': ['*.*', 'data/*', 'data/en/en.json.gz']}
 )
