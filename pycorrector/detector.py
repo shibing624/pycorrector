@@ -28,7 +28,7 @@ class Detector(object):
         # 语言模型 2.95GB
         'zh_giga.no_cna_cmn.prune01244.klm': 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
         # 人民日报训练语言模型 20MB
-        'people_chars_lm.klm': 'https://www.borntowin.cn/mm/emb_models/people_chars_lm.klm'
+        'people_chars_lm.klm': 'https://github.com/shibing624/pycorrector/releases/download/0.4.3/people_chars_lm.klm'
     }
 
     def __init__(self,
