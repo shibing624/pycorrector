@@ -12,7 +12,7 @@ from random import sample
 from xml.dom import minidom
 
 sys.path.append("../..")
-import pycorrector
+from pycorrector.corrector import Corrector
 from pycorrector.utils.io_utils import load_json, save_json
 from pycorrector.utils.io_utils import load_pkl
 from pycorrector.utils.math_utils import find_all_idx
@@ -77,13 +77,14 @@ def eval_bcmi_data(data_path, verbose=False):
     right_count = 0
     right_result = dict()
     wrong_result = dict()
+    rule_model = Corrector()
     with open(data_path, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             error_sentence, right_sentence, right_detail = get_bcmi_corpus(line)
             if not error_sentence:
                 continue
-            pred_sentence, pred_detail = pycorrector.correct(error_sentence)
+            pred_sentence, pred_detail = rule_model.correct(error_sentence)
             total_count += 1
             if right_sentence == pred_sentence:
                 right_count += 1

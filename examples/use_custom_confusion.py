@@ -6,7 +6,7 @@
 
 import sys
 
-sys.path.append("../")
+sys.path.append("..")
 import pycorrector
 
 pycorrector.set_log_level('INFO')
