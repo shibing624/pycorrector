@@ -22,10 +22,14 @@ common_char_path = os.path.join(pwd_path, 'data/common_char_set.txt')
 same_pinyin_path = os.path.join(pwd_path, 'data/same_pinyin.txt')
 # 形似字
 same_stroke_path = os.path.join(pwd_path, 'data/same_stroke.txt')
+# 五笔笔画字典
+stroke_path = os.path.join(pwd_path, 'data/stroke.txt')
 # 知名人名词典 format: 词语 词频
 person_name_path = os.path.join(pwd_path, 'data/person_name.txt')
 # 地名词典 format: 词语 词频
 place_name_path = os.path.join(pwd_path, 'data/place_name.txt')
+# 专名词典，包括成语、俗语、专业领域词等 format: 词语
+proper_name_path = os.path.join(pwd_path, 'data/proper_name.txt')
 # 停用词
 stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 # 搭配词

@@ -7,37 +7,43 @@ import operator
 import os
 from codecs import open
 
-from pypinyin import lazy_pinyin
+import pypinyin
 
-from . import config
-from .detector import Detector, ErrorType
-from .utils.logger import logger
-from .utils.math_utils import edit_distance_word
-from .utils.text_utils import is_chinese_string, convert_to_unicode
-from .utils.tokenizer import segment, split_2_short_text
+from pycorrector import config
+from pycorrector.detector import Detector, ErrorType
+from pycorrector.utils.logger import logger
+from pycorrector.utils.math_utils import edit_distance_word
+from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.tokenizer import segment, split_2_short_text
 
 
 class Corrector(Detector):
-    def __init__(self,
-                 common_char_path=config.common_char_path,
-                 same_pinyin_path=config.same_pinyin_path,
-                 same_stroke_path=config.same_stroke_path,
-                 language_model_path=config.language_model_path,
-                 word_freq_path=config.word_freq_path,
-                 custom_word_freq_path='',
-                 custom_confusion_path='',
-                 person_name_path=config.person_name_path,
-                 place_name_path=config.place_name_path,
-                 stopwords_path=config.stopwords_path
-                 ):
-        super(Corrector, self).__init__(language_model_path=language_model_path,
-                                        word_freq_path=word_freq_path,
-                                        custom_word_freq_path=custom_word_freq_path,
-                                        custom_confusion_path=custom_confusion_path,
-                                        person_name_path=person_name_path,
-                                        place_name_path=place_name_path,
-                                        stopwords_path=stopwords_path
-                                        )
+    def __init__(
+            self,
+            common_char_path=config.common_char_path,
+            same_pinyin_path=config.same_pinyin_path,
+            same_stroke_path=config.same_stroke_path,
+            language_model_path=config.language_model_path,
+            word_freq_path=config.word_freq_path,
+            custom_word_freq_path='',
+            custom_confusion_path='',
+            person_name_path=config.person_name_path,
+            place_name_path=config.place_name_path,
+            stopwords_path=config.stopwords_path,
+            proper_name_path=config.proper_name_path,
+            stroke_path=config.stroke_path
+    ):
+        super(Corrector, self).__init__(
+            language_model_path=language_model_path,
+            word_freq_path=word_freq_path,
+            custom_word_freq_path=custom_word_freq_path,
+            custom_confusion_path=custom_confusion_path,
+            person_name_path=person_name_path,
+            place_name_path=place_name_path,
+            stopwords_path=stopwords_path,
+            proper_name_path=proper_name_path,
+            stroke_path=stroke_path
+        )
         self.name = 'corrector'
         self.common_char_path = common_char_path
         self.same_pinyin_text_path = same_pinyin_path
@@ -158,7 +164,7 @@ class Corrector(Detector):
         confusion_word_set = set()
         candidate_words = list(self.known(edit_distance_word(word, self.cn_char_set)))
         for candidate_word in candidate_words:
-            if lazy_pinyin(candidate_word) == lazy_pinyin(word):
+            if pypinyin.lazy_pinyin(candidate_word) == pypinyin.lazy_pinyin(word):
                 # same pinyin
                 confusion_word_set.add(candidate_word)
         return confusion_word_set
@@ -188,28 +194,32 @@ class Corrector(Detector):
         candidates_1.extend(self._confusion_word_set(word))
         # custom confusion word
         candidates_1.extend(self._confusion_custom_set(word))
-        # same pinyin char
+        # get similarity char
         if len(word) == 1:
-            # same one char pinyin
+            # sim one char
             confusion = [i for i in self._confusion_char_set(word[0]) if i]
             candidates_1.extend(confusion)
         if len(word) == 2:
-            # same first char pinyin
-            confusion = [i + word[1:] for i in self._confusion_char_set(word[0]) if i]
-            candidates_2.extend(confusion)
-            # same last char pinyin
-            confusion = [word[:-1] + i for i in self._confusion_char_set(word[-1]) if i]
-            candidates_2.extend(confusion)
+            # sim first char
+            confusion_first = [i for i in self._confusion_char_set(word[0]) if i]
+            candidates_2.extend([i + word[1] for i in confusion_first])
+            # sim last char
+            confusion_last = [i for i in self._confusion_char_set(word[1]) if i]
+            candidates_2.extend([word[0] + i for i in confusion_last])
+            # both change, sim char
+            candidates_2.extend([i + j for i in confusion_first for j in confusion_last if i + j])
+            # sim word
+            # candidates_2.extend([i for i in self._confusion_word_set(word) if i])
         if len(word) > 2:
-            # same mid char pinyin
+            # sim mid char
             confusion = [word[0] + i + word[2:] for i in self._confusion_char_set(word[1])]
             candidates_3.extend(confusion)
 
-            # same first word pinyin
+            # sim first word
             confusion_word = [i + word[-1] for i in self._confusion_word_set(word[:-1])]
             candidates_3.extend(confusion_word)
 
-            # same last word pinyin
+            # sim last word
             confusion_word = [word[0] + i for i in self._confusion_word_set(word[1:])]
             candidates_3.extend(confusion_word)
 
@@ -257,7 +267,12 @@ class Corrector(Detector):
 
     def correct(self, text, include_symbol=True, num_fragment=1, threshold=57, **kwargs):
         """
-        句子改错
+        文本改错
+
+        改错逻辑：
+        1. 自定义混淆集
+        2. 专名错误
+        3. 字词错误
         :param text: str, query 文本
         :param include_symbol: bool, 是否包含标点符号
         :param num_fragment: 纠错候选集分段数, 1 / (num_fragment + 1)
@@ -270,30 +285,38 @@ class Corrector(Detector):
         self.check_corrector_initialized()
         # 编码统一，utf-8 to unicode
         text = convert_to_unicode(text)
-        # 长句切分为短句
-        blocks = split_2_short_text(text, include_symbol=include_symbol)
-        for blk, idx in blocks:
-            maybe_errors = self.detect_short(blk, idx)
+        # 文本切分为句子
+        sentences = split_2_short_text(text, include_symbol=include_symbol)
+        for sentence, idx in sentences:
+            maybe_errors, proper_details = self.detect_sentence(sentence, idx, **kwargs)
             for cur_item, begin_idx, end_idx, err_type in maybe_errors:
                 # 纠错，逐个处理
-                before_sent = blk[:(begin_idx - idx)]
-                after_sent = blk[(end_idx - idx):]
+                before_sent = sentence[:(begin_idx - idx)]
+                after_sent = sentence[(end_idx - idx):]
 
                 # 困惑集中指定的词，直接取结果
                 if err_type == ErrorType.confusion:
                     corrected_item = self.custom_confusion[cur_item]
+                elif err_type == ErrorType.proper:
+                    # proper_details format: (error_word, corrected_word, begin_idx, end_idx)
+                    corrected_item = [i[1] for i in proper_details if cur_item == i[0] and begin_idx == i[2]][0]
                 else:
-                    # 取得所有可能正确的词
+                    # 找所有可能正确的词
                     candidates = self.generate_items(cur_item, fragment=num_fragment)
                     if not candidates:
                         continue
-                    corrected_item = self.get_lm_correct_item(cur_item, candidates, before_sent, after_sent,
-                                                              threshold=threshold)
+                    corrected_item = self.get_lm_correct_item(
+                        cur_item,
+                        candidates,
+                        before_sent,
+                        after_sent,
+                        threshold=threshold
+                    )
                 # output
                 if corrected_item != cur_item:
-                    blk = before_sent + corrected_item + after_sent
+                    sentence = before_sent + corrected_item + after_sent
                     detail_word = (cur_item, corrected_item, begin_idx, end_idx)
                     details.append(detail_word)
-            text_new += blk
+            text_new += sentence
         details = sorted(details, key=operator.itemgetter(2))
         return text_new, details

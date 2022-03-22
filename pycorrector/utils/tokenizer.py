@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing(xuming624@qq.com)
-@description: 配置切词器
+@description: 切词器
 """
-
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 import logging
 import os
@@ -25,31 +21,31 @@ re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
 re_skip = re.compile("(\r\n\\s)", re.U)
 
 
-def split_2_short_text(text, include_symbol=False):
+def split_2_short_text(text, include_symbol=True):
     """
-    长句切分为短句
+    文本切分为句子，以标点符号切分
     :param text: str
     :param include_symbol: bool
     :return: (sentence, idx)
     """
     result = []
-    blocks = re_han.split(text)
+    sentences = re_han.split(text)
     start_idx = 0
-    for blk in blocks:
-        if not blk:
+    for sentence in sentences:
+        if not sentence:
             continue
         if include_symbol:
-            result.append((blk, start_idx))
+            result.append((sentence, start_idx))
         else:
-            if re_han.match(blk):
-                result.append((blk, start_idx))
-        start_idx += len(blk)
+            if re_han.match(sentence):
+                result.append((sentence, start_idx))
+        start_idx += len(sentence)
     return result
 
 
 def split_text_by_maxlen(text, maxlen=512):
     """
-    长句切分为短句，每个短句maxlen个字
+    文本切分为句子，以句子maxlen切分
     :param text: str
     :param maxlen: int, 最大长度
     :return: list, (sentence, idx)

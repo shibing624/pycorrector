@@ -2,7 +2,7 @@
 """
 @author:XuMing(xuming624@qq.com)
 @description:
-""" 
+"""
 import sys
 
 sys.path.append("../")
@@ -67,6 +67,8 @@ def test_chengyu():
     # 看着这两个人谈笑风声（（生））我心理（（里））不由有些忌妒。
     # 有了这一番旁证（（征））博引。
     x = [
+        '这场比赛我甘败下风',
+        '这场比赛我甘拜下封',
         '这家伙还蛮格尽职守的',
         '报应接中迩来',  # 接踵而来
         '人群穿流不息',
@@ -130,3 +132,15 @@ def test_ner():
         print(c.detect(line))
         correct_sent = c.correct(line)
         print("original sentence:{} => correct sentence:{}".format(line, correct_sent))
+
+
+def test_common_error():
+    from pycorrector.corrector import Corrector
+    from pycorrector.proper_corrector import load_dict_file
+    m = Corrector()
+    data = load_dict_file('./common_error_pairs.txt')
+    error_sentences = ['我喜欢' + k for k, v in data.items()]
+    error_sentences_val = [v for k, v in data.items()]
+    for i, v in zip(error_sentences, error_sentences_val):
+        print(i, ' -> ', m.correct(i))
+        print(v)

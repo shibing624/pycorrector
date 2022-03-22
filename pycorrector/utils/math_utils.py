@@ -79,6 +79,52 @@ def find_all_idx(lst, item):
     return ids
 
 
+def edit_distance_dp(str1: str, str2: str) -> int:
+    """
+    计算两个字符串的编辑距离
+    Args:
+        str1:
+        str2:
+
+    Returns:
+        int: 编辑距离
+    """
+    if not str1:
+        return len(str2)
+    if not str2:
+        return len(str1)
+
+    dp = [[0 for _ in range(len(str2) + 1)] for _ in range(len(str1) + 1)]
+
+    for i in range(0, len(str1) + 1):
+        dp[i][0] = i
+
+    for j in range(0, len(str2) + 1):
+        dp[0][j] = j
+
+    for i in range(1, len(str1) + 1):
+        for j in range(1, len(str2) + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
+
+    return dp[-1][-1]
+
+
+def edit_distance(str1, str2):
+    try:
+        # very fast
+        # http://stackoverflow.com/questions/14260126/how-python-levenshtein-ratio-is-computed
+        import Levenshtein
+        d = Levenshtein.distance(str1, str2) / float(max(len(str1), len(str2)))
+    except:
+        # https://docs.python.org/2/library/difflib.html
+        import difflib
+        d = 1.0 - difflib.SequenceMatcher(lambda x: x == " ", str1, str2).ratio()
+    return d
+
+
 if __name__ == "__main__":
     l = [1, 2, 3, 4, 2, 3, 4]
     item = 2
