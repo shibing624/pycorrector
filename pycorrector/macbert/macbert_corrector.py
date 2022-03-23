@@ -18,6 +18,29 @@ from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '——', '\t', '֍', '玕', '']
+
+
+def get_errors(corrected_text, origin_text):
+    sub_details = []
+    for i, ori_char in enumerate(origin_text):
+        if i >= len(corrected_text):
+            continue
+        if ori_char in unk_tokens:
+            # deal with unk word
+            if corrected_text[i] == '在':
+                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+            else:
+                corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
+            continue
+        if ori_char != corrected_text[i]:
+            if ori_char.lower() == corrected_text[i]:
+                # pass english upper char
+                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                continue
+            sub_details.append((ori_char, corrected_text[i], i, i + 1))
+    sub_details = sorted(sub_details, key=operator.itemgetter(2))
+    return corrected_text, sub_details
 
 
 class MacBertCorrector(object):
@@ -30,7 +53,6 @@ class MacBertCorrector(object):
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
         self.model.to(device)
-        self.unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']
         logger.debug("device: {}".format(device))
         logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
@@ -50,24 +72,6 @@ class MacBertCorrector(object):
         inputs = self.tokenizer(blocks, padding=True, return_tensors='pt').to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
-
-        def get_errors(corrected_text, origin_text):
-            sub_details = []
-            for i, ori_char in enumerate(origin_text):
-                if ori_char in self.unk_tokens:
-                    # add unk word
-                    corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
-                    continue
-                if i >= len(corrected_text):
-                    continue
-                if ori_char != corrected_text[i]:
-                    if ori_char.lower() == corrected_text[i]:
-                        # pass english upper char
-                        corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
-                        continue
-                    sub_details.append((ori_char, corrected_text[i], i, i + 1))
-            sub_details = sorted(sub_details, key=operator.itemgetter(2))
-            return corrected_text, sub_details
 
         for ids, text in zip(outputs.logits, blocks):
             decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
@@ -100,7 +104,16 @@ if __name__ == "__main__":
         '你说：“怎么办？”我怎么知道？',
         '我父母们常常说：“那时候吃的东西太少，每天只能吃一顿饭。”想一想，人们都快要饿死，谁提出化肥和农药的污染。',
         '这本新书《居里夫人传》将的很生动有趣',
-        '我喜欢吃鸡，公鸡、母鸡、白切鸡、乌鸡、紫燕鸡……',
+        '֍我喜欢吃鸡，公鸡、母鸡、白切鸡、乌鸡、紫燕鸡……֍新的食谱',
+        '注意：“跨类保护”不等于“全类保护”。',
+        '12.——对比文件中未公开的数值和对比文件中已经公开的中间值具有新颖性；',
+        '《著作权法》（2020修正）第23条：“自然人的作品，其发表权、本法第',
+        '三步检验法（三步检验标准）（three-step test）：若要',
+        '①申请人应提交，顺应了国家“健全创新激励',
+        '①申请人应提交,太平天国领导人洪仁玕。',
+        '	部分优先权：',
+        '实施其专利的行为（生产经营≠营利≠商业经营）',
+        '实施,i can speak chinese, can i spea english. ? hello.',
     ]
     for sent in error_sentences:
         corrected_sent, err = m.macbert_correct(sent)

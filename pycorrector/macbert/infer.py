@@ -12,6 +12,7 @@ sys.path.append('../..')
 
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
+from pycorrector.macbert.macbert_corrector import get_errors
 from pycorrector.macbert.defaults import _C as cfg
 from pycorrector.utils.logger import logger
 
@@ -75,39 +76,6 @@ class Inference:
             is_str = True
             sentence_list = [sentence_list]
         corrected_texts = self.model.predict(sentence_list)
-
-        def get_errors(_corrected_text, _origin_text):
-            sub_details = []
-            
-            # Flags, we found that blanks are remained but enters are cleaned.
-            blanks_cleaned = False
-            enter_cleaned = True
-            
-            for i, ori_char in enumerate(_origin_text):
-                if ori_char == " ":
-                    # add blank word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if blanks_cleaned else i + 1:]
-                    continue
-                if ori_char == "\n":
-                    # add enter word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i if enter_cleaned else i + 1:]
-                    continue
-                if ori_char in ['“', '”', '‘', '’', '琊', '…', '—', '擤']:
-                    # add unk word
-                    _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
-                    continue
-                if i >= len(_corrected_text):
-                    continue
-                if ori_char != _corrected_text[i]:
-                    # print(ori_char, corrected_text[i])
-                    if (ori_char.lower() == _corrected_text[i]) or _corrected_text[i] == '֍':
-                        # pass english upper char
-                        _corrected_text = _corrected_text[:i] + ori_char + _corrected_text[i + 1:]
-                        continue
-                    sub_details.append((ori_char, _corrected_text[i], i, i + 1))
-                    # print(_corrected_text)
-            sub_details = sorted(sub_details, key=operator.itemgetter(2))
-            return _corrected_text, sub_details
 
         for corrected_text, text in zip(corrected_texts, sentence_list):
             corrected_text, sub_details = get_errors(corrected_text, text)
