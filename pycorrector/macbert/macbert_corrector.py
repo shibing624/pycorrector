@@ -18,7 +18,7 @@ from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '——', '\t', '֍', '玕', '']
+unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
 
 
 def get_errors(corrected_text, origin_text):
@@ -28,10 +28,7 @@ def get_errors(corrected_text, origin_text):
             continue
         if ori_char in unk_tokens:
             # deal with unk word
-            if corrected_text[i] == '在':
-                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
-            else:
-                corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if ori_char != corrected_text[i]:
             if ori_char.lower() == corrected_text[i]:
@@ -85,6 +82,7 @@ class MacBertCorrector(object):
 if __name__ == "__main__":
     m = MacBertCorrector()
     error_sentences = [
+        '内容提要——在知识产权学科领域里',
         '疝気医院那好 为老人让坐，疝気专科百科问答',
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',
