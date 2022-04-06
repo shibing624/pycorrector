@@ -5,7 +5,7 @@
 """
 import sys
 import torch
-import operator
+import argparse
 from transformers import BertTokenizer
 
 sys.path.append('../..')
@@ -40,7 +40,6 @@ class Inference:
         else:
             raise ValueError("model not found.")
         self.model.to(device)
-        logger.debug("device: {}".format(device))
         self.model.eval()
 
     def predict(self, sentence_list):
@@ -86,12 +85,13 @@ class Inference:
 
 
 if __name__ == "__main__":
-    ckpt_path = sys.argv[1]
-    vocab_path = sys.argv[2]
-    cfg_path = sys.argv[3]
-    m = Inference(ckpt_path,
-                  vocab_path,
-                  cfg_path)
+    parser = argparse.ArgumentParser(description="infer")
+    parser.add_argument("--ckpt_path", default="output/macbert4csc/epoch=09-val_loss=0.01.ckpt",
+                        help="path to config file", type=str)
+    parser.add_argument("--vocab_path", default="output/macbert4csc/vocab.txt", help="path to config file", type=str)
+    parser.add_argument("--config_file", default="train_macbert4csc.yml", help="path to config file", type=str)
+    args = parser.parse_args()
+    m = Inference(args.ckpt_path, args.vocab_path, args.config_file)
     inputs = [
         '它的本领是呼风唤雨，因此能灭火防灾。狎鱼后面是獬豸。獬豸通常头上长着独角，有时又被称为独角羊。它很聪彗，而且明辨是非，象征着大公无私，又能镇压斜恶。',
         '老是较书。',
