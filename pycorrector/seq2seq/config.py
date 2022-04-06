@@ -28,9 +28,9 @@ train_path = os.path.join(output_dir, 'train.txt')
 test_path = os.path.join(output_dir, 'test.txt')
 
 dataset = 'sighan'  # 'sighan' or 'cged'
-arch = 'bertseq2seq'  # 'seq2seq' or 'convseq2seq' or 'bertseq2seq'
+arch = 'convseq2seq'  # 'seq2seq' or 'convseq2seq' or 'bertseq2seq'
 
-model_name_or_path = "bert-base-chinese"  # for bertseq2seq
+model_name_or_path = "bert-base-chinese"  # only for bertseq2seq
 
 # config
 src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
@@ -38,7 +38,7 @@ trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_dir = os.path.join(output_dir, 'model_{}'.format(dataset))
 
 batch_size = 32
-epochs = 40  # bertseq2seq is '40', other is '200'
+epochs = 200  # bertseq2seq is '40', other is '200'
 max_length = 128
 
 gpu_id = 0

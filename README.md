@@ -539,7 +539,8 @@ macbert4csc-base-chinese
 
 - ErnieCSC模型
 
-基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)的模型库中[https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
+基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)的
+模型库中[https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
 
 模型网络结构：
 
@@ -614,14 +615,16 @@ output:
 
 [seq2seq](./pycorrector/seq2seq) 模型使用示例:
 
-#### 配置
+#### 1.查看配置
 
-通过修改`config.py`。
-
-#### 数据预处理
-
-```
+```shell
 cd seq2seq
+config.py
+```
+
+#### 2.数据预处理
+
+```shell
 # 数据预处理
 python preprocess.py
 ```
@@ -634,7 +637,7 @@ python preprocess.py
 我 现 在 好 得 多 了 。	我 现 在 好 多 了 。
 ```
 
-#### 训练
+#### 3.训练
 
 ```
 python train.py
@@ -642,7 +645,7 @@ python train.py
 
 设置`config.py`中`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
-#### 预测
+#### 4.预测
 
 ```
 python infer.py
@@ -654,7 +657,7 @@ python infer.py
 
 PS：
 
-1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)测试。
+1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)试试。
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
 
 </details>
@@ -673,9 +676,8 @@ PS：
 
 说明：
 
-- SIGHAN+Wang271K中文纠错数据集(27万条)
-  ，是通过原始SIGHAN13、14、15年数据集和Wang271K数据集格式转化后得到，json格式，带错误字符位置信息，SIGHAN为test.json，macbert4csc模型训练可以直接用该数据集复现paper准召结果，详见[pycorrector/macbert/README.md](pycorrector/macbert/README.md)
-  。
+- SIGHAN+Wang271K中文纠错数据集(27万条)，是通过原始SIGHAN13、14、15年数据集和Wang271K数据集格式转化后得到，json格式，带错误字符位置信息，SIGHAN为test.json，
+  macbert4csc模型训练可以直接用该数据集复现paper准召结果，详见[pycorrector/macbert/README.md](pycorrector/macbert/README.md)。
 - NLPCC 2018 GEC官方数据集[NLPCC2018-GEC](http://tcci.ccf.org.cn/conference/2018/taskdata.php)，
   训练集[trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)[解压后114.5MB]，该数据格式是原始文本，未做切词处理。
 - 汉语水平考试（HSK）和lang8原始平行语料[HSK+Lang8][百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g)，该数据集已经切词，可用作数据扩增。
