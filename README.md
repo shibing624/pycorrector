@@ -723,7 +723,7 @@ PS：
 - 邮件我：xuming: xuming624@qq.com
 - 微信我：加我*微信号：xuming624*, 进Python-NLP交流群，备注：*姓名-公司名-NLP*
 
-<img src="http://42.193.145.218/github_data/xm_wechat_erweima.png" width="200" />
+<img src="https://github.com/shibing624/pycorrector/blob/master/docs/git_image/wechat.jpeg" width="200" />
 
 ## Citation
 
