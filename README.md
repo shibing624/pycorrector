@@ -660,6 +660,12 @@ PS：
 1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)试试。
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
 
+#### release models
+
+基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，下载地址：[github models](https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar)。
+
+位置同以上训练脚本，放到seq2seq文件夹下即可。
+
 </details>
 
 ## Dataset

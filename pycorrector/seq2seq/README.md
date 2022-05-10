@@ -96,4 +96,6 @@ python preprocess.py
 
 ### release models
 
-基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，通过[github models]()获取。
+基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，下载地址：[github models](https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar)。
+
+位置同以上训练脚本，放到seq2seq文件夹下即可。
