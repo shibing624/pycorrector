@@ -5,7 +5,6 @@
 """
 import os
 import sys
-from codecs import open
 from xml.dom import minidom
 
 from sklearn.model_selection import train_test_split

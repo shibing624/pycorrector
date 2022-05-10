@@ -2,8 +2,7 @@
 """
 @author:XuMing(xuming624@qq.com)
 @description:
-""" Corpus for model
-
+"""
 import sys
 from codecs import open
 from collections import Counter

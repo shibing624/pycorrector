@@ -29,6 +29,7 @@ from pycorrector.seq2seq.convseq2seq import ConvSeq2Seq
 from pycorrector.utils.logger import logger
 from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 
+os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -262,7 +263,6 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
 
         train_df = pd.DataFrame(train_data, columns=['input_text', 'target_text'])
         dev_df = pd.DataFrame(dev_data, columns=['input_text', 'target_text'])
-        os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"
         model.train_model(train_df, eval_data=dev_df)
     else:
         logger.error('error arch: {}'.format(arch))

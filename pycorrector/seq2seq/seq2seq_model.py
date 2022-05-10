@@ -309,9 +309,6 @@ class Seq2SeqModel:
         if args:
             self.args.update_from_dict(args)
 
-        # if self.args.silent:
-        #     show_running_loss = False
-
         if self.args.evaluate_during_training and eval_data is None:
             raise ValueError(
                 "evaluate_during_training is enabled but eval_data is not specified."
@@ -343,12 +340,6 @@ class Seq2SeqModel:
         )
 
         self.save_model(self.args.output_dir, model=self.model)
-
-        # model_to_save = self.model.module if hasattr(self.model, "module") else self.model
-        # model_to_save.save_pretrained(output_dir)
-        # self.encoder_tokenizer.save_pretrained(output_dir)
-        # self.decoder_tokenizer.save_pretrained(output_dir)
-        # torch.save(self.args, os.path.join(output_dir, "training_args.bin"))
 
         if verbose:
             logger.info(" Training of {} model complete. Saved to {}.".format(self.args.model_name, output_dir))

@@ -2,7 +2,7 @@
 """
 @author:XuMing(xuming624@qq.com)
 @description:
-""" Use CGED corpus
+"""
 import os
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))

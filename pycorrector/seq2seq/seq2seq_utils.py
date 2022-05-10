@@ -20,7 +20,7 @@ from pycorrector.utils.logger import logger
 
 if transformers.__version__ < "4.2.0":
     shift_tokens_right = lambda input_ids, pad_token_id, decoder_start_token_id: _shift_tokens_right(
-        input_ids, pad_token_id)
+        input_ids, pad_token_id, decoder_start_token_id)
 else:
     shift_tokens_right = _shift_tokens_right
 
