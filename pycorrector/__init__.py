@@ -4,6 +4,7 @@
 @description:
 """
 
+from pycorrector.version import __version__
 from pycorrector.config import language_model_path
 from pycorrector.corrector import Corrector
 from pycorrector.en_spell import EnSpell
