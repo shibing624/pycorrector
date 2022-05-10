@@ -270,17 +270,18 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
 
 
 if __name__ == '__main__':
-    train(config.arch,
-          config.train_path,
-          config.batch_size,
-          config.embed_size,
-          config.hidden_size,
-          config.dropout,
-          config.epochs,
-          config.src_vocab_path,
-          config.trg_vocab_path,
-          config.model_dir,
-          config.max_length,
-          config.use_segment,
-          config.model_name_or_path,
-          )
+    train(
+        config.arch,
+        config.train_path,
+        config.batch_size,
+        config.embed_size,
+        config.hidden_size,
+        config.dropout,
+        config.epochs,
+        config.src_vocab_path,
+        config.trg_vocab_path,
+        config.model_dir,
+        config.max_length,
+        config.use_segment,
+        config.model_name_or_path,
+    )

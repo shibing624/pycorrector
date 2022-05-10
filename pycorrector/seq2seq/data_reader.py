@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing(xuming624@qq.com)
-@description:
-""" Corpus for model
+@description:Corpus for model
+"""
 
 import sys
-from codecs import open
 from collections import Counter
 
 import numpy as np
