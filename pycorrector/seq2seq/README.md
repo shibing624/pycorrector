@@ -22,7 +22,7 @@ tensorboardX
 
 ## Demo
 
-- bertseq2seq demo
+- convseq2seq demo
 
 示例[seq2seq_demo.py](../../examples/seq2seq_demo.py)
 ```
@@ -93,3 +93,7 @@ predict: 王天华开心地一直说话。
 ```
 python preprocess.py
 ```
+
+### release models
+
+基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，通过[github models]()获取。

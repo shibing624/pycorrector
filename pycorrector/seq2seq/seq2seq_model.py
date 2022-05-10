@@ -520,7 +520,7 @@ class Seq2SeqModel:
 
         if args.model_name and os.path.exists(args.model_name):
             try:
-                # set global_step to gobal_step of last saved checkpoint from model path
+                # set global_step to global_step of last saved checkpoint from model path
                 checkpoint_suffix = args.model_name.split("/")[-1].split("-")
                 if len(checkpoint_suffix) > 2:
                     checkpoint_suffix = checkpoint_suffix[1]

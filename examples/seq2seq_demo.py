@@ -34,7 +34,7 @@ def main():
                         )
     parser.add_argument("--model_dir", default="output/bertseq2seq/", type=str, help="Dir for model save.")
     parser.add_argument("--arch",
-                        default="bertseq2seq", type=str,
+                        default="convseq2seq", type=str,
                         help="The name of the task to train selected in the list: " + ", ".join(
                             ['seq2seq', 'convseq2seq', 'bertseq2seq']),
                         )
@@ -52,7 +52,7 @@ def main():
     parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
     parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
     parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
-    parser.add_argument("--epochs", default=10, type=int, help="Epoch num.")
+    parser.add_argument("--epochs", default=200, type=int, help="Epoch num.")
 
     args = parser.parse_args()
     print(args)
