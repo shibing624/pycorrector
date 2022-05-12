@@ -425,7 +425,7 @@ pip install -r requirements-dev.txt
 
 各模型均可独立的预处理数据、训练、预测。
 
-- MacBert4csc模型
+- **MacBert4csc模型[推荐]**
 
 基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models [https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
