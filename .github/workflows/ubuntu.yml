@@ -1,0 +1,52 @@
+on:
+  workflow_dispatch: # Manually running a workflow
+name: Linux build
+jobs:
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        #python-version: [ 3.7, 3.8, 3.9 ]
+        python-version: [ 3.9 ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache pip
+        uses: actions/cache@v2
+        if: startsWith(runner.os, 'Linux')
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache huggingface models
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/huggingface
+          key: ${{ runner.os }}-huggingface-
+      - name: Cache pycorrector models
+        uses: actions/cache@v2
+        with:
+          path: ~/.pycorrector
+          key: ${{ runner.os }}-pycorrector-
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install torch
+        run: |
+          python -m pip install --upgrade pip
+          pip install Cython
+          pip install torch
+      - name: Install from pypi
+        run: |
+          pip install -U pycorrector
+          pip uninstall -y pycorrector
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install .
+          pip install pytest
+      - name: PKG-TEST
+        run: |
+          python -m pytest

@@ -1,0 +1,49 @@
+on:
+  workflow_dispatch: # Manually running a workflow
+name: Windows build
+jobs:
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache pip
+        uses: actions/cache@v2
+        if: startsWith(runner.os, 'Windows')
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache huggingface models
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/huggingface
+          key: ${{ runner.os }}-huggingface-
+      - name: Cache pycorrector models
+        uses: actions/cache@v2
+        with:
+          path: ~/.pycorrector
+          key: ${{ runner.os }}-pycorrector-
+      - name: Install miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          python-version: 3.9
+      - name: Install torch
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch
+      - name: Test torch installation
+        run: |
+          python -c "import sys; print(sys.version)"
+          python -c "import torch; print(torch.__version__)"
+      - name: Install from pypi
+        run: |
+          pip install -U pycorrector
+          pip uninstall -y pycorrector
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install Cython
+          pip install -r requirements.txt
+          pip install .

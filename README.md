@@ -12,7 +12,7 @@
 
 # pycorrector
 
-中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python3开发。
+中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python开发。
 
 **pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
@@ -101,6 +101,11 @@ HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ![](docs/hf.png)
 
+run example: [examples/gradio_demo.py](examples/gradio_demo.py) to see the demo:
+```shell
+python examples/gradio_demo.py
+```
+
 ## Evaluation
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)
@@ -135,14 +140,20 @@ HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ## Install
 
-* 全自动安装：pip install pycorrector
-* 半自动安装：
+```shell
+pip install -U pycorrector
+```
+
+or
 
 ```shell
+pip install -r requirements.txt
+
 git clone https://github.com/shibing624/pycorrector.git
 cd pycorrector
-python setup.py install
+pip install --no-deps .
 ```
+
 
 通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，直接使用docker拉取安装好的部署环境即可。
 
@@ -154,7 +165,7 @@ python setup.py install
 docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 ```
 
-后续调用python3使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)。
+后续调用python使用即可，该镜像已经安装好kenlm、pycorrector等包，具体参见[Dockerfile](Dockerfile)。
 
 使用示例：
 
