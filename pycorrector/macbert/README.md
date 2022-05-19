@@ -204,7 +204,7 @@ python infer.py
 ```
 
 - 方法二：加载`pytorch_model.bin`文件：
-把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/dataset/macbert_models/chinese_finetuned_correction`目录下，
+把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/datasets/macbert_models/chinese_finetuned_correction`目录下，
 就可以像上面`快速加载`使用pycorrector或者transformers调用。
 
 ```shell
