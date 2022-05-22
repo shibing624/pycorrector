@@ -32,7 +32,7 @@
 
 中文文本纠错任务，常见错误类型：
 
-<img src="docs/git_image/error_type.png" width="400" />
+<img src="docs/git_image/error_type.png" width="600" />
 
 当然，针对不同业务场景，这些问题并不一定全部存在，比如拼音输入法、语音识别后处理主要关注音似错误；五笔输入法、OCR后处理关注形似错误，搜索引擎关注所有错误类型。
 
