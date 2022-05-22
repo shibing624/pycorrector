@@ -50,8 +50,8 @@ class MacBertCorrector(object):
         self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
         self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
         self.model.to(device)
-        logger.debug("device: {}".format(device))
-        logger.debug('Loaded macbert model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
+        logger.debug("Use device: {}".format(device))
+        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
         """
@@ -65,16 +65,17 @@ class MacBertCorrector(object):
         text = convert_to_unicode(text)
         # 长句切分为短句
         blocks = split_text_by_maxlen(text, maxlen=128)
-        blocks = [block[0] for block in blocks]
-        inputs = self.tokenizer(blocks, padding=True, return_tensors='pt').to(device)
+        block_texts = [block[0] for block in blocks]
+        inputs = self.tokenizer(block_texts, padding=True, return_tensors='pt').to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
 
-        for ids, text in zip(outputs.logits, blocks):
+        for ids, (text, idx) in zip(outputs.logits, blocks):
             decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
             corrected_text = decode_tokens[:len(text)]
             corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
+            sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
             details.extend(sub_details)
         return text_new, details
 
