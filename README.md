@@ -30,19 +30,13 @@
 
 # Question
 
-中文文本纠错任务，常见错误类型包括：
+中文文本纠错任务，常见错误类型：
 
-- 谐音字词，如 配副眼睛-配副眼镜
-- 混淆音字词，如 流浪织女-牛郎织女
-- 字词顺序颠倒，如 伍迪艾伦-艾伦伍迪
-- 字词补全，如 爱有天意-假如爱有天意
-- 形似字错误，如 高梁-高粱
-- 中文拼音全拼，如 xingfu-幸福
-- 中文拼音缩写，如 sz-深圳
-- 语法错误，如 想象难以-难以想象
+![error_type](docs/git_image/error_type.png)
 
-当然，针对不同业务场景，这些问题并不一定全部存在，比如输入法中需要处理前四种，搜索引擎需要处理所有类型，语音识别后文本纠错只需要处理前两种， 其中'形似字错误'
-主要针对五笔或者笔画手写输入等。本项目重点解决其中的谐音、混淆音、形似字错误、中文拼音全拼、语法错误带来的纠错任务。
+当然，针对不同业务场景，这些问题并不一定全部存在，比如拼音输入法、语音识别后处理主要关注；五笔、笔画手写输入关注形似错误，搜索引擎关注所有错误类型。
+
+本项目重点解决其中的"音似、形字、成语、语法错误"的纠错任务。
 
 # Solution
 
@@ -54,7 +48,7 @@
 
 ### 深度模型的解决思路
 
-1. 端到端的深度模型可以避免人工提取特征，减少人工工作量，RNN序列模型对文本任务拟合能力强，rnn_attention在英文文本纠错比赛中取得第一名成绩，证明应用效果不错；
+1. 端到端的深度模型可以避免人工提取特征，减少人工工作量，RNN序列模型对文本任务拟合能力强，RNN Attn在英文文本纠错比赛中取得第一名成绩，证明应用效果不错；
 2. CRF会计算全局最优输出节点的条件概率，对句子中特定错误类型的检测，会根据整句话判定该错误，阿里参赛2016中文语法纠错任务并取得第一名，证明应用效果不错；
 3. Seq2Seq模型是使用Encoder-Decoder结构解决序列转换问题，目前在序列转换任务中（如机器翻译、对话生成、文本摘要、图像描述）使用最广泛、效果最好的模型之一；
 4. BERT/ELECTRA/ERNIE/MacBERT等预训练模型强大的语言表征能力，对NLP届带来翻天覆地的改变，海量的训练数据拟合的语言模型效果无与伦比，基于其MASK掩码的特征，可以简单改造预训练模型用于纠错，加上fine-tune，效果轻松达到最优。
@@ -69,13 +63,13 @@ PS：
 ### 规则方法
 #### 错误检测
 
-* 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子文本平均值，则判定该字是疑似错别字的概率大。
-* 词粒度：切词后不在词典中的词是疑似错词的概率大。
+* 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子平均值，则判定该字是疑似错别字的概率大
+* 词粒度：切词后不在词典中的词是疑似错词的概率大
 
 #### 错误纠正
 
-* 通过错误检测定位所有疑似错误后，取所有疑似错字的音似、形似候选词，
-* 使用候选词替换，基于语言模型得到类似翻译模型的候选排序结果，得到最优纠正词。
+* 通过错误检测定位所有疑似错误后，取所有疑似错字的音似、形似候选词
+* 使用候选词替换，基于语言模型得到类似翻译模型的候选排序结果，得到最优纠正词
 
 #### 思考
 
@@ -118,9 +112,9 @@ python examples/gradio_demo.py
 
 ### 评估结果
 
-- GPU：Tesla V100，显存 32510 MiB(32 GB)
+GPU：Tesla V100，显存 32 GB
 
-| 数据集 | 模型 | Backbone | CPU/GPU | Precision | Recall | F1 | QPS |
+| 数据集 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
 | :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
 | sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
 | sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 1.85 |
@@ -130,7 +124,7 @@ python examples/gradio_demo.py
 
 - 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
 - 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
-- 更多模型在评估中，如：electra、ernie、seq2seq、deepcontext、transformer等
+- 其他模型（electra、ernie、deepcontext、transformer）评估（doing）
 
 # Install
 
@@ -294,7 +288,7 @@ iPhone差 iPhoneX 100
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率稍低，下载地址：[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率稍低，模型下载地址：[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
 
 example：[examples/load_custom_language_model.py](examples/load_custom_language_model.py)
 
@@ -399,7 +393,7 @@ python -m pycorrector input.txt -o out.txt -n -d
 
 主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[macbert](./pycorrector/macbert)、[seq2seq](./pycorrector/seq2seq)、
 [bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)
-、[ernie-csc](./pycorrector/ernie_csc)，各模型方法 内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
+、[ernie-csc](./pycorrector/ernie_csc)，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 - 安装依赖
 
@@ -413,7 +407,7 @@ pip install -r requirements-dev.txt
 
 ### **MacBert4csc模型[推荐]**
 
-基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models [https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
 模型网络结构：
 - 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
@@ -422,8 +416,9 @@ MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最
 
 ![macbert_network](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_network.jpg)
 
-示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[pycorrector/macbert/README.md](./pycorrector/macbert/README.md)
+详细教程参考[pycorrector/macbert/README.md](./pycorrector/macbert/README.md)
 
+example：[examples/macbert_demo.py](examples/macbert_demo.py)
 #### 使用pycorrector调用纠错：
 
 ```python
@@ -532,7 +527,9 @@ macbert4csc-base-chinese
 
 <img src="https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png" width="500" />
 
-可直接运行示例[python examples/ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[pycorrector/ernie_csc/README.md](./pycorrector/ernie_csc/README.md)
+详细教程参考[pycorrector/ernie_csc/README.md](./pycorrector/ernie_csc/README.md)
+
+example：[examples/ernie_csc_demo.py](examples/ernie_csc_demo.py)
 
 #### 使用pycorrector调用纠错：
 
@@ -596,16 +593,9 @@ output:
 
 ### Seq2Seq模型
 
-[seq2seq](./pycorrector/seq2seq) 模型使用示例:
+[pycorrector/seq2seq](pycorrector/seq2seq) 模型使用示例:
 
-#### 1. 查看配置
-
-```shell
-cd seq2seq
-config.py
-```
-
-#### 2. 数据预处理
+#### 1. 数据预处理
 
 ```shell
 cd seq2seq
@@ -620,7 +610,7 @@ python preprocess.py
 我 现 在 好 得 多 了 。	我 现 在 好 多 了 。
 ```
 
-#### 3. 训练
+#### 2. 训练
 
 ```shell
 python train.py
@@ -628,7 +618,7 @@ python train.py
 
 设置`config.py`中`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
-#### 4. 预测
+#### 3. 预测
 
 ```shell
 python infer.py
@@ -647,7 +637,7 @@ PS：
 
 基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，下载地址：[github models](https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar)。
 
-位置同以上训练脚本，放到seq2seq文件夹下即可。
+位置同以上训练脚本，放到`seq2seq/output`文件夹下即可。
 
 
 # Dataset
@@ -677,7 +667,7 @@ PS：
 [什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
 
 语言模型对于纠错步骤至关重要，当前默认使用的是从千兆中文文本训练的中文语言模型[zh_giga.no_cna_cmn.prune01244.klm(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)，
-此处也提供人民日报2014版语料训练得到的轻量版语言模型[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
+提供人民日报2014版语料训练得到的轻量版语言模型[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
 
 大家可以用中文维基（繁体转简体，pycorrector.utils.text_utils下有此功能）等语料数据训练通用的语言模型，或者也可以用专业领域语料训练更专用的语言模型。更适用的语言模型，对于纠错效果会有比较好的提升。
 
