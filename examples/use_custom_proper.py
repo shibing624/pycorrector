@@ -26,6 +26,7 @@ if __name__ == '__main__':
         '我想去长江达桥走一走',
         '美国前总统特琅普给普京点了一个赞，特朗普称普金做了一个果断的决定',
         '今天在拼哆哆上买了点苹果',
+        '消炎可以吃点阿木西林药品',  # 阿莫西林
     ]
     m = Corrector(proper_name_path='')
     for i in error_sentences:
