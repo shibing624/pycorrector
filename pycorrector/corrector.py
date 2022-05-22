@@ -298,8 +298,7 @@ class Corrector(Detector):
                 if err_type == ErrorType.confusion:
                     corrected_item = self.custom_confusion[cur_item]
                 elif err_type == ErrorType.proper:
-                    # 专名错误
-                    # proper_details format: (error_word, corrected_word, begin_idx, end_idx)
+                    # 专名错误 proper_details format: (error_word, corrected_word, begin_idx, end_idx)
                     corrected_item = [i[1] for i in proper_details if cur_item == i[0] and begin_idx == i[2]][0]
                 else:
                     # 字词错误，找所有可能正确的词

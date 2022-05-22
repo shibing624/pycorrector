@@ -28,7 +28,7 @@
 - [Contact](#Contact)
 - [Reference](#reference)
 
-## Question
+# Question
 
 中文文本纠错任务，常见错误类型包括：
 
@@ -44,7 +44,7 @@
 当然，针对不同业务场景，这些问题并不一定全部存在，比如输入法中需要处理前四种，搜索引擎需要处理所有类型，语音识别后文本纠错只需要处理前两种， 其中'形似字错误'
 主要针对五笔或者笔画手写输入等。本项目重点解决其中的谐音、混淆音、形似字错误、中文拼音全拼、语法错误带来的纠错任务。
 
-## Solution
+# Solution
 
 ### 规则的解决思路
 
@@ -64,9 +64,25 @@ PS：
 - [我的纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
 - [网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 
-## Feature
+# Feature
 
-### 模型
+### 规则方法
+#### 错误检测
+
+* 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子文本平均值，则判定该字是疑似错别字的概率大。
+* 词粒度：切词后不在词典中的词是疑似错词的概率大。
+
+#### 错误纠正
+
+* 通过错误检测定位所有疑似错误后，取所有疑似错字的音似、形似候选词，
+* 使用候选词替换，基于语言模型得到类似翻译模型的候选排序结果，得到最优纠正词。
+
+#### 思考
+
+1. 现在的处理手段，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法上有更大的突破。
+2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
+
+### 模型方法
 
 * Kenlm：kenlm统计语言模型工具，规则方法，语言模型纠错，利用混淆集，扩展性强
 * DeepContext模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
@@ -78,22 +94,7 @@ PS：
 * ERNIE模型：百度提出的基于知识增强的语义表示模型，有可适配中文的强大语义表征能力。在情感分析、文本匹配、自然语言推理、词法分析、阅读理解、智能问答等16个公开数据集上超越世界领先技术
 * MacBERT模型：使用全词掩蔽和N-Gram掩蔽策略适配中文表达，和通过用其相似的单词来掩盖单词，相较BERT缩小了训练前和微调阶段之间的差距，加入错误检测和纠正网络端到端纠正文本拼写错误
 
-### 错误检测
-
-* 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子文本平均值，则判定该字是疑似错别字的概率大。
-* 词粒度：切词后不在词典中的词是疑似错词的概率大。
-
-### 错误纠正
-
-* 通过错误检测定位所有疑似错误后，取所有疑似错字的音似、形似候选词，
-* 使用候选词替换，基于语言模型得到类似翻译模型的候选排序结果，得到最优纠正词。
-
-### 思考
-
-1. 现在的处理手段，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法上有更大的突破。
-2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
-
-## Demo
+# Demo
 
 Official Demo: http://42.193.145.218/product/corrector/
 
@@ -106,21 +107,17 @@ run example: [examples/gradio_demo.py](examples/gradio_demo.py) to see the demo:
 python examples/gradio_demo.py
 ```
 
-## Evaluation
+# Evaluation
 
 提供评估脚本[pycorrector/utils/eval.py](./pycorrector/utils/eval.py)
 和评估执行脚本[examples/evaluate_models.py](./examples/evaluate_models.py)，该脚本有两个功能：
 
 - sighan15评估集：SIGHAN2015的测试集[pycorrector/data/cn/sighan_2015/test.tsv](pycorrector/data/cn/sighan_2015/test.tsv)
   ，已经转为简体中文。
-- corpus500评估样本集：评估集[pycorrector/data/eval_corpus.json](./pycorrector/data/eval_corpus.json),
-  包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。
 - 评估纠错准召率：采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错。
 
-### 效果评估
+### 评估结果
 
-- 机器：linux(centos7)
-- CPU：28核 Intel(R) Xeon(R) Gold 5117 CPU @ 2.00GHz
 - GPU：Tesla V100，显存 32510 MiB(32 GB)
 
 | 数据集 | 模型 | Backbone | CPU/GPU | Precision | Recall | F1 | QPS |
@@ -128,17 +125,14 @@ python examples/gradio_demo.py
 | sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
 | sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 1.85 |
 | **sighan_15** | **macbert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **101** |
-| corpus500 | rule | kenlm | cpu | 0.8358 | 0.1873 | 0.3060 | 9 |
-| corpus500 | bert | bert-base-chinese + MLM | gpu | 0.8643 | 0.4047 | 0.5513 | 1.85 |
-| corpus500 | macbert | macbert4csc-base-chinese | gpu | 0.9133 | 0.5987 | 0.7232 | 101 |
 
-#### 结论
+### 结论
 
 - 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
 - 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
 - 更多模型在评估中，如：electra、ernie、seq2seq、deepcontext、transformer等
 
-## Install
+# Install
 
 ```shell
 pip install -U pycorrector
@@ -185,11 +179,11 @@ pip install https://github.com/kpu/kenlm/archive/master.zip
 pip install -r requirements.txt
 ```
 
-## Usage
+# Usage
 
-- 文本纠错
+### 文本纠错
 
-示例[base_demo.py](examples/base_demo.py)
+example: [examples/base_demo.py](examples/base_demo.py)
 
 ```python
 import pycorrector
@@ -204,14 +198,12 @@ output:
 少先队员应该为老人让座 [('因该', '应该', 4, 6), ('坐', '座', 10, 11)]
 ```
 
-> 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
+> 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
+则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
 
-<details>
-<summary>查看更多使用说明</summary>
+### 错误检测
 
-- 错误检测
-
-示例[detect_demo.py](examples/detect_demo.py)
+example: [examples/detect_demo.py](examples/detect_demo.py)
 
 ```python
 import pycorrector
@@ -228,52 +220,39 @@ output:
 
 > 返回类型是`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
 
-- 关闭字粒度纠错
+### 成语、专名纠错
 
-示例[disable_char_error.py](examples/disable_char_error.py)
+example: [examples/proper_correct_demo.py](examples/proper_correct_demo.py)
 
 ```python
-import pycorrector
+import sys
 
-error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
-correct_sent = pycorrector.correct(error_sentence_1)
-print(correct_sent)
+sys.path.append("..")
+from pycorrector.proper_corrector import ProperCorrector
+
+m = ProperCorrector()
+x = [
+    '报应接中迩来',
+    '这块名表带带相传',
+]
+
+for i in x:
+    print(i, ' -> ', m.proper_correct(i))
 ```
 
 output:
 
 ```
-'我的喉咙发炎了要买点阿莫西林吉', [('细林', '西林', 12, 14), ('吃', '吉', 14, 15)]
+报应接中迩来  ->  ('报应接踵而来', [('接中迩来', '接踵而来', 2, 6)])
+这块名表带带相传  ->  ('这块名表代代相传', [('带带相传', '代代相传', 4, 8)])
 ```
 
-上例中`吃`发生误纠，如下代码关闭字粒度纠错：
 
-```python
-import pycorrector
-
-error_sentence_1 = '我的喉咙发炎了要买点阿莫细林吃'
-pycorrector.enable_char_error(enable=False)
-correct_sent = pycorrector.correct(error_sentence_1)
-print(correct_sent)
-```
-
-output:
-
-```
-'我的喉咙发炎了要买点阿莫西林吃', [('细林', '西林', 12, 14)]
-```
-
-默认字粒度、词粒度的纠错都打开，一般情况下单字错误发生较少，而且字粒度纠错准确率较低。关闭字粒度纠错，这样可以提高纠错准确率，提高纠错速度。
-
-> 默认`enable_char_error`方法的`enable`参数为`True`，即打开错字纠正，这种方式可以召回字粒度错误，但是整体准确率会低；
-
-> 如果追求准确率而不追求召回率的话，建议将`enable`设为`False`，仅使用错词纠正。
-
-- 加载自定义混淆集
+### 自定义混淆集
 
 通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）错误补召回；2）误杀加白。
 
-示例[use_custom_confusion.py](examples/use_custom_confusion.py)
+example: [examples/use_custom_confusion.py](examples/use_custom_confusion.py)
 
 ```python
 import pycorrector
@@ -302,7 +281,7 @@ output:
 ('共同实际控制人萧华、霍荣铨、张旗康', [])
 ```
 
-具体demo见[example/use_custom_confusion.py](./examples/use_custom_confusion.py)，其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
+> 其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
 
 ```
 iPhone差 iPhoneX 100
@@ -311,14 +290,13 @@ iPhone差 iPhoneX 100
 
 > `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径。
 
-- 加载自定义语言模型
+### 自定义语言模型
 
-默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存较小的电脑使用`pycorrector`程序可能会吃力些。
+默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率低些。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率稍低，下载地址：[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
 
-示例[load_custom_language_model.py](examples/load_custom_language_model.py)
-，其中[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)是自定义语言模型文件。
+example：[examples/load_custom_language_model.py](examples/load_custom_language_model.py)
 
 ```python
 from pycorrector import Corrector
@@ -338,11 +316,11 @@ output:
 少先队员应该为老人让座 [('因该', '应该', 4, 6), ('坐', '座', 10, 11)]
 ```
 
-- 英文拼写纠错
+### 英文拼写纠错
 
-支持英文单词的拼写错误纠正。
+支持英文单词级别的拼写错误纠正。
 
-示例[en_correct_demo.py](examples/en_correct_demo.py)
+example：[examples/en_correct_demo.py](examples/en_correct_demo.py)
 
 ```python
 import pycorrector
@@ -361,11 +339,11 @@ what happending? how to speling it, can you gorrect it?
 [('happending', 'happening', 5, 15), ('speling', 'spelling', 24, 31), ('gorrect', 'correct', 44, 51)]
 ```
 
-- 中文简繁互换
+### 中文简繁互换
 
 支持中文繁体到简体的转换，和简体到繁体的转换。
 
-示例[traditional_simplified_chinese_demo.py](examples/traditional_simplified_chinese_demo.py)
+example：[examples/traditional_simplified_chinese_demo.py](examples/traditional_simplified_chinese_demo.py)
 
 ```python
 import pycorrector
@@ -386,7 +364,7 @@ output:
 忧郁的台湾乌龟 => 憂郁的臺灣烏龜
 ```
 
-- 命令行模式
+### 命令行模式
 
 支持批量文本纠错
 
@@ -414,17 +392,8 @@ python -m pycorrector input.txt -o out.txt -n -d
 ```
 
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
-</details>
 
-## Deep Model Usage
-
-### 安装依赖
-
-```
-pip install -r requirements-dev.txt
-```
-
-### 介绍
+# Deep Model Usage
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
@@ -432,24 +401,30 @@ pip install -r requirements-dev.txt
 [bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)
 、[ernie-csc](./pycorrector/ernie_csc)，各模型方法 内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
-### 使用方法
+- 安装依赖
+
+```
+pip install -r requirements-dev.txt
+```
+
+## 使用方法
 
 各模型均可独立的预处理数据、训练、预测。
 
-- **MacBert4csc模型[推荐]**
+### **MacBert4csc模型[推荐]**
 
 基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models [https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 
 模型网络结构：
-+ 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
-+ 在原生 BERT 模型上进行了魔改，追加了一个全连接层作为错误检测即 [detection](https://github.com/shibing624/pycorrector/blob/c0f31222b7849c452cc1ec207c71e9954bd6ca08/pycorrector/macbert/macbert4csc.py#L18) ，
+- 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
+- 在原生 BERT 模型上进行了魔改，追加了一个全连接层作为错误检测即 [detection](https://github.com/shibing624/pycorrector/blob/c0f31222b7849c452cc1ec207c71e9954bd6ca08/pycorrector/macbert/macbert4csc.py#L18) ，
 MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最终的 loss。预测时用 BERT MLM 的 correction 权重即可。 
 
 ![macbert_network](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_network.jpg)
 
 示例[macbert_demo.py](examples/macbert_demo.py)，详细教程参考[pycorrector/macbert/README.md](./pycorrector/macbert/README.md)
 
-使用pycorrector调用纠错：
+#### 使用pycorrector调用纠错：
 
 ```python
 import sys
@@ -482,7 +457,7 @@ query:一只小鱼船浮在平净的河面上 => 一只小鱼船浮在平净的�
 query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之乡, err:[('明', '名', 6, 7)]
 ```
 
-使用原生transformers库调用纠错：
+#### 使用原生transformers库调用纠错：
 
 ```python
 import operator
@@ -548,18 +523,18 @@ macbert4csc-base-chinese
     └── vocab.txt
 ```
 
-- ErnieCSC模型
+### ErnieCSC模型
 
 基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)的
 模型库中[https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
 
 模型网络结构：
 
-![image](https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png)
+<img src="https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png" width="500" />
 
-可直接运行示例[python ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[pycorrector/ernie_csc/README.md](./pycorrector/ernie_csc/README.md)
+可直接运行示例[python examples/ernie_csc_demo.py](examples/ernie_csc_demo.py)，详细教程参考[pycorrector/ernie_csc/README.md](./pycorrector/ernie_csc/README.md)
 
-使用pycorrector调用纠错：
+#### 使用pycorrector调用纠错：
 
 ```python
 
@@ -591,7 +566,7 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 
 ```
 
-使用原生PaddleNLP库调用纠错：
+#### 使用PaddleNLP库调用纠错：
 
 可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
 
@@ -619,24 +594,21 @@ output:
 
 ```
 
-<details>
-<summary>查看Seq2Seq模型</summary>
-
-- Seq2Seq模型
+### Seq2Seq模型
 
 [seq2seq](./pycorrector/seq2seq) 模型使用示例:
 
-#### 1.查看配置
+#### 1. 查看配置
 
 ```shell
 cd seq2seq
 config.py
 ```
 
-#### 2.数据预处理
+#### 2. 数据预处理
 
 ```shell
-# 数据预处理
+cd seq2seq
 python preprocess.py
 ```
 
@@ -648,21 +620,21 @@ python preprocess.py
 我 现 在 好 得 多 了 。	我 现 在 好 多 了 。
 ```
 
-#### 3.训练
+#### 3. 训练
 
-```
+```shell
 python train.py
 ```
 
 设置`config.py`中`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
-#### 4.预测
+#### 4. 预测
 
-```
+```shell
 python infer.py
 ```
 
-预测输出效果样例截图：
+output：
 
 ![result image](./docs/git_image/convseq2seq_ret.png)
 
@@ -671,22 +643,21 @@ PS：
 1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)试试。
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
 
-#### release models
+#### Release models
 
 基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，下载地址：[github models](https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar)。
 
 位置同以上训练脚本，放到seq2seq文件夹下即可。
 
-</details>
 
-## Dataset
+# Dataset
 
 | 数据集 | 语料 | 下载链接 | 压缩包大小 |
 | :------- | :--------- | :---------: | :---------: |
 | **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
 | **`原始SIGHAN数据集`** | SIGHAN13 14 15 | [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)| 339K |
 | **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
-| **`人民日报2014版语料`** | 人民日报2014版 | [百度网盘（密码uc11）](https://pan.baidu.com/s/1971a5XLQsIpL0zL0zxuK2A) <br/> [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
+| **`人民日报2014版语料`** | 人民日报2014版 | [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
 | **`NLPCC 2018 GEC官方数据集`** | NLPCC2018-GEC | [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz) | 114M |
 | **`NLPCC 2018+HSK熟语料`** | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M |
 | **`NLPCC 2018+HSK原始语料`** | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) | 81M |
@@ -701,7 +672,7 @@ PS：
 - NLPCC 2018 + HSK + CGED16、17、18的数据，经过以字切分，繁体转简体，打乱数据顺序的预处理后，生成用于纠错的熟语料(nlpcc2018+hsk)
   ，[百度网盘（密码:m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) [130万对句子，215MB]
 
-## Custom Language Model
+## Language Model
 
 [什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
 
@@ -716,7 +687,7 @@ PS：
 
 尊重版权，传播请注明出处。
 
-## Todo
+# Todo
 
 - [x] 优化形似字字典，提高形似字纠错准确率
 - [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
@@ -729,11 +700,8 @@ PS：
 - [x] 升级bert纠错逻辑，提升基于mask的纠错效果
 - [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
 - [x] 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征。
-- [ ] 规则方法，改进`generate_items`疑似错字生成函数，提速并优化逻辑。
-- [ ] 预测提速，规则方法加入vertebi动态规划，深度模型使用beamsearch搜索结果，引入GPU + fp16预测部署。
-- [ ] 语言模型纠错ppl阈值参数，使用动态调整方法替换写死的阈值。
 
-## Contact
+# Contact
 
 - Issue(建议)
   ：[![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
@@ -742,7 +710,7 @@ PS：
 
 <img src="https://github.com/shibing624/pycorrector/blob/master/docs/git_image/wechat.jpeg" width="200" />
 
-## Citation
+# Citation
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
 
@@ -761,11 +729,11 @@ version = {0.4.2}
 }
 ```
 
-## License
+# License
 
 pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。
 
-## Contribute
+# Contribute
 
 项目代码还很粗糙，如果大家对代码有所改进，欢迎提交回本项目，在提交之前，注意以下两点：
 
@@ -774,7 +742,7 @@ pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用
 
 之后即可提交PR。
 
-## Reference
+# Reference
 
 * [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
 * [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)

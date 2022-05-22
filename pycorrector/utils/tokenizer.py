@@ -181,7 +181,7 @@ class Tokenizer(object):
 
 
 if __name__ == '__main__':
-    text = "这个消息在北京城里不胫儿走"
+    text = "这个消息在北京城里不胫儿走，你好，我才来到这里。你呢？"
     print(text)
 
     t = Tokenizer()
@@ -193,3 +193,9 @@ if __name__ == '__main__':
                 "I was just a kid, and loved it very much! What a fantastic song!"
     cutwords1 = whitespace_tokenize(paragraph)  # 分词
     print('【my分词结果：】', cutwords1)
+
+    print('----\n', text)
+    r = split_2_short_text(text, include_symbol=True)
+    print('split_2_short_text:',r)
+    r = split_text_by_maxlen(text, maxlen=4)
+    print('split_text_by_maxlen:',r)
