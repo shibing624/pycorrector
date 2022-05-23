@@ -12,9 +12,9 @@
 
 # pycorrector
 
-中文文本纠错工具。音似、形似错字（或变体字）纠正，可用于中文拼音、笔画输入法的错误纠正。python开发。
+中文文本纠错工具。支持中文音似、形似、语法错误纠正，python3开发。
 
-**pycorrector**依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
+**pycorrector**实现了Kenlm、ConvSeq2Seq、BERT、MacBERT、ELECTRA、ERNIE、Transformer等多种模型的文本纠错，并在SigHAN数据集评估各模型的效果。
 
 **Guide**
 
@@ -34,13 +34,15 @@
 
 <img src="docs/git_image/error_type.png" width="600" />
 
-当然，针对不同业务场景，这些问题并不一定全部存在，比如拼音输入法、语音识别后处理主要关注音似错误；五笔输入法、OCR后处理关注形似错误，搜索引擎关注所有错误类型。
+当然，针对不同业务场景，这些问题并不一定全部存在，比如拼音输入法、语音识别校对关注音似错误；五笔输入法、OCR校对关注形似错误，
+搜索引擎query纠错关注所有错误类型。
 
-本项目重点解决其中的"音似、形字、成语、语法错误"的纠错任务。
+本项目重点解决其中的"音似、形字、语法、专名错误"等类型。
 
 # Solution
 
 ### 规则的解决思路
+依据语言模型检测错别字位置，通过拼音音似特征、笔画五笔编辑距离特征及语言模型困惑度特征纠正错别字。
 
 1. 中文纠错分为两步走，第一步是错误检测，第二步是错误纠正；
 2. 错误检测部分先通过结巴中文分词器切词，由于句子中含有错别字，所以切词结果往往会有切分错误的情况，这样从字粒度和词粒度两方面检测错误， 整合这两种粒度的疑似错误结果，形成疑似错误位置候选集；
@@ -55,7 +57,7 @@
 
 PS：
 
-- [我的纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
+- [作者纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
 - [网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 
 # Feature
@@ -117,7 +119,7 @@ GPU：Tesla V100，显存 32 GB
 | 数据集 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
 | :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
 | sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
-| sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 1.85 |
+| sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 2 |
 | **sighan_15** | **macbert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **101** |
 
 ### 结论
