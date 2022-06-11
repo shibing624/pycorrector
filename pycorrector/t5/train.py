@@ -166,7 +166,7 @@ def train():
         "do_eval": True,
         "fp16": False,
         "use_cache": False,
-        "max_steps": 2000  # default 5000
+        "max_steps": 2000,  # default 5000
     }
     parser = HfArgumentParser(
         (ModelArguments, DataTrainingArguments, TrainingArguments))
@@ -174,13 +174,21 @@ def train():
     set_seed(training_args.seed)
     if args.train_path.endswith('.tsv'):
         dataset = load_dataset('text', data_files={'train': [args.train_path], 'test': args.test_path})
+        print(dataset)
+        train_dataset = dataset['train']
+        valid_dataset = dataset['test']
     elif args.train_path.endswith('.json'):
         d = CscDataset(args.train_path)
         data_dict = d.load()
-        dataset = Dataset.from_dict(data_dict)
+        train_dataset = Dataset.from_dict(data_dict, split='train')
+
+        d = CscDataset(args.test_path)
+        data_dict = d.load()
+        valid_dataset = Dataset.from_dict(data_dict, split='test')
+        print(train_dataset)
+        print(valid_dataset)
     else:
         raise ValueError('train_path must be tsv or json')
-    print(dataset)
 
     # Load pretrained model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained(
@@ -197,8 +205,6 @@ def train():
     tokenizer.model_max_length = 128
     model.config.max_length = 128
 
-    train_dataset = dataset['train']
-    valid_dataset = dataset['test']
     print('train_dataset:', train_dataset[:3])
 
     def tokenize_dataset(tokenizer, dataset, max_len):
