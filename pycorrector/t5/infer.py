@@ -6,6 +6,8 @@
 import os
 import argparse
 from transformers import AutoTokenizer, T5ForConditionalGeneration
+import torch
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def parse_args():
@@ -26,9 +28,10 @@ def predict():
     model_dir = os.path.join(args.save_dir, './byt5-base-zh-correction')
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
     model = T5ForConditionalGeneration.from_pretrained(model_dir)
+    model.to(device)
     results = []
     for s in example_sentences:
-        model_inputs = tokenizer(s, max_length=128, truncation=True, return_tensors="pt")
+        model_inputs = tokenizer(s, max_length=128, truncation=True, return_tensors="pt").to(device)
         outputs = model.generate(**model_inputs, max_length=128)
         r = tokenizer.decode(outputs[0])
         print('output:', r)

@@ -156,7 +156,7 @@ def train():
         "do_eval": True,
         "fp16": False,
         "use_cache": False,
-        "max_steps": 200  # default 5000
+        "max_steps": 2000  # default 5000
     }
     parser = HfArgumentParser(
         (ModelArguments, DataTrainingArguments, TrainingArguments))
