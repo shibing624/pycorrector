@@ -140,7 +140,6 @@ class CscDataset(object):
         self.data = json.load(open(file_path, 'r', encoding='utf-8'))
 
     def load(self):
-        res = dict()
         data_list = []
         for item in self.data:
             data_list.append(item['original_text'] + '\t' + item['correct_text'])
@@ -176,7 +175,8 @@ def train():
     if args.train_path.endswith('.tsv'):
         dataset = load_dataset('text', data_files={'train': [args.train_path], 'test': args.test_path})
     elif args.train_path.endswith('.json'):
-        data_dict = CscDataset(args.train_path).load()
+        d = CscDataset(args.train_path)
+        data_dict = d.load()
         dataset = Dataset.from_dict(data_dict)
     else:
         raise ValueError('train_path must be tsv or json')
