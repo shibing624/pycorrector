@@ -153,8 +153,8 @@ def train():
         "max_len": 128,
         "output_dir": os.path.join(args.save_dir, './byt5-base-zh-correction'),
         "overwrite_output_dir": True,
-        "per_device_train_batch_size": 8,
-        "per_device_eval_batch_size": 8,
+        "per_device_train_batch_size": 32,
+        "per_device_eval_batch_size": 32,
         "gradient_accumulation_steps": 4,
         "learning_rate": 5e-4,
         "warmup_steps": 250,
@@ -166,7 +166,7 @@ def train():
         "do_eval": True,
         "fp16": False,
         "use_cache": False,
-        "max_steps": 2000,  # default 5000
+        "max_steps": 5000,  # default 5000
     }
     parser = HfArgumentParser(
         (ModelArguments, DataTrainingArguments, TrainingArguments))
