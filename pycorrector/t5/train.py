@@ -2,16 +2,15 @@
 """
 @author:XuMing(xuming624@qq.com)
 @description:
-
-
 """
+import json
 from dataclasses import dataclass, field
 from typing import Optional
 import os
 import argparse
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 from transformers import HfArgumentParser, TrainingArguments, Trainer, set_seed
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -136,6 +135,18 @@ def parse_args():
     return args
 
 
+class CscDataset(object):
+    def __init__(self, file_path):
+        self.data = json.load(open(file_path, 'r', encoding='utf-8'))
+
+    def load(self):
+        res = dict()
+        data_list = []
+        for item in self.data:
+            data_list.append(item['original_text'] + '\t' + item['correct_text'])
+        return {'text': data_list}
+
+
 def train():
     args = parse_args()
     args_dict = {
@@ -162,7 +173,13 @@ def train():
         (ModelArguments, DataTrainingArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_dict(args_dict)
     set_seed(training_args.seed)
-    dataset = load_dataset('text', data_files={'train': [args.train_path], 'test': args.test_path})
+    if args.train_path.endswith('.tsv'):
+        dataset = load_dataset('text', data_files={'train': [args.train_path], 'test': args.test_path})
+    elif args.train_path.endswith('.json'):
+        data_dict = CscDataset(args.train_path).load()
+        dataset = Dataset.from_dict(data_dict)
+    else:
+        raise ValueError('train_path must be tsv or json')
     print(dataset)
 
     # Load pretrained model and tokenizer
