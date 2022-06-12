@@ -32,7 +32,7 @@ class Seq2SeqCorrector(object):
         """
         句子纠错
         :param: sentences, List[str]: 待纠错的句子
-        :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
+        :return: list, [corrected_texts, [error_word, correct_word, begin_pos, end_pos]]
         """
         outputs = self.model.predict(sentences)
         return outputs

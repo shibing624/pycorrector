@@ -121,12 +121,12 @@ GPU：Tesla V100，显存 32 GB
 | Sighan_15 | Rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
 | Sighan_15 | BERT | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 2 |
 | Sighan_15 | T5 | byt5-small | gpu | 0.5220 | 0.3941 | 0.4491 | 111 |
+| Sighan_15 | Seq2Seq | convseq2seq | gpu | 0.2415 | 0.1436 | 0.1801 | 6 |
 | **Sighan_15** | **MacBert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **224** |
-
 
 ### 结论
 
-- 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
+- 中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
 - 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
 
 # Install
