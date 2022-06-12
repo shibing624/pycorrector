@@ -33,9 +33,9 @@ arch = 'convseq2seq'  # 'seq2seq' or 'convseq2seq' or 'bertseq2seq'
 model_name_or_path = "bert-base-chinese"  # only for bertseq2seq
 
 # config
-src_vocab_path = os.path.join(output_dir, 'vocab_source.txt')
-trg_vocab_path = os.path.join(output_dir, 'vocab_target.txt')
 model_dir = os.path.join(output_dir, 'model_{}'.format(dataset))
+src_vocab_path = os.path.join(model_dir, 'vocab_source.txt')
+trg_vocab_path = os.path.join(model_dir, 'vocab_target.txt')
 
 batch_size = 32
 epochs = 200  # bertseq2seq is '40', other is '200'

@@ -11,8 +11,8 @@ sys.path.append("..")
 
 import pycorrector
 from pycorrector.utils import eval
-pwd_path = os.path.abspath(os.path.dirname(__file__))
 
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
 def main(args):
@@ -41,6 +41,12 @@ def main(args):
         model = T5Corrector()
         eval.eval_sighan2015_by_model_batch(model.batch_t5_correct)
         # Sentence Level: acc:0.5227, precision:0.5220, recall:0.3941, f1:0.4491, cost time:9.88 s
+    if args.data == 'sighan_15' and args.model == 'convseq2seq':
+        from pycorrector.seq2seq.seq2seq_corrector import Seq2SeqCorrector
+        model = Seq2SeqCorrector()
+        eval.eval_sighan2015_by_model_batch(model.seq2seq_correct)
+        # Sentence Level: acc:0.3545, precision:0.2415, recall:0.1436, f1:0.1801, cost time:404.95 s
+
     if args.data == 'corpus500' and args.model == 'rule':
         # right_rate:0.486, right_count:243, total_count:500;
         # recall_rate:0.18, recall_right_count:54, recall_total_count:300, spend_time:78 s

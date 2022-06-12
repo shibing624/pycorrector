@@ -5,7 +5,7 @@
 """
 import os
 import sys
-
+import operator
 import numpy as np
 import torch
 
@@ -21,13 +21,31 @@ from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '', '《', '》']
+
+
+def get_errors(corrected_text, origin_text):
+    sub_details = []
+    for i, ori_char in enumerate(origin_text):
+        if i >= len(corrected_text):
+            continue
+        if ori_char in unk_tokens:
+            # deal with unk word
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
+            continue
+        if ori_char != corrected_text[i]:
+            sub_details.append((ori_char, corrected_text[i], i, i + 1))
+    sub_details = sorted(sub_details, key=operator.itemgetter(2))
+    return corrected_text, sub_details
 
 
 class Inference(object):
-    def __init__(self, arch, model_dir, src_vocab_path=None, trg_vocab_path=None,
-                 embed_size=50, hidden_size=50, dropout=0.5, max_length=128):
+    def __init__(self, model_dir, arch='convseq2seq',
+                 embed_size=128, hidden_size=128, dropout=0.25, max_length=128):
         logger.debug("device: {}".format(device))
         if arch in ['seq2seq', 'convseq2seq']:
+            src_vocab_path = os.path.join(model_dir, 'vocab_source.txt')
+            trg_vocab_path = os.path.join(model_dir, 'vocab_target.txt')
             self.src_2_ids = load_word_dict(src_vocab_path)
             self.trg_2_ids = load_word_dict(trg_vocab_path)
             self.id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
@@ -40,7 +58,8 @@ class Inference(object):
                                      dec_hidden_size=hidden_size,
                                      dropout=dropout).to(device)
                 model_path = os.path.join(model_dir, 'seq2seq.pth')
-                self.model.load_state_dict(torch.load(model_path))
+                logger.debug('load model from {}'.format(model_path))
+                self.model.load_state_dict(torch.load(model_path, map_location=device))
                 self.model.eval()
             else:
                 logger.debug('use convseq2seq model.')
@@ -55,7 +74,8 @@ class Inference(object):
                                          device=device,
                                          max_length=max_length).to(device)
                 model_path = os.path.join(model_dir, 'convseq2seq.pth')
-                self.model.load_state_dict(torch.load(model_path))
+                self.model.load_state_dict(torch.load(model_path, map_location=device))
+                logger.debug('load model from {}'.format(model_path))
                 self.model.eval()
         elif arch == 'bertseq2seq':
             # Bert Seq2seq model
@@ -97,20 +117,22 @@ class Inference(object):
                         out.append(word)
                     else:
                         break
-                result.append(''.join(out))
-        elif self.arch == 'bertseq2seq':
+                corrected_text = ''.join(out)
+                corrected_text, sub_details = get_errors(corrected_text, query)
+                result.append([corrected_text, sub_details])
+        else:
             corrected_sents = self.model.predict(sentence_list)
             result = [i.replace(' ', '') for i in corrected_sents]
-        else:
-            raise ValueError('error arch.')
+            for c, s in zip(corrected_sents, sentence_list):
+                c = c.replace(' ', '')
+                c, sub_details = get_errors(c, s)
+                result.append([c, sub_details])
         return result
 
 
 if __name__ == "__main__":
-    m = Inference(config.arch,
-                  config.model_dir,
-                  config.src_vocab_path,
-                  config.trg_vocab_path,
+    m = Inference(config.model_dir,
+                  config.arch,
                   embed_size=config.embed_size,
                   hidden_size=config.hidden_size,
                   dropout=config.dropout,
@@ -127,11 +149,12 @@ if __name__ == "__main__":
     outputs = m.predict(inputs)
     for a, b in zip(inputs, outputs):
         print('input  :', a)
-        print('predict:', b)
+        print('predict:', b[0], b[1])
         print()
+
 # result:
-# input:由我起开始做。
-# output:我开始做。
-# input:没有解决这个问题，
-# output:没有解决的问题，
-# input:由我起开始做。
+# input  : 老是较书。
+# predict: 老师教书。 [('是', '师', 1, 2), ('较', '教', 2, 3)]
+#
+# input  : 感谢等五分以后，碰到一位很棒的奴生跟我可聊。
+# predict: 感谢等五分以后，碰到一位很棒的女生跟我可聊。 [('奴', '女', 15, 16)]

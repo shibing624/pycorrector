@@ -89,15 +89,14 @@ def main():
 
     # Predict
     if args.do_predict:
-        inference = Inference(args.arch,
-                              args.model_dir,
-                              args.src_vocab_path,
-                              args.trg_vocab_path,
-                              embed_size=args.embed_size,
-                              hidden_size=args.hidden_size,
-                              dropout=args.dropout,
-                              max_length=args.max_length,
-                              )
+        inference = Inference(
+            args.model_dir,
+            args.arch,
+            embed_size=args.embed_size,
+            hidden_size=args.hidden_size,
+            dropout=args.dropout,
+            max_length=args.max_length,
+        )
         inputs = [
             '老是较书。',
             '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',

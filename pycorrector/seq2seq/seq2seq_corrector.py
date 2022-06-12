@@ -10,25 +10,23 @@ from typing import List
 
 sys.path.append('../..')
 from pycorrector.utils.logger import logger
-from pycorrector.seq2seq import config
+from pycorrector import config
 from pycorrector.seq2seq.infer import Inference
-
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
 class Seq2SeqCorrector(object):
-    def __init__(self, model_dir=''):
+    def __init__(
+            self, model_dir=config.convseq2seq_model_dir,
+            arch='convseq2seq', embed_size=128, hidden_size=128, dropout=0.25, max_length=128
+    ):
         self.name = 'seq2seq_corrector'
         t1 = time.time()
-        self.model = Inference('convseq2seq', model_dir,
-                               config.src_vocab_path,
-                               config.trg_vocab_path,
-                               embed_size=config.embed_size,
-                               hidden_size=config.hidden_size,
-                               dropout=config.dropout,
-                               max_length=config.max_length
-                               )
-        logger.debug('Loaded seq2seq model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
+        self.model = Inference(
+            model_dir, arch,
+            embed_size=embed_size, hidden_size=hidden_size,
+            dropout=dropout, max_length=max_length
+        )
+        logger.debug('Loaded model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
     def seq2seq_correct(self, sentences: List[str]):
         """
@@ -41,7 +39,7 @@ class Seq2SeqCorrector(object):
 
 
 if __name__ == "__main__":
-    m = Seq2SeqCorrector('./output/convseq2seq/')
+    m = Seq2SeqCorrector()
     error_sentences = [
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',
@@ -69,4 +67,4 @@ if __name__ == "__main__":
     ]
     res = m.seq2seq_correct(error_sentences)
     for sent, r in zip(error_sentences, res):
-        print("original sentence:{} => {} ".format(sent, r))
+        print("original sentence:{} => {} , err:{}".format(sent, r[0], r[1]))
