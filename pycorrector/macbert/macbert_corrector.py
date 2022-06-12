@@ -41,17 +41,20 @@ def get_errors(corrected_text, origin_text):
 
 
 class MacBertCorrector(object):
-    def __init__(self, macbert_model_dir=config.macbert_model_dir):
+    def __init__(self, model_dir=config.macbert_model_dir):
         super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
-        if not os.path.exists(os.path.join(macbert_model_dir, 'vocab.txt')):
-            macbert_model_dir = "shibing624/macbert4csc-base-chinese"
-        self.tokenizer = BertTokenizer.from_pretrained(macbert_model_dir)
-        self.model = BertForMaskedLM.from_pretrained(macbert_model_dir)
+        bin_path = os.path.join(model_dir, 'pytorch_model.bin')
+        if not os.path.exists(bin_path):
+            model_dir = "shibing624/macbert4csc-base-chinese"
+            logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
+
+        self.tokenizer = BertTokenizer.from_pretrained(model_dir)
+        self.model = BertForMaskedLM.from_pretrained(model_dir)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))
-        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (macbert_model_dir, time.time() - t1))
+        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
     def macbert_correct(self, text):
         """

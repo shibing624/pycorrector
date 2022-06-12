@@ -25,7 +25,7 @@ def predict():
                          "他带了黑色的包，也带了照像机",
                          ]
     args = parse_args()
-    model_dir = os.path.join(args.save_dir, './byt5-base-zh-correction')
+    model_dir = os.path.join(args.save_dir, './byt5-small-chinese-correction')
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
     model = T5ForConditionalGeneration.from_pretrained(model_dir)
     model.to(device)

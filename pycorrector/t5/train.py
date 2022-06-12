@@ -151,7 +151,7 @@ def train():
     args_dict = {
         "model_name_or_path": 'google/byt5-small',
         "max_len": 128,
-        "output_dir": os.path.join(args.save_dir, './byt5-base-zh-correction'),
+        "output_dir": os.path.join(args.save_dir, './byt5-small-chinese-correction'),
         "overwrite_output_dir": True,
         "per_device_train_batch_size": 32,
         "per_device_eval_batch_size": 32,

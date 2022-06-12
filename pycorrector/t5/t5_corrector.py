@@ -41,17 +41,19 @@ def get_errors(corrected_text, origin_text):
 
 
 class T5Corrector(object):
-    def __init__(self, model_dir=config.macbert_model_dir):
+    def __init__(self, model_dir=config.t5_model_dir):
         super(T5Corrector, self).__init__()
         self.name = 'byt5_corrector'
         t1 = time.time()
-        if not os.path.exists(os.path.join(model_dir, 'vocab.txt')):
+        bin_path = os.path.join(model_dir, 'pytorch_model.bin')
+        if not os.path.exists(bin_path):
             model_dir = "shibing624/byt5-small-chinese-correction"
+            logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
         self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
         self.model = T5ForConditionalGeneration.from_pretrained(model_dir)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))
-        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
+        logger.debug('Loaded byt5 correction model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
     def t5_correct(self, text, max_length=128):
         """
@@ -67,11 +69,10 @@ class T5Corrector(object):
         blocks = split_text_by_maxlen(text, maxlen=max_length)
         block_texts = [block[0] for block in blocks]
         inputs = self.tokenizer(block_texts, padding=True,  max_length=max_length, truncation=True,return_tensors='pt').to(device)
-        with torch.no_grad():
-            outputs = self.model.generate(**inputs, max_length=max_length)
+        outputs = self.model.generate(**inputs, max_length=max_length)
 
-        for ids, (text, idx) in zip(outputs.logits, blocks):
-            decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+        for text, idx in blocks:
+            decode_tokens = self.tokenizer.decode(outputs[0]).replace('<pad>', '').replace('</s>', '').replace(' ', '')
             corrected_text = decode_tokens[:len(text)]
             corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
@@ -81,10 +82,8 @@ class T5Corrector(object):
 
 
 if __name__ == "__main__":
-    m = T5Corrector()
+    m = T5Corrector('./output/byt5-small-chinese-correction/')
     error_sentences = [
-        '内容提要——在知识产权学科领域里',
-        '疝気医院那好 为老人让坐，疝気专科百科问答',
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',
         '机七学习是人工智能领遇最能体现智能的一个分知',

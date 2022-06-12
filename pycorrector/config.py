@@ -48,3 +48,6 @@ electra_G_model_dir = os.path.join(USER_DATA_DIR, "electra_models/chinese_electr
 # macbert模型文件路径
 macbert_model_dir = os.path.join(USER_DATA_DIR, 'macbert_models/chinese_finetuned_correction/')
 os.makedirs(macbert_model_dir, exist_ok=True)
+# t5模型文件路径
+t5_model_dir = os.path.join(USER_DATA_DIR, 't5_models/byt5-small-chinese-correction/')
+os.makedirs(macbert_model_dir, exist_ok=True)
