@@ -14,14 +14,9 @@ from pycorrector.utils import eval
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 
-def demo():
-    idx_errors = pycorrector.detect('少先队员因该为老人让坐')
-    print(idx_errors)
-
 
 def main(args):
     if args.data == 'sighan_15' and args.model == 'rule':
-        demo()
         # Sentence Level: acc:0.173225, precision:0.979592, recall:0.148541, f1:0.257965, cost time:230.92 s
         eval.eval_sighan2015_by_model(pycorrector.correct)
     if args.data == 'sighan_15' and args.model == 'bert':
@@ -41,9 +36,14 @@ def main(args):
         from pycorrector.ernie.ernie_corrector import ErnieCorrector
         model = ErnieCorrector()
         eval.eval_sighan2015_by_model(model.ernie_correct)
+    if args.data == 'sighan_15' and args.model == 't5':
+        # right_rate:0.297029702970297, right_count:30, total_count:101;
+        # recall_rate:0.28125, recall_right_count:27, recall_total_count:96, spend_time:655 s
+        from pycorrector.t5.t5_corrector import T5Corrector
+        model = T5Corrector()
+        eval.eval_sighan2015_by_model(model.t5_correct)
 
     if args.data == 'corpus500' and args.model == 'rule':
-        demo()
         # right_rate:0.486, right_count:243, total_count:500;
         # recall_rate:0.18, recall_right_count:54, recall_total_count:300, spend_time:78 s
         eval.eval_corpus500_by_model(pycorrector.correct)
