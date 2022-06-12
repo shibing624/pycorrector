@@ -13,7 +13,7 @@ from pycorrector import config
 from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance_word
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.tokenizer import segment, split_2_short_text
 
 
@@ -283,8 +283,6 @@ class Corrector(Detector):
         text_new = ''
         details = []
         self.check_corrector_initialized()
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 文本切分为句子
         sentences = split_2_short_text(text, include_symbol=include_symbol)
         for sentence, idx in sentences:

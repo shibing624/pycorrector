@@ -13,7 +13,7 @@ from transformers import pipeline, ElectraForPreTraining
 
 sys.path.append('../..')
 
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.utils.tokenizer import split_2_short_text
@@ -59,8 +59,6 @@ class ElectraCorrector(Corrector):
         """
         text_new = ''
         details = []
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 长句切分为短句
         blocks = split_2_short_text(text, include_symbol=True)
         for blk, start_idx in blocks:

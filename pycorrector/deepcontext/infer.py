@@ -14,7 +14,7 @@ from torch import optim
 sys.path.append('../..')
 from pycorrector.deepcontext.model import Context2vec
 from pycorrector.deepcontext.data_reader import read_config, load_word_dict
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 from pycorrector.corrector import Corrector
 from pycorrector.utils.logger import logger
@@ -95,8 +95,6 @@ class Inference(Corrector):
         details = []
         text_new = ''
         self.check_corrector_initialized()
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 长句切分为短句
         blocks = split_text_by_maxlen(text, maxlen=128)
         for blk, start_idx in blocks:

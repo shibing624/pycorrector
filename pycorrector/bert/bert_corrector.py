@@ -12,7 +12,7 @@ import torch
 from transformers import pipeline
 
 sys.path.append('../..')
-from pycorrector.utils.text_utils import is_chinese_string, convert_to_unicode
+from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector import config
@@ -46,8 +46,6 @@ class BertCorrector(Corrector):
         text_new = ''
         details = []
         self.check_corrector_initialized()
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 长句切分为短句
         blocks = split_text_by_maxlen(text, maxlen=128)
         for blk, start_idx in blocks:

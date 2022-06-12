@@ -12,7 +12,7 @@ from pycorrector import config
 from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance
 from pycorrector.utils.ngram_util import NgramUtil
-from pycorrector.utils.text_utils import is_chinese, convert_to_unicode
+from pycorrector.utils.text_utils import is_chinese
 from pycorrector.utils.tokenizer import segment, split_2_short_text
 
 
@@ -235,7 +235,6 @@ class ProperCorrector:
         """
         text_new = ''
         details = []
-        text = convert_to_unicode(text)
         # 切分为短句
         sentences = split_2_short_text(text, include_symbol=True)
         for sentence, idx in sentences:

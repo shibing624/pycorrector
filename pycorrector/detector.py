@@ -12,7 +12,7 @@ import numpy as np
 from pycorrector import config
 from pycorrector.utils.get_file import get_file
 from pycorrector.utils.logger import logger
-from pycorrector.utils.text_utils import uniform, is_alphabet_string, convert_to_unicode, is_chinese_string
+from pycorrector.utils.text_utils import uniform, is_alphabet_string, is_chinese_string
 from pycorrector.utils.tokenizer import Tokenizer, split_2_short_text
 from pycorrector.proper_corrector import ProperCorrector
 
@@ -346,8 +346,6 @@ class Detector(object):
             return maybe_errors
         # 初始化
         self.check_detector_initialized()
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 文本归一化
         text = uniform(text)
         # 文本切分为句子

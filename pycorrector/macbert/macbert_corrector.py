@@ -11,7 +11,6 @@ from transformers import BertTokenizer, BertForMaskedLM
 import torch
 
 sys.path.append('../..')
-from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
@@ -64,8 +63,6 @@ class MacBertCorrector(object):
         """
         text_new = ''
         details = []
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 长句切分为短句
         blocks = split_text_by_maxlen(text, maxlen=128)
         block_texts = [block[0] for block in blocks]

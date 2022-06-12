@@ -26,7 +26,7 @@ def main(args):
         model = BertCorrector()
         eval.eval_sighan2015_by_model(model.bert_correct)
     if args.data == 'sighan_15' and args.model == 'macbert':
-        # Sentence Level: acc:0.914885, precision:0.995199, recall:0.916446, f1:0.954200, cost time:29.47 s
+        # Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:10.94 s
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_sighan2015_by_model(model.macbert_correct)
@@ -37,8 +37,7 @@ def main(args):
         model = ErnieCorrector()
         eval.eval_sighan2015_by_model(model.ernie_correct)
     if args.data == 'sighan_15' and args.model == 't5':
-        # right_rate:0.297029702970297, right_count:30, total_count:101;
-        # recall_rate:0.28125, recall_right_count:27, recall_total_count:96, spend_time:655 s
+        # Sentence Level: acc:0.5227, precision:0.5220, recall:0.3941, f1:0.4491, cost time:551.89 s
         from pycorrector.t5.t5_corrector import T5Corrector
         model = T5Corrector()
         eval.eval_sighan2015_by_model(model.t5_correct)

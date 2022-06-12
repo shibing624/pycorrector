@@ -11,7 +11,6 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 import torch
 
 sys.path.append('../..')
-from pycorrector.utils.text_utils import convert_to_unicode
 from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
@@ -55,27 +54,25 @@ class T5Corrector(object):
         logger.debug("Use device: {}".format(device))
         logger.debug('Loaded byt5 correction model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
-    def t5_correct(self, text, max_length=128):
+    def t5_correct(self, texts, max_length=128):
         """
         句子纠错
-        :param text: 句子文本
+        :param texts: 句子文本
         :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
         """
         text_new = ''
         details = []
-        # 编码统一，utf-8 to unicode
-        text = convert_to_unicode(text)
         # 长句切分为短句
-        blocks = split_text_by_maxlen(text, maxlen=max_length)
+        blocks = split_text_by_maxlen(texts, maxlen=max_length)
         block_texts = [block[0] for block in blocks]
         inputs = self.tokenizer(block_texts, padding=True, max_length=max_length, truncation=True,
                                 return_tensors='pt').to(device)
         outputs = self.model.generate(**inputs, max_length=max_length)
 
-        for text, idx in blocks:
+        for texts, idx in blocks:
             decode_tokens = self.tokenizer.decode(outputs[0]).replace('<pad>', '').replace('</s>', '').replace(' ', '')
-            corrected_text = decode_tokens[:len(text)]
-            corrected_text, sub_details = get_errors(corrected_text, text)
+            corrected_text = decode_tokens[:len(texts)]
+            corrected_text, sub_details = get_errors(corrected_text, texts)
             text_new += corrected_text
             sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
             details.extend(sub_details)
