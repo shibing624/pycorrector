@@ -42,7 +42,6 @@ def get_errors(corrected_text, origin_text):
 
 class MacBertCorrector(object):
     def __init__(self, model_dir=config.macbert_model_dir):
-        super(MacBertCorrector, self).__init__()
         self.name = 'macbert_corrector'
         t1 = time.time()
         bin_path = os.path.join(model_dir, 'pytorch_model.bin')

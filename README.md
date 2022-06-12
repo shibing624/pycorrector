@@ -118,15 +118,16 @@ GPU：Tesla V100，显存 32 GB
 
 | 数据集 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
 | :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
-| sighan_15 | rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
-| sighan_15 | bert | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 2 |
-| **sighan_15** | **macbert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **101** |
+| Sighan_15 | Rule | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
+| Sighan_15 | BERT | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 2 |
+| Sighan_15 | T5 | byt5-small | gpu | 0.5220 | 0.3941 | 0.4491 | 111 |
+| **Sighan_15** | **MacBert** | **macbert4csc-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **224** |
+
 
 ### 结论
 
 - 当前中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
 - 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
-- 其他模型（electra、ernie、deepcontext、transformer）评估（doing）
 
 # Install
 

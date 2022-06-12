@@ -42,7 +42,6 @@ def get_errors(corrected_text, origin_text):
 
 class T5Corrector(object):
     def __init__(self, model_dir=config.t5_model_dir):
-        super(T5Corrector, self).__init__()
         self.name = 'byt5_corrector'
         t1 = time.time()
         bin_path = os.path.join(model_dir, 'pytorch_model.bin')
@@ -58,7 +57,7 @@ class T5Corrector(object):
     def t5_correct(self, text: str, max_length: int = 128):
         """
         句子纠错
-        :param texts: list[str], sentence list
+        :param text: str, sentence
         :param max_length: int, max length of each sentence
         :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
         """
@@ -86,7 +85,7 @@ class T5Corrector(object):
         句子纠错
         :param texts: list[str], sentence list
         :param max_length: int, max length of each sentence
-        :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
+        :return: list, (corrected_text, [error_word, correct_word, begin_pos, end_pos])
         """
         result = []
         inputs = self.tokenizer(texts, padding=True, max_length=max_length, truncation=True,

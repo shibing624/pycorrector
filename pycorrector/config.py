@@ -50,4 +50,7 @@ macbert_model_dir = os.path.join(USER_DATA_DIR, 'macbert_models/chinese_finetune
 os.makedirs(macbert_model_dir, exist_ok=True)
 # t5模型文件路径
 t5_model_dir = os.path.join(USER_DATA_DIR, 't5_models/byt5-small-chinese-correction/')
-os.makedirs(macbert_model_dir, exist_ok=True)
+os.makedirs(t5_model_dir, exist_ok=True)
+# convseq2seq模型文件夹路径
+convseq2seq_model_dir = os.path.join(USER_DATA_DIR, 'seq2seq_models/convseq2seq_correction/')
+os.makedirs(convseq2seq_model_dir, exist_ok=True)
