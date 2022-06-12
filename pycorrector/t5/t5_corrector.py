@@ -18,12 +18,17 @@ from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
 
 
 def get_errors(corrected_text, origin_text):
     sub_details = []
     for i, ori_char in enumerate(origin_text):
         if i >= len(corrected_text):
+            continue
+        if ori_char in unk_tokens:
+            # deal with unk word
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if ori_char != corrected_text[i]:
             if ori_char.lower() == corrected_text[i]:
