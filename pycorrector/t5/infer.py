@@ -7,6 +7,7 @@ import os
 import argparse
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 import torch
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
