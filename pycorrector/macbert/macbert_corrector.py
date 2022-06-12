@@ -9,6 +9,7 @@ import time
 import os
 from transformers import BertTokenizer, BertForMaskedLM
 import torch
+from typing import List
 
 sys.path.append('../..')
 from pycorrector.utils.logger import logger
@@ -79,6 +80,31 @@ class MacBertCorrector(object):
             details.extend(sub_details)
         return text_new, details
 
+    def batch_macbert_correct(self, texts: List[str], max_length: int = 128):
+        """
+        句子纠错
+        :param texts: list[str], sentence list
+        :param max_length: int, max length of each sentence
+        :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos]
+        """
+        result = []
+
+        inputs = self.tokenizer(texts, padding=True, return_tensors='pt').to(device)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+        for ids, text in zip(outputs.logits, texts):
+            text_new = ''
+            details = []
+            decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
+            corrected_text = decode_tokens[:len(text)]
+            corrected_text, sub_details = get_errors(corrected_text, text)
+            text_new += corrected_text
+            sub_details = [(i[0], i[1],  i[2],  i[3]) for i in sub_details]
+            details.extend(sub_details)
+            details.extend(sub_details)
+            result.append([text_new, details])
+        return result
+
 
 if __name__ == "__main__":
     m = MacBertCorrector()
@@ -114,6 +140,14 @@ if __name__ == "__main__":
         '实施其专利的行为（生产经营≠营利≠商业经营）',
         '实施,i can speak chinese, can i spea english. ? hello.',
     ]
+    t1 = time.time()
     for sent in error_sentences:
         corrected_sent, err = m.macbert_correct(sent)
         print("original sentence:{} => {} err:{}".format(sent, corrected_sent, err))
+    print('[single]spend time:', time.time() - t1)
+    t2 = time.time()
+    res = m.batch_macbert_correct(error_sentences)
+    for sent, r in zip(error_sentences, res):
+        print("original sentence:{} => {} err:{}".format(sent, r[0], r[1]))
+    print('[batch]spend time:', time.time() - t2)
+
