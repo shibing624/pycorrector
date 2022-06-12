@@ -17,7 +17,7 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 def main(args):
     if args.data == 'sighan_15' and args.model == 'rule':
-        # Sentence Level: acc:0.173225, precision:0.979592, recall:0.148541, f1:0.257965, cost time:230.92 s
+        # Sentence Level: acc:0.5100, precision:0.5139, recall:0.1363, f1:0.2154, cost time:1464.87 s
         eval.eval_sighan2015_by_model(pycorrector.correct)
     if args.data == 'sighan_15' and args.model == 'bert':
         # right_rate:0.37623762376237624, right_count:38, total_count:101;
@@ -40,7 +40,7 @@ def main(args):
         # Sentence Level: acc:0.5227, precision:0.5220, recall:0.3941, f1:0.4491, cost time:551.89 s
         from pycorrector.t5.t5_corrector import T5Corrector
         model = T5Corrector()
-        eval.eval_sighan2015_by_model(model.t5_correct)
+        eval.eval_sighan2015_by_model_batch(model.t5_correct)
 
     if args.data == 'corpus500' and args.model == 'rule':
         # right_rate:0.486, right_count:243, total_count:500;
