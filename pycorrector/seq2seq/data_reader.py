@@ -68,7 +68,7 @@ def load_bert_data(path, use_segment, num_examples=None):
     return src_trg_lines
 
 
-def create_dataset(path, num_examples=None):
+def create_dataset(path, num_examples=None, split_on_space=False):
     """
     # 1. Remove the accents
     # 2. Clean the sentences
@@ -78,14 +78,14 @@ def create_dataset(path, num_examples=None):
     :return:
     """
     lines = open(path, 'r', encoding='utf-8').read().strip().split('\n')
-    word_pairs = [[preprocess_sentence(s) for s in l.split('\t')] for l in lines[:num_examples]]
+    word_pairs = [[preprocess_sentence(s, split_on_space) for s in l.split('\t')] for l in lines[:num_examples]]
     return zip(*word_pairs)
 
 
-def preprocess_sentence(sentence):
+def preprocess_sentence(sentence, split_on_space=False):
     # adding a start and an end token to the sentence
     # so that the model know when to start and stop predicting.
-    return [SOS_TOKEN] + sentence.lower().split() + [EOS_TOKEN]
+    return [SOS_TOKEN] + sentence.lower().split() if split_on_space else list(sentence.lower())  + [EOS_TOKEN]
 
 
 def show_progress(curr, total, time=""):

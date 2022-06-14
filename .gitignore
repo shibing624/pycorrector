@@ -103,3 +103,4 @@ ENV/
 # jetbrains
 .idea
 .DS_Store
+output/

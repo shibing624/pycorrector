@@ -18,7 +18,7 @@ cged_train_paths = [
 
 sighan_train_path = os.path.join(pwd_path, '../data/cn/sighan_2015/train.tsv')
 
-use_segment = True
+use_segment = False
 segment_type = 'char'
 
 output_dir = os.path.join(pwd_path, 'output')

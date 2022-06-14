@@ -182,7 +182,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
     arch = arch.lower()
     os.makedirs(model_dir, exist_ok=True)
     if arch in ['seq2seq', 'convseq2seq']:
-        source_texts, target_texts = create_dataset(train_path, None)
+        source_texts, target_texts = create_dataset(train_path, split_on_space=use_segment)
 
         src_2_ids = read_vocab(source_texts)
         trg_2_ids = read_vocab(target_texts)
