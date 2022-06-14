@@ -598,30 +598,22 @@ output:
 
 [pycorrector/seq2seq](pycorrector/seq2seq) 模型使用示例:
 
-#### 1. 数据预处理
+
+#### 训练
+data example:
+```
+# train.txt:
+你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
+```
 
 ```shell
 cd seq2seq
-python preprocess.py
-```
-
-自动新建文件夹output，在output下生成`train.txt`和`test.txt`文件，以TAB（"\t"）间隔错误文本和纠正文本，文本以空格切分词，文件内容示例：
-
-```
-希 望 少 吸 烟 。	 希 望 烟 民 们 少 吸 烟 。
-以 前 ， 包 括 中 国 ， 我 国 也 是 。	以 前 ， 不 仅 中 国 ， 我 国 也 是 。
-我 现 在 好 得 多 了 。	我 现 在 好 多 了 。
-```
-
-#### 2. 训练
-
-```shell
 python train.py
 ```
 
-设置`config.py`中`arch='convseq2seq'`，训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
+`convseq2seq`训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
 
-#### 3. 预测
+#### 预测
 
 ```shell
 python infer.py
@@ -630,8 +622,6 @@ python infer.py
 output：
 
 ![result image](./docs/git_image/convseq2seq_ret.png)
-
-PS：
 
 1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)试试。
 2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。

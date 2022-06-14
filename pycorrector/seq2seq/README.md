@@ -37,7 +37,7 @@ python seq2seq_demo.py --do_train --do_predict
 data example:
 ```
 # train.txt:
-如 服 装 ， 若 有 一 个 很 流 行 的 形 式 ， 人 们 就 赶 快 地 追 求 。\t如 服 装 ， 若 有 一 个 很 流 行 的 样 式 ， 人 们 就 赶 快 地 追 求 。
+你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
 ```
 run train.py
 ```
