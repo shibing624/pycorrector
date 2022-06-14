@@ -32,25 +32,14 @@ python seq2seq_demo.py --do_train --do_predict
 
 ## Detail
 
-### Preprocess
 
-
-- toy train data
-```
-cd seq2seq
-python preprocess.py
-```
-
-generate toy train data(`train.txt`) and valid data(`test.txt`), segment by char.
-
-result:
+### Train
+data example:
 ```
 # train.txt:
 如 服 装 ， 若 有 一 个 很 流 行 的 形 式 ， 人 们 就 赶 快 地 追 求 。\t如 服 装 ， 若 有 一 个 很 流 行 的 样 式 ， 人 们 就 赶 快 地 追 求 。
 ```
-
-### Train
-
+run train.py
 ```
 python train.py
 ```
@@ -88,11 +77,7 @@ predict: 王天华开心地一直说话。
 
 ### big train data
 
-1. download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
-2. run `preprocess.py`.
-```
-python preprocess.py
-```
+download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
 
 ### release models
 

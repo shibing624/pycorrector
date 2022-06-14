@@ -8,14 +8,13 @@ import os
 import sys
 
 sys.path.append("..")
-from pycorrector.seq2seq.train import train, device
+from pycorrector.seq2seq.train import train
 from pycorrector.seq2seq.infer import Inference
 from pycorrector.seq2seq.preprocess import get_data_file, parse_xml_file, save_corpus_data
 
 
 def main():
     parser = argparse.ArgumentParser()
-    # Required parameters
     parser.add_argument("--raw_train_path",
                         default="../pycorrector/data/cn/sighan_2015/train.tsv", type=str,
                         help="The input data dir. Should contain the .tsv files (or other data files) for the task.",
@@ -23,7 +22,7 @@ def main():
     parser.add_argument("--dataset", default="sighan", type=str,
                         help="Dataset name. selected in the list:" + ", ".join(["sighan", "cged"])
                         )
-    parser.add_argument("--no_segment", action="store_true", help="Whether not to segment train data in preprocess")
+    parser.add_argument("--use_segment", action="store_true", help="Whether not to segment train data")
     parser.add_argument("--do_train", action="store_true", help="Whether not to train")
     parser.add_argument("--do_predict", action="store_true", help="Whether not to predict")
     parser.add_argument("--segment_type", default="char", type=str,
@@ -32,7 +31,7 @@ def main():
                         default="bert-base-chinese", type=str,
                         help="Path to pretrained model or model identifier from huggingface.co/models",
                         )
-    parser.add_argument("--model_dir", default="output/bertseq2seq/", type=str, help="Dir for model save.")
+    parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
     parser.add_argument("--arch",
                         default="convseq2seq", type=str,
                         help="The name of the task to train selected in the list: " + ", ".join(
@@ -40,15 +39,11 @@ def main():
                         )
     parser.add_argument("--train_path", default="output/train.txt", type=str, help="Train file after preprocess.")
     parser.add_argument("--test_path", default="output/test.txt", type=str, help="Test file after preprocess.")
-    parser.add_argument("--src_vocab_path", default="output/vocab_source.txt", type=str, help="Vocab file for src.")
-    parser.add_argument("--trg_vocab_path", default="output/vocab_target.txt", type=str, help="Vocab file for trg.")
-
-    # Other parameters
     parser.add_argument("--max_length", default=128, type=int,
-                        help="The maximum total input sequence length after WordPiece tokenization. \n"
+                        help="The maximum total input sequence length after tokenization. \n"
                              "Sequences longer than this will be truncated, sequences shorter padded.",
                         )
-    parser.add_argument("--batch_size", default=8, type=int, help="Batch size.")
+    parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
     parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
     parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
     parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
@@ -63,7 +58,6 @@ def main():
     # Train
     if args.do_train:
         # Preprocess
-        args.use_segment = False if args.no_segment else True
         data_list = []
         if args.dataset == 'sighan':
             data_list.extend(get_data_file(args.raw_train_path, args.use_segment, args.segment_type))
@@ -79,8 +73,6 @@ def main():
               args.hidden_size,
               args.dropout,
               args.epochs,
-              args.src_vocab_path,
-              args.trg_vocab_path,
               args.model_dir,
               args.max_length,
               args.use_segment,

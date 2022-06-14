@@ -11,7 +11,6 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append('../..')
 from pycorrector.utils.tokenizer import segment
-from pycorrector.seq2seq import config
 
 
 def parse_xml_file(path, use_segment, segment_type):
@@ -38,6 +37,9 @@ def parse_xml_file(path, use_segment, segment_type):
 
 def get_data_file(path, use_segment, segment_type):
     data_list = []
+    if not os.path.exists(path):
+        print('%s not exists' % path)
+        return data_list
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
@@ -70,15 +72,3 @@ def save_corpus_data(data_list, train_data_path, test_data_path):
     train_lst, test_lst = train_test_split(data_list, test_size=0.1)
     _save_data(train_lst, train_data_path)
     _save_data(test_lst, test_data_path)
-
-
-if __name__ == '__main__':
-    # train data
-    data_list = []
-    if config.dataset == 'sighan':
-        data = get_data_file(config.sighan_train_path, config.use_segment, config.segment_type)
-        data_list.extend(data)
-    else:
-        for path in config.cged_train_paths:
-            data_list.extend(parse_xml_file(path, config.use_segment, config.segment_type))
-    save_corpus_data(data_list, config.train_path, config.test_path)

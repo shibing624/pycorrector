@@ -8,10 +8,9 @@ import sys
 import operator
 import numpy as np
 import torch
-
+import argparse
 sys.path.append('../..')
 
-from pycorrector.seq2seq import config
 from pycorrector.seq2seq.data_reader import SOS_TOKEN, EOS_TOKEN
 from pycorrector.seq2seq.data_reader import load_word_dict
 from pycorrector.seq2seq.seq2seq import Seq2Seq
@@ -131,12 +130,30 @@ class Inference(object):
 
 
 if __name__ == "__main__":
-    m = Inference(config.model_dir,
-                  config.arch,
-                  embed_size=config.embed_size,
-                  hidden_size=config.hidden_size,
-                  dropout=config.dropout,
-                  max_length=config.max_length
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
+    parser.add_argument("--arch",
+                        default="convseq2seq", type=str,
+                        help="The name of the task to train selected in the list: " + ", ".join(
+                            ['seq2seq', 'convseq2seq', 'bertseq2seq']),
+                        )
+    parser.add_argument("--max_length", default=128, type=int,
+                        help="The maximum total input sequence length after tokenization. \n"
+                             "Sequences longer than this will be truncated, sequences shorter padded.",
+                        )
+    parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
+    parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
+    parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
+
+    args = parser.parse_args()
+    print(args)
+
+    m = Inference(args.model_dir,
+                  args.arch,
+                  embed_size=args.embed_size,
+                  hidden_size=args.hidden_size,
+                  dropout=args.dropout,
+                  max_length=args.max_length
                   )
     inputs = [
         '老是较书。',
