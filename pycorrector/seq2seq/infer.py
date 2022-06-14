@@ -9,6 +9,7 @@ import operator
 import numpy as np
 import torch
 import argparse
+
 sys.path.append('../..')
 
 from pycorrector.seq2seq.data_reader import SOS_TOKEN, EOS_TOKEN
@@ -132,8 +133,7 @@ class Inference(object):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
-    parser.add_argument("--arch",
-                        default="convseq2seq", type=str,
+    parser.add_argument("--arch", default="convseq2seq", type=str,
                         help="The name of the task to train selected in the list: " + ", ".join(
                             ['seq2seq', 'convseq2seq', 'bertseq2seq']),
                         )

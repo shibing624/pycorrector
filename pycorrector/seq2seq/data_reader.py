@@ -9,6 +9,7 @@ import json
 from collections import Counter
 
 import numpy as np
+from pycorrector.utils.logger import logger
 
 # Define constants associated with the usual special tokens.
 SOS_TOKEN = '<sos>'
@@ -25,13 +26,16 @@ def save_word_dict(dict_data, save_path):
 
 def load_word_dict(save_path):
     dict_data = dict()
+    num = 0
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.strip().split()
+            line = line.strip('\n')
+            items = line.split('\t')
+            num += 1
             try:
                 dict_data[items[0]] = int(items[1])
             except IndexError:
-                print('error', line)
+                logger.error('IndexError, index:%s, line:%s' % (num, line))
     return dict_data
 
 

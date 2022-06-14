@@ -292,8 +292,7 @@ if __name__ == '__main__':
                         help="Dataset name. selected in the list:" + ", ".join(["sighan", "cged"])
                         )
     parser.add_argument("--use_segment", action="store_true", help="Whether not to segment train data")
-    parser.add_argument("--do_train", action="store_true", help="Whether not to train")
-    parser.add_argument("--do_predict", action="store_true", help="Whether not to predict")
+    parser.add_argument("--do_preprocess", action="store_true", help="Whether not to preprocess train data")
     parser.add_argument("--segment_type", default="char", type=str,
                         help="Segment data type, selected in list: " + ", ".join(["char", "word"]))
     parser.add_argument("--model_name_or_path",
@@ -301,8 +300,7 @@ if __name__ == '__main__':
                         help="Path to pretrained model or model identifier from huggingface.co/models",
                         )
     parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
-    parser.add_argument("--arch",
-                        default="convseq2seq", type=str,
+    parser.add_argument("--arch", default="convseq2seq", type=str,
                         help="The name of the task to train selected in the list: " + ", ".join(
                             ['seq2seq', 'convseq2seq', 'bertseq2seq']),
                         )
@@ -321,14 +319,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args)
 
-    # Preprocess
-    data_list = []
-    if args.dataset == 'sighan':
-        data_list.extend(get_data_file(args.raw_train_path, args.use_segment, args.segment_type))
-    else:
-        data_list.extend(parse_xml_file(args.raw_train_path, args.use_segment, args.segment_type))
-    save_corpus_data(data_list, args.train_path, args.test_path)
-
+    if args.do_preprocess:
+        # Preprocess
+        data_list = []
+        if args.dataset == 'sighan':
+            data_list.extend(get_data_file(args.raw_train_path, args.use_segment, args.segment_type))
+        else:
+            data_list.extend(parse_xml_file(args.raw_train_path, args.use_segment, args.segment_type))
+        if data_list:
+            save_corpus_data(data_list, args.train_path, args.test_path)
     # Train model with train data file
     train(args.arch,
           args.train_path,
