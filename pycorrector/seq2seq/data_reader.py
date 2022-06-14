@@ -5,6 +5,7 @@
 """
 
 import sys
+import json
 from collections import Counter
 
 import numpy as np
@@ -68,6 +69,17 @@ def load_bert_data(path, use_segment, num_examples=None):
     return src_trg_lines
 
 
+class CscDataset(object):
+    def __init__(self, file_path):
+        self.data = json.load(open(file_path, 'r', encoding='utf-8'))
+
+    def load(self):
+        data_list = []
+        for item in self.data:
+            data_list.append(item['original_text'] + '\t' + item['correct_text'])
+        return data_list
+
+
 def create_dataset(path, num_examples=None, split_on_space=False):
     """
     # 1. Remove the accents
@@ -77,7 +89,11 @@ def create_dataset(path, num_examples=None, split_on_space=False):
     :param num_examples:
     :return:
     """
-    lines = open(path, 'r', encoding='utf-8').read().strip().split('\n')
+    if path.endswith('.json'):
+        d = CscDataset(path)
+        lines = d.load()
+    else:
+        lines = open(path, 'r', encoding='utf-8').read().strip().split('\n')
     word_pairs = [[preprocess_sentence(s, split_on_space) for s in l.split('\t')] for l in lines[:num_examples]]
     return zip(*word_pairs)
 
@@ -85,7 +101,7 @@ def create_dataset(path, num_examples=None, split_on_space=False):
 def preprocess_sentence(sentence, split_on_space=False):
     # adding a start and an end token to the sentence
     # so that the model know when to start and stop predicting.
-    return [SOS_TOKEN] + sentence.lower().split() if split_on_space else list(sentence.lower())  + [EOS_TOKEN]
+    return [SOS_TOKEN] + sentence.lower().split() if split_on_space else list(sentence.lower()) + [EOS_TOKEN]
 
 
 def show_progress(curr, total, time=""):
