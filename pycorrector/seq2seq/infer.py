@@ -120,7 +120,7 @@ class Inference(object):
                 result.append([corrected_text, sub_details])
         else:
             corrected_sents = self.model.predict(sentence_list)
-            result = [i.replace(' ', '') for i in corrected_sents]
+            corrected_sents = [i.replace(' ', '') for i in corrected_sents]
             for c, s in zip(corrected_sents, sentence_list):
                 c = c.replace(' ', '')
                 c, sub_details = get_errors(c, s)
