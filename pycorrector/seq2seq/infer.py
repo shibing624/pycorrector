@@ -43,6 +43,7 @@ class Inference(object):
     def __init__(self, model_dir, arch='convseq2seq',
                  embed_size=128, hidden_size=128, dropout=0.25, max_length=128):
         logger.debug("device: {}".format(device))
+        logger.debug(f'use {arch} model.')
         if arch in ['seq2seq', 'convseq2seq']:
             src_vocab_path = os.path.join(model_dir, 'vocab_source.txt')
             trg_vocab_path = os.path.join(model_dir, 'vocab_target.txt')
@@ -50,7 +51,6 @@ class Inference(object):
             self.trg_2_ids = load_word_dict(trg_vocab_path)
             self.id_2_trgs = {v: k for k, v in self.trg_2_ids.items()}
             if arch == 'seq2seq':
-                logger.debug('use seq2seq model.')
                 self.model = Seq2Seq(encoder_vocab_size=len(self.src_2_ids),
                                      decoder_vocab_size=len(self.trg_2_ids),
                                      embed_size=embed_size,
@@ -62,7 +62,6 @@ class Inference(object):
                 self.model.load_state_dict(torch.load(model_path, map_location=device))
                 self.model.eval()
             else:
-                logger.debug('use convseq2seq model.')
                 trg_pad_idx = self.trg_2_ids[PAD_TOKEN]
                 self.model = ConvSeq2Seq(encoder_vocab_size=len(self.src_2_ids),
                                          decoder_vocab_size=len(self.trg_2_ids),
@@ -79,7 +78,6 @@ class Inference(object):
                 self.model.eval()
         elif arch == 'bertseq2seq':
             # Bert Seq2seq model
-            logger.debug('use bert seq2seq model.')
             use_cuda = True if torch.cuda.is_available() else False
 
             # encoder_type=None, encoder_name=None, decoder_name=None

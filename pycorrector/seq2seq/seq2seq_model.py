@@ -98,8 +98,6 @@ MODEL_CLASSES = {
     "longformer": (LongformerConfig, LongformerModel, LongformerTokenizerFast),
     "mobilebert": (MobileBertConfig, MobileBertModel, MobileBertTokenizerFast),
     "marian": (MarianConfig, MarianMTModel, MarianTokenizer),
-    "rag-token": (RagConfig, RagTokenForGeneration, RagTokenizer, RagRetriever),
-    "rag-sequence": (RagConfig, RagSequenceForGeneration, RagTokenizer, RagRetriever),
     "roberta": (RobertaConfig, RobertaModel, RobertaTokenizerFast),
 }
 
@@ -198,7 +196,7 @@ class Seq2SeqModel:
 
         if not use_cuda:
             self.args.fp16 = False
-
+        self.retriever = None
         if encoder_decoder_type in ["rag-token", "rag-sequence"]:
             config_class, model_class, tokenizer_class, retriever_class = MODEL_CLASSES[encoder_decoder_type]
 
@@ -238,7 +236,7 @@ class Seq2SeqModel:
                     self.encoder_tokenizer = tokenizer_class.from_pretrained(
                         os.path.join(encoder_decoder_name, "encoder")
                     )
-                    self.decoder_tokenizer = AutoTokenizer.from_pretrained(
+                    self.decoder_tokenizer = tokenizer_class.from_pretrained(
                         os.path.join(encoder_decoder_name, "decoder")
                     )
                 else:
@@ -246,7 +244,7 @@ class Seq2SeqModel:
                         encoder_name, decoder_name, config=config
                     )
                     self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_name)
-                    self.decoder_tokenizer = AutoTokenizer.from_pretrained(decoder_name)
+                    self.decoder_tokenizer = tokenizer_class.from_pretrained(decoder_name)
                 self.encoder_config = self.model.config.encoder
                 self.decoder_config = self.model.config.decoder
 
@@ -283,7 +281,13 @@ class Seq2SeqModel:
                 self.args.model_type = "encoder-decoder"
 
     def train_model(
-            self, train_data, output_dir=None, show_running_loss=True, args=None, eval_data=None, verbose=True,
+            self,
+            train_data,
+            output_dir=None,
+            show_running_loss=True,
+            args=None,
+            eval_data=None,
+            verbose=True,
             **kwargs,
     ):
         """
@@ -347,7 +351,13 @@ class Seq2SeqModel:
         return global_step, training_details
 
     def train(
-            self, train_dataset, output_dir, show_running_loss=True, eval_data=None, verbose=True, **kwargs,
+            self,
+            train_dataset,
+            output_dir,
+            show_running_loss=True,
+            eval_data=None,
+            verbose=True,
+            **kwargs,
     ):
         """
         Trains the model on train_dataset.
@@ -429,8 +439,6 @@ class Seq2SeqModel:
 
         warmup_steps = math.ceil(t_total * args.warmup_ratio)
         args.warmup_steps = warmup_steps if args.warmup_steps == 0 else args.warmup_steps
-
-        # TODO: Use custom optimizer like with BertSum?
         if args.optimizer == "AdamW":
             optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
         elif args.optimizer == "Adafactor":
@@ -446,7 +454,6 @@ class Seq2SeqModel:
                 relative_step=args.adafactor_relative_step,
                 warmup_init=args.adafactor_warmup_init,
             )
-            print("Using Adafactor for T5")
         else:
             raise ValueError(
                 "{} is not a valid optimizer class. Please use one of ('AdamW', 'Adafactor') instead.".format(
@@ -533,9 +540,9 @@ class Seq2SeqModel:
                 )
 
                 logger.info("   Continuing training from checkpoint, will skip to saved global_step")
-                logger.info("   Continuing training from epoch %d", epochs_trained)
-                logger.info("   Continuing training from global step %d", global_step)
-                logger.info("   Will skip the first %d steps in the current epoch", steps_trained_in_current_epoch)
+                logger.info("   Continuing training from epoch %d" % epochs_trained)
+                logger.info("   Continuing training from global step %d" % global_step)
+                logger.info("   Will skip the first %d steps in the current epoch" % steps_trained_in_current_epoch)
             except ValueError:
                 logger.info("   Starting fine-tuning.")
 
@@ -891,8 +898,6 @@ class Seq2SeqModel:
             from torch.cuda import amp
 
         for batch in tqdm(eval_dataloader, disable=args.silent or silent, desc="Running Evaluation"):
-            # batch = tuple(t.to(device) for t in batch)
-
             inputs = self._get_inputs_dict(batch)
             with torch.no_grad():
                 if self.args.fp16:
@@ -1244,15 +1249,15 @@ class Seq2SeqModel:
         device = self.device
         if self.args.model_type in ["bart", "marian"]:
             pad_token_id = self.encoder_tokenizer.pad_token_id
-            source_ids, source_mask, y = batch["source_ids"], batch["source_mask"], batch["target_ids"]
-            y_ids = y[:, :-1].contiguous()
-            labels = y[:, 1:].clone()
-            labels[y[:, 1:] == pad_token_id] = -100
+            source_ids, source_mask, labels = (
+                batch["source_ids"],
+                batch["source_mask"],
+                batch["target_ids"],
+            )
 
             inputs = {
                 "input_ids": source_ids.to(device),
                 "attention_mask": source_mask.to(device),
-                "decoder_input_ids": y_ids.to(device),
                 "labels": labels.to(device),
             }
         elif self.args.model_type in ["mbart"]:

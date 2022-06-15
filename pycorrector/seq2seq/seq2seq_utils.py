@@ -170,7 +170,11 @@ def preprocess_data(data):
 
     if args.model_type in ["rag-token", "rag-sequence"]:
         source_inputs = encoder_tokenizer(
-            input_text, max_length=args.max_seq_length, padding="max_length", return_tensors="pt", truncation=True
+            input_text,
+            max_length=args.max_seq_length,
+            padding="max_length",
+            return_tensors="pt",
+            truncation=True
         )
         target_inputs = encoder_tokenizer.generator(
             target_text, max_length=args.max_seq_length, padding="max_length", return_tensors="pt", truncation=True
@@ -204,11 +208,11 @@ class Seq2SeqDataset(Dataset):
                 (not args.reprocess_input_data and not args.no_cache)
                 or (mode == "dev" and args.use_cached_eval_features and not args.no_cache)
         ):
-            logger.info(" Loading features from cached file %s", cached_features_file)
+            logger.info(" Loading features from cached file %s" % cached_features_file)
             with open(cached_features_file, "rb") as handle:
                 self.examples = pickle.load(handle)
         else:
-            logger.info(" Creating features from dataset file at %s", args.cache_dir)
+            logger.info(" Creating features from dataset file at %s" % args.cache_dir)
 
             data = [
                 (input_text, target_text, encoder_tokenizer, decoder_tokenizer, args)
@@ -231,7 +235,7 @@ class Seq2SeqDataset(Dataset):
                 self.examples = [preprocess_data(d) for d in tqdm(data, disable=args.silent)]
 
             if not args.no_cache:
-                logger.info(" Saving features into cached file %s", cached_features_file)
+                logger.info(" Saving features into cached file %s" % cached_features_file)
                 with open(cached_features_file, "wb") as handle:
                     pickle.dump(self.examples, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -269,6 +273,7 @@ def preprocess_data_mbart(data):
         src_lang=args.src_lang,
         tgt_lang=args.tgt_lang,
         max_length=args.max_seq_length,
+        max_target_length=args.max_seq_length,
         padding="max_length",  # pad_to_max_length=True won't work in this case
         return_tensors="pt",
         truncation=True,

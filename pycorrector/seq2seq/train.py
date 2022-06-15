@@ -186,6 +186,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
           model_dir, max_length, use_segment, model_name_or_path):
     logger.info("device: {}".format(device))
     arch = arch.lower()
+    logger.debug(f'use {arch} model.')
     os.makedirs(model_dir, exist_ok=True)
     if arch in ['seq2seq', 'convseq2seq']:
         src_vocab_path = os.path.join(model_dir, 'vocab_source.txt')
@@ -269,7 +270,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
         data = load_bert_data(train_path, use_segment)
         logger.info(f'load data done, data size: {len(data)}')
         logger.debug(f'data samples: {data[:10]}')
-        train_data, dev_data = train_test_split(data, test_size=0.1, shuffle=True)
+        train_data, dev_data = train_test_split(data, test_size=0.1, shuffle=False)
 
         train_df = pd.DataFrame(train_data, columns=['input_text', 'target_text'])
         dev_df = pd.DataFrame(dev_data, columns=['input_text', 'target_text'])
@@ -277,7 +278,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
         def count_matches(labels, preds):
             logger.debug(f"labels: {labels[:10]}")
             logger.debug(f"preds: {preds[:10]}")
-            match = sum([1 if label == pred else 0 for label, pred in zip(labels, preds)])
+            match = sum([1 if label == pred else 0 for label, pred in zip(labels,  )])
             logger.debug(f"match: {match}")
             return match
 
