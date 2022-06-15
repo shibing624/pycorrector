@@ -96,7 +96,7 @@ def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir
 
             if it % 100 == 0:
                 logger.info("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
-                                                                          loss.item()))
+                                                                                loss.item()))
         cur_loss = total_loss / total_num_words
         logger.info("Epoch :{}/{}, training loss:{:.4f}".format(epoch, epochs, cur_loss))
         if epoch % 1 == 0:
@@ -165,7 +165,7 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
 
             if it % 100 == 0:
                 logger.info("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
-                                                                          loss.item()))
+                                                                                loss.item()))
         cur_loss = total_loss / total_iter
         logger.info("Epoch :{}/{}, training loss:{:.4f}".format(epoch, epochs, cur_loss))
         if epoch % 1 == 0:
@@ -278,7 +278,7 @@ def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs
         def count_matches(labels, preds):
             logger.debug(f"labels: {labels[:10]}")
             logger.debug(f"preds: {preds[:10]}")
-            match = sum([1 if label == pred else 0 for label, pred in zip(labels,  )])
+            match = sum([1 if label == pred else 0 for label, pred in zip(labels, preds)])
             logger.debug(f"match: {match}")
             return match
 
