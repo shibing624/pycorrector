@@ -14,7 +14,6 @@ from multiprocessing import Pool
 import numpy as np
 import pandas as pd
 import torch
-import transformers
 from tensorboardX import SummaryWriter
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from tqdm.auto import tqdm, trange
@@ -22,14 +21,9 @@ from transformers import (
     AutoConfig,
     AutoModel,
     AutoTokenizer,
-    BartConfig,
-    BartForConditionalGeneration,
-    BartTokenizerFast,
-    MBartConfig,
-    MBartForConditionalGeneration,
-    MBartTokenizer,
     BertConfig,
     BertModel,
+    BertLMHeadModel,
     BertTokenizerFast,
     CamembertConfig,
     CamembertModel,
@@ -37,24 +31,10 @@ from transformers import (
     DistilBertConfig,
     DistilBertModel,
     DistilBertTokenizerFast,
-    ElectraConfig,
-    ElectraModel,
-    ElectraTokenizerFast,
     EncoderDecoderModel,
-    LongformerConfig,
-    LongformerModel,
-    LongformerTokenizerFast,
-    MarianConfig,
-    MarianMTModel,
-    MarianTokenizer,
     MobileBertConfig,
     MobileBertModel,
     MobileBertTokenizerFast,
-    RagTokenizer,
-    RagRetriever,
-    RagTokenForGeneration,
-    RagSequenceForGeneration,
-    RagConfig,
     RobertaConfig,
     RobertaModel,
     RobertaTokenizerFast,
@@ -70,10 +50,9 @@ from transformers.optimization import (
 )
 
 from pycorrector.utils.logger import logger
-from .model_args import Seq2SeqArgs
-from .seq2seq_utils import (
+from pycorrector.seq2seq.model_args import Seq2SeqArgs
+from pycorrector.seq2seq.seq2seq_utils import (
     Seq2SeqDataset,
-    SimpleSummarizationDataset,
     load_hf_dataset,
 )
 
@@ -84,20 +63,12 @@ try:
 except ImportError:
     wandb_available = False
 
-if transformers.__version__ < "4.2.0":
-    MBartForConditionalGeneration._keys_to_ignore_on_save = []
-
 MODEL_CLASSES = {
     "auto": (AutoConfig, AutoModel, AutoTokenizer),
-    "bart": (BartConfig, BartForConditionalGeneration, BartTokenizerFast),
-    "mbart": (MBartConfig, MBartForConditionalGeneration, MBartTokenizer),
     "bert": (BertConfig, BertModel, BertTokenizerFast),
     "camembert": (CamembertConfig, CamembertModel, CamembertTokenizerFast),
     "distilbert": (DistilBertConfig, DistilBertModel, DistilBertTokenizerFast),
-    "electra": (ElectraConfig, ElectraModel, ElectraTokenizerFast),
-    "longformer": (LongformerConfig, LongformerModel, LongformerTokenizerFast),
     "mobilebert": (MobileBertConfig, MobileBertModel, MobileBertTokenizerFast),
-    "marian": (MarianConfig, MarianMTModel, MarianTokenizer),
     "roberta": (RobertaConfig, RobertaModel, RobertaTokenizerFast),
 }
 
@@ -112,10 +83,6 @@ class Seq2SeqModel:
             encoder_decoder_name=None,
             additional_special_tokens_encoder=None,
             additional_special_tokens_decoder=None,
-            index_name=None,
-            knowledge_dataset=None,
-            index_path=None,
-            dpr_ctx_encoder_model_name=None,
             config=None,
             args=None,
             use_cuda=True,
@@ -135,12 +102,6 @@ class Seq2SeqModel:
             encoder_decoder_name (optional): The path to a directory containing the saved encoder and decoder of a Seq2SeqModel. (E.g. "outputs/") OR a valid BART or MarianMT model.
             additional_special_tokens_encoder (optional): dict of special tokens to add to encoder tokenizer
             additional_special_tokens_decoder (optional): dict of special tokens to add to decoder tokenizer
-            index_name (optional): Name of the index to use: 'hf' for a canonical dataset from the datasets library, 'custom' for a local index, or 'legacy' for the original one
-            knowledge_dataset (optional): Path to a TSV file (two columns - title, text) containing a knowledge dataset for RAG or the path to a directory containing a saved Huggingface dataset for RAG.
-                                        If this is not given for a RAG model, a dummy dataset will be used.
-            index_path (optional): Path to the faiss index of the custom knowledge dataset. If this is not given and knowledge_dataset is given, it will be computed.
-            dpr_ctx_encoder_model_name (optional): The DPR context encoder model to use. This may be a Hugging Face Transformers compatible pre-trained model, a community model, or the path to a directory containing model files.
-                                                This is required when using a custom knowledge_dataset.
             config (optional): A configuration file to build an EncoderDecoderModel.
             args (optional): Default args will be used if this parameter is not provided. If provided, it should be a dict containing the args that should be changed in the default args.
             use_cuda (optional): Use GPU if available. Setting to False will force model to use CPU only.
@@ -197,56 +158,55 @@ class Seq2SeqModel:
         if not use_cuda:
             self.args.fp16 = False
         self.retriever = None
-        if encoder_decoder_type in ["rag-token", "rag-sequence"]:
-            config_class, model_class, tokenizer_class, retriever_class = MODEL_CLASSES[encoder_decoder_type]
-
-            if self.args.config is not None:
-                config = config_class.from_pretrained(encoder_decoder_name, **self.args.config)
-            elif config is not None:
-                config = config_class.from_pretrained(encoder_decoder_name, **config)
-
-            self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name, config=config)
-            self.decoder_tokenizer = self.encoder_tokenizer
-
-            self.model = model_class.from_pretrained(encoder_decoder_name, retriever=self.retriever, config=config)
-            self.config = self.model.config
+        if encoder_decoder_type:
+            config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_decoder_type]
         else:
-            if encoder_decoder_type:
-                config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_decoder_type]
-            else:
-                config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_type]
+            config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_type]
 
-            if encoder_decoder_type in ["bart", "mbart", "marian"]:
-                self.model = model_class.from_pretrained(encoder_decoder_name)
-                if encoder_decoder_type in ["bart", "mbart"]:
-                    self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name)
-                elif encoder_decoder_type == "marian":
-                    if self.args.base_marian_model_name:
-                        self.encoder_tokenizer = tokenizer_class.from_pretrained(self.args.base_marian_model_name)
-                    else:
-                        self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name)
-                self.decoder_tokenizer = self.encoder_tokenizer
-                self.config = self.model.config
-            else:
-                if encoder_decoder_name:
-                    # self.model = EncoderDecoderModel.from_pretrained(encoder_decoder_name)
-                    self.model = EncoderDecoderModel.from_encoder_decoder_pretrained(
-                        os.path.join(encoder_decoder_name, "encoder"), os.path.join(encoder_decoder_name, "decoder")
-                    )
-                    self.encoder_tokenizer = tokenizer_class.from_pretrained(
-                        os.path.join(encoder_decoder_name, "encoder")
-                    )
-                    self.decoder_tokenizer = tokenizer_class.from_pretrained(
-                        os.path.join(encoder_decoder_name, "decoder")
-                    )
-                else:
-                    self.model = EncoderDecoderModel.from_encoder_decoder_pretrained(
-                        encoder_name, decoder_name, config=config
-                    )
-                    self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_name)
-                    self.decoder_tokenizer = tokenizer_class.from_pretrained(decoder_name)
-                self.encoder_config = self.model.config.encoder
-                self.decoder_config = self.model.config.decoder
+        if encoder_decoder_name:
+            # self.model = EncoderDecoderModel.from_pretrained(encoder_decoder_name)
+            self.model = EncoderDecoderModel.from_encoder_decoder_pretrained(
+                os.path.join(encoder_decoder_name, "encoder"), os.path.join(encoder_decoder_name, "decoder")
+            )
+            self.encoder_tokenizer = tokenizer_class.from_pretrained(
+                os.path.join(encoder_decoder_name, "encoder")
+            )
+            self.decoder_tokenizer = tokenizer_class.from_pretrained(
+                os.path.join(encoder_decoder_name, "decoder")
+            )
+        else:
+            # >> > from transformers import EncoderDecoderModel, BertTokenizer
+            # >> > import torch
+            #
+            # >> > tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+            # >> > model = EncoderDecoderModel.from_encoder_decoder_pretrained(
+            #     ...
+            # "bert-base-uncased", "bert-base-uncased"
+            #     ... )  # initialize Bert2Bert from pre-trained checkpoints
+            #
+            # >> >  # training
+            # >> > model.config.decoder_start_token_id = tokenizer.cls_token_id
+            # >> > model.config.pad_token_id = tokenizer.pad_token_id
+            # >> > model.config.vocab_size = model.config.decoder.vocab_size
+            #
+            # >> > input_ids = tokenizer("This is a really long text", return_tensors="pt").input_ids
+            # >> > labels = tokenizer("This is the corresponding summary", return_tensors="pt").input_ids
+            # >> > outputs = model(input_ids=input_ids, labels=input_ids)
+            # >> > loss, logits = outputs.loss, outputs.logits
+            #
+            # >> >  # save and load from pretrained
+            # >> > model.save_pretrained("bert2bert")
+            # >> > model = EncoderDecoderModel.from_pretrained("bert2bert")
+            #
+            # >> >  # generation
+            # >> > generated = model.generate(input_ids)
+            self.model = EncoderDecoderModel.from_encoder_decoder_pretrained(
+                encoder_name, decoder_name, config=config
+            )
+            self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_name)
+            self.decoder_tokenizer = tokenizer_class.from_pretrained(decoder_name)
+        self.encoder_config = self.model.config.encoder
+        self.decoder_config = self.model.config.decoder
 
         if additional_special_tokens_encoder is not None:
             self.encoder_tokenizer.add_special_tokens(additional_special_tokens_encoder)
@@ -262,12 +222,6 @@ class Seq2SeqModel:
         if self.args.model_name is None:
             if encoder_decoder_name:
                 self.args.model_name = encoder_decoder_name
-
-                # # Checking if we are loading from a saved model or using a pre-trained model
-                # if not saved_model_args and encoder_decoder_type == "marian":
-                # Need to store base pre-trained model name to get the tokenizer when loading a saved model
-                self.args.base_marian_model_name = encoder_decoder_name
-
             elif encoder_name and decoder_name:
                 self.args.model_name = encoder_name + "-" + decoder_name
             else:
@@ -855,10 +809,7 @@ class Seq2SeqModel:
 
         if self.args.evaluate_generated_text:
             to_predict = eval_data["input_text"].tolist()
-            if self.args.model_type in ["rag-token", "rag-sequence"]:
-                preds, _ = self.predict(to_predict)
-            else:
-                preds = self.predict(to_predict)
+            preds = self.predict(to_predict)
 
             result = self.compute_metrics(eval_data["target_text"].tolist(), preds, **kwargs)
             self.results.update(result)
@@ -948,118 +899,31 @@ class Seq2SeqModel:
                 desc="Generating outputs",
                 disable=self.args.silent,
         ):
-            if self.args.model_type == "marian":
-                input_ids = self.encoder_tokenizer.prepare_seq2seq_batch(
-                    batch,
-                    max_length=self.args.max_seq_length,
-                    padding="max_length",
-                    return_tensors="pt",
-                    truncation=True,
-                )["input_ids"]
-            elif self.args.model_type in ["mbart"]:
-                input_ids = self.encoder_tokenizer.prepare_seq2seq_batch(
-                    src_texts=batch,
-                    max_length=self.args.max_seq_length,
-                    pad_to_max_length=True,
-                    padding="max_length",
-                    return_tensors="pt",
-                    truncation=True,
-                    src_lang=self.args.src_lang,
-                )["input_ids"]
-            elif self.args.model_type in ["rag-token", "rag-sequence"]:
-                input_ids = self.encoder_tokenizer(batch, truncation=True, padding="longest", return_tensors="pt")[
-                    "input_ids"
-                ].to(self.device)
-
-                question_hidden_states = self.model.question_encoder(input_ids)[0]
-
-                docs_dict = self.retriever(
-                    input_ids.cpu().numpy(), question_hidden_states.detach().cpu().numpy(), return_tensors="pt"
-                )
-                doc_scores = torch.bmm(
-                    question_hidden_states.unsqueeze(1),
-                    docs_dict["retrieved_doc_embeds"].float().transpose(1, 2).to(self.device),
-                ).squeeze(1)
-            else:
-                input_ids = self.encoder_tokenizer.batch_encode_plus(
-                    batch,
-                    max_length=self.args.max_seq_length,
-                    padding="max_length",
-                    return_tensors="pt",
-                    truncation=True,
-                )["input_ids"]
+            input_ids = self.encoder_tokenizer.batch_encode_plus(
+                batch,
+                max_length=self.args.max_seq_length,
+                padding="max_length",
+                return_tensors="pt",
+                truncation=True,
+            )["input_ids"]
             input_ids = input_ids.to(self.device)
 
-            if self.args.model_type in ["bart", "marian"]:
-                outputs = self.model.generate(
-                    input_ids=input_ids,
-                    num_beams=self.args.num_beams,
-                    max_length=self.args.max_length,
-                    length_penalty=self.args.length_penalty,
-                    early_stopping=self.args.early_stopping,
-                    repetition_penalty=self.args.repetition_penalty,
-                    do_sample=self.args.do_sample,
-                    top_k=self.args.top_k,
-                    top_p=self.args.top_p,
-                    num_return_sequences=self.args.num_return_sequences,
-                )
-            elif self.args.model_type in ["mbart"]:
-                tgt_lang_token = self.decoder_tokenizer._convert_token_to_id(self.args.tgt_lang)
-
-                outputs = self.model.generate(
-                    input_ids=input_ids,
-                    decoder_start_token_id=tgt_lang_token,
-                    num_beams=self.args.num_beams,
-                    max_length=self.args.max_length,
-                    length_penalty=self.args.length_penalty,
-                    early_stopping=self.args.early_stopping,
-                    repetition_penalty=self.args.repetition_penalty,
-                    do_sample=self.args.do_sample,
-                    top_k=self.args.top_k,
-                    top_p=self.args.top_p,
-                    num_return_sequences=self.args.num_return_sequences,
-                )
-            elif self.args.model_type in ["rag-token", "rag-sequence"]:
-                outputs = self.model.generate(
-                    context_input_ids=docs_dict["context_input_ids"].to(self.device),
-                    context_attention_mask=docs_dict["context_attention_mask"].to(self.device),
-                    doc_scores=doc_scores,
-                    num_beams=self.args.num_beams,
-                    max_length=self.args.max_length,
-                    length_penalty=self.args.length_penalty,
-                    early_stopping=self.args.early_stopping,
-                    repetition_penalty=self.args.repetition_penalty,
-                    do_sample=self.args.do_sample,
-                    top_k=self.args.top_k,
-                    top_p=self.args.top_p,
-                    num_return_sequences=self.args.num_return_sequences,
-                )
-                retrieved_docs = [doc for doc in self.retriever.index.get_doc_dicts(docs_dict["doc_ids"])]
-            else:
-                outputs = self.model.generate(
-                    input_ids=input_ids,
-                    decoder_start_token_id=self.model.config.decoder.pad_token_id,
-                    num_beams=self.args.num_beams,
-                    max_length=self.args.max_length,
-                    length_penalty=self.args.length_penalty,
-                    early_stopping=self.args.early_stopping,
-                    repetition_penalty=self.args.repetition_penalty,
-                    do_sample=self.args.do_sample,
-                    top_k=self.args.top_k,
-                    top_p=self.args.top_p,
-                    num_return_sequences=self.args.num_return_sequences,
-                )
-
-            all_outputs.extend(outputs.cpu().numpy())
-            if self.args.model_type in ["rag-token", "rag-sequence"]:
-                all_retrieved.extend(retrieved_docs)
-                all_doc_scores.extend(doc_scores.detach().cpu())
-
-        if self.args.model_type in ["rag-token", "rag-sequence"]:
-            outputs = self.encoder_tokenizer.batch_decode(
-                all_outputs, skip_special_tokens=self.args.skip_special_tokens, clean_up_tokenization_spaces=True
+            outputs = self.model.generate(
+                input_ids=input_ids,
+                decoder_start_token_id=self.model.config.decoder.cls_token_id,
+                num_beams=self.args.num_beams,
+                max_length=self.args.max_length,
+                length_penalty=self.args.length_penalty,
+                early_stopping=self.args.early_stopping,
+                repetition_penalty=self.args.repetition_penalty,
+                do_sample=self.args.do_sample,
+                top_k=self.args.top_k,
+                top_p=self.args.top_p,
+                num_return_sequences=self.args.num_return_sequences,
             )
-        elif self.args.use_multiprocessed_decoding:
+            all_outputs.extend(outputs.cpu().numpy())
+
+        if self.args.use_multiprocessed_decoding:
             if self.args.multiprocessing_chunksize == -1:
                 chunksize = max(len(all_outputs) // (self.args.process_count * 2), 500)
             else:
@@ -1085,31 +949,12 @@ class Seq2SeqModel:
             ]
 
         if self.args.num_return_sequences > 1:
-            if self.args.model_type in ["rag-token", "rag-sequence"]:
-                return (
-                    [
-                        outputs[i: i + self.args.num_return_sequences]
-                        for i in range(0, len(outputs), self.args.num_return_sequences)
-                    ],
-                    [
-                        all_retrieved[i: i + self.args.num_return_sequences]
-                        for i in range(0, len(outputs), self.args.num_return_sequences)
-                    ],
-                    [
-                        all_doc_scores[i: i + self.args.num_return_sequences]
-                        for i in range(0, len(outputs), self.args.num_return_sequences)
-                    ],
-                )
-            else:
-                return [
-                    outputs[i: i + self.args.num_return_sequences]
-                    for i in range(0, len(outputs), self.args.num_return_sequences)
-                ]
+            return [
+                outputs[i: i + self.args.num_return_sequences]
+                for i in range(0, len(outputs), self.args.num_return_sequences)
+            ]
         else:
-            if self.args.model_type in ["rag-token", "rag-sequence"]:
-                return outputs, all_retrieved, all_doc_scores
-            else:
-                return outputs
+            return outputs
 
     def _decode(self, output_id):
         return self.decoder_tokenizer.decode(
@@ -1165,10 +1010,7 @@ class Seq2SeqModel:
                 CustomDataset = args.dataset_class
                 return CustomDataset(encoder_tokenizer, decoder_tokenizer, args, data, mode)
             else:
-                if args.model_type in ["bart", "mbart", "marian"]:
-                    return SimpleSummarizationDataset(encoder_tokenizer, self.args, data, mode)
-                else:
-                    return Seq2SeqDataset(encoder_tokenizer, decoder_tokenizer, self.args, data, mode, )
+                return Seq2SeqDataset(encoder_tokenizer, decoder_tokenizer, self.args, data, mode, )
 
     def _create_training_progress_scores(self, **kwargs):
         extra_metrics = {key: [] for key in kwargs}
@@ -1196,40 +1038,24 @@ class Seq2SeqModel:
             model_to_save = model.module if hasattr(model, "module") else model
             self.save_model_args(output_dir)
 
-            if self.args.model_type in ["bart", "mbart", "marian", "rag-token", "rag-sequence"]:
-                os.makedirs(os.path.join(output_dir), exist_ok=True)
-                model_to_save.save_pretrained(output_dir)
-                self.config.save_pretrained(output_dir)
+            os.makedirs(os.path.join(output_dir, "encoder"), exist_ok=True)
+            os.makedirs(os.path.join(output_dir, "decoder"), exist_ok=True)
+            self.encoder_config.save_pretrained(os.path.join(output_dir, "encoder"))
+            self.decoder_config.save_pretrained(os.path.join(output_dir, "decoder"))
 
-                if self.args.model_type in ["bart", "mbart", "rag-token", "rag-sequence"]:
-                    self.encoder_tokenizer.save_pretrained(output_dir)
+            model_to_save = (
+                self.model.encoder.module if hasattr(self.model.encoder, "module") else self.model.encoder
+            )
+            model_to_save.save_pretrained(os.path.join(output_dir, "encoder"))
 
-                if (
-                        self.args.model_type in ["rag-token", "rag-sequence"]
-                        and self.args.save_knowledge_dataset_with_checkpoints
-                ):
-                    output_dataset_directory = os.path.join(output_dir, "knowledge_dataset")
-                    os.makedirs(output_dataset_directory, exist_ok=True)
-                    self.retriever.save_pretrained(output_dataset_directory)
-            else:
-                os.makedirs(os.path.join(output_dir, "encoder"), exist_ok=True)
-                os.makedirs(os.path.join(output_dir, "decoder"), exist_ok=True)
-                self.encoder_config.save_pretrained(os.path.join(output_dir, "encoder"))
-                self.decoder_config.save_pretrained(os.path.join(output_dir, "decoder"))
+            model_to_save = (
+                self.model.decoder.module if hasattr(self.model.decoder, "module") else self.model.decoder
+            )
 
-                model_to_save = (
-                    self.model.encoder.module if hasattr(self.model.encoder, "module") else self.model.encoder
-                )
-                model_to_save.save_pretrained(os.path.join(output_dir, "encoder"))
+            model_to_save.save_pretrained(os.path.join(output_dir, "decoder"))
 
-                model_to_save = (
-                    self.model.decoder.module if hasattr(self.model.decoder, "module") else self.model.decoder
-                )
-
-                model_to_save.save_pretrained(os.path.join(output_dir, "decoder"))
-
-                self.encoder_tokenizer.save_pretrained(os.path.join(output_dir, "encoder"))
-                self.decoder_tokenizer.save_pretrained(os.path.join(output_dir, "decoder"))
+            self.encoder_tokenizer.save_pretrained(os.path.join(output_dir, "encoder"))
+            self.decoder_tokenizer.save_pretrained(os.path.join(output_dir, "decoder"))
 
             torch.save(self.args, os.path.join(output_dir, "training_args.bin"))
             if optimizer and scheduler and self.args.save_optimizer_and_scheduler:
@@ -1247,35 +1073,7 @@ class Seq2SeqModel:
 
     def _get_inputs_dict(self, batch):
         device = self.device
-        if self.args.model_type in ["bart", "marian"]:
-            pad_token_id = self.encoder_tokenizer.pad_token_id
-            source_ids, source_mask, labels = (
-                batch["source_ids"],
-                batch["source_mask"],
-                batch["target_ids"],
-            )
-
-            inputs = {
-                "input_ids": source_ids.to(device),
-                "attention_mask": source_mask.to(device),
-                "labels": labels.to(device),
-            }
-        elif self.args.model_type in ["mbart"]:
-            inputs = {
-                "input_ids": batch["input_ids"].to(device),
-                "attention_mask": batch["attention_mask"].to(device),
-                "decoder_input_ids": batch["decoder_input_ids"].to(device),
-                "labels": batch["labels"].to(device),
-            }
-        elif self.args.model_type in ["rag-token", "rag-sequence"]:
-            inputs = {
-                "input_ids": batch["input_ids"].to(device),
-                "attention_mask": batch["attention_mask"].to(device),
-                "decoder_input_ids": batch["decoder_input_ids"].to(device),
-                "labels": batch["decoder_input_ids"].to(device),
-                "reduce_loss": True,
-            }
-        elif self.args.use_hf_datasets:
+        if self.args.use_hf_datasets:
             labels = batch["decoder_input_ids"]
             labels_masked = labels.clone()
             labels_masked[labels_masked == self.decoder_tokenizer.pad_token_id] = -100
