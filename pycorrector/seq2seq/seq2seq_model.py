@@ -910,7 +910,7 @@ class Seq2SeqModel:
 
             outputs = self.model.generate(
                 input_ids=input_ids,
-                decoder_start_token_id=self.model.config.decoder.cls_token_id,
+                decoder_start_token_id=self.model.config.decoder.pad_token_id,
                 num_beams=self.args.num_beams,
                 max_length=self.args.max_length,
                 length_penalty=self.args.length_penalty,
