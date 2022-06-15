@@ -57,7 +57,8 @@ def evaluate_seq2seq_model(model, data, device, loss_fn):
             num_words = torch.sum(mb_y_len).item()
             total_loss += loss.item() * num_words
             total_num_words += num_words
-    print("Evaluation loss", total_loss / total_num_words)
+    loss = total_loss / total_num_words
+    return loss
 
 
 def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=20):
@@ -94,20 +95,22 @@ def train_seq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir
             optimizer.step()
 
             if it % 100 == 0:
-                print("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
+                logger.info("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
                                                                           loss.item()))
         cur_loss = total_loss / total_num_words
-        print("Epoch :{}/{}, Training loss:{:.4f}".format(epoch, epochs, cur_loss))
+        logger.info("Epoch :{}/{}, training loss:{:.4f}".format(epoch, epochs, cur_loss))
         if epoch % 1 == 0:
+            if dev_data:
+                eval_loss = evaluate_seq2seq_model(model, dev_data, device, loss_fn)
+                logger.info('Epoch:{}, dev loss:{:.4f}'.format(epoch, eval_loss))
+                cur_loss = eval_loss
             # find best model
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
             if is_best:
                 model_path = os.path.join(model_dir, 'seq2seq.pth')
                 torch.save(model.state_dict(), model_path)
-                print('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
-            if dev_data:
-                evaluate_seq2seq_model(model, dev_data, device, loss_fn)
+                logger.info('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
 
 
 def evaluate_convseq2seq_model(model, data, device, loss_fn):
@@ -128,11 +131,11 @@ def evaluate_convseq2seq_model(model, data, device, loss_fn):
             # trg = [batch size * trg len - 1]
             loss = loss_fn(output, trg)
             last_loss = loss.item()
-    print("Evaluation loss:{:.4f}".format(last_loss))
+    return last_loss
 
 
 def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model_dir, epochs=20):
-    print('start train...')
+    logger.info('start train...')
     best_loss = 1e3
     train_data, dev_data = train_test_split(train_data, test_size=0.1, shuffle=True)
 
@@ -161,20 +164,22 @@ def train_convseq2seq_model(model, train_data, device, loss_fn, optimizer, model
             optimizer.step()
 
             if it % 100 == 0:
-                print("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
+                logger.info("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, epochs, it, len(train_data),
                                                                           loss.item()))
         cur_loss = total_loss / total_iter
-        print("Epoch :{}/{}, Training loss:{:.4f}".format(epoch, epochs, cur_loss))
+        logger.info("Epoch :{}/{}, training loss:{:.4f}".format(epoch, epochs, cur_loss))
         if epoch % 1 == 0:
+            if dev_data:
+                eval_loss = evaluate_convseq2seq_model(model, dev_data, device, loss_fn)
+                logger.info('Epoch:{}, dev loss:{:.4f}'.format(epoch, eval_loss))
+                cur_loss = eval_loss
             # find best model
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
             if is_best:
                 model_path = os.path.join(model_dir, 'convseq2seq.pth')
                 torch.save(model.state_dict(), model_path)
-                print('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
-            if dev_data:
-                evaluate_convseq2seq_model(model, dev_data, device, loss_fn)
+                logger.info('Epoch:{}, save new bert model:{}'.format(epoch, model_path))
 
 
 def train(arch, train_path, batch_size, embed_size, hidden_size, dropout, epochs,
@@ -317,7 +322,7 @@ if __name__ == '__main__':
     parser.add_argument("--epochs", default=200, type=int, help="Epoch num.")
 
     args = parser.parse_args()
-    print(args)
+    logger.info(args)
 
     if args.do_preprocess:
         # Preprocess
