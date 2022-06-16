@@ -42,17 +42,17 @@ def get_errors(corrected_text, origin_text):
 
 class T5Corrector(object):
     def __init__(self, model_dir=config.t5_model_dir):
-        self.name = 'byt5_corrector'
+        self.name = 't5_corrector'
         t1 = time.time()
         bin_path = os.path.join(model_dir, 'pytorch_model.bin')
         if not os.path.exists(bin_path):
-            model_dir = "shibing624/byt5-small-chinese-correction"
+            model_dir = "shibing624/mengzi-t5-base-chinese-correction"
             logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
         self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
         self.model = T5ForConditionalGeneration.from_pretrained(model_dir)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))
-        logger.debug('Loaded byt5 correction model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
+        logger.debug('Loaded t5 correction model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
     def t5_correct(self, text: str, max_length: int = 128):
         """
@@ -107,7 +107,7 @@ class T5Corrector(object):
 
 
 if __name__ == "__main__":
-    m = T5Corrector('./output/byt5-small-chinese-correction/')
+    m = T5Corrector('./output/mengzi-t5-base-chinese-correction/')
     error_sentences = [
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',

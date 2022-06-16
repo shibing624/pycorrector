@@ -45,7 +45,8 @@ setup(
         "jieba",
         "pypinyin",
         "numpy",
-        "six"
+        "six",
+        "loguru",
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},

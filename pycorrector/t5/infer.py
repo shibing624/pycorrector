@@ -13,7 +13,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save_dir', type=str, default='output', help='save dir')
+    parser.add_argument('--save_dir', type=str, default='output/mengzi-t5-base-chinese-correction/', help='save dir')
     args = parser.parse_args()
     return args
 
@@ -26,7 +26,7 @@ def predict():
                          "他带了黑色的包，也带了照像机",
                          ]
     args = parse_args()
-    model_dir = os.path.join(args.save_dir, './byt5-small-chinese-correction')
+    model_dir = args.save_dir
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
     model = T5ForConditionalGeneration.from_pretrained(model_dir)
     model.to(device)
