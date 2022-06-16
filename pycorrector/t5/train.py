@@ -149,12 +149,12 @@ class CscDataset(object):
 def train():
     args = parse_args()
     args_dict = {
-        "model_name_or_path": 'google/byt5-small',
+        "model_name_or_path": 'Langboat/mengzi-t5-base',
         "max_len": 128,
-        "output_dir": os.path.join(args.save_dir, './byt5-small-chinese-correction'),
+        "output_dir": os.path.join(args.save_dir, './mengzi-t5-base-chinese-correction'),
         "overwrite_output_dir": True,
-        "per_device_train_batch_size": 32,
-        "per_device_eval_batch_size": 32,
+        "per_device_train_batch_size": 64,
+        "per_device_eval_batch_size": 64,
         "gradient_accumulation_steps": 4,
         "learning_rate": 5e-4,
         "warmup_steps": 250,
@@ -166,7 +166,7 @@ def train():
         "do_eval": True,
         "fp16": False,
         "use_cache": False,
-        "max_steps": 5000,  # default 5000
+        # "max_steps": 5000,
     }
     parser = HfArgumentParser(
         (ModelArguments, DataTrainingArguments, TrainingArguments))
