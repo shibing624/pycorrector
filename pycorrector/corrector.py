@@ -6,12 +6,11 @@
 import operator
 import os
 from codecs import open
-
+from loguru import logger
 import pypinyin
 
 from pycorrector import config
 from pycorrector.detector import Detector, ErrorType
-from pycorrector.utils.logger import logger
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.tokenizer import segment, split_2_short_text

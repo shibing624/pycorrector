@@ -10,9 +10,9 @@ import os
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 import torch
 from typing import List
+from loguru import logger
 
 sys.path.append('../..')
-from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 from pycorrector.utils.text_utils import is_chinese

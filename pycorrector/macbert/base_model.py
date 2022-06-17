@@ -5,14 +5,13 @@
 """
 import operator
 from abc import ABC
-
+from loguru import logger
 import torch
 import torch.nn as nn
 import numpy as np
 import pytorch_lightning as pl
 from pycorrector.macbert import lr_scheduler
 from pycorrector.macbert.evaluate_util import compute_corrector_prf, compute_sentence_level_prf
-from pycorrector.utils.logger import logger
 
 
 class FocalLoss(nn.Module):

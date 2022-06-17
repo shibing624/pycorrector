@@ -10,6 +10,7 @@ import time
 
 import torch
 from torch import optim
+from loguru import logger
 
 sys.path.append('../..')
 from pycorrector.deepcontext.model import Context2vec
@@ -17,7 +18,6 @@ from pycorrector.deepcontext.data_reader import read_config, load_word_dict
 from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 from pycorrector.corrector import Corrector
-from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

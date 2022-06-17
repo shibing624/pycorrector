@@ -9,7 +9,6 @@ from pycorrector.config import language_model_path
 from pycorrector.corrector import Corrector
 from pycorrector.en_spell import EnSpell
 from pycorrector.utils import text_utils, get_file, tokenizer, io_utils, math_utils
-from pycorrector.utils.logger import set_log_level
 from pycorrector.utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin, traditional2simplified, \
     simplified2traditional
 from pycorrector.proper_corrector import ProperCorrector

@@ -7,9 +7,9 @@ import sys
 import time
 import os
 from typing import List
+from loguru import logger
 
 sys.path.append('../..')
-from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.seq2seq.infer import Inference
 

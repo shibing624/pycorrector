@@ -11,14 +11,13 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 from transformers import BertTokenizer, BertForMaskedLM
 import argparse
 from collections import OrderedDict
-
+from loguru import logger
 sys.path.append('../..')
 
 from pycorrector.macbert.reader import make_loaders, DataCollator
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert import preprocess
-from pycorrector.utils.logger import logger
 from pycorrector.macbert.defaults import _C as cfg
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -11,9 +11,8 @@ import operator
 import os
 from codecs import open
 from collections import Counter
-
+from loguru import logger
 from pycorrector import config
-from pycorrector.utils.logger import logger
 from pycorrector.utils.text_utils import is_alphabet_string
 from pycorrector.utils.tokenizer import whitespace_tokenize, split_2_short_text
 

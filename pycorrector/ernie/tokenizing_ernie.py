@@ -19,9 +19,8 @@ from pathlib import Path
 
 import numpy as np
 import six
-
+from loguru import logger
 from .file_utils import _fetch_from_remote
-from ..utils.logger import logger
 
 open = partial(io.open, encoding='utf8')
 

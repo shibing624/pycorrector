@@ -9,6 +9,7 @@ import operator
 import numpy as np
 import torch
 import argparse
+from loguru import logger
 
 sys.path.append('../..')
 
@@ -18,7 +19,6 @@ from pycorrector.seq2seq.seq2seq import Seq2Seq
 from pycorrector.seq2seq.convseq2seq import ConvSeq2Seq
 from pycorrector.seq2seq.data_reader import PAD_TOKEN
 from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
-from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '', '《', '》']

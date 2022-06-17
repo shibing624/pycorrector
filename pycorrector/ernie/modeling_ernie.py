@@ -18,9 +18,8 @@ from pathlib import Path
 import paddle.fluid as F
 import paddle.fluid.dygraph as D
 import paddle.fluid.layers as L
-
+from loguru import logger
 from .file_utils import _fetch_from_remote, add_docstring
-from ..utils.logger import logger
 
 
 def _build_linear(n_in, n_out, name, init, act=None):

@@ -16,8 +16,7 @@ import re
 import paddle.fluid as F
 import paddle.fluid.dygraph as D
 import paddle.fluid.layers as L
-
-from ..utils.logger import logger
+from loguru import logger
 
 
 def linear_warmup_decay(learning_rate, warmup_steps, num_train_steps):

@@ -48,8 +48,7 @@ from transformers.optimization import (
     get_cosine_with_hard_restarts_schedule_with_warmup,
     get_polynomial_decay_schedule_with_warmup,
 )
-
-from pycorrector.utils.logger import logger
+from loguru import logger
 from pycorrector.seq2seq.model_args import Seq2SeqArgs
 from pycorrector.seq2seq.seq2seq_utils import (
     Seq2SeqDataset,

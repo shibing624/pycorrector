@@ -4,7 +4,6 @@
 @description: 切词器
 """
 
-import logging
 import os
 import re
 
@@ -132,7 +131,7 @@ def segment(sentence, cut_type='word', pos=False):
 class Tokenizer(object):
     def __init__(self, dict_path='', custom_word_freq_dict=None, custom_confusion_dict=None):
         self.model = jieba
-        self.model.default_logger.setLevel(logging.ERROR)
+        jieba.setLogLevel("ERROR")
         # 初始化大词典
         if os.path.exists(dict_path):
             self.model.set_dictionary(dict_path)

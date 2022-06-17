@@ -7,9 +7,8 @@
 import sys
 import json
 from collections import Counter
-
+from loguru import logger
 import numpy as np
-from pycorrector.utils.logger import logger
 
 # Define constants associated with the usual special tokens.
 SOS_TOKEN = '<sos>'

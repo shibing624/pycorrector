@@ -18,6 +18,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
+from loguru import logger
 
 sys.path.append('../..')
 from pycorrector.seq2seq.preprocess import get_data_file, parse_xml_file, save_corpus_data
@@ -26,7 +27,6 @@ from pycorrector.seq2seq.data_reader import read_vocab, create_dataset, one_hot,
 from pycorrector.seq2seq.seq2seq import Seq2Seq, LanguageModelCriterion
 from pycorrector.seq2seq.data_reader import PAD_TOKEN
 from pycorrector.seq2seq.convseq2seq import ConvSeq2Seq
-from pycorrector.utils.logger import logger
 from pycorrector.seq2seq.seq2seq_model import Seq2SeqModel
 
 os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"

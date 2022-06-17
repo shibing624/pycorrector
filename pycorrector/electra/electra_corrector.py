@@ -10,11 +10,10 @@ import time
 
 import torch
 from transformers import pipeline, ElectraForPreTraining
-
+from loguru import logger
 sys.path.append('../..')
 
 from pycorrector.utils.text_utils import is_chinese_string
-from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.utils.tokenizer import split_2_short_text
 from pycorrector import config

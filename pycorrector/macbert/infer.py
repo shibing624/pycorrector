@@ -7,14 +7,13 @@ import sys
 import torch
 import argparse
 from transformers import BertTokenizer
-
+from loguru import logger
 sys.path.append('../..')
 
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
 from pycorrector.macbert.macbert_corrector import get_errors
 from pycorrector.macbert.defaults import _C as cfg
-from pycorrector.utils.logger import logger
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

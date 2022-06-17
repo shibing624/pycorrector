@@ -17,9 +17,7 @@ import sys
 from pathlib import Path
 
 from tqdm import tqdm
-
-sys.path.append('../..')
-from pycorrector.utils.logger import logger
+from loguru import logger
 
 
 def _fetch_from_remote(url, force_download=False, cached_dir='~/.paddle-ernie-cache'):

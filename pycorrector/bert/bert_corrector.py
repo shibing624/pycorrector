@@ -10,10 +10,10 @@ import sys
 import time
 import torch
 from transformers import pipeline
+from loguru import logger
 
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string
-from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen

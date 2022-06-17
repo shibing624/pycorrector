@@ -12,10 +12,9 @@ import time
 import numpy as np
 import paddle.fluid.dygraph as D
 import paddle.fluid.layers as L
-
+from loguru import logger
 sys.path.append('../..')
 from pycorrector.utils.text_utils import is_chinese_string
-from pycorrector.utils.logger import logger
 from pycorrector.corrector import Corrector
 from pycorrector.ernie.modeling_ernie import ErnieModelForPretraining, ErnieModel
 from pycorrector.ernie.tokenizing_ernie import ErnieTokenizer

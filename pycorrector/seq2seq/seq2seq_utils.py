@@ -13,8 +13,7 @@ from datasets import Dataset as HFDataset
 from datasets import load_dataset
 from torch.utils.data import Dataset
 from tqdm.auto import tqdm
-
-from pycorrector.utils.logger import logger
+from loguru import logger
 
 
 def preprocess_batch_for_hf_dataset(dataset, encoder_tokenizer, decoder_tokenizer, args):

@@ -10,9 +10,9 @@ import os
 from transformers import BertTokenizer, BertForMaskedLM
 import torch
 from typing import List
+from loguru import logger
 
 sys.path.append('../..')
-from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
 
@@ -98,7 +98,7 @@ class MacBertCorrector(object):
             corrected_text = decode_tokens[:len(text)]
             corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
-            sub_details = [(i[0], i[1],  i[2],  i[3]) for i in sub_details]
+            sub_details = [(i[0], i[1], i[2], i[3]) for i in sub_details]
             details.extend(sub_details)
             details.extend(sub_details)
             result.append([text_new, details])
@@ -149,4 +149,3 @@ if __name__ == "__main__":
     for sent, r in zip(error_sentences, res):
         print("original sentence:{} => {} err:{}".format(sent, r[0], r[1]))
     print('[batch]spend time:', time.time() - t2)
-
