@@ -246,7 +246,8 @@ def eval_corpus500_by_model(correct_fn, input_eval_path=eval_data_path, verbose=
     recall = TP / (TP + FN) if TP > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
     print(
-        f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, cost time:{spend_time:.2f} s')
+        f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, '
+        f'cost time:{spend_time:.2f} s, total num: {total_num}')
     return acc, precision, recall, f1
 
 
@@ -313,7 +314,8 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
         recall = TP / (TP + FN) if TP > 0 else 0.0
         f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
         print(
-            f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, cost time:{spend_time:.2f} s')
+            f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, '
+            f'cost time:{spend_time:.2f} s, total num: {total_num}')
         return acc, precision, recall, f1
 
 
@@ -386,7 +388,8 @@ def eval_sighan2015_by_model_batch(correct_fn, sighan_path=sighan_2015_path, ver
     recall = TP / (TP + FN) if TP > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall != 0 else 0
     print(
-        f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, cost time:{spend_time:.2f} s')
+        f'Sentence Level: acc:{acc:.4f}, precision:{precision:.4f}, recall:{recall:.4f}, f1:{f1:.4f}, '
+        f'cost time:{spend_time:.2f} s, total num: {total_num}')
     return acc, precision, recall, f1
 
 

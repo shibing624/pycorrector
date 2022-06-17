@@ -40,7 +40,7 @@ def main(args):
         from pycorrector.t5.t5_corrector import T5Corrector
         model = T5Corrector()
         eval.eval_sighan2015_by_model_batch(model.batch_t5_correct)
-        # Sentence Level: acc:0.5227, precision:0.5220, recall:0.3941, f1:0.4491, cost time:9.88 s
+        # Sentence Level: acc:0.7582, precision:0.8321, recall:0.6390, f1:0.7229, cost time:5.12 s
     if args.data == 'sighan_15' and args.model == 'convseq2seq':
         from pycorrector.seq2seq.seq2seq_corrector import Seq2SeqCorrector
         model = Seq2SeqCorrector()
