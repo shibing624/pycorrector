@@ -42,8 +42,8 @@ def get_errors(corrected_text, origin_text):
 class Inference(object):
     def __init__(self, model_dir, arch='convseq2seq',
                  embed_size=128, hidden_size=128, dropout=0.25, max_length=128):
-        logger.debug("device: {}".format(device))
-        logger.debug(f'use {arch} model.')
+        logger.debug("Device: {}".format(device))
+        logger.debug(f'Use {arch} model.')
         if arch in ['seq2seq', 'convseq2seq']:
             src_vocab_path = os.path.join(model_dir, 'vocab_source.txt')
             trg_vocab_path = os.path.join(model_dir, 'vocab_target.txt')
@@ -58,7 +58,7 @@ class Inference(object):
                                      dec_hidden_size=hidden_size,
                                      dropout=dropout).to(device)
                 model_path = os.path.join(model_dir, 'seq2seq.pth')
-                logger.debug('load model from {}'.format(model_path))
+                logger.debug('Load model from {}'.format(model_path))
                 self.model.load_state_dict(torch.load(model_path, map_location=device))
                 self.model.eval()
             else:
@@ -74,7 +74,7 @@ class Inference(object):
                                          max_length=max_length).to(device)
                 model_path = os.path.join(model_dir, 'convseq2seq.pth')
                 self.model.load_state_dict(torch.load(model_path, map_location=device))
-                logger.debug('load model from {}'.format(model_path))
+                logger.debug('Load model from {}'.format(model_path))
                 self.model.eval()
         elif arch == 'bertseq2seq':
             # Bert Seq2seq model

@@ -12,6 +12,7 @@ from loguru import logger
 sys.path.append('../..')
 from pycorrector import config
 from pycorrector.seq2seq.infer import Inference
+from pycorrector.utils.get_file import get_file
 
 
 class Seq2SeqCorrector(object):
@@ -20,6 +21,22 @@ class Seq2SeqCorrector(object):
             arch='convseq2seq', embed_size=128, hidden_size=128, dropout=0.25, max_length=128
     ):
         self.name = 'seq2seq_corrector'
+        bin_path = os.path.join(model_dir, 'convseq2seq.pth')
+        if not os.path.exists(bin_path):
+            logger.warning(f'local model {bin_path} not exists, download default model to: {model_dir}')
+            pre_trained_seq2seq_models = {
+                # ConvSeq2Seq model 4.6MB
+                'convseq2seq_correction.tar.gz':
+                    'https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz'
+            }
+            filename = 'convseq2seq_correction.tar.gz'
+            url = pre_trained_seq2seq_models.get(filename)
+            get_file(
+                filename, url, extract=True,
+                cache_dir=config.USER_DATA_DIR,
+                cache_subdir="seq2seq_models",
+                verbose=1
+            )
         t1 = time.time()
         self.model = Inference(
             model_dir, arch,

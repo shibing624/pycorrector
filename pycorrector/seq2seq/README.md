@@ -80,7 +80,8 @@ predict: 王天华开心地一直说话。
 download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
 
 ### release models
+基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github:
 
-基于SIGHAN2015数据集训练的seq2seq和convseq2seq模型，已经release到github，下载地址：[github models](https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar)。
+- convseq2seq model url: https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz
 
-位置同以上训练脚本，放到seq2seq文件夹下即可。
+- seq2seq model url: https://github.com/shibing624/pycorrector/releases/download/0.4.5/output.tar
