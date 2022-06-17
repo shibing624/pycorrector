@@ -15,10 +15,11 @@ sys.path.append('../..')
 from pycorrector.utils.logger import logger
 from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
+from pycorrector.utils.text_utils import is_chinese
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
+unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
 
 
 def get_errors(corrected_text, origin_text):
@@ -31,9 +32,12 @@ def get_errors(corrected_text, origin_text):
             corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if ori_char != corrected_text[i]:
-            if ori_char.lower() == corrected_text[i]:
-                # pass english upper char
+            if not is_chinese(ori_char):
+                # pass not chinese char
                 corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                continue
+            if not is_chinese(corrected_text[i]):
+                corrected_text = corrected_text[:i] + corrected_text[i + 1:]
                 continue
             sub_details.append((ori_char, corrected_text[i], i, i + 1))
     sub_details = sorted(sub_details, key=operator.itemgetter(2))
@@ -132,6 +136,7 @@ if __name__ == "__main__":
         '12.——对比文件中未公开的数值和对比文件中已经公开的中间值具有新颖性；',
         '《著作权法》（2020修正）第23条：“自然人的作品，其发表权、本法第',
         '三步检验法（三步检验标准）（three-step test）：若要',
+        '三步检验法“三步‘检验’标准”（three-step test）：若要',
     ]
     t1 = time.time()
     for sent in error_sentences:
