@@ -129,7 +129,7 @@ GPU：Tesla V100，显存 32 GB
 
 - 中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
 - 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
-- 最具潜力的模型是**T5**，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
+- 最具潜力的模型是**T5**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
 
 # Install
 
