@@ -113,22 +113,22 @@ python examples/gradio_demo.py
 - 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错。
 
 ### 评估结果
-
+评估数据集：SIGHAN2015的测试集
 GPU：Tesla V100，显存 32 GB
 
-| 数据集 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
-| :---------:  | :---------: | :---------: | :------:  | :---------: | :---------: | :---------: | :---------: |
-| Sighan_15 | rule(pycorrector.correct) | kenlm | cpu | 0.6860 | 0.1529 | 0.2500 | 9 |
-| Sighan_15 | bert-correction | bert-base-chinese + MLM | gpu | 0.8029 | 0.4052 | 0.5386 | 2 |
-| Sighan_15 | t5 | byt5-small | gpu | 0.5220 | 0.3941 | 0.4491 | 111 |
-| Sighan_15 | mengzi-t5-base-chinese-correction | mengzi-t5-base | gpu | 0.8321 | 0.6390 | 0.7229 | 214 |
-| Sighan_15 | convseq2seq-chinese-correction | convseq2seq | gpu | 0.2415 | 0.1436 | 0.1801 | 6 |
-| **Sighan_15** | **macbert4csc-base-chinese** | **macbert-base-chinese** | **gpu** | **0.8254** | **0.7311** | **0.7754** | **224** |
+| 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
+| :-- | :-- | :---  | :----- | :--| :--- | :--- |
+| Rule(pycorrector.correct) | kenlm | CPU | 0.6860 | 0.1529 | 0.2500 | 9 |
+| Bert-correction | bert-base-chinese | GPU | 0.8029 | 0.4052 | 0.5386 | 2 |
+| T5 | byt5-small | GPU | 0.5220 | 0.3941 | 0.4491 | 111 |
+| mengzi-t5-base-chinese-correction | mengzi-t5-base | GPU | 0.8321 | 0.6390 | 0.7229 | 214 |
+| convseq2seq-chinese-correction | ConvSeq2Seq | GPU | 0.2415 | 0.1436 | 0.1801 | 6 |
+| **macbert4csc-base-chinese** | **macbert-base-chinese** | **GPU** | **0.8254** | **0.7311** | **0.7754** | **224** |
 
 ### 结论
 
-- 中文拼写纠错模型效果最好的是**macbert**，模型名称是*shibing624/macbert4csc-base-chinese*
-- 中文语法纠错模型效果最好的是**seq2seq**，模型名称是*convseq2seq*
+- 中文拼写纠错模型效果最好的是**MacBert**，模型名称是*shibing624/macbert4csc-base-chinese*
+- 中文语法纠错模型效果最好的是**Seq2Seq**，模型名称是*convseq2seq*
 - 最具潜力的模型是**T5**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
 
 # Install
