@@ -113,7 +113,8 @@ python examples/gradio_demo.py
 - 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错。
 
 ### 评估结果
-评估数据集：SIGHAN2015的测试集
+评估数据集：SIGHAN2015测试集
+
 GPU：Tesla V100，显存 32 GB
 
 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
@@ -127,9 +128,9 @@ GPU：Tesla V100，显存 32 GB
 
 ### 结论
 
-- 中文拼写纠错模型效果最好的是**MacBert**，模型名称是*shibing624/macbert4csc-base-chinese*
-- 中文语法纠错模型效果最好的是**Seq2Seq**，模型名称是*convseq2seq*
-- 最具潜力的模型是**T5**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
+- 中文拼写纠错模型效果最好的是**MacBert**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：[shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+- 中文语法纠错模型效果最好的是**Seq2Seq**，模型名称是*convseq2seq*，model：[convseq2seq_correction.tar.gz](https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz)
+- 最具潜力的模型是**T5**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：[shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
 
 # Install
 
@@ -398,7 +399,7 @@ python -m pycorrector input.txt -o out.txt -n -d
 
 主要使用了多种深度模型应用于文本纠错任务，分别是前面`模型`小节介绍的[macbert](./pycorrector/macbert)、[seq2seq](./pycorrector/seq2seq)、
 [bert](./pycorrector/bert)、[electra](./pycorrector/electra)、[transformer](./pycorrector/transformer)
-、[ernie-csc](./pycorrector/ernie_csc)，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
+、[ernie-csc](./pycorrector/ernie_csc)、[T5](./pycorrector/t5)，各模型方法内置于`pycorrector`文件夹下，有`README.md`详细指导，各模型可独立运行，相互之间无依赖。
 
 - 安装依赖
 
