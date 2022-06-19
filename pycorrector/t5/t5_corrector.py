@@ -111,7 +111,7 @@ class T5Corrector(object):
 
 
 if __name__ == "__main__":
-    m = T5Corrector('./output/mengzi-t5-base-chinese-correction/')
+    m = T5Corrector()
     error_sentences = [
         '少先队员因该为老人让坐',
         '少 先  队 员 因 该 为 老人让坐',
