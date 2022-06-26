@@ -47,11 +47,11 @@ def get_errors(corrected_text, origin_text):
 class T5Corrector(object):
     def __init__(self, model_dir=config.t5_model_dir):
         self.name = 't5_corrector'
-        t1 = time.time()
         bin_path = os.path.join(model_dir, 'pytorch_model.bin')
         if not os.path.exists(bin_path):
             model_dir = "shibing624/mengzi-t5-base-chinese-correction"
             logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
+        t1 = time.time()
         self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
         self.model = T5ForConditionalGeneration.from_pretrained(model_dir)
         self.model.to(device)

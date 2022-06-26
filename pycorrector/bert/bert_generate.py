@@ -4,7 +4,6 @@
 @description:
 
 refer https://github.com/voidful/BertGenerate/blob/master/Bert_Generate.ipynb
-update bert_lstm model to seq2seq
 """
 
 import torch

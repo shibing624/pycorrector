@@ -60,36 +60,23 @@ PS：
 - [作者纠错分享](https://github.com/shibing624/pycorrector/wiki/pycorrector%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E7%9B%B4%E6%92%AD%E5%88%86%E4%BA%AB)
 - [网友源码解读](https://zhuanlan.zhihu.com/p/138981644)
 
+
 # Feature
 
-### 规则方法
-#### 错误检测
-
-* 字粒度：语言模型困惑度（ppl）检测某字的似然概率值低于句子平均值，则判定该字是疑似错别字的概率大
-* 词粒度：切词后不在词典中的词是疑似错词的概率大
-
-#### 错误纠正
-
-* 通过错误检测定位所有疑似错误后，取所有疑似错字的音似、形似候选词
-* 使用候选词替换，基于语言模型得到类似翻译模型的候选排序结果，得到最优纠正词
+* [Kenlm模型](pycorrector/corrector.py)：本项目基于Kenlm统计语言模型工具训练了中文NGram语言模型，结合规则方法、混淆集可以纠正中文拼写错误，方法速度快，扩展性强，效果一般
+* [MacBERT模型](pycorrector/macbert)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的MacBERT4CSC模型，模型加入了错误检测和纠正网络，适配中文拼写纠错任务，效果好
+* [Seq2Seq模型](pycorrector/seq2seq)：本项目基于PyTorch实现了用于中文文本纠错的Seq2Seq模型、ConvSeq2Seq模型，其中ConvSeq2Seq在NLPCC-2018的中文语法纠错比赛中，使用单模型并取得第三名，可以并行训练，模型收敛快，效果一般
+* [T5模型](pycorrector/t5)：本项目基于PyTorch实现了用于中文文本纠错的T5模型，使用Langboat/mengzi-t5-base的预训练模型fine-tune中文纠错数据集，模型改造的潜力较大，效果好
+* [BERT模型](pycorrector/bert)：本项目基于PyTorch实现了基于原生BERT的fill-mask能力进行纠正错字的方法，效果差
+* [ELECTRA模型](pycorrector/electra)：本项目基于PyTorch实现了基于原生ELECTRA的fill-mask能力进行纠正错字的方法，效果差
+* [ERNIE_CSC模型](pycorrector/ernie_csc)：本项目基于PaddlePaddle实现了用于中文文本纠错的ERNIE_CSC模型，模型在ERNIE-1.0上fine-tune，模型结构适配了中文拼写纠错任务，效果好
+* [DeepContext模型](pycorrector/deepcontext)：本项目基于PyTorch实现了用于文本纠错的DeepContext模型，该模型结构参考Stanford University的NLC模型，2014英文纠错比赛得第一名，效果一般
+* [Transformer模型](pycorrector/transformer)：本项目基于PyTorch的fairseq库调研了Transformer模型用于中文文本纠错，效果一般
 
 #### 思考
 
-1. 现在的处理手段，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法上有更大的突破。
-2. 另外，现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
-
-### 模型方法
-
-* Kenlm：kenlm统计语言模型工具，规则方法，语言模型纠错，利用混淆集，扩展性强
-* DeepContext模型：参考Stanford University的nlc模型，该模型是参加2014英文文本纠错比赛并取得第一名的方法
-* Seq2Seq模型：在Seq2Seq模型加上attention机制，对于长文本效果更好，模型更容易收敛，但容易过拟合
-* ConvSeq2Seq模型：基于Facebook出品的fairseq，北京语言大学团队改进ConvS2S模型用于中文纠错，在NLPCC-2018的中文语法纠错比赛中，是唯一使用单模型并取得第三名的成绩
-* Transformer模型：全attention的结构代替了lstm用于解决sequence to sequence问题，语义特征提取效果更好
-* BERT模型：中文fine-tuned模型，使用MASK特征纠正错字
-* ELECTRA模型：斯坦福和谷歌联合提出的一种更具效率的预训练模型，学习文本上下文表示优于同等计算资源的BERT和XLNet
-* ERNIE模型：百度提出的基于知识增强的语义表示模型，有可适配中文的强大语义表征能力。在情感分析、文本匹配、自然语言推理、词法分析、阅读理解、智能问答等16个公开数据集上超越世界领先技术
-* MacBERT模型：使用全词掩蔽和N-Gram掩蔽策略适配中文表达，和通过用其相似的单词来掩盖单词，相较BERT缩小了训练前和微调阶段之间的差距，加入错误检测和纠正网络端到端纠正文本拼写错误
-* T5模型：基于Transformer的Encoder-Decoder模型，把所有NLP任务转化为Text-to-text任务的统一框架，在超大数据集上得到预训练大模型，在各任务取得SOTA效果
+1. 规则的方法，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法模型上有更大的突破。
+2. 现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
 
 # Demo
 
