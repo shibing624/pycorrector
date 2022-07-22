@@ -107,16 +107,18 @@ class CopyT5Corrector(object):
             details.extend(sub_details)
         return text_new, details
 
-    def batch_t5_correct(self, texts: List[str], max_length: int = 128, batch_size: int = 32):
+    def batch_t5_correct(self, texts: List[str], max_length: int = 128, batch_size: int = 256, silent: bool = False):
         """
         句子纠错
         :param texts: list[str], sentence list
         :param max_length: int, max length of each sentence
         :param batch_size: int, bz
+        :param silent: bool, show log
         :return: list, (corrected_text, [error_word, correct_word, begin_pos, end_pos])
         """
         result = []
-        for batch in tqdm([texts[i:i + batch_size] for i in range(0, len(texts), batch_size)]):
+        for batch in tqdm([texts[i:i + batch_size] for i in range(0, len(texts), batch_size)],
+                          desc="Generating outputs", disable=silent):
             inputs = self.tokenizer(batch, padding=True, max_length=max_length, truncation=True,
                                     return_tensors='pt').to(device)
             input_ids = inputs["input_ids"]

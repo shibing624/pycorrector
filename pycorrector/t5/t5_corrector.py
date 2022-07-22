@@ -11,6 +11,7 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 import torch
 from typing import List
 from loguru import logger
+from tqdm import tqdm
 
 sys.path.append('../..')
 from pycorrector import config
@@ -84,29 +85,34 @@ class T5Corrector(object):
             details.extend(sub_details)
         return text_new, details
 
-    def batch_t5_correct(self, texts: List[str], max_length: int = 128):
+    def batch_t5_correct(self, texts: List[str], max_length: int = 128, batch_size: int = 512, silent: bool = False):
         """
         句子纠错
         :param texts: list[str], sentence list
         :param max_length: int, max length of each sentence
+        :param batch_size: int, bz
+        :param silent: bool, show log
         :return: list, (corrected_text, [error_word, correct_word, begin_pos, end_pos])
         """
         result = []
-        inputs = self.tokenizer(texts, padding=True, max_length=max_length, truncation=True,
-                                return_tensors='pt').to(device)
-        with torch.no_grad():
-            outputs = self.model.generate(**inputs, max_length=max_length)
-        for i, text in enumerate(texts):
-            text_new = ''
-            details = []
-            idx = 0
-            decode_tokens = self.tokenizer.decode(outputs[i]).replace('<pad>', '').replace('</s>', '').replace(' ', '')
-            corrected_text = decode_tokens[:len(text)]
-            corrected_text, sub_details = get_errors(corrected_text, text)
-            text_new += corrected_text
-            sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
-            details.extend(sub_details)
-            result.append([text_new, details])
+        for batch in tqdm([texts[i:i + batch_size] for i in range(0, len(texts), batch_size)],
+                          desc="Generating outputs", disable=silent):
+            inputs = self.tokenizer(batch, padding=True, max_length=max_length, truncation=True,
+                                    return_tensors='pt').to(device)
+            with torch.no_grad():
+                outputs = self.model.generate(**inputs, max_length=max_length)
+            for i, text in enumerate(batch):
+                text_new = ''
+                details = []
+                idx = 0
+                decode_tokens = self.tokenizer.decode(outputs[i]). \
+                    replace('<pad>', '').replace('</s>', '').replace(' ', '')
+                corrected_text = decode_tokens[:len(text)]
+                corrected_text, sub_details = get_errors(corrected_text, text)
+                text_new += corrected_text
+                sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
+                details.extend(sub_details)
+                result.append([text_new, details])
         return result
 
 
