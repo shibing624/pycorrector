@@ -23,7 +23,7 @@ jieba.setLogLevel('ERROR')
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
+unk_tokens = [' ', '擤', '玕']
 
 
 class ZHTokenizer(BertTokenizer):
@@ -57,7 +57,7 @@ def get_errors(corrected_text, origin_text):
 
 
 class CopyT5Corrector(object):
-    def __init__(self, model_dir):
+    def __init__(self, model_dir=config.copyt5_model_dir):
         self.name = 'copyt5_corrector'
         bin_path = os.path.join(model_dir, 'pytorch_model.bin')
         if not os.path.exists(bin_path):
