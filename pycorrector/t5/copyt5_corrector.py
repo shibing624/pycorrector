@@ -9,7 +9,7 @@ import time
 import os
 import jieba
 from transformers import BertTokenizer, T5ForConditionalGeneration
-
+from tqdm import tqdm
 import torch
 from typing import List
 from loguru import logger
@@ -107,41 +107,43 @@ class CopyT5Corrector(object):
             details.extend(sub_details)
         return text_new, details
 
-    def batch_t5_correct(self, texts: List[str], max_length: int = 128):
+    def batch_t5_correct(self, texts: List[str], max_length: int = 128, batch_size: int = 32):
         """
         句子纠错
         :param texts: list[str], sentence list
         :param max_length: int, max length of each sentence
+        :param batch_size: int, bz
         :return: list, (corrected_text, [error_word, correct_word, begin_pos, end_pos])
         """
         result = []
-        inputs = self.tokenizer(texts, padding=True, max_length=max_length, truncation=True,
-                                return_tensors='pt').to(device)
-        input_ids = inputs["input_ids"]
-        attention_mask = inputs["attention_mask"]
-        with torch.no_grad():
-            outputs = self.model.generate(
-                input_ids=input_ids,
-                attention_mask=attention_mask,
-                eos_token_id=self.tokenizer.sep_token_id,
-                decoder_start_token_id=self.tokenizer.cls_token_id,
-                num_beams=3,
-                max_length=max_length,
-                num_return_sequences=1
-            )
-            outputs = outputs[:, 1:].cpu().numpy()
-            preds = self.tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            preds = [s.replace(' ', '') for s in preds]
-        for i, text in enumerate(texts):
-            text_new = ''
-            details = []
-            idx = 0
-            corrected_text = preds[i]
-            corrected_text, sub_details = get_errors(corrected_text, text)
-            text_new += corrected_text
-            sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
-            details.extend(sub_details)
-            result.append([text_new, details])
+        for batch in tqdm([texts[i:i + batch_size] for i in range(0, len(texts), batch_size)]):
+            inputs = self.tokenizer(batch, padding=True, max_length=max_length, truncation=True,
+                                    return_tensors='pt').to(device)
+            input_ids = inputs["input_ids"]
+            attention_mask = inputs["attention_mask"]
+            with torch.no_grad():
+                outputs = self.model.generate(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    eos_token_id=self.tokenizer.sep_token_id,
+                    decoder_start_token_id=self.tokenizer.cls_token_id,
+                    num_beams=3,
+                    max_length=max_length,
+                    num_return_sequences=1
+                )
+                outputs = outputs[:, 1:].cpu().numpy()
+                preds = self.tokenizer.batch_decode(outputs, skip_special_tokens=True)
+                preds = [s.replace(' ', '') for s in preds]
+            for i, text in enumerate(batch):
+                text_new = ''
+                details = []
+                idx = 0
+                corrected_text = preds[i]
+                corrected_text, sub_details = get_errors(corrected_text, text)
+                text_new += corrected_text
+                sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
+                details.extend(sub_details)
+                result.append([text_new, details])
         return result
 
 
