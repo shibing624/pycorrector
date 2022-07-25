@@ -77,7 +77,7 @@ class T5Corrector(object):
             outputs = self.model.generate(**inputs, max_length=max_length)
 
         for texts, idx in blocks:
-            decode_tokens = self.tokenizer.decode(outputs[0]).replace('<pad>', '').replace('</s>', '').replace(' ', '')
+            decode_tokens = self.tokenizer.decode(outputs[0], skip_special_tokens=True).replace(' ', '')
             corrected_text = decode_tokens[:len(texts)]
             corrected_text, sub_details = get_errors(corrected_text, texts)
             text_new += corrected_text
@@ -105,8 +105,7 @@ class T5Corrector(object):
                 text_new = ''
                 details = []
                 idx = 0
-                decode_tokens = self.tokenizer.decode(outputs[i]). \
-                    replace('<pad>', '').replace('</s>', '').replace(' ', '')
+                decode_tokens = self.tokenizer.decode(outputs[i], skip_special_tokens=True).replace(' ', '')
                 corrected_text = decode_tokens[:len(text)]
                 corrected_text, sub_details = get_errors(corrected_text, text)
                 text_new += corrected_text
@@ -143,6 +142,7 @@ if __name__ == "__main__":
         '《著作权法》（2020修正）第23条：“自然人的作品，其发表权、本法第',
         '三步检验法（三步检验标准）（three-step test）：若要',
         '三步检验法“三步‘检验’标准”（three-step test）：若要',
+        '中央发文称，国院统一部署统一规划行动',
     ]
     t1 = time.time()
     for sent in error_sentences:

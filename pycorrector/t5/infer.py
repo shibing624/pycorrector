@@ -47,7 +47,7 @@ def predict():
     for s in example_sentences:
         model_inputs = tokenizer(s, max_length=128, truncation=True, return_tensors="pt").to(device)
         outputs = model.generate(**model_inputs, max_length=128)
-        r = tokenizer.decode(outputs[0])
+        r = tokenizer.decode(outputs[0], skip_special_tokens=True)
         print('output:', r)
         results.append(r)
     return results

@@ -137,7 +137,7 @@ def parse_args():
     parser.add_argument('--warmup_steps', type=int, default=200, help='logging steps num')
     parser.add_argument('--eval_steps', type=int, default=250, help='eval steps num')
     parser.add_argument('--epochs', type=int, default=10, help='train epochs num')
-    parser.add_argument('--max_steps', type=int, default=100, help='train max steps')
+    parser.add_argument('--max_steps', type=int, default=100, help='train max steps') # default 5000
     parser.add_argument("--do_train", action="store_true", help="whether not to do train")
     parser.add_argument("--do_eval", action="store_true", help="whether not to do eval")
     args = parser.parse_args()
@@ -212,8 +212,8 @@ def train():
         cache_dir=model_args.cache_dir,
     )
     # add custom word
-    tokenizer.add_tokens(['，', '（', '）'])
-    model.resize_token_embeddings(len(tokenizer))
+    # tokenizer.add_tokens(['，', '（', '）'])
+    # model.resize_token_embeddings(len(tokenizer))
 
     # overwriting the default max_length of 20
     tokenizer.model_max_length = 128
