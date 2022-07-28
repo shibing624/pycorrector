@@ -21,18 +21,21 @@ def use_origin_transformers():
     model.to(device)
 
     texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
+    
+    text_tokens = None
     with torch.no_grad():
-        outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
+        text_tokens = tokenizer(texts, padding=True, return_tensors='pt')
+        outputs = model(**text_tokens.to(device))
 
     def get_errors(corrected_text, origin_text):
         sub_details = []
         for i, ori_char in enumerate(origin_text):
-            if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
+            if ori_char in [' ', '“', '”', '‘', '’', '\n', '…', '—', '擤']:
                 # add unk word
                 corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
                 continue
             if i >= len(corrected_text):
-                continue
+                break
             if ori_char != corrected_text[i]:
                 if ori_char.lower() == corrected_text[i]:
                     # pass english upper char
@@ -44,9 +47,8 @@ def use_origin_transformers():
 
     result = []
     for ids, text in zip(outputs.logits, texts):
-        _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-        corrected_text = _text[:len(text)]
-        corrected_text, details = get_errors(corrected_text, text)
+        _text = tokenizer.decode((torch.argmax(ids, dim=-1) * text_tokens.attention_mask[i]), skip_special_tokens=True).replace(' ', '')
+        corrected_text, details = get_errors(_text, text)
         print(text, ' => ', corrected_text, details)
         result.append((corrected_text, details))
     print(result)
