@@ -451,7 +451,6 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 import operator
 import torch
 from transformers import BertTokenizer, BertForMaskedLM
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
@@ -459,19 +458,22 @@ model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 model.to(device)
 
 texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-with torch.no_grad():
-    outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
+text_tokens = None
+with torch.no_grad():
+    text_tokens = tokenizer(texts, padding=True, return_tensors='pt')
+    outputs = model(**text_tokens.to(device))
 
 def get_errors(corrected_text, origin_text):
     sub_details = []
     for i, ori_char in enumerate(origin_text):
-        if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
+        # , '琊'
+        if ori_char in [' ', '“', '”', '‘', '’', '\n', '…', '—', '擤']:
             # add unk word
             corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
             continue
         if i >= len(corrected_text):
-            continue
+            break
         if ori_char != corrected_text[i]:
             if ori_char.lower() == corrected_text[i]:
                 # pass english upper char
@@ -481,14 +483,16 @@ def get_errors(corrected_text, origin_text):
     sub_details = sorted(sub_details, key=operator.itemgetter(2))
     return corrected_text, sub_details
 
-
 result = []
+i = 0
 for ids, text in zip(outputs.logits, texts):
-    _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-    corrected_text = _text[:len(text)]
-    corrected_text, details = get_errors(corrected_text, text)
+
+    _text = tokenizer.decode((torch.argmax(ids, dim=-1) * text_tokens.attention_mask[i]), skip_special_tokens=True).replace(' ', '')
+    corrected_text, details = get_errors(_text, text)
+    
     print(text, ' => ', corrected_text, details)
     result.append((corrected_text, details))
+    i += 1
 print(result)
 ```
 
