@@ -18,14 +18,14 @@ from pycorrector.utils.tokenizer import split_text_by_maxlen
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
+unk_tokens = [' ', '“', '”', '‘', '’', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
 
 
 def get_errors(corrected_text, origin_text):
     sub_details = []
     for i, ori_char in enumerate(origin_text):
         if i >= len(corrected_text):
-            continue
+            break
         if ori_char in unk_tokens:
             # deal with unk word
             corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
@@ -91,15 +91,14 @@ class MacBertCorrector(object):
         inputs = self.tokenizer(texts, padding=True, return_tensors='pt').to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
-        for ids, text in zip(outputs.logits, texts):
+        for ids, (i, text) in zip(outputs.logits, enumerate(texts)):
             text_new = ''
             details = []
-            decode_tokens = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
-            corrected_text = decode_tokens[:len(text)]
+            corrected_text = self.tokenizer.decode((torch.argmax(ids, dim=-1) * inputs.attention_mask[i]),
+                                                  skip_special_tokens=True).replace(' ', '')
             corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
             sub_details = [(i[0], i[1], i[2], i[3]) for i in sub_details]
-            details.extend(sub_details)
             details.extend(sub_details)
             result.append([text_new, details])
         return result
@@ -138,6 +137,7 @@ if __name__ == "__main__":
         '	部分优先权：',
         '实施其专利的行为（生产经营≠营利≠商业经营）',
         '实施,i can speak chinese, can i spea english. ? hello.',
+        "我不唉“看 琅擤琊榜”",
     ]
     t1 = time.time()
     for sent in error_sentences:

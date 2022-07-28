@@ -20,12 +20,11 @@ def use_origin_transformers():
     model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
     model.to(device)
 
-    texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。"]
-    
-    text_tokens = None
+    texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心。", "我不唉“看 琅擤琊榜”"]
+
+    text_tokens = tokenizer(texts, padding=True, return_tensors='pt').to(device)
     with torch.no_grad():
-        text_tokens = tokenizer(texts, padding=True, return_tensors='pt')
-        outputs = model(**text_tokens.to(device))
+        outputs = model(**text_tokens)
 
     def get_errors(corrected_text, origin_text):
         sub_details = []
@@ -46,8 +45,9 @@ def use_origin_transformers():
         return corrected_text, sub_details
 
     result = []
-    for ids, text in zip(outputs.logits, texts):
-        _text = tokenizer.decode((torch.argmax(ids, dim=-1) * text_tokens.attention_mask[i]), skip_special_tokens=True).replace(' ', '')
+    for ids, (i, text) in zip(outputs.logits, enumerate(texts)):
+        _text = tokenizer.decode((torch.argmax(ids, dim=-1) * text_tokens.attention_mask[i]),
+                                 skip_special_tokens=True).replace(' ', '')
         corrected_text, details = get_errors(_text, text)
         print(text, ' => ', corrected_text, details)
         result.append((corrected_text, details))
