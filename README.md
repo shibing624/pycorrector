@@ -237,7 +237,7 @@ output:
 
 ### 自定义混淆集
 
-通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）错误补召回；2）误杀加白。
+通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）【提升准确率】误杀加白；2）【提升召回率】补充召回。
 
 example: [examples/use_custom_confusion.py](examples/use_custom_confusion.py)
 
