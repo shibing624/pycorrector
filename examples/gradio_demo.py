@@ -17,6 +17,11 @@ def ai_text(text):
     with torch.no_grad():
         outputs = model(**tokenizer([text], padding=True, return_tensors='pt'))
 
+    def to_highlight(corrected_sent, errs):
+        output = [{"entity": "纠错", "word": err[1], "start": err[2], "end": err[3]} for i, err in
+                  enumerate(errs)]
+        return {"text": corrected_sent, "entities": output}
+
     def get_errors(corrected_text, origin_text):
         sub_details = []
         for i, ori_char in enumerate(origin_text):
@@ -39,7 +44,7 @@ def ai_text(text):
     corrected_text = _text[:len(text)]
     corrected_text, details = get_errors(corrected_text, text)
     print(text, ' => ', corrected_text, details)
-    return corrected_text, details
+    return to_highlight(corrected_text, details), details
 
 
 if __name__ == '__main__':
@@ -54,9 +59,20 @@ if __name__ == '__main__':
         ['他们的吵翻很不错，再说他们做的咖喱鸡也好吃'],
     ]
 
-    output_text = gr.outputs.Textbox()
-    gr.Interface(ai_text, "textbox", output_text,
-                 title="Chinese Spelling Correction Model shibing624/macbert4csc-base-chinese",
-                 description="Copy or input error Chinese text. Submit and the machine will correct text.",
-                 article="Link to <a href='https://github.com/shibing624/pycorrector' style='color:blue;' target='_blank\'>Github REPO</a>",
-                 examples=examples).launch()
+    gr.Interface(
+        ai_text,
+        inputs="textbox",
+        outputs=[
+            gr.outputs.HighlightedText(
+                label="Output",
+                show_legend=True,
+            ),
+            gr.outputs.JSON(
+                label="JSON Output"
+            )
+        ],
+        title="Chinese Spelling Correction Model shibing624/macbert4csc-base-chinese",
+        description="Copy or input error Chinese text. Submit and the machine will correct text.",
+        article="Link to <a href='https://github.com/shibing624/pycorrector' style='color:blue;' target='_blank\'>Github REPO</a>",
+        examples=examples
+    ).launch()
