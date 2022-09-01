@@ -13,6 +13,7 @@
 ```
 torch
 transformers
+datasets
 loguru
 ```
 
