@@ -32,6 +32,7 @@ def correct_api():
       if "text" in request.args:
         text = request.args.get("text")
         logger.info("Received data: {}".format(text))
-        return jsonify(correct(text))
+        results = correct(text)
+        return results[0] + " " + str(results[1])
     return help
       
