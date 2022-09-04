@@ -1,5 +1,6 @@
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 from pycorrector import config
+import pycorrector
 from flask import Flask, request, jsonify
 from loguru import logger
 import json
@@ -19,6 +20,23 @@ def hello_world():
     return help
 
 correct = MacBertCorrector(config.macbert_model_dir).macbert_correct
+
+@app.route('/pyc', methods=['POST','GET']) 
+def py_correct():
+    if request.method == 'POST':
+      data = request.json
+      logger.info("Received data: {}".format(data))
+      text = data["text"]
+      corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+      return corrected_sent + " " + str(detail)
+    else:
+      if "text" in request.args:
+        text = request.args.get("text")
+        logger.info("Received data: {}".format(text))
+        corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
+        return corrected_sent + " " + str(detail)
+    return help
+    
 
 @app.route('/c', methods=['POST','GET']) 
 def correct_api():
