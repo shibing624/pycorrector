@@ -193,7 +193,7 @@ def main():
     print('data_size:', len(rst_items))
     train_lst, dev_lst = train_test_split(rst_items, test_size=0.1, random_state=42)
     save_json(train_lst, os.path.join(pwd_path, 'output/train.json'))
-    save_json(train_lst, os.path.join(pwd_path, 'output/dev.json'))
+    save_json(dev_lst, os.path.join(pwd_path, 'output/dev.json'))
     save_json(test_lst, os.path.join(pwd_path, 'output/test.json'))
 
 
