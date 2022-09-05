@@ -1,3 +1,15 @@
+# A pycorrector flask demo service (for development & test)
+# Author: David Euler
+# Date: 2022/09/04
+
+# python3 -m pip install flask
+
+# flask --app flask_server_demo run
+
+#You can test the service by :
+# curl -H "Content-Type: application/json" -X POST -d '{"text":"我从北京南做高铁到南京南战，总共花四个小时的事件"}' http://127.0.0.1:5000/c
+
+
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 from pycorrector import config
 import pycorrector
