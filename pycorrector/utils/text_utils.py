@@ -37,6 +37,11 @@ def is_alphabet_string(string):
     return all(is_alphabet(c) for c in string)
 
 
+def is_alphabet_number_string(string):
+    """判断全是数字和英文字符"""
+    return all((is_alphabet(c) or is_number(c)) for c in string)
+
+
 def is_other(uchar):
     """判断是否非汉字，数字和英文字符"""
     return not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar))
@@ -153,3 +158,11 @@ if __name__ == "__main__":
     print(traditional_sentence, simplified_sentence)
     print(is_alphabet_string('Teacher'))
     print(is_alphabet_string('Teacher '))
+
+    print('*' * 12)
+    print(is_alphabet_number_string('nihao123'))
+    print(is_alphabet_number_string('ni*hao12'))
+    print(is_alphabet_number_string('12'))
+    print(is_alphabet_number_string('teacher'))
+    print(is_alphabet_number_string('oppo12'))
+    print(is_alphabet_number_string('oppo12 '))
