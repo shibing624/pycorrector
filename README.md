@@ -271,11 +271,12 @@ output:
 > 其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
 
 ```
-iPhone差 iPhoneX 100
+iPhone差 iPhoneX
 张旗康 张旗康
 ```
 
-> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径。
+> 混淆集功能只在`correct`方法中生效；
+> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)。
 
 ### 自定义语言模型
 

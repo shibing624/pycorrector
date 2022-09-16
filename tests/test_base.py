@@ -45,6 +45,7 @@ class BaseTestCase(unittest.TestCase):
         sents = [
             '买iphonex，要多少钱',
             '共同实际控制人萧华、霍荣铨、张旗康',
+            '通信用户份额呈现下降趋势',
         ]
         res = []
         for name in sents:
