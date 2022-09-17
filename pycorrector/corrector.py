@@ -25,7 +25,7 @@ class Corrector(Detector):
             language_model_path=config.language_model_path,
             word_freq_path=config.word_freq_path,
             custom_word_freq_path='',
-            custom_confusion_path='',
+            custom_confusion_path_or_dict='',
             person_name_path=config.person_name_path,
             place_name_path=config.place_name_path,
             stopwords_path=config.stopwords_path,
@@ -36,7 +36,7 @@ class Corrector(Detector):
             language_model_path=language_model_path,
             word_freq_path=word_freq_path,
             custom_word_freq_path=custom_word_freq_path,
-            custom_confusion_path=custom_confusion_path,
+            custom_confusion_path_or_dict=custom_confusion_path_or_dict,
             person_name_path=person_name_path,
             place_name_path=place_name_path,
             stopwords_path=stopwords_path,
@@ -74,7 +74,7 @@ class Corrector(Detector):
         """
         result = dict()
         if not os.path.exists(path):
-            logger.warn("file not exists:" + path)
+            logger.warning(f"file not exists: {path}")
             return result
         with open(path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -101,7 +101,7 @@ class Corrector(Detector):
         """
         result = dict()
         if not os.path.exists(path):
-            logger.warn("file not exists:" + path)
+            logger.warning(f"file not exists: {path}")
             return result
         with open(path, 'r', encoding='utf-8') as f:
             for line in f:

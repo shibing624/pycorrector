@@ -3,11 +3,6 @@
 @author:David Euler
 @description:
 python3 -m pip install flask
-
-flask --app flask_server_demo run
-
-You can test the service by :
-curl -H "Content-Type: application/json" -X POST -d '{"text":"我从北京南做高铁到南京南战，总共花四个小时的事件"}' http://127.0.0.1:5000/c
 """
 import sys
 from flask import Flask, request
@@ -19,15 +14,17 @@ from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 app = Flask(__name__)
 rule_model = Corrector()
+rule_model.check_corrector_initialized()
 macbert_model = MacBertCorrector()
 
 help = """
 You can request the service by HTTP get: <br> 
-   /c?text=xxxxx, <p> 
+   http://0.0.0.0:5001/macbert_correct?text=我从北京南做高铁到南京南<br>
+   
 or HTTP post with json: <br>  
    {"text":"xxxx"} <p>
-Post example: 
-  curl -H "Content-Type: application/json" -X POST -d '{"text":"我从北京南做高铁到南京南"}' http://127.0.0.1:5000/macbert_correct  
+Post example: <br>
+  curl -H "Content-Type: application/json" -X POST -d '{"text":"我从北京南做高铁到南京南"}' http://0.0.0.0:5001/macbert_correct
 """
 
 
@@ -68,3 +65,7 @@ def correct_api():
             results = macbert_model.macbert_correct(text)
             return results[0] + " " + str(results[1])
     return help
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5001, debug=True)

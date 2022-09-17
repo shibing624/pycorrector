@@ -7,9 +7,8 @@
 import sys
 
 sys.path.append("..")
-from pycorrector import Corrector, set_log_level
+from pycorrector import Corrector
 
-set_log_level('INFO')
 if __name__ == '__main__':
     error_sentences = [
         '买iphonex，要多少钱',  # 漏召回
@@ -19,12 +18,13 @@ if __name__ == '__main__':
         '共同实际控制人萧华、霍荣铨、张旗康',  # 误杀
         '上述承诺内容系本人真实意思表示',  # 正常
         '大家一哄而伞怎么回事',  # 成语
+        '交通银行的份额没有减少',  # 误杀
     ]
     m = Corrector()
     for i in error_sentences:
-        print(i, ' -> ', m.correct(i))
+        print(i, ' -> ', m.detect(i), m.correct(i))
 
     print('*' * 42)
-    m = Corrector(custom_confusion_path='./my_custom_confusion.txt')
+    m = Corrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
     for i in error_sentences:
-        print(i, ' -> ', m.correct(i))
+        print(i, ' -> ', m.detect(i), m.correct(i))

@@ -275,8 +275,8 @@ iPhone差 iPhoneX
 张旗康 张旗康
 ```
 
-> 混淆集功能只在`correct`方法中生效；
-> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)。
+> 混淆集功能在`correct`方法中生效；
+> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)或混淆集字典(dict)。
 
 ### 自定义语言模型
 

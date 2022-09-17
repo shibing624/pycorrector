@@ -17,7 +17,7 @@ from pycorrector.proper_corrector import ProperCorrector
 ct = Corrector()
 get_same_pinyin = ct.get_same_pinyin
 get_same_stroke = ct.get_same_stroke
-set_custom_confusion_dict = ct.set_custom_confusion_dict
+set_custom_confusion_path_or_dict = ct.set_custom_confusion_path_or_dict
 set_custom_word_freq = ct.set_custom_word_freq
 set_language_model_path = ct.set_language_model_path
 correct = ct.correct

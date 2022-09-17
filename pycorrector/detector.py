@@ -37,7 +37,7 @@ class Detector(object):
             language_model_path=config.language_model_path,
             word_freq_path=config.word_freq_path,
             custom_word_freq_path='',
-            custom_confusion_path='',
+            custom_confusion_path_or_dict='',
             person_name_path=config.person_name_path,
             place_name_path=config.place_name_path,
             stopwords_path=config.stopwords_path,
@@ -48,7 +48,7 @@ class Detector(object):
         self.language_model_path = language_model_path
         self.word_freq_path = word_freq_path
         self.custom_word_freq_path = custom_word_freq_path
-        self.custom_confusion_path = custom_confusion_path
+        self.custom_confusion_path_or_dict = custom_confusion_path_or_dict
         self.person_name_path = person_name_path
         self.place_name_path = place_name_path
         self.stopwords_path = stopwords_path
@@ -91,7 +91,14 @@ class Detector(object):
         # 词、频数dict
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
         # 自定义混淆集
-        self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path)
+        if isinstance(self.custom_confusion_path_or_dict, dict):
+            self.custom_confusion = self.custom_confusion_path_or_dict
+            for k,v in self.custom_confusion.items():
+                self.word_freq[v] = self.word_freq.get(v, 1)
+        elif isinstance(self.custom_confusion_path_or_dict, str):
+            self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path_or_dict)
+        else:
+            raise ValueError('custom_confusion_path_or_dict must be dict or str.')
         # 自定义切词词典
         self.custom_word_freq = self.load_word_freq_dict(self.custom_word_freq_path)
         self.person_names = self.load_word_freq_dict(self.person_name_path)
@@ -173,10 +180,17 @@ class Detector(object):
         self.lm = kenlm.Model(path)
         logger.debug('Loaded language model: %s' % path)
 
-    def set_custom_confusion_dict(self, path):
+    def set_custom_confusion_path_or_dict(self, data):
         self.check_detector_initialized()
-        self.custom_confusion = self._get_custom_confusion_dict(path)
-        logger.debug('Loaded confusion path: %s, size: %d' % (path, len(self.custom_confusion)))
+        if isinstance(data, dict):
+            self.custom_confusion = data
+            for k,v in self.custom_confusion.items():
+                self.word_freq[v] = self.word_freq.get(v, 1)
+        elif isinstance(data, str):
+            self.custom_confusion = self._get_custom_confusion_dict(data)
+        else:
+            raise ValueError('custom_confusion_path_or_dict must be dict or str.')
+        logger.debug('Loaded confusion size: %d' % len(self.custom_confusion))
 
     def set_custom_word_freq(self, path):
         self.check_detector_initialized()
@@ -433,7 +447,7 @@ class Detector(object):
                                      ErrorType.char]
                         self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
-                logger.warn("index error, sentence:" + sentence + str(ie))
+                logger.warning("index error, sentence:" + sentence + str(ie))
             except Exception as e:
-                logger.warn("detect error, sentence:" + sentence + str(e))
+                logger.warning("detect error, sentence:" + sentence + str(e))
         return sorted(maybe_errors, key=lambda k: k[1], reverse=False), proper_details
