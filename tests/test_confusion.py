@@ -41,7 +41,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res[4], [('平净', '平静', 7, 9)])
         self.assertEqual(res[5], [('有明', '有名', 5, 7)])
 
-    def test_confusion_dict(self):
+    def test_confusion_dict_file(self):
         sents = [
             '买iphonex，要多少钱',
             '共同实际控制人萧华、霍荣铨、张旗康',
@@ -56,9 +56,51 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res[0], [])
         self.assertEqual(res[1], [('张旗康', '张启康', 14, 17)])
 
-        pycorrector.set_custom_confusion_dict('../examples/my_custom_confusion.txt')
+        pycorrector.set_custom_confusion_path_or_dict('../examples/my_custom_confusion.txt')
         res = []
         for name in sents:
+            s, r = pycorrector.correct(name)
+            print(r)
+            res.append(r)
+        self.assertEqual(res[0], [('iphonex', 'iphoneX', 1, 8)])
+        self.assertEqual(res[1], [])
+
+    def test_confusion_dict_dict(self):
+        sents = [
+            '买iphonex，要多少钱',
+            '共同实际控制人萧华、霍荣铨、张旗康',
+            '通信用户份额呈现下降趋势',
+        ]
+        res = []
+        for name in sents:
+            print(name, pycorrector.detect(name))
+            s, r = pycorrector.correct(name)
+            print(r)
+            res.append(r)
+
+        self.assertEqual(res[0], [])
+        self.assertEqual(res[1], [('张旗康', '张启康', 14, 17)])
+        print('*' * 42)
+
+        m_dict = {'iphonex': 'iphoneX',
+                  '张旗康': '张旗康',
+                  '份额': '份额',
+                  }
+
+        # 苹果吧    苹果八    20
+        # iphonex iphoneX
+        # 小明同学    小茗同学    1000
+        # 萧华  萧华
+        # 张旗康 张旗康
+        # 一哄而伞 一哄而散
+        # happt happen
+        # shylock shylock
+        # 份额  份额
+
+        pycorrector.set_custom_confusion_path_or_dict(m_dict)
+        res = []
+        for name in sents:
+            print(name, pycorrector.detect(name))
             s, r = pycorrector.correct(name)
             print(r)
             res.append(r)
