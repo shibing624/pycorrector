@@ -47,7 +47,7 @@ jobs:
           pip install -r requirements.txt
           pip install .
           pip install pytest
-      - name: PKG-TEST
-        run: |
+#      - name: PKG-TEST
+#        run: |
 #          python -m pytest
-          echo "PKG-TEST done"
+#          echo "PKG-TEST done"
