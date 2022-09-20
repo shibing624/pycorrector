@@ -18,7 +18,22 @@ def parse_args():
     return args
 
 
-def predict():
+def predict(example_sentences):
+    args = parse_args()
+    model_dir = args.save_dir
+    tokenizer = AutoTokenizer.from_pretrained(model_dir)
+    model = T5ForConditionalGeneration.from_pretrained(model_dir)
+    model.to(device)
+    results = []
+    for s in example_sentences:
+        model_inputs = tokenizer(s, max_length=128, truncation=True, return_tensors="pt").to(device)
+        outputs = model.generate(**model_inputs, max_length=128)
+        r = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        results.append(r)
+    return results
+
+
+if __name__ == '__main__':
     example_sentences = [
         "我跟我朋唷打算去法国玩儿。",
         "少先队员因该为老人让坐。",
@@ -38,20 +53,6 @@ def predict():
         '三步检验法（三步检验标准）（three-step test）：若要',
         '三步检验法“三步‘检验’标准”（three-step test）：若要',
     ]
-    args = parse_args()
-    model_dir = args.save_dir
-    tokenizer = AutoTokenizer.from_pretrained(model_dir)
-    model = T5ForConditionalGeneration.from_pretrained(model_dir)
-    model.to(device)
-    results = []
-    for s in example_sentences:
-        model_inputs = tokenizer(s, max_length=128, truncation=True, return_tensors="pt").to(device)
-        outputs = model.generate(**model_inputs, max_length=128)
-        r = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        print('output:', r)
-        results.append(r)
-    return results
-
-
-if __name__ == '__main__':
-    predict()
+    r = predict(example_sentences)
+    for i, o in zip(example_sentences, r):
+        print(i, ' -> ', o)
