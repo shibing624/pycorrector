@@ -584,8 +584,7 @@ output:
 
 ```
 
-### Seq2Seq模型
-#### Bart 模型
+### Bart模型
 
 ```python
 from transformers import BertTokenizerFast
@@ -611,13 +610,13 @@ output:
 
 如果需要训练Bart模型，请参考 https://github.com/shibing624/textgen/blob/main/examples/seq2seq/training_bartseq2seq_zh_demo.py
 
-- Release models
+#### Release models
 
 基于SIGHAN+Wang271K中文纠错数据集训练的Bart模型，已经release到HuggingFace Models:
 
 - BART模型：模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 
-#### ConvSeq2Seq 模型
+### ConvSeq2Seq模型
 [pycorrector/seq2seq](pycorrector/seq2seq) 模型使用示例:
 
 
