@@ -51,6 +51,18 @@ def main(args):
         model = Seq2SeqCorrector()
         eval.eval_sighan2015_by_model_batch(model.seq2seq_correct)
         # Sentence Level: acc:0.3545, precision:0.2415, recall:0.1436, f1:0.1801, cost time:404.95 s
+    if args.data == 'sighan_15' and args.model == 'bartseq2seq':
+        from transformers import BertTokenizerFast
+        from textgen import BartSeq2SeqModel
+        tokenizer = BertTokenizerFast.from_pretrained('shibing624/bart4csc-base-chinese')
+        model = BartSeq2SeqModel(
+            encoder_type='bart',
+            encoder_decoder_type='bart',
+            encoder_decoder_name='shibing624/bart4csc-base-chinese',
+            tokenizer=tokenizer,
+            args={"max_length": 128})
+        eval.eval_sighan2015_by_model_batch(model.predict)
+        # Sentence Level: acc:0.6845, precision:0.6984, recall:0.6354, f1:0.6654
 
     if args.data == 'corpus500' and args.model == 'rule':
         # right_rate:0.486, right_count:243, total_count:500;

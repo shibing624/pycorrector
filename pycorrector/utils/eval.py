@@ -353,12 +353,16 @@ def eval_sighan2015_by_model_batch(correct_fn, sighan_path=sighan_2015_path, ver
             tgts.append(tgt)
 
     res = correct_fn(srcs)
-    for (tgt_pred, pred_detail), src, tgt in zip(res, srcs, tgts):
+    for each_res, src, tgt in zip(res, srcs, tgts):
+        if len(each_res) == 2:
+            tgt_pred, pred_detail = each_res
+        else:
+            tgt_pred = each_res
         if verbose:
             print()
             print('input  :', src)
             print('truth  :', tgt)
-            print('predict:', tgt_pred, pred_detail)
+            print('predict:', each_res)
 
         # 负样本
         if src == tgt:

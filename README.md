@@ -107,16 +107,17 @@ GPU：Tesla V100，显存 32 GB
 | 模型 | Backbone | GPU | Precision | Recall | F1 | QPS |
 | :-- | :-- | :---  | :----- | :--| :--- | :--- |
 | Rule(pycorrector.correct) | kenlm | CPU | 0.6860 | 0.1529 | 0.2500 | 9 |
-| Bert-correction | bert-base-chinese | GPU | 0.8029 | 0.4052 | 0.5386 | 2 |
+| BERT | bert-base-chinese | GPU | 0.8029 | 0.4052 | 0.5386 | 2 |
+| BART | fnlp/bart-base-chinese | GPU | 0.6984 | 0.6354 | 0.6654 | 58 |
 | T5 | byt5-small | GPU | 0.5220 | 0.3941 | 0.4491 | 111 |
-| mengzi-t5-base-chinese-correction | mengzi-t5-base | GPU | 0.8321 | 0.6390 | 0.7229 | 214 |
-| convseq2seq-chinese-correction | ConvSeq2Seq | GPU | 0.2415 | 0.1436 | 0.1801 | 6 |
-| **macbert4csc-base-chinese** | **macbert-base-chinese** | **GPU** | **0.8254** | **0.7311** | **0.7754** | **224** |
+| Mengzi-T5 | mengzi-t5-base | GPU | 0.8321 | 0.6390 | 0.7229 | 214 |
+| ConvSeq2Seq | ConvSeq2Seq | GPU | 0.2415 | 0.1436 | 0.1801 | 6 |
+| **MacBert** | **macbert-base-chinese** | **GPU** | **0.8254** | **0.7311** | **0.7754** | **224** |
 
 ### 结论
 
 - 中文拼写纠错模型效果最好的是**MacBert**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：[shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
-- 中文语法纠错模型效果最好的是**Seq2Seq**，模型名称是*convseq2seq*，model：[convseq2seq_correction.tar.gz](https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz)
+- 中文语法纠错模型效果最好的是**Seq2Seq**，模型名称是*shibing624/bart4csc-base-chinese*，huggingface model：[shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 - 最具潜力的模型是**T5**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：[shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
 
 # Install
@@ -584,7 +585,39 @@ output:
 ```
 
 ### Seq2Seq模型
+#### Bart 模型
 
+```python
+from transformers import BertTokenizerFast
+from textgen import BartSeq2SeqModel
+
+tokenizer = BertTokenizerFast.from_pretrained('shibing624/bart4csc-base-chinese')
+model = BartSeq2SeqModel(
+    encoder_type='bart',
+    encoder_decoder_type='bart',
+    encoder_decoder_name='shibing624/bart4csc-base-chinese',
+    tokenizer=tokenizer,
+    args={"max_length": 128, "eval_batch_size": 128})
+sentences = ["少先队员因该为老人让坐"]
+print(model.predict(sentences))
+```
+
+
+output:
+
+```shell
+['少先队员应该为老人让座']
+```
+
+如果需要训练Bart模型，请参考 https://github.com/shibing624/textgen/blob/main/examples/seq2seq/training_bartseq2seq_zh_demo.py
+
+- Release models
+
+基于SIGHAN+Wang271K中文纠错数据集训练的Bart模型，已经release到HuggingFace Models:
+
+- BART模型：模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
+
+#### ConvSeq2Seq 模型
 [pycorrector/seq2seq](pycorrector/seq2seq) 模型使用示例:
 
 
