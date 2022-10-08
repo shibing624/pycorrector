@@ -78,7 +78,45 @@ class MacBertCorrector(object):
             sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
             details.extend(sub_details)
         return text_new, details
-
+    
+    def macbert_correct_probs(self, text ,threshold):
+        """
+        句子纠错
+        :param text: 句子文本, threshold: 阈值
+        :return: corrected_text, list[list], [error_word, correct_word, begin_pos, end_pos] , probs:每个词模型判断的准确概率
+        """
+        text_new = ''
+        details = []
+        # 长句切分为短句
+        blocks = split_text_by_maxlen(text, maxlen=128)
+        block_texts = [block[0] for block in blocks]
+        inputs = self.tokenizer(block_texts, padding=True, return_tensors='pt').to(device)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+        probs=[]
+        for ids, (text, idx) in zip(outputs.logits, blocks):
+            sub_probs=torch.max(torch.softmax(ids, dim=-1), dim=-1)[0].cpu().numpy()
+            decode_tokens_last=self.tokenizer.decode(inputs['input_ids'][idx], skip_special_tokens=True)
+            decode_tokens_new=self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True)
+            decode_tokens_last=decode_tokens_last.split(' ')
+            decode_tokens_new=decode_tokens_new.split(' ')
+            if len(decode_tokens_new) != len(decode_tokens_last):
+                continue
+            decode_tokens=''
+            for i in range(len(decode_tokens_last)):
+                if sub_probs[i+1]>=threshold:
+                    decode_tokens+=decode_tokens_new[i]
+                else:
+                    decode_tokens+=decode_tokens_last[i]
+            decode_tokens=decode_tokens.replace(' ', '')
+            corrected_text = decode_tokens[:len(text)]
+            corrected_text, sub_details = get_errors(corrected_text, text)
+            text_new += corrected_text
+            sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
+            details.extend(sub_details)
+            probs.extend(sub_probs)
+        return text_new, details ,probs
+    
     def batch_macbert_correct(self, texts: List[str], max_length: int = 128):
         """
         句子纠错
