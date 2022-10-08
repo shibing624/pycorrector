@@ -64,8 +64,6 @@ error_sentences.extend(badcase)
 start = time.time()
 bertCorrector = macbert_corrector.MacBertCorrector()
 for line in error_sentences:
-    threshold=0.95
-    correct_sent, err ,probs= bertCorrector.macbert_correct_probs(line,threshold)
+    correct_sent, err = bertCorrector.macbert_correct(line, threshold=0.95)
     print("original sentence:{} => {} err:{}".format(line, correct_sent, err))
-    print(probs)
 print('time spend:', time.time() - start, ' sentence count:', len(error_sentences))
