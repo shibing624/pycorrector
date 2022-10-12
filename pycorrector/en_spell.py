@@ -2,7 +2,7 @@
 """
 @author:XuMing(xuming624@qq.com)
 @description: english correction
-refer to http://norvig.com/spell-correct.html
+refer: http://norvig.com/spell-correct.html
 """
 
 import gzip
@@ -29,7 +29,7 @@ class EnSpell(object):
 
     def _init(self):
         with gzip.open(config.en_dict_path, "rb") as f:
-            all_word_freq_dict = json.loads(f.read(), encoding="utf-8")
+            all_word_freq_dict = json.loads(f.read())
             word_freq = {}
             for k, v in all_word_freq_dict.items():
                 # 英语常用单词3万个，取词频高于400
