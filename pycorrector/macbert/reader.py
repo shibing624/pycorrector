@@ -7,36 +7,31 @@ import os
 import json
 import torch
 from torch.utils.data import Dataset
-
+from transformers import BertTokenizerFast
 from torch.utils.data import DataLoader
 
 
 class DataCollator:
-    def __init__(self, tokenizer):
+    def __init__(self, tokenizer: BertTokenizerFast):
         self.tokenizer = tokenizer
 
     def __call__(self, data):
         ori_texts, cor_texts, wrong_idss = zip(*data)
-        encoded_texts = [self.tokenizer.tokenize(t) for t in ori_texts]
-        max_len = max([len(t) for t in encoded_texts]) + 2
+        encoded_texts = [self.tokenizer(t, return_offsets_mapping=True, add_special_tokens=False) for t in ori_texts]
+        max_len = max([len(t['input_ids']) for t in encoded_texts]) + 2
         det_labels = torch.zeros(len(ori_texts), max_len).long()
+
         for i, (encoded_text, wrong_ids) in enumerate(zip(encoded_texts, wrong_idss)):
+            off_mapping = encoded_text['offset_mapping']
             for idx in wrong_ids:
-                margins = []
-                for word in encoded_text[:idx]:
-                    if word == '[UNK]':
+                for j, (b, e) in enumerate(off_mapping):
+                    if b <= idx < e:
+                        #j+1是因为前面的 CLS token
+                        det_labels[i, j+1] = 1
                         break
-                    if word.startswith('##'):
-                        margins.append(len(word) - 3)
-                    else:
-                        margins.append(len(word) - 1)
-                margin = sum(margins)
-                move = 0
-                while (abs(move) < margin) or (idx + move >= len(encoded_text)) \
-                        or encoded_text[idx + move].startswith('##'):
-                    move -= 1
-                det_labels[i, idx + move + 1] = 1
-        return ori_texts, cor_texts, det_labels
+                    
+        return list(ori_texts), list(cor_texts), det_labels
+
 
 
 class CscDataset(Dataset):
