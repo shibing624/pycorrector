@@ -26,12 +26,11 @@ class DataCollator:
             for idx in wrong_ids:
                 for j, (b, e) in enumerate(off_mapping):
                     if b <= idx < e:
-                        #j+1是因为前面的 CLS token
-                        det_labels[i, j+1] = 1
+                        # j+1是因为前面的 CLS token
+                        det_labels[i, j + 1] = 1
                         break
-                    
-        return list(ori_texts), list(cor_texts), det_labels
 
+        return list(ori_texts), list(cor_texts), det_labels
 
 
 class CscDataset(Dataset):

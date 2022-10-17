@@ -6,7 +6,7 @@
 import sys
 import torch
 import argparse
-from transformers import BertTokenizer
+from transformers import BertTokenizerFast
 from loguru import logger
 sys.path.append('../..')
 
@@ -23,7 +23,7 @@ class Inference:
                  vocab_path='output/macbert4csc/vocab.txt',
                  cfg_path='train_macbert4csc.yml'):
         logger.debug("device: {}".format(device))
-        self.tokenizer = BertTokenizer.from_pretrained(vocab_path)
+        self.tokenizer = BertTokenizerFast.from_pretrained(vocab_path)
         cfg.merge_from_file(cfg_path)
         
         if 'macbert4csc' in cfg_path:

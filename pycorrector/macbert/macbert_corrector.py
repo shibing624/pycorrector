@@ -7,7 +7,7 @@ import operator
 import sys
 import time
 import os
-from transformers import BertTokenizer, BertForMaskedLM
+from transformers import BertTokenizerFast, BertForMaskedLM
 import torch
 from typing import List
 from loguru import logger
@@ -49,7 +49,7 @@ class MacBertCorrector(object):
             model_dir = "shibing624/macbert4csc-base-chinese"
             logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
 
-        self.tokenizer = BertTokenizer.from_pretrained(model_dir)
+        self.tokenizer = BertTokenizerFast.from_pretrained(model_dir)
         self.model = BertForMaskedLM.from_pretrained(model_dir)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))

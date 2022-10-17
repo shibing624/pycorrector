@@ -7,9 +7,9 @@
 import gradio as gr
 import operator
 import torch
-from transformers import BertTokenizer, BertForMaskedLM
+from transformers import BertTokenizerFast, BertForMaskedLM
 
-tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+tokenizer = BertTokenizerFast.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 
 

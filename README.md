@@ -451,10 +451,10 @@ query:我的家乡是有明的渔米之乡 => 我的家乡是有名的渔米之�
 ```python
 import operator
 import torch
-from transformers import BertTokenizer, BertForMaskedLM
+from transformers import BertTokenizerFast, BertForMaskedLM
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-tokenizer = BertTokenizer.from_pretrained("shibing624/macbert4csc-base-chinese")
+tokenizer = BertTokenizerFast.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")
 model.to(device)
 
