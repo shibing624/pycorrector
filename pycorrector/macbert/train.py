@@ -12,6 +12,7 @@ from transformers import BertTokenizerFast, BertForMaskedLM
 import argparse
 from collections import OrderedDict
 from loguru import logger
+
 sys.path.append('../..')
 
 from pycorrector.macbert.reader import make_loaders, DataCollator
@@ -22,6 +23,7 @@ from pycorrector.macbert.defaults import _C as cfg
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"
 
 
 def args_parse(config_file=''):
