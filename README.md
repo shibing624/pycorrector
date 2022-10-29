@@ -80,7 +80,7 @@ PS：
 
 # Demo
 
-Official Demo: https://www.mulanai.com/product/corrector/
+Official Demo: http://42.193.145.218/product/corrector/
 
 HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
