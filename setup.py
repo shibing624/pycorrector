@@ -40,7 +40,7 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
     platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
-    keywords='NLP,correction,Chinese error correction,pycorrector',
+    keywords='pycorrector,correction,Chinese error correction,NLP',
     install_requires=[
         "jieba",
         "pypinyin",

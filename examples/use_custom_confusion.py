@@ -7,7 +7,7 @@
 import sys
 
 sys.path.append("..")
-from pycorrector import Corrector
+from pycorrector import ConfusionCorrector, Corrector
 
 if __name__ == '__main__':
     error_sentences = [
@@ -25,6 +25,6 @@ if __name__ == '__main__':
         print(i, ' -> ', m.detect(i), m.correct(i))
 
     print('*' * 42)
-    m = Corrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
+    m = ConfusionCorrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
     for i in error_sentences:
-        print(i, ' -> ', m.detect(i), m.correct(i))
+        print(i, ' -> ', m.confusion_correct(i))
