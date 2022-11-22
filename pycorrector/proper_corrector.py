@@ -61,7 +61,7 @@ class ProperCorrector:
         self.name = 'ProperCorrector'
         # proper name, 专名词典，包括成语、俗语、专业领域词等 format: 词语
         self.proper_names = load_set_file(proper_name_path)
-        # stroke, 五笔笔画字典 format: 字:五笔笔画
+        # stroke, 笔划字典 format: 字:笔划，如：万，笔划是横(h),折(z),撇(p),组合起来是：hzp
         self.stroke_dict = load_dict_file(stroke_path)
 
     def get_stroke(self, char):
