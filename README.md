@@ -751,13 +751,15 @@ Xu, M. Pycorrector: Text error correction tool (Version 0.4.2) [Computer softwar
 
 BibTeX:
 ```latex
-@software{Xu_Pycorrector_Text_error,
-author = {Xu, Ming},
-title = {Pycorrector: Text error correction tool},
-url = {https://github.com/shibing624/pycorrector},
-version = {0.4.2}
+@misc{Xu_Pycorrector_Text_error,
+  title={Pycorrector: Text error correction tool},
+  author={Xu Ming},
+  year={2021},
+  howpublished={\url{https://github.com/shibing624/pycorrector}},
 }
 ```
+
+
 
 # License
 
