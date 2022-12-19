@@ -198,6 +198,9 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 python train.py
 ```
 
+注意：MacBert4CSC模型只能处理对齐文本的纠错问题，不能处理多字、少字的错误，所以训练集original_text需要和correct_text长度一样。
+否则会报错：“ValueError: Expected input batch_size (*A) to match target batch_size (*B).”
+
 ### 预测
 - 方法一：直接加载保存的ckpt文件：
 ```shell
