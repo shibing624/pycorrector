@@ -129,15 +129,16 @@ def parse_args():
                         help='train dataset')
     parser.add_argument('--test_path', type=str, default=os.path.join(pwd_path, '../data/cn/sighan_2015/test.tsv'),
                         help='test dataset')
-    parser.add_argument('--save_dir', type=str, default='./output/mengzi-t5-base-chinese-correction-test/', help='save dir')
+    parser.add_argument('--save_dir', type=str, default='./output/mengzi-t5-base-chinese-correction-test/',
+                        help='save dir')
     parser.add_argument('--model_name_or_path', type=str, default='Langboat/mengzi-t5-base', help='pretrained model')
     parser.add_argument('--max_len', type=int, default=128, help='max length')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size')
     parser.add_argument('--logging_steps', type=int, default=100, help='logging steps num')
     parser.add_argument('--warmup_steps', type=int, default=200, help='logging steps num')
     parser.add_argument('--eval_steps', type=int, default=250, help='eval steps num')
-    parser.add_argument('--epochs', type=int, default=10, help='train epochs num')
-    parser.add_argument('--max_steps', type=int, default=100, help='train max steps') # default 5000
+    parser.add_argument('--epochs', type=int, default=3, help='train epochs num')
+    parser.add_argument('--max_steps', type=int, default=-1, help='train max steps')  # 如果设置了max_steps>0，将取代epochs
     parser.add_argument("--do_train", action="store_true", help="whether not to do train")
     parser.add_argument("--do_eval", action="store_true", help="whether not to do eval")
     args = parser.parse_args()
@@ -206,7 +207,7 @@ def train():
         cache_dir=model_args.cache_dir,
         max_length=data_args.max_len
     )
-    
+
     model = T5ForConditionalGeneration.from_pretrained(
         model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
