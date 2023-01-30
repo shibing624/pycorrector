@@ -47,6 +47,7 @@ setup(
         "numpy",
         "six",
         "loguru",
+        "kenlm",
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},

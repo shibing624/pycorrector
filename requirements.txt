@@ -3,3 +3,4 @@ pypinyin
 numpy
 six
 loguru
+kenlm

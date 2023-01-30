@@ -156,7 +156,7 @@ docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 * kenlm安装
 
 ```
-pip install https://github.com/kpu/kenlm/archive/master.zip
+pip install kenlm
 ```
 
 [安装kenlm-wiki](https://github.com/shibing624/pycorrector/wiki/Install-kenlm)
