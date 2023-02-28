@@ -29,7 +29,9 @@ def main(args):
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_sighan2015_by_model_batch(model.batch_macbert_correct)
-        # Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:4.90 s
+        # macbert-base: Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:4.90 s
+        # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
+        # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
     if args.data == 'sighan_15' and args.model == 'ernie':
         # right_rate:0.297029702970297, right_count:30, total_count:101;
         # recall_rate:0.28125, recall_right_count:27, recall_total_count:96, spend_time:655 s
