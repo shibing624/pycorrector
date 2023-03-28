@@ -658,7 +658,7 @@ output：
 
 | 数据集 | 语料 | 下载链接 | 压缩包大小 |
 | :------- | :--------- | :---------: | :---------: |
-| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
+| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ) <br/> [shibing624/CSC](https://huggingface.co/datasets/shibing624/CSC)| 106M |
 | **`原始SIGHAN数据集`** | SIGHAN13 14 15 | [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)| 339K |
 | **`原始Wang271K数据集`** | Wang271K | [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)| 93M |
 | **`人民日报2014版语料`** | 人民日报2014版 | [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)| 383M |
@@ -692,6 +692,13 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
     }
 ]
 ```
+
+字段解释：
+- id：唯一标识符，无意义
+- original_text: 原始错误文本
+- wrong_ids： 错误字的位置，从0开始
+- correct_text: 纠正后的文本
+
 #### 自有数据集
 
 可以使用自己数据集训练纠错模型，把自己数据集标注好，保存为跟训练样本集一样的json格式，然后加载数据训练模型即可。
