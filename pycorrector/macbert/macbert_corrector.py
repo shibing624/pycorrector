@@ -55,7 +55,7 @@ class MacBertCorrector(object):
         logger.debug("Use device: {}".format(device))
         logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
 
-    def macbert_correct(self, text, threshold=0.7, verbose=False):
+    def macbert_correct(self, text, threshold=0.7, verbose=False, maxlen=128):
         """
         句子纠错
         :param text: 句子文本
@@ -66,15 +66,15 @@ class MacBertCorrector(object):
         text_new = ''
         details = []
         # 长句切分为短句
-        blocks = split_text_by_maxlen(text, maxlen=128)
+        blocks = split_text_by_maxlen(text, maxlen=maxlen)
         block_texts = [block[0] for block in blocks]
         inputs = self.tokenizer(block_texts, padding=True, return_tensors='pt').to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
 
-        for ids, (text, idx) in zip(outputs.logits, blocks):
+        for id, (ids, (text, idx)) in enumerate(zip(outputs.logits, blocks)):
             decode_tokens_new = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).split(' ')
-            decode_tokens_old = self.tokenizer.decode(inputs['input_ids'][idx], skip_special_tokens=True).split(' ')
+            decode_tokens_old = self.tokenizer.decode(inputs['input_ids'][id], skip_special_tokens=True).split(' ')
             if len(decode_tokens_new) != len(decode_tokens_old):
                 continue
             probs = torch.max(torch.softmax(ids, dim=-1), dim=-1)[0].cpu().numpy()
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     ]
     t1 = time.time()
     for sent in error_sentences:
-        corrected_sent, err = m.macbert_correct(sent, 0.6)
+        corrected_sent, err = m.macbert_correct(sent, 0.6, maxlen=8)
         print("original sentence:{} => {} err:{}".format(sent, corrected_sent, err))
     print('[single]spend time:', time.time() - t1)
     t2 = time.time()
