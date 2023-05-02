@@ -104,16 +104,16 @@ python examples/gradio_demo.py
 
 GPU：Tesla V100，显存 32 GB
 
-| Model Name |Model Hub Link|                       | Backbone                 | GPU | Precision | Recall | F1 | QPS     |
-|:---------------|:-----------|:-------------------------| :---  | :----- | :--| :--- |:--------|
-| Rule |-| kenlm                    | CPU | 0.6860 | 0.1529 | 0.2500 | 9       |
-| BERT-CSC                  |-| bert-base-chinese        | GPU | 0.8029 | 0.4052 | 0.5386 | 2       |
-| BART-CSC                  |[shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)| fnlp/bart-base-chinese   | GPU | 0.6984 | 0.6354 | 0.6654 | 58      |
-| T5-CSC                    |-| byt5-small               | GPU | 0.5220 | 0.3941 | 0.4491 | 111     |
-| Mengzi-T5-CSC             |[shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)| mengzi-t5-base           | GPU | 0.8321 | 0.6390 | 0.7229 | 214     |
-| ConvSeq2Seq-CSC           |-| ConvSeq2Seq              | GPU | 0.2415 | 0.1436 | 0.1801 | 6       |
-| ChatGLM-6B-CSC            |[shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)| ChatGLM                  | GPU | 0.5263 | 0.4052 | 0.4579 | 4       |
-| **MacBERT-CSC**           |[shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)| **macbert-base-chinese** | **GPU** | **0.8254** | **0.7311** | **0.7754** | **224** |
+| Model Name | Model Hub Link                                                                                                      | Backbone                     | GPU | Precision | Recall | F1 | QPS     |
+|:--------|:--------------------------------------------------------------------------------------------------------------------|:-----------------------------|:----|:----------| :--| :--- |:--------|
+| Rule | -                                                                                                                   | kenlm                        | CPU | 0.6860    | 0.1529 | 0.2500 | 9       |
+| BERT-CSC                  | -                                                                                                                   | bert-base-chinese            | GPU | 0.8029    | 0.4052 | 0.5386 | 2       |
+| BART-CSC                  | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese       | GPU | 0.6984    | 0.6354 | 0.6654 | 58      |
+| T5-CSC                    | -                                                                                                                   | byt5-small                   | GPU | 0.5220    | 0.3941 | 0.4491 | 111     |
+| Mengzi-T5-CSC             | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base               | GPU | **0.8321**    | 0.6390 | 0.7229 | 214     |
+| ConvSeq2Seq-CSC           | -                                                                                                                   | ConvSeq2Seq                  | GPU | 0.2415    | 0.1436 | 0.1801 | 6       |
+| ChatGLM-6B-CSC            | [shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)                       | ChatGLM                      | GPU | 0.5263    | 0.4052 | 0.4579 | 4       |
+| **MacBERT-CSC**           | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254  | **0.7311** | **0.7754** | **224** |
 
 ### 结论
 
