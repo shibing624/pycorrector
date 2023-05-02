@@ -120,7 +120,7 @@ GPU：Tesla V100，显存 32 GB
 - 中文拼写纠错模型效果最好的是**MacBert-CSC**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：[shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
 - 中文语法纠错模型效果最好的是**BART-CSC**，模型名称是*shibing624/bart4csc-base-chinese*，huggingface model：[shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 - 最具潜力的模型是**Mengzi-T5-CSC**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：[shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)，未改变模型结构，仅fine-tune中文纠错数据集，已经在`SIGHAN 2015`取得接近SOTA的效果
-- 基于ChatGLM-6B的纠错微调模型效果也不错，模型名称是*shibing624/chatglm-6b-csc-zh-lora*，huggingface model：[shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)，大模型不仅能改错还能句子润色，但是模型太大，推理速度慢，不适合线上部署
+- 基于ChatGLM-6B的纠错微调模型效果也不错，模型名称是*shibing624/chatglm-6b-csc-zh-lora*，huggingface model：[shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)，大模型不仅能改错还能润色句子，但是模型太大，推理速度慢
 
 # Install
 
