@@ -1,5 +1,12 @@
-![alt text](docs/pycorrector.png)
+<div align="center">
+  <a href="https://github.com/shibing624/pycorrector">
+    <img src="https://github.com/shibing624/pycorrector/blob/master/docs/pycorrector.png" alt="Logo" height="156">
+  </a>
+</div>
 
+-----------------
+
+# pycorrector: useful python text correction toolkit
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
 [![Downloads](https://pepy.tech/badge/pycorrector)](https://pepy.tech/project/pycorrector)
 [![GitHub contributors](https://img.shields.io/github/contributors/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/graphs/contributors)
@@ -10,9 +17,8 @@
 
 [English](README.en.md) | 简体中文
 
-# pycorrector
 
-中文文本纠错工具。支持中文音似、形似、语法错误纠正，python3开发。
+**pycorrector**: 中文文本纠错工具。支持中文音似、形似、语法错误纠正，python3开发。
 
 **pycorrector**实现了Kenlm、ConvSeq2Seq、BERT、MacBERT、ELECTRA、ERNIE、Transformer等多种模型的文本纠错，并在SigHAN数据集评估各模型的效果。
 
