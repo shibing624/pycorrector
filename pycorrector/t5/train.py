@@ -176,7 +176,7 @@ def train():
         "do_train": args.do_train,
         "do_eval": args.do_eval,
         "fp16": False,
-        "use_cache": False,
+        # "use_cache": False,
         "max_steps": args.max_steps,
     }
     parser = HfArgumentParser(
@@ -212,14 +212,10 @@ def train():
         model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
     )
-    # add custom word
-    # tokenizer.add_tokens(['，', '（', '）'])
-    # model.resize_token_embeddings(len(tokenizer))
 
-    # overwriting the default max_length of 20
-    tokenizer.model_max_length = 128
-    model.config.max_length = 128
-
+    # overwriting the default max_length
+    tokenizer.model_max_length = data_args.max_len
+    model.config.max_length = data_args.max_len
     logger.info(f'train_dataset: {train_dataset[:3]}')
 
     def tokenize_dataset(tokenizer, dataset, max_len):
@@ -272,10 +268,7 @@ def train():
         train_dataset=train_dataset,
         eval_dataset=valid_dataset,
     )
-    trainer.train(
-        model_path=model_args.model_name_or_path if os.path.isdir(
-            model_args.model_name_or_path) else None
-    )
+    trainer.train()
 
     trainer.save_model()
     # For convenience, we also re-save the tokenizer to the same directory,
