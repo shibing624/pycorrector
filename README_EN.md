@@ -1,16 +1,24 @@
-![alt text](docs/pycorrector.png)
+[**🇨🇳中文**](https://github.com/shibing624/pycorrector/blob/master/README.md) | [**🌐English**](https://github.com/shibing624/pycorrector/blob/master/README_EN.md) | [**📖文档/Docs**](https://github.com/shibing624/pycorrector/wiki) | [**🤖模型/Models**](https://huggingface.co/shibing624) 
 
+<div align="center">
+  <a href="https://github.com/shibing624/pycorrector">
+    <img src="https://github.com/shibing624/pycorrector/blob/master/docs/pycorrector.png" alt="Logo" height="156">
+  </a>
+</div>
+
+-----------------
+
+# pycorrector: useful python text correction toolkit
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pycorrector/LICENSE)
-![Language](https://img.shields.io/badge/Language-Python-blue.svg)
-![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
+[![Downloads](https://pepy.tech/badge/pycorrector)](https://pepy.tech/project/pycorrector)
+[![GitHub contributors](https://img.shields.io/github/contributors/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/graphs/contributors)
+[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![python_vesion](https://img.shields.io/badge/Python-3.6%2B-green.svg)](requirements.txt)
+[![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
+[![Wechat Group](http://vlog.sfyc.ltd/wechat_everyday/wxgroup_logo.png?imageView2/0/w/60/h/20)](#wechat-group)
 
-English | [简体中文](README.md)
 
-# pycorrector
-
-Chinese Text Error Correction Tool.
+**pycorrector**: Chinese Text Error Correction Toolkit.
 
 
 **pycorrector** Use the language model to detect errors, pinyin feature and shape feature to correct chinese text
