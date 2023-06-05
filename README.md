@@ -1,3 +1,5 @@
+[**🇨🇳中文**](https://github.com/shibing624/pycorrector/blob/master/README.md) | [**🌐English**](https://github.com/shibing624/pycorrector/blob/master/README_EN.md) | [**📖文档/Docs**](https://github.com/shibing624/pycorrector/wiki) | [**🤖模型/Models**](https://huggingface.co/shibing624) 
+
 <div align="center">
   <a href="https://github.com/shibing624/pycorrector">
     <img src="https://github.com/shibing624/pycorrector/blob/master/docs/pycorrector.png" alt="Logo" height="156">
@@ -14,8 +16,6 @@
 [![python_vesion](https://img.shields.io/badge/Python-3.6%2B-green.svg)](requirements.txt)
 [![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
 [![Wechat Group](http://vlog.sfyc.ltd/wechat_everyday/wxgroup_logo.png?imageView2/0/w/60/h/20)](#wechat-group)
-
-[English](README.en.md) | 简体中文
 
 
 **pycorrector**: 中文文本纠错工具。支持中文音似、形似、语法错误纠正，python3开发。
@@ -768,7 +768,7 @@ BibTeX:
 ```latex
 @misc{Xu_Pycorrector_Text_error,
   title={Pycorrector: Text error correction tool},
-  author={Xu Ming},
+  author={Ming Xu},
   year={2021},
   howpublished={\url{https://github.com/shibing624/pycorrector}},
 }
