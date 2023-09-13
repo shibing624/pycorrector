@@ -10,7 +10,7 @@
 
 # pycorrector: useful python text correction toolkit
 [![PyPI version](https://badge.fury.io/py/pycorrector.svg)](https://badge.fury.io/py/pycorrector)
-[![Downloads](https://pepy.tech/badge/pycorrector)](https://pepy.tech/project/pycorrector)
+[![Downloads](https://static.pepy.tech/badge/pycorrector)](https://pepy.tech/project/pycorrector)
 [![GitHub contributors](https://img.shields.io/github/contributors/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/graphs/contributors)
 [![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![python_vesion](https://img.shields.io/badge/Python-3.6%2B-green.svg)](requirements.txt)
