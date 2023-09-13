@@ -76,7 +76,7 @@ class MacBertCorrector(object):
             decode_tokens_new = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).split(' ')
             decode_tokens_old = self.tokenizer.decode(inputs['input_ids'][id], skip_special_tokens=True).split(' ')
             if len(decode_tokens_new) != len(decode_tokens_old):
-                continue
+                return text, details
             probs = torch.max(torch.softmax(ids, dim=-1), dim=-1)[0].cpu().numpy()
             decode_tokens = ''
             for i in range(len(decode_tokens_old)):
