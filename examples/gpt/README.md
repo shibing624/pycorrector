@@ -1,54 +1,27 @@
-# ERNIE for Chinese Spelling Correction
+# LLaMA for Chinese Spelling Correction
 
 ## 简介
 
-中文文本纠错任务是一项NLP基础任务，其输入是一个可能含有语法错误的中文句子，输出是一个正确的中文句子。语法错误类型很多，有多字、少字、错别字等，目前最常见的错误类型是`错别字`。大部分研究工作围绕错别字这一类型进行研究。本项目基于[PaddleNLP](https://github.com/PaddlePaddle/PaddleNLP)模型库实现了百度在ACL 2021上提出结合拼音特征的Softmask策略的中文错别字纠错的下游任务网络，并提供预训练模型，模型结构如下：
+中文文本纠错任务是一项NLP基础任务，其输入是一个可能含有语法错误的中文句子，输出是一个正确的中文句子。
+语法错误类型很多，有多字、少字、错别字等，目前最常见的错误类型是`错别字`。大部分研究工作围绕错别字这一类型进行研究。
+本项目基于LLaMA实现了中文拼写纠错和语法纠错。
 
-![image](https://user-images.githubusercontent.com/10826371/131974040-fc84ec04-566f-4310-9839-862bfb27172e.png)
-
-以下是本项目的简要目录结构及说明：
-
-```text
-.
-├── README.md                   # 文档
-├── download.py                 # 下载SIGHAN测试集
-├── predict.py                  # 预测标准输入的句子
-├── predict_sighan.py           # 生成SIGHAN测试集的预测结果
-├── run_sighan_predict.sh       # 生成训练后模型在SIGHAN测试集的预测结果并输出预测效果
-├── sighan_evaluate.py          # 评估模型在SIGHAN测试集上预测效果
-├── train.py                    # 训练脚本
-```
-
-* 注：论文中暂未开源融合字音特征的预训练模型参数(即MLM-phonetics)，所以本文提供的纠错模型是在ERNIE-1.0的参数上进行Finetune，纠错模型结构与论文保持一致。
 
 ## 安装依赖项
 
-* paddle>=2.2.0
-* paddlenlp>=2.2.0
-* pypinyin 
+- loguru
+- transformers>=4.33.2
+- datasets
+- tqdm>=4.47.0
+- accelerate>=0.21.0
+- peft>=0.5.0
 
 运行命令：
 ```
-pip install paddlepaddle-gpu paddlenlp pypinyin # pip install paddlepaddle for cpu
+pip install transformers peft -U
 ```
 
 ## 模型训练
-
-### 参数
-- `model_name_or_path` 目前支持的预训练模型有："ernie-1.0"。
-- `max_seq_length` 表示最大句子长度，超过该长度的部分将被切分成下一个样本。
-- `batch_size` 表示每次迭代**每张卡**上的样本数目。
-- `learning_rate` 表示基础学习率大小，将于learning rate scheduler产生的值相乘作为当前学习率。
-- `epochs` 表示训练轮数。
-- `logging_steps` 表示日志打印间隔步数。
-- `save_steps` 表示模型保存及评估间隔步数。
-- `output_dir` 表示模型保存路径。
-- `device` 表示训练使用的设备, 'gpu'表示使用GPU, 'xpu'表示使用百度昆仑卡, 'cpu'表示使用CPU。
-- `seed` 表示随机数种子。
-- `weight_decay` 表示AdamW的权重衰减系数。
-- `warmup_proportion` 表示学习率warmup系数。
-- `pinyin_vocab_file_path` 拼音字表路径。默认为当前目录下的`pinyin_vocab.txt`文件。
-- `extra_train_ds_dir` 额外纠错训练集目录。用户可在该目录下提供文件名以`txt`为后缀的纠错数据集文件，以增大训练样本。默认为None。
 
 ### 训练数据
 
@@ -137,7 +110,7 @@ Source: 人生就是如此，经过磨练才能让自己更加拙壮，才能使
 Target: 人生就是如此，经过磨练才能让自己更加茁壮，才能使自己更加乐观。
 ```
 
-### Taskflow一键预测
+### pycorrector一键预测
 可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
 
 ```python
@@ -158,7 +131,3 @@ print(text_correction('人生就是如此，经过磨练才能让自己更加拙
 '''
 ```
 
-
-## 参考文献
-* Ruiqing Zhang, Chao Pang et al. "Correcting Chinese Spelling Errors with Phonetic Pre-training", ACL, 2021
-* DingminWang et al. "A Hybrid Approach to Automatic Corpus Generation for Chinese Spelling Check", EMNLP, 2018
