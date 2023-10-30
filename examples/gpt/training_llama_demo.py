@@ -62,8 +62,13 @@ def main():
                 peft_name=args.output_dir,
                 args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
             )
-
-        response = model.predict(["介绍下北京", "介绍下南京", "给出5个必去武汉的理由"])
+        prefix = "对这个句子语法纠错"
+        sents = [
+            "美国总统特朗普访日，不仅吸引了美日民众的关注，中国人民也同样密切关注。",
+            "这块名表带带相传",
+            "少先队员因该为老人让坐",
+        ]
+        response = model.predict([prefix + i for i in sents])
         print(response)
 
         # Chat model with multi turns conversation
