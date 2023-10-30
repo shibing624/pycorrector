@@ -6,7 +6,7 @@
 
 import sys
 
-sys.path.append("..")
+sys.path.append("../..")
 from pycorrector import ConfusionCorrector, Corrector
 
 if __name__ == '__main__':

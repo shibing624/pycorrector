@@ -4,8 +4,7 @@
 @description: 
 """
 import sys
-
-sys.path.append("..")
+sys.path.append("../..")
 from pycorrector.proper_corrector import ProperCorrector
 
 if __name__ == '__main__':

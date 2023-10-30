@@ -25,23 +25,6 @@ pip install transformers peft -U
 
 ### 训练数据
 
-该模型在SIGHAN简体版数据集以及[Automatic Corpus Generation生成的中文纠错数据集](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)上进行Finetune训练。PaddleNLP已经集成SIGHAN简体版数据集，以下将介绍如何使用Automatic Corpus Generation生成的中文纠错数据集。
-
-#### 下载数据集
-
-Automatic Corpus Generation生成的中文纠错数据集比较大，下载时间比较长，请耐心等候。运行以下命令完成数据集下载：
-
-```
-python download.py --data_dir ./extra_train_ds/ --url https://github.com/wdimmy/Automatic-Corpus-Generation/raw/master/corpus/train.sgml
-```
-
-#### 预处理数据集
-
-训练脚本要求训练集文件内容以句子对形式呈现，这里提供一个转换脚本，将Automatic Corpus Generation提供的XML文件转换成句子对形式的文件，运行以下命令：
-
-```
-python change_sgml_to_txt.py -i extra_train_ds/train.sgml -o extra_train_ds/train.txt
-```
 
 ### 单卡训练
 
@@ -74,29 +57,9 @@ sh run_sighan_predict.sh
 | Detection F1 | 0.8348    | 0.6534    | 0.7464    |
 | Correction F1| 0.8217    | 0.6302    | 0.7296    |
 
-### 预测部署
+### 预测
 
-#### 模型导出
-
-使用动态图训练结束之后，预测部署需要导出静态图参数，具体做法需要运行模型导出脚本`export_model.py`。以下是脚本参数介绍以及运行方式：
-
-**参数**
-- `params_path` 是指动态图训练保存的参数路径。
-- `output_path` 是指静态图参数导出路径。
-- `pinyin_vocab_file_path` 指拼音表路径。
-- `model_name_or_path` 目前支持的预训练模型有："ernie-1.0"。
-
-**运行方式**
-
-```shell
-python export_model.py --params_path checkpoints/best_model.pdparams --output_path ./infer_model/static_graph_params
-```
-
-其中`checkpoints/best_model.pdparams`是训练过程中保存的参数文件，请更换为实际得到的训练保存路径。
-
-#### 预测
-
-导出模型之后，可以用于预测部署，predict.py文件提供了python预测部署示例。运行方式：
+predict.py文件提供了python预测部署示例。运行方式：
 
 ```python
 python predict.py --model_file infer_model/static_graph_params.pdmodel --params_file infer_model/static_graph_params.pdiparams

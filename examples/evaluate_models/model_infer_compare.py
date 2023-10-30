@@ -4,8 +4,7 @@
 @description: 
 """
 import sys
-
-sys.path.append("..")
+sys.path.append("../..")
 from pycorrector.corrector import Corrector
 from pycorrector.macbert import macbert_corrector
 
@@ -34,7 +33,8 @@ error_sentences = [
     '我的家乡是有明的渔米之乡',
     ' _ ,',
     '我对于宠物出租得事非常认同，因为其实很多人喜欢宠物',  # 出租的事
-    '有了宠物出租地方另一方面还可以题高人类对动物的了解，因为那些专业人氏可以指导我们对于动物的习惯。',  # 题高 => 提高 专业人氏 => 专业人士
+    '有了宠物出租地方另一方面还可以题高人类对动物的了解，因为那些专业人氏可以指导我们对于动物的习惯。',
+    # 题高 => 提高 专业人氏 => 专业人士
     '三个凑皮匠胜过一个诸葛亮也有道理。',  # 凑
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
     '今天心情很好',
@@ -43,11 +43,11 @@ error_sentences = [
 
 
 def main():
-    m_rule = Corrector()
+    m_stat = Corrector()
     m_macbert = macbert_corrector.MacBertCorrector()
     for line in error_sentences:
-        correct_sent, err = m_rule.correct(line)
-        print("rule: {} => {}, err:{}".format(line, correct_sent, err))
+        correct_sent, err = m_stat.correct(line)
+        print("kenlm: {} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_macbert.macbert_correct(line)
         print("macbert: {} => {}, err:{}".format(line, correct_sent, err))
         print()
