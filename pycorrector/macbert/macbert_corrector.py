@@ -4,20 +4,22 @@
 @description:
 """
 import operator
+import os
 import sys
 import time
-import os
-from transformers import BertTokenizerFast, BertForMaskedLM
-import torch
 from typing import List
+
+import torch
 from loguru import logger
+from transformers import BertTokenizerFast, BertForMaskedLM
 
 sys.path.append('../..')
-from pycorrector import config
 from pycorrector.utils.tokenizer import split_text_by_maxlen
+from pycorrector.detector import USER_DATA_DIR
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+macbert_model_dir = os.path.join(USER_DATA_DIR, 'macbert_models/chinese_finetuned_correction/')
 unk_tokens = [' ', '“', '”', '‘', '’', '\n', '…', '—', '擤', '\t', '֍', '玕', '']
 
 
@@ -40,20 +42,15 @@ def get_errors(corrected_text, origin_text):
     return corrected_text, sub_details
 
 
-class MacBertCorrector(object):
-    def __init__(self, model_dir=config.macbert_model_dir):
+class MacBertCorrector:
+    def __init__(self, model_name_or_path="shibing624/macbert4csc-base-chinese"):
         self.name = 'macbert_corrector'
         t1 = time.time()
-        bin_path = os.path.join(model_dir, 'pytorch_model.bin')
-        if not os.path.exists(bin_path):
-            model_dir = "shibing624/macbert4csc-base-chinese"
-            logger.warning(f'local model {bin_path} not exists, use default HF model {model_dir}')
-
-        self.tokenizer = BertTokenizerFast.from_pretrained(model_dir)
-        self.model = BertForMaskedLM.from_pretrained(model_dir)
+        self.tokenizer = BertTokenizerFast.from_pretrained(model_name_or_path)
+        self.model = BertForMaskedLM.from_pretrained(model_name_or_path)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))
-        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_dir, time.time() - t1))
+        logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
     def macbert_correct(self, text, threshold=0.7, verbose=False, maxlen=128):
         """
@@ -76,19 +73,20 @@ class MacBertCorrector(object):
             decode_tokens_new = self.tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).split(' ')
             decode_tokens_old = self.tokenizer.decode(inputs['input_ids'][id], skip_special_tokens=True).split(' ')
             if len(decode_tokens_new) != len(decode_tokens_old):
-                return text, details
-            probs = torch.max(torch.softmax(ids, dim=-1), dim=-1)[0].cpu().numpy()
-            decode_tokens = ''
-            for i in range(len(decode_tokens_old)):
-                if probs[i + 1] >= threshold:
-                    if verbose:
-                        logger.debug(
-                            f"word: {decode_tokens_old[i]}, prob: {probs[i + 1]}, new word: {decode_tokens_new[i]}")
-                    decode_tokens += decode_tokens_new[i]
-                else:
-                    decode_tokens += decode_tokens_old[i]
-            corrected_text = decode_tokens[:len(text)]
-            corrected_text, sub_details = get_errors(corrected_text, text)
+                corrected_text, sub_details = text, []
+            else:
+                probs = torch.max(torch.softmax(ids, dim=-1), dim=-1)[0].cpu().numpy()
+                decode_tokens = ''
+                for i in range(len(decode_tokens_old)):
+                    if probs[i + 1] >= threshold:
+                        if verbose:
+                            logger.debug(
+                                f"word: {decode_tokens_old[i]}, prob: {probs[i + 1]}, new word: {decode_tokens_new[i]}")
+                        decode_tokens += decode_tokens_new[i]
+                    else:
+                        decode_tokens += decode_tokens_old[i]
+                corrected_text = decode_tokens[:len(text)]
+                corrected_text, sub_details = get_errors(corrected_text, text)
             text_new += corrected_text
             sub_details = [(i[0], i[1], idx + i[2], idx + i[3]) for i in sub_details]
             details.extend(sub_details)

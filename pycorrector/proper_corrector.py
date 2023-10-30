@@ -8,12 +8,16 @@ from codecs import open
 
 import pypinyin
 from loguru import logger
-from pycorrector import config
 from pycorrector.utils.math_utils import edit_distance
 from pycorrector.utils.ngram_util import NgramUtil
 from pycorrector.utils.text_utils import is_chinese
 from pycorrector.utils.tokenizer import segment, split_2_short_text
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 
+# 五笔笔画字典
+stroke_path = os.path.join(pwd_path, 'data/stroke.txt')
+# 专名词典，包括成语、俗语、专业领域词等 format: 词语
+proper_name_path = os.path.join(pwd_path, 'data/proper_name.txt')
 
 def load_set_file(path):
     words = set()
@@ -55,8 +59,8 @@ def load_dict_file(path):
 class ProperCorrector:
     def __init__(
             self,
-            proper_name_path=config.proper_name_path,
-            stroke_path=config.stroke_path,
+            proper_name_path=proper_name_path,
+            stroke_path=stroke_path,
     ):
         self.name = 'ProperCorrector'
         # proper name, 专名词典，包括成语、俗语、专业领域词等 format: 词语

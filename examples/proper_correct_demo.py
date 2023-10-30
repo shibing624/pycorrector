@@ -7,11 +7,10 @@ import sys
 
 sys.path.append("..")
 from pycorrector.proper_corrector import ProperCorrector
-from pycorrector import config
 
 if __name__ == '__main__':
     """成语纠错"""
-    m = ProperCorrector(proper_name_path=config.proper_name_path)
+    m = ProperCorrector()
     # 报应接中迩（（而））来。
     # 人群穿（（川））流不息。
     # 这个消息不径（（胫））而走。

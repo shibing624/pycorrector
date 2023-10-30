@@ -7,7 +7,7 @@
 import math
 import torch
 import torch.nn as nn
-from .loss import NegativeSampling
+from pycorrector.deepcontext.loss import NegativeSampling
 
 
 class Context2vec(nn.Module):

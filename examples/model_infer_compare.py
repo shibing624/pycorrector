@@ -5,10 +5,7 @@
 """
 import sys
 
-sys.path.append("../")
-from pycorrector.bert import bert_corrector
-from pycorrector.electra import electra_corrector
-from pycorrector.ernie import ernie_corrector
+sys.path.append("..")
 from pycorrector.corrector import Corrector
 from pycorrector.macbert import macbert_corrector
 
@@ -47,19 +44,10 @@ error_sentences = [
 
 def main():
     m_rule = Corrector()
-    m_bert = bert_corrector.BertCorrector()
-    m_electra = electra_corrector.ElectraCorrector()
-    m_ernie = ernie_corrector.ErnieCorrector()
     m_macbert = macbert_corrector.MacBertCorrector()
     for line in error_sentences:
         correct_sent, err = m_rule.correct(line)
         print("rule: {} => {}, err:{}".format(line, correct_sent, err))
-        correct_sent, err = m_bert.bert_correct(line)
-        print("bert: {} => {}, err:{}".format(line, correct_sent, err))
-        corrected_sent, err = m_electra.electra_correct(line)
-        print("electra: {} => {}, err:{}".format(line, correct_sent, err))
-        corrected_sent, err = m_ernie.ernie_correct(line)
-        print("ernie: {} => {}, err:{}".format(line, correct_sent, err))
         corrected_sent, err = m_macbert.macbert_correct(line)
         print("macbert: {} => {}, err:{}".format(line, correct_sent, err))
         print()

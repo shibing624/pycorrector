@@ -6,47 +6,38 @@
 import operator
 import os
 from codecs import open
-from loguru import logger
-import pypinyin
 
-from pycorrector import config
+import pypinyin
+from loguru import logger
+
 from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
 from pycorrector.utils.tokenizer import segment, split_2_short_text
 
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+# 中文常用字符集
+common_char_path = os.path.join(pwd_path, 'data/common_char_set.txt')
+# 同音字
+same_pinyin_path = os.path.join(pwd_path, 'data/same_pinyin.txt')
+# 形似字
+same_stroke_path = os.path.join(pwd_path, 'data/same_stroke.txt')
+
 
 class Corrector(Detector):
     def __init__(
             self,
-            common_char_path=config.common_char_path,
-            same_pinyin_path=config.same_pinyin_path,
-            same_stroke_path=config.same_stroke_path,
-            language_model_path=config.language_model_path,
-            word_freq_path=config.word_freq_path,
-            custom_word_freq_path='',
-            custom_confusion_path_or_dict='',
-            person_name_path=config.person_name_path,
-            place_name_path=config.place_name_path,
-            stopwords_path=config.stopwords_path,
-            proper_name_path=config.proper_name_path,
-            stroke_path=config.stroke_path
+            common_char_path=common_char_path,
+            same_pinyin_path=same_pinyin_path,
+            same_stroke_path=same_stroke_path,
+            **kwargs,
     ):
-        super(Corrector, self).__init__(
-            language_model_path=language_model_path,
-            word_freq_path=word_freq_path,
-            custom_word_freq_path=custom_word_freq_path,
-            custom_confusion_path_or_dict=custom_confusion_path_or_dict,
-            person_name_path=person_name_path,
-            place_name_path=place_name_path,
-            stopwords_path=stopwords_path,
-            proper_name_path=proper_name_path,
-            stroke_path=stroke_path
-        )
+        super(Corrector, self).__init__(**kwargs)
         self.name = 'corrector'
         self.common_char_path = common_char_path
-        self.same_pinyin_text_path = same_pinyin_path
-        self.same_stroke_text_path = same_stroke_path
+        self.same_pinyin_path = same_pinyin_path
+        self.same_stroke_path = same_stroke_path
         self.initialized_corrector = False
         self.cn_char_set = None
         self.same_pinyin = None
@@ -120,9 +111,9 @@ class Corrector(Detector):
         # chinese common char
         self.cn_char_set = self.load_set_file(self.common_char_path)
         # same pinyin
-        self.same_pinyin = self.load_same_pinyin(self.same_pinyin_text_path)
+        self.same_pinyin = self.load_same_pinyin(self.same_pinyin_path)
         # same stroke
-        self.same_stroke = self.load_same_stroke(self.same_stroke_text_path)
+        self.same_stroke = self.load_same_stroke(self.same_stroke_path)
         self.initialized_corrector = True
 
     def check_corrector_initialized(self):

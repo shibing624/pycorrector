@@ -79,11 +79,6 @@ PS：
 * [DeepContext模型](pycorrector/deepcontext)：本项目基于PyTorch实现了用于文本纠错的DeepContext模型，该模型结构参考Stanford University的NLC模型，2014英文纠错比赛得第一名，效果一般
 * [Transformer模型](pycorrector/transformer)：本项目基于PyTorch的fairseq库调研了Transformer模型用于中文文本纠错，效果一般
 
-#### 思考
-
-1. 规则的方法，在词粒度的错误召回还不错，但错误纠正的准确率还有待提高，更多优质的纠错集及纠错词库会有提升，我更希望算法模型上有更大的突破。
-2. 现在的文本错误不再局限于字词粒度上的拼写错误，需要提高中文语法错误检测（CGED, Chinese Grammar Error Diagnosis）及纠正能力，列在TODO中，后续调研。
-
 # Demo
 
 Official Demo: https://www.mulanai.com/product/corrector/
@@ -110,16 +105,13 @@ python examples/gradio_demo.py
 
 GPU：Tesla V100，显存 32 GB
 
-| Model Name | Model Hub Link                                                                                                      | Backbone                     | GPU | Precision | Recall | F1 | QPS     |
-|:--------|:--------------------------------------------------------------------------------------------------------------------|:-----------------------------|:----|:----------| :--| :--- |:--------|
-| Rule | -                                                                                                                   | kenlm                        | CPU | 0.6860    | 0.1529 | 0.2500 | 9       |
-| BERT-CSC                  | -                                                                                                                   | bert-base-chinese            | GPU | 0.8029    | 0.4052 | 0.5386 | 2       |
-| BART-CSC                  | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese       | GPU | 0.6984    | 0.6354 | 0.6654 | 58      |
-| T5-CSC                    | -                                                                                                                   | byt5-small                   | GPU | 0.5220    | 0.3941 | 0.4491 | 111     |
-| Mengzi-T5-CSC             | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base               | GPU | **0.8321**    | 0.6390 | 0.7229 | 214     |
-| ConvSeq2Seq-CSC           | -                                                                                                                   | ConvSeq2Seq                  | GPU | 0.2415    | 0.1436 | 0.1801 | 6       |
-| ChatGLM-6B-CSC            | [shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)                       | ChatGLM                      | GPU | 0.5263    | 0.4052 | 0.4579 | 4       |
-| **MacBERT-CSC**           | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254  | **0.7311** | **0.7754** | **224** |
+| Model Name      | Model Hub Link                                                                                                      | Backbone                     | GPU | Precision | Recall | F1 | QPS     |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------|:-----------------------------|:----|:----------| :--| :--- |:--------|
+| Kenlm           | -                                                                                                                   | kenlm                        | CPU | 0.6860    | 0.1529 | 0.2500 | 9       |
+| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese       | GPU | 0.6984    | 0.6354 | 0.6654 | 58      |
+| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base               | GPU | **0.8321**    | 0.6390 | 0.7229 | 214     |
+| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254  | **0.7311** | **0.7754** | **224** |
+| ChatGLM-6B-CSC  | [shibing624/chatglm-6b-csc-zh-lora](https://huggingface.co/shibing624/chatglm-6b-csc-zh-lora)                       | ChatGLM                      | GPU | 0.5263    | 0.4052 | 0.4579 | 4       |
 
 ### 结论
 
@@ -624,44 +616,6 @@ output:
 
 - BART模型：模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 
-### ConvSeq2Seq模型
-[pycorrector/seq2seq](pycorrector/seq2seq) 模型使用示例:
-
-
-#### 训练
-data example:
-```
-# train.txt:
-你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
-```
-
-```shell
-cd seq2seq
-python train.py
-```
-
-`convseq2seq`训练sighan数据集（2104条样本），200个epoch，单卡P40GPU训练耗时：3分钟。
-
-#### 预测
-
-```shell
-python infer.py
-```
-
-output：
-
-![result image](./docs/git_image/convseq2seq_ret.png)
-
-1. 如果训练数据太少（不足万条），深度模型拟合不足，会出现预测结果全为`unk`的情况，解决方法：增大训练样本集，使用下方提供的纠错熟语料(nlpcc2018+hsk，130万对句子)试试。
-2. 深度模型训练耗时长，有GPU尽量用GPU，加速训练，节省时间。
-
-#### Release models
-
-基于SIGHAN2015数据集训练的convseq2seq模型，已经release到github:
-
-- convseq2seq model url: https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz
-
-
 # Dataset
 
 | 数据集                          | 语料 |                                                                                下载链接                                                                                 | 压缩包大小 |
@@ -733,20 +687,6 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 
 尊重版权，传播请注明出处。
 
-# Todo
-
-- [x] 优化形似字字典，提高形似字纠错准确率
-- [x] 整理中文纠错训练数据，使用seq2seq做深度中文纠错模型
-- [x] 添加中文语法错误检测及纠正能力
-- [x] 规则方法添加用户自定义纠错集，并将其纠错优先度调为最高
-- [x] seq2seq_attention 添加dropout，减少过拟合
-- [x] 在seq2seq模型框架上，新增Pointer-generator network、Beam search、Unknown words replacement、Coverage mechanism等特性
-- [x] 更新bert的fine-tuned使用wiki，适配transformers 2.10.0库
-- [x] 升级代码，兼容TensorFlow 2.0库
-- [x] 升级bert纠错逻辑，提升基于mask的纠错效果
-- [x] 新增基于electra模型的纠错逻辑，参数更小，预测更快
-- [x] 新增专用于纠错任务深度模型，使用bert/ernie预训练模型，加入文本音似、形似特征
-- [x] 新增GPT大语言纠错模型，用于中文拼写纠错和语法纠错任务
 
 # Contact
 

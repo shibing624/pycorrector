@@ -128,15 +128,16 @@ def train(train_path,
 
 
 if __name__ == "__main__":
-    train(config.train_path,
-          config.model_dir,
-          config.vocab_path,
-          config.batch_size,
-          config.epochs,
-          config.word_embed_size,
-          config.hidden_size,
-          config.learning_rate,
-          config.n_layers,
-          config.min_freq,
-          config.dropout
-          )
+    train(
+        config.train_path,
+        config.model_dir,
+        config.vocab_path,
+        config.batch_size,
+        config.epochs,
+        config.word_embed_size,
+        config.hidden_size,
+        config.learning_rate,
+        config.n_layers,
+        config.min_freq,
+        config.dropout
+    )

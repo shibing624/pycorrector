@@ -25,7 +25,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class Inference(Corrector):
     def __init__(self, model_dir, vocab_path):
         super(Inference, self).__init__()
-        self.name = 'bert_corrector'
+        self.name = 'deepcontext_corrector'
         t1 = time.time()
         # device
         logger.debug("device: {}".format(device))

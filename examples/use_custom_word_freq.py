@@ -6,11 +6,10 @@
 
 import sys
 
-sys.path.append("../")
+sys.path.append("..")
 import pycorrector
 
 if __name__ == '__main__':
-
     error_sentences = [
         '根据联合国公布数据显示，全球产龄妇女从１９５０年６．３亿人增至２０１０年17亿人，由统计数据显示，至２０５０年全球产龄妇女将达20亿人',
         '晓红的藉贯是北京。',

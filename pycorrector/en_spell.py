@@ -12,10 +12,11 @@ import os
 from codecs import open
 from collections import Counter
 from loguru import logger
-from pycorrector import config
 from pycorrector.utils.text_utils import is_alphabet_string
 from pycorrector.utils.tokenizer import whitespace_tokenize, split_2_short_text
-
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+# 英文拼写词频文件
+en_dict_path = os.path.join(pwd_path, 'data/en.json.gz')
 
 def get_word_freq_dict_from_text(text):
     return Counter(whitespace_tokenize(text))
@@ -28,7 +29,7 @@ class EnSpell(object):
         self.custom_confusion = {}
 
     def _init(self):
-        with gzip.open(config.en_dict_path, "rb") as f:
+        with gzip.open(en_dict_path, "rb") as f:
             all_word_freq_dict = json.loads(f.read())
             word_freq = {}
             for k, v in all_word_freq_dict.items():
@@ -36,8 +37,8 @@ class EnSpell(object):
                 if v > 400:
                     word_freq[k] = v
             self.word_freq_dict = word_freq
-            logger.debug("load en spell data: %s, size: %d" % (config.en_dict_path,
-                                                               len(self.word_freq_dict)))
+            logger.debug("load en spell data: %s, size: %d" % (
+                en_dict_path, len(self.word_freq_dict)))
 
     def check_init(self):
         if not self.word_freq_dict:
