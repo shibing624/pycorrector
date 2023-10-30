@@ -34,7 +34,7 @@ def main():
     args = parser.parse_args()
     logger.info(args)
     model = None
-    # fine-tune Llama model
+    # fine-tune model
     if args.do_train:
         logger.info('Loading data...')
         model_args = {
