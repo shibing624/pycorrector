@@ -52,6 +52,7 @@ class GptArgs:
     overwrite_output_dir: bool = True
     model_name: str = None
     tokenizer_name: str = None
+    reprocess_input_data: bool = False
     silent: bool = False
     no_cache: bool = False
     cache_dir: str = "cache_dir/"
