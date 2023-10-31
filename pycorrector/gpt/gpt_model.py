@@ -80,7 +80,9 @@ class GptModel:
         """  # noqa: ignore flake8"
         model_type = model_type.lower()
         self.args = GptArgs()
-        if isinstance(args, GptArgs):
+        if isinstance(args, dict):
+            self.args.update_from_dict(args)
+        elif isinstance(args, GptArgs):
             self.args = args
 
         if self.args.manual_seed:
@@ -214,6 +216,7 @@ class GptModel:
             self,
             train_data,
             output_dir=None,
+            args=None,
             eval_data=None,
             verbose=True,
             **kwargs,
@@ -236,7 +239,8 @@ class GptModel:
             global_step: Number of global steps trained
             training_details: Average training loss if evaluate_during_training is False or full training progress scores if evaluate_during_training is True
         """  # noqa: ignore flake8"
-
+        if args:
+            self.args.update_from_dict(args)
         if self.args.evaluate_during_training and eval_data is None:
             raise ValueError(
                 "evaluate_during_training is enabled but eval_data is not specified."
@@ -431,25 +435,14 @@ class GptModel:
 
         # Initialize our Trainer
         data_collator = DataCollatorForSeq2Seq(self.tokenizer, label_pad_token_id=IGNORE_INDEX)
-
-        if self.args.use_peft:
-            trainer = SavePeftModelTrainer(
-                model=self.model,
-                train_dataset=train_dataset,
-                eval_dataset=eval_dataset if eval_data is not None else None,
-                args=training_args,
-                tokenizer=self.tokenizer,
-                data_collator=data_collator,
-            )
-        else:
-            trainer = Trainer(
-                model=self.model,
-                train_dataset=train_dataset,
-                eval_dataset=eval_dataset if eval_data is not None else None,
-                args=training_args,
-                tokenizer=self.tokenizer,
-                data_collator=data_collator,
-            )
+        trainer = SavePeftModelTrainer(
+            model=self.model,
+            train_dataset=train_dataset,
+            eval_dataset=eval_dataset if eval_data is not None else None,
+            args=training_args,
+            tokenizer=self.tokenizer,
+            data_collator=data_collator,
+        )
 
         # Training
         logger.info("*** Train ***")

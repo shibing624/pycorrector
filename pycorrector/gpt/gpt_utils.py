@@ -92,6 +92,12 @@ class GptArgs:
     preprocessing_num_workers: int = 4
     prompt_template_name: str = "vicuna"
 
+    def update_from_dict(self, new_values):
+        if isinstance(new_values, dict):
+            for key, value in new_values.items():
+                setattr(self, key, value)
+        else:
+            raise (TypeError(f"{new_values} is not a Python dict."))
 
 @dataclass
 class Conversation:
