@@ -547,10 +547,10 @@ class GptModel:
             inputs = self.tokenizer(batch, padding=True, return_tensors='pt')
             input_ids = inputs['input_ids'].to(self.device)
             generation_kwargs = dict(
-                max_new_tokens=max_length if max_length else self.args.max_length,
+                max_new_tokens=max_length if max_length is not None else self.args.max_length,
                 do_sample=do_sample if do_sample is not None else self.args.do_sample,
                 temperature=temperature if temperature is not None else self.args.temperature,
-                repetition_penalty=repetition_penalty if repetition_penalty else self.args.repetition_penalty,
+                repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
             )
             outputs = self.model.generate(
                 input_ids=input_ids,
@@ -579,9 +579,10 @@ class GptModel:
             history: List[Tuple[str, str]] = None,
             skip_prompt: bool = True,
             prompt_template_name: str = "vicuna",
-            max_new_tokens=512,
-            temperature=0.7,
-            repetition_penalty=1.0,
+            max_new_tokens: int = None,
+            do_sample: bool = None,
+            temperature: float = None,
+            repetition_penalty: float = None,
             context_len: int = 2048,
             **kwargs
     ):
@@ -595,13 +596,15 @@ class GptModel:
         streamer = TextIteratorStreamer(
             self.tokenizer, timeout=60.0, skip_prompt=skip_prompt, skip_special_tokens=True)
         input_ids = self.tokenizer(prompt).input_ids
+        max_new_tokens = max_new_tokens if max_new_tokens is not None else self.args.max_length
         max_src_len = context_len - max_new_tokens - 8
         input_ids = input_ids[-max_src_len:]
         generation_kwargs = dict(
             input_ids=torch.as_tensor([input_ids]).to(self.device),
             max_new_tokens=max_new_tokens,
-            temperature=temperature,
-            repetition_penalty=repetition_penalty,
+            do_sample=do_sample if do_sample is not None else self.args.do_sample,
+            temperature=temperature if temperature is not None else self.args.temperature,
+            repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
             streamer=streamer,
             **kwargs,
         )
