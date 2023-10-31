@@ -99,6 +99,7 @@ class GptArgs:
         else:
             raise (TypeError(f"{new_values} is not a Python dict."))
 
+
 @dataclass
 class Conversation:
     """A class that manages prompt templates and keeps all conversation history."""
@@ -264,6 +265,22 @@ register_conv_template(
         roles=("问", "答"),
         prompt="问：{query}\n\n答：",
         sep="\n\n",
+    )
+)
+
+"""ChatGLM3 template
+Support: https://huggingface.co/THUDM/chatglm3-6b
+source: https://huggingface.co/THUDM/chatglm3-6b/blob/main/tokenization_chatglm.py#L179
+"""
+register_conv_template(
+    Conversation(
+        name="chatglm3",
+        system_prompt="",
+        messages=[],
+        roles=("<|user|>", "<|assistant|>"),
+        prompt="<|user|>\n{query}<|assistant|>",
+        sep="\n",
+        stop_str="<|user|>",
     )
 )
 
