@@ -57,7 +57,6 @@ class GptArgs:
     no_cache: bool = False
     cache_dir: str = "cache_dir/"
     no_save: bool = False
-    save_optimizer_and_scheduler: bool = False
     top_k: float = 40
     top_p: float = 0.9
     model_name_or_path: Optional[str] = field(default="shibing624/chinese-alpaca-plus-7b-hf")
