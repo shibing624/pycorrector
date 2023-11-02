@@ -54,7 +54,7 @@ def main():
             "prompt_template_name": args.prompt_template_name,
         }
         model = GptModel(args.model_type, args.model_name, args=model_args)
-        model.train_model(args.train_file)
+        model.train_model(args.train_file, eval_data=args.test_file)
     if args.do_predict:
         if model is None:
             model = GptModel(

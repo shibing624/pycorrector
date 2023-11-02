@@ -47,7 +47,6 @@ class GptArgs:
     do_sample: bool = True
     temperature: float = 0.7
     special_tokens_list: list = field(default_factory=list)
-    evaluate_during_training: bool = False
     output_dir: str = "outputs/"
     overwrite_output_dir: bool = True
     model_name: str = None

@@ -231,7 +231,7 @@ class GptModel:
                 format: {"conversations":[{"from":"human","value":"Mike的妈妈有4个孩子; 其中3个是 Luis、Drake 和 Matilda。 第4个孩子叫什么？"},{"from":"gpt","value":"Mike。"}]}
             output_dir: The directory where model files will be saved. If not given, self.args.output_dir will be used.
             args (optional): Optional changes to the args dict of the model. Any changes made will persist for the model.
-            eval_data (optional): A DataFrame against which evaluation will be performed when evaluate_during_training is enabled. Is required if evaluate_during_training is enabled.
+            eval_data (optional): A DataFrame against which evaluation will be performed. If it is not passed, evaluation will be skipped.
             verbose (optional): If True, all of the warnings related to data processing will be printed. 
             **kwargs: Additional metrics that should be used. Pass in the metrics as keyword arguments (name of metric: function to use).
                         A metric function should take in two parameters. The first parameter will be the true labels, and the second parameter will be the predictions. Both inputs
@@ -239,15 +239,12 @@ class GptModel:
 
         Returns:
             global_step: Number of global steps trained
-            training_details: Average training loss if evaluate_during_training is False or full training progress scores if evaluate_during_training is True
+            training_details: Training progress scores 
         """  # noqa: ignore flake8"
         if args:
             self.args.update_from_dict(args)
-        if self.args.evaluate_during_training and eval_data is None:
-            raise ValueError(
-                "evaluate_during_training is enabled but eval_data is not specified."
-                " Pass eval_data to model.train_model() if using evaluate_during_training."
-            )
+        if eval_data is None:
+            logger.debug("eval_data is not specified. Pass eval_data to model.train_model() if using evaluate.")
 
         if not output_dir:
             output_dir = self.args.output_dir

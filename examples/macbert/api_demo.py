@@ -14,8 +14,8 @@ from pycorrector import Corrector
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 app = Flask(__name__)
-rule_model = Corrector()
-rule_model.check_corrector_initialized()
+kenlm_model = Corrector()
+kenlm_model.check_corrector_initialized()
 macbert_model = MacBertCorrector()
 
 help = """
@@ -34,19 +34,19 @@ def hello_world():
     return help
 
 
-@app.route('/rule_correct', methods=['POST', 'GET'])
-def rule_correct():
+@app.route('/kenlm_correct', methods=['POST', 'GET'])
+def kenlm_correct():
     if request.method == 'POST':
         data = request.json
         logger.info("Received data: {}".format(data))
         text = data["text"]
-        corrected_sent, detail = rule_model.correct(text)
+        corrected_sent, detail = kenlm_model.correct(text)
         return corrected_sent + " " + str(detail)
     else:
         if "text" in request.args:
             text = request.args.get("text")
             logger.info("Received data: {}".format(text))
-            corrected_sent, detail = rule_model.correct(text)
+            corrected_sent, detail = kenlm_model.correct(text)
             return corrected_sent + " " + str(detail)
     return help
 
