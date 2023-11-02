@@ -6,15 +6,14 @@
 
 import os
 
+import torch
 from peft import PeftModel
 from transformers import AutoTokenizer, AutoModel
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
-model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True, device_map='auto')
-model = PeftModel.from_pretrained(model, "shibing624/chatglm3-6b-csc-chinese-lora")
-model.half().cuda()  # fp16
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).half().cuda()
+model = PeftModel.from_pretrained(model, "shibing624/chatglm3-6b-csc-chinese-lora")
 
 sents = ['对下面文本纠错\n\n少先队员因该为老人让坐。',
          '对下面文本纠错\n\n下个星期，我跟我朋唷打算去法国玩儿。']
@@ -29,5 +28,9 @@ def get_prompt(user_query):
 
 for s in sents:
     q = get_prompt(s)
-    response = model.chat(tokenizer, s, max_length=128, eos_token_id=tokenizer.eos_token_id)
+    input_ids = tokenizer(q).input_ids
+    generation_kwargs = dict(max_new_tokens=128, do_sample=True, temperature=0.8)
+    outputs = model.generate(input_ids=torch.as_tensor([input_ids]).to('cuda'), **generation_kwargs)
+    output_tensor = outputs[0][len(input_ids[0]):]
+    response = tokenizer.decode(output_tensor, skip_special_tokens=True)
     print(response)

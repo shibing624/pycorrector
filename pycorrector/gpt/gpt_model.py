@@ -621,7 +621,8 @@ class GptModel:
             )
             output_tensor = outputs[0][len(input_ids[0]):] if skip_prompt else outputs[0]
             response = self.tokenizer.decode(output_tensor, skip_special_tokens=True)
-            return response
+            history[-1][1] = response
+            return response, history
 
     def load_and_cache_examples(
             self, data, evaluate=False, no_cache=False, verbose=True, silent=False

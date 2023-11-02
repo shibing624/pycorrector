@@ -72,13 +72,11 @@ def main():
         print(response)
 
         # Chat model with multi turns conversation
-        history = []
-        query = "简单介绍下北京"
-        response = model.chat(query, history=history)
+        response, history = model.chat("简单介绍下北京", history=None)
+        print(response, history)
+        response, history = model.chat('继续', history=history)
         print(response)
-        history.append([query, response])
-        response = model.chat('继续', history=history)
-        print(response)
+
 
 if __name__ == '__main__':
     main()
