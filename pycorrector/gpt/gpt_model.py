@@ -569,6 +569,7 @@ class GptModel:
             self,
             query: str,
             history: List[Tuple[str, str]] = None,
+            stream: bool = True,
             skip_prompt: bool = True,
             prompt_template_name: str = "vicuna",
             max_new_tokens: int = None,
@@ -585,37 +586,42 @@ class GptModel:
             history = []
         history.append([query, ''])
         prompt = prompt_template.get_prompt(messages=history)
-        streamer = TextIteratorStreamer(
-            self.tokenizer, timeout=60.0, skip_prompt=skip_prompt, skip_special_tokens=True)
+
         input_ids = self.tokenizer(prompt).input_ids
         max_new_tokens = max_new_tokens if max_new_tokens is not None else self.args.max_length
         max_src_len = context_len - max_new_tokens - 8
         input_ids = input_ids[-max_src_len:]
-        generation_kwargs = dict(
-            input_ids=torch.as_tensor([input_ids]).to(self.device),
-            max_new_tokens=max_new_tokens,
-            do_sample=do_sample if do_sample is not None else self.args.do_sample,
-            temperature=temperature if temperature is not None else self.args.temperature,
-            repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
-            streamer=streamer,
-            **kwargs,
-        )
-        thread = Thread(target=self.model.generate, kwargs=generation_kwargs)
-        thread.start()
-        stop_str = self.tokenizer.eos_token or prompt_template.stop_str
-        generated_text = ""
-        for new_text in streamer:
-            stop = False
-            pos = new_text.find(stop_str)
-            if pos != -1:
-                new_text = new_text[:pos]
-                stop = True
-            generated_text += new_text
-            if stop:
-                break
-        response = generated_text.strip()
-        history = history + [[query, response]]
-        return response, history
+        if stream:
+            streamer = TextIteratorStreamer(
+                self.tokenizer, timeout=60.0, skip_prompt=skip_prompt, skip_special_tokens=True
+            )
+            generation_kwargs = dict(
+                input_ids=torch.as_tensor([input_ids]).to(self.device),
+                max_new_tokens=max_new_tokens,
+                do_sample=do_sample if do_sample is not None else self.args.do_sample,
+                temperature=temperature if temperature is not None else self.args.temperature,
+                repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
+                streamer=streamer,
+                **kwargs,
+            )
+            thread = Thread(target=self.model.generate, kwargs=generation_kwargs)
+            thread.start()
+            return streamer
+        else:
+            generation_kwargs = dict(
+                max_new_tokens=max_new_tokens if max_new_tokens is not None else self.args.max_length,
+                do_sample=do_sample if do_sample is not None else self.args.do_sample,
+                temperature=temperature if temperature is not None else self.args.temperature,
+                repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
+            )
+            outputs = self.model.generate(
+                input_ids=torch.as_tensor([input_ids]).to(self.device),
+                **generation_kwargs,
+                **kwargs,
+            )
+            output_tensor = outputs[0][len(input_ids[0]):] if skip_prompt else outputs[0]
+            response = self.tokenizer.decode(output_tensor, skip_special_tokens=True)
+            return response
 
     def load_and_cache_examples(
             self, data, evaluate=False, no_cache=False, verbose=True, silent=False
