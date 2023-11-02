@@ -53,17 +53,15 @@ def main():
             raw_input_text = input("Input:")
             if raw_input_text.strip() == 'exit':
                 break
-            position = 0
             print("Response:", end='', flush=True)
             try:
-                for response in model.chat(
+                for new_token in model.chat(
                         raw_input_text,
                         history=history,
                         prompt_template_name=args.prompt_template_name,
                         stream=True
                 ):
-                    print(response[position:], end='', flush=True)
-                    position = len(response)
+                    print(new_token, end='', flush=True)
             except KeyboardInterrupt:
                 pass
             print()

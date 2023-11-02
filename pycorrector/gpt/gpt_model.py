@@ -606,7 +606,7 @@ class GptModel:
             )
             thread = Thread(target=self.model.generate, kwargs=generation_kwargs)
             thread.start()
-            return streamer
+            yield from streamer
         else:
             generation_kwargs = dict(
                 max_new_tokens=max_new_tokens if max_new_tokens is not None else self.args.max_length,
