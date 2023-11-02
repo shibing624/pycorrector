@@ -67,8 +67,8 @@ def main():
         predict,
         chatbot=gr.Chatbot(),
         textbox=gr.Textbox(placeholder="Ask me question", lines=4, scale=9),
-        title="TextGen",
-        description="github: [shibing624/textgen](https://github.com/shibing624/textgen)",
+        title="pycorrector: text correction use gpt model",
+        description="github: [shibing624/pycorrector](https://github.com/shibing624/pycorrector)",
         theme="soft",
     ).queue().launch(share=args.share, inbrowser=True, server_name='0.0.0.0', server_port=args.port)
 

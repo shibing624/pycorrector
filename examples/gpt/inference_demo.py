@@ -24,7 +24,7 @@ def main():
     parser.add_argument('--interactive', action='store_true', help="run in the instruction mode")
     parser.add_argument('--data_file', default=None, type=str,
                         help="A file that contains instructions (one instruction per line)")
-    parser.add_argument('--predictions_file', default='./predictions_result.jsonl', type=str)
+    parser.add_argument('--output_file', default='./predictions_result.jsonl', type=str)
     parser.add_argument('--batch_size', default=8, type=int, help='Batch size')
     args = parser.parse_args()
     print(args)
@@ -50,20 +50,37 @@ def main():
         print(f"Start inference with interactive mode.")
         history = []
         while True:
-            raw_input_text = input("Input:")
-            if raw_input_text.strip() == 'exit':
+            try:
+                query = input("Input:")
+            except UnicodeDecodeError:
+                print("Detected decoding error at the inputs, please try again.")
+                continue
+            except Exception:
+                raise
+            if query == "":
+                print("Please input text, try again.")
+                continue
+            if query.strip() == "clear":
+                history = []
+                print("history cleared.")
+                continue
+            if query.strip() == 'exit':
                 break
             print("Response:", end='', flush=True)
             try:
+                response = ""
                 for new_token in model.chat(
-                        raw_input_text,
+                        query,
                         history=history,
                         prompt_template_name=args.prompt_template_name,
                         stream=True
                 ):
                     print(new_token, end='', flush=True)
+                    response += new_token
+                history = history + [[query, response]]
             except KeyboardInterrupt:
-                pass
+                print("KeyboardInterrupt detected, stop.")
+                continue
             print()
     else:
         print("Start inference.")
@@ -78,11 +95,11 @@ def main():
             print(f"Input: {example}\n")
             print(f"Output: {response}\n")
             results.append({"Input": example, "Output": response})
-        with open(args.predictions_file, 'w', encoding='utf-8') as f:
+        with open(args.output_file, 'w', encoding='utf-8') as f:
             for entry in results:
                 json.dump(entry, f, ensure_ascii=False)
                 f.write('\n')
-        print(f'save to {args.predictions_file}, size: {len(results)}')
+        print(f'save to {args.output_file}, size: {len(results)}')
 
 
 if __name__ == '__main__':

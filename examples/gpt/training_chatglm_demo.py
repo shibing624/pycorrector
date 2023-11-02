@@ -72,11 +72,13 @@ def main():
         print(response)
 
         # Chat model with multi turns conversation
-        response, history = model.chat('请问1加2等于多少？')
+        history = []
+        query = "简单介绍下北京"
+        response = model.chat(query, history=history)
         print(response)
-        response, history = model.chat('两数相乘呢？', history=history)
-        print(response, history)
-
+        history.append([query, response])
+        response = model.chat('继续', history=history)
+        print(response)
 
 if __name__ == '__main__':
     main()

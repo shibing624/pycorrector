@@ -7,7 +7,7 @@ import math
 import os
 import random
 from threading import Thread
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Union
 
 import numpy as np
 import torch
@@ -568,8 +568,8 @@ class GptModel:
     def chat(
             self,
             query: str,
-            history: List[Tuple[str, str]] = None,
-            stream: bool = True,
+            history: Union[List, List[Tuple[str, str]]] = None,
+            stream: bool = False,
             skip_prompt: bool = True,
             prompt_template_name: str = "vicuna",
             max_new_tokens: int = None,
