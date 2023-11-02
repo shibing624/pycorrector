@@ -18,6 +18,17 @@ tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code
 
 sents = ['对下面文本纠错\n\n少先队员因该为老人让坐。',
          '对下面文本纠错\n\n下个星期，我跟我朋唷打算去法国玩儿。']
+
+system_prompt = "A chat between a curious user and an artificial intelligence assistant. " \
+                "The assistant gives helpful, detailed, and polite answers to the user's questions. " \
+                "USER: {query} ASSISTANT:",
+
+
+def get_prompt(query):
+    return system_prompt.format(query=query)
+
+
 for s in sents:
+    q = get_prompt(s)
     response = model.chat(tokenizer, s, max_length=128, eos_token_id=tokenizer.eos_token_id)
     print(response)
