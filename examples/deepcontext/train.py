@@ -60,18 +60,19 @@ def main():
         save_corpus_data(data_list, args.train_path)
 
         # Train model with train data file
-        train(args.train_path,
-              args.model_dir,
-              args.vocab_path,
-              batch_size=args.batch_size,
-              epochs=args.epochs,
-              word_embed_size=args.embed_size,
-              hidden_size=args.hidden_size,
-              learning_rate=args.learning_rate,
-              n_layers=args.n_layers,
-              min_freq=args.min_freq,
-              dropout=args.dropout
-              )
+        train(
+            args.train_path,
+            args.model_dir,
+            args.vocab_path,
+            batch_size=args.batch_size,
+            epochs=args.epochs,
+            word_embed_size=args.embed_size,
+            hidden_size=args.hidden_size,
+            learning_rate=args.learning_rate,
+            n_layers=args.n_layers,
+            min_freq=args.min_freq,
+            dropout=args.dropout
+        )
 
     # Predict
     if args.do_predict:

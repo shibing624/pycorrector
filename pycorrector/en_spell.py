@@ -13,7 +13,7 @@ from codecs import open
 from collections import Counter
 from loguru import logger
 from pycorrector.utils.text_utils import is_alphabet_string
-from pycorrector.utils.tokenizer import whitespace_tokenize, split_2_short_text
+from pycorrector.utils.tokenizer import whitespace_tokenize, split_text_into_sentences_by_symbol
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 英文拼写词频文件
 en_dict_path = os.path.join(pwd_path, 'data/en.json.gz')
@@ -140,10 +140,10 @@ class EnSpell(object):
         self.custom_confusion = self._get_custom_confusion_dict(path)
         logger.debug('Loaded en spell confusion path: %s, size: %d' % (path, len(self.custom_confusion)))
 
-    def correct(self, text, include_symbol=True):
+    def correct(self, sentence, include_symbol=True):
         """
         most probable spelling correction for text
-        :param text: input query
+        :param sentence: input query
         :param include_symbol: True, default
         :return: corrected_text, details [(wrong_word, right_word, begin_idx, end_idx), ...]
         example:
@@ -152,7 +152,7 @@ class EnSpell(object):
         self.check_init()
         text_new = ''
         details = []
-        blocks = split_2_short_text(text, include_symbol=include_symbol)
+        blocks = split_text_into_sentences_by_symbol(sentence, include_symbol=include_symbol)
         for w, idx in blocks:
             # 大于1个字符的英文词
             if len(w) > 1 and is_alphabet_string(w):

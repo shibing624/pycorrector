@@ -6,6 +6,7 @@
 import operator
 import os
 from codecs import open
+from typing import List
 
 import pypinyin
 from loguru import logger
@@ -13,7 +14,7 @@ from loguru import logger
 from pycorrector.detector import Detector, ErrorType
 from pycorrector.utils.math_utils import edit_distance_word
 from pycorrector.utils.text_utils import is_chinese_string
-from pycorrector.utils.tokenizer import segment, split_2_short_text
+from pycorrector.utils.tokenizer import segment, split_text_into_sentences_by_symbol
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -219,7 +220,7 @@ class Corrector(Detector):
         confusion_sorted = sorted(confusion_word_list, key=lambda k: self.word_frequency(k), reverse=True)
         return confusion_sorted[:len(confusion_word_list) // fragment + 1]
 
-    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57, cut_type='char'):
+    def get_lm_correct_item(self, cur_item, candidates, before_sent, after_sent, threshold=57.0, cut_type='char'):
         """
         通过语言模型纠正字词错误
         :param cur_item: 当前词
@@ -255,32 +256,40 @@ class Corrector(Detector):
             result = top_items[0]
         return result
 
-    def correct(self, text, include_symbol=True, num_fragment=1, threshold=57, **kwargs):
+    def correct(
+            self,
+            sentence: str,
+            include_symbol: bool = True,
+            num_fragment: int = 1,
+            threshold: float = 57.0,
+            **kwargs
+    ):
         """
-        文本改错
+        单条文本纠错
 
-        改错逻辑：
+        纠错逻辑：
         1. 自定义混淆集
         2. 专名错误
         3. 字词错误
-        :param text: str, query 文本
+        :param sentence: str, query 文本
         :param include_symbol: bool, 是否包含标点符号
         :param num_fragment: 纠错候选集分段数, 1 / (num_fragment + 1)
         :param threshold: 语言模型纠错ppl阈值
         :param kwargs: ...
         :return: text (str)改正后的句子, list(wrong, right, begin_idx, end_idx)
         """
-        text_new = ''
+        corrected_sentence = ''
         details = []
         self.check_corrector_initialized()
-        # 文本切分为句子
-        sentences = split_2_short_text(text, include_symbol=include_symbol)
-        for sentence, idx in sentences:
-            maybe_errors, proper_details = self.detect_sentence(sentence, idx, **kwargs)
+        # 按标点符号切分短句
+        short_sents = split_text_into_sentences_by_symbol(sentence, include_symbol=include_symbol)
+        for sent, idx in short_sents:
+            # 检错
+            maybe_errors, proper_details = self._detect(sent, idx, **kwargs)
             for cur_item, begin_idx, end_idx, err_type in maybe_errors:
                 # 纠错，逐个处理
-                before_sent = sentence[:(begin_idx - idx)]
-                after_sent = sentence[(end_idx - idx):]
+                before_sent = sent[:(begin_idx - idx)]
+                after_sent = sent[(end_idx - idx):]
 
                 # 困惑集中指定的词，直接取结果
                 if err_type == ErrorType.confusion:
@@ -302,9 +311,19 @@ class Corrector(Detector):
                     )
                 # output
                 if corrected_item != cur_item:
-                    sentence = before_sent + corrected_item + after_sent
+                    sent = before_sent + corrected_item + after_sent
                     detail_word = (cur_item, corrected_item, begin_idx, end_idx)
                     details.append(detail_word)
-            text_new += sentence
+            corrected_sentence += sent
         details = sorted(details, key=operator.itemgetter(2))
-        return text_new, details
+        return corrected_sentence, details
+
+    def correct_batch(self, sentences: List[str], **kwargs):
+        """Correct sentences with correct method."""
+        corrected_sentences = []
+        corrected_details = []
+        for sentence in sentences:
+            corrected_sent, details = self.correct(sentence, **kwargs)
+            corrected_sentences.append(corrected_sent)
+            corrected_details.append(details)
+        return corrected_sentences, corrected_details

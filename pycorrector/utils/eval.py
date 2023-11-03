@@ -13,13 +13,12 @@ from xml.dom import minidom
 
 sys.path.append("../..")
 from pycorrector.corrector import Corrector
-from pycorrector.utils.io_utils import load_json, save_json
-from pycorrector.utils.io_utils import load_pkl
+from pycorrector.utils.io_utils import load_json, save_json, load_pkl
 from pycorrector.utils.math_utils import find_all_idx
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 eval_data_path = os.path.join(pwd_path, '../data/eval_corpus.json')
-sighan_2015_path = os.path.join(pwd_path, '../data/cn/sighan_2015/test.tsv')
+sighan_2015_path = os.path.join(pwd_path, '../data/sighan_2015_test.tsv')
 
 
 def get_bcmi_corpus(line, left_symbol='（（', right_symbol='））'):

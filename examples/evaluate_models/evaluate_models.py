@@ -12,8 +12,6 @@ sys.path.append("../..")
 import pycorrector
 from pycorrector.utils import eval
 
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-
 
 def main(args):
     if args.model == 'kenlm':
@@ -22,11 +20,11 @@ def main(args):
     elif args.model == 'macbert':
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
-        eval.eval_sighan2015_by_model_batch(model.batch_macbert_correct)
+        eval.eval_sighan2015_by_model_batch(model.correct)
         # macbert-base: Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:4.90 s
         # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
         # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
-        eval.eval_sighan2015_by_model(model.macbert_correct)
+        eval.eval_sighan2015_by_model(model.correct)
     elif args.model == 'bartseq2seq':
         from transformers import BertTokenizerFast
         from textgen import BartSeq2SeqModel

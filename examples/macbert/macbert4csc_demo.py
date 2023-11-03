@@ -39,8 +39,8 @@ if __name__ == '__main__':
     confusion_dict = {"喝小明同学": "喝小茗同学", "老人让坐": "老人让座", "平净": "平静", "分知": "分支"}
     cm = ConfusionCorrector(custom_confusion_path_or_dict=confusion_dict)
     for line in error_sentences:
-        correct_sent, err = m.macbert_correct(line)
+        correct_sent, err = m.correct(line)
         print("query:{} => {} err:{}".format(line, correct_sent, err))
-        correct_sent, err = cm.confusion_correct(correct_sent)
+        correct_sent, err = cm.correct(correct_sent)
         if err:
             print("added confusion result: {} err: {}".format(correct_sent, err))

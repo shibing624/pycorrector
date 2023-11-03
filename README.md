@@ -223,7 +223,7 @@ x = [
 ]
 
 for i in x:
-    print(i, ' -> ', m.proper_correct(i))
+    print(i, ' -> ', m.correct(i))
 ```
 
 output:

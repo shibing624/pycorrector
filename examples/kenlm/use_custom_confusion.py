@@ -28,4 +28,4 @@ if __name__ == '__main__':
     print('*' * 42)
     m = ConfusionCorrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
     for i in error_sentences:
-        print(i, ' -> ', m.confusion_correct(i))
+        print(i, ' -> ', m.correct(i))

@@ -63,7 +63,7 @@ class TestEnSpell(unittest.TestCase):
         self.assertEqual(spell.word_freq_dict.get('a', 0), 48779620)
 
     def test_case_insensitive_parse_words(self):
-        """ Test using the parse words to generate a case insensitive dict """
+        """ Test using the parse words to generate dict """
         spell_old = EnSpell()
         spell_old.check_init()
         print(spell_old.word_freq_dict.get('thisss', 0))

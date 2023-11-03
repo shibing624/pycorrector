@@ -7,7 +7,7 @@ import kenlm
 
 import jieba
 
-from pycorrector import language_model_path
+from pycorrector.detector import language_model_path
 
 model = kenlm.Model(language_model_path)
 

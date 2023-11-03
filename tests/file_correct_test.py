@@ -5,7 +5,7 @@
 """ 
 import sys
 sys.path.append("../")
-from pycorrector import corrector
+import pycorrector as ct
 
 in_file = sys.argv[1]
 out_file = sys.argv[2]
@@ -37,7 +37,7 @@ def saver(out_file, lines):
 input_lines = reader(in_file)
 correct_lines = list()
 for line in input_lines:
-    correct_sent, error_detail = corrector.correct(line)
+    correct_sent, error_detail = ct.correct(line)
     print("{}\t{}\t{}".format(
         line, correct_sent, error_detail))
     correct_lines.append(line + '\t' + correct_sent + '\t' + str(error_detail))

@@ -19,7 +19,7 @@ sys.path.append('../..')
 from pycorrector.macbert.reader import make_loaders, DataCollator
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
-from pycorrector.macbert import preprocess
+from examples.macbert import preprocess
 from pycorrector.macbert.defaults import _C as cfg
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -32,17 +32,16 @@ def args_parse(config_file=''):
     parser.add_argument(
         "--config_file", default="train_macbert4csc.yml", help="path to config file", type=str
     )
-    parser.add_argument("--opts", help="Modify config options using the command-line key value", default=[],
-                        nargs=argparse.REMAINDER)
-
+    parser.add_argument(
+        "--opts", help="Modify config options using the command-line key value", default=[],
+        nargs=argparse.REMAINDER
+    )
     args = parser.parse_args()
-
+    logger.info(args)
     config_file = args.config_file or config_file
     cfg.merge_from_file(config_file)
     cfg.merge_from_list(args.opts)
     cfg.freeze()
-
-    logger.info(args)
 
     if config_file != '':
         logger.info("Loaded configuration file {}".format(config_file))

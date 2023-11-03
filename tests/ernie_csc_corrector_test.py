@@ -16,7 +16,7 @@
 import sys
 
 sys.path.append("../")
-from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCSCCorrector
+from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCscCorrector
 
 if __name__ == '__main__':
     error_sentences = [
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         '一只小鱼船浮在平净的河面上',
         '我的家乡是有名的渔米之乡'
     ]
-    corrector = ErnieCSCCorrector("csc-ernie-1.0")
-    for error, correct in zip(error_sentences, correct_sentences):
-        result = corrector.ernie_csc_correct(error)[0]
+    corrector = ErnieCscCorrector("csc-ernie-1.0")
+    for sent, correct in zip(error_sentences, correct_sentences):
+        result = corrector.correct(sent)[0]
         assert result['target'] == correct

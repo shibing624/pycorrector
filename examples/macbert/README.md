@@ -32,10 +32,9 @@ example: [correct_demo.py](correct_demo.py)
 ```python
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
-nlp = MacBertCorrector("shibing624/macbert4csc-base-chinese").macbert_correct
+m = MacBertCorrector("shibing624/macbert4csc-base-chinese")
 
-i = nlp('今天新情很好')
-print(i)
+print(m.correct('今天新情很好'))
 ```
 #### transformers调用
 当然，你也可使用官方的transformers库进行调用。

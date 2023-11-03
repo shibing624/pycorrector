@@ -7,7 +7,7 @@ import sys
 
 sys.path.append("../")
 from pycorrector.utils.tokenizer import segment
-from pycorrector.corrector import Corrector
+from pycorrector import Corrector
 
 error_sentences = [
     '少先队员因该为老人让坐,1234567890，123a-bc,bcsd123入狱dfs,方式，监控。水电费？及。"是文法的上午"下午说："也是"好的',

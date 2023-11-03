@@ -24,23 +24,6 @@ from paddlenlp.transformers import ErnieTokenizer
 sys.path.append('../..')
 from pycorrector.ernie_csc.utils import convert_example, parse_decode
 
-# yapf: disable
-parser = argparse.ArgumentParser(__doc__)
-parser.add_argument("--model_file", type=str, required=True, default='./static_graph_params.pdmodel',
-                    help="The path to model info in static graph.")
-parser.add_argument("--params_file", type=str, required=True, default='./static_graph_params.pdiparams',
-                    help="The path to parameters in static graph.")
-parser.add_argument("--batch_size", type=int, default=2, help="The number of sequences contained in a mini-batch.")
-parser.add_argument("--max_seq_len", type=int, default=64, help="Number of words of the longest seqence.")
-parser.add_argument("--device", default="gpu", type=str, choices=["cpu", "gpu"],
-                    help="The device to select to train the model, is must be cpu/gpu.")
-parser.add_argument("--pinyin_vocab_file_path", type=str, default="pinyin_vocab.txt", help="pinyin vocab file path")
-
-args = parser.parse_args()
-
-
-# yapf: enable
-
 
 class Predictor(object):
     def __init__(self, model_file, params_file, device, max_seq_length,
@@ -70,12 +53,12 @@ class Predictor(object):
         self.tokenizer = tokenizer
         self.pinyin_vocab = pinyin_vocab
 
-    def predict(self, data, batch_size=1):
+    def predict(self, sentences, batch_size=1):
         """
         Predicts the data labels.
 
         Args:
-            data (obj:`List(Example)`): The processed data whose each element is a Example (numedtuple) object.
+            sentences (obj:`List(Example)`): The processed data and each element is a example (numedtuple) object.
                 A Example object contains `text`(word_ids) and `seq_len`(sequence length).
             batch_size(obj:`int`, defaults to 1): The number of batch.
 
@@ -98,7 +81,7 @@ class Predictor(object):
             Stack(axis=0, dtype='int64'),  # length
         ): [data for data in fn(samples)]
 
-        for text in data:
+        for text in sentences:
             example = {"source": text.strip()}
             input_ids, token_type_ids, pinyin_ids, length = trans_func(example)
             examples.append((input_ids, token_type_ids, pinyin_ids, length))
@@ -136,6 +119,21 @@ class Predictor(object):
 
 
 if __name__ == "__main__":
+    # yapf: disable
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model_file", type=str, required=True, default='./static_graph_params.pdmodel',
+                        help="The path to model info in static graph.")
+    parser.add_argument("--params_file", type=str, required=True, default='./static_graph_params.pdiparams',
+                        help="The path to parameters in static graph.")
+    parser.add_argument("--batch_size", type=int, default=4, help="The number of sequences contained in a mini-batch.")
+    parser.add_argument("--max_seq_len", type=int, default=64, help="Number of words of the longest seqence.")
+    parser.add_argument("--device", default="gpu", type=str, choices=["cpu", "gpu"],
+                        help="The device to select to train the model, is must be cpu/gpu.")
+    parser.add_argument("--pinyin_vocab_file_path", type=str, default="pinyin_vocab.txt", help="pinyin vocab file path")
+
+    args = parser.parse_args()
+    # yapf: enable
+
     tokenizer = ErnieTokenizer.from_pretrained("ernie-1.0")
     pinyin_vocab = Vocab.load_vocabulary(
         args.pinyin_vocab_file_path, unk_token='[UNK]', pad_token='[PAD]')

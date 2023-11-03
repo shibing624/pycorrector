@@ -11,7 +11,7 @@ from loguru import logger
 from pycorrector.utils.math_utils import edit_distance
 from pycorrector.utils.ngram_util import NgramUtil
 from pycorrector.utils.text_utils import is_chinese
-from pycorrector.utils.tokenizer import segment, split_2_short_text
+from pycorrector.utils.tokenizer import segment, split_text_into_sentences_by_symbol
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 # 五笔笔画字典
@@ -215,7 +215,7 @@ class ProperCorrector:
             self.get_word_pinyin_similarity_score(word1, word2)
         )
 
-    def proper_correct(
+    def correct(
             self,
             text,
             start_idx=0,
@@ -239,7 +239,7 @@ class ProperCorrector:
         text_new = ''
         details = []
         # 切分为短句
-        sentences = split_2_short_text(text, include_symbol=True)
+        sentences = split_text_into_sentences_by_symbol(text, include_symbol=True)
         for sentence, idx in sentences:
             # 遍历句子中的所有词，专名词的最大长度为4,最小长度为2
             sentence_words = segment(sentence, cut_type=cut_type)

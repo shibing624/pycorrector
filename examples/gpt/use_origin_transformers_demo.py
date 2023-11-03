@@ -30,7 +30,7 @@ for s in sents:
     q = get_prompt(s)
     input_ids = tokenizer(q).input_ids
     generation_kwargs = dict(max_new_tokens=128, do_sample=True, temperature=0.8)
-    outputs = model.generate(input_ids=torch.as_tensor([input_ids]).to('cuda'), **generation_kwargs)
+    outputs = model.generate(input_ids=torch.as_tensor([input_ids]).to('cuda:0'), **generation_kwargs)
     output_tensor = outputs[0][len(input_ids):]
     response = tokenizer.decode(output_tensor, skip_special_tokens=True)
     print(response)

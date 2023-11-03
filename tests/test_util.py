@@ -12,7 +12,7 @@ from pypinyin import lazy_pinyin
 from pycorrector.utils.text_utils import traditional2simplified, simplified2traditional
 from pycorrector.utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
 from pycorrector.utils.text_utils import is_chinese, is_chinese_string
-from pycorrector.utils.tokenizer import split_text_by_maxlen, split_2_short_text
+from pycorrector.utils.tokenizer import split_text_into_sentences_by_length, split_text_into_sentences_by_symbol
 
 
 class UtilTestCase(unittest.TestCase):
@@ -47,7 +47,7 @@ class UtilTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            r = split_text_by_maxlen(name, 4)
+            r = split_text_into_sentences_by_length(name, 4)
             print(r)
             res.append(r)
 

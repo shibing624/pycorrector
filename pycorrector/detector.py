@@ -12,7 +12,7 @@ from loguru import logger
 from pycorrector.proper_corrector import ProperCorrector
 from pycorrector.utils.get_file import get_file
 from pycorrector.utils.text_utils import uniform, is_alphabet_string, is_chinese_string
-from pycorrector.utils.tokenizer import Tokenizer, split_2_short_text
+from pycorrector.utils.tokenizer import Tokenizer, split_text_into_sentences_by_symbol
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # -----用户目录，存储模型文件-----
@@ -374,26 +374,7 @@ class Detector:
             result = True
         return result
 
-    def detect(self, text):
-        """
-        文本错误检测
-        :param text: 长文本
-        :return: 错误index
-        """
-        maybe_errors = []
-        if not text.strip():
-            return maybe_errors
-        # 初始化
-        self.check_detector_initialized()
-        # 文本归一化
-        text = uniform(text)
-        # 文本切分为句子
-        sentences = split_2_short_text(text)
-        for sentence, idx in sentences:
-            maybe_errors += self.detect_sentence(sentence, idx)[0]
-        return maybe_errors
-
-    def detect_sentence(self, sentence, start_idx=0, **kwargs):
+    def _detect(self, sentence, start_idx=0, **kwargs):
         """
         检测句子中的疑似错误字词，包括[词、位置、错误类型]
 
@@ -417,7 +398,7 @@ class Detector:
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 2. 专名错误检测
-        _, proper_details = self.proper_corrector.proper_correct(sentence, start_idx=start_idx, **kwargs)
+        _, proper_details = self.proper_corrector.correct(sentence, start_idx=start_idx, **kwargs)
         for error_word, corrected_word, begin_idx, end_idx in proper_details:
             maybe_err = [error_word, begin_idx, end_idx, ErrorType.proper]
             self._add_maybe_error_item(maybe_err, maybe_errors)
@@ -476,3 +457,20 @@ class Detector:
             except Exception as e:
                 logger.warning("detect error, sentence:" + sentence + str(e))
         return sorted(maybe_errors, key=lambda k: k[1], reverse=False), proper_details
+
+    def detect(self, sentence):
+        """
+        文本错误检测
+        :param sentence: 句子
+        :return: 错误index
+        """
+        maybe_errors = []
+        if not sentence.strip():
+            return maybe_errors
+        # 文本归一化
+        sentence = uniform(sentence)
+        # 文本切分为句子
+        short_sents = split_text_into_sentences_by_symbol(sentence)
+        for sent, idx in short_sents:
+            maybe_errors += self._detect(sent, idx)[0]
+        return maybe_errors
