@@ -10,8 +10,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from loguru import logger
+from tqdm import tqdm
 
-from pycorrector.seq2seq.data_reader import (
+from pycorrector.seq2seq.conv_seq2seq_utils import (
     gen_examples, read_vocab, create_dataset,
     one_hot, save_word_dict, load_word_dict,
     SOS_TOKEN, EOS_TOKEN, PAD_TOKEN
@@ -312,8 +313,8 @@ class ConvSeq2SeqModel:
         self.model_path = os.path.join(self.model_dir, 'convseq2seq.pth')
         logger.debug(f"Device: {device}")
         self.loss_fn = nn.CrossEntropyLoss()
-        self.src_vocab_path = os.path.join(self.model_dir, "src_vocab.txt")
-        self.trg_vocab_path = os.path.join(self.model_dir, "trg_vocab.txt")
+        self.src_vocab_path = os.path.join(self.model_dir, "vocab_source.txt")
+        self.trg_vocab_path = os.path.join(self.model_dir, "vocab_target.txt")
         if os.path.exists(self.src_vocab_path):
             self.src_2_ids = load_word_dict(self.src_vocab_path)
             self.trg_2_ids = load_word_dict(self.trg_vocab_path)
@@ -480,13 +481,13 @@ class ConvSeq2SeqModel:
         logger.info(f"Evaluation loss: {loss}")
         return {'loss': loss}
 
-    def predict(self, sentences):
+    def predict(self, sentences, silent=True):
         """
         Performs predictions on a list of text.
 
         Args:
             sentences: A python list of text (str) to be sent to the model for prediction. 
-
+            silent: A boolean flag to indicate whether to log the progress to stdout.
         Returns:
             preds: A python list of the generated sequences.
         """  # noqa: ignore flake8"
@@ -514,7 +515,7 @@ class ConvSeq2SeqModel:
                 raise ValueError("Model not found at {}".format(self.model_path))
         self.model.eval()
         result = []
-        for query in sentences:
+        for query in tqdm(sentences, desc="Generating outputs", disable=silent):
             out = []
             tokens = [token.lower() for token in query]
             tokens = [SOS_TOKEN] + tokens + [EOS_TOKEN]
@@ -538,4 +539,4 @@ class ConvSeq2SeqModel:
 
     def load_model(self):
         logger.info(f"Loading model from {self.model_path}")
-        self.model.load_state_dict(torch.load(self.model_path))
+        self.model.load_state_dict(torch.load(self.model_path, map_location=device))

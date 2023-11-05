@@ -87,10 +87,12 @@ def main():
     )
     # 训练模型
     logger.info('train model ...')
-    trainer = pl.Trainer(max_epochs=cfg.SOLVER.MAX_EPOCHS,
-                         gpus=None if device == torch.device('cpu') else cfg.MODEL.GPU_IDS,
-                         accumulate_grad_batches=cfg.SOLVER.ACCUMULATE_GRAD_BATCHES,
-                         callbacks=[ckpt_callback])
+    trainer = pl.Trainer(
+        max_epochs=cfg.SOLVER.MAX_EPOCHS,
+        gpus=None if device == torch.device('cpu') else cfg.MODEL.GPU_IDS,
+        accumulate_grad_batches=cfg.SOLVER.ACCUMULATE_GRAD_BATCHES,
+        callbacks=[ckpt_callback]
+    )
     # 进行训练
     # train_loader中有数据
     torch.autograd.set_detect_anomaly(True)

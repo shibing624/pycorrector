@@ -8,25 +8,19 @@ import sys
 
 sys.path.append('../..')
 
-from pycorrector.seq2seq.seq2seq_corrector import Seq2SeqCorrector
+from pycorrector.seq2seq.conv_seq2seq_corrector import ConvSeq2SeqCorrector
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
     parser.add_argument("--max_length", default=128, type=int, help="The maximum total input sequence length")
-    parser.add_argument("--embed_size", default=128, type=int, help="Embedding size.")
-    parser.add_argument("--hidden_size", default=128, type=int, help="Hidden size.")
-    parser.add_argument("--dropout", default=0.25, type=float, help="Dropout rate.")
 
     args = parser.parse_args()
     print(args)
 
-    m = Seq2SeqCorrector(
+    m = ConvSeq2SeqCorrector(
         args.model_dir,
-        embed_size=args.embed_size,
-        hidden_size=args.hidden_size,
-        dropout=args.dropout,
         max_length=args.max_length
     )
     inputs = [

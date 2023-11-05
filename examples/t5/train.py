@@ -125,9 +125,9 @@ class ModelArguments:
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_path', type=str, default=os.path.join(pwd_path, '../data/cn/sighan_2015/train.tsv'),
+    parser.add_argument('--train_path', type=str, default=os.path.join(pwd_path, '../data/sighan_2015/train.tsv'),
                         help='train dataset')
-    parser.add_argument('--test_path', type=str, default=os.path.join(pwd_path, '../data/cn/sighan_2015/test.tsv'),
+    parser.add_argument('--test_path', type=str, default=os.path.join(pwd_path, '../data/sighan_2015/test.tsv'),
                         help='test dataset')
     parser.add_argument('--save_dir', type=str, default='./output/mengzi-t5-base-chinese-correction-test/',
                         help='save dir')

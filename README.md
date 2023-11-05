@@ -30,7 +30,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Deep Model Usage](#deep-model-usage)
-- [Dataset](#Dataset)
+- [ContextDataset](#Dataset)
 - [Contact](#Contact)
 - [Reference](#reference)
 
@@ -614,7 +614,7 @@ output:
 
 - BART模型：模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 
-# Dataset
+# ContextDataset
 
 | 数据集                          | 语料 |                                                                                下载链接                                                                                 | 压缩包大小 |
 |:-----------------------------| :--------- |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----:|
