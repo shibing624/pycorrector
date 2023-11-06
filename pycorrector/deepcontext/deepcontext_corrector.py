@@ -35,7 +35,7 @@ class DeepContextCorrector(Corrector):
     def __init__(
             self,
             model_name_or_path: str = None,
-            max_length: int = 512,
+            max_length: int = 1024,
             *args,
             **kwargs,
     ):
@@ -64,7 +64,7 @@ class DeepContextCorrector(Corrector):
         """Correct the Chinese sentence with deep context language model."""
         details = []
         text_new = ''
-        blocks = split_text_into_sentences_by_length(sentence, 128)
+        blocks = split_text_into_sentences_by_length(sentence, self.max_length)
         for blk, start_idx in blocks:
             blk_new = ''
             for idx, s in enumerate(blk):

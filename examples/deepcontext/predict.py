@@ -14,7 +14,7 @@ from pycorrector.deepcontext.deepcontext_corrector import DeepContextCorrector
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output_dir", default="./outputs-deepcontext-lm", type=str, help="Dir for model save.")
-    parser.add_argument("--max_length", default=512, type=int, help="The maximum total input sequence length")
+    parser.add_argument("--max_length", default=1024, type=int, help="The maximum total input sequence length")
 
     args = parser.parse_args()
     print(args)
