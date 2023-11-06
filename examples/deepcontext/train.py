@@ -24,7 +24,7 @@ def main():
     parser.add_argument("--batch_size", default=8, type=int, help="Batch size.")
     parser.add_argument("--min_freq", default=1, type=int, help="Mini word frequency.")
     parser.add_argument("--dropout", default=0.0, type=float, help="Dropout rate.")
-    parser.add_argument("--num_epochs", default=20, type=int, help="Epoch num.")
+    parser.add_argument("--num_epochs", default=80, type=int, help="Epoch num.")
     args = parser.parse_args()
     print(args)
 
@@ -39,8 +39,9 @@ def main():
             min_freq=args.min_freq,
             dropout=args.dropout
         )
-        pred_words_res = m.predict_mask_token(list('老是较书。'), mask_index=2)
-        print(pred_words_res)
+        sent = '老是较书。'
+        pred_words_res = m.predict_mask_token(list(sent), mask_index=2)
+        print(sent, pred_words_res)
     # Predict
     if args.do_predict:
         m = DeepContextCorrector(args.output_dir, max_length=args.max_length)

@@ -117,8 +117,8 @@ class DeepContextModel:
         else:
             optimizer = self.optimizer
         logger.info(
-            'model: {model}, batch_size: {batch_size}, epochs: {epochs}, '
-            'word_embed_size: {word_embed_size}, hidden_size: {hidden_size}, learning_rate: {learning_rate}'
+            f'model: {model}, batch_size: {batch_size}, epochs: {num_epochs}, '
+            f'word_embed_size: {word_embed_size}, hidden_size: {hidden_size}, learning_rate: {learning_rate}'
         )
 
         # save config
@@ -181,11 +181,10 @@ class DeepContextModel:
             # find best model
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
-            logger.info('epoch:[{}/{}], total_loss:[{}], best_cur_loss:[{}]'
-                        .format(epoch + 1, num_epochs, total_loss.item(), best_loss))
+            logger.info('epoch: {}/{}, loss: {}, best_loss: {}'.format(epoch + 1, num_epochs, cur_loss, best_loss))
             if is_best:
                 self.save_model(model_dir=self.model_dir, model=model, optimizer=optimizer)
-                logger.info('epoch:{}, save new model:{}'.format(epoch + 1, self.model_dir))
+                logger.info('save new model: {}'.format(epoch + 1, self.model_dir))
 
     def save_model(self, model_dir=None, model=None, optimizer=None):
         """Save the model and the optim."""
