@@ -39,7 +39,7 @@ def main():
             min_freq=args.min_freq,
             dropout=args.dropout
         )
-        pred_words_res = m.predict_mask_token(list('老是较书。'),mask_index=2 )
+        pred_words_res = m.predict_mask_token(list('老是较书。'), mask_index=2)
         print(pred_words_res)
     # Predict
     if args.do_predict:

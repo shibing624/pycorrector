@@ -80,6 +80,7 @@ class DeepContextModel:
             learning_rate=1e-3,
             n_layers=2,
             min_freq=1,
+            vocab_max_size=50000,
             dropout=0.0
     ):
         if not os.path.isfile(train_path):
@@ -88,11 +89,12 @@ class DeepContextModel:
         logger.info('Loading data')
         dataset = ContextDataset(
             train_path,
-            batch_size,
-            min_freq,
-            device,
-            self.vocab_file,
-            self.max_length,
+            batch_size=batch_size,
+            max_length=self.max_length,
+            min_freq=min_freq,
+            device=device,
+            vocab_path=self.vocab_file,
+            vocab_max_size=vocab_max_size,
         )
         counter = np.array([dataset.word_freqs[word] for word in dataset.vocab_2_ids])
         model = Context2vec(

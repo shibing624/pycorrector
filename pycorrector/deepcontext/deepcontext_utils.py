@@ -404,15 +404,16 @@ class ContextDataset:
     def __init__(
             self,
             train_path,
-            batch_size,
-            min_freq,
-            device,
-            vocab_path,
+            batch_size=64,
+            max_length=512,
+            min_freq=0,
+            device='cuda',
+            vocab_path='vocab.txt',
+            vocab_max_size=50000,
             pad_token=PAD_TOKEN,
             unk_token=UNK_TOKEN,
             sos_token=SOS_TOKEN,
             eos_token=EOS_TOKEN,
-            max_length=512,
     ):
         sentences = []
         with open(train_path, 'r', encoding='utf-8') as f:
@@ -427,12 +428,15 @@ class ContextDataset:
         self.eos_token = eos_token
         self.device = device
 
-        self.vocab_2_ids, self.word_freqs = read_vocab(sentences, min_count=min_freq)
+        self.vocab_2_ids, self.word_freqs = read_vocab(sentences, max_size=vocab_max_size, min_count=min_freq)
+        logger.debug(f"vocab_2_ids size: {len(self.vocab_2_ids)}, word_freqs: {len(self.word_freqs)}, "
+                     f"vocab_2_ids head: {list(self.vocab_2_ids.items())[:10]}, "
+                     f"word_freqs head: {list(self.word_freqs.items())[:10]}")
         save_word_dict(self.vocab_2_ids, vocab_path)
 
         self.id_2_vocabs = {v: k for k, v in self.vocab_2_ids.items()}
         self.train_data = gen_examples(one_hot(sentences, self.vocab_2_ids), batch_size, max_length)
-        self.pad_index = self.vocab_2_ids[self.pad_token]
+        self.pad_index = self.vocab_2_ids.get(self.pad_token, 0)
 
     def _gathered_by_lengths(self, sentences):
         lengths = [(index, len(sent)) for index, sent in enumerate(sentences)]
