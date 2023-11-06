@@ -27,7 +27,7 @@ class EnSpellCorrector:
         """
         Init english spell corrector
         Args:
-            word_freq_dict:
+            word_freq_dict: Word freq dict, k=word, v=int(freq)
             custom_confusion_dict:
             en_dict_path:
         """
@@ -37,11 +37,11 @@ class EnSpellCorrector:
             word_freq_dict = {}
         if custom_confusion_dict is None:
             custom_confusion_dict = {}
-        if en_dict_path is None:
+        if not word_freq_dict and en_dict_path is None:
             en_dict_path = default_en_dict_path
-        self.word_freq_dict = word_freq_dict  # Word freq dict, k=word, v=int(freq)
+        self.word_freq_dict = word_freq_dict
         self.custom_confusion_dict = custom_confusion_dict
-        if os.path.exists(en_dict_path):
+        if en_dict_path and os.path.exists(en_dict_path):
             with gzip.open(en_dict_path, "rb") as f:
                 all_word_freq_dict = json.loads(f.read())
                 word_freq = {}

@@ -8,13 +8,15 @@ import sys
 import unittest
 
 sys.path.append('..')
-import pycorrector
+from pycorrector import Corrector
+
+m = Corrector()
 
 
 class BaseTestCase(unittest.TestCase):
     def test_base_correct(self):
         query = '机七学习是人工智能领遇最能体现智能的一个分知'
-        corrected_sent, detail = pycorrector.correct(query)
+        corrected_sent, detail = m.correct(query)
         print(corrected_sent, detail)
         self.assertEqual(corrected_sent, '机器学习是人工智能领域最能体现智能的一个分知')
         self.assertEqual(detail, [('机七', '机器', 0, 2), ('领遇', '领域', 9, 11)])
@@ -30,7 +32,7 @@ class BaseTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = pycorrector.correct(name)
+            s, r = m.correct(name)
             print(r)
             res.append(r)
 
@@ -49,17 +51,17 @@ class BaseTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = pycorrector.correct(name)
+            s, r = m.correct(name)
             print(r)
             res.append(r)
 
         self.assertEqual(res[0], [])
         self.assertEqual(res[1], [('张旗康', '张启康', 14, 17)])
 
-        pycorrector.set_custom_confusion_path_or_dict('../examples/my_custom_confusion.txt')
+        m.set_custom_confusion_path_or_dict('../examples/my_custom_confusion.txt')
         res = []
         for name in sents:
-            s, r = pycorrector.correct(name)
+            s, r = m.correct(name)
             print(r)
             res.append(r)
         self.assertEqual(res[0], [('iphonex', 'iphoneX', 1, 8)])
@@ -73,8 +75,8 @@ class BaseTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            print(name, pycorrector.detect(name))
-            s, r = pycorrector.correct(name)
+            print(name, m.detect(name))
+            s, r = m.correct(name)
             print(r)
             res.append(r)
 
@@ -97,11 +99,11 @@ class BaseTestCase(unittest.TestCase):
         # shylock shylock
         # 份额  份额
 
-        pycorrector.set_custom_confusion_path_or_dict(m_dict)
+        m.set_custom_confusion_path_or_dict(m_dict)
         res = []
         for name in sents:
-            print(name, pycorrector.detect(name))
-            s, r = pycorrector.correct(name)
+            print(name, m.detect(name))
+            s, r = m.correct(name)
             print(r)
             res.append(r)
         self.assertEqual(res[0], [('iphonex', 'iphoneX', 1, 8)])

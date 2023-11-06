@@ -97,6 +97,5 @@ error_sentences2 = [
 error_sentences.extend(badcase)
 error_sentences.extend(error_sentences2)
 bertCorrector = macbert_corrector.MacBertCorrector()
-for line in error_sentences:
-    r = bertCorrector.correct(line)
-    print("{}".format(r))
+r = bertCorrector.correct_batch(error_sentences)
+print("{}".format(r))

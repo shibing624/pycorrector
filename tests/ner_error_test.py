@@ -7,7 +7,8 @@ import sys
 
 sys.path.append("../")
 
-import pycorrector as ct
+from pycorrector import Corrector
+ct = Corrector()
 
 
 def test_disease():

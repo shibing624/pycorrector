@@ -6,9 +6,9 @@
 import sys
 
 sys.path.append('..')
-import pycorrector
+from pycorrector import Corrector
 
-
+m = Corrector()
 # 那天花板上的钻石可比鸡弹（（蛋））还大啊。
 # 才般（（搬））进装修好没多久的新宫殿里。
 # 做的最倒霉的一件事就帮尼哥檫（（擦））脚。
@@ -45,7 +45,7 @@ def test_char_correct_right():
         '有了这一番旁证博引。',
     ]
     for i in errors:
-        print(i, pycorrector.correct(i))
+        print(i, m.correct(i))
 
 
 def test_char_correct_wrong():
@@ -73,5 +73,5 @@ def test_char_correct_wrong():
         '叶子的绿色与本身枝干的颜色都会变为偏较暗的颜色。',
     ]
     for i in errors:
-        print(i, pycorrector.detect(i))
-        print(i, pycorrector.correct(i))
+        print(i, m.detect(i))
+        print(i, m.correct(i))

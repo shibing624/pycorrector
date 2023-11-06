@@ -5,8 +5,8 @@
 """
 import sys
 
-sys.path.append("../")
-import pycorrector
+sys.path.append("..")
+from pycorrector import Corrector
 
 error_sentences = [
     '桥为什么修的想过山车一样',
@@ -75,16 +75,16 @@ error_sentences1 = ['能充几次呢？',
                     '想不想在来一次比赛',
                     '权利的游戏第八季']
 
-
+m = Corrector()
 def test_sent1():
     for line in error_sentences:
         print(line)
-        print(pycorrector.detect(line))
-        print(pycorrector.correct(line))
+        print(m.detect(line))
+        print(m.correct(line))
 
 
 def test_sent2():
     for line in error_sentences1:
         print(line)
-        print(pycorrector.detect(line))
-        print(pycorrector.correct(line))
+        print(m.detect(line))
+        print(m.correct(line))
