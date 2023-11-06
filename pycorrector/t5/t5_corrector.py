@@ -15,34 +15,11 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 sys.path.append('../..')
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
-from pycorrector.utils.error_utils import get_errors
-from pycorrector.utils.text_utils import is_chinese_char
+from pycorrector.utils.error_utils import get_errors_for_t5
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
 
-
-def t5_get_errors(corrected_text, origin_text):
-    sub_details = []
-    for i, ori_char in enumerate(origin_text):
-        if i >= len(corrected_text):
-            continue
-        if ori_char in unk_tokens:
-            # deal with unk word
-            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
-            continue
-        if ori_char != corrected_text[i]:
-            if not is_chinese_char(ori_char):
-                # pass not chinese char
-                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
-                continue
-            if not is_chinese_char(corrected_text[i]):
-                corrected_text = corrected_text[:i] + corrected_text[i + 1:]
-                continue
-            sub_details.append((ori_char, corrected_text[i], i, i + 1))
-    sub_details = sorted(sub_details, key=operator.itemgetter(2))
-    return corrected_text, sub_details
 
 class T5Corrector:
     def __init__(self, model_name_or_path: str = "shibing624/mengzi-t5-base-chinese-correction"):
@@ -105,7 +82,7 @@ class T5Corrector:
         new_corrected_sentences = []
         corrected_details = []
         for idx, corrected_sent in enumerate(corrected_sentences):
-            new_corrected_sent, sub_details = t5_get_errors(corrected_sent, sentences[idx])
+            new_corrected_sent, sub_details = get_errors_for_t5(corrected_sent, sentences[idx])
             new_corrected_sentences.append(new_corrected_sent)
             corrected_details.append(sub_details)
         return [{'source': s, 'target': c, 'errors': e} for s, c, e in

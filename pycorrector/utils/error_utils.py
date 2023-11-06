@@ -51,9 +51,33 @@ def get_errors(corrected_text, origin_text):
             if origin_text[i] == corrected_text[j]:
                 j += 1
             i += 1
-
     errors = sorted(errors, key=operator.itemgetter(2))
     return new_corrected_text, errors
+
+
+def get_errors_for_t5(corrected_text, origin_text):
+    """Get new corrected text and errors between corrected text and origin text"""
+    errors = []
+    unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
+
+    for i, ori_char in enumerate(origin_text):
+        if i >= len(corrected_text):
+            continue
+        if ori_char in unk_tokens:
+            # deal with unk word
+            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
+            continue
+        if ori_char != corrected_text[i]:
+            if not is_chinese_char(ori_char):
+                # pass not chinese char
+                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
+                continue
+            if not is_chinese_char(corrected_text[i]):
+                corrected_text = corrected_text[:i] + corrected_text[i + 1:]
+                continue
+            errors.append((ori_char, corrected_text[i], i))
+    errors = sorted(errors, key=operator.itemgetter(2))
+    return corrected_text, errors
 
 
 if __name__ == '__main__':

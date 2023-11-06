@@ -20,10 +20,10 @@ def main():
     parser.add_argument("--do_predict", action="store_true", help="Whether not to predict")
     parser.add_argument("--output_dir", default="outputs-deepcontext-lm/", type=str, help="Dir for model save.")
     # Other parameters
-    parser.add_argument("--max_length", default=512, type=int, help="Max length of input sentence.")
-    parser.add_argument("--batch_size", default=8, type=int, help="Batch size.")
+    parser.add_argument("--max_length", default=1024, type=int, help="Max length of input sentence.")
+    parser.add_argument("--batch_size", default=512, type=int, help="Batch size.")
     parser.add_argument("--min_freq", default=1, type=int, help="Mini word frequency.")
-    parser.add_argument("--dropout", default=0.0, type=float, help="Dropout rate.")
+    parser.add_argument("--dropout", default=0.5, type=float, help="Dropout rate.")
     parser.add_argument("--num_epochs", default=80, type=int, help="Epoch num.")
     args = parser.parse_args()
     print(args)

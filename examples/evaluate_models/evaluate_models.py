@@ -45,7 +45,7 @@ def main(args):
         from pycorrector import T5Corrector
         model = T5Corrector()
         eval_sighan2015_by_model_batch(model.correct_batch)
-        # Sentence Level: acc:0.6291, precision:0.8199, recall:0.3186, f1:0.4589, cost time:27.54 s, total num: 1100
+        # Sentence Level: acc:0.7582, precision:0.8321, recall:0.6390, f1:0.7229, cost time:26.36 s, total num: 1100
     elif args.model == 'deepcontext':
         from pycorrector import DeepContextCorrector
         model = DeepContextCorrector()
