@@ -84,7 +84,7 @@ class DeepContextModel:
     ):
         if not os.path.isfile(train_path):
             raise FileNotFoundError
-
+        os.makedirs(self.model_dir, exist_ok=True)
         logger.info('Loading data')
         dataset = ContextDataset(
             train_path,

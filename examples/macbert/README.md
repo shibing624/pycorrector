@@ -81,7 +81,7 @@ macbert4csc-base-chinese
 
 ## Evaluate
 
-提供评估脚本[pycorrector/utils/eval.py](https://github.com/shibing624/pycorrector/blob/master/pycorrector/utils/eval.py)，该脚本有两个功能：
+提供评估脚本[pycorrector/utils/evaluate_utils.py](https://github.com/shibing624/pycorrector/blob/master/pycorrector/utils/evaluate_utils.py)：
 
 - 评估样本集：SIGHAN2015测试集。
 - 计算纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
@@ -92,12 +92,6 @@ macbert4csc-base-chinese
 - Sentence Level: precision:0.8264, recall:0.7366, f1:0.7789
 
 由于训练使用的数据使用了 SIGHAN2015 的训练集（复现paper），在 SIGHAN2015 的测试集上达到SOTA水平。
-
-#### 评估case
-
-- run `python tests/macbert_corrector_test.py`
-   ![result](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_result.jpg)
-在 SIGHAN2015 的测试集上达到了SOTA水平。
 
 
 ## 训练

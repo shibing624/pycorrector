@@ -16,11 +16,13 @@ from pycorrector.macbert.macbert_corrector import MacBertCorrector
 from pycorrector.proper_corrector import ProperCorrector
 from pycorrector.seq2seq.conv_seq2seq_corrector import ConvSeq2SeqCorrector
 from pycorrector.t5.t5_corrector import T5Corrector
-from pycorrector.utils import text_utils, get_file, tokenizer, io_utils, math_utils
+from pycorrector.utils import text_utils, tokenizer, io_utils, math_utils, evaluate_utils
 from pycorrector.utils.text_utils import (
     get_homophones_by_char,
     get_homophones_by_pinyin,
     traditional2simplified,
     simplified2traditional,
 )
+from pycorrector.utils.get_file import get_file
+from pycorrector.utils.evaluate_utils import eval_sighan2015_by_model_batch, eval_sighan2015_by_model
 from pycorrector.version import __version__

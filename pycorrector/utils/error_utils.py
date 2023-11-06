@@ -6,17 +6,15 @@
 
 import operator
 
-from loguru import logger
-
 from pycorrector.utils.text_utils import is_chinese_char
 
 
 def get_errors(corrected_text, origin_text):
     """Get errors between corrected text and origin text"""
+    new_corrected_text = ""
     errors = []
     i, j = 0, 0
     unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
-    new_corrected_text = ""
 
     while i < len(origin_text) and j < len(corrected_text):
         if origin_text[i] in unk_tokens:
@@ -79,4 +77,4 @@ if __name__ == '__main__':
     ]
     for pair in sentence_pairs:
         new_corrected_text, errors = get_errors(pair[0], pair[1])
-        logger.info(f"{new_corrected_text} {errors}")
+        print(f"{new_corrected_text} {errors}")

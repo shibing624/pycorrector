@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append("../")
-from pycorrector.macbert import macbert_corrector
+from pycorrector import MacBertCorrector
 
 error_sentences = [
     '内容提要——在知识产权学科领域里',
@@ -96,6 +96,6 @@ error_sentences2 = [
 ]
 error_sentences.extend(badcase)
 error_sentences.extend(error_sentences2)
-bertCorrector = macbert_corrector.MacBertCorrector()
-r = bertCorrector.correct_batch(error_sentences)
+m = MacBertCorrector()
+r = m.correct_batch(error_sentences)
 print("{}".format(r))

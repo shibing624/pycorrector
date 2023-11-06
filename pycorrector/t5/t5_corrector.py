@@ -53,7 +53,7 @@ class T5Corrector:
         :param max_length: int, max length of each sentence
         :param batch_size: int, bz
         :param silent: bool, show log
-        :return: list, (corrected_text, [error_word, correct_word, begin_pos, end_pos])
+        :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         input_sents = []
         sent_map = []

@@ -5,7 +5,7 @@
 """
 
 
-class NgramUtil(object):
+class NgramUtil:
     @staticmethod
     def unigrams(words):
         """

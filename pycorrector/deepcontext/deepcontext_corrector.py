@@ -98,6 +98,6 @@ class DeepContextCorrector(Corrector):
         批量句子纠错
         :param sentences: 句子文本列表
         :param kwargs: 其他参数
-        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         return [self.correct(s, **kwargs) for s in sentences]

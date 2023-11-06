@@ -5,11 +5,8 @@
 """
 
 import os
-import sys
 import time
 from codecs import open
-
-sys.path.append("../..")
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 sighan_2015_path = os.path.join(pwd_path, '../data/sighan2015_test.tsv')

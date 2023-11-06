@@ -16,9 +16,7 @@
 example: [examples/deepcontext/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/deepcontext/demo.py)
 ```python
 from pycorrector import DeepContextCorrector
-
 m = DeepContextCorrector()
-
 print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
 ```
 

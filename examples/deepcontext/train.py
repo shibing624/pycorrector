@@ -54,8 +54,7 @@ def main():
         ]
         for i in inputs:
             output = m.correct(i)
-            print('input  :', i)
-            print('predict:', output)
+            print(output)
             print()
 
 
