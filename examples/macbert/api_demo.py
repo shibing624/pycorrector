@@ -40,14 +40,14 @@ def kenlm_correct():
         data = request.json
         logger.info("Received data: {}".format(data))
         text = data["text"]
-        corrected_sent, detail = kenlm_model.correct(text)
-        return corrected_sent + " " + str(detail)
+        r = kenlm_model.correct(text)
+        return r
     else:
         if "text" in request.args:
             text = request.args.get("text")
             logger.info("Received data: {}".format(text))
-            corrected_sent, detail = kenlm_model.correct(text)
-            return corrected_sent + " " + str(detail)
+            r = kenlm_model.correct(text)
+            return r
     return help
 
 
@@ -57,14 +57,14 @@ def correct_api():
         data = request.json
         logger.info("Received data: {}".format(data))
         text = data["text"]
-        results = macbert_model.correct(text)
-        return results[0] + " " + str(results[1])
+        r = macbert_model.correct(text)
+        return r
     else:
         if "text" in request.args:
             text = request.args.get("text")
             logger.info("Received data: {}".format(text))
-            results = macbert_model.correct(text)
-            return results[0] + " " + str(results[1])
+            r = macbert_model.correct(text)
+            return r
     return help
 
 

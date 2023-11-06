@@ -13,8 +13,7 @@ from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
 
 def predict(text):
-    corrected_text, details = model.correct(text)
-    return corrected_text, details
+    return model.correct(text)
 
 
 if __name__ == '__main__':

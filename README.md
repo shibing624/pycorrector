@@ -63,9 +63,9 @@ HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ![](docs/hf.png)
 
-run example: [examples/gradio_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/gradio_demo.py) to see the demo:
+run example: [examples/macbert/gradio_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/gradio_demo.py) to see the demo:
 ```shell
-python examples/gradio_demo.py
+python examples/macbert/gradio_demo.py
 ```
 
 # Evaluation
@@ -81,18 +81,19 @@ python examples/gradio_demo.py
 
 GPU：Tesla V100，显存 32 GB
 
-| Model Name      | Model Hub Link                                                                                                      | Backbone                 | GPU | Precision | Recall | F1 | QPS     |
-|:----------------|:--------------------------------------------------------------------------------------------------------------------|:-------------------------|:----|:----------| :--| :--- |:--------|
-| Kenlm           | -                                                                                                                   | kenlm                    | CPU | 0.6860    | 0.1529 | 0.2500 | 9       |
-| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese   | GPU | 0.6984    | 0.6354 | 0.6654 | 58      |
-| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base           | GPU | **0.8321**    | 0.6390 | 0.7229 | 214     |
-| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254  | **0.7311** | **0.7754** | **224** |
-| ChatGLM3-6B-CSC | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | chatglm3-6b              | GPU | 0.5263    | 0.4052 | 0.4579 | 4       |
+| Model Name      | Model Hub Link                                                                                                      | Backbone                 | GPU | Precision  | Recall     | F1         | QPS     |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------|:-------------------------|:----|:-----------|:-----------|:-----------|:--------|
+| Kenlm           | -                                                                                                                   | kenlm                    | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
+| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese   | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
+| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base           | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
+| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
+| ChatGLM3-6B-CSC | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | chatglm3-6b              | GPU | 0.5574     | 0.4917     | 0.5225     | 4       |
 
+    
 ### 结论
 
-- 中文拼写纠错模型效果最好的是**MacBert-CSC**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：[shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
-- 中文语法纠错模型效果最好的是**ChatGLM3-6B-CSC**，模型名称是*shibing624/chatglm3-6b-csc-chinese-lora*，huggingface model：[shibing624/shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/shibing624/chatglm3-6b-csc-chinese-lora)
+- 中文拼写纠错模型效果最好的是**MacBert-CSC**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：https://huggingface.co/shibing624/macbert4csc-base-chinese
+- 中文语法纠错模型效果最好的是**Mengzi-T5-CSC**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction
 
 # Install
 
