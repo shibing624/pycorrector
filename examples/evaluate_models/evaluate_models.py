@@ -21,7 +21,7 @@ def main(args):
         from pycorrector import MacBertCorrector
         model = MacBertCorrector()
         eval_sighan2015_by_model_batch(model.correct_batch)
-        # macbert:      Sentence Level: acc:0.7891, precision:0.8479, recall:0.6980, f1:0.7657, cost time:2.37 s, total num: 1100
+        # macbert:      Sentence Level: acc:0.7918, precision:0.8489, recall:0.7035, f1:0.7694, cost time:2.25 s, total num: 1100
         # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
         # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
     elif args.model == 'bartseq2seq':

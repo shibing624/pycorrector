@@ -9,7 +9,7 @@ import operator
 from pycorrector.utils.text_utils import is_chinese_char
 
 
-def get_errors(corrected_text, origin_text):
+def get_errors_for_diff_length(corrected_text, origin_text):
     """Get errors between corrected text and origin text"""
     new_corrected_text = ""
     errors = []
@@ -55,7 +55,7 @@ def get_errors(corrected_text, origin_text):
     return new_corrected_text, errors
 
 
-def get_errors_for_t5(corrected_text, origin_text):
+def get_errors_for_same_length(corrected_text, origin_text):
     """Get new corrected text and errors between corrected text and origin text"""
     errors = []
     unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
@@ -100,5 +100,5 @@ if __name__ == '__main__':
         ('我喜欢吃鸡，公鸡、母鸡、白切鸡、乌鸡、紫燕鸡', '我喜欢吃鸡，公鸡、母鸡、切鸡、乌鸡、紫燕鸡'),  # 少字
     ]
     for pair in sentence_pairs:
-        new_corrected_text, errors = get_errors(pair[0], pair[1])
+        new_corrected_text, errors = get_errors_for_same_length(pair[0], pair[1])
         print(f"{new_corrected_text} {errors}")
