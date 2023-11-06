@@ -77,7 +77,7 @@ class MacBertCorrector:
         :param batch_size: int, batch size
         :param threshold: float, threshold of error word
         :param silent: bool, silent or not
-        :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         input_sents = []
         sent_map = []

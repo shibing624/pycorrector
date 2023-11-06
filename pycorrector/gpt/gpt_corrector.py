@@ -50,6 +50,7 @@ class GptCorrector(GptModel):
         :param prompt_template_name: str, prompt template name
         :param prefix_prompt: str, prefix of prompt
         :param kwargs: dict, other params
+        :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         if prefix_prompt is None:
             prefix_prompt = "对下面的文本纠错\n\n"
