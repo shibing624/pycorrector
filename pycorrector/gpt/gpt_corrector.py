@@ -13,7 +13,7 @@ from loguru import logger
 sys.path.append('../..')
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
 from pycorrector.gpt.gpt_model import GptModel
-from pycorrector.utils.error_utils import get_errors_for_same_length
+from pycorrector.utils.error_utils import get_errors_for_diff_length
 
 
 class GptCorrector(GptModel):
@@ -37,7 +37,7 @@ class GptCorrector(GptModel):
             self,
             sentences: List[str],
             max_length: int = 512,
-            batch_size: int = 4,
+            batch_size: int = 12,
             prompt_template_name: str = 'vicuna',
             prefix_prompt: str = None,
             **kwargs
@@ -83,7 +83,7 @@ class GptCorrector(GptModel):
         new_corrected_sentences = []
         corrected_details = []
         for idx, corrected_sent in enumerate(corrected_sentences):
-            new_corrected_sent, sub_details = get_errors_for_same_length(corrected_sent, sentences[idx])
+            new_corrected_sent, sub_details = get_errors_for_diff_length(corrected_sent, sentences[idx])
             new_corrected_sentences.append(new_corrected_sent)
             corrected_details.append(sub_details)
         return [{'source': s, 'target': c, 'errors': e} for s, c, e in

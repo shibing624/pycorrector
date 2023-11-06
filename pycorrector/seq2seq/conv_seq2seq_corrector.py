@@ -17,7 +17,7 @@ from pycorrector.seq2seq.conv_seq2seq_model import ConvSeq2SeqModel
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
 from pycorrector.utils.get_file import get_file
 from pycorrector.detector import USER_DATA_DIR
-from pycorrector.utils.error_utils import get_errors_for_same_length
+from pycorrector.utils.error_utils import get_errors_for_diff_length
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 pretrained_seq2seq_models = {
@@ -84,7 +84,7 @@ class ConvSeq2SeqCorrector:
         new_corrected_sentences = []
         corrected_details = []
         for idx, corrected_sent in enumerate(corrected_sentences):
-            new_corrected_sent, sub_details = get_errors_for_same_length(corrected_sent, sentences[idx])
+            new_corrected_sent, sub_details = get_errors_for_diff_length(corrected_sent, sentences[idx])
             new_corrected_sentences.append(new_corrected_sent)
             corrected_details.append(sub_details)
         return [{'source': s, 'target': c, 'errors': e} for s, c, e in
