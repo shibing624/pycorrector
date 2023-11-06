@@ -51,5 +51,5 @@ setup(
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
-    package_data={'pycorrector': ['*.*', 'data/*', 'data/en.json.gz', 'data/sighan_2015_test.tsv']}
+    package_data={'pycorrector': ['*.*', 'data/*', 'data/en.json.gz', 'data/sighan2015_test.tsv']}
 )

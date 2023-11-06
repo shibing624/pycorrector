@@ -12,7 +12,7 @@ from codecs import open
 sys.path.append("../..")
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
-sighan_2015_path = os.path.join(pwd_path, '../data/sighan_2015_test.tsv')
+sighan_2015_path = os.path.join(pwd_path, '../data/sighan2015_test.tsv')
 
 
 def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=True):
