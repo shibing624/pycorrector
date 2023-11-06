@@ -28,7 +28,7 @@ class T5Corrector:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
         self.model = T5ForConditionalGeneration.from_pretrained(model_name_or_path)
         self.model.to(device)
-        logger.debug("Use device: {}".format(device))
+        logger.debug("Device: {}".format(device))
         logger.debug('Loaded t5 correction model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
     def _predict(self, sentences, batch_size=32, max_length=128, silent=True):

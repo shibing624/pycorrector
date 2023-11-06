@@ -50,7 +50,6 @@ class ConvSeq2SeqCorrector:
                 verbose=1
             )
         t1 = time.time()
-        logger.debug("Device: {}".format(device))
         self.model = ConvSeq2SeqModel(model_dir=model_dir)
         self.max_length = max_length
         logger.debug('Loaded model: %s, spend: %.4f s.' % (model_dir, time.time() - t1))
