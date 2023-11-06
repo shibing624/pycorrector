@@ -1,4 +1,4 @@
-# Seq2seq Attention Model
+# ConvSeq2seq Attention Model for Chinese Spelling Correction
 
 
 ## Features
@@ -8,7 +8,7 @@
 * Conv Seq2Seq model, GPU并行计算，训练加速
 * 训练加速tricks：dataset bucketing, prefetching, token-based batching, gradients accumulation
 * Beam Search
-* Chinese Samples: sighan2015 sample data, CGED sample data
+* Chinese Samples: sighan2015 data
 
 ## Usage
 
@@ -17,41 +17,38 @@
 ```
 torch>=1.4.0
 transformers>=4.4.2
-tensorboardX
 ```
 
-## Demo
+### Dataset
 
-- convseq2seq demo
+#### toy data
+sighan 2015中文拼写纠错数据（2k条）：[examples/data/sighan_2015/train.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/sighan_2015/train.tsv)
 
-示例[seq2seq_demo.py](../../examples/seq2seq_demo.py)
+data format:
 ```
-cd ../../examples
-python seq2seq_demo.py --do_train --do_predict
-```
-
-## Detail
-
-
-### Train
-data example:
-```
-# train.txt:
+# head -n 1 train.txt
 你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
 ```
-run train.py
+
+
+#### big train data
+
+nlpcc2018+hsk dataset, download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB] 
+
+### Train model
+run train:
 ```
-python train.py
+python train.py --do_train --do_predict
 ```
 
-### Predict
+
+### Predict model
 ```
 python predict.py
-
 ```
 
 
-### Result
+output:
 ```
 input  : 老是较书。
 predict: 老师教书。
@@ -72,14 +69,10 @@ input  : 王天华开心得一直说话。
 predict: 王天华开心地一直说话。
 
 ```
-![result image](../../docs/git_image/convseq2seq_ret.png)
+![result image](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/convseq2seq_ret.png)
 
 
-### big train data
-
-download from https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA  密码:m6fg [130W sentence pair，215MB], put data to `seq2seq/output` folder.
-
-### release models
+## Release model
 基于SIGHAN2015数据集训练的convseq2seq模型，已经release到github:
 
-- convseq2seq model url: https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz
+- convseq2seq model: https://github.com/shibing624/pycorrector/releases/download/0.4.5/convseq2seq_correction.tar.gz

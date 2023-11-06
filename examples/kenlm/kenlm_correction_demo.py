@@ -9,8 +9,8 @@ sys.path.append("../..")
 import pycorrector
 
 if __name__ == '__main__':
-    corrected_sent, detail = pycorrector.correct('少先队员因该为老人让坐')
-    print(corrected_sent, detail)
+    r = pycorrector.correct('少先队员因该为老人让坐')
+    print(r)
 
     error_sentences = [
         '真麻烦你了。希望你们好好的跳无',
@@ -22,5 +22,5 @@ if __name__ == '__main__':
         '报应接中迩来',  # 接踵而来
     ]
     for line in error_sentences:
-        correct_sent, err = pycorrector.correct(line)
-        print("{} => {} {}".format(line, correct_sent, err))
+        r = pycorrector.correct(line)
+        print("r".format(r))

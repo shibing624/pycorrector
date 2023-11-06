@@ -11,7 +11,7 @@ sys.path.append('..')
 from pypinyin import lazy_pinyin
 from pycorrector.utils.text_utils import traditional2simplified, simplified2traditional
 from pycorrector.utils.text_utils import get_homophones_by_char, get_homophones_by_pinyin
-from pycorrector.utils.text_utils import is_chinese, is_chinese_string
+from pycorrector.utils.text_utils import is_chinese_char, is_chinese_string
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length, split_text_into_sentences_by_symbol
 
 
@@ -39,7 +39,7 @@ class UtilTestCase(unittest.TestCase):
         print(s, is_chinese_string(s))
 
         for i in s:
-            print(i, is_chinese(i))
+            print(i, is_chinese_char(i))
 
     def test_split_maxlen(self):
         sents = [

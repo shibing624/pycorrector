@@ -45,11 +45,11 @@ class ConfusionCorrector:
             logger.warning('file not found.%s' % path)
         return confusion
 
-    def correct(self, sentence):
+    def correct(self, sentence: str):
         """
         基于混淆集纠错
         :param sentence: str, 待纠错的文本
-        :return: tuple(str, list), list(wrong, right, begin_idx, end_idx)
+        :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         corrected_sentence = sentence
         details = []
@@ -58,6 +58,6 @@ class ConfusionCorrector:
             idx = sentence.find(err)
             if idx > -1:
                 corrected_sentence = sentence[:idx] + truth + sentence[(idx + len(err)):]
-                maybe_err = [err, truth, idx, idx + len(err)]
-                details.append(maybe_err)
-        return corrected_sentence, details
+                details.append((err, truth, idx))
+        return {'source': sentence, 'target': corrected_sentence, 'errors': details}
+

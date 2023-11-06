@@ -57,13 +57,13 @@ def correct_api():
         data = request.json
         logger.info("Received data: {}".format(data))
         text = data["text"]
-        results = macbert_model.macbert_correct(text)
+        results = macbert_model.correct(text)
         return results[0] + " " + str(results[1])
     else:
         if "text" in request.args:
             text = request.args.get("text")
             logger.info("Received data: {}".format(text))
-            results = macbert_model.macbert_correct(text)
+            results = macbert_model.correct(text)
             return results[0] + " " + str(results[1])
     return help
 

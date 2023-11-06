@@ -3,15 +3,15 @@
 @author:XuMing(xuming624@qq.com)
 @description: loss function
 """
+import json
 import math
+from codecs import open
+from collections import Counter
 
 import numpy as np
 import torch
 import torch.nn as nn
-import json
-from codecs import open
-from collections import Counter
-import os
+
 # Define constants associated with the usual special tokens.
 SOS_TOKEN = '<sos>'
 EOS_TOKEN = '<eos>'
@@ -34,9 +34,11 @@ class NegativeSampling(nn.Module):
         self.power = power
         self.device = device
 
-        self.W = nn.Embedding(num_embeddings=len(counter),
-                              embedding_dim=embed_size,
-                              padding_idx=ignore_index)
+        self.W = nn.Embedding(
+            num_embeddings=len(counter),
+            embedding_dim=embed_size,
+            padding_idx=ignore_index
+        )
         self.W.weight.data.zero_()
         self.logsigmoid = nn.LogSigmoid()
         self.sampler = WalkerAlias(np.power(counter, power))
@@ -286,9 +288,6 @@ class MLP(nn.Module):
         return self.MLP[-1](self.drop(out))
 
 
-
-
-
 def save_word_dict(dict_data, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
         for k, v in dict_data.items():
@@ -336,31 +335,30 @@ def get_minibatches(n, minibatch_size, shuffle=True):
     return minibatches
 
 
-def prepare_data(seqs):
+def prepare_data(seqs, max_length=512):
+    seqs = [seq[:max_length] for seq in seqs]
     lengths = [len(seq) for seq in seqs]
     n_samples = len(seqs)
-    max_len = np.max(lengths)
 
-    x = np.zeros((n_samples, max_len)).astype('int32')
+    x = np.zeros((n_samples, max_length)).astype('int32')
     x_lengths = np.array(lengths).astype("int32")
     for idx, seq in enumerate(seqs):
         x[idx, :lengths[idx]] = seq
     return x, x_lengths  # x_mask
 
 
-def gen_examples(src_sentences, batch_size):
+def gen_examples(src_sentences, batch_size, max_length):
     minibatches = get_minibatches(len(src_sentences), batch_size)
     examples = []
     for minibatch in minibatches:
         mb_src_sentences = [src_sentences[t] for t in minibatch]
-        mb_x, mb_x_len = prepare_data(mb_src_sentences)
+        mb_x, mb_x_len = prepare_data(mb_src_sentences, max_length)
         examples.append((mb_x, mb_x_len))
     return examples
 
 
 def one_hot(src_sentences, src_dict, sort_by_len=False):
-    """vector the sequences.
-    """
+    """vector the sequences."""
     out_src_sentences = [[src_dict.get(w, 0) for w in sent] for sent in src_sentences]
 
     # sort sentences by english lengths
@@ -411,11 +409,12 @@ class ContextDataset:
             unk_token=UNK_TOKEN,
             sos_token=SOS_TOKEN,
             eos_token=EOS_TOKEN,
+            max_length=512,
     ):
         sentences = []
         with open(train_path, 'r', encoding='utf-8') as f:
             for line in f:
-                tokens = line.strip().lower().split()
+                tokens = list(line.strip().lower())
                 if len(tokens) > 0:
                     sentences.append([sos_token] + tokens + [eos_token])
         self.sent_dict = self._gathered_by_lengths(sentences)
@@ -431,7 +430,7 @@ class ContextDataset:
 
         self.id_2_vocabs = {v: k for k, v in vocab_2_ids.items()}
         train_vec = one_hot(sentences, self.vocab_2_ids)
-        self.train_data = gen_examples(train_vec, batch_size)
+        self.train_data = gen_examples(train_vec, batch_size, max_length)
 
         if self.pad_token:
             self.pad_index = self.vocab_2_ids[self.pad_token]

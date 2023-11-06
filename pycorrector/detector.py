@@ -286,7 +286,7 @@ class Detector:
         """
         检测错误集合(maybe_errors)是否已经包含该错误位置（maybe_err)
         :param maybe_err: [error_word, begin_pos, end_pos, error_type]
-        :param maybe_errors:list
+        :param maybe_errors: list
         :return: bool
         """
         error_word_idx = 0
@@ -398,8 +398,9 @@ class Detector:
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 2. 专名错误检测
-        _, proper_details = self.proper_corrector.correct(sentence, start_idx=start_idx, **kwargs)
-        for error_word, corrected_word, begin_idx, end_idx in proper_details:
+        proper_details = self.proper_corrector.correct(sentence, start_idx=start_idx, **kwargs)['errors']
+        for error_word, corrected_word, begin_idx in proper_details:
+            end_idx = begin_idx + len(error_word)
             maybe_err = [error_word, begin_idx, end_idx, ErrorType.proper]
             self._add_maybe_error_item(maybe_err, maybe_errors)
 
@@ -449,8 +450,7 @@ class Detector:
                         if token in self.stopwords:
                             continue
                         # token, begin_idx, end_idx, error_type
-                        maybe_err = [token, i + start_idx, i + start_idx + 1,
-                                     ErrorType.char]
+                        maybe_err = [token, i + start_idx, i + start_idx + 1, ErrorType.char]
                         self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warning("index error, sentence:" + sentence + str(ie))

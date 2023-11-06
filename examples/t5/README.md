@@ -1,4 +1,4 @@
-# T5 model for Text Correction
+# T5 model for Chinese Spelling Correction
 
 
 ## Features
@@ -17,14 +17,20 @@ datasets
 loguru
 ```
 
-## Demo
+### Train
+data example:
+```
+# head -n 1 train.txt
+你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
+```
+run train:
+```
+python train.py --do_train --do_eval
+```
 
-- T5 correction demo
-
-example: [t5_corrector.py](t5_corrector.py)
-
-```shell
-python t5_corrector.py
+### Predict
+```
+python predict.py
 ```
 
 output:
@@ -35,25 +41,6 @@ original sentence:机七学习是人工智能领遇最能体现智能的一个�
 original sentence:今天心情很好 => 今天心情很好 err:[]
 original sentence:老是较书。 => 老师教书。 err:[('是', '师', 1, 2), ('较', '教', 2, 3)]
 ```
-
-
-### Train
-data example:
-```
-# train.txt:
-你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
-```
-run train.py
-```
-python train.py --do_train --do_eval
-```
-
-### Predict
-```
-python predict.py
-```
-
-
 
 ## ContextDataset
 

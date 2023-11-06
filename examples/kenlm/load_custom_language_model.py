@@ -15,5 +15,5 @@ if __name__ == '__main__':
     lm_path = os.path.join(pwd_path, './people2014corpus_chars.klm')
     model = Corrector(language_model_path=lm_path)
 
-    corrected_sent, detail = model.correct('少先队员因该为老人让坐')
-    print(corrected_sent, detail)
+    r = model.correct('少先队员因该为老人让坐')
+    print(r)

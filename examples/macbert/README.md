@@ -1,4 +1,4 @@
-# MacBertMaskedLM For Correction
+# MacBertMaskedLM For Chinese Spelling Correction
 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。   
 > "MacBERT shares the same pre-training tasks as BERT with several modifications."  —— (Cui et al., Findings of the EMNLP 2020)
 
@@ -27,8 +27,6 @@ MLM as Correction Mask strategies：
 
 #### pycorrector调用
 
-example: [correct_demo.py](correct_demo.py)
-
 ```python
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
@@ -38,13 +36,6 @@ print(m.correct('今天新情很好'))
 ```
 #### transformers调用
 当然，你也可使用官方的transformers库进行调用。
-
-1.先pip安装transformers库：
-
-```shell
-pip install transformers>=4.1.1
-```
-2.使用以下示例执行：
 
 ```python
 import operator
@@ -107,23 +98,12 @@ macbert4csc-base-chinese
 
 ## Evaluate
 
-提供评估脚本[pycorrector/utils/eval.py](../utils/eval.py)，该脚本有两个功能：
+提供评估脚本[pycorrector/utils/eval.py](https://github.com/shibing624/pycorrector/blob/master/pycorrector/utils/eval.py)，该脚本有两个功能：
 
-- 构建评估样本集：评估集[pycorrector/data/eval_corpus.json](../data/eval_corpus.json),
-  包括字粒度错误100条、词粒度错误100条、语法错误100条，正确句子200条。用户可以修改条数生成其他评估样本分布。
+- 评估样本集：SIGHAN2015测试集。
 - 计算纠错准召率：采用保守计算方式，简单把纠错之后与正确句子完成匹配的视为正确，否则为错。
 
-执行该评估脚本后，
-
-`shibing624/macbert4csc-base-chinese` 模型在 corpus500 纠错效果评估如下：
-
-- Sentence Level: acc:0.6560, precision:0.7797, recall:0.5919, f1:0.6730
-
-规则方法(加入自定义混淆集)在corpus500纠错效果评估如下：
-
-- Sentence Level: acc:0.6400, recall:0.5067
-
-`shibing624/macbert4csc-base-chinese` 在 SIGHAN2015 测试集纠错效果评估如下：
+执行该评估脚本后，`shibing624/macbert4csc-base-chinese` 在 SIGHAN2015 测试集纠错效果评估如下：
 
 - Char Level:     precision:0.9372, recall:0.8640, f1:0.8991
 - Sentence Level: precision:0.8264, recall:0.7366, f1:0.7789
@@ -133,7 +113,7 @@ macbert4csc-base-chinese
 #### 评估case
 
 - run `python tests/macbert_corrector_test.py`
-   ![result](../../docs/git_image/macbert_result.jpg)
+   ![result](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_result.jpg)
 在 SIGHAN2015 的测试集上达到了SOTA水平。
 
 
@@ -145,18 +125,23 @@ pip install transformers>=4.1.1 pytorch-lightning==1.4.9 torch>=1.7.0 yacs
 ```
 ### 训练数据集
 
-#### toy数据集（约1千条）
-```shell
-cd macbert
-python preprocess.py
+#### toy数据集
+sighan 2015中文拼写纠错数据（2k条）：[examples/data/sighan_2015/train.json](https://github.com/shibing624/pycorrector/blob/master/examples/data/sighan_2015/train.json)
+
+data format:
 ```
-得到toy数据集文件：
-```shell
-macbert/output
-|-- dev.json
-|-- test.json
-`-- train.json
+[
+    {
+        "id": "A2-0003-1",
+        "original_text": "但是我不能去参加，因为我有一点事情阿！",
+        "wrong_ids": [
+            17
+        ],
+        "correct_text": "但是我不能去参加，因为我有一点事情啊！"
+    },
+]
 ```
+
 #### SIGHAN+Wang271K中文纠错数据集
 
 
@@ -194,35 +179,33 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 
 ### 训练 MacBert4CSC 模型
 ```shell
-python train.py
+python train.py --config_file train_macbert4csc.yml
 ```
 
-注意：MacBert4CSC模型只能处理对齐文本的纠错问题，不能处理多字、少字的错误，所以训练集original_text需要和correct_text长度一样。
+注意：MacBert4CSC模型只能处理对齐长度的文本纠错问题，不能处理多字、少字的错误，所以训练集original_text需要和correct_text长度一样。
 否则会报错：“ValueError: Expected input batch_size (*A) to match target batch_size (*B).”
 
 ### 预测
 - 方法一：直接加载保存的ckpt文件：
 ```shell
-python infer.py
+python predict_ckpt.py
 ```
 
 - 方法二：加载`pytorch_model.bin`文件：
-把`output/macbert4csc`文件夹下以下模型文件复制到`~/.pycorrector/datasets/macbert_models/chinese_finetuned_correction`目录下，
+把`outputs_macbert4csc`文件夹路径赋值给`MacBertCorrector`类的`model_name_or_path`，
 就可以像上面`快速加载`使用pycorrector或者transformers调用。
 
 ```shell
-output
-└── macbert4csc
+outputs-macbert4csc
     ├── config.json
     ├── pytorch_model.bin
     ├── special_tokens_map.json
     ├── tokenizer_config.json
     └── vocab.txt
 ```
-
-demo示例[macbert_corrector.py](macbert_corrector.py):
+示例[predict.py](predict.py):
 ```
-python3 macbert_corrector.py
+python predict.py
 ```
 
 ### 训练 SoftMaskedBert4CSC 模型
@@ -230,7 +213,11 @@ python3 macbert_corrector.py
 python train.py --config_file train_softmaskedbert4csc.yml
 ```
 
-# Reference
+## Release model
+基于`SIGHAN+Wang271K中文纠错数据集`训练的macbert4csc模型，已经release到HuggingFace models: https://huggingface.co/shibing624/macbert4csc-base-chinese
+
+
+## Reference
 - [BertBasedCorrectionModels](https://github.com/gitabtion/BertBasedCorrectionModels)
 - <div class="csl-entry">Cui, Y., Che, W., Liu, T., Qin, B., Wang, S., &#38; Hu, G. (2020). Revisiting Pre-Trained Models for Chinese Natural Language Processing. <i>Findings of the EMNLP</i>, 657–668. https://doi.org/10.18653/v1/2020.findings-emnlp.58</div> (The publication for [MacBERT](https://arxiv.org/pdf/2004.13922.pdf))
 

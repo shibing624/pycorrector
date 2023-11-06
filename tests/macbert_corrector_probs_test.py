@@ -41,29 +41,7 @@ error_sentences = [
     '还有广告业是只要桌子前面坐者工作未必产生出来好的成果。',
 ]
 
-badcase = ['这个跟 原木纯品 那个啥区别？不是原木纸浆做的?',
-           '能充几次呢？',
-           '这是酸奶还是像饮料一样的奶？',
-           '现在银色的K2P是MTK还是博通啊？',
-           '是浓稠的还是稀薄的？',
-           '这个到底有多辣',
-           'U盘有送挂绳吗 ',
-           '果子酸吗？有烂的吗？',
-           '刚下单买了一箱，需要明天到货，先问下味道如何',
-           '2周岁22斤宝宝用多大的啊？',
-           '请问这茶是一条装的吗',
-           '有坏的果吗',
-           '生产日期怎么样 新嘛',
-           '插上去的时候是驱蚊液放下面的吗？',
-           '橄榄的和这款哪个比较好用？味道都是一样的么？',
-           '妈妈说：”以后做错了要主动人错哦，别赖。“，我说：”我知道了。“',
-           '他在唱”听妈妈的话“，真的很好听呢',
-           '我最爱看的是《巴黎圣母院》这书，里面思想深邃，值得回味。',
-           ]
-error_sentences.extend(badcase)
-start = time.time()
 bertCorrector = macbert_corrector.MacBertCorrector()
 for line in error_sentences:
-    correct_sent, err = bertCorrector.correct(line, threshold=0.95)
-    print("original sentence:{} => {} err:{}".format(line, correct_sent, err))
-print('time spend:', time.time() - start, ' sentence count:', len(error_sentences))
+    r = bertCorrector.correct(line, threshold=0.95)
+    print("{}".format(r))

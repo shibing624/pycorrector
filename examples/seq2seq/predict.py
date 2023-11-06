@@ -13,14 +13,14 @@ from pycorrector.seq2seq.conv_seq2seq_corrector import ConvSeq2SeqCorrector
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_dir", default="output/sighan_convseq2seq/", type=str, help="Dir for model save.")
+    parser.add_argument("--output_dir", default="outputs-sighan-convseq2seq/", type=str, help="Dir for model save.")
     parser.add_argument("--max_length", default=128, type=int, help="The maximum total input sequence length")
 
     args = parser.parse_args()
     print(args)
 
     m = ConvSeq2SeqCorrector(
-        args.model_dir,
+        args.output_dir,
         max_length=args.max_length
     )
     inputs = [

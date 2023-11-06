@@ -12,14 +12,14 @@ from pypinyin import pinyin
 from pycorrector.utils.langconv import Converter
 
 
-def is_chinese(uchar):
+def is_chinese_char(uchar):
     """判断一个unicode是否是汉字"""
     return '\u4e00' <= uchar <= '\u9fa5'
 
 
 def is_chinese_string(string):
     """判断是否全为汉字"""
-    return all(is_chinese(c) for c in string)
+    return all(is_chinese_char(c) for c in string)
 
 
 def is_number(uchar):
@@ -44,7 +44,7 @@ def is_alphabet_number_string(string):
 
 def is_other(uchar):
     """判断是否非汉字，数字和英文字符"""
-    return not (is_chinese(uchar) or is_number(uchar) or is_alphabet(uchar))
+    return not (is_chinese_char(uchar) or is_number(uchar) or is_alphabet(uchar))
 
 
 def B2Q(uchar):
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     print(ustring)
     print(is_other(','))
     print(uniform('你干么！ｄ７＆８８８学英 语ＡＢＣ？ｎｚ'))
-    print(is_chinese('喜'))
+    print(is_chinese_char('喜'))
     print(is_chinese_string('喜,'))
     print(is_chinese_string('丽，'))
 

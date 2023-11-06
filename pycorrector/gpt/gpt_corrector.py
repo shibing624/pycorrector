@@ -13,6 +13,7 @@ from loguru import logger
 sys.path.append('../..')
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
 from pycorrector.gpt.gpt_model import GptModel
+from pycorrector.utils.error_utils import get_errors
 
 
 class GptCorrector(GptModel):
@@ -38,6 +39,7 @@ class GptCorrector(GptModel):
             max_length: int = 512,
             batch_size: int = 4,
             prompt_template_name: str = 'vicuna',
+            prefix_prompt: str = None,
             **kwargs
     ):
         """
@@ -46,8 +48,11 @@ class GptCorrector(GptModel):
         :param max_length: int, max length of input sentence
         :param batch_size: int, batch size
         :param prompt_template_name: str, prompt template name
+        :param prefix_prompt: str, prefix of prompt
         :param kwargs: dict, other params
         """
+        if prefix_prompt is None:
+            prefix_prompt = "对下面的文本纠错\n\n"
         input_sents = []
         sent_map = []
         for idx, sentence in enumerate(sentences):
@@ -59,7 +64,7 @@ class GptCorrector(GptModel):
             else:
                 input_sents.append(sentence)
                 sent_map.append(idx)
-
+        input_sents = [prefix_prompt + s for s in input_sents]
         # predict all sentences
         corrected_sents = self.predict(
             input_sents,
@@ -74,31 +79,15 @@ class GptCorrector(GptModel):
         for idx, corrected_sent in zip(sent_map, corrected_sents):
             corrected_sentences[idx] += corrected_sent
 
-        return corrected_sentences
+        new_corrected_sentences = []
+        corrected_details = []
+        for idx, corrected_sent in enumerate(corrected_sentences):
+            new_corrected_sent, sub_details = get_errors(corrected_sent, sentences[idx])
+            new_corrected_sentences.append(new_corrected_sent)
+            corrected_details.append(sub_details)
+        return [{'source': s, 'target': c, 'errors': e} for s, c, e in
+                zip(sentences, new_corrected_sentences, corrected_details)]
 
     def correct(self, sentence: str, **kwargs):
         """Correct a sentence with gpt csc model"""
         return self.correct_batch([sentence], **kwargs)[0]
-
-
-if __name__ == "__main__":
-    m = GptCorrector()
-    error_sentences = [
-        '内容提要——在知识产权学科领域里',
-        '疝気医院那好 为老人让坐，疝気专科百科问答',
-        '少先队员因该为老人让坐',
-        '少 先  队 员 因 该 为 老人让坐',
-        '机七学习是人工智能领遇最能体现智能的一个分知',
-        '今天心情很好',
-        '老是较书。',
-        '遇到一位很棒的奴生跟我聊天。',
-        '他的语说的很好，法语也不错',
-        '他法语说的很好，的语也不错',
-        '他们的吵翻很不错，再说他们做的咖喱鸡也好吃',
-        '影像小孩子想的快，学习管理的斑法',
-    ]
-    t2 = time.time()
-    res = m.correct_batch(error_sentences)
-    for sent, r in zip(error_sentences, res):
-        print("original sentence:{} => {} err:{}".format(sent, r[0], r[1]))
-    print('[batch]spend time:', time.time() - t2)

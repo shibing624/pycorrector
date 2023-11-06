@@ -25,7 +25,7 @@ sys.path.append('../..')
 from pycorrector.ernie_csc.utils import convert_example, parse_decode
 
 
-class Predictor(object):
+class Predictor:
     def __init__(self, model_file, params_file, device, max_seq_length,
                  tokenizer, pinyin_vocab):
         self.max_seq_length = max_seq_length

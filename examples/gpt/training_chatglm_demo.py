@@ -10,6 +10,7 @@ from loguru import logger
 
 sys.path.append('../..')
 from pycorrector.gpt.gpt_model import GptModel
+from pycorrector.gpt.gpt_corrector import GptCorrector
 
 
 def main():
@@ -56,26 +57,19 @@ def main():
         model = GptModel(args.model_type, args.model_name, args=model_args)
         model.train_model(args.train_file, eval_data=args.test_file)
     if args.do_predict:
-        if model is None:
-            model = GptModel(
-                args.model_type, args.model_name,
-                peft_name=args.output_dir,
-                args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
-            )
-        prefix = "对下面的文本纠错\n\n"
-        sents = [
+        error_sentences = [
             "美国总统特朗普访日，不仅吸引了美日民众的关注，中国人民也同样密切关注。",
             "这块名表带带相传",
             "少先队员因该为老人让坐",
         ]
-        response = model.predict([prefix + i for i in sents])
-        print(response)
-
-        # Chat model with multi turns conversation
-        response, history = model.chat("简单介绍下北京", history=None)
-        print(response, history)
-        response, history = model.chat('继续', history=history)
-        print(response)
+        m = GptCorrector(
+            args.model_type, args.model_name,
+            peft_name=args.output_dir,
+            args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
+        )
+        result = m.correct_batch(error_sentences)
+        for res_dict in result:
+            print(res_dict)
 
 
 if __name__ == '__main__':

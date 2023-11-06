@@ -168,7 +168,7 @@ def do_train(args):
         trans_fn=trans_func)
 
     num_training_steps = args.max_steps if args.max_steps > 0 else len(
-        train_data_loader) * args.epochs
+        train_data_loader) * args.num_epochs
 
     lr_scheduler = LinearDecayWithWarmup(args.learning_rate, num_training_steps,
                                          args.warmup_proportion)
@@ -190,7 +190,7 @@ def do_train(args):
     global_steps = 1
     best_f1 = -1
     tic_train = time.time()
-    for epoch in range(args.epochs):
+    for epoch in range(args.num_epochs):
         for step, batch in enumerate(train_data_loader, start=1):
             input_ids, token_type_ids, pinyin_ids, det_labels, corr_labels, length = batch
             det_error_probs, corr_logits = model(input_ids, pinyin_ids,

@@ -12,10 +12,10 @@ import pycorrector
 
 if __name__ == '__main__':
     sent = '少先队员因该为老人让坐'
-    corrected_sent, detail = pycorrector.correct(sent)
-    print(corrected_sent, detail)
+    corrected_sent = pycorrector.correct(sent)
+    print(corrected_sent)
 
     print("*" * 42)
     pycorrector.enable_char_error(enable=False)
-    correct_sent, detail = pycorrector.correct(sent)
-    print("{} => {} {}".format(sent, correct_sent, detail))
+    corrected_dict = pycorrector.correct(sent)
+    print("{} => {} {}".format(sent, corrected_dict['target'], corrected_dict['errors']))

@@ -14,7 +14,7 @@
 
 from typing import List
 
-from paddlenlp import Taskflow
+from paddlenlp.taskflow import Taskflow
 
 
 class ErnieCscCorrector:
@@ -25,11 +25,11 @@ class ErnieCscCorrector:
         """
         句子纠错
         :param sentence: 句子
-        :return: list[{'source': wrong_text,
-                   'target': right_text,
-                   'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]}]
+        :return: {'source': wrong_text,
+                  'target': right_text,
+                  'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]}
         """
-        return self.text_correction(sentence)
+        return self.text_correction(sentence)[0]
 
     def correct_batch(self, sentences: List[str]):
         """
@@ -37,6 +37,7 @@ class ErnieCscCorrector:
         :param sentences: 句子文本列表
         :return: list[{'source': wrong_text,
                    'target': right_text,
-                   'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]}]
+                   'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]},
+                   ...]
         """
-        return [self.text_correction(text) for text in sentences]
+        return self.text_correction(sentences)

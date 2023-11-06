@@ -11,12 +11,16 @@ import operator
 import os
 from codecs import open
 from collections import Counter
+
 from loguru import logger
+
 from pycorrector.utils.text_utils import is_alphabet_string
 from pycorrector.utils.tokenizer import whitespace_tokenize, split_text_into_sentences_by_symbol
+
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 英文拼写词频文件
 en_dict_path = os.path.join(pwd_path, 'data/en.json.gz')
+
 
 def get_word_freq_dict_from_text(text):
     return Counter(whitespace_tokenize(text))
@@ -147,7 +151,7 @@ class EnSpell(object):
         :param include_symbol: True, default
         :return: corrected_text, details [(wrong_word, right_word, begin_idx, end_idx), ...]
         example:
-        cann you speling it? [['cann', 'can'], ['speling', 'spelling']]
+            cann you speling it? [['cann', 'can'], ['speling', 'spelling']]
         """
         self.check_init()
         text_new = ''
@@ -162,11 +166,10 @@ class EnSpell(object):
                     corrected_item = self.correct_word(w)
                 if corrected_item != w:
                     begin_idx = idx
-                    end_idx = idx + len(w)
-                    detail_word = (w, corrected_item, begin_idx, end_idx)
+                    detail_word = (w, corrected_item, begin_idx)
                     details.append(detail_word)
                     w = corrected_item
             text_new += w
         # 以begin_idx排序
         details = sorted(details, key=operator.itemgetter(2))
-        return text_new, details
+        return {'source': sentence, 'target': text_new, 'errors': details}

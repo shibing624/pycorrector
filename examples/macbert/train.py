@@ -19,7 +19,6 @@ sys.path.append('../..')
 from pycorrector.macbert.reader import make_loaders, DataCollator
 from pycorrector.macbert.macbert4csc import MacBert4Csc
 from pycorrector.macbert.softmaskedbert4csc import SoftMaskedBert4Csc
-from examples.macbert import preprocess
 from pycorrector.macbert.defaults import _C as cfg
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -55,18 +54,15 @@ def args_parse(config_file=''):
 
 def main():
     cfg = args_parse()
-
-    # 如果不存在训练文件则先处理数据
-    if not os.path.exists(cfg.DATASETS.TRAIN):
-        logger.debug('preprocess data')
-        preprocess.main()
     logger.info(f'load model, model arch: {cfg.MODEL.NAME}')
     tokenizer = BertTokenizerFast.from_pretrained(cfg.MODEL.BERT_CKPT)
     collator = DataCollator(tokenizer=tokenizer)
     # 加载数据
-    train_loader, valid_loader, test_loader = make_loaders(collator, train_path=cfg.DATASETS.TRAIN,
-                                                           valid_path=cfg.DATASETS.VALID, test_path=cfg.DATASETS.TEST,
-                                                           batch_size=cfg.SOLVER.BATCH_SIZE, num_workers=4)
+    train_loader, valid_loader, test_loader = make_loaders(
+        collator, train_path=cfg.DATASETS.TRAIN,
+        valid_path=cfg.DATASETS.VALID, test_path=cfg.DATASETS.TEST,
+        batch_size=cfg.SOLVER.BATCH_SIZE, num_workers=4
+    )
     if cfg.MODEL.NAME == 'softmaskedbert4csc':
         model = SoftMaskedBert4Csc(cfg, tokenizer)
     elif cfg.MODEL.NAME == 'macbert4csc':
@@ -75,7 +71,12 @@ def main():
         raise ValueError("model not found.")
     # 加载之前保存的模型，继续训练
     if cfg.MODEL.WEIGHTS and os.path.exists(cfg.MODEL.WEIGHTS):
-        model.load_from_checkpoint(checkpoint_path=cfg.MODEL.WEIGHTS, cfg=cfg, map_location=device, tokenizer=tokenizer)
+        model.load_from_checkpoint(
+            checkpoint_path=cfg.MODEL.WEIGHTS,
+            cfg=cfg,
+            map_location=device,
+            tokenizer=tokenizer
+        )
     # 配置模型保存参数
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     ckpt_callback = ModelCheckpoint(

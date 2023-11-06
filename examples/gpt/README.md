@@ -21,76 +21,32 @@
 pip install transformers peft -U
 ```
 
-## 模型训练
 
-### 训练数据
+### Dataset
 
+#### toy data
+中文语法纠错数据（1k条）：[examples/data/grammar/train_sharegpt.jsonl](https://github.com/shibing624/pycorrector/blob/master/examples/data/grammar/train_sharegpt.jsonl)
 
-### 单卡训练
-
-```python
-python train.py --batch_size 32 --logging_steps 100 --epochs 10 --learning_rate 5e-5 --model_name_or_path ernie-1.0 --output_dir ./checkpoints/ --extra_train_ds_dir ./extra_train_ds/ --max_seq_length 192
+data format:
+```
+{"conversations":[{"from":"human","value":"对这个句子语法纠错\n\n这件事对我们大家当时震动很大。"},{"from":"gpt","value":"这件事当时对我们大家震动很大。"}]}
 ```
 
-### 多卡训练
 
-```python
-python -m paddle.distributed.launch --gpus "0,1"  train.py --batch_size 32 --logging_steps 100 --epochs 10 --learning_rate 5e-5 --model_name_or_path ernie-1.0 --output_dir ./checkpoints/ --extra_train_ds_dir ./extra_train_ds/ --max_seq_length 192
+#### big train data
+
+- 中文拼写纠错数据集：https://huggingface.co/datasets/shibing624/CSC
+- 中文语法纠错数据集：https://github.com/shibing624/pycorrector/tree/llm/examples/data/grammar
+- 通用GPT4问答数据集：https://huggingface.co/datasets/shibing624/sharegpt_gpt4
+### Train model
+run train:
+```
+cd examples/gpt
+python train_chatglm_demo.py --do_train --do_predict
 ```
 
-## 模型预测
-
-### 预测SIGHAN测试集
-
-SIGHAN 13，SIGHAN 14，SIGHAN 15是目前中文错别字纠错任务常用的benchmark数据。由于SIGHAN官方提供的是繁体字数据集，PaddleNLP将提供简体版本的SIGHAN测试数据。以下运行SIGHAN预测脚本：
-
-```shell
-sh run_sighan_predict.sh
+output:
 ```
-
-该脚本会下载SIGHAN数据集，加载checkpoint的模型参数运行模型，输出SIGHAN测试集的预测结果到predict_sighan文件，并输出预测效果。
-
-**预测效果**
-
-| Metric       | SIGHAN 13 | SIGHAN 14 | SIGHAN 15 |
-| -------------| --------- | --------- |---------  |
-| Detection F1 | 0.8348    | 0.6534    | 0.7464    |
-| Correction F1| 0.8217    | 0.6302    | 0.7296    |
-
-### 预测
-
-predict.py文件提供了python预测部署示例。运行方式：
-
-```python
-python predict.py --model_file infer_model/static_graph_params.pdmodel --params_file infer_model/static_graph_params.pdiparams
+input  : 这块名表带带相传
+predict: 这块名表代代相传
 ```
-
-输出如下：
-```
-Source: 遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。
-Target: 遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。
-Source: 人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。
-Target: 人生就是如此，经过磨练才能让自己更加茁壮，才能使自己更加乐观。
-```
-
-### pycorrector一键预测
-可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
-
-```python
-from paddlenlp import Taskflow
-text_correction = Taskflow("text_correction", model="csc-ernie-1.0")
-print(text_correction('遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。'))
-'''
-[{'source': '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
-    'target': '遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
-    'errors': [{'position': 3, 'correction': {'竟': '境'}}]}]
-'''
-
-print(text_correction('人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。'))
-'''
-[{'source': '人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。',
-    'target': '人生就是如此，经过磨练才能让自己更加茁壮，才能使自己更加乐观。',
-    'errors': [{'position': 18, 'correction': {'拙': '茁'}}]}]
-'''
-```
-

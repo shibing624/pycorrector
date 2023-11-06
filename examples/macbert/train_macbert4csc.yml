@@ -3,15 +3,13 @@ MODEL:
   DEVICE: "cuda"
   NAME: "macbert4csc"
   GPU_IDS: [0]
-  # [loss_coefficient]
   HYPER_PARAMS: [0.3]
-  #WEIGHTS: "output/macbert4csc/epoch=6-val_loss=0.07.ckpt"
   WEIGHTS: ""
 
 DATASETS:
-  TRAIN: "output/train.json"
-  VALID: "output/dev.json"
-  TEST: "output/test.json"
+  TRAIN: "../data/sighan_2015/train.json"
+  VALID: "../data/sighan_2015/test.json"
+  TEST: "../data/sighan_2015/test.json"
 
 SOLVER:
   BASE_LR: 5e-5
@@ -20,5 +18,5 @@ SOLVER:
   MAX_EPOCHS: 10
   ACCUMULATE_GRAD_BATCHES: 4
 
-OUTPUT_DIR: "output/macbert4csc"
+OUTPUT_DIR: "outputs-macbert4csc"
 MODE: ["train", "test"]

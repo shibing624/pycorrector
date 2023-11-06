@@ -276,7 +276,7 @@ class Corrector(Detector):
         :param num_fragment: 纠错候选集分段数, 1 / (num_fragment + 1)
         :param threshold: 语言模型纠错ppl阈值
         :param kwargs: ...
-        :return: text (str)改正后的句子, list(wrong, right, begin_idx, end_idx)
+        :return: {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         corrected_sentence = ''
         details = []
@@ -312,18 +312,16 @@ class Corrector(Detector):
                 # output
                 if corrected_item != cur_item:
                     sent = before_sent + corrected_item + after_sent
-                    detail_word = (cur_item, corrected_item, begin_idx, end_idx)
-                    details.append(detail_word)
+                    details.append((cur_item, corrected_item, begin_idx))
             corrected_sentence += sent
         details = sorted(details, key=operator.itemgetter(2))
-        return corrected_sentence, details
+        return {'source': sentence, 'target': corrected_sentence, 'errors': details}
 
     def correct_batch(self, sentences: List[str], **kwargs):
-        """Correct sentences with correct method."""
-        corrected_sentences = []
-        corrected_details = []
-        for sentence in sentences:
-            corrected_sent, details = self.correct(sentence, **kwargs)
-            corrected_sentences.append(corrected_sent)
-            corrected_details.append(details)
-        return corrected_sentences, corrected_details
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
+        :param kwargs: 其他参数
+        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        """
+        return [self.correct(s, **kwargs) for s in sentences]

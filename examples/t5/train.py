@@ -129,15 +129,14 @@ def parse_args():
                         help='train dataset')
     parser.add_argument('--test_path', type=str, default=os.path.join(pwd_path, '../data/sighan_2015/test.tsv'),
                         help='test dataset')
-    parser.add_argument('--save_dir', type=str, default='./output/mengzi-t5-base-chinese-correction-test/',
-                        help='save dir')
+    parser.add_argument('--output_dir', type=str, default='./outputs-mengzi-t5-base-chinese-correction-v1/')
     parser.add_argument('--model_name_or_path', type=str, default='Langboat/mengzi-t5-base', help='pretrained model')
     parser.add_argument('--max_len', type=int, default=128, help='max length')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size')
     parser.add_argument('--logging_steps', type=int, default=100, help='logging steps num')
     parser.add_argument('--warmup_steps', type=int, default=200, help='logging steps num')
     parser.add_argument('--eval_steps', type=int, default=250, help='eval steps num')
-    parser.add_argument('--epochs', type=int, default=3, help='train epochs num')
+    parser.add_argument('--num_epochs', type=int, default=3, help='train epochs num')
     parser.add_argument('--max_steps', type=int, default=-1, help='train max steps')  # 如果设置了max_steps>0，将取代epochs
     parser.add_argument("--do_train", action="store_true", help="whether not to do train")
     parser.add_argument("--do_eval", action="store_true", help="whether not to do eval")
@@ -162,7 +161,7 @@ def train():
     args_dict = {
         "model_name_or_path": args.model_name_or_path,
         "max_len": args.max_len,
-        "output_dir": args.save_dir,
+        "output_dir": args.output_dir,
         "overwrite_output_dir": True,
         "per_device_train_batch_size": args.batch_size,
         "per_device_eval_batch_size": args.batch_size,
@@ -172,11 +171,10 @@ def train():
         "logging_steps": args.logging_steps,
         "evaluation_strategy": "steps",
         "eval_steps": args.eval_steps,
-        "num_train_epochs": args.epochs,
+        "num_train_epochs": args.num_epochs,
         "do_train": args.do_train,
         "do_eval": args.do_eval,
         "fp16": False,
-        # "use_cache": False,
         "max_steps": args.max_steps,
     }
     parser = HfArgumentParser(

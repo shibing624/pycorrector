@@ -6,19 +6,26 @@
 
 import os
 import time
+from typing import List
 
 import numpy as np
 import torch
 from loguru import logger
 from torch import optim
 
-from pycorrector.deepcontext.deepcontext_utils import Context2vec, read_config, load_word_dict, write_config, ContextDataset
+from pycorrector.deepcontext.deepcontext_utils import (
+    Context2vec,
+    read_config,
+    load_word_dict,
+    write_config,
+    ContextDataset
+)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class DeepContextModel:
-    def __init__(self, model_dir: str):
+    def __init__(self, model_dir: str, max_length: int = 512):
         # device
         logger.debug("Device: {}".format(device))
         self.config_file = os.path.join(model_dir, 'config.json')
@@ -26,6 +33,7 @@ class DeepContextModel:
         self.optimizer_file = os.path.join(model_dir, 'optimizer.pt')
         self.vocab_file = os.path.join(model_dir, 'vocab.txt')
         self.model_dir = model_dir
+        self.max_length = max_length
         self.mask = "[]"
         self.model = None
         self.optimizer = None
@@ -83,7 +91,8 @@ class DeepContextModel:
             batch_size,
             min_freq,
             device,
-            self.vocab_file
+            self.vocab_file,
+            self.max_length,
         )
         counter = np.array([dataset.word_freqs[word] for word in dataset.vocab_2_ids])
         model = Context2vec(
@@ -103,7 +112,8 @@ class DeepContextModel:
             model.norm_embedding_weight(model.criterion.W)
         if self.optimizer is None:
             optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
+        else:
+            optimizer = self.optimizer
         logger.info(
             'model: {model}, batch_size: {batch_size}, epochs: {epochs}, '
             'word_embed_size: {word_embed_size}, hidden_size: {hidden_size}, learning_rate: {learning_rate}'
@@ -187,7 +197,7 @@ class DeepContextModel:
         if optimizer:
             torch.save(optimizer.state_dict(), self.optimizer_file)
 
-    def predict_mask_token(self, tokens, mask_index=0, k=10):
+    def predict_mask_token(self, tokens: List[str], mask_index: int = 0, k: int = 10):
         if not self.model:
             self.load_model()
         unk_token = self.config_dict['unk_token']
@@ -208,35 +218,3 @@ class DeepContextModel:
                 continue
             pred_words.append((word, score))
         return pred_words
-
-    # def predict(self, text, **kwargs):
-    #     details = []
-    #     text_new = ''
-    #     # 长句切分为短句
-    #     blocks = split_text_into_sentences_by_length(text, 128)
-    #     for blk, start_idx in blocks:
-    #         blk_new = ''
-    #         for idx, s in enumerate(blk):
-    #             # 处理中文错误
-    #             if is_chinese_string(s):
-    #                 sentence_lst = list(blk_new + blk[idx:])
-    #                 sentence_lst[idx] = self.mask
-    #                 # 预测，默认取top10
-    #                 predict_words = self.predict_mask_token(sentence_lst, idx, k=10)
-    #                 top_tokens = []
-    #                 for w, _ in predict_words:
-    #                     top_tokens.append(w)
-    #
-    #                 if top_tokens and (s not in top_tokens):
-    #                     # 取得所有可能正确的词
-    #                     candidates = self.generate_items(s)
-    #                     if candidates:
-    #                         for token_str in top_tokens:
-    #                             if token_str in candidates:
-    #                                 details.append((s, token_str, start_idx + idx, start_idx + idx + 1))
-    #                                 s = token_str
-    #                                 break
-    #             blk_new += s
-    #         text_new += blk_new
-    #     details = sorted(details, key=operator.itemgetter(2))
-    #     return text_new, details

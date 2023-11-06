@@ -297,12 +297,12 @@ class ConvSeq2SeqModel:
             embed_size=128,
             hidden_size=128,
             dropout=0.25,
-            epochs=10,
+            num_epochs=10,
             batch_size=32,
             model_dir="outputs/",
             max_length=128,
     ):
-        self.epochs = epochs
+        self.num_epochs = num_epochs
         self.batch_size = batch_size
         self.model_dir = model_dir
         self.max_length = max_length
@@ -373,7 +373,7 @@ class ConvSeq2SeqModel:
         train_data = gen_examples(train_src, train_trg, self.batch_size, self.max_length)
         train_losses = []
         best_loss = 1e3
-        for epoch in range(self.epochs):
+        for epoch in range(self.num_epochs):
             self.model.train()
             total_loss = 0.
             total_iter = 0.
@@ -397,12 +397,12 @@ class ConvSeq2SeqModel:
                 optimizer.step()
 
                 if it % 100 == 0:
-                    logger.debug("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, self.epochs,
+                    logger.debug("Epoch :{}/{}, iteration :{}/{} loss:{:.4f}".format(epoch, self.num_epochs,
                                                                                      it, len(train_data),
                                                                                      loss.item()))
             cur_loss = total_loss / total_iter
             train_losses.append(cur_loss)
-            logger.debug("Epoch :{}/{}, Training loss:{:.4f}".format(epoch, self.epochs, cur_loss))
+            logger.debug("Epoch :{}/{}, Training loss:{:.4f}".format(epoch, self.num_epochs, cur_loss))
             if epoch % 1 == 0:
                 # find best model
                 is_best = cur_loss < best_loss
