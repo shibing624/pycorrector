@@ -35,7 +35,7 @@ class Corrector(Detector):
             **kwargs,
     ):
         super(Corrector, self).__init__(**kwargs)
-        self.name = 'corrector'
+        self.name = 'kenlm_corrector'
         self.common_char_path = common_char_path
         self.same_pinyin_path = same_pinyin_path
         self.same_stroke_path = same_stroke_path
