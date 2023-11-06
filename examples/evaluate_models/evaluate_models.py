@@ -9,16 +9,16 @@ import sys
 sys.path.append("../..")
 
 from pycorrector.utils import eval
-from pycorrector import Corrector
 
 
 def main(args):
     if args.model == 'kenlm':
-        # Sentence Level: acc:0.5100, precision:0.5139, recall:0.1363, f1:0.2154, cost time:1464.87 s
+        from pycorrector import Corrector
         m = Corrector()
         eval.eval_sighan2015_by_model(m.correct)
+        # Sentence Level: acc:0.5100, precision:0.5139, recall:0.1363, f1:0.2154, cost time:1464.87 s
     elif args.model == 'macbert':
-        from pycorrector.macbert.macbert_corrector import MacBertCorrector
+        from pycorrector import MacBertCorrector
         model = MacBertCorrector()
         eval.eval_sighan2015_by_model_batch(model.correct_batch)
         # macbert-base: Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:4.90 s
