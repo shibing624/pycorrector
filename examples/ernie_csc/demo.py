@@ -14,7 +14,7 @@
 import sys
 
 sys.path.append("../..")
-from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCscCorrector
+from pycorrector import ErnieCscCorrector
 
 if __name__ == '__main__':
     error_sentences = [
@@ -24,7 +24,8 @@ if __name__ == '__main__':
         '一只小鱼船浮在平净的河面上',
         '我的家乡是有明的渔米之乡',
     ]
-    corrector = ErnieCscCorrector()
-    result = corrector.correct_batch(error_sentences)
-    for line, res_dict in zip(error_sentences, result):
-        print(res_dict)
+    m = ErnieCscCorrector()
+    batch_res = m.correct_batch(error_sentences)
+    for i in batch_res:
+        print(i)
+        print()

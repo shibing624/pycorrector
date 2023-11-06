@@ -8,7 +8,7 @@ import argparse
 import sys
 
 sys.path.append('..')
-import pycorrector
+from pycorrector import Corrector
 
 
 def main(**kwargs):
@@ -20,9 +20,10 @@ def main(**kwargs):
     :type output: text file object in write mode
     :return:
     """
+    m = Corrector()
     no_char = kwargs['no_char'] if 'no_char' in kwargs else False
     if no_char:
-        pycorrector.enable_char_error(enable=False)
+        m.enable_char_error(enable=False)
         print('disable char error detect.')
 
     detail = kwargs['detail'] if 'detail' in kwargs else False
@@ -30,11 +31,13 @@ def main(**kwargs):
     with open(kwargs['input'], 'r', encoding='utf-8') as fr, open(kwargs['output'], 'w', encoding='utf-8') as fw:
         for line in fr:
             line = line.strip()
-            corrected_sent, info = pycorrector.correct(line)
+            corrected_dict = m.correct(line)
             count += 1
+            corrected_sent = corrected_dict.get('target', '')
+            errors = corrected_dict.get('errors', '')
             r = corrected_sent
-            if detail:
-                r = corrected_sent + '\t' + str(info)
+            if errors and detail:
+                r = corrected_sent + '\t' + str(errors)
             fw.write(line + '\t' + r + '\n')
         print('{} lines in output'.format(count))
 

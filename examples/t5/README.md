@@ -16,44 +16,58 @@ transformers
 datasets
 loguru
 ```
+### 快速加载
+#### pycorrector快速预测
 
-### Train
-data example:
-```
-# head -n 1 train.txt
-你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
-```
-run train:
-```
-python train.py --do_train --do_eval
-```
-
-### Predict
-```
-python predict.py
+example: [examples/t5/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/t5/demo.py)
+```python
+from pycorrector import T5Corrector
+m = T5Corrector()
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
 ```
 
 output:
 ```shell
-original sentence:少先队员因该为老人让坐 => 少先队员应该为老人让坐 err:[('因', '应', 4, 5)]
-original sentence:少 先  队 员 因 该 为 老人让坐 => 少 先  队 员 因 该 为 老人让坐 err:[]
-original sentence:机七学习是人工智能领遇最能体现智能的一个分知 => 机七学习是人工智能领域最能体现智能的一个分知 err:[('遇', '域', 10, 11)]
-original sentence:今天心情很好 => 今天心情很好 err:[]
-original sentence:老是较书。 => 老师教书。 err:[('是', '师', 1, 2), ('较', '教', 2, 3)]
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
 ```
 
-## ContextDataset
+### Dataset
+
+#### toy data
+sighan 2015中文拼写纠错数据（2k条）：[examples/data/sighan_2015/train.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/sighan_2015/train.tsv)
+
+data format:
+```
+你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
+```
+
+
+#### big train data
 
 | 数据集 | 语料 | 下载链接 | 压缩包大小 |
 | :------- | :--------- | :---------: | :---------: |
 | **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) | [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ)| 106M |
 
 下载`SIGHAN+Wang271K中文纠错数据集`，解压后，为json格式。
-
-训练示例：
+### Train model
+run train:
 ```shell
 python train.py --do_train --do_eval --model_name_or_path output/mengzi-t5-base-chinese-correction/ --train_path ./output/train.json --test_path output/test.json
 ```
+
+### Predict model
+```
+python predict.py
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
+
+
 ## Release model
 基于`SIGHAN+Wang271K中文纠错数据集`训练的T5模型，已经release到HuggingFace models:[shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)
 

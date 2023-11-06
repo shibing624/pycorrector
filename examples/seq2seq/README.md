@@ -19,6 +19,23 @@ torch>=1.4.0
 transformers>=4.4.2
 ```
 
+
+### 快速加载
+#### pycorrector快速预测
+
+example: [examples/seq2seq/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/seq2seq/demo.py)
+```python
+from pycorrector import ConvSeq2SeqCorrector
+m = ConvSeq2SeqCorrector()
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
+
 ### Dataset
 
 #### toy data
@@ -26,7 +43,6 @@ sighan 2015中文拼写纠错数据（2k条）：[examples/data/sighan_2015/trai
 
 data format:
 ```
-# head -n 1 train.txt
 你说的是对，跟那些失业的人比起来你也算是辛运的。	你说的是对，跟那些失业的人比起来你也算是幸运的。
 ```
 
@@ -47,27 +63,10 @@ python train.py --do_train --do_predict
 python predict.py
 ```
 
-
 output:
-```
-input  : 老是较书。
-predict: 老师教书。
-
-input  : 感谢等五分以后，碰到一位很棒的奴生跟我可聊。
-predict: 感谢等五分以后，碰到一位很棒的女生跟我可聊。
-
-input  : 遇到一位很棒的奴生跟我聊天。
-predict: 遇到一位很棒的女生跟我聊天。
-
-input  : 遇到一位很美的女生跟我疗天。
-predict: 遇到一位很美的女生跟我疗天。
-
-input  : 他们只能有两个选择：接受降新或自动离职。
-predict: 他们只能有两个选择：接受降薪或自动离职。
-
-input  : 王天华开心得一直说话。
-predict: 王天华开心地一直说话。
-
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
 ```
 ![result image](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/convseq2seq_ret.png)
 

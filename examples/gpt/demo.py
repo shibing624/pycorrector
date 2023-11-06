@@ -14,7 +14,7 @@
 import sys
 
 sys.path.append("../..")
-from pycorrector.gpt.gpt_corrector import GptCorrector
+from pycorrector import GptCorrector
 
 if __name__ == '__main__':
     error_sentences = [
@@ -25,6 +25,9 @@ if __name__ == '__main__':
         '我的家乡是有明的渔米之乡',
     ]
     m = GptCorrector()
-    result = m.correct_batch(error_sentences)
-    for line, res_dict in zip(error_sentences, result):
-        print("query:{} => {}".format(line, res_dict['target']))
+
+    batch_res = m.correct_batch(error_sentences)
+    for i in batch_res:
+        print(i)
+        print()
+

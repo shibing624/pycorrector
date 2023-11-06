@@ -5,6 +5,7 @@
 功能：1）补充纠错对，提升召回率；2）对误杀加白，提升准确率
 """
 import os
+from typing import List
 
 from loguru import logger
 
@@ -61,3 +62,11 @@ class ConfusionCorrector:
                 details.append((err, truth, idx))
         return {'source': sentence, 'target': corrected_sentence, 'errors': details}
 
+    def correct_batch(self, sentences: List[str]):
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
+        :param kwargs: 其他参数
+        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        """
+        return [self.correct(s) for s in sentences]

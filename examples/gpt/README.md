@@ -6,8 +6,8 @@
 语法错误类型很多，有多字、少字、错别字等，目前最常见的错误类型是`错别字`。大部分研究工作围绕错别字这一类型进行研究。
 本项目基于LLaMA实现了中文拼写纠错和语法纠错。
 
-
-## 安装依赖项
+## Usage
+### 安装依赖项
 
 - loguru
 - transformers>=4.33.2
@@ -21,6 +21,21 @@
 pip install transformers peft -U
 ```
 
+### 快速加载
+#### pycorrector调用预测
+
+example: [examples/gpt/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/demo.py)
+```python
+from pycorrector import GptCorrector
+m = GptCorrector()
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
 
 ### Dataset
 

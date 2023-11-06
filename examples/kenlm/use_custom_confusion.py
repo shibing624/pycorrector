@@ -22,10 +22,8 @@ if __name__ == '__main__':
         '我爱北京天俺门',  # 漏召回
     ]
     m = Corrector()
-    for i in error_sentences:
-        print(i, ' -> ', m.detect(i), m.correct(i))
+    print(m.correct_batch(error_sentences))
 
     print('*' * 42)
     m = ConfusionCorrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
-    for i in error_sentences:
-        print(i, ' -> ', m.correct(i))
+    print(m.correct_batch(error_sentences))

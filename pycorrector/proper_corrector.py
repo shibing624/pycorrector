@@ -5,6 +5,7 @@
 """
 import os
 from codecs import open
+from typing import List
 
 import pypinyin
 from loguru import logger
@@ -260,3 +261,12 @@ class ProperCorrector:
                             details.append((cur_item, name, idx + cur_idx + start_idx))
             text_new += sentence
         return {'source': sentence, 'target': text_new, 'errors': details}
+
+    def correct_batch(self, sentences: List[str], **kwargs):
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
+        :param kwargs: 其他参数
+        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        """
+        return [self.correct(s, **kwargs) for s in sentences]

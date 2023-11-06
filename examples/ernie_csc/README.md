@@ -21,7 +21,7 @@
 
 * 注：论文中暂未开源融合字音特征的预训练模型参数(即MLM-phonetics)，所以本文提供的纠错模型是在ERNIE-1.0的参数上进行Finetune，纠错模型结构与论文保持一致。
 
-## 安装依赖项
+### 安装依赖项
 
 * paddlepaddle>=2.5.2
 * paddlenlp>=2.3.3
@@ -31,6 +31,41 @@
 ```
 pip install paddlepaddle-gpu paddlenlp pypinyin -U # pip install paddlepaddle for cpu
 ```
+
+## Usage
+### 快速加载
+#### pycorrector快速预测
+
+example: [examples/ernie_csc/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/ernie_csc/demo.py)
+```python
+from pycorrector import ErnieCscCorrector
+m = ErnieCscCorrector()
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
+
+#### paddlenlp快速预测
+可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
+
+```python
+from paddlenlp import Taskflow
+
+text_correction = Taskflow("text_correction")
+print(text_correction([
+    '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
+    '少先队员应该为老人让坐'
+]))
+"""
+[{'source': '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。', 'target': '遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。', 'errors': [{'position': 3, 'correction': {'竟': '境'}}]}, 
+{'source': '少先队员应该为老人让坐', 'target': '少先队员应该为老人让座', 'errors': [{'position': 10, 'correction': {'坐': '座'}}]}]
+"""
+```
+
 
 ## 模型训练
 
@@ -135,23 +170,6 @@ Source: 遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这
 Target: 遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。
 Source: 人生就是如此，经过磨练才能让自己更加拙壮，才能使自己更加乐观。
 Target: 人生就是如此，经过磨练才能让自己更加茁壮，才能使自己更加乐观。
-```
-
-### Taskflow一键预测
-可以使用PaddleNLP提供的Taskflow工具来对输入的文本进行一键纠错，具体使用方法如下:
-
-```python
-from paddlenlp import Taskflow
-
-text_correction = Taskflow("text_correction")
-print(text_correction([
-    '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。',
-    '少先队员应该为老人让坐'
-]))
-"""
-[{'source': '遇到逆竟时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。', 'target': '遇到逆境时，我们必须勇于面对，而且要愈挫愈勇，这样我们才能朝著成功之路前进。', 'errors': [{'position': 3, 'correction': {'竟': '境'}}]}, 
-{'source': '少先队员应该为老人让坐', 'target': '少先队员应该为老人让座', 'errors': [{'position': 10, 'correction': {'坐': '座'}}]}]
-"""
 ```
 
 

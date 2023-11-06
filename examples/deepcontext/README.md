@@ -10,6 +10,23 @@
 ![framework](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/framework_context.jpeg)
 
 ## Usage
+### 快速加载
+#### pycorrector快速预测
+
+example: [examples/deepcontext/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/deepcontext/demo.py)
+```python
+from pycorrector import DeepContextCorrector
+
+m = DeepContextCorrector()
+
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
 
 ### Dataset
 

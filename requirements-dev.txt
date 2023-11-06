@@ -10,4 +10,4 @@ pandas
 transformers>=4.4.2
 tensorboardX
 paddlenlp
-paddlepaddle-gpu
+paddlepaddle

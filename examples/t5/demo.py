@@ -7,11 +7,11 @@ import sys
 
 sys.path.append('../..')
 
-from pycorrector import DeepContextCorrector
+from pycorrector import T5Corrector
 
 
 def main():
-    m = DeepContextCorrector()
+    m = T5Corrector()
     error_sentences = [
         '今天新情很好',
         '你找到你最喜欢的工作，我也很高心。',

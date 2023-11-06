@@ -7,7 +7,7 @@
 import sys
 
 sys.path.append("../..")
-import pycorrector
+from pycorrector import Corrector
 
 if __name__ == '__main__':
     error_sentences = [
@@ -16,10 +16,8 @@ if __name__ == '__main__':
         '双十一下单到现在还没发货的',
         '汽车行试在这条路上'
     ]
-    for line in error_sentences:
-        print(pycorrector.correct(line))
-
+    m = Corrector()
+    print(m.correct_batch(error_sentences))
     print('*' * 42)
-    pycorrector.set_custom_word_freq(path='./custom_word_freq.txt')
-    for line in error_sentences:
-        print(pycorrector.correct(line))
+    m.set_custom_word_freq(path='./custom_word_freq.txt')
+    print(m.correct_batch(error_sentences))

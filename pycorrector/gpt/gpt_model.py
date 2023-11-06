@@ -12,14 +12,6 @@ from typing import List, Tuple, Optional, Union
 import numpy as np
 import torch
 from loguru import logger
-from peft import (
-    get_peft_model,
-    LoraConfig,
-    TaskType,
-    PeftModel,
-    prepare_model_for_kbit_training,
-    set_peft_model_state_dict,
-)
 from tqdm import tqdm
 from transformers import (
     AutoConfig,
@@ -36,7 +28,11 @@ from transformers import (
     DataCollatorForSeq2Seq,
     BitsAndBytesConfig,
 )
-from transformers.deepspeed import is_deepspeed_zero3_enabled
+
+try:
+    from transformers.integrations import is_deepspeed_zero3_enabled
+except ImportError:
+    from transformers.deepspeed import is_deepspeed_zero3_enabled
 from transformers.trainer import TRAINING_ARGS_NAME
 
 from pycorrector.gpt.gpt_utils import GptSupervisedDataset, IGNORE_INDEX, GptArgs, get_conv_template
@@ -185,6 +181,7 @@ class GptModel:
 
     def load_peft_model(self):
         """Load peft model"""
+        from peft import PeftModel
         self.model = PeftModel.from_pretrained(
             self.model,
             self.peft_name,
@@ -241,6 +238,14 @@ class GptModel:
             global_step: Number of global steps trained
             training_details: Training progress scores 
         """  # noqa: ignore flake8"
+        from peft import (
+            get_peft_model,
+            LoraConfig,
+            TaskType,
+            PeftModel,
+            prepare_model_for_kbit_training,
+            set_peft_model_state_dict,
+        )
         if args:
             self.args.update_from_dict(args)
         if eval_data is None:

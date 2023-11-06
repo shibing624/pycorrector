@@ -21,24 +21,26 @@ MLM as Correction Mask strategies：
 
 
 ## 使用说明
-
 ### 快速加载
+#### pycorrector调用预测
 
-
-#### pycorrector调用
-
+example: [examples/macbert/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/demo.py)
 ```python
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
-
+from pycorrector import MacBertCorrector
 m = MacBertCorrector("shibing624/macbert4csc-base-chinese")
-
-print(m.correct('今天新情很好'))
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
 ```
-#### transformers调用
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
+
+#### transformers调用预测
 当然，你也可使用官方的transformers库进行调用。
 
 ```python
-import operator
 import torch
 from transformers import BertTokenizerFast, BertForMaskedLM
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -51,38 +53,19 @@ texts = ["今天新情很好", "你找到你最喜欢的工作，我也很高心
 with torch.no_grad():
     outputs = model(**tokenizer(texts, padding=True, return_tensors='pt').to(device))
 
-def get_errors(corrected_text, origin_text):
-    sub_details = []
-    for i, ori_char in enumerate(origin_text):
-        if ori_char in [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤']:
-            # add unk word
-            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
-            continue
-        if i >= len(corrected_text):
-            continue
-        if ori_char != corrected_text[i]:
-            if ori_char.lower() == corrected_text[i]:
-                # pass english upper char
-                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
-                continue
-            sub_details.append((ori_char, corrected_text[i], i, i + 1))
-    sub_details = sorted(sub_details, key=operator.itemgetter(2))
-    return corrected_text, sub_details
-
 result = []
 for ids, text in zip(outputs.logits, texts):
     _text = tokenizer.decode(torch.argmax(ids, dim=-1), skip_special_tokens=True).replace(' ', '')
     corrected_text = _text[:len(text)]
-    corrected_text, details = get_errors(corrected_text, text)
-    print(text, ' => ', corrected_text, details)
-    result.append((corrected_text, details))
+    print(text, ' => ', corrected_text)
+    result.append(corrected_text)
 print(result)
 ```
 
 output:
 ```shell
-今天新情很好  =>  今天心情很好 [('新', '心', 2, 3)]
-你找到你最喜欢的工作，我也很高心。  =>  你找到你最喜欢的工作，我也很高兴。 [('心', '兴', 15, 16)]
+今天新情很好  =>  今天心情很好 
+你找到你最喜欢的工作，我也很高心。  =>  你找到你最喜欢的工作，我也很高兴。 
 ```
 
 模型文件组成：

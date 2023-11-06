@@ -14,11 +14,10 @@
 
 from typing import List
 
-from paddlenlp.taskflow import Taskflow
-
 
 class ErnieCscCorrector:
     def __init__(self, model_name_or_path="ernie-csc"):
+        from paddlenlp.taskflow import Taskflow
         self.text_correction = Taskflow("text_correction", model=model_name_or_path)
 
     def correct(self, sentence: str):

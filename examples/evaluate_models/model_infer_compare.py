@@ -11,25 +11,6 @@ from pycorrector.macbert import macbert_corrector
 error_sentences = [
     '真麻烦你了。希望你们好好的跳无',
     '少先队员因该为老人让坐',
-    '少 先  队 员 因 该 为 老人让坐',
-    '机七学习是人工智能领遇最能体现智能的一个分知',
-    '今天心情很好',
-    '汽车新式在这条路上',
-    '中国人工只能布局很不错',
-    '想不想在来一次比赛',
-    '你不觉的高兴吗',
-    '权利的游戏第八季',
-    '美食美事皆不可辜负，这场盛会你一定期待已久',
-    '点击咨询痣疮是什么原因?咨询医师痣疮原因',
-    '附睾焱的症状?要引起注意!',
-    '外阴尖锐涅疣怎样治疗?-济群解析',
-    '洛阳大华雅思 30天突破雅思7分',
-    '男人不育少靖子症如何治疗?专业男科,烟台京城医院',
-    '疝気医院那好 为老人让坐，疝気专科百科问答',
-    '成都医院治扁平苔鲜贵吗_国家2甲医院',
-    '少先队员因该为老人让坐',
-    '服装店里的衣服各试各样',
-    '一只小鱼船浮在平净的河面上',
     '我的家乡是有明的渔米之乡',
     ' _ ,',
     '我对于宠物出租得事非常认同，因为其实很多人喜欢宠物',  # 出租的事
@@ -46,10 +27,10 @@ def main():
     m_stat = Corrector()
     m_macbert = macbert_corrector.MacBertCorrector()
     for line in error_sentences:
-        correct_sent, err = m_stat.correct(line)
-        print("kenlm: {} => {}, err:{}".format(line, correct_sent, err))
-        corrected_sent, err = m_macbert.macbert_correct(line)
-        print("macbert: {} => {}, err:{}".format(line, correct_sent, err))
+        r = m_stat.correct(line)
+        print("kenlm: {}".format(r))
+        r = m_macbert.correct(line)
+        print("macbert: {}".format(r))
         print()
 
 

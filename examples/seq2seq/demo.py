@@ -7,11 +7,11 @@ import sys
 
 sys.path.append('../..')
 
-from pycorrector import DeepContextCorrector
+from pycorrector import ConvSeq2SeqCorrector
 
 
 def main():
-    m = DeepContextCorrector()
+    m = ConvSeq2SeqCorrector()
     error_sentences = [
         '今天新情很好',
         '你找到你最喜欢的工作，我也很高心。',
