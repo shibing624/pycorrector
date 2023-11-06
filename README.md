@@ -49,7 +49,7 @@
 * [Kenlm模型](pycorrector/corrector.py)：本项目基于Kenlm统计语言模型工具训练了中文NGram语言模型，结合规则方法、混淆集可以纠正中文拼写错误，方法速度快，扩展性强，效果一般
 * [DeepContext模型](pycorrector/deepcontext)：本项目基于PyTorch实现了用于文本纠错的DeepContext模型，该模型结构参考Stanford University的NLC模型，2014英文纠错比赛得第一名，效果一般
 * [Seq2Seq模型](pycorrector/seq2seq)：本项目基于PyTorch实现了用于中文文本纠错的ConvSeq2Seq模型，该模型在NLPCC-2018的中文语法纠错比赛中，使用单模型并取得第三名，可以并行训练，模型收敛快，效果一般
-* [T5模型](pycorrector/t5)：本项目基于PyTorch实现了用于中文文本纠错的T5模型，使用Langboat/mengzi-t5-base的预训练模型finetune中文纠错数据集，模型改造的潜力较大，效果好
+* [T5模型](pycorrector/t5)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的T5模型，使用Langboat/mengzi-t5-base的预训练模型finetune中文纠错数据集，模型改造的潜力较大，效果好
 * [ERNIE_CSC模型](pycorrector/ernie_csc)：本项目基于PaddlePaddle实现了用于中文文本纠错的ERNIE_CSC模型，模型在ERNIE-1.0上finetune，模型结构适配了中文拼写纠错任务，效果好
 * [MacBERT模型](pycorrector/macbert)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的MacBERT4CSC模型，模型加入了错误检测和纠正网络，适配中文拼写纠错任务，效果好
 * [GPT模型](pycorrector/gpt)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的ChatGLM/LLaMA模型，模型在中文CSC和语法纠错数据集上finetune，适配中文文本纠错任务，效果好
@@ -70,7 +70,7 @@ python examples/macbert/gradio_demo.py
 
 # Evaluation
 
-提供评估脚本[examples/evaluate_models.py](https://github.com/shibing624/pycorrector/blob/master/examples/evaluate_models.py)：
+提供评估脚本[examples/evaluate_models/evaluate_models.py](https://github.com/shibing624/pycorrector/blob/master/examples/evaluate_models/evaluate_models.py)：
 
 - 使用sighan15评估集：SIGHAN2015的测试集[pycorrector/data/sighan_2015/test.tsv](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/sighan_2015/test.tsv)
   ，已经转为简体中文。
@@ -346,7 +346,7 @@ python -m pycorrector input.txt -o out.txt -n -d
 
 本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
 
-实现了macbert、seq2seq、 ernie_csc、T5、deepcontext、GPT深度模型应用于文本纠错任务。
+实现了macbert、seq2seq、 ernie_csc、T5、deepcontext、GPT深度模型应用于文本纠错任务，各模型均可基于自有数据训练、预测。
 
 - 安装依赖
 
@@ -356,16 +356,14 @@ pip install -r requirements-dev.txt
 
 ## 使用方法
 
-各模型均可独立的基于自有数据训练、预测。
+### **MacBert4CSC模型[推荐]**
 
-### **MacBert4csc模型[推荐]**
-
-基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models：[https://huggingface.co/shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)
+基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models：https://huggingface.co/shibing624/macbert4csc-base-chinese
 
 模型网络结构：
-- 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone。
+- 本项目是 MacBERT 改变网络结构的中文文本纠错模型，可支持 BERT 类模型为 backbone
 - 在原生 BERT 模型上进行了魔改，追加了一个全连接层作为错误检测即 [detection](https://github.com/shibing624/pycorrector/blob/c0f31222b7849c452cc1ec207c71e9954bd6ca08/pycorrector/macbert/macbert4csc.py#L18) ，
-MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最终的 loss。预测时用 BERT MLM 的 correction 权重即可。 
+MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最终的 loss，预测时用 BERT MLM 的 correction 权重即可
 
 ![macbert_network](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/macbert_network.jpg)
 
@@ -445,6 +443,8 @@ output:
 
 ### Bart模型
 
+基于SIGHAN+Wang271K中文纠错数据集训练的Bart4CSC模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/bart4csc-base-chinese
+
 ```python
 from transformers import BertTokenizerFast
 from textgen import BartSeq2SeqModel
@@ -467,9 +467,6 @@ output:
 
 如果需要训练Bart模型，请参考 https://github.com/shibing624/textgen/blob/main/examples/seq2seq/training_bartseq2seq_zh_demo.py
 
-#### Release models
-
-基于SIGHAN+Wang271K中文纠错数据集训练的Bart模型，已经release到HuggingFace Models: [https://huggingface.co/shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)
 
 # Dataset
 
