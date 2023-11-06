@@ -8,7 +8,7 @@ import sys
 
 sys.path.append("../..")
 
-from pycorrector.utils.eval import eval_sighan2015_by_model_batch
+from pycorrector import eval_sighan2015_by_model_batch
 
 
 def main(args):
