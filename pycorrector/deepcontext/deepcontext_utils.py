@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing(xuming624@qq.com)
-@description: loss function
+@description:
 """
 import json
 import math
@@ -11,6 +11,7 @@ from collections import Counter
 import numpy as np
 import torch
 import torch.nn as nn
+from loguru import logger
 
 # Define constants associated with the usual special tokens.
 SOS_TOKEN = '<sos>'
@@ -60,7 +61,7 @@ class NegativeSampling(nn.Module):
         return -(pos_loss + neg_loss).sum()
 
 
-class WalkerAlias(object):
+class WalkerAlias:
     """
     This is from Chainer's implementation.
     You can find the original code at
@@ -298,11 +299,12 @@ def load_word_dict(save_path):
     dict_data = dict()
     with open(save_path, 'r', encoding='utf-8') as f:
         for line in f:
-            items = line.strip().split()
+            line = line.strip('\n')
+            items = line.split('\t')
             try:
                 dict_data[items[0]] = int(items[1])
             except IndexError:
-                print('error', line)
+                logger.warning(f"IndexError: {line}")
     return dict_data
 
 
@@ -317,9 +319,10 @@ def read_vocab(input_texts, max_size=None, min_count=0):
     vocab = [k for k, v in count_pairs if v >= min_count]
     word_freq = {k: v for k, v in count_pairs if v >= min_count}
     # Insert the special tokens to the beginning
-    vocab[0:0] = special_tokens
-    full_token_id = list(zip(vocab, range(len(vocab))))[:max_size]
-    vocab2id = dict(full_token_id)
+    vocab = special_tokens + vocab
+    if max_size is not None:
+        vocab = vocab[:max_size]
+    vocab2id = dict(zip(vocab, range(len(vocab))))
     special_tokens_dict = {k: 0 for k in special_tokens}
     word_freq.update(special_tokens_dict)
     return vocab2id, word_freq
@@ -424,16 +427,12 @@ class ContextDataset:
         self.eos_token = eos_token
         self.device = device
 
-        vocab_2_ids, self.word_freqs = read_vocab(sentences, min_count=min_freq)
-        save_word_dict(vocab_2_ids, vocab_path)
-        self.vocab_2_ids = load_word_dict(vocab_path)
+        self.vocab_2_ids, self.word_freqs = read_vocab(sentences, min_count=min_freq)
+        save_word_dict(self.vocab_2_ids, vocab_path)
 
-        self.id_2_vocabs = {v: k for k, v in vocab_2_ids.items()}
-        train_vec = one_hot(sentences, self.vocab_2_ids)
-        self.train_data = gen_examples(train_vec, batch_size, max_length)
-
-        if self.pad_token:
-            self.pad_index = self.vocab_2_ids[self.pad_token]
+        self.id_2_vocabs = {v: k for k, v in self.vocab_2_ids.items()}
+        self.train_data = gen_examples(one_hot(sentences, self.vocab_2_ids), batch_size, max_length)
+        self.pad_index = self.vocab_2_ids[self.pad_token]
 
     def _gathered_by_lengths(self, sentences):
         lengths = [(index, len(sent)) for index, sent in enumerate(sentences)]
