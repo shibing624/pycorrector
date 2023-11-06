@@ -8,18 +8,19 @@ import sys
 
 sys.path.append("../..")
 
-import pycorrector
 from pycorrector.utils import eval
+from pycorrector import Corrector
 
 
 def main(args):
     if args.model == 'kenlm':
         # Sentence Level: acc:0.5100, precision:0.5139, recall:0.1363, f1:0.2154, cost time:1464.87 s
-        eval.eval_sighan2015_by_model(pycorrector.correct)
+        m = Corrector()
+        eval.eval_sighan2015_by_model(m.correct)
     elif args.model == 'macbert':
         from pycorrector.macbert.macbert_corrector import MacBertCorrector
         model = MacBertCorrector()
-        eval.eval_sighan2015_by_model_batch(model.correct)
+        eval.eval_sighan2015_by_model_batch(model.correct_batch)
         # macbert-base: Sentence Level: acc:0.7900, precision:0.8250, recall:0.7293, f1:0.7742, cost time:4.90 s
         # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
         # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
@@ -35,6 +36,26 @@ def main(args):
             args={"max_length": 128})
         eval.eval_sighan2015_by_model_batch(model.predict)
         # Sentence Level: acc:0.6845, precision:0.6984, recall:0.6354, f1:0.6654
+    elif args.model == 'seq2seq':
+        from pycorrector import ConvSeq2SeqCorrector
+        model = ConvSeq2SeqCorrector()
+        eval.eval_sighan2015_by_model_batch(model.correct_batch)
+        # Sentence Level: acc:
+    elif args.model == 't5':
+        from pycorrector import T5Corrector
+        model = T5Corrector()
+        eval.eval_sighan2015_by_model_batch(model.correct_batch)
+        # Sentence Level: acc:
+    elif args.model == 'deepcontext':
+        from pycorrector import DeepContextCorrector
+        model = DeepContextCorrector()
+        eval.eval_sighan2015_by_model_batch(model.correct_batch)
+        # Sentence Level: acc:
+    elif args.model == 'ernie_csc':
+        from pycorrector import ErnieCscCorrector
+        model = ErnieCscCorrector()
+        eval.eval_sighan2015_by_model_batch(model.correct_batch)
+        # Sentence Level: acc:
     elif args.model == 'chatglm':
         from pycorrector.gpt.gpt_corrector import GptCorrector
         model = GptCorrector()
@@ -46,6 +67,6 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='kenlm', help='which model to evaluate, kenlm/bert/macbert/ernie')
+    parser.add_argument('--model', type=str, default='kenlm', help='which model to evaluate')
     args = parser.parse_args()
     main(args)
