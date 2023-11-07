@@ -9,6 +9,7 @@ import time
 from typing import List
 
 import numpy as np
+import pandas as pd
 import torch
 from loguru import logger
 from torch import optim
@@ -140,6 +141,12 @@ class DeepContextModel:
 
         interval = 1e5
         best_loss = 1e3
+        global_step = 0
+        training_progress_scores = {
+            "epoch": [],
+            "global_step": [],
+            "train_loss": [],
+        }
         logger.info("train start...")
         for epoch in range(num_epochs):
             begin_time = time.time()
@@ -160,6 +167,7 @@ class DeepContextModel:
                 loss = model(sentence, target)
                 loss.backward()
                 optimizer.step()
+                global_step += 1
                 total_loss += loss.data.mean()
 
                 minibatch_size, sentence_length = target.size()
@@ -167,6 +175,7 @@ class DeepContextModel:
                 accum_mean_loss = float(total_loss) / word_count if total_loss > 0.0 else 0.0
                 cur_mean_loss = (float(total_loss) - last_accum_loss) / (word_count - last_word_count)
                 cur_loss = cur_mean_loss
+
                 if word_count >= next_count:
                     now = time.time()
                     duration = now - cur_at
@@ -181,7 +190,13 @@ class DeepContextModel:
             # find best model
             is_best = cur_loss < best_loss
             best_loss = min(cur_loss, best_loss)
-            logger.info('epoch: {}/{}, loss: {}, best_loss: {}'.format(epoch + 1, num_epochs, cur_loss, best_loss))
+            logger.info('epoch: {}/{}, global_step: {}, loss: {}, best_loss: {}'.format(
+                epoch + 1, num_epochs, global_step, cur_loss, best_loss))
+            training_progress_scores["epoch"].append(epoch + 1)
+            training_progress_scores["global_step"].append(global_step)
+            training_progress_scores["train_loss"].append(cur_loss)
+            report = pd.DataFrame(training_progress_scores)
+            report.to_csv(os.path.join(self.model_dir, "training_progress_scores.csv"), index=False)
             if is_best:
                 self.save_model(model_dir=self.model_dir, model=model, optimizer=optimizer)
                 logger.info('save new model: {}'.format(epoch + 1, self.model_dir))
@@ -198,7 +213,7 @@ class DeepContextModel:
         if optimizer:
             torch.save(optimizer.state_dict(), self.optimizer_file)
 
-    def predict_mask_token(self, tokens: List[str], mask_index: int = 0, k: int = 10):
+    def predict_mask_token(self, tokens: List[str], mask_index: int = 0, topk: int = 10):
         if not self.model:
             self.load_model()
         unk_token = self.config_dict['unk_token']
@@ -211,7 +226,7 @@ class DeepContextModel:
         tokens = [sos_token] + tokens + [eos_token]
         indexed_sentence = [self.stoi[token] if token in self.stoi else self.stoi[unk_token] for token in tokens]
         input_tokens = torch.tensor(indexed_sentence, dtype=torch.long, device=device).unsqueeze(0)
-        topv, topi = self.model.run_inference(input_tokens, target=None, target_pos=mask_index, k=k)
+        topv, topi = self.model.run_inference(input_tokens, target=None, target_pos=mask_index, topk=topk)
         for value, key in zip(topv, topi):
             score = value.item()
             word = self.itos[key.item()]

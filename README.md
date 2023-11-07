@@ -26,7 +26,6 @@
 
 - [Features](#Features)
 - [Evaluation](#Evaluation)
-- [Install](#install)
 - [Usage](#usage)
 - [Deep Model Usage](#deep-model-usage)
 - [ContextDataset](#Dataset)
@@ -49,10 +48,10 @@
 * [Kenlm模型](pycorrector/corrector.py)：本项目基于Kenlm统计语言模型工具训练了中文NGram语言模型，结合规则方法、混淆集可以纠正中文拼写错误，方法速度快，扩展性强，效果一般
 * [DeepContext模型](pycorrector/deepcontext)：本项目基于PyTorch实现了用于文本纠错的DeepContext模型，该模型结构参考Stanford University的NLC模型，2014英文纠错比赛得第一名，效果一般
 * [Seq2Seq模型](pycorrector/seq2seq)：本项目基于PyTorch实现了用于中文文本纠错的ConvSeq2Seq模型，该模型在NLPCC-2018的中文语法纠错比赛中，使用单模型并取得第三名，可以并行训练，模型收敛快，效果一般
-* [T5模型](pycorrector/t5)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的T5模型，使用Langboat/mengzi-t5-base的预训练模型finetune中文纠错数据集，模型改造的潜力较大，效果好
+* [T5模型](pycorrector/t5)：本项目基于PyTorch实现了用于中文文本纠错的T5模型，使用Langboat/mengzi-t5-base的预训练模型finetune中文纠错数据集，模型改造的潜力较大，效果好
 * [ERNIE_CSC模型](pycorrector/ernie_csc)：本项目基于PaddlePaddle实现了用于中文文本纠错的ERNIE_CSC模型，模型在ERNIE-1.0上finetune，模型结构适配了中文拼写纠错任务，效果好
 * [MacBERT模型](pycorrector/macbert)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的MacBERT4CSC模型，模型加入了错误检测和纠正网络，适配中文拼写纠错任务，效果好
-* [GPT模型](pycorrector/gpt)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的ChatGLM/LLaMA模型，模型在中文CSC和语法纠错数据集上finetune，适配中文文本纠错任务，效果好
+* [GPT模型](pycorrector/gpt)：本项目基于PyTorch实现了用于中文文本纠错的ChatGLM/LLaMA模型，模型在中文CSC和语法纠错数据集上finetune，适配中文文本纠错任务，效果好
 
 - 延展阅读：[中文文本纠错实践和原理解读](https://github.com/shibing624/pycorrector/blob/master/docs/correction_solution.md)
 # Demo
@@ -143,8 +142,12 @@ pip install -r requirements.txt
 ```
 
 # Usage
+本项目的初衷之一是比对、调研各种中文文本纠错方法，抛砖引玉。
 
-## 统计模型（kenlm）
+项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、LLaMA等模型应用于文本纠错任务，各模型均可基于自有数据训练、预测。
+
+
+## kenlm模型（统计模型）
 ### 中文拼写纠错
 
 example: [examples/kenlm/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/demo.py)
@@ -342,21 +345,8 @@ python -m pycorrector input.txt -o out.txt -n -d
 
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
-## Deep Model for Text Correction
 
-本项目的初衷之一是比对、共享各种文本纠错方法，抛砖引玉的作用，如果对大家在文本纠错任务上有一点小小的启发就是我莫大的荣幸了。
-
-实现了macbert、seq2seq、 ernie_csc、T5、deepcontext、GPT深度模型应用于文本纠错任务，各模型均可基于自有数据训练、预测。
-
-- 安装依赖
-
-```
-pip install -r requirements-dev.txt
-```
-
-## 使用方法
-
-### **MacBert4CSC模型[推荐]**
+## MacBert4CSC模型
 
 基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models：https://huggingface.co/shibing624/macbert4csc-base-chinese
 
@@ -370,7 +360,7 @@ MacBERT4CSC 训练时用 detection 层和 correction 层的 loss 加权得到最
 详细教程参考[examples/macbert/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/README.md)
 
 
-#### 使用pycorrector快速预测
+#### pycorrector快速预测
 example：[examples/macbert/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/demo.py)
 
 ```python
@@ -405,7 +395,7 @@ output：
 #### 使用原生transformers库快速预测
 见[examples/macbert/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/README.md)
 
-### ErnieCSC模型
+## ErnieCSC模型
 
 基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
 模型网络结构：
@@ -416,7 +406,7 @@ output：
 
 
 
-#### 使用pycorrector快速预测
+#### pycorrector快速预测
 example：[examples/ernie_csc/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/ernie_csc/demo.py)
 ```python
 from pycorrector import ErnieCscCorrector
@@ -441,7 +431,7 @@ output:
 ```
 
 
-### Bart模型
+## Bart模型
 
 基于SIGHAN+Wang271K中文纠错数据集训练的Bart4CSC模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/bart4csc-base-chinese
 
@@ -466,6 +456,27 @@ output:
 ```
 
 如果需要训练Bart模型，请参考 https://github.com/shibing624/textgen/blob/main/examples/seq2seq/training_bartseq2seq_zh_demo.py
+
+## GPT模型
+基于ChatGLM3、LLaMA、Baichuan、QWen等模型微调训练纠错模型，训练方法见[examples/gpt/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/README.md)
+
+在ChatGLM3-6B上SFT微调的纠错模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora
+
+#### pycorrector快速预测
+
+example: [examples/gpt/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/demo.py)
+```python
+from pycorrector import GptCorrector
+m = GptCorrector()
+print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
+```
+
+output:
+```shell
+[{'source': '今天新情很好', 'target': '今天心情很好', 'errors': [('新', '心', 2)]},
+{'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
+```
+
 
 
 # Dataset
@@ -567,7 +578,7 @@ BibTeX:
 @misc{Xu_Pycorrector_Text_error,
   title={Pycorrector: Text error correction tool},
   author={Ming Xu},
-  year={2021},
+  year={2023},
   howpublished={\url{https://github.com/shibing624/pycorrector}},
 }
 ```

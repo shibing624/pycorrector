@@ -229,10 +229,10 @@ class Context2vec(nn.Module):
         return (weight.new_zeros(self.n_layers, batch_size, self.hidden_size),
                 weight.new_zeros(self.n_layers, batch_size, self.hidden_size))
 
-    def run_inference(self, input_tokens, target, target_pos, k=10):
+    def run_inference(self, input_tokens, target, target_pos, topk=10):
         context_vector = self.forward(input_tokens, target=None, target_pos=target_pos)
         if target is None:
-            topv, topi = ((self.criterion.W.weight * context_vector).sum(dim=1)).data.topk(k)
+            topv, topi = ((self.criterion.W.weight * context_vector).sum(dim=1)).data.topk(topk)
             return topv, topi
         else:
             context_vector /= torch.norm(context_vector, p=2)
@@ -303,8 +303,8 @@ def load_word_dict(save_path):
             items = line.split('\t')
             try:
                 dict_data[items[0]] = int(items[1])
-            except IndexError:
-                logger.warning(f"IndexError: {line}")
+            except Exception as e:
+                logger.warning(f"Exception: {e}, {line}")
     return dict_data
 
 

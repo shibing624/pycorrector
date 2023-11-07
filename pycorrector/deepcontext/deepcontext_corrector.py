@@ -13,9 +13,9 @@ import torch
 from loguru import logger
 
 sys.path.append('../..')
-from pycorrector.utils.text_utils import is_chinese_string
+from pycorrector.utils.text_utils import is_chinese_char
 from pycorrector.corrector import Corrector
-from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
+from pycorrector.utils.tokenizer import split_text_into_sentences_by_symbol
 from pycorrector.utils.get_file import get_file
 from pycorrector.detector import USER_DATA_DIR
 from pycorrector.deepcontext.deepcontext_model import DeepContextModel
@@ -23,11 +23,10 @@ from pycorrector.deepcontext.deepcontext_model import DeepContextModel
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '—', '擤', '\t', '֍', '玕', '', '《', '》']
 pretrained_deepcontext_models = {
-    # LM model
+    # LM model (45MB)
     'deepcontext_lm.tar.gz':
-        'https://github.com/shibing624/pycorrector/releases/download/0.4.5/deepcontext_lm.tar.gz'
+        'https://github.com/shibing624/pycorrector/releases/download/0.4.6/deepcontext_lm.tar.gz'
 }
 
 
@@ -57,23 +56,24 @@ class DeepContextCorrector(Corrector):
             )
         t1 = time.time()
         self.model = DeepContextModel(model_dir=model_dir, max_length=max_length)
+        self.model.load_model()
         self.max_length = max_length
         logger.debug('Loaded model: %s, spend: %.4f s.' % (model_dir, time.time() - t1))
 
-    def correct(self, sentence: str, **kwargs):
+    def correct(self, sentence: str, topk: int = 10, **kwargs):
         """Correct the Chinese sentence with deep context language model."""
         details = []
         text_new = ''
-        blocks = split_text_into_sentences_by_length(sentence, self.max_length)
+        blocks = split_text_into_sentences_by_symbol(sentence)
         for blk, start_idx in blocks:
             blk_new = ''
             for idx, s in enumerate(blk):
                 # 处理中文错误
-                if is_chinese_string(s):
-                    sentence_lst = list(blk_new + blk[idx:])
-                    sentence_lst[idx] = self.model.mask
-                    # 预测，默认取top10
-                    predict_words = self.model.predict_mask_token(sentence_lst, idx, k=10)
+                if is_chinese_char(s):
+                    tokens = list(blk_new + blk[idx:])
+                    tokens[idx] = self.model.mask
+                    # 预测
+                    predict_words = self.model.predict_mask_token(tokens, idx, topk=topk)
                     top_tokens = []
                     for w, _ in predict_words:
                         top_tokens.append(w)

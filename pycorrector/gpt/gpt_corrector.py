@@ -19,9 +19,9 @@ from pycorrector.utils.error_utils import get_errors_for_diff_length
 class GptCorrector(GptModel):
     def __init__(
             self,
-            model_name_or_path: str = "shibing624/chatglm3-6b-csc-chinese-merged",
+            model_name_or_path: str = "THUDM/chatglm3-6b",
             model_type: str = 'chatglm',
-            peft_name: Optional[str] = None,
+            peft_name: Optional[str] = "shibing624/chatglm3-6b-csc-chinese-lora",
             **kwargs,
     ):
         t1 = time.time()
