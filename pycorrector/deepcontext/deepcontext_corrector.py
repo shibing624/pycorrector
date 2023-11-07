@@ -9,7 +9,6 @@ import sys
 import time
 from typing import List
 
-import torch
 from loguru import logger
 
 sys.path.append('../..')
@@ -20,9 +19,6 @@ from pycorrector.utils.get_file import get_file
 from pycorrector.detector import USER_DATA_DIR
 from pycorrector.deepcontext.deepcontext_model import DeepContextModel
 
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 pretrained_deepcontext_models = {
     # LM model (45MB)
     'deepcontext_lm.tar.gz':
@@ -35,6 +31,7 @@ class DeepContextCorrector(Corrector):
             self,
             model_name_or_path: str = None,
             max_length: int = 1024,
+            use_cuda: bool = False,
             *args,
             **kwargs,
     ):
@@ -55,7 +52,7 @@ class DeepContextCorrector(Corrector):
                 verbose=1
             )
         t1 = time.time()
-        self.model = DeepContextModel(model_dir=model_dir, max_length=max_length)
+        self.model = DeepContextModel(model_dir=model_dir, max_length=max_length, use_cuda=use_cuda)
         self.model.load_model()
         self.max_length = max_length
         logger.debug('Loaded model: %s, spend: %.4f s.' % (model_dir, time.time() - t1))

@@ -6,7 +6,7 @@
 
 import os
 import time
-from typing import List
+from typing import List, Optional
 
 import numpy as np
 import pandas as pd
@@ -22,13 +22,25 @@ from pycorrector.deepcontext.deepcontext_utils import (
     ContextDataset
 )
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+has_cuda = torch.cuda.is_available()
 
 
 class DeepContextModel:
-    def __init__(self, model_dir: str, max_length: int = 512):
-        # device
-        logger.debug("Device: {}".format(device))
+    def __init__(self, model_dir: str, max_length: int = 512, use_cuda: Optional[bool] = has_cuda):
+        if use_cuda:
+            if torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                raise ValueError(
+                    "'use_cuda' set to True when cuda is unavailable."
+                    "Make sure CUDA is available or set `use_cuda=False`."
+                )
+        else:
+            if torch.backends.mps.is_available():
+                self.device = torch.device("mps")
+            else:
+                self.device = "cpu"
+        logger.debug(f"Device: {self.device}")
         self.config_file = os.path.join(model_dir, 'config.json')
         self.checkpoint_file = os.path.join(model_dir, "pytorch_model.bin")
         self.optimizer_file = os.path.join(model_dir, 'optimizer.pt')
@@ -59,13 +71,13 @@ class DeepContextModel:
             use_mlp=config_dict['use_mlp'],
             dropout=config_dict['dropout'],
             pad_index=config_dict['pad_index'],
-            device=device,
+            device=self.device,
             is_inference=True
-        ).to(device)
-        self.model.load_state_dict(torch.load(self.checkpoint_file, map_location=device))
+        ).to(self.device)
+        self.model.load_state_dict(torch.load(self.checkpoint_file, map_location=self.device))
         self.optimizer = optim.Adam(self.model.parameters(), lr=config_dict['learning_rate'])
         if os.path.exists(self.optimizer_file):
-            self.optimizer.load_state_dict(torch.load(self.optimizer_file, map_location=device))
+            self.optimizer.load_state_dict(torch.load(self.optimizer_file, map_location=self.device))
         self.config_dict = config_dict
         # read vocab
         self.stoi = load_word_dict(self.vocab_file)
@@ -93,7 +105,7 @@ class DeepContextModel:
             batch_size=batch_size,
             max_length=self.max_length,
             min_freq=min_freq,
-            device=device,
+            device=self.device,
             vocab_path=self.vocab_file,
             vocab_max_size=vocab_max_size,
         )
@@ -107,9 +119,9 @@ class DeepContextModel:
             use_mlp=True,
             dropout=dropout,
             pad_index=dataset.pad_index,
-            device=device,
+            device=self.device,
             is_inference=False
-        ).to(device)
+        ).to(self.device)
         if self.model is None:
             # norm weight
             model.norm_embedding_weight(model.criterion.W)
@@ -158,7 +170,7 @@ class DeepContextModel:
             last_word_count = 0
             cur_loss = 0
             for it, (mb_x, mb_x_len) in enumerate(dataset.train_data):
-                sentence = torch.from_numpy(mb_x).to(device).long()
+                sentence = torch.from_numpy(mb_x).to(self.device).long()
 
                 target = sentence[:, 1:-1]
                 if target.size(0) == 0:
@@ -225,7 +237,7 @@ class DeepContextModel:
         tokens[mask_index] = unk_token
         tokens = [sos_token] + tokens + [eos_token]
         indexed_sentence = [self.stoi[token] if token in self.stoi else self.stoi[unk_token] for token in tokens]
-        input_tokens = torch.tensor(indexed_sentence, dtype=torch.long, device=device).unsqueeze(0)
+        input_tokens = torch.tensor(indexed_sentence, dtype=torch.long, device=self.device).unsqueeze(0)
         topv, topi = self.model.run_inference(input_tokens, target=None, target_pos=mask_index, topk=topk)
         for value, key in zip(topv, topi):
             score = value.item()
