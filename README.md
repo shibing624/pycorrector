@@ -32,7 +32,7 @@
 - [Contact](#Contact)
 - [Reference](#reference)
 
-# Question
+## Introduction
 
 中文文本纠错任务，常见错误类型：
 
@@ -43,7 +43,11 @@
 
 本项目重点解决其中的"音似、形字、语法、专名错误"等类型。
 
-# Features
+## News
+[2023/11/07] v1.0.0版本：新增了ChatGLM3/LLaMA2等GPT模型用于中文文本纠错，发布了基于ChatGLM3-6B的[shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)拼写和语法纠错模型；重写了DeepContext、ConvSeq2Seq、T5等模型的实现。详见[Release-v1.0.0](https://github.com/shibing624/pycorrector/releases/tag/1.0.0)
+
+
+## Features
 
 * [Kenlm模型](pycorrector/corrector.py)：本项目基于Kenlm统计语言模型工具训练了中文NGram语言模型，结合规则方法、混淆集可以纠正中文拼写错误，方法速度快，扩展性强，效果一般
 * [DeepContext模型](pycorrector/deepcontext)：本项目基于PyTorch实现了用于文本纠错的DeepContext模型，该模型结构参考Stanford University的NLC模型，2014英文纠错比赛得第一名，效果一般
@@ -54,7 +58,7 @@
 * [GPT模型](pycorrector/gpt)：本项目基于PyTorch实现了用于中文文本纠错的ChatGLM/LLaMA模型，模型在中文CSC和语法纠错数据集上finetune，适配中文文本纠错任务，效果好
 
 - 延展阅读：[中文文本纠错实践和原理解读](https://github.com/shibing624/pycorrector/blob/master/docs/correction_solution.md)
-# Demo
+## Demo
 
 Official Demo: https://www.mulanai.com/product/corrector/
 
