@@ -62,10 +62,10 @@ class DeepContextModel:
             device=device,
             is_inference=True
         ).to(device)
-        self.model.load_state_dict(torch.load(self.checkpoint_file))
+        self.model.load_state_dict(torch.load(self.checkpoint_file, map_location=device))
         self.optimizer = optim.Adam(self.model.parameters(), lr=config_dict['learning_rate'])
         if os.path.exists(self.optimizer_file):
-            self.optimizer.load_state_dict(torch.load(self.optimizer_file))
+            self.optimizer.load_state_dict(torch.load(self.optimizer_file, map_location=device))
         self.config_dict = config_dict
         # read vocab
         self.stoi = load_word_dict(self.vocab_file)
