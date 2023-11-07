@@ -5,6 +5,7 @@
 功能：1）补充纠错对，提升召回率；2）对误杀加白，提升准确率
 """
 import os
+from typing import List
 
 from loguru import logger
 
@@ -21,7 +22,8 @@ class ConfusionCorrector:
             raise ValueError('custom_confusion_path_or_dict must be dict or str.')
         logger.debug('Loaded confusion size: %d' % len(self.custom_confusion))
 
-    def load_custom_confusion_dict(self, path):
+    @staticmethod
+    def load_custom_confusion_dict(path):
         """
         加载自定义困惑集
         :param path:
@@ -44,19 +46,27 @@ class ConfusionCorrector:
             logger.warning('file not found.%s' % path)
         return confusion
 
-    def confusion_correct(self, text):
+    def correct(self, sentence: str):
         """
-        混淆集纠错
-        :param text: str, 待纠错的文本
-        :return: tuple(str, list), list(wrong, right, begin_idx, end_idx)
+        基于混淆集纠错
+        :param sentence: str, 待纠错的文本
+        :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        text_new = text
+        corrected_sentence = sentence
         details = []
-        # 1. 自定义混淆集加入疑似错误词典
+        # 自定义混淆集加入疑似错误词典
         for err, truth in self.custom_confusion.items():
-            idx = text.find(err)
+            idx = sentence.find(err)
             if idx > -1:
-                text_new = text[:idx] + truth + text[(idx + len(err)):]
-                maybe_err = [err, truth, idx, idx + len(err)]
-                details.append(maybe_err)
-        return text_new, details
+                corrected_sentence = sentence[:idx] + truth + sentence[(idx + len(err)):]
+                details.append((err, truth, idx))
+        return {'source': sentence, 'target': corrected_sentence, 'errors': details}
+
+    def correct_batch(self, sentences: List[str]):
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
+        :param kwargs: 其他参数
+        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        """
+        return [self.correct(s) for s in sentences]

@@ -61,7 +61,7 @@ def compute_corrector_prf(results, logger):
 
     for i in range(len(all_predict_true_index)):
         # we only detect those correctly detected location, which is a different from the common metrics since
-        # we wanna to see the precision improve by using the confusionset
+        # we want to see the precision improve by using the confusionset
         if len(all_predict_true_index[i]) > 0:
             predict_words = []
             for j in all_predict_true_index[i]:

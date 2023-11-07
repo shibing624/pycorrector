@@ -14,19 +14,19 @@ from pycorrector.utils.text_utils import is_chinese_string
 
 jieba.setLogLevel(log_level="ERROR")
 
-# \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
-# \r\n|\s : whitespace characters. Will not be handled.
-re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
-re_skip = re.compile("(\r\n\\s)", re.U)
 
-
-def split_2_short_text(text, include_symbol=True):
+def split_text_into_sentences_by_symbol(text, include_symbol=True):
     """
-    文本切分为句子，以标点符号切分
+    将文本切分为句子，以标点符号为分隔符
     :param text: str
     :param include_symbol: bool
-    :return: (sentence, idx)
+    :return: list, (sentence, idx)
     """
+    # \u4E00-\u9FA5a-zA-Z0-9+#&\._ : All non-space characters. Will be handled with re_han
+    # \r\n|\s : whitespace characters. Will not be handled.
+    re_han = re.compile("([\u4E00-\u9Fa5a-zA-Z0-9+#&]+)", re.U)
+    re_skip = re.compile("(\r\n\\s)", re.U)
+
     result = []
     sentences = re_han.split(text)
     start_idx = 0
@@ -42,26 +42,25 @@ def split_2_short_text(text, include_symbol=True):
     return result
 
 
-def split_text_by_maxlen(text, maxlen=512):
+def split_text_into_sentences_by_length(text, length=512):
     """
-    文本切分为句子，以句子maxlen切分
+    将文本切分为固定长度的句子
     :param text: str
-    :param maxlen: int, 最大长度
+    :param length: int, 每个句子的最大长度
     :return: list, (sentence, idx)
     """
     result = []
-    for i in range(0, len(text), maxlen):
-        result.append((text[i:i + maxlen], i))
+    for i in range(0, len(text), length):
+        result.append((text[i:i + length], i))
     return result
 
 
 def tokenize_words(text):
     """Word segmentation"""
     output = []
-    sentences = split_2_short_text(text, include_symbol=True)
+    sentences = split_text_into_sentences_by_symbol(text, include_symbol=True)
     for sentence, idx in sentences:
         if is_chinese_string(sentence):
-            import jieba
             output.extend(jieba.lcut(sentence))
         else:
             output.extend(whitespace_tokenize(sentence))
@@ -69,11 +68,11 @@ def tokenize_words(text):
 
 
 def whitespace_tokenize(text):
-    """Runs basic whitespace cleaning and splitting on a peice of text."""
+    """Runs basic whitespace cleaning and splitting on a piece of text."""
     tokens = []
     if not text:
         return tokens
-    sents = split_2_short_text(text, include_symbol=True)
+    sents = split_text_into_sentences_by_symbol(text, include_symbol=True)
     for sent, idx in sents:
         tokens.extend(sent.split())
     return tokens
@@ -131,7 +130,6 @@ def segment(sentence, cut_type='word', pos=False):
 class Tokenizer(object):
     def __init__(self, dict_path='', custom_word_freq_dict=None, custom_confusion_dict=None):
         self.model = jieba
-        jieba.setLogLevel("ERROR")
         # 初始化大词典
         if os.path.exists(dict_path):
             self.model.set_dictionary(dict_path)
@@ -194,7 +192,7 @@ if __name__ == '__main__':
     print('【my分词结果：】', cutwords1)
 
     print('----\n', text)
-    r = split_2_short_text(text, include_symbol=True)
+    r = split_text_into_sentences_by_symbol(text, include_symbol=True)
     print('split_2_short_text:',r)
-    r = split_text_by_maxlen(text, maxlen=4)
+    r = split_text_into_sentences_by_length(text, 4)
     print('split_text_by_maxlen:',r)

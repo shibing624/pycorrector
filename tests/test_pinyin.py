@@ -8,7 +8,9 @@ import sys
 import unittest
 
 sys.path.append('..')
-import pycorrector
+from pycorrector import Corrector
+
+m = Corrector()
 
 
 class PinyinTestCase(unittest.TestCase):
@@ -19,7 +21,7 @@ class PinyinTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = pycorrector.correct(name)
+            s, r = m.correct(name)
             print(s, r)
             res.append(r)
 
@@ -35,7 +37,7 @@ class PinyinTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = pycorrector.correct(name)
+            s, r = m.correct(name)
             print(s, r)
             res.append(r)
 

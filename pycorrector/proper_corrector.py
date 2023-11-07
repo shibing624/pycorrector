@@ -5,14 +5,22 @@
 """
 import os
 from codecs import open
+from typing import List
 
 import pypinyin
 from loguru import logger
-from pycorrector import config
+
 from pycorrector.utils.math_utils import edit_distance
 from pycorrector.utils.ngram_util import NgramUtil
-from pycorrector.utils.text_utils import is_chinese
-from pycorrector.utils.tokenizer import segment, split_2_short_text
+from pycorrector.utils.text_utils import is_chinese_char
+from pycorrector.utils.tokenizer import segment, split_text_into_sentences_by_symbol
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+# 五笔笔画字典
+stroke_path = os.path.join(pwd_path, 'data/stroke.txt')
+# 专名词典，包括成语、俗语、专业领域词等 format: 词语
+proper_name_path = os.path.join(pwd_path, 'data/proper_name.txt')
 
 
 def load_set_file(path):
@@ -55,8 +63,8 @@ def load_dict_file(path):
 class ProperCorrector:
     def __init__(
             self,
-            proper_name_path=config.proper_name_path,
-            stroke_path=config.stroke_path,
+            proper_name_path=proper_name_path,
+            stroke_path=stroke_path,
     ):
         self.name = 'ProperCorrector'
         # proper name, 专名词典，包括成语、俗语、专业领域词等 format: 词语
@@ -98,9 +106,9 @@ class ProperCorrector:
         if char1 == char2:
             score = 1.0
         # 如果一个是中文字符，另一个不是，为0
-        if is_chinese(char1) != is_chinese(char2):
+        if is_chinese_char(char1) != is_chinese_char(char2):
             return score
-        if not is_chinese(char1):
+        if not is_chinese_char(char1):
             return score
         char_stroke1 = self.get_stroke(char1)
         char_stroke2 = self.get_stroke(char2)
@@ -167,9 +175,9 @@ class ProperCorrector:
         if char1 == char2:
             score = 1.0
         # 如果一个是中文字符，另一个不是，为0
-        if is_chinese(char1) != is_chinese(char2):
+        if is_chinese_char(char1) != is_chinese_char(char2):
             return score
-        if not is_chinese(char1):
+        if not is_chinese_char(char1):
             return score
         char_pinyin1 = self.get_pinyin(char1)[0]
         char_pinyin2 = self.get_pinyin(char2)[0]
@@ -211,9 +219,9 @@ class ProperCorrector:
             self.get_word_pinyin_similarity_score(word1, word2)
         )
 
-    def proper_correct(
+    def correct(
             self,
-            text,
+            sentence,
             start_idx=0,
             cut_type='char',
             ngram=1234,
@@ -223,19 +231,19 @@ class ProperCorrector:
     ):
         """
         专名纠错
-        :param text: str, 待纠错的文本
+        :param sentence: str, 待纠错的文本
         :param start_idx: int, 文本开始的索引，兼容correct方法
         :param cut_type: str, 分词类型，'char' or 'word'
         :param ngram: 遍历句子的ngram
         :param sim_threshold: 相似度得分阈值，超过该阈值才进行纠错
         :param max_word_length: int, 专名词的最大长度为4
         :param min_word_length: int, 专名词的最小长度为2
-        :return: tuple(str, list), list(wrong, right, begin_idx, end_idx)
+        :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         text_new = ''
         details = []
         # 切分为短句
-        sentences = split_2_short_text(text, include_symbol=True)
+        sentences = split_text_into_sentences_by_symbol(sentence, include_symbol=True)
         for sentence, idx in sentences:
             # 遍历句子中的所有词，专名词的最大长度为4,最小长度为2
             sentence_words = segment(sentence, cut_type=cut_type)
@@ -250,7 +258,15 @@ class ProperCorrector:
                         if cur_item != name:
                             cur_idx = sentence.find(cur_item)
                             sentence = sentence[:cur_idx] + name + sentence[(cur_idx + len(cur_item)):]
-                            details.append(
-                                (cur_item, name, idx + cur_idx + start_idx, idx + cur_idx + len(cur_item) + start_idx))
+                            details.append((cur_item, name, idx + cur_idx + start_idx))
             text_new += sentence
-        return text_new, details
+        return {'source': sentence, 'target': text_new, 'errors': details}
+
+    def correct_batch(self, sentences: List[str], **kwargs):
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
+        :param kwargs: 其他参数
+        :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
+        """
+        return [self.correct(s, **kwargs) for s in sentences]

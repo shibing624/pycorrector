@@ -1,6 +1,7 @@
 jieba
 pypinyin
 numpy
+pandas
 six
 loguru
 kenlm

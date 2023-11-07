@@ -15,9 +15,9 @@ def test_trace():
     tracemalloc.start(10)
     time1 = tracemalloc.take_snapshot()
 
-    import pycorrector
-
-    c = pycorrector.correct('少先队员因该为老人让坐')
+    from pycorrector import Corrector
+    m = Corrector()
+    c = m.correct('少先队员因该为老人让坐')
     print(c)
 
     time2 = tracemalloc.take_snapshot()

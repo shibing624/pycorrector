@@ -6,7 +6,9 @@
 
 import unittest
 
-from pycorrector.en_spell import EnSpell, get_word_freq_dict_from_text
+from pycorrector import EnSpellCorrector
+
+spell = EnSpellCorrector()
 
 
 class TestEnSpell(unittest.TestCase):
@@ -14,19 +16,15 @@ class TestEnSpell(unittest.TestCase):
 
     def test_correct(self):
         """ test spell checker corrects """
-        spell = EnSpell()
-        self.assertEqual(spell.correct('ths')[0], 'the')
-        self.assertEqual(spell.correct('ergo')[0], 'ergo')
-        # self.assertEqual(spell.correct('alot'), 'a lot')
-        self.assertEqual(spell.correct('this')[0], 'this')
-        self.assertEqual(spell.correct('-')[0], '-')
-        self.assertEqual(spell.correct('1213')[0], '1213')
-        self.assertEqual(''.join(spell.correct('1213.9')), '1213.9')
+        self.assertEqual(spell.correct('ths')['target'], 'the')
+        self.assertEqual(spell.correct('ergo')['target'], 'ergo')
+        self.assertEqual(spell.correct('this')['target'], 'this')
+        self.assertEqual(spell.correct('-')['target'], '-')
+        self.assertEqual(spell.correct('1213')['target'], '1213')
+        self.assertEqual(''.join(spell.correct('1213.9')['target']), '1213.9')
 
     def test_candidates(self):
         """ test spell checker candidates """
-        spell = EnSpell()
-        spell.check_init()
         print(spell.word_freq_dict.get('ths'), spell.candidates('ths'))
         self.assertEqual(len(spell.candidates('ths')) > 0, True)
         self.assertEqual(spell.candidates('the'), {'the'})
@@ -36,14 +34,11 @@ class TestEnSpell(unittest.TestCase):
 
     def test_word_frequency(self):
         """ test word frequency """
-        spell = EnSpell()
-        spell.check_init()
         # if the default load changes so will this...
         self.assertEqual(spell.word_freq_dict.get('he'), 12846723)
 
     def test_word_known(self):
         """ test if the word is a `known` word or not """
-        spell = EnSpell()
         self.assertEqual(spell.known(['this']), {'this'})
         self.assertEqual(spell.known(['hi']), {'hi'})
         self.assertEqual(spell.known(['holmes']), {'holmes'})
@@ -56,22 +51,17 @@ class TestEnSpell(unittest.TestCase):
 
     def test_word_in(self):
         """ test the use of the `in` operator """
-        spell = EnSpell()
-        spell.check_init()
         self.assertTrue('key' in spell.word_freq_dict)
         self.assertFalse('wantthis' in spell.word_freq_dict)  # a known excluded word
         self.assertEqual(spell.word_freq_dict.get('a', 0), 48779620)
 
     def test_case_insensitive_parse_words(self):
-        """ Test using the parse words to generate a case insensitive dict """
-        spell_old = EnSpell()
-        spell_old.check_init()
-        print(spell_old.word_freq_dict.get('thisss', 0))
-        assert spell_old.word_freq_dict.get('thisss', 0) == 0
+        """ Test using the parse words to generate dict """
+        print(spell.word_freq_dict.get('thisss', 0))
+        assert spell.word_freq_dict.get('thisss', 0) == 0
 
-        dic = get_word_freq_dict_from_text("thisss is a Test of the test!")
-        print(dic)
-        spell_new = EnSpell(word_freq_dict=dic)
+        dic = {'thisss': 1, 'is': 1, 'a': 1, 'test': 2, 'of': 1, 'the': 1}
+        spell_new = EnSpellCorrector(word_freq_dict=dic)
         print(spell_new.word_freq_dict.get('thisss', 0))
         # in makes sure it is lower case in this instance
         self.assertTrue(spell_new.word_freq_dict.get('thisss', 0) == 1)

@@ -4,27 +4,45 @@
 @description: error word detector
 """
 import os
-import time
-from loguru import logger
 from codecs import open
 
 import numpy as np
+from loguru import logger
 
-from pycorrector import config
+from pycorrector.proper_corrector import ProperCorrector
 from pycorrector.utils.get_file import get_file
 from pycorrector.utils.text_utils import uniform, is_alphabet_string, is_chinese_string
-from pycorrector.utils.tokenizer import Tokenizer, split_2_short_text
-from pycorrector.proper_corrector import ProperCorrector
+from pycorrector.utils.tokenizer import Tokenizer, split_text_into_sentences_by_symbol
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+# -----用户目录，存储模型文件-----
+USER_DATA_DIR = os.path.expanduser('~/.pycorrector/datasets/')
+os.makedirs(USER_DATA_DIR, exist_ok=True)
+language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
+
+# -----词典文件路径-----
+# 通用分词词典文件  format: 词语 词频
+word_freq_path = os.path.join(pwd_path, 'data/word_freq.txt')
+# 五笔笔画字典
+stroke_path = os.path.join(pwd_path, 'data/stroke.txt')
+# 知名人名词典 format: 词语 词频
+person_name_path = os.path.join(pwd_path, 'data/person_name.txt')
+# 地名词典 format: 词语 词频
+place_name_path = os.path.join(pwd_path, 'data/place_name.txt')
+# 专名词典，包括成语、俗语、专业领域词等 format: 词语
+proper_name_path = os.path.join(pwd_path, 'data/proper_name.txt')
+# 停用词
+stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 
 
-class ErrorType(object):
+class ErrorType:
     confusion = 'confusion'
     word = 'word'
     char = 'char'
     proper = 'proper'  # 专名纠错，包括成语纠错、人名纠错等
 
 
-class Detector(object):
+class Detector:
     pre_trained_language_models = {
         # 语言模型 2.95GB
         'zh_giga.no_cna_cmn.prune01244.klm': 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
@@ -34,15 +52,15 @@ class Detector(object):
 
     def __init__(
             self,
-            language_model_path=config.language_model_path,
-            word_freq_path=config.word_freq_path,
+            language_model_path=language_model_path,
+            word_freq_path=word_freq_path,
             custom_word_freq_path='',
             custom_confusion_path_or_dict='',
-            person_name_path=config.person_name_path,
-            place_name_path=config.place_name_path,
-            stopwords_path=config.stopwords_path,
-            proper_name_path=config.proper_name_path,
-            stroke_path=config.stroke_path
+            person_name_path=person_name_path,
+            place_name_path=place_name_path,
+            stopwords_path=stopwords_path,
+            proper_name_path=proper_name_path,
+            stroke_path=stroke_path
     ):
         self.name = 'detector'
         self.language_model_path = language_model_path
@@ -71,18 +89,21 @@ class Detector(object):
         try:
             import kenlm
         except ImportError:
-            raise ImportError('pycorrector dependencies are not fully installed, '
-                              'they are required for statistical language model.'
-                              'Please use "pip install kenlm" to install it.'
-                              'if you are Win, Please install kenlm in cgwin.')
+            raise ImportError(
+                'pycorrector dependencies are not fully installed, '
+                'they are required for statistical language model.'
+                'Please use "pip install kenlm" to install it.'
+                'if you are Win, Please install kenlm in cgwin.'
+            )
         if not os.path.exists(self.language_model_path):
-            filename = self.pre_trained_language_models.get(self.language_model_path,
-                                                            'zh_giga.no_cna_cmn.prune01244.klm')
+            filename = self.pre_trained_language_models.get(
+                self.language_model_path, 'zh_giga.no_cna_cmn.prune01244.klm'
+            )
             url = self.pre_trained_language_models.get(filename)
             get_file(
                 filename, url, extract=True,
                 cache_dir='~',
-                cache_subdir=config.USER_DATA_DIR,
+                cache_subdir=USER_DATA_DIR,
                 verbose=1
             )
         self.lm = kenlm.Model(self.language_model_path)
@@ -93,7 +114,7 @@ class Detector(object):
         # 自定义混淆集
         if isinstance(self.custom_confusion_path_or_dict, dict):
             self.custom_confusion = self.custom_confusion_path_or_dict
-            for k,v in self.custom_confusion.items():
+            for k, v in self.custom_confusion.items():
                 self.word_freq[v] = self.word_freq.get(v, 1)
         elif isinstance(self.custom_confusion_path_or_dict, str):
             self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path_or_dict)
@@ -109,11 +130,15 @@ class Detector(object):
         self.custom_word_freq.update(self.place_names)
         self.custom_word_freq.update(self.stopwords)
         self.word_freq.update(self.custom_word_freq)
-        self.tokenizer = Tokenizer(dict_path=self.word_freq_path,
-                                   custom_word_freq_dict=self.custom_word_freq,
-                                   custom_confusion_dict=self.custom_confusion)
-        self.proper_corrector = ProperCorrector(proper_name_path=self.proper_name_path,
-                                                stroke_path=self.stroke_path)
+        self.tokenizer = Tokenizer(
+            dict_path=self.word_freq_path,
+            custom_word_freq_dict=self.custom_word_freq,
+            custom_confusion_dict=self.custom_confusion
+        )
+        self.proper_corrector = ProperCorrector(
+            proper_name_path=self.proper_name_path,
+            stroke_path=self.stroke_path
+        )
         self.initialized_detector = True
 
     def check_detector_initialized(self):
@@ -184,7 +209,7 @@ class Detector(object):
         self.check_detector_initialized()
         if isinstance(data, dict):
             self.custom_confusion = data
-            for k,v in self.custom_confusion.items():
+            for k, v in self.custom_confusion.items():
                 self.word_freq[v] = self.word_freq.get(v, 1)
         elif isinstance(data, str):
             self.custom_confusion = self._get_custom_confusion_dict(data)
@@ -261,7 +286,7 @@ class Detector(object):
         """
         检测错误集合(maybe_errors)是否已经包含该错误位置（maybe_err)
         :param maybe_err: [error_word, begin_pos, end_pos, error_type]
-        :param maybe_errors:list
+        :param maybe_errors: list
         :return: bool
         """
         error_word_idx = 0
@@ -349,26 +374,7 @@ class Detector(object):
             result = True
         return result
 
-    def detect(self, text):
-        """
-        文本错误检测
-        :param text: 长文本
-        :return: 错误index
-        """
-        maybe_errors = []
-        if not text.strip():
-            return maybe_errors
-        # 初始化
-        self.check_detector_initialized()
-        # 文本归一化
-        text = uniform(text)
-        # 文本切分为句子
-        sentences = split_2_short_text(text)
-        for sentence, idx in sentences:
-            maybe_errors += self.detect_sentence(sentence, idx)[0]
-        return maybe_errors
-
-    def detect_sentence(self, sentence, start_idx=0, **kwargs):
+    def _detect(self, sentence, start_idx=0, **kwargs):
         """
         检测句子中的疑似错误字词，包括[词、位置、错误类型]
 
@@ -392,8 +398,9 @@ class Detector(object):
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 2. 专名错误检测
-        _, proper_details = self.proper_corrector.proper_correct(sentence, start_idx=start_idx, **kwargs)
-        for error_word, corrected_word, begin_idx, end_idx in proper_details:
+        proper_details = self.proper_corrector.correct(sentence, start_idx=start_idx, **kwargs)['errors']
+        for error_word, corrected_word, begin_idx in proper_details:
+            end_idx = begin_idx + len(error_word)
             maybe_err = [error_word, begin_idx, end_idx, ErrorType.proper]
             self._add_maybe_error_item(maybe_err, maybe_errors)
 
@@ -443,11 +450,27 @@ class Detector(object):
                         if token in self.stopwords:
                             continue
                         # token, begin_idx, end_idx, error_type
-                        maybe_err = [token, i + start_idx, i + start_idx + 1,
-                                     ErrorType.char]
+                        maybe_err = [token, i + start_idx, i + start_idx + 1, ErrorType.char]
                         self._add_maybe_error_item(maybe_err, maybe_errors)
             except IndexError as ie:
                 logger.warning("index error, sentence:" + sentence + str(ie))
             except Exception as e:
                 logger.warning("detect error, sentence:" + sentence + str(e))
         return sorted(maybe_errors, key=lambda k: k[1], reverse=False), proper_details
+
+    def detect(self, sentence):
+        """
+        文本错误检测
+        :param sentence: 句子
+        :return: 错误index
+        """
+        maybe_errors = []
+        if not sentence.strip():
+            return maybe_errors
+        # 文本归一化
+        sentence = uniform(sentence)
+        # 文本切分为句子
+        short_sents = split_text_into_sentences_by_symbol(sentence)
+        for sent, idx in short_sents:
+            maybe_errors += self._detect(sent, idx)[0]
+        return maybe_errors

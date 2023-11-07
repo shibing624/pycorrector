@@ -6,7 +6,8 @@
 import sys
 sys.path.append("../")
 import time
-from pycorrector import correct, detect
+from pycorrector import Corrector
+m = Corrector()
 
 error_sentences = [
     '汽车新式在这条路上',
@@ -35,13 +36,13 @@ error_sentences = [
 t1 = time.time()
 for i in range(3):
     for line in error_sentences:
-        idx_errors = detect(line)
+        idx_errors = m.detect(line)
 t2 = time.time()
 print('[detect] spend time: %f s' % (t2 - t1))
 
 for i in range(3):
     for line in error_sentences:
-        correct_sent = correct(line)
+        correct_sent = m.correct(line)
 t3 = time.time()
 print('[correct] spend time: %f s' % (t3 - t2))
 # spend time: 1.497331 s

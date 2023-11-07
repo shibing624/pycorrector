@@ -15,7 +15,7 @@ c.check_detector_initialized()
 
 
 def get_confusion_set(char):
-    confusion_set = c.same_pinyin.get(char, set()).union(c.same_shape.get(char, set()))
+    confusion_set = c.same_pinyin.get(char, set()).union(c.same_stroke.get(char, set()))
     confusion_set.add(char)
     return confusion_set
 

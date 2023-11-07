@@ -1,0 +1,22 @@
+MODEL:
+  BERT_CKPT: "bert-base-chinese"
+  DEVICE: "cuda"
+  NAME: "softmaskedbert4csc"
+  GPU_IDS: [0]
+  HYPER_PARAMS: [0.8]
+  WEIGHTS: ""
+
+DATASETS:
+  TRAIN: "../data/sighan_2015/train.json"
+  VALID: "../data/sighan_2015/test.json"
+  TEST: "../data/sighan_2015/test.json"
+
+SOLVER:
+  BASE_LR: 0.0001
+  WEIGHT_DECAY: 5e-8
+  BATCH_SIZE: 32
+  MAX_EPOCHS: 10
+  ACCUMULATE_GRAD_BATCHES: 4
+
+OUTPUT_DIR: "outputs-softmaskedbert4csc"
+MODE: ["train", "test"]

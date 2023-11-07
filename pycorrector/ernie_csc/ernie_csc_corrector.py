@@ -11,19 +11,32 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from paddlenlp import Taskflow
+
+from typing import List
 
 
-class ErnieCSCCorrector(object):
-    def __init__(self, model="ernie-csc"):
-        self.text_correction = Taskflow("text_correction", model=model)
+class ErnieCscCorrector:
+    def __init__(self, model_name_or_path="ernie-csc"):
+        from paddlenlp.taskflow import Taskflow
+        self.text_correction = Taskflow("text_correction", model=model_name_or_path)
 
-    def ernie_csc_correct(self, text):
+    def correct(self, sentence: str):
         """
         句子纠错
-        :param text: 句子文本
+        :param sentence: 句子
+        :return: {'source': wrong_text,
+                  'target': right_text,
+                  'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]}
+        """
+        return self.text_correction(sentence)[0]
+
+    def correct_batch(self, sentences: List[str]):
+        """
+        批量句子纠错
+        :param sentences: 句子文本列表
         :return: list[{'source': wrong_text,
                    'target': right_text,
-                   'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]}]
+                   'errors': [{'position': pos, 'correction': {wrong_word: correct_word}}]},
+                   ...]
         """
-        return self.text_correction(text)
+        return self.text_correction(sentences)
