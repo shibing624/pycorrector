@@ -130,24 +130,10 @@ docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 
 ![docker](https://github.com/shibing624/pycorrector/blob/master/docs/git_image/docker.png)
 
-* kenlm安装
-
-```
-pip install kenlm
-```
-
-[安装kenlm-wiki](https://github.com/shibing624/pycorrector/wiki/Install-kenlm)
-
-* 其他库包安装
-
-```
-pip install -r requirements.txt
-```
-
 ## Usage
 本项目的初衷之一是比对、调研各种中文文本纠错方法，抛砖引玉。
 
-项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、LLaMA等模型应用于文本纠错任务，各模型均可基于自有数据训练、预测。
+项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、LLaMA等模型应用于文本纠错任务，各模型均可基于已经训练好的纠错模型快速预测，也可使用自有数据训练、预测。
 
 
 ### kenlm模型（统计模型）
