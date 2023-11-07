@@ -27,10 +27,9 @@
 - [Features](#Features)
 - [Evaluation](#Evaluation)
 - [Usage](#usage)
-- [Deep Model Usage](#deep-model-usage)
-- [ContextDataset](#Dataset)
+- [Dataset](#Dataset)
 - [Contact](#Contact)
-- [Reference](#reference)
+- [References](#references)
 
 ## Introduction
 
@@ -71,7 +70,7 @@ run example: [examples/macbert/gradio_demo.py](https://github.com/shibing624/pyc
 python examples/macbert/gradio_demo.py
 ```
 
-# Evaluation
+## Evaluation
 
 提供评估脚本[examples/evaluate_models/evaluate_models.py](https://github.com/shibing624/pycorrector/blob/master/examples/evaluate_models/evaluate_models.py)：
 
@@ -98,7 +97,7 @@ GPU：Tesla V100，显存 32 GB
 - 中文拼写纠错模型效果最好的是**MacBert-CSC**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：https://huggingface.co/shibing624/macbert4csc-base-chinese
 - 中文语法纠错模型效果最好的是**Mengzi-T5-CSC**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction
 
-# Install
+## Install
 
 ```shell
 pip install -U pycorrector
@@ -145,14 +144,14 @@ pip install kenlm
 pip install -r requirements.txt
 ```
 
-# Usage
+## Usage
 本项目的初衷之一是比对、调研各种中文文本纠错方法，抛砖引玉。
 
 项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、LLaMA等模型应用于文本纠错任务，各模型均可基于自有数据训练、预测。
 
 
-## kenlm模型（统计模型）
-### 中文拼写纠错
+### kenlm模型（统计模型）
+#### 中文拼写纠错
 
 example: [examples/kenlm/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/demo.py)
 
@@ -172,7 +171,7 @@ output:
 > 规则方法默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
 则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
 
-### 错误检测
+#### 错误检测
 
 example: [examples/kenlm/detect_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/detect_demo.py)
 
@@ -191,7 +190,7 @@ output:
 
 > 返回类型是`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
 
-### 成语、专名纠错
+#### 成语、专名纠错
 
 example: [examples/kenlm/proper_correct_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/proper_correct_demo.py)
 
@@ -219,7 +218,7 @@ output:
 ```
 
 
-### 自定义混淆集
+#### 自定义混淆集
 
 通过加载自定义混淆集，支持用户纠正已知的错误，包括两方面功能：1）【提升准确率】误杀加白；2）【提升召回率】补充召回。
 
@@ -259,7 +258,7 @@ iPhone差 iPhoneX
 > 混淆集功能在`correct`方法中生效；
 > `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)或混淆集字典(dict)。
 
-### 自定义语言模型
+#### 自定义语言模型
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存小的电脑使用`pycorrector`程序可能会吃力些。
 
@@ -276,7 +275,7 @@ model = Corrector(language_model_path=lm_path)
 print(model.correct('少先队员因该为老人让坐'))
 ```
 
-### 英文拼写纠错
+#### 英文拼写纠错
 
 支持英文单词级别的拼写错误纠正。
 
@@ -295,7 +294,7 @@ output:
 {'source': 'what happending? how to speling it, can you gorrect it?', 'target': 'what happening? how to spelling it, can you correct it?', 'errors': [('happending', 'happening', 5), ('speling', 'spelling', 24), ('gorrect', 'correct', 44)]}
 ```
 
-### 中文简繁互换
+#### 中文简繁互换
 
 支持中文繁体到简体的转换，和简体到繁体的转换。
 
@@ -320,9 +319,9 @@ output:
 忧郁的台湾乌龟 => 憂郁的臺灣烏龜
 ```
 
-### 命令行模式
+#### 命令行模式
 
-支持批量文本纠错
+支持kenlm方法的批量文本纠错
 
 ```
 python -m pycorrector -h
@@ -350,7 +349,7 @@ python -m pycorrector input.txt -o out.txt -n -d
 > 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
 
-## MacBert4CSC模型
+### MacBert4CSC模型
 
 基于MacBERT改变网络结构的中文拼写纠错模型，模型已经开源在HuggingFace Models：https://huggingface.co/shibing624/macbert4csc-base-chinese
 
@@ -399,7 +398,7 @@ output：
 #### 使用原生transformers库快速预测
 见[examples/macbert/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/README.md)
 
-## ErnieCSC模型
+### ErnieCSC模型
 
 基于ERNIE的中文拼写纠错模型，模型已经开源在[PaddleNLP](https://bj.bcebos.com/paddlenlp/taskflow/text_correction/csc-ernie-1.0/csc-ernie-1.0.pdparams)。
 模型网络结构：
@@ -435,7 +434,7 @@ output:
 ```
 
 
-## Bart模型
+### Bart模型
 
 基于SIGHAN+Wang271K中文纠错数据集训练的Bart4CSC模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/bart4csc-base-chinese
 
@@ -461,7 +460,7 @@ output:
 
 如果需要训练Bart模型，请参考 https://github.com/shibing624/textgen/blob/main/examples/seq2seq/training_bartseq2seq_zh_demo.py
 
-## GPT模型
+### GPT模型
 基于ChatGLM3、LLaMA、Baichuan、QWen等模型微调训练纠错模型，训练方法见[examples/gpt/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/README.md)
 
 在ChatGLM3-6B上SFT微调的纠错模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora
@@ -483,7 +482,7 @@ output:
 
 
 
-# Dataset
+## Dataset
 
 | 数据集                          | 语料 |                                                                                下载链接                                                                                 | 压缩包大小 |
 |:-----------------------------| :--------- |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----:|
@@ -539,7 +538,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 第三方同音字生成脚本[同音词替换](https://github.com/dongrixinyu/JioNLP/wiki/%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3#%E5%90%8C%E9%9F%B3%E8%AF%8D%E6%9B%BF%E6%8D%A2)
 
 
-## Language Model
+### Language Model
 
 [什么是语言模型？-wiki](https://github.com/shibing624/pycorrector/wiki/%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86)
 
@@ -558,7 +557,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 尊重版权，传播请注明出处。
 
 
-# Contact
+## Contact
 
 - Github Issue(建议)：[![GitHub issues](https://img.shields.io/github/issues/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/issues)
 - Github discussions：欢迎到讨论区[![GitHub discussions](https://img.shields.io/github/discussions/shibing624/pycorrector.svg)](https://github.com/shibing624/pycorrector/discussions)灌水（不会打扰开发者），公开交流纠错技术和问题
@@ -568,7 +567,7 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 
 <img src="https://github.com/shibing624/pycorrector/blob/master/docs/git_image/wechat.jpeg" width="200" />
 
-# Citation
+## Citation
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
 
@@ -589,11 +588,11 @@ BibTeX:
 
 
 
-# License
+## License
 
 pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用途。请在产品说明中附加pycorrector的链接和授权协议。
 
-# Contribute
+## Contribute
 
 项目代码还很粗糙，如果大家对代码有所改进，欢迎提交回本项目，在提交之前，注意以下两点：
 
@@ -602,7 +601,7 @@ pycorrector 的授权协议为 **Apache License 2.0**，可免费用做商业用
 
 之后即可提交PR。
 
-# Reference
+## References
 
 * [基于文法模型的中文纠错系统](https://blog.csdn.net/mingzai624/article/details/82390382)
 * [Norvig’s spelling corrector](http://norvig.com/spell-correct.html)
