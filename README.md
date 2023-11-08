@@ -114,7 +114,9 @@ pip install --no-deps .
 ```
 
 
-通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，直接使用docker拉取安装好的部署环境即可。
+通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，可以用colab在线体验或者拉docker环境。
+* colab在线体验
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zvSyCdiLK_rglfXcIgc539K_Z7bIMpu0?usp=sharing)
 
 * docker使用
 

@@ -5,3 +5,6 @@ pandas
 six
 loguru
 kenlm
+pandas
+transformers
+datasets
