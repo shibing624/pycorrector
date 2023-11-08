@@ -29,7 +29,7 @@ class DeepContextModel:
     def __init__(self, model_dir: str, max_length: int = 512, use_cuda: Optional[bool] = has_cuda):
         if use_cuda:
             if torch.cuda.is_available():
-                self.device = torch.device("cuda")
+                self.device = torch.device("cuda:0")
             else:
                 raise ValueError(
                     "'use_cuda' set to True when cuda is unavailable."
