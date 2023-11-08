@@ -9,6 +9,7 @@ import sys
 import time
 from typing import List
 
+import torch
 from loguru import logger
 
 sys.path.append('../..')
@@ -25,13 +26,15 @@ pretrained_deepcontext_models = {
         'https://github.com/shibing624/pycorrector/releases/download/1.0.0/deepcontext_lm.tar.gz'
 }
 
+has_cuda = torch.cuda.is_available()
+
 
 class DeepContextCorrector(Corrector):
     def __init__(
             self,
             model_name_or_path: str = None,
             max_length: int = 1024,
-            use_cuda: bool = False,
+            use_cuda: bool = has_cuda,
             *args,
             **kwargs,
     ):

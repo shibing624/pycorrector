@@ -22,11 +22,9 @@ from pycorrector.deepcontext.deepcontext_utils import (
     ContextDataset
 )
 
-has_cuda = torch.cuda.is_available()
-
 
 class DeepContextModel:
-    def __init__(self, model_dir: str, max_length: int = 1024, use_cuda: Optional[bool] = has_cuda):
+    def __init__(self, model_dir: str, max_length: int = 1024, use_cuda: Optional[bool] = True):
         if use_cuda:
             if torch.cuda.is_available():
                 self.device = torch.device("cuda:0")
