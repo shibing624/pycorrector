@@ -116,8 +116,6 @@ pip install --no-deps .
 
 通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，直接使用docker拉取安装好的部署环境即可。
 
-#### 安装依赖
-
 * docker使用
 
 ```shell
@@ -154,10 +152,9 @@ output:
 {'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
 ```
 
-> `Corrector()`类是kenlm统计模型的纠错方法实现，默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
+- `Corrector()`类是kenlm统计模型的纠错方法实现，默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
 则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置
-
-> 返回值: `correct`方法返回`dict`，{'source': '原句子', 'target': '纠正后的句子', 'errors': [('错误词', '正确词', '错误位置'), ...]}，`correct_batch`方法返回包含多个`dict`的`list`
+- 返回值: `correct`方法返回`dict`，{'source': '原句子', 'target': '纠正后的句子', 'errors': [('错误词', '正确词', '错误位置'), ...]}，`correct_batch`方法返回包含多个`dict`的`list`
 
 #### 错误检测
 
@@ -176,7 +173,7 @@ output:
 [['因该', 4, 6, 'word'], ['坐', 10, 11, 'char']]
 ```
 
-> 返回值：`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
+- 返回值：`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
 
 #### 成语、专名纠错
 
@@ -228,16 +225,12 @@ output:
 ('共同实际控制人萧华、霍荣铨、张旗康', [])
 ```
 
-> 其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
+- 其中`./my_custom_confusion.txt`的内容格式如下，以空格间隔：
 
 ```
 iPhone差 iPhoneX
 张旗康 张旗康
 ```
-
-> 混淆集功能在`correct`方法中生效
-
-> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)或混淆集字典(dict)
 
 #### 自定义语言模型
 
@@ -327,7 +320,7 @@ case：
 python -m pycorrector input.txt -o out.txt -n -d
 ```
 
-> 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
+- 输入文件：`input.txt`；输出文件：`out.txt `；关闭字粒度纠错；打印详细纠错信息；纠错结果以`\t`间隔
 
 
 ### MacBert4CSC模型
