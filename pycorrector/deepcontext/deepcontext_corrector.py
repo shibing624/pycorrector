@@ -45,15 +45,17 @@ class DeepContextCorrector(Corrector):
             model_dir = os.path.join(USER_DATA_DIR, 'deepcontext_models', 'deepcontext_lm')
             logger.debug(f'Use default model: {model_dir}')
             filename = 'deepcontext_lm.tar.gz'
-            url = pretrained_deepcontext_models.get(filename)
-            get_file(
-                filename,
-                url,
-                extract=True,
-                cache_dir=USER_DATA_DIR,
-                cache_subdir="deepcontext_models",
-                verbose=1
-            )
+            checkpoint_file = os.path.join(model_dir, "pytorch_model.bin")
+            url = pretrained_deepcontext_models.get(filename, '')
+            if url and not os.path.exists(checkpoint_file):
+                get_file(
+                    filename,
+                    url,
+                    extract=True,
+                    cache_dir=USER_DATA_DIR,
+                    cache_subdir="deepcontext_models",
+                    verbose=1
+                )
         t1 = time.time()
         self.model = DeepContextModel(model_dir=model_dir, max_length=max_length, use_cuda=use_cuda)
         self.model.load_model()
