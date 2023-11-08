@@ -154,9 +154,10 @@ output:
 {'source': '你找到你最喜欢的工作，我也很高心。', 'target': '你找到你最喜欢的工作，我也很高兴。', 'errors': [('心', '兴', 15)]}]
 ```
 
-> Corrector()类是kenlm统计模型的纠错方法实现，默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
-则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置。
-> 返回值: correct方法返回dict，{'source': '原句子', 'target': '纠正后的句子', 'errors': [('错误词', '正确词', '错误位置'), ...]}，correct_batch方法返回包含多个dict的`list`
+> `Corrector()`类是kenlm统计模型的纠错方法实现，默认会从路径`~/.pycorrector/datasets/zh_giga.no_cna_cmn.prune01244.klm`加载kenlm语言模型文件，如果检测没有该文件，
+则程序会自动联网下载。当然也可以手动下载[模型文件(2.8G)](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)并放置于该位置
+
+> 返回值: `correct`方法返回`dict`，{'source': '原句子', 'target': '纠正后的句子', 'errors': [('错误词', '正确词', '错误位置'), ...]}，`correct_batch`方法返回包含多个`dict`的`list`
 
 #### 错误检测
 
@@ -175,24 +176,16 @@ output:
 [['因该', 4, 6, 'word'], ['坐', 10, 11, 'char']]
 ```
 
-> 返回类型是`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
+> 返回值：`list`, `[error_word, begin_pos, end_pos, error_type]`，`pos`索引位置以0开始。
 
 #### 成语、专名纠错
 
-example: [examples/kenlm/proper_correct_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/proper_correct_demo.py)
+example: [examples/kenlm/use_custom_proper.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/use_custom_proper.py)
 
 ```python
-import sys
-
-sys.path.append("..")
-from pycorrector import ProperCorrector
-
-m = ProperCorrector()
-x = [
-    '报应接中迩来',
-    '今天在拼哆哆上买了点苹果',
-]
-
+from pycorrector import Corrector
+m = Corrector(proper_name_path='./my_custom_proper.txt')
+x = ['报应接中迩来', '这块名表带带相传',]
 for i in x:
     print(i, ' -> ', m.correct(i))
 ```
@@ -212,7 +205,7 @@ output:
 example: [examples/kenlm/use_custom_confusion.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/use_custom_confusion.py)
 
 ```python
-from pycorrector import ConfusionCorrector, Corrector
+from pycorrector import Corrector
 
 error_sentences = [
     '买iphonex，要多少钱',
@@ -221,7 +214,7 @@ error_sentences = [
 m = Corrector()
 print(m.correct_batch(error_sentences))
 print('*' * 42)
-m = ConfusionCorrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
+m = Corrector(custom_confusion_path_or_dict='./my_custom_confusion.txt')
 print(m.correct_batch(error_sentences))
 ```
 
@@ -242,8 +235,9 @@ iPhone差 iPhoneX
 张旗康 张旗康
 ```
 
-> 混淆集功能在`correct`方法中生效；
-> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)或混淆集字典(dict)。
+> 混淆集功能在`correct`方法中生效
+
+> `set_custom_confusion_dict`方法的`path`参数为用户自定义混淆集文件路径(str)或混淆集字典(dict)
 
 #### 自定义语言模型
 
