@@ -87,7 +87,7 @@ GPU：Tesla V100，显存 32 GB
 
 | Model Name      | Model Link                                                                                                          | Base Model                | GPU | Precision  | Recall     | F1         | QPS     |
 |:----------------|:--------------------------------------------------------------------------------------------------------------------|:--------------------------|:----|:-----------|:-----------|:-----------|:--------|
-| Kenlm-CSC       | [zh_giga.no_cna_cmn.prune01244.klm](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)       | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
+| Kenlm-CSC       | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                 | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
 | BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese    | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
 | Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base            | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
 | **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base  | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
@@ -238,16 +238,13 @@ iPhone差 iPhoneX
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存小的电脑使用`pycorrector`程序可能会吃力些。
 
-支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率稍低，模型下载地址：[people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
+支持用户加载自己训练的kenlm语言模型，或使用2014版人民日报数据训练的模型，模型小（140M），准确率稍低，模型下载地址：[shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm) | [people2014corpus_chars.klm(密码o5e9)](https://pan.baidu.com/s/1I2GElyHy_MAdek3YaziFYw)。
 
 example：[examples/kenlm/load_custom_language_model.py](https://github.com/shibing624/pycorrector/blob/master/examples/kenlm/load_custom_language_model.py)
 
 ```python
 from pycorrector import Corrector
-import os
-pwd_path = os.path.abspath(os.path.dirname(__file__))
-lm_path = os.path.join(pwd_path, './people2014corpus_chars.klm')
-model = Corrector(language_model_path=lm_path)
+model = Corrector(language_model_path='people2014corpus_chars.klm')
 print(model.correct('少先队员因该为老人让坐'))
 ```
 

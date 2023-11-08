@@ -43,11 +43,16 @@ class ErrorType:
 
 
 class Detector:
-    pre_trained_language_models = {
+    pretrained_language_models = {
         # 语言模型 2.95GB
-        'zh_giga.no_cna_cmn.prune01244.klm': 'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
-        # 人民日报训练语言模型 20MB
-        'people_chars_lm.klm': 'https://github.com/shibing624/pycorrector/releases/download/0.4.3/people_chars_lm.klm'
+        'zh_giga.no_cna_cmn.prune01244.klm':
+            'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
+        # 人民日报训练语言模型 148MB
+        'people2014_corpus_chars.klm':
+            'https://github.com/shibing624/pycorrector/releases/download/1.0.0/people2014_corpus_chars.klm',
+        # 人民日报训练语言模型(tiny) 20MB
+        'people_chars_lm.klm':
+            'https://github.com/shibing624/pycorrector/releases/download/0.4.3/people_chars_lm.klm',
     }
 
     def __init__(
@@ -96,11 +101,11 @@ class Detector:
                 'if you are Win, Please install kenlm in cgwin.'
             )
         if not os.path.exists(self.language_model_path):
-            filename = self.pre_trained_language_models.get(
+            filename = self.pretrained_language_models.get(
                 self.language_model_path, 'zh_giga.no_cna_cmn.prune01244.klm'
             )
-            url = self.pre_trained_language_models.get(filename)
-            get_file(
+            url = self.pretrained_language_models.get(filename)
+            self.language_model_path = get_file(
                 filename, url, extract=True,
                 cache_dir='~',
                 cache_subdir=USER_DATA_DIR,
