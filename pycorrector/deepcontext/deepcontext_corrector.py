@@ -22,7 +22,7 @@ from pycorrector.deepcontext.deepcontext_model import DeepContextModel
 pretrained_deepcontext_models = {
     # LM model (45MB)
     'deepcontext_lm.tar.gz':
-        'https://github.com/shibing624/pycorrector/releases/download/0.4.6/deepcontext_lm.tar.gz'
+        'https://github.com/shibing624/pycorrector/releases/download/1.0.0/deepcontext_lm.tar.gz'
 }
 
 
@@ -54,7 +54,6 @@ class DeepContextCorrector(Corrector):
         t1 = time.time()
         self.model = DeepContextModel(model_dir=model_dir, max_length=max_length, use_cuda=use_cuda)
         self.model.load_model()
-        self.max_length = max_length
         logger.debug('Loaded model: %s, spend: %.4f s.' % (model_dir, time.time() - t1))
 
     def correct(self, sentence: str, topk: int = 10, **kwargs):
