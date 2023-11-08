@@ -59,9 +59,11 @@
 - 延展阅读：[中文文本纠错实践和原理解读](https://github.com/shibing624/pycorrector/blob/master/docs/correction_solution.md)
 ## Demo
 
-Official Demo: https://www.mulanai.com/product/corrector/
+- Official demo: https://www.mulanai.com/product/corrector/
 
-HuggingFace Demo: https://huggingface.co/spaces/shibing624/pycorrector
+- Colab online demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zvSyCdiLK_rglfXcIgc539K_Z7bIMpu0?usp=sharing)
+
+- HuggingFace demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ![](docs/hf.png)
 
@@ -114,9 +116,7 @@ pip install --no-deps .
 ```
 
 
-通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，可以用colab在线体验或者拉docker环境。
-* colab在线体验
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zvSyCdiLK_rglfXcIgc539K_Z7bIMpu0?usp=sharing)
+通过以上两种方法的任何一种完成安装都可以。如果不想安装依赖包，可以拉docker环境。
 
 * docker使用
 
