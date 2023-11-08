@@ -76,22 +76,22 @@ python examples/macbert/gradio_demo.py
 
 提供评估脚本[examples/evaluate_models/evaluate_models.py](https://github.com/shibing624/pycorrector/blob/master/examples/evaluate_models/evaluate_models.py)：
 
-- 使用sighan15评估集：SIGHAN2015的测试集[pycorrector/data/sighan_2015/test.tsv](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/sighan_2015/test.tsv)
-  ，已经转为简体中文。
-- 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错。
+- 使用sighan15评估集：SIGHAN2015的测试集[pycorrector/data/sighan2015_test.tsv](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/sighan2015_test.tsv)
+  ，已经转为简体中文
+- 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错
 
 ### 评估结果
 评估数据集：SIGHAN2015测试集
 
 GPU：Tesla V100，显存 32 GB
 
-| Model Name      | Model Link                                                                                                      | Base Model               | GPU | Precision  | Recall     | F1         | QPS     |
-|:----------------|:--------------------------------------------------------------------------------------------------------------------|:-------------------------|:----|:-----------|:-----------|:-----------|:--------|
-| Kenlm           | -                                                                                                                   | kenlm                    | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
-| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese   | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
-| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base           | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
-| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
-| ChatGLM3-6B-CSC | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | chatglm3-6b              | GPU | 0.5574     | 0.4917     | 0.5225     | 4       |
+| Model Name      | Model Link                                                                                                          | Base Model                | GPU | Precision  | Recall     | F1         | QPS     |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------|:--------------------------|:----|:-----------|:-----------|:-----------|:--------|
+| Kenlm           | [zh_lm/zh_giga.no_cna_cmn.prune01244.klm](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm) | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
+| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese    | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
+| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base            | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
+| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base  | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
+| ChatGLM3-6B-CSC | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | THUDM/chatglm3-6b         | GPU | 0.5574     | 0.4917     | 0.5225     | 4       |
 
     
 ### 结论
