@@ -87,7 +87,7 @@ GPU：Tesla V100，显存 32 GB
 
 | Model Name      | Model Link                                                                                                          | Base Model                | GPU | Precision  | Recall     | F1         | QPS     |
 |:----------------|:--------------------------------------------------------------------------------------------------------------------|:--------------------------|:----|:-----------|:-----------|:-----------|:--------|
-| Kenlm           | [zh_lm/zh_giga.no_cna_cmn.prune01244.klm](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm) | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
+| Kenlm-CSC       | [zh_giga.no_cna_cmn.prune01244.klm](https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm)       | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
 | BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese    | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
 | Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base            | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
 | **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base  | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
