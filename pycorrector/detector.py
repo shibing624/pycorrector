@@ -107,7 +107,6 @@ class Detector:
                 verbose=1
             )
         self.lm = kenlm.Model(self.language_model_path)
-        logger.debug('Loaded language model: %s' % self.language_model_path)
 
         # 词、频数dict
         self.word_freq = self.load_word_freq_dict(self.word_freq_path)
