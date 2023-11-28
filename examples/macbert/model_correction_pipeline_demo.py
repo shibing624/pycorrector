@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append("../..")
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
+from pycorrector import MacBertCorrector
 from pycorrector import ConfusionCorrector
 
 if __name__ == '__main__':

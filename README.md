@@ -234,6 +234,8 @@ iPhone差 iPhoneX
 张旗康 张旗康
 ```
 
+- 自定义混淆集`ConfusionCorrector`类，可以独立使用，也可以和`Corrector`类一起使用，还可以和`MacBertCorrector`一起使用，示例代码[examples/macbert/model_correction_pipeline_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/model_correction_pipeline_demo.py)
+
 #### 自定义语言模型
 
 默认提供下载并使用的kenlm语言模型`zh_giga.no_cna_cmn.prune01244.klm`文件是2.8G，内存小的电脑使用`pycorrector`程序可能会吃力些。
