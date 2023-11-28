@@ -234,7 +234,7 @@ iPhone差 iPhoneX
 张旗康 张旗康
 ```
 
-- 自定义混淆集`ConfusionCorrector`类，可以独立使用，也可以和`Corrector`类一起使用，还可以和`MacBertCorrector`一起使用，示例代码[examples/macbert/model_correction_pipeline_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/model_correction_pipeline_demo.py)
+自定义混淆集`ConfusionCorrector`类，除了上面演示的和`Corrector`类一起使用，还可以和`MacBertCorrector`一起使用，也可以独立使用。示例代码 [examples/macbert/model_correction_pipeline_demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/macbert/model_correction_pipeline_demo.py)
 
 #### 自定义语言模型
 
