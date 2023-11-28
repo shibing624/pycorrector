@@ -63,7 +63,8 @@ def main():
             "少先队员因该为老人让坐",
         ]
         m = GptCorrector(
-            args.model_type, args.model_name,
+            model_name_or_path=args.model_name,
+            model_type=args.model_type,
             peft_name=args.output_dir,
             args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
         )
