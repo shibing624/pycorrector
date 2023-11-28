@@ -579,7 +579,7 @@ class GptSupervisedDataset(Dataset):
 
         if os.path.exists(cached_features_file) and (
                 (not args.reprocess_input_data and not args.no_cache)
-                or (mode == "dev" and args.use_cached_eval_features and not args.no_cache)
+                or (mode == "dev" and not args.no_cache)
         ):
             logger.info(" Loading features from cached file %s" % cached_features_file)
             with open(cached_features_file, "rb") as handle:
