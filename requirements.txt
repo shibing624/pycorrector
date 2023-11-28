@@ -6,5 +6,6 @@ six
 loguru
 kenlm
 pandas
-transformers
+transformers>=4.28.1
+accelerate
 datasets
