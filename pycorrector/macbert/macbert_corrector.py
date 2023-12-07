@@ -48,17 +48,18 @@ class MacBertCorrector:
             for id, (logit_tensor, sentence) in enumerate(zip(outputs.logits, batch)):
                 decode_tokens_new = self.tokenizer.decode(
                     torch.argmax(logit_tensor, dim=-1), skip_special_tokens=True).split(' ')
-                decode_tokens_old = self.tokenizer.decode(
-                    inputs['input_ids'][id], skip_special_tokens=True).split(' ')
-                decode_tokens_new = decode_tokens_new[:len(decode_tokens_old)]
-                probs = torch.max(torch.softmax(logit_tensor, dim=-1), dim=-1)[0].cpu().numpy()
-                decode_tokens = ''
-                for i in range(len(decode_tokens_old)):
-                    if probs[i + 1] >= threshold:
-                        decode_tokens += decode_tokens_new[i]
-                    else:
-                        decode_tokens += decode_tokens_old[i]
-                corrected_text = decode_tokens[:len(sentence)]
+                decode_tokens_new = decode_tokens_new[:len(sentence)]
+                if len(decode_tokens_new) == len(sentence):
+                    probs = torch.max(torch.softmax(logit_tensor, dim=-1), dim=-1)[0].cpu().numpy()
+                    decode_str = ''
+                    for i in range(len(sentence)):
+                        if probs[i + 1] >= threshold:
+                            decode_str += decode_tokens_new[i]
+                        else:
+                            decode_str += sentence[i]
+                    corrected_text = decode_str
+                else:
+                    corrected_text = sentence
                 corrected_sents.append(corrected_text)
         return corrected_sents
 

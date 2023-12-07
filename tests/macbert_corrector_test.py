@@ -93,9 +93,12 @@ error_sentences2 = [
     '实施其专利的行为（生产经营≠营利≠商业经营）',
     '实施,i can speak chinese, can i spea english. ? hello.',
     "我不唉“看 琅擤琊榜”",
+    "禅精竭虑学习",
 ]
 error_sentences.extend(badcase)
 error_sentences.extend(error_sentences2)
 m = MacBertCorrector()
 r = m.correct_batch(error_sentences)
 print("{}".format(r))
+for i in error_sentences:
+    print(m.correct(i))
