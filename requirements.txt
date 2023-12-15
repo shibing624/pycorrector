@@ -1,11 +1,10 @@
 jieba
 pypinyin
+transformers>=4.28.1
+accelerate
+datasets
 numpy
 pandas
 six
 loguru
 kenlm
-pandas
-transformers>=4.28.1
-accelerate
-datasets
