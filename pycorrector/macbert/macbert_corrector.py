@@ -30,7 +30,7 @@ class MacBertCorrector:
         logger.debug("Use device: {}".format(device))
         logger.debug('Loaded macbert4csc model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
-    def _predict(self, sentences, threshold=0.75, batch_size=32, silent=True):
+    def _predict(self, sentences, threshold=0.7, batch_size=32, silent=True):
         """Predict sentences with macbert4csc model"""
         corrected_sents = []
         for batch in tqdm(

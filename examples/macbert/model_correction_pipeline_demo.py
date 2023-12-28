@@ -30,19 +30,17 @@ if __name__ == '__main__':
         '因为爸爸在看录音机，所以我没得看',
         '不过在许多传统国家，女人向未得到平等',
         '我想喝小明同学。',  # 漏召回
-        '直接采用君主常用名，如赵昺。',  # 人名误杀
     ]
 
     model1 = MacBertCorrector()
     # add confusion corrector for post process
-    confusion_dict = {"喝小明同学": "喝小茗同学", "老人让坐": "老人让座", "平净": "平静", "分知": "分支",
-                      "赵昺": "赵昺"}
+    confusion_dict = {"喝小明同学": "喝小茗同学", "老人让坐": "老人让座", "平净": "平静", "分知": "分支"}
     model2 = ConfusionCorrector(custom_confusion_path_or_dict=confusion_dict)
     for line in error_sentences:
         r1 = model1.correct(line)
         correct_sent = r1['target']
         print("query:{} => {} err:{}".format(line, correct_sent, r1['errors']))
-        r2 = model2.correct(line)
+        r2 = model2.correct(correct_sent)
         corrected_sent2 = r2['target']
         if corrected_sent2 != correct_sent:
-            print("update, query:{} => {} err:{}".format(line, corrected_sent2, r2['errors']))
+            print("update, query:{} => {} err:{}".format(correct_sent, corrected_sent2, r2['errors']))
