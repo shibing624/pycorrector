@@ -164,10 +164,8 @@ class CscTrainingModel(BaseTrainingEngine, ABC):
         loss = np.mean([out[0] for out in outputs])
         self.log('val_loss', loss)
         logger.info(f'loss: {loss}')
-        logger.info(f'Detection:\n'
-                    f'acc: {np.mean(det_acc_labels):.4f}')
-        logger.info(f'Correction:\n'
-                    f'acc: {np.mean(cor_acc_labels):.4f}')
+        logger.info(f'Detection:  acc: {np.mean(det_acc_labels):.4f}')
+        logger.info(f'Correction: acc: {np.mean(cor_acc_labels):.4f}')
         compute_corrector_prf(results, logger)
         compute_sentence_level_prf(results, logger)
 

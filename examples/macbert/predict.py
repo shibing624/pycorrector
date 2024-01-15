@@ -8,7 +8,7 @@ import sys
 
 sys.path.append('../..')
 
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
+from pycorrector import MacBertCorrector
 
 
 def main():

@@ -128,8 +128,7 @@ def main():
             )
         model.eval()
         # 保存finetune训练后的模型文件pytorch_model.bin
-        pt_file = os.path.join(cfg.OUTPUT_DIR, 'pytorch_model.bin')
-        model.bert.save_pretrained(pt_file)
+        model.bert.save_pretrained(cfg.OUTPUT_DIR)
 
 if __name__ == '__main__':
     main()

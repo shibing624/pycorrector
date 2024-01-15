@@ -9,7 +9,7 @@ import sys
 import gradio as gr
 
 sys.path.append("../..")
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
+from pycorrector import MacBertCorrector
 
 
 def predict(text):

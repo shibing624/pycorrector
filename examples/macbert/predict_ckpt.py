@@ -23,11 +23,11 @@ class Inference:
     def __init__(
             self,
             ckpt_path='outputs-macbert4csc/epoch=09-val_loss=0.01.ckpt',
-            vocab_path='outputs-macbert4csc/vocab.txt',
+            vocab_dir='outputs-macbert4csc/',
             cfg_path='train_macbert4csc.yml'
     ):
         logger.debug("device: {}".format(device))
-        self.tokenizer = BertTokenizerFast.from_pretrained(vocab_path)
+        self.tokenizer = BertTokenizerFast.from_pretrained(vocab_dir)
         cfg.merge_from_file(cfg_path)
 
         if 'macbert4csc' in cfg_path:
@@ -65,11 +65,11 @@ class Inference:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="infer")
     parser.add_argument("--ckpt_path", default="outputs-macbert4csc/epoch=09-val_loss=0.01.ckpt",
-                        help="path to config file", type=str)
-    parser.add_argument("--vocab_path", default="outputs-macbert4csc/vocab.txt", help="path to config file", type=str)
+                        help="path to ckpt file", type=str)
+    parser.add_argument("--vocab_dir", default="outputs-macbert4csc/", help="path to vocab file", type=str)
     parser.add_argument("--config_file", default="train_macbert4csc.yml", help="path to config file", type=str)
     args = parser.parse_args()
-    m = Inference(args.ckpt_path, args.vocab_path, args.config_file)
+    m = Inference(args.ckpt_path, args.vocab_dir, args.config_file)
     inputs = [
         '它的本领是呼风唤雨，因此能灭火防灾。狎鱼后面是獬豸。獬豸通常头上长着独角，有时又被称为独角羊。它很聪彗，而且明辨是非，象征着大公无私，又能镇压斜恶。',
         '老是较书。',

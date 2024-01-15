@@ -11,7 +11,7 @@ from loguru import logger
 
 sys.path.append("../..")
 from pycorrector import Corrector
-from pycorrector.macbert.macbert_corrector import MacBertCorrector
+from pycorrector import MacBertCorrector
 
 app = Flask(__name__)
 kenlm_model = Corrector()
