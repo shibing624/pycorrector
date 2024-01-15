@@ -94,7 +94,6 @@ def main():
         callbacks=[ckpt_callback]
     )
     # 进行训练
-    # train_loader中有数据
     torch.autograd.set_detect_anomaly(True)
     if 'train' in cfg.MODE and train_loader and len(train_loader) > 0:
         if valid_loader and len(valid_loader) > 0:
@@ -102,6 +101,9 @@ def main():
         else:
             trainer.fit(model, train_loader)
         logger.info('train model done.')
+    # 进行测试的逻辑同训练
+    if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
+        trainer.test(model, test_loader)
     # 模型转为transformers可加载
     if ckpt_callback and len(ckpt_callback.best_model_path) > 0:
         ckpt_path = ckpt_callback.best_model_path
@@ -111,17 +113,23 @@ def main():
     if ckpt_path and os.path.exists(ckpt_path):
         tokenizer.save_pretrained(cfg.OUTPUT_DIR)
         if cfg.MODEL.NAME == 'softmaskedbert4csc':
-            m = SoftMaskedBert4Csc.load_from_checkpoint(ckpt_path)
+            model = SoftMaskedBert4Csc.load_from_checkpoint(
+                checkpoint_path=ckpt_path,
+                cfg=cfg,
+                map_location=device,
+                tokenizer=tokenizer
+            )
         else:
-            m = MacBert4Csc.load_from_checkpoint(ckpt_path)
+            model = MacBert4Csc.load_from_checkpoint(
+                checkpoint_path=ckpt_path,
+                cfg=cfg,
+                map_location=device,
+                tokenizer=tokenizer
+            )
+        model.eval()
         # 保存finetune训练后的模型文件pytorch_model.bin
         pt_file = os.path.join(cfg.OUTPUT_DIR, 'pytorch_model.bin')
-        m.bert.save_pretrained(pt_file)
-        del m
-    # 进行测试的逻辑同训练
-    if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
-        trainer.test(model, test_loader)
-
+        model.bert.save_pretrained(pt_file)
 
 if __name__ == '__main__':
     main()
