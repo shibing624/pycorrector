@@ -11,7 +11,7 @@ import pytorch_lightning as pl
 import torch
 from loguru import logger
 from pytorch_lightning.callbacks import ModelCheckpoint
-from transformers import BertTokenizer
+from transformers import BertTokenizerFast
 
 sys.path.append('../..')
 
@@ -54,7 +54,7 @@ def args_parse(config_file=''):
 def main():
     cfg = args_parse()
     logger.info(f'load model, model arch: {cfg.MODEL.NAME}')
-    tokenizer = BertTokenizer.from_pretrained(cfg.MODEL.BERT_CKPT)
+    tokenizer = BertTokenizerFast.from_pretrained(cfg.MODEL.BERT_CKPT)
     collator = DataCollator(tokenizer=tokenizer)
     # 加载数据
     train_loader, valid_loader, test_loader = make_loaders(

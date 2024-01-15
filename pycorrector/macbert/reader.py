@@ -9,11 +9,11 @@ import os
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
-from transformers import BertTokenizer
+from transformers import BertTokenizerFast
 
 
 class DataCollator:
-    def __init__(self, tokenizer: BertTokenizer):
+    def __init__(self, tokenizer: BertTokenizerFast):
         self.tokenizer = tokenizer
 
     def __call__(self, data):
