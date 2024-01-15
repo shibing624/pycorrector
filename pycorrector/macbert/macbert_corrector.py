@@ -11,7 +11,7 @@ from typing import List
 import torch
 from loguru import logger
 from tqdm import tqdm
-from transformers import BertTokenizerFast, BertForMaskedLM
+from transformers import BertTokenizer, BertForMaskedLM
 
 sys.path.append('../..')
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
@@ -24,7 +24,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 class MacBertCorrector:
     def __init__(self, model_name_or_path="shibing624/macbert4csc-base-chinese"):
         t1 = time.time()
-        self.tokenizer = BertTokenizerFast.from_pretrained(model_name_or_path)
+        self.tokenizer = BertTokenizer.from_pretrained(model_name_or_path)
         self.model = BertForMaskedLM.from_pretrained(model_name_or_path)
         self.model.to(device)
         logger.debug("Use device: {}".format(device))

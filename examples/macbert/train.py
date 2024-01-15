@@ -6,13 +6,12 @@
 import argparse
 import os
 import sys
-from collections import OrderedDict
 
 import pytorch_lightning as pl
 import torch
 from loguru import logger
 from pytorch_lightning.callbacks import ModelCheckpoint
-from transformers import BertTokenizerFast, BertForMaskedLM
+from transformers import BertTokenizer
 
 sys.path.append('../..')
 
@@ -55,7 +54,7 @@ def args_parse(config_file=''):
 def main():
     cfg = args_parse()
     logger.info(f'load model, model arch: {cfg.MODEL.NAME}')
-    tokenizer = BertTokenizerFast.from_pretrained(cfg.MODEL.BERT_CKPT)
+    tokenizer = BertTokenizer.from_pretrained(cfg.MODEL.BERT_CKPT)
     collator = DataCollator(tokenizer=tokenizer)
     # 加载数据
     train_loader, valid_loader, test_loader = make_loaders(
@@ -106,27 +105,19 @@ def main():
     # 模型转为transformers可加载
     if ckpt_callback and len(ckpt_callback.best_model_path) > 0:
         ckpt_path = ckpt_callback.best_model_path
-    elif cfg.MODEL.WEIGHTS and os.path.exists(cfg.MODEL.WEIGHTS):
-        ckpt_path = cfg.MODEL.WEIGHTS
     else:
         ckpt_path = ''
     logger.info(f'ckpt_path: {ckpt_path}')
     if ckpt_path and os.path.exists(ckpt_path):
-        model.load_state_dict(torch.load(ckpt_path)['state_dict'])
-        # 先保存原始transformer bert model
         tokenizer.save_pretrained(cfg.OUTPUT_DIR)
-        bert = BertForMaskedLM.from_pretrained(cfg.MODEL.BERT_CKPT)
-        bert.save_pretrained(cfg.OUTPUT_DIR)
-        state_dict = torch.load(ckpt_path)['state_dict']
-        new_state_dict = OrderedDict()
-        if cfg.MODEL.NAME in ['macbert4csc']:
-            for k, v in state_dict.items():
-                if k.startswith('bert.'):
-                    new_state_dict[k[5:]] = v
+        if cfg.MODEL.NAME == 'softmaskedbert4csc':
+            m = SoftMaskedBert4Csc.load_from_checkpoint(ckpt_path)
         else:
-            new_state_dict = state_dict
-        # 再保存finetune训练后的模型文件，替换原始的pytorch_model.bin
-        torch.save(new_state_dict, os.path.join(cfg.OUTPUT_DIR, 'pytorch_model.bin'))
+            m = MacBert4Csc.load_from_checkpoint(ckpt_path)
+        # 保存finetune训练后的模型文件pytorch_model.bin
+        pt_file = os.path.join(cfg.OUTPUT_DIR, 'pytorch_model.bin')
+        m.bert.save_pretrained(pt_file)
+        del m
     # 进行测试的逻辑同训练
     if 'test' in cfg.MODE and test_loader and len(test_loader) > 0:
         trainer.test(model, test_loader)

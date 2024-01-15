@@ -3,16 +3,17 @@
 @author:XuMing(xuming624@qq.com), Abtion(abtion@outlook.com)
 @description: 
 """
-import os
 import json
+import os
+
 import torch
-from torch.utils.data import Dataset
-from transformers import BertTokenizerFast
 from torch.utils.data import DataLoader
+from torch.utils.data import Dataset
+from transformers import BertTokenizer
 
 
 class DataCollator:
-    def __init__(self, tokenizer: BertTokenizerFast):
+    def __init__(self, tokenizer: BertTokenizer):
         self.tokenizer = tokenizer
 
     def __call__(self, data):
@@ -48,21 +49,27 @@ def make_loaders(collate_fn, train_path='', valid_path='', test_path='',
                  batch_size=32, num_workers=4):
     train_loader = None
     if train_path and os.path.exists(train_path):
-        train_loader = DataLoader(CscDataset(train_path),
-                                  batch_size=batch_size,
-                                  shuffle=False,
-                                  num_workers=num_workers,
-                                  collate_fn=collate_fn)
+        train_loader = DataLoader(
+            CscDataset(train_path),
+            batch_size=batch_size,
+            shuffle=False,
+            num_workers=num_workers,
+            collate_fn=collate_fn
+        )
     valid_loader = None
     if valid_path and os.path.exists(valid_path):
-        valid_loader = DataLoader(CscDataset(valid_path),
-                                  batch_size=batch_size,
-                                  num_workers=num_workers,
-                                  collate_fn=collate_fn)
+        valid_loader = DataLoader(
+            CscDataset(valid_path),
+            batch_size=batch_size,
+            num_workers=num_workers,
+            collate_fn=collate_fn
+        )
     test_loader = None
     if test_path and os.path.exists(test_path):
-        test_loader = DataLoader(CscDataset(test_path),
-                                 batch_size=batch_size,
-                                 num_workers=num_workers,
-                                 collate_fn=collate_fn)
+        test_loader = DataLoader(
+            CscDataset(test_path),
+            batch_size=batch_size,
+            num_workers=num_workers,
+            collate_fn=collate_fn
+        )
     return train_loader, valid_loader, test_loader
