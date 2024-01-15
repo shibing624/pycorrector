@@ -98,7 +98,7 @@ macbert4csc-base-chinese
 
 ### 安装依赖
 ```shell
-pip install transformers>=4.1.1 pytorch-lightning==1.4.9 torch>=1.7.0 yacs
+pip install transformers>=4.1.1 pytorch-lightning==1.4.9 torch>=1.7.0 yacs torchmetrics==0.6.0
 ```
 ### 训练数据集
 
