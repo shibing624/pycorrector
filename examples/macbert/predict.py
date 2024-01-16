@@ -19,7 +19,9 @@ def main():
 
     m = MacBertCorrector(args.output_dir)
     inputs = [
+        '它的本领是呼风唤雨，因此能灭火防灾。狎鱼后面是獬豸。獬豸通常头上长着独角，有时又被称为独角羊。它很聪彗，而且明辨是非，象征着大公无私，又能镇压斜恶。',
         '老是较书。',
+        '少先队 员因该 为老人让 坐',
         '感谢等五分以后，碰到一位很棒的奴生跟我可聊。',
         '遇到一位很棒的奴生跟我聊天。',
         '遇到一位很美的女生跟我疗天。',
@@ -27,7 +29,7 @@ def main():
         '王天华开心得一直说话。'
     ]
     for i in inputs:
-        output = m.correct(i)
+        output = m.correct(i, threshold=0.1)
         print('input  :', i)
         print('predict:', output)
         print()
