@@ -4,6 +4,7 @@
 @description: error word detector
 """
 import os
+import re
 from codecs import open
 
 import numpy as np
@@ -396,9 +397,8 @@ class Detector:
         self.check_detector_initialized()
         # 1. 自定义混淆集加入疑似错误词典
         for confuse in self.custom_confusion:
-            idx = sentence.find(confuse)
-            if idx > -1:
-                maybe_err = [confuse, idx + start_idx, idx + len(confuse) + start_idx, ErrorType.confusion]
+            for i in re.finditer(confuse, sentence):
+                maybe_err = [confuse, i.span()[0] + start_idx, i.span()[1] + start_idx, ErrorType.confusion]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 2. 专名错误检测
