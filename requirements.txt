@@ -7,4 +7,3 @@ numpy
 pandas
 six
 loguru
-kenlm

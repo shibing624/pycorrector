@@ -58,7 +58,7 @@ class ConfusionCorrector:
         # 自定义混淆集加入疑似错误词典
         for err, truth in self.custom_confusion.items():
             for i in re.finditer(err, sentence):
-                start,end = i.span()
+                start, end = i.span()
                 corrected_sentence = corrected_sentence[:start] + truth + corrected_sentence[end:]
                 details.append((err, truth, start))
         return {'source': sentence, 'target': corrected_sentence, 'errors': details}
