@@ -376,6 +376,9 @@ class GptModel:
                 logger.debug("Merge peft weights to base model")
                 self.model = self.model.merge_and_unload()
             self.model = get_peft_model(self.model, peft_config)
+            # Set data type to float32
+            for param in filter(lambda p: p.requires_grad, self.model.parameters()):
+                param.data = param.data.to(torch.float32)
 
             if resume_from_checkpoint:
                 # Check the available weights and load them
