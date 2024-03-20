@@ -17,7 +17,7 @@ from pycorrector.utils.tokenizer import Tokenizer, split_text_into_sentences_by_
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # -----用户目录，存储模型文件-----
-USER_DATA_DIR = os.path.expanduser('~/.pycorrector/datasets/')
+USER_DATA_DIR = os.environ.get('PYCORRECTOR_DATA_DIR', os.path.expanduser('~/.pycorrector/datasets'))
 os.makedirs(USER_DATA_DIR, exist_ok=True)
 language_model_path = os.path.join(USER_DATA_DIR, 'zh_giga.no_cna_cmn.prune01244.klm')
 
