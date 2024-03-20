@@ -1,12 +1,9 @@
-FROM centos:7
+# Use a base image with Python3.8 version
+FROM docker pull nikolaik/python-nodejs:python3.8-nodejs21-slim
 MAINTAINER XuMing "xuming624@qq.com"
 
-RUN  yum -y install python36
-RUN  yum -y install git boost-devel boost-test boost zlib bzip2 xz cmake make
-RUN  yum -y install gcc-c++
-RUN  yum -y install python36-devel
 # install kenlm
-RUN pip3 install https://github.com/kpu/kenlm/archive/master.zip
+RUN pip3 install kenlm==0.2.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
 # clone repo
 #RUN git clone --depth=1 https://github.com/shibing624/pycorrector.git
 #WORKDIR /home/work/pycorrector
