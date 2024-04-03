@@ -1,6 +1,7 @@
 jieba
 pypinyin
 transformers>=4.28.1
+datasets
 numpy
 pandas
 six

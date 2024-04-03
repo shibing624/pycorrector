@@ -44,7 +44,10 @@ setup(
     install_requires=[
         "jieba",
         "pypinyin",
+        "transformers",
+        "datasets",
         "numpy",
+        "pandas",
         "six",
         "loguru",
     ],
