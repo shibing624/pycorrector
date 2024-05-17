@@ -34,8 +34,13 @@ if __name__ == '__main__':
 
     model1 = MacBertCorrector()
     # add confusion corrector for post process
-    confusion_dict = {"喝小明同学": "喝小茗同学", "老人让坐": "老人让座", "平净": "平静", "分知": "分支",
-                      "天氨门": "天安门"}
+    confusion_dict = {
+        "喝小明同学": "喝小茗同学",
+        "老人让坐": "老人让座",
+        "平净": "平静",
+        "分知": "分支",
+        "天氨门": "天安门"
+    }
     model2 = ConfusionCorrector(custom_confusion_path_or_dict=confusion_dict)
     for line in error_sentences:
         r1 = model1.correct(line)

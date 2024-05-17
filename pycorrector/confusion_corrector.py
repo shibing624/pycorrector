@@ -5,9 +5,9 @@
 功能：1）补充纠错对，提升召回率；2）对误杀加白，提升准确率
 """
 import os
-import re
 from typing import List
 
+from ahocorasick import Automaton
 from loguru import logger
 
 
@@ -21,7 +21,12 @@ class ConfusionCorrector:
             self.custom_confusion = self.load_custom_confusion_dict(custom_confusion_path_or_dict)
         else:
             raise ValueError('custom_confusion_path_or_dict must be dict or str.')
-        logger.debug('Loaded confusion size: %d' % len(self.custom_confusion))
+
+        self.automaton = Automaton()
+        for idx, (err, truth) in enumerate(self.custom_confusion.items()):
+            self.automaton.add_word(err, (idx, err, truth))
+        self.automaton.make_automaton()
+        logger.debug('Loaded confusion size: %d, make automaton done' % len(self.custom_confusion))
 
     @staticmethod
     def load_custom_confusion_dict(path):
@@ -53,21 +58,19 @@ class ConfusionCorrector:
         :param sentence: str, 待纠错的文本
         :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        corrected_sentence = sentence
+        corrected_sentence = list(sentence)
         details = []
-        # 自定义混淆集加入疑似错误词典
-        for err, truth in self.custom_confusion.items():
-            for i in re.finditer(err, sentence):
-                start, end = i.span()
-                corrected_sentence = corrected_sentence[:start] + truth + corrected_sentence[end:]
-                details.append((err, truth, start))
-        return {'source': sentence, 'target': corrected_sentence, 'errors': details}
+        for end_index, (idx, err, truth) in self.automaton.iter(sentence):
+            start_index = end_index - len(err) + 1
+            corrected_sentence[start_index:end_index + 1] = list(truth)
+            details.append((err, truth, start_index))
+
+        return {'source': sentence, 'target': ''.join(corrected_sentence), 'errors': details}
 
     def correct_batch(self, sentences: List[str]):
         """
         批量句子纠错
         :param sentences: 句子文本列表
-        :param kwargs: 其他参数
         :return: list of {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
         return [self.correct(s) for s in sentences]

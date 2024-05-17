@@ -6,3 +6,4 @@ numpy
 pandas
 six
 loguru
+pyahocorasick
