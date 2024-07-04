@@ -50,6 +50,7 @@ setup(
         "pandas",
         "six",
         "loguru",
+        "pyahocorasick",
     ],
     packages=find_packages(exclude=['tests']),
     package_dir={'pycorrector': 'pycorrector'},
