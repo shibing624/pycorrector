@@ -1,6 +1,6 @@
 jieba
 pypinyin
-transformers>=4.28.1
+transformers
 datasets
 numpy
 pandas
