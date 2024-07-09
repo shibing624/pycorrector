@@ -52,6 +52,8 @@ class EnSpellCorrector:
                 self.word_freq_dict = word_freq
                 logger.debug("load en spell data: %s, size: %d" % (
                     en_dict_path, len(self.word_freq_dict)))
+        # 词频总和
+        self.sum_freq = sum(self.word_freq_dict.values())
 
     @staticmethod
     def edits1(word):
@@ -91,8 +93,7 @@ class EnSpellCorrector:
         :param word:
         :return:float
         """
-        N = sum(self.word_freq_dict.values())
-        return self.word_freq_dict.get(word, 0) / N
+        return self.word_freq_dict.get(word, 0) / self.sum_freq
 
     def candidates(self, word):
         """
