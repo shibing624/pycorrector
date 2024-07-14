@@ -528,8 +528,8 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
    - kenlm训练字粒度语言模型文件及其二进制文件people2014corpus_chars.arps/klm
    - kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
 
-- 16GB中英文无监督、平行语料[Linly-AI/Chinese-pretraining-dataset](https://huggingface.co/datasets/Linly-AI/Chinese-pretraining-dataset)
-- 524MB中文维基百科语料[wikipedia-cn-20230720-filtered](https://huggingface.co/datasets/pleisto/wikipedia-cn-20230720-filtered)
+3. 16GB中英文无监督、平行语料[Linly-AI/Chinese-pretraining-dataset](https://huggingface.co/datasets/Linly-AI/Chinese-pretraining-dataset)
+4. 524MB中文维基百科语料[wikipedia-cn-20230720-filtered](https://huggingface.co/datasets/pleisto/wikipedia-cn-20230720-filtered)
 
 尊重版权，传播请注明出处。
 
