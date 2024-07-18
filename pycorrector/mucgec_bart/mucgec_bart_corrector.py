@@ -14,7 +14,6 @@ import sys
 sys.path.append('../..')
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
-from pycorrector.mucgec_bart.monkey_pack import Pipeline
 from pycorrector.utils.sentence_utils import long_sentence_split
 import difflib
 
@@ -22,12 +21,12 @@ import difflib
 class MuCGECBartCorrector:
     def __init__(self, model_name_or_path: str = "damo/nlp_bart_text-error-correction_chinese"):
         t1 = time.time()
-        self.model = pipeline(Tasks.text_error_correction, model=model_name_or_path, model_revision='v1.0.1')
+        self.model = pipeline(Tasks.text_error_correction, model=model_name_or_path)
         logger.debug("Device: {}".format(device))
-        logger.debug('Loaded t5 correction model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
+        logger.debug('Loaded mucgecbart correction model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
     def _predict(self, sentences, batch_size=32, max_length=128, silent=True):
-        """Predict sentences with t5 model"""
+        """Predict sentences with mucgecbart model"""
         corrected_sents = []
         for batch in tqdm([sentences[i:i + batch_size] for i in range(0, len(sentences), batch_size)],
                           desc="Generating outputs", disable=silent):
@@ -42,7 +41,6 @@ class MuCGECBartCorrector:
         return corrected_sents
     
     
-
     def correct_batch(self, sentences: List[str], max_length: int = 128, batch_size: int = 32, silent: bool = True, ignore_function=None):
         """
         批量句子纠错
@@ -53,7 +51,8 @@ class MuCGECBartCorrector:
         :param ignore_function: function, 自定义一个函数可以指定跳过某类错误， 无需训练模型
         :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        result = self.model(sentences, batch_size=batch_size, model_name="batch_correct")
+        # 参考调用方式 https://github.com/modelscope/modelscope/blob/master/tests/pipelines/test_text_error_correction.py#L43
+        result = self.model(sentences, {'batch_size': batch_size})
         start_idx = 0
         n = len(sentences)
         data = []
@@ -81,8 +80,8 @@ class MuCGECBartCorrector:
         
 
     def correct(self, sentence: str, **kwargs):
-        """长句改为短句, 使用更方便"""
-        sentences = long_sentence_split(sentence, max_length=kwargs.pop("max_length", 128))
+        """长句改为短句, 可直接调用长文本"""
+        sentences = long_sentence_split(sentence, max_length=kwargs.pop("max_length", 128), period=kwargs.pop("period", None), comma=kwargs.pop("comma", None))
         batch_results = self.correct_batch(sentences, **kwargs)
         source, target, errors = "", "", []
         for sr in batch_results:

@@ -55,7 +55,7 @@
 * [ERNIE_CSC模型](https://github.com/shibing624/pycorrector/tree/master/examples/ernie_csc)：本项目基于PaddlePaddle实现了用于中文文本纠错的ERNIE_CSC模型，模型在ERNIE-1.0上finetune，模型结构适配了中文拼写纠错任务，效果好
 * [MacBERT模型](https://github.com/shibing624/pycorrector/tree/master/examples/macbert)【推荐】：本项目基于PyTorch实现了用于中文文本纠错的MacBERT4CSC模型，模型加入了错误检测和纠正网络，适配中文拼写纠错任务，效果好
 * [GPT模型](https://github.com/shibing624/pycorrector/tree/master/examples/gpt)：本项目基于PyTorch实现了用于中文文本纠错的ChatGLM/LLaMA模型，模型在中文CSC和语法纠错数据集上finetune，适配中文文本纠错任务，效果好
-* [MuCGECBart模型](https://modelscope.cn/models/iic/nlp_bart_text-error-correction_chinese/summary)：本项目直接使用该开源模型，临时修复魔搭批量推理的问题，支持自动处理长篇文章，同时可以自定义后处理逻辑修改推理结果，方便使用。该模型中文文本纠错效果非常好， 但是推理速度较慢，需要GPU推理
+* [MuCGECBart模型](https://modelscope.cn/models/iic/nlp_bart_text-error-correction_chinese/summary)：本项目直接使用该开源模型，支持自动处理长篇文章，同时可以自定义后处理逻辑修改推理结果，方便使用。该模型中文文本纠错效果非常好， 但是推理速度较慢，需要GPU推理
 
 
 - 延展阅读：[中文文本纠错实践和原理解读](https://github.com/shibing624/pycorrector/blob/master/docs/correction_solution.md)

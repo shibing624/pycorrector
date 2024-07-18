@@ -1,7 +1,7 @@
 import re
 
-period = set(["。", "……", "！", "?", "？",  "\n",])
-comma = set(["，", "，"])
+default_period = set(["。", "……", "！", "?", "？",  "\n",])
+default_comma = set(["，", "，"])
 
 
 def is_not_chinese_error(e):
@@ -16,10 +16,15 @@ def is_not_chinese_error(e):
     return False
 
 
-def long_sentence_split(text, max_length=128):
+def long_sentence_split(text, max_length=128, period=None, comma=None):
     """
     先按照 period切分再按照 comma切分， 最后减少句子数量再合并
     """
+    if period is None:
+        period = default_period
+    if comma is None:
+        comma = default_comma
+    
     def same_split(text, max_length=128):
         """
         等长切分
