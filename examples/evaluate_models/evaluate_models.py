@@ -7,7 +7,6 @@ import argparse
 import sys
 
 sys.path.append("../..")
-
 from pycorrector import eval_sighan2015_by_model_batch
 
 
@@ -61,6 +60,14 @@ def main(args):
         model = GptCorrector()
         eval_sighan2015_by_model_batch(model.correct_batch)
         # chatglm3-6b-csc: Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
+    elif args.model=="mucgec_bart":
+        import sys
+        sys.path.append("./")
+        from pycorrector.mucgec_bart.mucgec_bart_corrector import MuCGECBartCorrector
+        model = MuCGECBartCorrector()
+        eval_sighan2015_by_model_batch(model.correct_batch)
+        # 该数据集无法体现模型的能力, 表现高于正确标准答案
+        # Sentence Level: acc:0.2645, precision:0.2442, recall:0.2339, f1:0.2389, cost time:346.37 s, total num: 1100
     else:
         raise ValueError('model name error.')
 
