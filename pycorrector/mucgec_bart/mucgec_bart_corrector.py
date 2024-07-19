@@ -14,6 +14,7 @@ import sys
 sys.path.append('../..')
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
+from pycorrector.mucgec_bart.monkey_pack import Pipeline
 from pycorrector.utils.sentence_utils import long_sentence_split
 import difflib
 
@@ -51,8 +52,7 @@ class MuCGECBartCorrector:
         :param ignore_function: function, 自定义一个函数可以指定跳过某类错误， 无需训练模型
         :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        # 参考调用方式 https://github.com/modelscope/modelscope/blob/master/tests/pipelines/test_text_error_correction.py#L43
-        result = self.model(sentences, {'batch_size': batch_size})
+        result = self.model(sentences, batch_size=batch_size, model_name="batch_correct")
         start_idx = 0
         n = len(sentences)
         data = []
