@@ -522,16 +522,9 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 大家可以用中文维基（繁体转简体，pycorrector.utils.text_utils下有此功能）等语料数据训练通用的语言模型，或者也可以用专业领域语料训练更专用的语言模型。更适用的语言模型，对于纠错效果会有比较好的提升。
 
 1. kenlm语言模型训练工具的使用，请见博客：http://blog.csdn.net/mingzai624/article/details/79560063
-2. 附上训练语料<人民日报2014版熟语料>，包括：
-   - 标准人工切词及词性数据people2014.tar.gz
-   - 未切词文本数据people2014_words.txt，
-   - kenlm训练字粒度语言模型文件及其二进制文件people2014corpus_chars.arps/klm
-   - kenlm词粒度语言模型文件及其二进制文件people2014corpus_words.arps/klm。
+2. 16GB中英文无监督、平行语料[Linly-AI/Chinese-pretraining-dataset](https://huggingface.co/datasets/Linly-AI/Chinese-pretraining-dataset)
+3. 524MB中文维基百科语料[wikipedia-cn-20230720-filtered](https://huggingface.co/datasets/pleisto/wikipedia-cn-20230720-filtered)
 
-3. 16GB中英文无监督、平行语料[Linly-AI/Chinese-pretraining-dataset](https://huggingface.co/datasets/Linly-AI/Chinese-pretraining-dataset)
-4. 524MB中文维基百科语料[wikipedia-cn-20230720-filtered](https://huggingface.co/datasets/pleisto/wikipedia-cn-20230720-filtered)
-
-尊重版权，传播请注明出处。
 
 
 ## Contact
