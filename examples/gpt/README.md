@@ -51,7 +51,7 @@ data format:
 #### big train data
 
 - 中文拼写纠错数据集：https://huggingface.co/datasets/shibing624/CSC
-- 中文语法纠错数据集：https://github.com/shibing624/pycorrector/tree/llm/examples/data/grammar
+- 中文语法纠错数据集：https://github.com/shibing624/pycorrector/tree/master/examples/data/grammar
 - 通用GPT4问答数据集：https://huggingface.co/datasets/shibing624/sharegpt_gpt4
 ### Train model
 run train:
