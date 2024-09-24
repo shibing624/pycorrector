@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append("../..")
-from pycorrector import GptCorrector
+from pycorrector.gpt.gpt_corrector import GptCorrector
 
 if __name__ == '__main__':
     error_sentences = [

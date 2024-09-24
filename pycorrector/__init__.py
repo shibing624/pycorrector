@@ -11,7 +11,6 @@ from pycorrector.detector import Detector
 from pycorrector.detector import USER_DATA_DIR
 from pycorrector.en_spell_corrector import EnSpellCorrector
 from pycorrector.ernie_csc.ernie_csc_corrector import ErnieCscCorrector
-from pycorrector.gpt.gpt_corrector import GptCorrector
 from pycorrector.macbert.macbert_corrector import MacBertCorrector
 from pycorrector.proper_corrector import ProperCorrector
 from pycorrector.seq2seq.conv_seq2seq_corrector import ConvSeq2SeqCorrector

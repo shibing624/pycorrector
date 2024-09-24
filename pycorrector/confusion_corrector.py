@@ -7,7 +7,6 @@
 import os
 from typing import List
 
-from ahocorasick import Automaton
 from loguru import logger
 
 
@@ -21,7 +20,11 @@ class ConfusionCorrector:
             self.custom_confusion = self.load_custom_confusion_dict(custom_confusion_path_or_dict)
         else:
             raise ValueError('custom_confusion_path_or_dict must be dict or str.')
-
+        try:
+            from ahocorasick import Automaton
+        except ImportError:
+            logger.error('ahocorasick package not found. pip install pyahocorasick')
+            raise ImportError('ahocorasick package not found. pip install pyahocorasick')
         self.automaton = Automaton()
         for idx, (err, truth) in enumerate(self.custom_confusion.items()):
             self.automaton.add_word(err, (idx, err, truth))
