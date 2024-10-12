@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the models and datasets
-models=("kenlm" "macbert" "qwen")
+models=("kenlm" "macbert" "qwen1.5b" "qwen7b")
 datasets=("sighan" "ec_law" "mcsc")
 
 # Loop through each model and dataset combination
