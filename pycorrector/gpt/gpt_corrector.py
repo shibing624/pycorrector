@@ -31,6 +31,7 @@ class GptCorrector(GptModel):
             peft_name=peft_name,
             **kwargs,
         )
+        self.system_prompt = "你是一个中文文本纠错助手。请根据用户提供的原始文本，生成纠正后的文本。"
         logger.debug('Loaded model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
     def correct_batch(
@@ -65,6 +66,8 @@ class GptCorrector(GptModel):
             else:
                 input_sents.append(sentence)
                 sent_map.append(idx)
+        if system_prompt is None and prefix_prompt is None:
+            system_prompt = self.system_prompt
         input_sents = [prefix_prompt + s for s in input_sents] if prefix_prompt else [s for s in input_sents]
         # predict all sentences
         corrected_sents = self.predict(
