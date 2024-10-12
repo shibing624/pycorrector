@@ -166,6 +166,8 @@ class GptModel:
             else:
                 self.tokenizer.pad_token = self.tokenizer.eos_token
             logger.debug("Add pad token: {}".format(self.tokenizer.pad_token))
+        if self.model.config.architectures[0] == "Qwen2ForCausalLM":
+            self.tokenizer.padding_side = "left"
 
         self.args.model_type = model_type
         if model_name is None:
@@ -550,31 +552,28 @@ class GptModel:
             )
 
             if prompt_template_name:
-                outputs = []
-                for s in batch:
-                    messages = [[s, '']]
-                    prompt = prompt_template.get_prompt(messages=messages, system_prompt=system_prompt)
-                    inputs_tokens = self.tokenizer(prompt, return_tensors="pt", padding=True)
-                    input_ids = inputs_tokens['input_ids'].to(self.device)
-                    output = self.model.generate(input_ids=input_ids, **generation_kwargs, **kwargs)
-                    outputs.append(output[0])
+                prompts = [prompt_template.get_prompt(messages=[[s, '']], system_prompt=system_prompt) for s in batch]
+                inputs = self.tokenizer(prompts, padding=True, return_tensors='pt')
+                input_ids = inputs['input_ids'].to(self.device)
+                outputs = self.model.generate(input_ids, **generation_kwargs, **kwargs)
             else:
-                outputs = []
+                conversation = []
                 for s in batch:
                     messages = []
                     if system_prompt:
                         messages.append({'role': 'system', 'content': system_prompt})
                     messages.append({'role': 'user', 'content': s})
-                    input_id = self.tokenizer.apply_chat_template(
-                        conversation=messages,
-                        tokenize=True,
-                        add_generation_prompt=False,
-                        return_tensors='pt'
-                    )
-                    output = self.model.generate(input_id.to(self.device), **generation_kwargs, **kwargs)
-                    outputs.append(output[0])
+                    conversation.append(messages)
+                inputs = self.tokenizer.apply_chat_template(
+                    conversation=conversation,
+                    tokenize=True,
+                    add_generation_prompt=True,
+                    return_tensors='pt',
+                    padding=True,
+                )
+                outputs = self.model.generate(inputs.to(self.device), **generation_kwargs, **kwargs)
 
-            for prompt, generated_sequence in zip(batch, outputs):
+            for input_text, generated_sequence in zip(batch, outputs):
                 # Decode text
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
                 stop_str = self.tokenizer.eos_token or prompt_template.stop_str
@@ -582,10 +581,9 @@ class GptModel:
                 if pos != -1:
                     gen_text = gen_text[:pos]
                 if skip_prompt:
-                    gen_text = gen_text.split(prompt, 1)[-1]
-                if "assistant" in gen_text:
-                    gen_text = gen_text.split("assistant", 1)[-1]
-                gen_text = gen_text.strip()
+                    gen_text = gen_text.split(input_text, 1)[-1]
+                if gen_text.startswith("\nassistant\n"):
+                    gen_text = gen_text.split("\nassistant\n", 1)[-1]
                 all_outputs.append(gen_text)
 
         return all_outputs

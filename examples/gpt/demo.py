@@ -19,14 +19,13 @@ if __name__ == '__main__':
     ]
     m = GptCorrector("shibing624/chinese-text-correction-1.5b")
 
-    batch_res = m.correct_batch(error_sentences, prefix_prompt="文本纠错：\n\n")
+    batch_res = m.correct_batch(error_sentences, system_prompt=None, prefix_prompt="文本纠错：\n\n")
     for i in batch_res:
         print(i)
         print()
 
     batch_res = m.correct_batch(error_sentences,
                                 system_prompt="你是一个中文文本纠错助手。请根据用户提供的原始文本，生成纠正后的文本。",
-                                prompt_template_name="qwen",
                                 prefix_prompt="")
     for i in batch_res:
         print(i)
