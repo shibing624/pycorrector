@@ -71,13 +71,13 @@ def main(args):
         if args.data == 'sighan':
             eval_model_batch(m.correct_batch)
             # Sentence Level: acc:0.7491, precision:0.7623, recall:0.7145, f1:0.7376, cost time:3.03 s, total num: 1100
-            #
+            # Sentence Level: acc:0.8373, precision:0.8817, recall:0.7989, f1:0.8383, cost time:14.97 s, total num: 707
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
-            #
+            # Sentence Level: acc:0.5370, precision:0.6882, recall:0.2220, f1:0.3357, cost time:25.15 s, total num: 1000
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
-            #
+            # Sentence Level: acc:0.4600, precision:0.2971, recall:0.0847, f1:0.1318, cost time:18.69 s, total num: 1000
     elif args.model == 'chatglm':
         from pycorrector.gpt.gpt_corrector import GptCorrector
         model = GptCorrector(model_name_or_path="THUDM/chatglm3-6b",
