@@ -28,7 +28,7 @@ class GptArgs:
     dataset_class: Dataset = None
     learning_rate: float = 2e-5
     manual_seed: int = 42
-    fp16: bool = True
+    fp16: bool = False
     bf16: bool = False
     int8: bool = False
     int4: bool = False
@@ -45,7 +45,7 @@ class GptArgs:
     num_return_sequences: int = 1
     repetition_penalty: float = 1.0
     do_sample: bool = True
-    temperature: float = 0.7
+    temperature: float = 0.1
     special_tokens_list: list = field(default_factory=list)
     output_dir: str = "outputs/"
     overwrite_output_dir: bool = True

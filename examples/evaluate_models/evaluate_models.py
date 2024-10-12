@@ -24,7 +24,7 @@ def main(args):
             # Sentence Level: acc:0.5790, precision:0.8581, recall:0.2410, f1:0.3763, cost time:64.61 s, total num: 1000
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
-            #
+            # Sentence Level: acc:0.5850, precision:0.7518, recall:0.2128, f1:0.3317, cost time:30.61 s, total num: 1000
     elif args.model == 'macbert':
         from pycorrector import MacBertCorrector
         model = MacBertCorrector()
