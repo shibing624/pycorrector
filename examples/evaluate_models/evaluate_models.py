@@ -58,15 +58,21 @@ def main(args):
         # Sentence Level: acc:0.7491, precision:0.7623, recall:0.7145, f1:0.7376, cost time:3.03 s, total num: 1100
     elif args.model == 'chatglm':
         from pycorrector.gpt.gpt_corrector import GptCorrector
-        model = GptCorrector()
+        model = GptCorrector(model_name_or_path="THUDM/chatglm3-6b",
+                             model_type='chatglm',
+                             peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
         eval_sighan2015_by_model_batch(model.correct_batch)
         # chatglm3-6b-csc: Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
+    elif args.model == 'qwen':
+        from pycorrector.gpt.gpt_corrector import GptCorrector
+        model = GptCorrector(model_name_or_path="shibing624/chinese-text-correction-1.5b", model_type='auto')
+        eval_sighan2015_by_model_batch(model.correct_batch)
     else:
         raise ValueError('model name error.')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='kenlm', help='which model to evaluate')
+    parser.add_argument('--model', type=str, default='macbert', help='which model to evaluate')
     args = parser.parse_args()
     main(args)

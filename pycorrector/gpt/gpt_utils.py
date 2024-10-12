@@ -88,7 +88,7 @@ class GptArgs:
     trust_remote_code: bool = True
     qlora: bool = False
     preprocessing_num_workers: int = 4
-    prompt_template_name: str = "vicuna"
+    prompt_template_name: str = "qwen"
 
     def update_from_dict(self, new_values):
         if isinstance(new_values, dict):
@@ -120,7 +120,7 @@ class Conversation:
     def get_prompt(
             self,
             messages: Optional[List[Sequence[str]]] = None,
-            system_prompt: Optional[str] = ""
+            system_prompt: Optional[str] = None
     ) -> str:
         """
         Returns a string containing prompt without response.
@@ -140,9 +140,10 @@ class Conversation:
     def _format_example(
             self,
             messages: Optional[List[Sequence[str]]] = None,
-            system_prompt: Optional[str] = ""
+            system_prompt: Optional[str] = None
     ) -> List[str]:
-        system_prompt = system_prompt or self.system_prompt
+        if system_prompt is None:
+            system_prompt = self.system_prompt
         system_prompt = system_prompt + self.sep if system_prompt else ""  # add separator for non-empty system prompt
         messages = messages or self.messages
         convs = []
@@ -181,6 +182,18 @@ register_conv_template(
         messages=[],
         roles=("USER", "ASSISTANT"),
         prompt="USER: {query} ASSISTANT:",
+        sep="</s>",
+    )
+)
+
+"""Base model template, for few shot"""
+register_conv_template(
+    Conversation(
+        name="base",
+        system_prompt="",
+        messages=[],
+        roles=("USER", "ASSISTANT"),
+        prompt="{query}",
         sep="</s>",
     )
 )
@@ -357,6 +370,21 @@ register_conv_template(
     )
 )
 
+"""intern2 template
+Supports: https://huggingface.co/internlm/internlm2-1_8b
+"""
+register_conv_template(
+    Conversation(
+        name="intern2",
+        system_prompt="<|im_start|>system\nYou are an AI assistant whose name is InternLM (书生·浦语).\n<|im_end|>\n",
+        messages=[],
+        roles=("user", "assistant"),
+        prompt="<|im_start|>user\n{query}<|im_end|>\n<|im_start|>assistant\n",
+        sep="<|im_end|>\n",
+        stop_str="<|im_end|>",
+    )
+)
+
 """StarChat template
 Supports: https://huggingface.co/HuggingFaceH4/starchat-alpha
           https://huggingface.co/HuggingFaceH4/starchat-beta
@@ -382,18 +410,47 @@ reference: https://github.com/facebookresearch/llama/blob/cfc3fc8c1968d390eb830e
 register_conv_template(
     Conversation(
         name="llama2",
-        system_prompt="<<SYS>>\nYou are a helpful, respectful and honest assistant. "
-                      "Always answer as helpfully as possible, while being safe. "
-                      "Your answers should not include any harmful, unethical, racist, sexist, "
-                      "toxic, dangerous, or illegal content. "
-                      "Please ensure that your responses are socially unbiased and positive in nature.\n\n"
-                      "If a question does not make any sense, or is not factually coherent, "
-                      "explain why instead of answering something not correct. "
-                      "If you don't know the answer to a question, please don't share false information.\n<</SYS>>\n\n",
+        system_prompt=(
+            "<<SYS>>\nYou are a helpful, respectful and honest assistant. "
+            "Always answer as helpfully as possible, while being safe. "
+            "Your answers should not include any harmful, unethical, racist, sexist, "
+            "toxic, dangerous, or illegal content. "
+            "Please ensure that your responses are socially unbiased and positive in nature.\n\n"
+            "If a question does not make any sense, or is not factually coherent, "
+            "explain why instead of answering something not correct. "
+            "If you don't know the answer to a question, please don't share false information.\n<</SYS>>\n\n"
+        ),
         messages=[],
         roles=("[INST]", "[/INST]"),
         prompt="[INST] {query} [/INST]",
         sep="</s>",
+    )
+)
+
+"""llama3 template
+source: https://huggingface.co/meta-llama
+Supports: https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct
+chat template:
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+{{ system_prompt }}<|eot_id|><|start_header_id|>user<|end_header_id|>
+{{ user_msg_1 }}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+{{ model_answer_1 }}<|eot_id|>
+"""
+register_conv_template(
+    Conversation(
+        name="llama3",
+        system_prompt=(
+            "<|start_header_id|>system<|end_header_id|>\n\n"
+            "You are a helpful, excellent and smart assistant."
+        ),
+        messages=[],
+        roles=("user", "assistant"),
+        prompt=(
+            "<|start_header_id|>user<|end_header_id|>\n\n{query}<|eot_id|>"
+            "<|start_header_id|>assistant<|end_header_id|>\n\n"
+        ),
+        sep="<|eot_id|>",
+        stop_str="<|eot_id|>",
     )
 )
 
@@ -420,7 +477,7 @@ source: https://docs.mistral.ai/llm/mistral-instruct-v0.1
 register_conv_template(
     Conversation(
         name="mistral",
-        system_prompt="<s>",
+        system_prompt="",
         messages=[],
         roles=("[INST]", "[/INST]"),
         prompt="[INST] {query} [/INST]",
@@ -442,8 +499,7 @@ register_conv_template(
     )
 )
 
-"""Qwen template
-Supports: https://huggingface.co/Qwen/Qwen-7B-Chat
+"""chatml template
 chatml: https://xbot123.com/645a461b922f176d7cfdbc2d/
 """
 register_conv_template(
@@ -454,6 +510,111 @@ register_conv_template(
         roles=("user", "assistant"),
         prompt="<|im_start|>user\n{query}<|im_end|>\n<|im_start|>assistant\n",
         sep="<|im_end|>\n",
+        stop_str="<|im_end|>",
+    )
+)
+
+"""deepseek template
+Supports: https://huggingface.co/deepseek-ai/deepseek-llm-7b-chat
+          https://huggingface.co/deepseek-ai/deepseek-moe-16b-chat
+"""
+register_conv_template(
+    Conversation(
+        name="deepseek",
+        system_prompt="",
+        messages=[],
+        roles=("User", "Assistant"),
+        prompt="User: {query}\n\nAssistant:",
+        sep="</s>",
+    )
+)
+
+"""deepseekcoder template
+Supports: https://huggingface.co/deepseek-ai/deepseek-coder-33b-instruct
+"""
+register_conv_template(
+    Conversation(
+        name="deepseekcoder",
+        system_prompt=(
+            "You are an AI programming assistant, utilizing the Deepseek Coder model, "
+            "developed by Deepseek Company, and you only answer questions related to computer science. "
+            "For politically sensitive questions, security and privacy issues, "
+            "and other non-computer science questions, you will refuse to answer\n"
+        ),
+        messages=[],
+        roles=("### Instruction", "### Response"),
+        prompt="### Instruction:\n{{content}}\n### Response:\n",
+        sep="\n",
+        stop_str="<|EOT|>",
+    )
+)
+
+"""Yi template
+source: https://github.com/01-ai/Yi
+Supports: https://huggingface.co/01-ai/Yi-34B-Chat
+          https://huggingface.co/01-ai/Yi-6B-Chat
+"""
+register_conv_template(
+    Conversation(
+        name="yi",
+        system_prompt="",
+        messages=[],
+        roles=("user", "assistant"),
+        prompt="<|im_start|>user\n{query}<|im_end|>\n<|im_start|>assistant\n",
+        sep="\n",
+        stop_str="<|im_end|>",
+    )
+)
+
+"""Orion template
+source: https://github.com/OrionStarAI/Orion
+Supports: https://huggingface.co/OrionStarAI/Orion-14B-Chat
+"""
+register_conv_template(
+    Conversation(
+        name="orion",
+        system_prompt="",
+        messages=[],
+        roles=("Human", "Assistant"),
+        prompt="Human: {query}\n\nAssistant: </s>",
+        sep="</s>",
+    )
+)
+
+"""Cohere template
+source: https://huggingface.co/CohereForAI/c4ai-command-r-plus
+Supports: https://huggingface.co/CohereForAI/c4ai-command-r-plus-4bit
+          https://huggingface.co/CohereForAI/c4ai-command-r-plus
+"""
+register_conv_template(
+    Conversation(
+        name="cohere",
+        system_prompt="<BOS_TOKEN>",
+        messages=[],
+        roles=("User", "Assistant"),
+        prompt=(
+            "<|START_OF_TURN_TOKEN|><|USER_TOKEN|>{query}<|END_OF_TURN_TOKEN|>"
+            "<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>"
+        ),
+        sep="</s>",
+    )
+)
+
+"""Qwen template
+source: https://huggingface.co/Qwen/CodeQwen1.5-7B-Chat/blob/main/tokenizer_config.json#L18
+Supports: https://huggingface.co/Qwen/CodeQwen1.5-7B-Chat
+          https://huggingface.co/Qwen/Qwen1.5-72B-Chat
+          https://huggingface.co/Qwen/Qwen2-72B
+          https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct
+"""
+register_conv_template(
+    Conversation(
+        name="qwen",
+        system_prompt="<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n",
+        messages=[],
+        roles=("user", "assistant"),
+        prompt="<|im_start|>user\n{query}<|im_end|>\n<|im_start|>assistant\n",
+        sep="\n",
         stop_str="<|im_end|>",
     )
 )

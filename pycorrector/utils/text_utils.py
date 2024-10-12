@@ -87,7 +87,7 @@ def remove_punctuation(strs):
     :param strs:
     :return:
     """
-    return re.sub("[\s+\.\!\/<>“”,$%^*(+\"\']+|[+——！，。？、~@#￥%……&*（）]+", "", strs.strip())
+    return re.sub(r"[\s+\.\!\/<>“”,$%^*(+\"\']+|[+——！，。？、~@#￥%……&*（）]+", "", strs.strip())
 
 
 def traditional2simplified(sentence):

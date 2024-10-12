@@ -497,12 +497,13 @@ class GptModel:
             self,
             sentences: List[str],
             skip_prompt: bool = True,
-            prompt_template_name: str = 'vicuna',
+            prompt_template_name: str = None,
             max_length: int = None,
             do_sample: bool = None,
             temperature: float = None,
             repetition_penalty: float = None,
             eval_batch_size: int = None,
+            system_prompt: str = None,
             **kwargs
     ) -> List[str]:
         """
@@ -517,6 +518,7 @@ class GptModel:
             temperature: The value used to module the next token probabilities.
             repetition_penalty: The parameter for repetition penalty. 1.0 means no penalty.
             eval_batch_size: Batch size to use for evaluation.
+            system_prompt: The system prompt to use for generation.
             **kwargs: Additional arguments for generating sequences.
 
         Returns:
@@ -540,32 +542,50 @@ class GptModel:
                 desc="Generating outputs",
                 disable=self.args.silent,
         ):
-            if prompt_template_name:
-                batch = [prompt_template.get_prompt(messages=[[s, '']]) for s in batch]
-            inputs = self.tokenizer(batch, padding=True, return_tensors='pt')
-            input_ids = inputs['input_ids'].to(self.device)
             generation_kwargs = dict(
                 max_new_tokens=max_length if max_length is not None else self.args.max_length,
                 do_sample=do_sample if do_sample is not None else self.args.do_sample,
                 temperature=temperature if temperature is not None else self.args.temperature,
                 repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
             )
-            outputs = self.model.generate(
-                input_ids=input_ids,
-                **generation_kwargs,
-                **kwargs,
-            )
+
+            if prompt_template_name:
+                outputs = []
+                for s in batch:
+                    messages = [[s, '']]
+                    prompt = prompt_template.get_prompt(messages=messages, system_prompt=system_prompt)
+                    inputs_tokens = self.tokenizer(prompt, return_tensors="pt", padding=True)
+                    input_ids = inputs_tokens['input_ids'].to(self.device)
+                    output = self.model.generate(input_ids=input_ids, **generation_kwargs, **kwargs)
+                    outputs.append(output[0])
+            else:
+                outputs = []
+                for s in batch:
+                    messages = []
+                    if system_prompt:
+                        messages.append({'role': 'system', 'content': system_prompt})
+                    messages.append({'role': 'user', 'content': s})
+                    input_id = self.tokenizer.apply_chat_template(
+                        conversation=messages,
+                        tokenize=True,
+                        add_generation_prompt=False,
+                        return_tensors='pt'
+                    )
+                    output = self.model.generate(input_id.to(self.device), **generation_kwargs, **kwargs)
+                    outputs.append(output[0])
+
             for prompt, generated_sequence in zip(batch, outputs):
                 # Decode text
-                prompt_len = len(input_ids[0])
-                generated_sequence = generated_sequence[prompt_len:]
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
                 stop_str = self.tokenizer.eos_token or prompt_template.stop_str
                 pos = gen_text.find(stop_str)
                 if pos != -1:
                     gen_text = gen_text[:pos]
-                if not skip_prompt:
-                    gen_text = prompt + gen_text
+                if skip_prompt:
+                    gen_text = gen_text.split(prompt, 1)[-1]
+                if "assistant" in gen_text:
+                    gen_text = gen_text.split("assistant", 1)[-1]
+                gen_text = gen_text.strip()
                 all_outputs.append(gen_text)
 
         return all_outputs
@@ -577,7 +597,7 @@ class GptModel:
             history: Union[List, List[Tuple[str, str]]] = None,
             stream: bool = False,
             skip_prompt: bool = True,
-            prompt_template_name: str = "vicuna",
+            prompt_template_name: str = "",
             max_new_tokens: int = None,
             do_sample: bool = None,
             temperature: float = None,
