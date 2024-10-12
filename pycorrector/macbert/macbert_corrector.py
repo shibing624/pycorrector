@@ -17,7 +17,7 @@ sys.path.append('../..')
 from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
 from pycorrector.utils.error_utils import get_errors_for_same_length
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 

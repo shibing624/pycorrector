@@ -54,8 +54,6 @@ class GptCorrector(GptModel):
         :param kwargs: dict, other params
         :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        if prefix_prompt is None:
-            prefix_prompt = "文本纠错：\n\n"
         input_sents = []
         sent_map = []
         for idx, sentence in enumerate(sentences):
@@ -67,7 +65,7 @@ class GptCorrector(GptModel):
             else:
                 input_sents.append(sentence)
                 sent_map.append(idx)
-        input_sents = [prefix_prompt + s for s in input_sents]
+        input_sents = [prefix_prompt + s for s in input_sents] if prefix_prompt else [s for s in input_sents]
         # predict all sentences
         corrected_sents = self.predict(
             input_sents,

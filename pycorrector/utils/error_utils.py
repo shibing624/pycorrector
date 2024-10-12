@@ -52,7 +52,7 @@ def get_errors_for_diff_length(corrected_text, origin_text):
                 j += 1
             i += 1
     errors = sorted(errors, key=operator.itemgetter(2))
-    return new_corrected_text, errors
+    return corrected_text, errors
 
 
 def get_errors_for_same_length(corrected_text, origin_text):

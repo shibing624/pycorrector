@@ -5,68 +5,79 @@
 """
 import argparse
 import sys
-
+import os
 sys.path.append("../..")
 
-from pycorrector import eval_sighan2015_by_model_batch
-
+from pycorrector import eval_model_batch
+pwd_path = os.path.abspath(os.path.dirname(__file__))
 
 def main(args):
     if args.model == 'kenlm':
         from pycorrector import Corrector
         m = Corrector()
-        eval_sighan2015_by_model_batch(m.correct_batch)
-        # Sentence Level: acc:0.5409, precision:0.6532, recall:0.1492, f1:0.2429, cost time:295.07 s, total num: 1100
+        if args.data == 'sighan':
+            eval_model_batch(m.correct_batch)
+            # Sentence Level: acc:0.5409, precision:0.6532, recall:0.1492, f1:0.2429, cost time:295.07 s, total num: 1100
+            # Sentence Level: acc:0.5502, precision:0.8022, recall:0.1957, f1:0.3147, cost time:37.28 s, total num: 707
+        elif args.data == 'ec_law':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
+            # Sentence Level: acc:0.5790, precision:0.8581, recall:0.2410, f1:0.3763, cost time:64.61 s, total num: 1000
+        elif args.data == 'mcsc':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
+            #
     elif args.model == 'macbert':
         from pycorrector import MacBertCorrector
         model = MacBertCorrector()
-        eval_sighan2015_by_model_batch(model.correct_batch)
-        # macbert:      Sentence Level: acc:0.7918, precision:0.8489, recall:0.7035, f1:0.7694, cost time:2.25 s, total num: 1100
-        # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
-        # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
-    elif args.model == 'bartseq2seq':
-        from transformers import BertTokenizerFast
-        from textgen import BartSeq2SeqModel
-        tokenizer = BertTokenizerFast.from_pretrained('shibing624/bart4csc-base-chinese')
-        model = BartSeq2SeqModel(
-            encoder_type='bart',
-            encoder_decoder_type='bart',
-            encoder_decoder_name='shibing624/bart4csc-base-chinese',
-            tokenizer=tokenizer,
-            args={"max_length": 128})
-        eval_sighan2015_by_model_batch(model.predict)
-        # Sentence Level: acc:0.6845, precision:0.6984, recall:0.6354, f1:0.6654
+        if args.data == 'sighan':
+            eval_model_batch(model.correct_batch)
+            # macbert:      Sentence Level: acc:0.7918, precision:0.8489, recall:0.7035, f1:0.7694, cost time:2.25 s, total num: 1100
+            # pert-base:    Sentence Level: acc:0.7709, precision:0.7893, recall:0.7311, f1:0.7591, cost time:2.52 s, total num: 1100
+            # pert-large:   Sentence Level: acc:0.7709, precision:0.7847, recall:0.7385, f1:0.7609, cost time:7.22 s, total num: 1100
+            # macbert4csc   Sentence Level: acc:0.8388, precision:0.9274, recall:0.7534, f1:0.8314, cost time:4.26 s, total num: 707
+        elif args.data == 'ec_law':
+            eval_model_batch(model.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
+            # Sentence Level: acc:0.2390, precision:0.1921, recall:0.1385, f1:0.1610, cost time:7.11 s, total num: 1000
+        elif args.data == 'mcsc':
+            eval_model_batch(model.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
+            # Sentence Level: acc:0.5360, precision:0.6000, recall:0.1240, f1:0.2055, cost time:2.65 s, total num: 1000
     elif args.model == 'seq2seq':
         from pycorrector import ConvSeq2SeqCorrector
         model = ConvSeq2SeqCorrector()
-        eval_sighan2015_by_model_batch(model.correct_batch)
+        eval_model_batch(model.correct_batch)
         # Sentence Level: acc:0.3909, precision:0.2803, recall:0.1492, f1:0.1947, cost time:219.50 s, total num: 1100
     elif args.model == 't5':
         from pycorrector import T5Corrector
         model = T5Corrector()
-        eval_sighan2015_by_model_batch(model.correct_batch)
+        eval_model_batch(model.correct_batch)
         # Sentence Level: acc:0.7582, precision:0.8321, recall:0.6390, f1:0.7229, cost time:26.36 s, total num: 1100
     elif args.model == 'deepcontext':
         from pycorrector import DeepContextCorrector
         model = DeepContextCorrector()
-        eval_sighan2015_by_model_batch(model.correct_batch)
-        # Sentence Level: acc:
+        eval_model_batch(model.correct_batch)
     elif args.model == 'ernie_csc':
         from pycorrector import ErnieCscCorrector
         model = ErnieCscCorrector()
-        eval_sighan2015_by_model_batch(model.correct_batch)
+        eval_model_batch(model.correct_batch)
         # Sentence Level: acc:0.7491, precision:0.7623, recall:0.7145, f1:0.7376, cost time:3.03 s, total num: 1100
     elif args.model == 'chatglm':
         from pycorrector.gpt.gpt_corrector import GptCorrector
         model = GptCorrector(model_name_or_path="THUDM/chatglm3-6b",
                              model_type='chatglm',
                              peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
-        eval_sighan2015_by_model_batch(model.correct_batch)
+        eval_model_batch(model.correct_batch)
         # chatglm3-6b-csc: Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
     elif args.model == 'qwen':
         from pycorrector.gpt.gpt_corrector import GptCorrector
-        model = GptCorrector(model_name_or_path="shibing624/chinese-text-correction-1.5b", model_type='auto')
-        eval_sighan2015_by_model_batch(model.correct_batch)
+        m = GptCorrector(model_name_or_path="shibing624/chinese-text-correction-1.5b")
+        if args.data == 'sighan':
+            eval_model_batch(m.correct_batch)
+            # Sentence Level: acc:0.4356, precision:0.4323, recall:0.2225, f1:0.2938, cost time:217.89 s, total num: 707
+        elif args.data == 'ec_law':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
+            # Sentence Level: acc:0.7010, precision:0.7893, recall:0.5901, f1:0.6754, cost time:1036.44 s, total num: 1000
+        elif args.data == 'mcsc':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
+            #
     else:
         raise ValueError('model name error.')
 
@@ -74,5 +85,6 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default='macbert', help='which model to evaluate')
+    parser.add_argument('--data', type=str, default='sighan', help='test dataset')
     args = parser.parse_args()
     main(args)
