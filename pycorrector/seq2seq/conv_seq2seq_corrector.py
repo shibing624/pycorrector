@@ -18,8 +18,8 @@ from pycorrector.utils.tokenizer import split_text_into_sentences_by_length
 from pycorrector.utils.get_file import get_file
 from pycorrector.detector import USER_DATA_DIR
 from pycorrector.utils.error_utils import get_errors_for_diff_length
-
-device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps" if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()
+                      else "cuda" if torch.cuda.is_available() else "cpu")
 pretrained_seq2seq_models = {
     # ConvSeq2Seq model 4.6MB
     'convseq2seq_correction.tar.gz':

@@ -12,7 +12,8 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 checkpoint = "shibing624/chinese-text-correction-1.5b"
 
 # use cuda or mps or cpu
-device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps" if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()
+                      else "cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 model = AutoModelForCausalLM.from_pretrained(checkpoint).to(device)
 

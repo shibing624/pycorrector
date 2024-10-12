@@ -19,8 +19,8 @@ from pycorrector.seq2seq.conv_seq2seq_utils import (
 )
 
 os.environ["TOKENIZERS_PARALLELISM"] = "FALSE"
-device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
-
+device = torch.device("mps" if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()
+                      else "cuda" if torch.cuda.is_available() else "cpu")
 
 class Encoder(nn.Module):
     def __init__(

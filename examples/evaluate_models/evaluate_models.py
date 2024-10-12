@@ -54,12 +54,13 @@ def main(args):
         if args.data == 'sighan':
             eval_model_batch(m.correct_batch)
             # Sentence Level: acc:0.7582, precision:0.8321, recall:0.6390, f1:0.7229, cost time:26.36 s, total num: 1100
+            # Sentence Level: acc:0.7907, precision:0.8920, recall:0.6863, f1:0.7758, cost time:20.82 s, total num: 707
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
-            #
+            # Sentence Level: acc:0.5230, precision:0.6471, recall:0.2087, f1:0.3156, cost time:43.61 s, total num: 1000
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
-            #
+            # Sentence Level: acc:0.4650, precision:0.2743, recall:0.0640, f1:0.1039, cost time:14.99 s, total num: 1000
     elif args.model == 'deepcontext':
         from pycorrector import DeepContextCorrector
         model = DeepContextCorrector()
@@ -70,6 +71,7 @@ def main(args):
         if args.data == 'sighan':
             eval_model_batch(m.correct_batch)
             # Sentence Level: acc:0.7491, precision:0.7623, recall:0.7145, f1:0.7376, cost time:3.03 s, total num: 1100
+            #
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
             #
@@ -103,10 +105,10 @@ def main(args):
             # Sentence Level: acc:0.5672, precision:0.6463, recall:0.3968, f1:0.4917, cost time:392.10 s, total num: 707
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
-            # Sentence Level:
+            # Sentence Level: acc:0.9790, precision:0.9941, recall:0.9658, f1:0.9798, cost time:717.37 s, total num: 1000
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
-            # Sentence Level:
+            # Sentence Level: acc:0.9960, precision:0.9979, recall:0.9938, f1:0.9959, cost time:267.12 s, total num: 1000
     else:
         raise ValueError('model name error.')
 
