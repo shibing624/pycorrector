@@ -100,7 +100,7 @@ class GptModel:
                     "Make sure CUDA is available or set `use_cuda=False`."
                 )
         else:
-            if torch.backends.mps.is_available():
+            if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
                 self.device = torch.device("mps")
                 self.device_map = {"": "mps"}
             else:
