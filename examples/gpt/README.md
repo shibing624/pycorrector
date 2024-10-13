@@ -26,7 +26,7 @@ pip install transformers peft -U
 
 example: [examples/gpt/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/demo.py)
 ```python
-from pycorrector import GptCorrector
+from pycorrector.gpt.gpt_corrector import GptCorrector
 m = GptCorrector()
 print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
 ```

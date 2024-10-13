@@ -370,15 +370,13 @@ output:
 ```
 
 ### GPT模型
-基于ChatGLM3、LLaMA、Baichuan、QWen等模型微调训练纠错模型，训练方法见[examples/gpt/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/README.md)
-
-在ChatGLM3-6B上SFT微调的纠错模型，已经release到HuggingFace Models: https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora
+基于ChatGLM3、Qwen2.5等模型微调训练纠错模型，训练方法见[examples/gpt/README.md](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/README.md)
 
 #### pycorrector快速预测
 
 example: [examples/gpt/demo.py](https://github.com/shibing624/pycorrector/blob/master/examples/gpt/demo.py)
 ```python
-from pycorrector import GptCorrector
+from pycorrector.gpt.gpt_corrector import GptCorrector
 m = GptCorrector()
 print(m.correct_batch(['今天新情很好', '你找到你最喜欢的工作，我也很高心。']))
 ```
@@ -457,17 +455,18 @@ output:
 
 ## Dataset
 
-| 数据集                          | 语料 |                                                                                下载链接                                                                                 | 压缩包大小 |
-|:-----------------------------| :--------- |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----:|
-| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条) |               [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ) <br/> [shibing624/CSC](https://huggingface.co/datasets/shibing624/CSC)                | 106M  |
-| **`原始SIGHAN数据集`**            | SIGHAN13 14 15 |                                                      [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)                                                       | 339K  |
-| **`原始Wang271K数据集`**          | Wang271K |                   [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)                    |  93M  |
-| **`人民日报2014版语料`**            | 人民日报2014版 |                                    [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)                                    | 383M  |
-| **`NLPCC 2018 GEC官方数据集`**    | NLPCC2018-GEC |                                        [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)                                         | 114M  |
-| **`NLPCC 2018+HSK熟语料`**      | nlpcc2018+hsk+CGED | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M  |
-| **`NLPCC 2018+HSK原始语料`**     | HSK+Lang8 | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) |  81M  |
+| 数据集                          | 语料                           |                                                                                下载链接                                                                                 | 压缩包大小 |
+|:-----------------------------|:-----------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----:|
+| **`SIGHAN+Wang271K中文纠错数据集`** | SIGHAN+Wang271K(27万条)        |               [百度网盘（密码01b9）](https://pan.baidu.com/s/1BV5tr9eONZCI0wERFvr0gQ) <br/> [shibing624/CSC](https://huggingface.co/datasets/shibing624/CSC)                | 106M  |
+| **`原始SIGHAN数据集`**            | SIGHAN13 14 15               |                                                      [官方csc.html](http://nlp.ee.ncu.edu.tw/resource/csc.html)                                                       | 339K  |
+| **`原始Wang271K数据集`**          | Wang271K                     |                   [Automatic-Corpus-Generation dimmywang提供](https://github.com/wdimmy/Automatic-Corpus-Generation/blob/master/corpus/train.sgml)                    |  93M  |
+| **`人民日报2014版语料`**            | 人民日报2014版                    |                                    [飞书（密码cHcu）](https://l6pmn3b1eo.feishu.cn/file/boxcnKpildqIseq1D4IrLwlir7c?from=from_qr_code)                                    | 383M  |
+| **`NLPCC 2018 GEC官方数据集`**    | NLPCC2018-GEC                |                                        [官方trainingdata](http://tcci.ccf.org.cn/conference/2018/dldoc/trainingdata02.tar.gz)                                         | 114M  |
+| **`NLPCC 2018+HSK熟语料`**      | nlpcc2018+hsk+CGED           | [百度网盘（密码m6fg）](https://pan.baidu.com/s/1BkDru60nQXaDVLRSr7ktfA) <br/> [飞书（密码gl9y）](https://l6pmn3b1eo.feishu.cn/file/boxcnudJgRs5GEMhZwe77YGTQfc?from=from_qr_code) | 215M  |
+| **`NLPCC 2018+HSK原始语料`**     | HSK+Lang8                    | [百度网盘（密码n31j）](https://pan.baidu.com/s/1DaOX89uL1JRaZclfrV9C0g) <br/> [飞书（密码Q9LH）](https://l6pmn3b1eo.feishu.cn/file/boxcntebW3NI6OAaqzDUXlZHoDb?from=from_qr_code) |  81M  |
 | **`中文纠错比赛数据汇总`**             | Chinese Text Correction（CTC） |                                                     [中文纠错汇总数据集（天池）](https://tianchi.aliyun.com/dataset/138195)                                                      |   -   |
-| **`NLPCC 2023中文语法纠错数据集`**    | NLPCC 2023 Sharedtask1 |                          [Task 1: Chinese Grammatical Error Correction（Training Set）](http://tcci.ccf.org.cn/conference/2023/taskdata.php)                          | 125M  |
+| **`NLPCC 2023中文语法纠错数据集`**    | NLPCC 2023 Sharedtask1       |                          [Task 1: Chinese Grammatical Error Correction（Training Set）](http://tcci.ccf.org.cn/conference/2023/taskdata.php)                          | 125M  |
+| **`百度智能文本校对比赛数据集`**          | 中文真实场景纠错数据                   |                          [shibing624/chinese_text_correction](https://huggingface.co/datasets/shibing624/chinese_text_correction)                          |  10M  |
 
 
 
