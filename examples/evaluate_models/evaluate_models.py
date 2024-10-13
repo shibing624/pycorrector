@@ -80,11 +80,19 @@ def main(args):
             # Sentence Level: acc:0.4600, precision:0.2971, recall:0.0847, f1:0.1318, cost time:18.69 s, total num: 1000
     elif args.model == 'chatglm':
         from pycorrector.gpt.gpt_corrector import GptCorrector
-        model = GptCorrector(model_name_or_path="THUDM/chatglm3-6b",
-                             model_type='chatglm',
-                             peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
-        eval_model_batch(model.correct_batch)
-        # chatglm3-6b-csc: Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
+        m = GptCorrector(model_name_or_path="THUDM/chatglm3-6b",
+                         model_type='chatglm',
+                         peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
+        if args.data == 'sighan':
+            eval_model_batch(m.correct_batch)
+            # Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
+            #
+        elif args.data == 'ec_law':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"))
+            #
+        elif args.data == 'mcsc':
+            eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"))
+            #
     elif args.model == 'qwen1.5b':
         from pycorrector.gpt.gpt_corrector import GptCorrector
         m = GptCorrector(model_name_or_path="shibing624/chinese-text-correction-1.5b")

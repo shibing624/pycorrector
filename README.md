@@ -89,7 +89,6 @@ python examples/macbert/gradio_demo.py
 | Model Name       | Model Link                                                                                                          | Base Model                 | SIGHAN-2015 | EC-LAW | MCSC   | GPU/CPU | QPS     |
 |:-----------------|:--------------------------------------------------------------------------------------------------------------------|:---------------------------|:------------|:-------|:-------|:-----------|:--------|
 | Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                 | kenlm                      | 0.3147      | 0.3763 | 0.3317 | CPU | 9       |
-| BART-CSC         | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese     | 0.6654      | -      | -      | GPU | 58      |
 | Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base             | 0.7758      | 0.3156 | 0.1039 | GPU | 214     |
 | ERNIE-CSC        | [ernie-csc](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/legacy/examples/text_correction/ernie-csc) | PaddlePaddle/ernie-1.0-base-zh             | 0.8383      | 0.3357 | 0.1318 | GPU | 114     |
 | MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base   | 0.8314      | 0.1610 | 0.2055 | GPU | **224** |
