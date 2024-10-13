@@ -12,7 +12,7 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 sighan_2015_path = os.path.join(pwd_path, '../data/sighan2015_test.tsv')
 
 
-def eval_model_single(correct_fn, input_tsv_file=sighan_2015_path, verbose=True):
+def eval_model_single(correct_fn, input_tsv_file=sighan_2015_path, verbose=True, **kwargs):
     """
     SIGHAN句级评估结果，设定需要纠错为正样本，无需纠错为负样本
     Args:
@@ -40,7 +40,7 @@ def eval_model_single(correct_fn, input_tsv_file=sighan_2015_path, verbose=True)
             src = parts[0]
             tgt = parts[1]
 
-            r = correct_fn(src)
+            r = correct_fn(src, **kwargs)
             tgt_pred, pred_detail = r['target'], r['errors']
             if verbose:
                 print()
@@ -80,7 +80,7 @@ def eval_model_single(correct_fn, input_tsv_file=sighan_2015_path, verbose=True)
         return acc, precision, recall, f1
 
 
-def eval_model_batch(correct_fn, input_tsv_file=sighan_2015_path, verbose=True):
+def eval_model_batch(correct_fn, input_tsv_file=sighan_2015_path, verbose=True, **kwargs):
     """
     SIGHAN句级评估结果，设定需要纠错为正样本，无需纠错为负样本
     Args:
@@ -113,7 +113,7 @@ def eval_model_batch(correct_fn, input_tsv_file=sighan_2015_path, verbose=True):
             srcs.append(src)
             tgts.append(tgt)
 
-    res = correct_fn(srcs)
+    res = correct_fn(srcs, **kwargs)
     for each_res, src, tgt in zip(res, srcs, tgts):
         pred_detail = ''
         if isinstance(each_res, str):
