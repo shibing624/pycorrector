@@ -81,24 +81,23 @@ python examples/macbert/gradio_demo.py
 - 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错
 
 ### 评估结果
-评估数据集：SIGHAN2015测试集
+- 评估指标：F1
+- CSC(Chinese Spelling Correction): 拼写纠错模型，表示模型可以处理音似、形似、语法等长度对齐的错误纠正
+- CTC(CHinese Text Correction): 文本纠错模型，表示模型支持拼写、语法等长度对齐的错误纠正，还可以处理多字、少字等长度不对齐的错误纠正
+- GPU：Tesla V100，显存 32 GB
 
-GPU：Tesla V100，显存 32 GB
-
-| Model Name      | Model Link                                                                                                          | Base Model                | GPU | Precision  | Recall     | F1         | QPS     |
-|:----------------|:--------------------------------------------------------------------------------------------------------------------|:--------------------------|:----|:-----------|:-----------|:-----------|:--------|
-| Kenlm-CSC       | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                 | kenlm                     | CPU | 0.6860     | 0.1529     | 0.2500     | 9       |
-| BART-CSC        | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese    | GPU | 0.6984     | 0.6354     | 0.6654     | 58      |
-| Mengzi-T5-CSC   | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base            | GPU | **0.8321** | 0.6390     | 0.7229     | 214     |
-| **MacBERT-CSC** | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base  | GPU | 0.8254     | **0.7311** | **0.7754** | **224** |
-| ChatGLM3-6B-CSC | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | THUDM/chatglm3-6b         | GPU | 0.5574     | 0.4917     | 0.5225     | 4       |
+| Model Name       | Model Link                                                                                                          | Base Model                 | SIGHAN-2015 | EC-LAW | MCSC   | GPU/CPU | QPS     |
+|:-----------------|:--------------------------------------------------------------------------------------------------------------------|:---------------------------|:------------|:-------|:-------|:-----------|:--------|
+| Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                 | kenlm                      | 0.3147      | 0.3763 | 0.3317 | CPU | 9       |
+| BART-CSC         | [shibing624/bart4csc-base-chinese](https://huggingface.co/shibing624/bart4csc-base-chinese)                         | fnlp/bart-base-chinese     | 0.6654      | -      | -      | GPU | 58      |
+| Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base             | 0.7758      | 0.3156 | 0.1039 | GPU | 214     |
+| ERNIE-CSC        | [ernie-csc](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/legacy/examples/text_correction/ernie-csc) | PaddlePaddle/ernie-1.0-base-zh             | 0.8383      | 0.3357 | 0.1318 | GPU | 114     |
+| MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base   | 0.8314      | 0.1610 | 0.2055 | GPU | **224** |
+| ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | THUDM/chatglm3-6b          | 0.5225      | -      | -      | GPU | 1       |
+| Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)           | Qwen/Qwen2.5-1.5B-Instruct | 0.3032      | 0.7846 | 0.9529 | GPU | 3       |
+| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)               | Qwen/Qwen2.5-7B-Instruct   | 0.4917      | 0.9798 | 0.9959 | GPU | 2       |
 
     
-### 结论
-
-- 中文拼写纠错模型效果最好的是**MacBert-CSC**，模型名称是*shibing624/macbert4csc-base-chinese*，huggingface model：https://huggingface.co/shibing624/macbert4csc-base-chinese
-- 中文语法纠错模型效果最好的是**Mengzi-T5-CSC**，模型名称是*shibing624/mengzi-t5-base-chinese-correction*，huggingface model：https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction
-
 ## Install
 
 ```shell
