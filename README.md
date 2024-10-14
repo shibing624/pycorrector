@@ -88,7 +88,7 @@ EC-LAW([ec_law_test.tsv](https://github.com/shibing624/pycorrector/blob/master/e
 - CTC(CHinese Text Correction): 文本纠错模型，表示模型支持拼写、语法等长度对齐的错误纠正，还可以处理多字、少字等长度不对齐的错误纠正
 - GPU：Tesla V100，显存 32 GB
 
-| Model Name       | Model Link                                                                                                              | Base Model                 | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU/CPU | QPS     |
+| Model Name       | Model Link                                                                                                              | Base Model                 | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU | QPS     |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------|:---------------------------|:-----------|:------------|:-------|:-------|:--------|:--------|
 | Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                     | kenlm | 0.3409     | 0.3147      | 0.3763 | 0.3317 | CPU     | 9       |
 | Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)     | mengzi-t5-base | 0.3984     | 0.7758      | 0.3156 | 0.1039 | GPU     | 214     |
