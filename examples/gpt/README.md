@@ -1,10 +1,10 @@
-# LLaMA for Chinese Spelling Correction
+# LLM for Chinese Text Correction
 
 ## 简介
 
 中文文本纠错任务是一项NLP基础任务，其输入是一个可能含有语法错误的中文句子，输出是一个正确的中文句子。
 语法错误类型很多，有多字、少字、错别字等，目前最常见的错误类型是`错别字`。大部分研究工作围绕错别字这一类型进行研究。
-本项目基于LLaMA实现了中文拼写纠错和语法纠错。
+本项目基于Qwen/ChatGLM实现了中文拼写纠错和语法纠错。
 
 ## Usage
 ### 安装依赖项
@@ -53,11 +53,12 @@ data format:
 - 中文拼写纠错数据集：https://huggingface.co/datasets/shibing624/CSC
 - 中文语法纠错数据集：https://github.com/shibing624/pycorrector/tree/master/examples/data/grammar
 - 通用GPT4问答数据集：https://huggingface.co/datasets/shibing624/sharegpt_gpt4
+- 中文真实校对数据：https://huggingface.co/datasets/shibing624/chinese_text_correction
 ### Train model
 run train:
 ```
 cd examples/gpt
-python train_chatglm_demo.py --do_train --do_predict
+python train_qwen_demo.py --do_train --do_predict
 ```
 
 output:
