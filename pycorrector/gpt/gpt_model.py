@@ -571,19 +571,15 @@ class GptModel:
                     return_tensors='pt',
                     padding=True,
                 )
-                outputs = self.model.generate(inputs.to(self.device), **generation_kwargs, **kwargs)
+                input_ids = inputs.to(self.device)
+                outputs = self.model.generate(input_ids, **generation_kwargs, **kwargs)
 
             for input_text, generated_sequence in zip(batch, outputs):
                 # Decode text
+                prompt_len = len(input_ids[0])
+                generated_sequence = generated_sequence[prompt_len:]
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
-                stop_str = self.tokenizer.eos_token or prompt_template.stop_str
-                pos = gen_text.find(stop_str)
-                if pos != -1:
-                    gen_text = gen_text[:pos]
-                if skip_prompt:
-                    gen_text = gen_text.split(input_text, 1)[-1]
-                if gen_text.startswith("\nassistant\n"):
-                    gen_text = gen_text.split("\nassistant\n", 1)[-1]
+                # logger.error(f"input_text: {input_text}, gen_text: {gen_text}")
                 all_outputs.append(gen_text)
 
         return all_outputs
