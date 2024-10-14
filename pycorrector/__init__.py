@@ -4,8 +4,9 @@
 @description:
 """
 
-from pycorrector.confusion_corrector import ConfusionCorrector
+from pycorrector.version import __version__  # noqa, isort:skip
 from pycorrector.corrector import Corrector
+from pycorrector.confusion_corrector import ConfusionCorrector
 from pycorrector.deepcontext.deepcontext_corrector import DeepContextCorrector
 from pycorrector.detector import Detector
 from pycorrector.detector import USER_DATA_DIR
@@ -24,4 +25,3 @@ from pycorrector.utils.text_utils import (
     traditional2simplified,
     simplified2traditional,
 )
-from pycorrector.version import __version__
