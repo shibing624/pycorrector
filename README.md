@@ -86,15 +86,15 @@ python examples/macbert/gradio_demo.py
 - CTC(CHinese Text Correction): 文本纠错模型，表示模型支持拼写、语法等长度对齐的错误纠正，还可以处理多字、少字等长度不对齐的错误纠正
 - GPU：Tesla V100，显存 32 GB
 
-| Model Name       | Model Link                                                                                                          | Base Model                 | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU/CPU | QPS     |
-|:-----------------|:--------------------------------------------------------------------------------------------------------------------|:---------------------------|:-----------|:----------------|:-------|:-------|:--------|:--------|
-| Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                 | kenlm | 0.3409     | 0.3147 | 0.3763 | 0.3317 | CPU     | 9 |
-| Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction) | mengzi-t5-base | 0.3984     | 0.7758 | 0.3156 | 0.1039 | GPU     | 214 |
-| ERNIE-CSC        | [PaddleNLP/ernie-csc](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/legacy/examples/text_correction/ernie-csc) | PaddlePaddle/ernie-1.0-base-zh | 0.4353     | 0.8383 | 0.3357 | 0.1318 | GPU     | 114 |
-| MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base   | 0.3993     | 0.8314 | 0.1610 | 0.2055 | GPU     | **224** |
-| ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | THUDM/chatglm3-6b          | -          | 0.5225          | -      | -      | GPU     | 1 |
-| Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)           | Qwen/Qwen2.5-1.5B-Instruct | 0.6802     | 0.3032 | 0.7846 | 0.9529 | GPU     | 3 |
-| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)               | Qwen/Qwen2.5-7B-Instruct   | **0.8225** | 0.4917 | 0.9798 | 0.9959 | GPU     | 2 |
+| Model Name       | Model Link                                                                                                              | Base Model                 | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU/CPU | QPS     |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------|:---------------------------|:-----------|:------------|:-------|:-------|:--------|:--------|
+| Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                     | kenlm | 0.3409     | 0.3147      | 0.3763 | 0.3317 | CPU     | 9       |
+| Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)     | mengzi-t5-base | 0.3984     | 0.7758      | 0.3156 | 0.1039 | GPU     | 214     |
+| ERNIE-CSC        | [PaddleNLP/ernie-csc](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/legacy/examples/text_correction/ernie-csc) | PaddlePaddle/ernie-1.0-base-zh | 0.4353     | 0.8383      | 0.3357 | 0.1318 | GPU     | 114     |
+| MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                       | hfl/chinese-macbert-base   | 0.3993     | 0.8314      | 0.1610 | 0.2055 | GPU     | **224** |
+| ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)               | THUDM/chatglm3-6b          | 0.4538     | 0.6572      | 0.4369     | 0.2672      | GPU     | 3       |
+| Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)               | Qwen/Qwen2.5-1.5B-Instruct | 0.6802     | 0.3032      | 0.7846 | 0.9529 | GPU     | 6       |
+| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)                   | Qwen/Qwen2.5-7B-Instruct   | **0.8225** | 0.4917      | 0.9798 | 0.9959 | GPU     | 3       |
 
 
 ## Install
@@ -125,7 +125,7 @@ docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 ## Usage
 本项目的初衷之一是比对、调研各种中文文本纠错方法，抛砖引玉。
 
-项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、LLaMA等模型应用于文本纠错任务，各模型均可基于已经训练好的纠错模型快速预测，也可使用自有数据训练、预测。
+项目实现了kenlm、macbert、seq2seq、 ernie_csc、T5、deepcontext、GPT(Qwen/ChatGLM)等模型应用于文本纠错任务，各模型均可基于已经训练好的纠错模型快速预测，也可使用自有数据训练、预测。
 
 
 ### kenlm模型（统计模型）

@@ -579,7 +579,8 @@ class GptModel:
                 prompt_len = len(input_ids[0])
                 generated_sequence = generated_sequence[prompt_len:]
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
-                # logger.error(f"input_text: {input_text}, gen_text: {gen_text}")
+                gen_text = gen_text.strip()
+                # logger.debug(f"input_text: {input_text}, gen_text: {gen_text}")
                 all_outputs.append(gen_text)
 
         return all_outputs
@@ -641,6 +642,7 @@ class GptModel:
             )
             output_tensor = outputs[0][len(input_ids[0]):] if skip_prompt else outputs[0]
             response = self.tokenizer.decode(output_tensor, skip_special_tokens=True)
+            response = response.strip()
             history[-1][1] = response
             return response, history
 

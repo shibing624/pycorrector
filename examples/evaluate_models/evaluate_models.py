@@ -84,19 +84,17 @@ def main(args):
                          model_type='chatglm',
                          peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
         if args.data == 'sighan':
-            eval_model_batch(m.correct_batch, prefix_prompt="对这个句子语法纠错\n\n", prompt_template_name='vicuna')
+            eval_model_batch(m.correct_batch, prefix_prompt="对下面文本纠错：", prompt_template_name='vicuna')
             # Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
-            #
+            # Sentence Level: acc:0.6591, precision:0.7000, recall:0.6193, f1:0.6572, cost time:273.06 s, total num: 707
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"),
-                             prefix_prompt="对这个句子语法纠错\n\n",
-                             prompt_template_name='vicuna')
-            #
+                             prefix_prompt="对下面文本纠错：", prompt_template_name='vicuna')
+            # Sentence Level: acc:0.4870, precision:0.5182, recall:0.3776, f1:0.4369, cost time:372.46 s, total num: 1000
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"),
-                             prefix_prompt="对这个句子语法纠错\n\n",
-                             prompt_template_name='vicuna')
-            #
+                             prefix_prompt="对下面文本纠错：", prompt_template_name='vicuna')
+            # Sentence Level: acc:0.4790, precision:0.4185, recall:0.1963, f1:0.2672, cost time:383.76 s, total num: 1000
     elif args.model == 'qwen1.5b':
         from pycorrector.gpt.gpt_corrector import GptCorrector
         m = GptCorrector(model_name_or_path="shibing624/chinese-text-correction-1.5b")
