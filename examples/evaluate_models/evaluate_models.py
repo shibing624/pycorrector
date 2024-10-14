@@ -84,15 +84,17 @@ def main(args):
                          model_type='chatglm',
                          peft_name="shibing624/chatglm3-6b-csc-chinese-lora")
         if args.data == 'sighan':
-            eval_model_batch(m.correct_batch, prompt_template_name='vicuna')
+            eval_model_batch(m.correct_batch, prefix_prompt="对这个句子语法纠错\n\n", prompt_template_name='vicuna')
             # Sentence Level: acc:0.5564, precision:0.5574, recall:0.4917, f1:0.5225, cost time:1572.49 s, total num: 1100
             #
         elif args.data == 'ec_law':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/ec_law_test.tsv"),
+                             prefix_prompt="对这个句子语法纠错\n\n",
                              prompt_template_name='vicuna')
             #
         elif args.data == 'mcsc':
             eval_model_batch(m.correct_batch, input_tsv_file=os.path.join(pwd_path, "../data/mcsc_test.tsv"),
+                             prefix_prompt="对这个句子语法纠错\n\n",
                              prompt_template_name='vicuna')
             #
     elif args.model == 'qwen1.5b':
