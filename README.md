@@ -78,7 +78,8 @@ python examples/macbert/gradio_demo.py
 
 评估脚本[examples/evaluate_models/evaluate_models.py](https://github.com/shibing624/pycorrector/blob/master/examples/evaluate_models/evaluate_models.py)：
 
-- 评测集：SIGHAN-2015[sighan2015_test.tsv](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/sighan2015_test.tsv)、EC-LAW[ec_law_test.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/ec_law_test.tsv)、MCSC[mcsc_test.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/mcsc_test.tsv)
+- 评测集：SIGHAN-2015([sighan2015_test.tsv](https://github.com/shibing624/pycorrector/blob/master/pycorrector/data/sighan2015_test.tsv))、
+EC-LAW([ec_law_test.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/ec_law_test.tsv))、MCSC([mcsc_test.tsv](https://github.com/shibing624/pycorrector/blob/master/examples/data/mcsc_test.tsv))
 - 评估标准：纠错准召率，采用严格句子粒度（Sentence Level）计算方式，把模型纠正之后的与正确句子完成相同的视为正确，否则为错
 
 ### 评估结果
