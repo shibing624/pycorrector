@@ -94,7 +94,7 @@ python examples/macbert/gradio_demo.py
 | MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                   | hfl/chinese-macbert-base   | 0.3993 | 0.8314          | 0.1610 | 0.2055 | GPU | **224** |
 | ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)           | THUDM/chatglm3-6b          | - | 0.5225          | -      | -      | GPU | 1       |
 | Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)           | Qwen/Qwen2.5-1.5B-Instruct | 0.6802 | 0.3032 | 0.7846 | 0.9529 | GPU | 3 |
-| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)               | Qwen/Qwen2.5-7B-Instruct   | 0.8225 | 0.4917 | 0.9798 | 0.9959 | GPU | 2 |
+| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)               | Qwen/Qwen2.5-7B-Instruct   | **0.8225** | 0.4917 | 0.9798 | 0.9959 | GPU | 2 |
 
 
 ## Install
