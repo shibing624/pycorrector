@@ -17,17 +17,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_file', default='../data/grammar/train_sharegpt.jsonl', type=str, help='Train file')
     parser.add_argument('--test_file', default='../data/grammar/test_sharegpt.jsonl', type=str, help='Test file')
-    parser.add_argument('--model_type', default='llama', type=str, help='Transformers model type')
-    parser.add_argument('--model_name', default='shibing624/chinese-alpaca-plus-7b-hf', type=str,
+    parser.add_argument('--model_type', default='auto', type=str, help='Transformers model type')
+    parser.add_argument('--model_name', default='Qwen/Qwen2.5-1.5B-Instruct', type=str,
                         help='Transformers model or path')
     parser.add_argument('--do_train', action='store_true', help='Whether to run training.')
     parser.add_argument('--do_predict', action='store_true', help='Whether to run predict.')
     parser.add_argument('--bf16', action='store_true', help='Whether to use bf16 mixed precision training.')
-    parser.add_argument('--output_dir', default='./outputs-llama-demo/', type=str, help='Model output directory')
-    parser.add_argument('--prompt_template_name', default='vicuna', type=str, help='Prompt template name')
-    parser.add_argument('--max_seq_length', default=128, type=int, help='Input max sequence length')
-    parser.add_argument('--max_length', default=128, type=int, help='Output max sequence length')
-    parser.add_argument('--num_epochs', default=0.2, type=float, help='Number of training epochs')
+    parser.add_argument('--output_dir', default='./outputs-qwen-1.5b-demo/', type=str, help='Model output directory')
+    parser.add_argument('--prompt_template_name', default='qwen', type=str, help='Prompt template name')
+    parser.add_argument('--max_seq_length', default=512, type=int, help='Input max sequence length')
+    parser.add_argument('--max_length', default=512, type=int, help='Output max sequence length')
+    parser.add_argument('--num_epochs', default=1, type=float, help='Number of training epochs')
     parser.add_argument('--batch_size', default=8, type=int, help='Batch size')
     parser.add_argument('--eval_steps', default=50, type=int, help='Eval every X steps')
     parser.add_argument('--save_steps', default=50, type=int, help='Save checkpoint every X steps')
@@ -67,7 +67,7 @@ def main():
             peft_name=args.output_dir,
             args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
         )
-        result = m.correct_batch(error_sentences)
+        result = m.correct_batch(error_sentences, prefix_prompt="对这个句子语法纠错\n\n")
         for res_dict in result:
             print(res_dict)
 

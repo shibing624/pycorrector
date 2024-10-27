@@ -100,7 +100,7 @@ class GptModel:
                     "Make sure CUDA is available or set `use_cuda=False`."
                 )
         else:
-            if torch.backends.mps.is_available():
+            if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
                 self.device = torch.device("mps")
                 self.device_map = {"": "mps"}
             else:
@@ -166,6 +166,8 @@ class GptModel:
             else:
                 self.tokenizer.pad_token = self.tokenizer.eos_token
             logger.debug("Add pad token: {}".format(self.tokenizer.pad_token))
+        if self.model.config.architectures[0] == "Qwen2ForCausalLM":
+            self.tokenizer.padding_side = "left"
 
         self.args.model_type = model_type
         if model_name is None:
@@ -497,12 +499,13 @@ class GptModel:
             self,
             sentences: List[str],
             skip_prompt: bool = True,
-            prompt_template_name: str = 'vicuna',
+            prompt_template_name: str = None,
             max_length: int = None,
             do_sample: bool = None,
             temperature: float = None,
             repetition_penalty: float = None,
             eval_batch_size: int = None,
+            system_prompt: str = None,
             **kwargs
     ) -> List[str]:
         """
@@ -517,6 +520,7 @@ class GptModel:
             temperature: The value used to module the next token probabilities.
             repetition_penalty: The parameter for repetition penalty. 1.0 means no penalty.
             eval_batch_size: Batch size to use for evaluation.
+            system_prompt: The system prompt to use for generation.
             **kwargs: Additional arguments for generating sequences.
 
         Returns:
@@ -540,32 +544,43 @@ class GptModel:
                 desc="Generating outputs",
                 disable=self.args.silent,
         ):
-            if prompt_template_name:
-                batch = [prompt_template.get_prompt(messages=[[s, '']]) for s in batch]
-            inputs = self.tokenizer(batch, padding=True, return_tensors='pt')
-            input_ids = inputs['input_ids'].to(self.device)
             generation_kwargs = dict(
                 max_new_tokens=max_length if max_length is not None else self.args.max_length,
                 do_sample=do_sample if do_sample is not None else self.args.do_sample,
                 temperature=temperature if temperature is not None else self.args.temperature,
                 repetition_penalty=repetition_penalty if repetition_penalty is not None else self.args.repetition_penalty,
             )
-            outputs = self.model.generate(
-                input_ids=input_ids,
-                **generation_kwargs,
-                **kwargs,
-            )
-            for prompt, generated_sequence in zip(batch, outputs):
+
+            if prompt_template_name:
+                prompts = [prompt_template.get_prompt(messages=[[s, '']], system_prompt=system_prompt) for s in batch]
+                inputs = self.tokenizer(prompts, padding=True, return_tensors='pt')
+                input_ids = inputs['input_ids'].to(self.device)
+                outputs = self.model.generate(input_ids, **generation_kwargs, **kwargs)
+            else:
+                conversation = []
+                for s in batch:
+                    messages = []
+                    if system_prompt:
+                        messages.append({'role': 'system', 'content': system_prompt})
+                    messages.append({'role': 'user', 'content': s})
+                    conversation.append(messages)
+                inputs = self.tokenizer.apply_chat_template(
+                    conversation=conversation,
+                    tokenize=True,
+                    add_generation_prompt=True,
+                    return_tensors='pt',
+                    padding=True,
+                )
+                input_ids = inputs.to(self.device)
+                outputs = self.model.generate(input_ids, **generation_kwargs, **kwargs)
+
+            for input_text, generated_sequence in zip(batch, outputs):
                 # Decode text
                 prompt_len = len(input_ids[0])
                 generated_sequence = generated_sequence[prompt_len:]
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
-                stop_str = self.tokenizer.eos_token or prompt_template.stop_str
-                pos = gen_text.find(stop_str)
-                if pos != -1:
-                    gen_text = gen_text[:pos]
-                if not skip_prompt:
-                    gen_text = prompt + gen_text
+                gen_text = gen_text.strip()
+                # logger.debug(f"input_text: {input_text}, gen_text: {gen_text}")
                 all_outputs.append(gen_text)
 
         return all_outputs
@@ -577,7 +592,7 @@ class GptModel:
             history: Union[List, List[Tuple[str, str]]] = None,
             stream: bool = False,
             skip_prompt: bool = True,
-            prompt_template_name: str = "vicuna",
+            prompt_template_name: str = "",
             max_new_tokens: int = None,
             do_sample: bool = None,
             temperature: float = None,
@@ -627,6 +642,7 @@ class GptModel:
             )
             output_tensor = outputs[0][len(input_ids[0]):] if skip_prompt else outputs[0]
             response = self.tokenizer.decode(output_tensor, skip_special_tokens=True)
+            response = response.strip()
             history[-1][1] = response
             return response, history
 

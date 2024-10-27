@@ -43,7 +43,7 @@ output:
 ```python
 import torch
 from transformers import BertTokenizerFast, BertForMaskedLM
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = BertTokenizerFast.from_pretrained("shibing624/macbert4csc-base-chinese")
 model = BertForMaskedLM.from_pretrained("shibing624/macbert4csc-base-chinese")

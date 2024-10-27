@@ -19,9 +19,9 @@ from pycorrector.utils.error_utils import get_errors_for_diff_length
 class GptCorrector(GptModel):
     def __init__(
             self,
-            model_name_or_path: str = "THUDM/chatglm3-6b",
-            model_type: str = 'chatglm',
-            peft_name: Optional[str] = "shibing624/chatglm3-6b-csc-chinese-lora",
+            model_name_or_path: str = "shibing624/chinese-text-correction-1.5b",
+            model_type: str = 'auto',
+            peft_name: Optional[str] = None,
             **kwargs,
     ):
         t1 = time.time()
@@ -31,15 +31,17 @@ class GptCorrector(GptModel):
             peft_name=peft_name,
             **kwargs,
         )
-        logger.debug('Loaded gpt csc model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
+        self.system_prompt = "你是一个中文文本纠错助手。请根据用户提供的原始文本，生成纠正后的文本。"
+        logger.debug('Loaded model: %s, spend: %.3f s.' % (model_name_or_path, time.time() - t1))
 
     def correct_batch(
             self,
             sentences: List[str],
             max_length: int = 512,
-            batch_size: int = 12,
-            prompt_template_name: str = 'vicuna',
+            batch_size: int = 16,
+            prompt_template_name: str = '',
             prefix_prompt: str = None,
+            system_prompt: str = None,
             **kwargs
     ):
         """
@@ -49,11 +51,10 @@ class GptCorrector(GptModel):
         :param batch_size: int, batch size
         :param prompt_template_name: str, prompt template name
         :param prefix_prompt: str, prefix of prompt
+        :param system_prompt: str, system prompt
         :param kwargs: dict, other params
         :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
-        if prefix_prompt is None:
-            prefix_prompt = "对下面的文本纠错\n\n"
         input_sents = []
         sent_map = []
         for idx, sentence in enumerate(sentences):
@@ -65,13 +66,16 @@ class GptCorrector(GptModel):
             else:
                 input_sents.append(sentence)
                 sent_map.append(idx)
-        input_sents = [prefix_prompt + s for s in input_sents]
+        if system_prompt is None and prefix_prompt is None:
+            system_prompt = self.system_prompt
+        input_sents = [prefix_prompt + s for s in input_sents] if prefix_prompt else [s for s in input_sents]
         # predict all sentences
         corrected_sents = self.predict(
             input_sents,
             max_length=max_length,
             prompt_template_name=prompt_template_name,
             eval_batch_size=batch_size,
+            system_prompt=system_prompt,
             **kwargs
         )
 

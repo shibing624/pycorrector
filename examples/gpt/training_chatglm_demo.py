@@ -18,7 +18,7 @@ def main():
     parser.add_argument('--train_file', default='../data/grammar/train_sharegpt.jsonl', type=str, help='Train file')
     parser.add_argument('--test_file', default='../data/grammar/test_sharegpt.jsonl', type=str, help='Test file')
     parser.add_argument('--model_type', default='chatglm', type=str, help='Transformers model type')
-    parser.add_argument('--model_name', default='THUDM/chatglm-6b', type=str,
+    parser.add_argument('--model_name', default='THUDM/chatglm3-6b', type=str,
                         help='Transformers model or path')
     parser.add_argument('--do_train', action='store_true', help='Whether to run training.')
     parser.add_argument('--do_predict', action='store_true', help='Whether to run predict.')
@@ -68,7 +68,9 @@ def main():
             peft_name=args.output_dir,
             args={'use_peft': True, 'eval_batch_size': args.batch_size, "max_length": args.max_length, }
         )
-        result = m.correct_batch(error_sentences)
+        result = m.correct_batch(error_sentences,
+                                 prefix_prompt="对这个句子语法纠错\n\n",
+                                 prompt_template_name=args.prompt_template_name)
         for res_dict in result:
             print(res_dict)
 

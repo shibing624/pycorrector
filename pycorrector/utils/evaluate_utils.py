@@ -12,13 +12,12 @@ pwd_path = os.path.abspath(os.path.dirname(__file__))
 sighan_2015_path = os.path.join(pwd_path, '../data/sighan2015_test.tsv')
 
 
-def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=True):
+def eval_model_single(correct_fn, input_tsv_file=sighan_2015_path, verbose=True, **kwargs):
     """
     SIGHAN句级评估结果，设定需要纠错为正样本，无需纠错为负样本
     Args:
         correct_fn:
-        input_eval_path:
-        output_eval_path:
+        input_tsv_file:
         verbose:
 
     Returns:
@@ -30,7 +29,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
     TN = 0.0
     total_num = 0
     start_time = time.time()
-    with open(sighan_path, 'r', encoding='utf-8') as f:
+    with open(input_tsv_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if line.startswith('#'):
@@ -41,7 +40,7 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
             src = parts[0]
             tgt = parts[1]
 
-            r = correct_fn(src)
+            r = correct_fn(src, **kwargs)
             tgt_pred, pred_detail = r['target'], r['errors']
             if verbose:
                 print()
@@ -81,12 +80,12 @@ def eval_sighan2015_by_model(correct_fn, sighan_path=sighan_2015_path, verbose=T
         return acc, precision, recall, f1
 
 
-def eval_sighan2015_by_model_batch(correct_fn, sighan_path=sighan_2015_path, verbose=True):
+def eval_model_batch(correct_fn, input_tsv_file=sighan_2015_path, verbose=True, **kwargs):
     """
     SIGHAN句级评估结果，设定需要纠错为正样本，无需纠错为负样本
     Args:
         correct_fn:
-        sighan_path:
+        input_tsv_file:
         verbose:
 
     Returns:
@@ -100,7 +99,7 @@ def eval_sighan2015_by_model_batch(correct_fn, sighan_path=sighan_2015_path, ver
     start_time = time.time()
     srcs = []
     tgts = []
-    with open(sighan_path, 'r', encoding='utf-8') as f:
+    with open(input_tsv_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if line.startswith('#'):
@@ -114,19 +113,21 @@ def eval_sighan2015_by_model_batch(correct_fn, sighan_path=sighan_2015_path, ver
             srcs.append(src)
             tgts.append(tgt)
 
-    res = correct_fn(srcs)
+    res = correct_fn(srcs, **kwargs)
     for each_res, src, tgt in zip(res, srcs, tgts):
+        pred_detail = ''
         if isinstance(each_res, str):
             tgt_pred = each_res
         elif isinstance(each_res, dict):
             tgt_pred = each_res['target']
+            pred_detail = each_res['errors']
         else:
             raise ValueError('correct_fn return type error.')
         if verbose:
             print()
             print('input  :', src)
             print('truth  :', tgt)
-            print('predict:', each_res)
+            print('predict:', tgt_pred, pred_detail)
 
         # 负样本
         if src == tgt:
@@ -166,4 +167,4 @@ if __name__ == "__main__":
     from pycorrector.macbert.macbert_corrector import MacBertCorrector
 
     model = MacBertCorrector()
-    eval_sighan2015_by_model(model.correct)
+    eval_model_batch(model.correct)
