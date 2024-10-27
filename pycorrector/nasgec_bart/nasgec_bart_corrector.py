@@ -84,10 +84,10 @@ class NaSGECBartCorrector:
             for e in sr["errors"]:
                 # 改写位置
                 e = list(e)
+                e.append(e[-1])
                 e[2] += ll
                 errors.append(tuple(e))
-        
-        return {"source": source, "target": target, "errors": errors}
+        return {"source": source, "target": target, "errors": errors, "sentences": batch_results}
 
 
 
