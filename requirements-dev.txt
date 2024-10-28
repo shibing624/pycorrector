@@ -16,3 +16,6 @@ paddlenlp
 paddlepaddle
 pytest
 kenlm
+difflib
+modelscope==1.16.0
+fairseq==0.12.2

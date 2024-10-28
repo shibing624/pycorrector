@@ -1,13 +1,13 @@
 import re
 
-default_period = set(["。", "……", "！", "?", "？",  "\n",])
-default_comma = set(["，", "，"])
+default_period = {"。", "……", "！", "?", "？", "\n"}
+default_comma = {"，", "，"}
 
 
 def is_not_chinese_error(e):
     """不是全中文的情况， 忽略这类错误"""
     text = e[0]
-    if len(text)==0:
+    if len(text) == 0:
         return True
     for char in text:
         chinese_char_pattern = re.compile(r'[\u4e00-\u9fff]')
@@ -24,7 +24,7 @@ def long_sentence_split(text, max_length=128, period=None, comma=None):
         period = default_period
     if comma is None:
         comma = default_comma
-    
+
     def same_split(text, max_length=128):
         """
         等长切分
@@ -47,7 +47,7 @@ def long_sentence_split(text, max_length=128, period=None, comma=None):
             if last < n:
                 sentences.extend(same_split(text[last:], max_length=max_length))
         return sentences
-    
+
     sentences = []
 
     n, last = len(text), 0
@@ -61,10 +61,10 @@ def long_sentence_split(text, max_length=128, period=None, comma=None):
     new = []
     cur = ""
     for s in sentences:
-        if len(cur)+len(s)>max_length:
+        if len(cur) + len(s) > max_length:
             new.append(cur)
             cur = ""
         cur += s
-    if len(cur)>0:
+    if len(cur) > 0:
         new.append(cur)
     return new

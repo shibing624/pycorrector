@@ -2,19 +2,15 @@
 import os
 import time
 from typing import List
-
 import torch
 from loguru import logger
-from tqdm import tqdm
-
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-import sys
-sys.path.append('../..')
-from transformers import BertTokenizer, BartForConditionalGeneration, Text2TextGenerationPipeline
+from transformers import BertTokenizer, BartForConditionalGeneration
 from pycorrector.utils.sentence_utils import long_sentence_split
 import difflib
+
+device = torch.device("mps" if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()
+                      else "cuda" if torch.cuda.is_available() else "cpu")
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
 class NaSGECBartCorrector:
@@ -28,9 +24,9 @@ class NaSGECBartCorrector:
 
     def _predict(self, sentences, batch_size=32, max_length=128, silent=True):
         raise NotImplementedError
-    
-    
-    def correct_batch(self, sentences: List[str], max_length: int = 128, batch_size: int = 32, silent: bool = True, ignore_function=None):
+
+    def correct_batch(self, sentences: List[str], max_length: int = 128, batch_size: int = 32, silent: bool = True,
+                      ignore_function=None):
         """
         批量句子纠错
         :param sentences: list[str], sentence list
@@ -52,29 +48,32 @@ class NaSGECBartCorrector:
         print(result)
         for i in range(n):
             a, b = sentences[i], result[i]
-            if len(a)==0 or len(b)==0 or a=="\n":
+            if len(a) == 0 or len(b) == 0 or a == "\n":
                 start_idx += len(a)
                 return
             s = difflib.SequenceMatcher(None, a, b)
             errors = []
             offset = 0
             for tag, i1, i2, j1, j2 in s.get_opcodes():
-                if tag!="equal":
-                    e = [a[i1:i2], b[j1+offset:j2+offset], i1]
+                if tag != "equal":
+                    e = [a[i1:i2], b[j1 + offset:j2 + offset], i1]
                     if ignore_function and ignore_function(e):
                         # 因为不认为是错误， 所以改回原来的偏移值
                         b = b[:j1] + a[i1:i2] + b[j2:]
-                        offset += i2-i1-j2+j1
+                        offset += i2 - i1 - j2 + j1
                         continue
-                    
+
                     errors.append(tuple(e))
             data.append({"source": a, "target": b, "errors": errors})
         return data
-        
 
     def correct(self, sentence: str, **kwargs):
-        """长句改为短句, 可直接调用长文本"""
-        sentences = long_sentence_split(sentence, max_length=kwargs.pop("max_length", 128), period=kwargs.pop("period", None), comma=kwargs.pop("comma", None))
+        sentences = long_sentence_split(
+            sentence,
+            max_length=kwargs.pop("max_length", 128),
+            period=kwargs.pop("period", None),
+            comma=kwargs.pop("comma", None)
+        )
         batch_results = self.correct_batch(sentences, **kwargs)
         source, target, errors = "", "", []
         for sr in batch_results:
@@ -88,9 +87,3 @@ class NaSGECBartCorrector:
                 e[2] += ll
                 errors.append(tuple(e))
         return {"source": source, "target": target, "errors": errors, "sentences": batch_results}
-
-
-
-
-    
-
