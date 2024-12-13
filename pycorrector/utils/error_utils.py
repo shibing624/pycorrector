@@ -5,79 +5,37 @@
 """
 
 import operator
+import difflib
 
-from pycorrector.utils.text_utils import is_chinese_char
 
-
-def get_errors_for_diff_length(corrected_text, origin_text):
+def get_errors(corrected_text, origin_text):
     """Get errors between corrected text and origin text"""
+    errors = []
+    unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
+
+    s = difflib.SequenceMatcher(None, origin_text, corrected_text)
     new_corrected_text = ""
-    errors = []
-    i, j = 0, 0
-    unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
-
-    while i < len(origin_text) and j < len(corrected_text):
-        if origin_text[i] in unk_tokens:
-            new_corrected_text += origin_text[i]
-            i += 1
-        elif corrected_text[j] in unk_tokens:
-            new_corrected_text += corrected_text[j]
-            j += 1
-        # Deal with Chinese characters
-        elif is_chinese_char(origin_text[i]) and is_chinese_char(corrected_text[j]):
-            # If the two characters are the same, then the two pointers move forward together
-            if origin_text[i] == corrected_text[j]:
-                new_corrected_text += corrected_text[j]
-                i += 1
-                j += 1
-            else:
-                # Check for insertion errors
-                if j + 1 < len(corrected_text) and origin_text[i] == corrected_text[j + 1]:
-                    errors.append(('', corrected_text[j], j))
-                    new_corrected_text += corrected_text[j]
-                    j += 1
-                # Check for deletion errors
-                elif i + 1 < len(origin_text) and origin_text[i + 1] == corrected_text[j]:
-                    errors.append((origin_text[i], '', i))
-                    i += 1
-                # Check for replacement errors
-                else:
+    for tag, i1, i2, j1, j2 in s.get_opcodes():
+        if tag == 'replace':
+            for i, j in zip(range(i1, i2), range(j1, j2)):
+                if origin_text[i] not in unk_tokens and corrected_text[j] not in unk_tokens:
                     errors.append((origin_text[i], corrected_text[j], i))
-                    new_corrected_text += corrected_text[j]
-                    i += 1
-                    j += 1
-        else:
-            new_corrected_text += origin_text[i]
-            if origin_text[i] == corrected_text[j]:
-                j += 1
-            i += 1
-    errors = sorted(errors, key=operator.itemgetter(2))
-    return corrected_text, errors
+                new_corrected_text += corrected_text[j]
+        elif tag == 'delete':
+            for i in range(i1, i2):
+                if origin_text[i] not in unk_tokens:
+                    errors.append((origin_text[i], '', i))
+                new_corrected_text += origin_text[i]
+        elif tag == 'insert':
+            for j in range(j1, j2):
+                if corrected_text[j] not in unk_tokens:
+                    errors.append(('', corrected_text[j], j))
+                new_corrected_text += corrected_text[j]
+        elif tag == 'equal':
+            new_corrected_text += origin_text[i1:i2]
 
-
-def get_errors_for_same_length(corrected_text, origin_text):
-    """Get new corrected text and errors between corrected text and origin text"""
-    errors = []
-    unk_tokens = [' ', '“', '”', '‘', '’', '琊', '\n', '…', '擤', '\t', '玕', '']
-
-    for i, ori_char in enumerate(origin_text):
-        if i >= len(corrected_text):
-            continue
-        if ori_char in unk_tokens:
-            # deal with unk word
-            corrected_text = corrected_text[:i] + ori_char + corrected_text[i:]
-            continue
-        if ori_char != corrected_text[i]:
-            if not is_chinese_char(ori_char):
-                # pass not chinese char
-                corrected_text = corrected_text[:i] + ori_char + corrected_text[i + 1:]
-                continue
-            if not is_chinese_char(corrected_text[i]):
-                corrected_text = corrected_text[:i] + corrected_text[i + 1:]
-                continue
-            errors.append((ori_char, corrected_text[i], i))
-    errors = sorted(errors, key=operator.itemgetter(2))
-    return corrected_text, errors
+    errors = sorted(errors, key=lambda x: x[2])
+    return new_corrected_text, errors
 
 
 if __name__ == '__main__':
@@ -100,5 +58,6 @@ if __name__ == '__main__':
         ('我喜欢吃鸡，公鸡、母鸡、白切鸡、乌鸡、紫燕鸡', '我喜欢吃鸡，公鸡、母鸡、切鸡、乌鸡、紫燕鸡'),  # 少字
     ]
     for pair in sentence_pairs:
-        new_corrected_text, errors = get_errors_for_same_length(pair[0], pair[1])
+        new_corrected_text, errors = get_errors(pair[0], pair[1])
         print(f"{new_corrected_text} {errors}")
+        print('--' * 42 + '\n')
