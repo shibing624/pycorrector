@@ -25,3 +25,4 @@ from pycorrector.utils.text_utils import (
     traditional2simplified,
     simplified2traditional,
 )
+from pycorrector.utils.error_utils import get_errors
