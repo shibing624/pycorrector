@@ -4,7 +4,6 @@
 @description: 
 """
 
-import operator
 import difflib
 
 

@@ -464,7 +464,7 @@ output:
 
 #### 安装依赖
 ```shell
-pip install pycorrector difflib modelscope==1.16.0 fairseq==0.12.2
+pip install pycorrector modelscope==1.16.0 fairseq==0.12.2
 ```
 
 #### 使用示例
