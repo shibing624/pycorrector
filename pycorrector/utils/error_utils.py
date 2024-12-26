@@ -24,7 +24,7 @@ def get_errors(corrected_text, origin_text):
             for i in range(i1, i2):
                 if origin_text[i] not in unk_tokens:
                     errors.append((origin_text[i], '', i))
-                new_corrected_text += origin_text[i]
+            # 不拼接被删除的字符
         elif tag == 'insert':
             for j in range(j1, j2):
                 if corrected_text[j] not in unk_tokens:
