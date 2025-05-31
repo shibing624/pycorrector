@@ -26,11 +26,7 @@ from transformers import (
     DataCollatorForSeq2Seq,
     BitsAndBytesConfig,
 )
-
-try:
-    from transformers.integrations import is_deepspeed_zero3_enabled
-except ImportError:
-    from transformers.deepspeed import is_deepspeed_zero3_enabled
+from transformers.integrations import is_deepspeed_zero3_enabled
 from transformers.trainer import TRAINING_ARGS_NAME
 
 from pycorrector.gpt.gpt_utils import GptSupervisedDataset, IGNORE_INDEX, GptArgs, get_conv_template
@@ -280,7 +276,7 @@ class GptModel:
             save_steps=self.args.save_steps,
             optim=self.args.optimizer,
             save_strategy=self.args.save_strategy,
-            evaluation_strategy='steps' if eval_data is not None else 'no',
+            eval_strategy='steps' if eval_data is not None else 'no',
             eval_steps=self.args.eval_steps if eval_data is not None else None,
             load_best_model_at_end=True if eval_data is not None else False,
             ddp_find_unused_parameters=False if self.ddp else None,

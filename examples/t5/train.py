@@ -169,7 +169,6 @@ def train():
         "learning_rate": 5e-4,
         "warmup_steps": args.warmup_steps,
         "logging_steps": args.logging_steps,
-        "evaluation_strategy": "steps",
         "eval_steps": args.eval_steps,
         "num_train_epochs": args.num_epochs,
         "do_train": args.do_train,
