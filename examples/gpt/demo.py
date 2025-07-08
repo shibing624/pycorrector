@@ -27,7 +27,9 @@ if __name__ == '__main__':
         print(i)
         print()
 
-    # batch_res = m.correct_batch(error_sentences, prefix_prompt='文本纠错：\n\n', prompt_template_name='qwen')
-    # for i in batch_res:
-    #     print(i)
-    #     print()
+    m = GptCorrector("twnlp/ChineseErrorCorrector3-4B")
+    batch_res = m.correct_batch(error_sentences,
+                                prefix_prompt='你是一个文本纠错专家，纠正输入句子中的语法错误，并输出正确的句子，输入句子为：')
+    for i in batch_res:
+        print(i)
+        print()

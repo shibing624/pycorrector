@@ -92,15 +92,16 @@ EC-LAW([ec_law_test.tsv](https://github.com/shibing624/pycorrector/blob/master/e
 - CTC(CHinese Text Correction): 文本纠错模型，表示模型支持拼写、语法等长度对齐的错误纠正，还可以处理多字、少字等长度不对齐的错误纠正
 - GPU：Tesla V100，显存 32 GB
 
-| Model Name       | Model Link                                                                                                              | Base Model                 | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU | QPS     |
-|:-----------------|:------------------------------------------------------------------------------------------------------------------------|:---------------------------|:-----------|:------------|:-------|:-------|:--------|:--------|
-| Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                     | kenlm | 0.3409     | 0.3147      | 0.3763 | 0.3317 | CPU     | 9       |
-| Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)     | mengzi-t5-base | 0.3984     | 0.7758      | 0.3156 | 0.1039 | GPU     | 214     |
+| Model Name       | Model Link                                                                                                              | Base Model                     | Avg        | SIGHAN-2015 | EC-LAW | MCSC   | GPU | QPS     |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------|:-------------------------------|:-----------|:------------|:-------|:-------|:--------|:--------|
+| Kenlm-CSC        | [shibing624/chinese-kenlm-klm](https://huggingface.co/shibing624/chinese-kenlm-klm)                                     | kenlm                          | 0.3409     | 0.3147      | 0.3763 | 0.3317 | CPU     | 9       |
+| Mengzi-T5-CSC    | [shibing624/mengzi-t5-base-chinese-correction](https://huggingface.co/shibing624/mengzi-t5-base-chinese-correction)     | mengzi-t5-base                 | 0.3984     | 0.7758      | 0.3156 | 0.1039 | GPU     | 214     |
 | ERNIE-CSC        | [PaddleNLP/ernie-csc](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/legacy/examples/text_correction/ernie-csc) | PaddlePaddle/ernie-1.0-base-zh | 0.4353     | 0.8383      | 0.3357 | 0.1318 | GPU     | 114     |
-| MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                       | hfl/chinese-macbert-base   | 0.3993     | 0.8314      | 0.1610 | 0.2055 | GPU     | **224** |
-| ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)               | THUDM/chatglm3-6b          | 0.4538     | 0.6572      | 0.4369     | 0.2672      | GPU     | 3       |
-| Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)               | Qwen/Qwen2.5-1.5B-Instruct | 0.6802     | 0.3032      | 0.7846 | 0.9529 | GPU     | 6       |
-| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)                   | Qwen/Qwen2.5-7B-Instruct   | **0.8225** | 0.4917      | 0.9798 | 0.9959 | GPU     | 3       |
+| MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                       | hfl/chinese-macbert-base       | 0.3993     | 0.8314      | 0.1610 | 0.2055 | GPU     | **224** |
+| ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)               | THUDM/chatglm3-6b              | 0.4538     | 0.6572      | 0.4369 | 0.2672 | GPU     | 3       |
+| Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)               | Qwen/Qwen2.5-1.5B-Instruct     | 0.6802     | 0.3032      | 0.7846 | 0.9529 | GPU     | 6       |
+| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)                   | Qwen/Qwen2.5-7B-Instruct       | **0.8225** | 0.4917      | 0.9798 | 0.9959 | GPU     | 3       |
+| Qwen3-4B-CTC     | [twnlp/ChineseErrorCorrector3-4B](https://huggingface.co/twnlp/ChineseErrorCorrector3-4B)                   | Qwen/Qwen3-4B                  | **0.xxx**  | 0.xx        | 0.xx   | 0.xx   | GPU     | 5       |
 
 
 ## Install
@@ -511,6 +512,7 @@ output:
 | **`中文纠错比赛数据汇总`**             | Chinese Text Correction（CTC） |                                                     [中文纠错汇总数据集（天池）](https://tianchi.aliyun.com/dataset/138195)                                                      |   -   |
 | **`NLPCC 2023中文语法纠错数据集`**    | NLPCC 2023 Sharedtask1       |                          [Task 1: Chinese Grammatical Error Correction（Training Set）](http://tcci.ccf.org.cn/conference/2023/taskdata.php)                          | 125M  |
 | **`百度智能文本校对比赛数据集`**          | 中文真实场景纠错数据                   |                          [shibing624/chinese_text_correction](https://huggingface.co/datasets/shibing624/chinese_text_correction)                          |  10M  |
+| **`200万中文纠错数据集`**            | 中文语法和拼写纠错数据                  |                          [twnlp/ChinseseErrorCorrectData](https://huggingface.co/datasets/twnlp/ChinseseErrorCorrectData)                          |  2M   |
 
 
 

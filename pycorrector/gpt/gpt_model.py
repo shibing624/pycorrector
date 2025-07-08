@@ -162,7 +162,7 @@ class GptModel:
             else:
                 self.tokenizer.pad_token = self.tokenizer.eos_token
             logger.debug("Add pad token: {}".format(self.tokenizer.pad_token))
-        if self.model.config.architectures[0] == "Qwen2ForCausalLM":
+        if self.model.config.architectures[0] in ["Qwen2ForCausalLM", "Qwen3ForCausalLM"]:
             self.tokenizer.padding_side = "left"
 
         self.args.model_type = model_type
@@ -576,6 +576,8 @@ class GptModel:
                 generated_sequence = generated_sequence[prompt_len:]
                 gen_text = self.tokenizer.decode(generated_sequence, skip_special_tokens=True)
                 gen_text = gen_text.strip()
+                if gen_text.startswith("<think>\n\n</think>"):
+                    gen_text = gen_text.replace("<think>\n\n</think>", "").strip()
                 # logger.debug(f"input_text: {input_text}, gen_text: {gen_text}")
                 all_outputs.append(gen_text)
 
