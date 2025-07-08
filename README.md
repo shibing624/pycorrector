@@ -43,6 +43,8 @@
 本项目重点解决其中的"音似、形字、语法、专名错误"等类型。
 
 ## News
+[2025/07/08] v1.1.2版本：支持了基于Qwen3的中文文本纠错模型[twnlp/ChineseErrorCorrector3-4B](https://huggingface.co/twnlp/ChineseErrorCorrector3-4B)，支持多字、少字、错字、词序、语法等错误纠正。详见[Release-v1.1.1](https://github.com/shibing624/pycorrector/releases/tag/1.1.2)
+
 [2024/10/14] v1.1.0版本：新增了基于Qwen2.5的中文文本纠错模型，支持多字、少字、错字、词序、语法等错误纠正，发布了[shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)和[shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)模型，及其对应的LoRA模型。详见[Release-v1.1.0](https://github.com/shibing624/pycorrector/releases/tag/1.1.0)
 
 [2023/11/07] v1.0.0版本：新增了ChatGLM3/LLaMA2等GPT模型用于中文文本纠错，发布了基于ChatGLM3-6B的[shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)拼写和语法纠错模型；重写了DeepContext、ConvSeq2Seq、T5等模型的实现。详见[Release-v1.0.0](https://github.com/shibing624/pycorrector/releases/tag/1.0.0)
