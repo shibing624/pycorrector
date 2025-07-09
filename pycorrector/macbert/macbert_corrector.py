@@ -77,7 +77,9 @@ class MacBertCorrector:
         :param sentences: list[str], sentence list
         :param max_length: int, max length of each sentence
         :param batch_size: int, batch size
-        :param threshold: float, threshold of error word
+        :param threshold: float, threshold of error word,
+            阈值越大（如 0.9），模型对预测的置信度要求越高，只有当模型非常确信某个字需要被纠正时才会执行替换，这会减少误纠正但可能会漏掉一些实际错误;
+            阈值越小（如 0.5），模型对预测的置信度要求越低，更容易对文本进行修改，可能会纠正更多错误但也可能引入不必要的修改
         :param silent: bool, silent or not
         :return: list of dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
