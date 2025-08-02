@@ -268,29 +268,44 @@ class ProperCorrector:
         :param min_word_length: int, 专名词的最小长度为2
         :return: dict, {'source': 'src', 'target': 'trg', 'errors': [(error_word, correct_word, position), ...]}
         """
+        original_sentence = sentence  # 保存原始输入句子
         text_new = ''
         details = []
         # 切分为短句
         sentences = split_text_into_sentences_by_symbol(sentence, include_symbol=True)
-        for sentence, idx in sentences:
+        for short_sent, idx in sentences:
+            current_sent = short_sent  # 当前处理的短句
             # 遍历句子中的所有词，专名词的最大长度为4,最小长度为2
-            sentence_words = segment(sentence, cut_type=cut_type)
+            sentence_words = segment(short_sent, cut_type=cut_type)
             ngrams = NgramUtil.ngrams(sentence_words, ngram, join_string="_")
             # 去重
             ngrams = list(set([i.replace("_", "") for i in ngrams if i]))
             # 词长度过滤
             ngrams = [i for i in ngrams if min_word_length <= len(i) <= max_word_length]
+            
+            # 收集所有需要纠错的信息，避免修改current_sent影响后续位置计算
+            corrections = []
             for cur_item in ngrams:
                 if self.trie.search(cur_item):
                     continue
                 for name in self.proper_names:
                     if self.get_word_similarity_score(cur_item, name) > sim_threshold:
                         if cur_item != name:
-                            cur_idx = sentence.find(cur_item)
-                            sentence = sentence[:cur_idx] + name + sentence[(cur_idx + len(cur_item)):]
-                            details.append((cur_item, name, idx + cur_idx + start_idx))
-            text_new += sentence
-        return {'source': sentence, 'target': text_new, 'errors': details}
+                            cur_idx = short_sent.find(cur_item)
+                            if cur_idx != -1:  # 确保找到了该词
+                                corrections.append((cur_item, name, cur_idx))
+                            break  # 找到匹配的专名后退出内层循环
+            
+            # 按位置从后往前排序，避免前面的修改影响后面的位置
+            corrections.sort(key=lambda x: x[2], reverse=True)
+            
+            # 应用所有纠错
+            for cur_item, name, cur_idx in corrections:
+                current_sent = current_sent[:cur_idx] + name + current_sent[(cur_idx + len(cur_item)):]
+                details.append((cur_item, name, idx + cur_idx + start_idx))
+            
+            text_new += current_sent
+        return {'source': original_sentence, 'target': text_new, 'errors': details}
 
     def correct_batch(self, sentences: List[str], **kwargs):
         """
