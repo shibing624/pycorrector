@@ -102,8 +102,8 @@ EC-LAW([ec_law_test.tsv](https://github.com/shibing624/pycorrector/blob/master/e
 | MacBERT-CSC      | [shibing624/macbert4csc-base-chinese](https://huggingface.co/shibing624/macbert4csc-base-chinese)                       | hfl/chinese-macbert-base       | 0.3993     | 0.8314      | 0.1610 | 0.2055 | GPU     | **224** |
 | ChatGLM3-6B-CSC  | [shibing624/chatglm3-6b-csc-chinese-lora](https://huggingface.co/shibing624/chatglm3-6b-csc-chinese-lora)               | THUDM/chatglm3-6b              | 0.4538     | 0.6572      | 0.4369 | 0.2672 | GPU     | 3       |
 | Qwen2.5-1.5B-CTC | [shibing624/chinese-text-correction-1.5b](https://huggingface.co/shibing624/chinese-text-correction-1.5b)               | Qwen/Qwen2.5-1.5B-Instruct     | 0.6802     | 0.3032      | 0.7846 | 0.9529 | GPU     | 6       |
-| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)                   | Qwen/Qwen2.5-7B-Instruct       | **0.8225** | 0.4917      | 0.9798 | 0.9959 | GPU     | 3       |
-| Qwen3-4B-CTC     | [twnlp/ChineseErrorCorrector3-4B](https://huggingface.co/twnlp/ChineseErrorCorrector3-4B)                   | Qwen/Qwen3-4B                  | **0.7792** | 0.5270      | 0.8115 | 0.9990 | GPU     | 5       |
+| Qwen2.5-7B-CTC   | [shibing624/chinese-text-correction-7b](https://huggingface.co/shibing624/chinese-text-correction-7b)                   | Qwen/Qwen2.5-7B-Instruct       | 0.8225     | 0.4917      | 0.9798 | 0.9959 | GPU     | 3       |
+| Qwen3-4B-CTC     | [twnlp/ChineseErrorCorrector3-4B](https://huggingface.co/twnlp/ChineseErrorCorrector3-4B)                               | Qwen/Qwen3-4B                  | 0.8521     | 0.6340      | 0.9360 | 0.9864 | GPU     | 5       |
 
 
 ## Install
