@@ -4,10 +4,18 @@
 @description: 
 """
 import sys
+from loguru import logger
 
 sys.path.append('../..')
 
 from pycorrector import MacBertCorrector
+
+# 获取当前所有处理器的 ID
+all_handlers = logger._core.handlers.keys()
+
+# 移除所有处理器
+for handler_id in all_handlers:
+    logger.remove(handler_id)
 
 
 def main():
