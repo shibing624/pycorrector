@@ -583,8 +583,6 @@ SIGHAN+Wang271K中文纠错数据集，数据格式：
 
 <img src="https://github.com/shibing624/pycorrector/blob/master/docs/git_image/wechat.jpeg" width="200" />
 
-<img src="https://github.com/shibing624/pycorrector/blob/master/docs/git_image/wechat_group.jpg" width="200" />
-
 ## Citation
 
 如果你在研究中使用了pycorrector，请按如下格式引用：
