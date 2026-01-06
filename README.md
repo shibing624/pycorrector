@@ -69,8 +69,6 @@
 
 - Official demo: https://www.mulanai.com/product/corrector/
 
-- Colab online demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zvSyCdiLK_rglfXcIgc539K_Z7bIMpu0?usp=sharing)
-
 - HuggingFace demo: https://huggingface.co/spaces/shibing624/pycorrector
 
 ![](https://github.com/shibing624/pycorrector/blob/master/docs/hf.png)
@@ -130,6 +128,10 @@ pip install --no-deps .
 ```shell
 docker run -it -v ~/.pycorrector:/root/.pycorrector shibing624/pycorrector:0.0.2
 ```
+
+* colab在线使用
+
+- Colab usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zvSyCdiLK_rglfXcIgc539K_Z7bIMpu0?usp=sharing)
 
 ## Usage
 本项目的初衷之一是比对、调研各种中文文本纠错方法，抛砖引玉。
