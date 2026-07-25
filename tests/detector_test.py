@@ -6,6 +6,11 @@
 import sys
 
 sys.path.append("../")
+
+import pytest
+
+pytest.importorskip("kenlm")
+
 from pycorrector.utils.tokenizer import segment
 from pycorrector import Corrector
 

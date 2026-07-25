@@ -5,11 +5,13 @@
 """
 import os
 
+import pytest
+
+pytest.importorskip("kenlm")
+
 import kenlm
 
 import jieba
-
-import pytest
 
 from pycorrector.detector import language_model_path
 

@@ -49,6 +49,7 @@ jobs:
           pip install -r requirements.txt
           pip install .
           pip install pytest
+          pip install kenlm
       - name: PKG-TEST
         run: |
           python -m pytest

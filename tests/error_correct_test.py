@@ -6,6 +6,11 @@
 import sys
 
 sys.path.append("..")
+
+import pytest
+
+pytest.importorskip("kenlm")
+
 from pycorrector import Corrector
 
 error_sentences = [

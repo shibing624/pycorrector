@@ -9,6 +9,11 @@ import sys
 import unittest
 
 sys.path.append('..')
+
+import pytest
+
+pytest.importorskip("kenlm")
+
 from pycorrector import Corrector
 
 m = Corrector()

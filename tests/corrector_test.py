@@ -7,6 +7,10 @@ import sys
 
 sys.path.append("../")
 
+import pytest
+
+pytest.importorskip("kenlm")
+
 from pycorrector import Corrector
 from pycorrector.utils.math_utils import get_sub_array
 
