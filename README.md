@@ -43,7 +43,7 @@
 本项目重点解决其中的"音似、形字、语法、专名错误"等类型。
 
 ## News
-[2026/07/25] v1.1.4版本：优化专名纠错(ProperCorrector)性能，将逐片段全量扫描专名词典改为按词长+位置的多级倒排索引，并移除冗余Trie、修复OOV笔画假阳性，4万规模专名词典下纠错速度提升约1~2个数量级；混淆集匹配由正则替换为Aho-Corasick自动机；修复默认配置下自定义混淆集为空时的崩溃；修正预训练语言模型文件名(people2014corpus_chars.klm)。详见[Release-v1.1.4](https://github.com/shibing624/pycorrector/releases/tag/1.1.4)
+[2026/07/25] v1.1.4版本：优化专名纠错(ProperCorrector)性能，将逐片段全量扫描专名词典改为按词长+位置的多级倒排索引，并移除冗余Trie、修复OOV笔画假阳性，4万规模专名词典下纠错速度提升约80倍。详见[Release-v1.1.4](https://github.com/shibing624/pycorrector/releases/tag/1.1.4)
 
 [2025/07/08] v1.1.2版本：支持了基于Qwen3的中文文本纠错模型[twnlp/ChineseErrorCorrector3-4B](https://huggingface.co/twnlp/ChineseErrorCorrector3-4B)，支持多字、少字、错字、词序、语法等错误纠正。详见[Release-v1.1.2](https://github.com/shibing624/pycorrector/releases/tag/1.1.2)
 
