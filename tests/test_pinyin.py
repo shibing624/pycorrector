@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing(xuming624@qq.com)
-@description: 
+@description:
 """
 
 import sys
@@ -21,12 +21,11 @@ class PinyinTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = m.correct(name)
-            print(s, r)
+            r = m.correct(name)['errors']
+            print(r)
             res.append(r)
 
-        # self.assertEqual(res[0], [('zhuan', '赚', 6, 12)])
-        # self.assertEqual(res[1], [('zuo', '做', 3, 7)])
+        # pinyin fragments are left untouched by the char/word corrector
         self.assertEqual(res[0], [])
         self.assertEqual(res[1], [])
 
@@ -37,12 +36,10 @@ class PinyinTestCase(unittest.TestCase):
         ]
         res = []
         for name in sents:
-            s, r = m.correct(name)
-            print(s, r)
+            r = m.correct(name)['errors']
+            print(r)
             res.append(r)
 
-        # self.assertEqual(res[0], [('xingfu', '幸福', 4, 11)])
-        # self.assertEqual(res[1], [('pingguo', '苹果', 9, 17)])
         self.assertEqual(res[0], [])
         self.assertEqual(res[1], [])
 

@@ -5,7 +5,9 @@
 """
 import sys
 
-sys.path.append("../")
+import pytest
+
+sys.path.append('..')
 from pycorrector import MacBertCorrector
 
 error_sentences = [
@@ -97,8 +99,12 @@ error_sentences2 = [
 ]
 error_sentences.extend(badcase)
 error_sentences.extend(error_sentences2)
-m = MacBertCorrector()
-r = m.correct_batch(error_sentences)
-print("{}".format(r))
-for i in error_sentences:
-    print(m.correct(i))
+
+
+@pytest.mark.heavy(repo='shibing624/macbert4csc-base-chinese')
+def test_macbert_correct_batch():
+    m = MacBertCorrector()
+    r = m.correct_batch(error_sentences)
+    print("{}".format(r))
+    for i in error_sentences:
+        print(m.correct(i))

@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 """
 @author:XuMing(xuming624@qq.com)
-@description: 
+@description:
 """
+import os
+
 import kenlm
 
 import jieba
 
+import pytest
+
 from pycorrector.detector import language_model_path
 
-model = kenlm.Model(language_model_path)
+pytestmark = pytest.mark.skipif(
+    not os.path.exists(language_model_path),
+    reason='big kenlm model (zh_giga.no_cna_cmn.prune01244.klm) not downloaded; '
+           'run a Corrector once to fetch it, or set PYCORRECTOR_RUN_HEAVY=1 after '
+           'pre-downloading it. The tiny people_chars_lm.klm used by the other '
+           'tests is char-level and would break the word-level OOV assertions here.',
+)
 
 sentence = '盘点不怕被税的海淘网站❗️海淘向来便宜又保真！'
 sentence_char_split = ' '.join(list(sentence))
@@ -17,6 +27,7 @@ sentence_word_split = ' '.join(jieba.lcut(sentence))
 
 
 def test_score():
+    model = kenlm.Model(language_model_path)
     print('Loaded language model: %s' % language_model_path)
 
     print(sentence)
@@ -42,6 +53,7 @@ def test_score():
 
 
 def test_full_scores_chars():
+    model = kenlm.Model(language_model_path)
     print('Loaded language model: %s' % language_model_path)
     # Show scores and n-gram matches
     words = ['<s>'] + list(sentence) + ['</s>']
@@ -61,6 +73,7 @@ def test_full_scores_chars():
 
 
 def test_full_scores_words():
+    model = kenlm.Model(language_model_path)
     print('Loaded language model: %s' % language_model_path)
     # Show scores and n-gram matches
     words = ['<s>'] + sentence_word_split.split() + ['</s>']
@@ -81,6 +94,7 @@ def test_full_scores_words():
 
 def test_full_scores_chars_length():
     """test bos eos size"""
+    model = kenlm.Model(language_model_path)
     print('Loaded language model: %s' % language_model_path)
     r = list(model.full_scores(sentence_char_split))
     n = list(model.full_scores(sentence_char_split, bos=False, eos=False))
@@ -96,6 +110,7 @@ def test_full_scores_chars_length():
 
 def test_ppl_sentence():
     """测试句子粒度的ppl得分"""
+    model = kenlm.Model(language_model_path)
     sentence_char_split1 = ' '.join('先救挨饿的人，然后治疗病人。')
     sentence_char_split2 = ' '.join('先就挨饿的人，然后治疗病人。')
     n = model.perplexity(sentence_char_split1)
