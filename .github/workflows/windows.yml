@@ -7,9 +7,9 @@ jobs:
   test-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Cache pip
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         if: startsWith(runner.os, 'Windows')
         with:
           path: ~\AppData\Local\pip\Cache
@@ -17,12 +17,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
       - name: Cache huggingface models
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-huggingface-
       - name: Cache pycorrector models
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.pycorrector
           key: ${{ runner.os }}-pycorrector-
