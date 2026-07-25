@@ -104,3 +104,5 @@ ENV/
 .idea
 .DS_Store
 output/
+tmp/
+scripts/

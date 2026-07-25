@@ -5,7 +5,7 @@
 """
 import os
 from codecs import open
-from typing import List
+from typing import Dict, List, Set
 import pypinyin
 from loguru import logger
 
@@ -59,31 +59,6 @@ def load_dict_file(path):
     return result
 
 
-class TrieNode:
-    def __init__(self):
-        self.children = defaultdict(TrieNode)
-        self.is_end_of_word = False
-
-
-class Trie:
-    def __init__(self):
-        self.root = TrieNode()
-
-    def insert(self, word):
-        node = self.root
-        for char in word:
-            node = node.children[char]
-        node.is_end_of_word = True
-
-    def search(self, word):
-        node = self.root
-        for char in word:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return node.is_end_of_word
-
-
 class ProperCorrector:
     def __init__(
             self,
@@ -95,9 +70,20 @@ class ProperCorrector:
         self.proper_names = load_set_file(proper_name_path)
         # stroke, 笔划字典 format: 字:笔划，如：万，笔划是横(h),折(z),撇(p),组合起来是：hzp
         self.stroke_dict = load_dict_file(stroke_path)
-        self.trie = Trie()
+        self.proper_names_by_length: Dict[int, Set[str]] = defaultdict(set)
+        self.char_pos_index: Dict[int, Dict[tuple, Set[str]]] = defaultdict(lambda: defaultdict(set))
+        self.pinyin_pos_index: Dict[int, Dict[tuple, Set[str]]] = defaultdict(lambda: defaultdict(set))
+        self.stroke_pos_index: Dict[int, Dict[tuple, Set[str]]] = defaultdict(lambda: defaultdict(set))
+        self.pinyin_cache: Dict[str, List[str]] = {}
+        self.stroke_cache: Dict[str, str] = {}
         for name in self.proper_names:
-            self.trie.insert(name)
+            self.proper_names_by_length[len(name)].add(name)
+            for idx, char in enumerate(name):
+                self.char_pos_index[len(name)][(idx, char)].add(name)
+                self.pinyin_pos_index[len(name)][(idx, self.get_pinyin(char)[0])].add(name)
+                stroke = self.get_stroke(char)
+                if stroke:
+                    self.stroke_pos_index[len(name)][(idx, stroke)].add(name)
 
     def get_stroke(self, char):
         """
@@ -105,10 +91,14 @@ class ProperCorrector:
         :param char:
         :return:
         """
-        return self.stroke_dict.get(char, '')
+        if char not in self.stroke_cache:
+            self.stroke_cache[char] = self.stroke_dict.get(char, '')
+        return self.stroke_cache[char]
 
     def get_pinyin(self, char):
-        return pypinyin.lazy_pinyin(char)
+        if char not in self.pinyin_cache:
+            self.pinyin_cache[char] = pypinyin.lazy_pinyin(char)
+        return self.pinyin_cache[char]
 
     def is_near_stroke_char(self, char1, char2, stroke_threshold=0.8):
         """
@@ -130,19 +120,19 @@ class ProperCorrector:
         Returns:
             float, 字符相似度值
         """
-        score = 0.0
         if char1 == char2:
-            score = 1.0
+            return 1.0
         # 如果一个是中文字符，另一个不是，为0
         if is_chinese_char(char1) != is_chinese_char(char2):
-            return score
+            return 0.0
         if not is_chinese_char(char1):
-            return score
+            return 0.0
         char_stroke1 = self.get_stroke(char1)
         char_stroke2 = self.get_stroke(char2)
+        if not char_stroke1 or not char_stroke2:
+            return 0.0
         # 相似度计算：1-编辑距离
-        score = 1.0 - edit_distance(char_stroke1, char_stroke2)
-        return score
+        return 1.0 - edit_distance(char_stroke1, char_stroke2)
 
     def get_word_stroke_similarity_score(self, word1, word2):
         """
@@ -199,19 +189,19 @@ class ProperCorrector:
         :param char2:
         :return: float, 相似度
         """
-        score = 0.0
         if char1 == char2:
-            score = 1.0
+            return 1.0
         # 如果一个是中文字符，另一个不是，为0
         if is_chinese_char(char1) != is_chinese_char(char2):
-            return score
+            return 0.0
         if not is_chinese_char(char1):
-            return score
+            return 0.0
         char_pinyin1 = self.get_pinyin(char1)[0]
         char_pinyin2 = self.get_pinyin(char2)[0]
+        if not char_pinyin1 or not char_pinyin2:
+            return 0.0
         # 相似度计算：1-编辑距离
-        score = 1.0 - edit_distance(char_pinyin1, char_pinyin2)
-        return score
+        return 1.0 - edit_distance(char_pinyin1, char_pinyin2)
 
     def get_word_pinyin_similarity_score(self, word1, word2):
         """
@@ -247,6 +237,34 @@ class ProperCorrector:
             self.get_word_pinyin_similarity_score(word1, word2)
         )
 
+    def get_candidate_names(self, word):
+        """
+        按词长、位置索引召回候选专名，避免每个片段扫描全量专名词典。
+        :param word: 待纠错片段
+        :return: list, 候选专名集合
+        """
+        word_len = len(word)
+        names = self.proper_names_by_length.get(word_len)
+        if not names:
+            return []
+        if word_len == 1:
+            return list(names)
+
+        char_buckets = [self.char_pos_index[word_len].get((idx, char), set()) for idx, char in enumerate(word)]
+        pinyin_buckets = [self.pinyin_pos_index[word_len].get((idx, self.get_pinyin(char)[0]), set()) for idx, char in enumerate(word)]
+        stroke_buckets = [self.stroke_pos_index[word_len].get((idx, self.get_stroke(char)), set()) for idx, char in enumerate(word)]
+
+        votes = defaultdict(int)
+        for buckets in (char_buckets, pinyin_buckets, stroke_buckets):
+            for skip_idx in range(word_len):
+                selected = [bucket for idx, bucket in enumerate(buckets) if idx != skip_idx and bucket]
+                if len(selected) != word_len - 1:
+                    continue
+                matched = set.intersection(*selected)
+                for name in matched:
+                    votes[name] += 1
+        return sorted(votes, key=lambda name: votes[name], reverse=True)
+
     def correct(
             self,
             sentence,
@@ -276,31 +294,53 @@ class ProperCorrector:
         for short_sent, idx in sentences:
             current_sent = short_sent  # 当前处理的短句
             # 遍历句子中的所有词，专名词的最大长度为4,最小长度为2
-            sentence_words = segment(short_sent, cut_type=cut_type)
-            ngrams = NgramUtil.ngrams(sentence_words, ngram, join_string="_")
-            # 去重
-            ngrams = list(set([i.replace("_", "") for i in ngrams if i]))
-            # 词长度过滤
-            ngrams = [i for i in ngrams if min_word_length <= len(i) <= max_word_length]
+            if cut_type == 'char':
+                ngrams = [
+                    (short_sent[i:i + word_len], i)
+                    for word_len in range(min_word_length, max_word_length + 1)
+                    for i in range(0, len(short_sent) - word_len + 1)
+                ]
+            else:
+                sentence_words = segment(short_sent, cut_type=cut_type)
+                ngram_items = NgramUtil.ngrams(sentence_words, ngram, join_string="_") or []
+                ngrams = []
+                for item in (i.replace("_", "") for i in ngram_items if i):
+                    cur_idx = short_sent.find(item)
+                    while cur_idx != -1:
+                        ngrams.append((item, cur_idx))
+                        cur_idx = short_sent.find(item, cur_idx + 1)
+            # 去重并过滤词长度
+            ngrams = list(dict.fromkeys((i, pos) for i, pos in ngrams if min_word_length <= len(i) <= max_word_length))
             
             # 收集所有需要纠错的信息，避免修改current_sent影响后续位置计算
             corrections = []
-            for cur_item in ngrams:
-                if self.trie.search(cur_item):
+            for cur_item, cur_idx in ngrams:
+                if cur_item in self.proper_names:
                     continue
-                for name in self.proper_names:
-                    if self.get_word_similarity_score(cur_item, name) > sim_threshold:
-                        if cur_item != name:
-                            cur_idx = short_sent.find(cur_item)
-                            if cur_idx != -1:  # 确保找到了该词
-                                corrections.append((cur_item, name, cur_idx))
-                            break  # 找到匹配的专名后退出内层循环
+                best_name = None
+                best_score = sim_threshold
+                for name in self.get_candidate_names(cur_item):
+                    score = self.get_word_similarity_score(cur_item, name)
+                    if score > best_score:
+                        best_name = name
+                        best_score = score
+                if best_name and cur_item != best_name:
+                    corrections.append((cur_item, best_name, cur_idx, best_score))
             
+            # 优先保留长词、高分纠错，避免短片段与长专名重叠后重复替换
+            filtered_corrections = []
+            occupied = set()
+            for cur_item, name, cur_idx, score in sorted(corrections, key=lambda x: (len(x[0]), x[3]), reverse=True):
+                span = set(range(cur_idx, cur_idx + len(cur_item)))
+                if occupied & span:
+                    continue
+                occupied.update(span)
+                filtered_corrections.append((cur_item, name, cur_idx))
             # 按位置从后往前排序，避免前面的修改影响后面的位置
-            corrections.sort(key=lambda x: x[2], reverse=True)
+            filtered_corrections.sort(key=lambda x: x[2], reverse=True)
             
             # 应用所有纠错
-            for cur_item, name, cur_idx in corrections:
+            for cur_item, name, cur_idx in filtered_corrections:
                 current_sent = current_sent[:cur_idx] + name + current_sent[(cur_idx + len(cur_item)):]
                 details.append((cur_item, name, idx + cur_idx + start_idx))
             

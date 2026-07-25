@@ -7,6 +7,7 @@ import os
 import re
 from codecs import open
 
+import ahocorasick
 import numpy as np
 from loguru import logger
 
@@ -49,8 +50,8 @@ class Detector:
         'zh_giga.no_cna_cmn.prune01244.klm':
             'https://deepspeech.bj.bcebos.com/zh_lm/zh_giga.no_cna_cmn.prune01244.klm',
         # 人民日报训练语言模型 148MB
-        'people2014_corpus_chars.klm':
-            'https://github.com/shibing624/pycorrector/releases/download/1.0.0/people2014_corpus_chars.klm',
+        'people2014corpus_chars.klm':
+            'https://github.com/shibing624/pycorrector/releases/download/1.0.0/people2014corpus_chars.klm',
         # 人民日报训练语言模型(tiny) 20MB
         'people_chars_lm.klm':
             'https://github.com/shibing624/pycorrector/releases/download/0.4.3/people_chars_lm.klm',
@@ -82,6 +83,7 @@ class Detector:
         self.lm = None
         self.word_freq = None
         self.custom_confusion = None
+        self.custom_confusion_automaton = None
         self.custom_word_freq = None
         self.person_names = None
         self.place_names = None
@@ -125,6 +127,7 @@ class Detector:
             self.custom_confusion = self._get_custom_confusion_dict(self.custom_confusion_path_or_dict)
         else:
             raise ValueError('custom_confusion_path_or_dict must be dict or str.')
+        self.custom_confusion_automaton = self._build_custom_confusion_automaton(self.custom_confusion)
         # 自定义切词词典
         self.custom_word_freq = self.load_word_freq_dict(self.custom_word_freq_path)
         self.person_names = self.load_word_freq_dict(self.person_name_path)
@@ -204,6 +207,16 @@ class Detector:
                         confusion[variant] = origin
         return confusion
 
+    @staticmethod
+    def _build_custom_confusion_automaton(custom_confusion):
+        automaton = ahocorasick.Automaton()
+        if not custom_confusion:
+            return automaton
+        for confuse in custom_confusion:
+            automaton.add_word(confuse, confuse)
+        automaton.make_automaton()
+        return automaton
+
     def set_language_model_path(self, path):
         self.check_detector_initialized()
         import kenlm
@@ -220,6 +233,7 @@ class Detector:
             self.custom_confusion = self._get_custom_confusion_dict(data)
         else:
             raise ValueError('custom_confusion_path_or_dict must be dict or str.')
+        self.custom_confusion_automaton = self._build_custom_confusion_automaton(self.custom_confusion)
         logger.debug('Loaded confusion size: %d' % len(self.custom_confusion))
 
     def set_custom_word_freq(self, path):
@@ -396,9 +410,10 @@ class Detector:
         # 初始化
         self.check_detector_initialized()
         # 1. 自定义混淆集加入疑似错误词典
-        for confuse in self.custom_confusion:
-            for i in re.finditer(confuse, sentence):
-                maybe_err = [confuse, i.span()[0] + start_idx, i.span()[1] + start_idx, ErrorType.confusion]
+        if self.custom_confusion_automaton and len(self.custom_confusion_automaton) > 0:
+            for end_idx, confuse in self.custom_confusion_automaton.iter(sentence):
+                begin_idx = end_idx - len(confuse) + 1
+                maybe_err = [confuse, begin_idx + start_idx, end_idx + 1 + start_idx, ErrorType.confusion]
                 self._add_maybe_error_item(maybe_err, maybe_errors)
 
         # 2. 专名错误检测

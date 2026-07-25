@@ -24,6 +24,9 @@
 **pycorrector** Use the language model to detect errors, pinyin feature and shape feature to correct chinese text
 error, it can be used for Chinese Pinyin and stroke input method.
 
+## News
+[2026/07/25] v1.1.4: Optimized proper-noun correction (ProperCorrector) performance by replacing the brute-force per-fragment scan over the entire proper-noun dictionary with a multi-level inverted index (by word length and position), and removed the redundant Trie and fixed OOV stroke false positives, achieving ~1-2 orders of magnitude speedup on a 40k-size dictionary; replaced regex with an Aho-Corasick automaton for custom confusion matching; fixed a crash when the custom confusion set is empty in the default config; corrected the pretrained language model filename (people2014corpus_chars.klm). See [Release-v1.1.4](https://github.com/shibing624/pycorrector/releases/tag/1.1.4)
+
 ## Features
 ### language model
 * Kenlm
