@@ -1,4 +1,6 @@
 on:
+  push:
+    branches: [ master, main ]
   workflow_dispatch: # Manually running a workflow
 name: Linux build
 jobs:
@@ -47,7 +49,7 @@ jobs:
           pip install -r requirements.txt
           pip install .
           pip install pytest
-#      - name: PKG-TEST
-#        run: |
-#          python -m pytest
-#          echo "PKG-TEST done"
+      - name: PKG-TEST
+        run: |
+          python -m pytest
+          echo "PKG-TEST done"
